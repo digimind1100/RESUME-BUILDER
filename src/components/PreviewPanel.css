@@ -1,0 +1,151 @@
+.preview-panel {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  width: 794px;   /* A4 width */
+  height: 1123px; /* A4 height */
+  box-sizing: border-box;
+  margin: 0 auto; /* center on screen */
+  background: white; /* for clean print background */
+}
+
+/* Left Column */
+.preview-left {
+  width: 30%;
+  border: 1px solid #ccc;
+  padding: 15px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Profile Circle with Elegant Background */
+.profile-circle {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: #f4f4f4; /* light elegant background */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px; /* space between border and image */
+  margin-bottom: 15px;
+  overflow: hidden;
+}
+
+.profile-circle img.preview-profile-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profile-circle i {
+  font-size: 50px;
+  color: #aaa;
+}
+
+/* Name */
+.preview-name {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* Contact Info */
+.preview-info {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  align-items: center;
+}
+
+.info-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.info-block i {
+  font-size: 18px;
+  color: #333;
+}
+
+.info-block span {
+  font-size: 14px;
+  color: #555;
+  margin: 8px 0;   /* 🔹 reduced margin (was 16px default) */
+}
+
+/* Education */
+.preview-education {
+  margin-top: 20px;
+  text-align: left;
+  width: 100%;
+}
+
+.preview-education h3 {
+  font-size: 16px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 4px;
+}
+
+.preview-education ul {
+  padding-left: 15px;
+}
+
+.preview-education li {
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+/* Right Column */
+.preview-right {
+  width: 70%;
+  padding: 15px;
+  border: 1px solid #eee;
+}
+
+.preview-right h2 {
+  margin-bottom: 15px;
+  font-size: 20px;
+}
+
+.preview-panel p {
+  margin-top: 2px;
+  margin-bottom: 6px;
+}
+/* Section Headings */
+.section-heading,
+.preview-education h3,
+.preview-right h2 {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+
+
+/* CSS FOR PROFILE PICTUER  */
+.profile-pic-wrapper {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-color: #f0f0f0; /* elegant background */
+  overflow: hidden; /* ensures image never overflows */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 15px; /* center in column */
+  border: 3px solid #ddd; /* optional nice border */
+}
+
+.profile-pic-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* crop image proportionally */
+  border-radius: 50%; /* ensures circular */
+}

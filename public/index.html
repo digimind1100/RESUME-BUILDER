@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+
+
+    <!-- your HTML code above -->
+
+<script>
+  document.getElementById('profilePic').addEventListener('change', function (event) {
+    const reader = new FileReader();
+    reader.onload = function () {
+      document.getElementById('profilePicPreview').src = reader.result;
+    };
+    reader.readAsDataURL(event.target.files[0]);
+  });
+</script>
+</body>
+</html>
+
+</body>
+</html>

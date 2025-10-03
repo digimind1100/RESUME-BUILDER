@@ -1,0 +1,13 @@
+
+.education-entry {
+  border: 1px solid #ddd; /* Example */
+  border-radius: 8px;
+  padding: 0px;
+  margin-bottom: 5px;
+  background: #f9f9f9;
+  width: 228px;
+  align-items: center;
+  gap: 0px;
+  
+}
+

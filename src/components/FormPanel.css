@@ -1,0 +1,110 @@
+/* Container */
+.form-panel {
+  width: 100%;
+  padding: 10px;
+  background-color: #f3f3f3;
+  height: 100vh;
+  /* overflow-y: auto; */
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+/* Headings */
+.form-panel h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.form-panel h3 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+/* Labels */
+.form-panel label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+/* Inputs */
+.form-panel input,
+.form-panel textarea {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+/* Textarea height */
+.form-panel textarea {
+  height: 80px;
+  resize: vertical;
+}
+
+/* Buttons */
+.form-panel .form-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.form-panel .form-buttons button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  color: #fff;
+}
+
+.form-panel .form-buttons .add-btn {
+  background-color: #007bff;
+}
+
+.form-panel .form-buttons .add-btn:hover {
+  background-color: #0056b3;
+}
+
+.form-panel .form-buttons .delete-btn {
+  background-color: #dc3545;
+}
+
+.form-panel .form-buttons .delete-btn:hover {
+  background-color: #a71d2a;
+}
+.education-entry {
+  display: flex;
+  align-items: flex-start; /* checkbox ko top align karega */
+  gap: 10px;
+  margin-bottom: 8px;
+  border: 1px solid #ccc;
+  padding: 8px;
+  border-radius: 6px;
+}
+
+.checkbox-block {
+  margin-top: 4px; /* thoda space deta hai taki text ke sath align ho */
+}
+
+.education-details p {
+  margin: 4px 0; /* line spacing ko reduce karke neat look */
+}
+.education-entry {
+  display: flex;
+  flex-direction: column; /* vertical stack */
+  border: 1px solid #ccc;
+  padding: 8px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+
+.checkbox-block {
+  margin-bottom: 4px; /* thoda gap */
+}
