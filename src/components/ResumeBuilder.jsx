@@ -4,23 +4,14 @@ import PreviewPanel from "./PreviewPanel";
 
 export default function ResumeBuilder() {
   const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    phone: "",
-    address: "",
-    city: "",
-    country: "",
-    dob: "",
-    linkedin: "",
-    profilePic: "",
-    education: [],
+    fullName: "", email: "", phone: "", address: "", city: "", country: "",
+    dob: "", linkedin: "", profilePic: "", education: []
   });
 
-  const [selectedEducations, setSelectedEducations] = useState([]); // ✅ centralized
-
+  const [selectedEducations, setSelectedEducations] = useState([]);
 
   return (
-   <div className="resume-builder flex">
+    <div className="resume-builder flex">
       <div className="w-1/3 p-4">
         <FormPanel
           formData={formData}
@@ -40,4 +31,3 @@ export default function ResumeBuilder() {
     </div>
   );
 }
-

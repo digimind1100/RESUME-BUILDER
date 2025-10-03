@@ -1,32 +1,29 @@
-import React, { useState } from "react";
+import React, { useRef, useEffect } from "react";
 import "./PreviewPanel.css";
 import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaLinkedin } from "react-icons/fa";
 
-export default function PreviewPanel({
-  formData,
-  selectedEducations,
-  setSelectedEducations,
-}) {
+export default function PreviewPanel({ formData, selectedEducations, setSelectedEducations }) {
+  const educationRef = useRef(null);
 
-  const toggleSelect = (index) => {
-    let updated;
+  // Checkbox toggle function
+  const handleCheckboxChange = (index) => {
     if (selectedEducations.includes(index)) {
-      updated = selectedEducations.filter((i) => i !== index);
+      setSelectedEducations(selectedEducations.filter((i) => i !== index));
     } else {
-      updated = [...selectedEducations, index];
+      setSelectedEducations([...selectedEducations, index]);
     }
-    setSelectedEducations(updated); // ✅ parent state update
   };
-  // local selected indexes (keeps UI snappy)
-  const [selected, setSelected] = useState([]);
 
-
+  useEffect(() => {
+    if (educationRef.current) {
+      console.log("Education wrapper height:", educationRef.current.offsetHeight);
+    }
+  }, [formData?.education]);
 
   return (
     <div className="preview-panel">
-      {/* Left Column - Personal Info + Education */}
+      {/* Left Column */}
       <div className="preview-left">
-        {/* Profile picture */}
         <div className="profile-pic-wrapper">
           <img
             id="profilePicPreview"
@@ -35,10 +32,9 @@ export default function PreviewPanel({
           />
         </div>
 
-        {/* Name */}
         <h2 className="preview-name">{formData?.fullName || "Your Name"}</h2>
 
-        {/* Contact Details */}
+        {/* Contact Info */}
         <div className="contact-info">
           <div className="icon-block">
             <FaEnvelope className="icon" />
@@ -64,33 +60,34 @@ export default function PreviewPanel({
           </div>
         </div>
 
-        {/* Date of Birth */}
         <h3 className="section-heading">Date of Birth</h3>
         <p>{formData?.dob || "DD/MM/YYYY"}</p>
 
         {/* Education */}
         <div className="p-4">
           <h2 className="section-heading">Education</h2>
-
-          {formData.education.length > 0 ? (
-            formData.education.map((edu, index) => (
-              <div key={index} className="education-entry bg-red-500">
-                <input
-                  type="checkbox"
-                  checked={selectedEducations.includes(index)} // ✅ synced
-                  onChange={() => toggleSelect(index)}
-                />
-                <div className="education-details">
-                  <p>{edu.degree}</p>
-                  <p>{edu.school}</p>
-                  <p>{edu.year}</p>
+          <div ref={educationRef} className="education-wrapper">
+            {formData?.education && formData.education.length > 0 ? (
+              formData.education.map((edu, index) => (
+                <div key={index} className="education-entry">
+                  {/* Checkbox */}
+                  <input
+                    type="checkbox"
+                    checked={selectedEducations.includes(index)}
+                    onChange={() => handleCheckboxChange(index)}
+                  />
+                  {/* Education Details */}
+                  <div className="education-details">
+                    <p>{edu.school}</p>
+                    <p>{edu.degree}</p>
+                    <p>{edu.year}</p>
+                  </div>
                 </div>
-              </div>
-            ))
-          ) : (
-            <p>No education added yet</p>
-          )}
-
+              ))
+            ) : (
+              <p>No education added yet</p>
+            )}
+          </div>
         </div>
       </div>
 
