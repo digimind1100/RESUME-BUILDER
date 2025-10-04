@@ -92,8 +92,13 @@ export default function FormPanel({ formData, setFormData, selectedEducations, s
       <input type="text" name="degree" value={education.degree} onChange={handleChange} placeholder="Degree" />
       <input type="text" name="year" value={education.year} onChange={handleChange} placeholder="Year" />
 
-      <button onClick={handleAddEducation}>Add Education</button>
-      <button onClick={handleDeleteSelected} disabled={selectedEducations.length === 0}>Delete Selected</button>
+     <button onClick={handleAddEducation}>Add Education</button>
+<button onClick={handleDeleteSelected} disabled={selectedEducations.length === 0}>
+  Delete Selected
+</button>
+
+
+      
 
       {/* Education list with checkboxes */}
 

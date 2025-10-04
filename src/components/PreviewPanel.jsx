@@ -2,15 +2,15 @@ import React, { useRef, useEffect } from "react";
 import "./PreviewPanel.css";
 import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaLinkedin } from "react-icons/fa";
 
-export default function PreviewPanel({ formData, selectedEducations, setSelectedEducations }) {
+export default function PreviewPanel({ formData, selectedEducations, setSelectedEducations, offset }) {
   const educationRef = useRef(null);
 
-  // Checkbox toggle function
-  const handleCheckboxChange = (index) => {
-    if (selectedEducations.includes(index)) {
-      setSelectedEducations(selectedEducations.filter((i) => i !== index));
+  // ✅ Checkbox toggle
+const handleCheckboxChange = (globalIndex) => {
+    if (selectedEducations.includes(globalIndex)) {
+      setSelectedEducations(selectedEducations.filter((i) => i !== globalIndex));
     } else {
-      setSelectedEducations([...selectedEducations, index]);
+      setSelectedEducations([...selectedEducations, globalIndex]);
     }
   };
 
@@ -21,7 +21,10 @@ export default function PreviewPanel({ formData, selectedEducations, setSelected
   }, [formData?.education]);
 
   return (
-    <div className="preview-panel">
+    <div
+      className="preview-panel"
+      style={{ width: "794px", height: "1123px", margin: "0 auto" }}
+    >
       {/* Left Column */}
       <div className="preview-left">
         <div className="profile-pic-wrapper">
@@ -67,26 +70,28 @@ export default function PreviewPanel({ formData, selectedEducations, setSelected
         <div className="p-4">
           <h2 className="section-heading">Education</h2>
           <div ref={educationRef} className="education-wrapper">
-            {formData?.education && formData.education.length > 0 ? (
-              formData.education.map((edu, index) => (
-                <div key={index} className="education-entry">
-                  {/* Checkbox */}
+        {formData?.education && formData.education.length > 0 ? (
+            formData.education.map((edu, index) => {
+              const globalIndex = offset + index; // 👈 actual index maintain
+              return (
+                <div key={globalIndex} className="education-entry">
                   <input
                     type="checkbox"
-                    checked={selectedEducations.includes(index)}
-                    onChange={() => handleCheckboxChange(index)}
+                    checked={selectedEducations.includes(globalIndex)}
+                    onChange={() => handleCheckboxChange(globalIndex)}
                   />
-                  {/* Education Details */}
                   <div className="education-details">
                     <p>{edu.school}</p>
                     <p>{edu.degree}</p>
                     <p>{edu.year}</p>
                   </div>
                 </div>
-              ))
-            ) : (
-              <p>No education added yet</p>
-            )}
+              );
+            })
+          ) : (
+            <p>No education added yet</p>
+          )}
+
           </div>
         </div>
       </div>
