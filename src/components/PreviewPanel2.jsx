@@ -1,6 +1,7 @@
 import React from "react";
 import "./PreviewPanel.css"; // ✅ reuse same CSS
 
+
 export default function PreviewPanel2({ education, selectedEducations, setSelectedEducations, offset = 0 }) {
   const handleCheckboxChange = (globalIndex) => {
     if (selectedEducations.includes(globalIndex)) {

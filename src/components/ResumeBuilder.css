@@ -1,21 +1,68 @@
 .resume-builder {
   display: flex;
-  flex-direction: row; /* side by side */
-  gap: 10px;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px;
+  background: #f4f4f4;
+  min-height: 100vh;
+}
+
+.builder-container {
+  display: grid;
+  grid-template-columns: 35% 65%;
+  gap: 20px;
   width: 100%;
-  height: 100vh; /* full height */
-  box-sizing: border-box;
+  max-width: 1400px;
 }
 
 .form-section {
-  width: 30%; /* left form 40% */
-  overflow-y: auto;
-  border-right: 1px solid #ddd;
-  padding: 10px;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  height: 1123px; /* ✅ Fix A4 Height for Left Side */
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .preview-section {
-  width: 70%; /* right preview 60% */
-  overflow-y: auto;
-  padding: 10px;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  /* ✅ Exact A4 Page Dimensions */
+  width: 794px;
+  height: 1123px;
+
+  /* ✅ No Scrolling, static view */
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.download-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.download-btn {
+  background: #007bff;
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 60%;
+  max-width: 250px;
+  transition: background 0.3s ease;
+}
+
+.download-btn:hover {
+  background: #0056b3;
 }

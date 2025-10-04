@@ -1,6 +1,9 @@
 import React, { useRef, useEffect } from "react";
 import "./PreviewPanel.css";
 import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaLinkedin } from "react-icons/fa";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
+
 
 export default function PreviewPanel({ formData, selectedEducations, setSelectedEducations, offset }) {
   const educationRef = useRef(null);
@@ -20,10 +23,31 @@ const handleCheckboxChange = (globalIndex) => {
     }
   }, [formData?.education]);
 
+
+  
+const handleDownloadPDF = async () => {
+  const previewElement = document.querySelector(".preview-panel");
+
+  if (!previewElement) {
+    alert("Preview not found!");
+    return;
+  }
+
+  const canvas = await html2canvas(previewElement, { scale: 2 });
+  const imgData = canvas.toDataURL("image/png");
+
+  const pdf = new jsPDF("p", "mm", "a4");
+  const pdfWidth = pdf.internal.pageSize.getWidth();
+  const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+  pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+  pdf.save("resume.pdf");
+};
+
   return (
     <div
-      className="preview-panel"
-      style={{ width: "794px", height: "1123px", margin: "0 auto" }}
+      className="preview-panel" 
+      style={{ width: "794px", height: "1123px", margin: "0 auto", flexShrink: 0 }}
     >
       {/* Left Column */}
       <div className="preview-left">
@@ -94,13 +118,25 @@ const handleCheckboxChange = (globalIndex) => {
 
           </div>
         </div>
+        
       </div>
+
+       
+      
 
       {/* Right Column */}
       <div className="preview-right">
         <h3 className="section-heading">Work Experience</h3>
         <p>Coming soon...</p>
       </div>
+
+
+      
     </div>
+
+
+
+
+
   );
 }

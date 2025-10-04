@@ -1,0 +1,9 @@
+.a4-page {
+  width: 794px;
+  height: 1123px;
+  background: white;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
