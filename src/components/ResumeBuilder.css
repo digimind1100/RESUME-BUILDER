@@ -8,12 +8,22 @@
 }
 
 .builder-container {
-  display: grid;
-  grid-template-columns: 35% 65%;
+  display: flex;               /* ✅ change grid → flex */
+  flex-direction: row;         /* ✅ ensure horizontal layout */
+  align-items: flex-start;
+  justify-content: space-between;
   gap: 20px;
   width: 100%;
   max-width: 1400px;
 }
+.form-section {
+  flex: 0 0 35%;
+}
+
+.preview-section {
+  flex: 0 0 65%;
+}
+
 
 .form-section {
   background: white;
@@ -25,44 +35,66 @@
   box-sizing: border-box;
 }
 
-.preview-section {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
-  /* ✅ Exact A4 Page Dimensions */
-  width: 794px;
-  height: 1123px;
 
-  /* ✅ No Scrolling, static view */
-  overflow: hidden;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-}
-
+/* --- DOWNLOAD BUTTON --- */
 .download-container {
-  width: 100%;
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  margin: 20px 0;
+  position: relative;
+  z-index: 10;
 }
 
 .download-btn {
-  background: #007bff;
+  background-color: #007bff;
   color: white;
-  padding: 10px 16px;
+  font-size: 16px;
+  padding: 10px 20px;
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
   cursor: pointer;
-  width: 60%;
-  max-width: 250px;
-  transition: background 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .download-btn:hover {
-  background: #0056b3;
+  background-color: #0056b3;
+}
+.a4-page {
+  width: 794px;       /* exact A4 width */
+  height: 1123px;     /* exact A4 height */
+  background: white;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+  margin-bottom: 20px;
+}
+
+.resume-builder-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%;
+  height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.form-panel {
+  flex: 0 0 45%;
+  max-width: 45%;
+  background: #f9f9f9;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.preview-panel-container {
+  flex: 1;
+  max-width: 55%;
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
 }

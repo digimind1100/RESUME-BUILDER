@@ -1,14 +1,25 @@
 .preview-section {
-  width: 794px !important;
-  height: 1123px !important;
-  flex-shrink: 0 !important;
-  min-height: 1123px !important;
-  max-height: 1123px !important;
-  overflow: hidden !important;
+  flex: 1;
+  background: #f9f9f9;
+  padding: 20px;
+  overflow-y:hidden;
+  display: flex;
+  flex-direction: row;   /* ✅ horizontal layout */
+  align-items: flex-start;
+  height:1123px;
+  width:794px;
+  gap: 20px;
+  box-sizing: border-box;
 }
 
+.preview-left {
+  flex: 0 0 30%;
+}
 
-/* Left Column */
+.preview-right {
+  flex: 1; /* takes remaining width (around 70%) */
+}
+
 .preview-left {
   width: 30%;
   border: 1px solid #ccc;
@@ -17,7 +28,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 100%;           /* ✅ takes full height of parent (A4 height) */
+  box-sizing: border-box; /* ✅ ensures padding doesn’t expand height */
+  
 }
+
 
 /* Profile Circle with Elegant Background */
 .profile-circle {
@@ -77,6 +92,10 @@
   font-size: 14px;
   color: #555;
   margin: 8px 0;   /* 🔹 reduced margin (was 16px default) */
+}
+
+.icon-block p{
+  margin: 8px 0
 }
 
 /* Education */
@@ -140,6 +159,7 @@
   justify-content: center;
   margin: 0 auto 15px; /* center in column */
   border: 3px solid #ddd; /* optional nice border */
+  flex-shrink: 0;
 }
 
 .profile-pic-wrapper img {
