@@ -27,14 +27,9 @@ export default function PreviewPanel({
 
   return (
     <div
-<<<<<<< HEAD
-  className="preview-section"
-  style={{ width: "794px", height: "1123px", margin: "0 auto" }}
-=======
   className="preview-section" id="resumePreview"
   style={{ width: "738px", height: "1040px", margin: "0 auto" }}
->>>>>>> 99a9e3f (add)
->
+> 
 
       {/* Left Column */}
       <div className="preview-left">
@@ -107,11 +102,7 @@ export default function PreviewPanel({
         <p>Coming soon...</p>
       </div>
     </div>
-<<<<<<< HEAD
-=======
 
-    
->>>>>>> 99a9e3f (add)
   );
 }
 <ButtonSection />
