@@ -1,14 +1,24 @@
 .preview-section {
   flex: 1;
   background: #f9f9f9;
+<<<<<<< HEAD
   padding: 20px;
+=======
+  padding: 12px;
+>>>>>>> 99a9e3f (add)
   overflow-y:hidden;
   display: flex;
   flex-direction: row;   /* ✅ horizontal layout */
   align-items: flex-start;
+<<<<<<< HEAD
   height:1123px;
   width:794px;
   gap: 20px;
+=======
+  height:1040px;
+  width:738px;
+  gap: 12px;
+>>>>>>> 99a9e3f (add)
   box-sizing: border-box;
 }
 
@@ -169,16 +179,3 @@
   border-radius: 50%; /* ensures circular */
 }
 
-.download-btn {
-  background: #007bff;
-  color: white;
-  padding: 10px 16px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  margin-bottom: 20px;
-}
-
-.download-btn:hover {
-  background: #0056b3;
-}

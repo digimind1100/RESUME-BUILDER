@@ -44,6 +44,16 @@
   margin: 20px 0;
   position: relative;
   z-index: 10;
+<<<<<<< HEAD
+=======
+}
+.download-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+  position: relative;
+  z-index: 10;
+>>>>>>> 99a9e3f (add)
 }
 
 .download-btn {
@@ -52,6 +62,10 @@
   font-size: 16px;
   padding: 10px 20px;
   border: none;
+<<<<<<< HEAD
+=======
+  margin-top:20px;
+>>>>>>> 99a9e3f (add)
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -60,6 +74,10 @@
 .download-btn:hover {
   background-color: #0056b3;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 99a9e3f (add)
 .a4-page {
   width: 794px;       /* exact A4 width */
   height: 1123px;     /* exact A4 height */

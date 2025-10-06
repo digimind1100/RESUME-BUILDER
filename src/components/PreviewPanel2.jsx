@@ -27,7 +27,11 @@ export default function PreviewPane2({
   return (
     <div
       className="preview-section"
+<<<<<<< HEAD
       style={{ width: "794px", height: "1123px", margin: "24px auto" }}
+=======
+      style={{ width: "738px", height: "1040px", margin: "0 auto" }}
+>>>>>>> 99a9e3f (add)
     >
       {/* Left Column: continued education */}
       <div className="preview-left">
