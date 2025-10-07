@@ -3,6 +3,7 @@ import FormPanel from "./FormPanel";
 import PreviewPanel from "./PreviewPanel";
 import PreviewPanel2 from "./PreviewPanel2";
 import ButtonSection from "./ButtonSection";
+import "./ButtonSection.css";
 
 export default function ResumeBuilder() {
   // ✅ State initialization

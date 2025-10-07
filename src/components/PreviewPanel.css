@@ -168,4 +168,70 @@
   object-fit: cover; /* crop image proportionally */
   border-radius: 50%; /* ensures circular */
 }
+.preview-section {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  white-space: normal;
+}
 
+.education-entry {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;                /* space between checkbox and text */
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: #fff;
+  margin-bottom: 8px;
+  box-sizing: border-box;
+
+  /* ✅ make box stretch automatically with content */
+  height: auto;
+  min-height: 40px;
+  word-break: break-word;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.education-entry input[type="checkbox"] {
+  margin-top: 1px;         /* nicely aligns with text top */
+  transform: scale(1.1);   /* slightly bigger checkbox */
+  cursor: pointer;
+}
+
+.education-details {
+  display: inline-block;
+  flex-direction: column;
+  font-family: 'Times New Roman', Times, serif;
+  justify-content: flex-start;
+  width: 100%;
+       
+}
+
+.education-details p {
+  margin: 4px 0;
+  line-height: 1.4;
+  color: #333;
+  border-bottom: 1px dotted #ccc;  
+}
+.education-details p:last-child {
+  border-bottom: none;                /* no line under last entry */
+}
+
+.edu-school,
+.edu-degree,
+.edu-year {
+  font-size: 14px;
+  word-break: break-word;
+}
+.edu-school{
+  margin-top: 0px;
+}
+
+/* Optional hover effect (looks nice in preview) */
+.education-entry:hover {
+  background-color: #f9f9f9;
+  border-color: #aaa;
+  transition: all 0.2s ease;
+}

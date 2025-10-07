@@ -1,6 +1,7 @@
 // FormPanel.jsx
 import React, { useState } from "react";
 import "./FormPanel.css";
+import "./ButtonSection.css"
 
 export default function FormPanel({
   formData = {},                  // safe default
@@ -168,19 +169,20 @@ export default function FormPanel({
         placeholder="Year"
       />
 
-      <div className="edu-buttons">
-        <button type="button" onClick={handleAddEducation}>
-          Add Education
+     
+        <button className="add-edu-btn" type="button" onClick={handleAddEducation}>
+         ➕ Add Education
         </button>
-
+   
         <button
+        className="delete-btn"
           type="button"
           onClick={handleDeleteSelected}
           disabled={(selectedEducations || []).length === 0}
         >
-          Delete Selected
+         🗑️ Delete Selected
         </button>
-      </div>
+     
 
       {/* NOTE: we intentionally do NOT render the full education list here to avoid duplication.
           The preview panel handles displaying entries with checkboxes.

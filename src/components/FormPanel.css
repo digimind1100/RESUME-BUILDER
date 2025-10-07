@@ -79,32 +79,8 @@
 .form-panel .form-buttons .delete-btn:hover {
   background-color: #a71d2a;
 }
-.education-entry {
-  display: flex;
-  align-items: flex-start; /* checkbox ko top align karega */
-  gap: 10px;
-  margin-bottom: 8px;
-  border: 1px solid #ccc;
-  padding: 8px;
-  border-radius: 6px;
-}
+
 
 .checkbox-block {
   margin-top: 4px; /* thoda space deta hai taki text ke sath align ho */
-}
-
-.education-details p {
-  margin: 4px 0; /* line spacing ko reduce karke neat look */
-}
-.education-entry {
-  display: flex;
-  flex-direction: column; /* vertical stack */
-  border: 1px solid #ccc;
-  padding: 8px;
-  border-radius: 6px;
-  margin-bottom: 8px;
-}
-
-.checkbox-block {
-  margin-bottom: 4px; /* thoda gap */
 }

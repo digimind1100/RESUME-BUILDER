@@ -1,6 +1,8 @@
 import React, { useRef, useEffect } from "react";
 import "./PreviewPanel.css";
 import ButtonSection from "./ButtonSection";
+import "./ButtonSection.css";
+import "./ButtonSection.css";
 
 
 import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaLinkedin } from "react-icons/fa";
@@ -82,9 +84,9 @@ export default function PreviewPanel({
                       onChange={() => handleCheckboxChange(globalIndex)}
                     />
                     <div className="education-details">
-                      <p>{edu.school}</p>
-                      <p>{edu.degree}</p>
-                      <p>{edu.year}</p>
+                      <p className="edu-chool">{edu.school}</p>
+                      <p className="edu-degree">{edu.degree}</p>
+                      <p className="edu-year">{edu.year}</p>
                     </div>
                   </div>
                 );

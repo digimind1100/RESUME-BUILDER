@@ -1,14 +1,25 @@
 
 .education-entry {
+
+display: flex;
+flex-direction: column;
+flex-direction: column;
+ justify-content: flex-start;
   border: 1px solid #ddd; /* Example */
   border-radius: 8px;
   padding: 0px;
   margin-bottom: 5px;
+  padding: 5px;
   background: #f9f9f9;
-  width: 208px;
-  height: 100px;
+  width: 194px;
+  min-height: auto;
+  height: auto;
   align-items: center;
   gap: 0px;
+  white-space: normal;
+   overflow-wrap: anywhere;
+  text-overflow: clip;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   
 }
 

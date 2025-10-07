@@ -1,9 +1,47 @@
-/* === Button Section Container === */
+/* === BUTTON SECTION STYLES (safe & isolated) === */
+
+/* Wrapper container */
 .button-section-container {
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-top: 30px;
+  margin-top: 24px;
+  margin-bottom: 10px;
+  position: relative;
+  z-index: 5;
+}
+/* === DOWNLOAD BUTTON STYLE === */
+.download-btn {
+  background: linear-gradient(135deg, #007bff, #0056d3);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 22px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 3px 6px rgba(0, 123, 255, 0.3);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px; /* if icon is used */
+}
+
+.download-btn:hover {
+  background: linear-gradient(135deg, #0056d3, #0041a8);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 10px rgba(0, 123, 255, 0.4);
+}
+
+.download-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 5px rgba(0, 123, 255, 0.3);
+}
+
+.download-btn i {
+  font-size: 16px;
 }
 
 /* Inner wrapper for grouping all buttons */
@@ -12,29 +50,101 @@
   flex-wrap: wrap;
   gap: 12px;
   justify-content: center;
+  align-items: center;
+  padding: 10px 0;
 }
 
-/* Common button style */
+/* Common button design */
 .common-btn {
   background-color: #007bff;
-  color: white;
+  color: #ffffff;
   border: none;
-  padding: 10px 18px;
+  padding: 10px 20px;
   border-radius: 6px;
   cursor: pointer;
   font-size: 14px;
   font-weight: 500;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.25s ease-in-out;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  white-space: nowrap; /* prevent text breaking inside button */
 }
 
-/* Hover state */
+/* Hover effect */
 .common-btn:hover:not(:disabled) {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Disabled (placeholder) buttons */
+.common-btn:disabled {
+  background-color: #b0b0b0;
+  cursor: not-allowed;
+  opacity: 0.7;
+  box-shadow: none;
+}
+
+/* Responsive: stack buttons neatly on mobile */
+@media (max-width: 640px) {
+  .button-section-inner {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .common-btn {
+    width: 80%;
+  }
+}
+
+/* === ADD EDUCATION BUTTON === */
+.add-edu-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
+  transition: all 0.25s ease-in-out;
+  margin: 6px;
+}
+
+.add-edu-btn:hover {
   background-color: #0056b3;
   transform: translateY(-1px);
 }
 
-/* Disabled buttons (future placeholders) */
-.common-btn:disabled {
+.add-edu-btn:active {
+  background-color: #004b9c;
+  transform: translateY(0);
+}
+
+/* === DELETE SELECTED BUTTON === */
+.delete-btn {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
+  transition: all 0.25s ease-in-out;
+  margin: 6px;
+}
+
+.delete-btn:hover {
+  background-color: #b02a37;
+  transform: translateY(-1px);
+}
+
+.delete-btn:active {
+  background-color: #a52834;
+  transform: translateY(0);
+}
+
+.delete-btn:disabled {
   background-color: #b0b0b0;
   cursor: not-allowed;
   opacity: 0.6;
