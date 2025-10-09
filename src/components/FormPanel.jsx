@@ -111,11 +111,11 @@ export default function FormPanel({
         onChange={handleChange}
       />
 
-      <label>City / State</label>
+      <label>City / State / Zip Code</label>
       <input
         type="text"
         name="city"
-        placeholder="e.g. New York, NY"
+        placeholder="e.g. New York, NY 10004"
         value={formData?.city || ""}
         onChange={handleChange}
       />

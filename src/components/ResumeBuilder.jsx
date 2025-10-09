@@ -16,6 +16,15 @@ export default function ResumeBuilder() {
 
   const [selectedEducations, setSelectedEducations] = useState([]);
 
+  // ✅ Checkbox handler (must be inside the component)
+  const handleCheckboxChange = (index) => {
+    setSelectedEducations((prev) =>
+      prev.includes(index)
+        ? prev.filter((i) => i !== index)
+        : [...prev, index]
+    );
+  };
+
   // ✅ Add new education entry
   const addEducation = (newEntry) => {
     if (!newEntry || typeof newEntry !== "object") {
@@ -29,50 +38,47 @@ export default function ResumeBuilder() {
     }));
   };
 
-  // ✅ Pagination setup
-  const entriesPerPage = 3;
-  const firstPageEducation = formData.education.slice(0, entriesPerPage);
-  const secondPageEducation = formData.education.slice(entriesPerPage);
-
-  return (
-    <div className="resume-builder flex flex-col items-center">
-      {/* Top: Main area (Form + Previews side by side) */}
-      <div className="flex w-full">
-        {/* Left: Form */}
-        <div className="w-1/3 p-4">
-          <FormPanel
-            formData={formData}
-            setFormData={setFormData}
-            selectedEducations={selectedEducations}
-            setSelectedEducations={setSelectedEducations}
-            addEducation={addEducation}
-          />
-        </div>
-
-        {/* Right: Previews */}
-        <div id="resumeContainer" className="w-2/3 p-4">
-          <PreviewPanel
-            formData={{ ...formData, education: firstPageEducation }}
-            selectedEducations={selectedEducations}
-            setSelectedEducations={setSelectedEducations}
-            pageNumber={1}
-          />
-          {formData.education.length > entriesPerPage && (
-            <PreviewPanel2
-              formData={{ ...formData, education: secondPageEducation }}
-              selectedEducations={selectedEducations}
-              setSelectedEducations={setSelectedEducations}
-              offset={entriesPerPage}
-              pageNumber={2}
-            />
-          )}
-        </div>
+ return (
+  <div className="resume-builder flex flex-col items-center">
+    {/* Top: Main area (Form + Previews side by side) */}
+    <div className="flex w-full">
+      {/* Left: Form */}
+      <div className="w-1/3 p-4">
+        <FormPanel
+          formData={formData}
+          setFormData={setFormData}
+          selectedEducations={selectedEducations}
+          setSelectedEducations={setSelectedEducations}
+          addEducation={addEducation}
+        />
       </div>
 
-      {/* ✅ Bottom: All buttons (PDF, etc.) */}
-      <div className="mt-6">
-        <ButtonSection />
+      {/* Right: Previews */}
+      <div id="resumeContainer" className="w-2/3 p-4">
+        <PreviewPanel
+  formData={formData}
+  selectedEducations={selectedEducations}
+  handleCheckboxChange={handleCheckboxChange}
+   pageNumber={1}
+/>
+
+
+        {/* ✅ Future Page 2 placeholder (no error) */}
+        {selectedEducations.length > 6 && (
+          <PreviewPanel
+            formData={formData}
+            selectedEducations={selectedEducations}
+            setSelectedEducations={setSelectedEducations}
+            pageNumber={2}
+          />
+        )}
       </div>
     </div>
-  );
+
+    {/* ✅ Bottom: All buttons (PDF, etc.) */}
+    <div className="mt-6">
+      <ButtonSection />
+    </div>
+  </div>
+);
 }
