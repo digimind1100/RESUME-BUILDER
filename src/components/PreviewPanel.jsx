@@ -101,7 +101,7 @@ export default function PreviewPanel({
 
       setPage1Education(fit);
       setPage2Education(overflow);
-      setPageBreakY(MAX_HEIGHT); // ✅ red line bottom se 15px upar
+      setPageBreakY(MAX_HEIGHT); //
     }, 140);
 
     return () => clearTimeout(timer);
@@ -180,18 +180,23 @@ export default function PreviewPanel({
               </div>
             </div>
           ))}
-          {page2Education.length > 0 && page1Education.length > 0 && (
-  <div
-    style={{
-      marginTop: "20px",
-      fontStyle: "italic",
-      textAlign: "center",
-      opacity: 0.7,
-    }}
-  >
-    Continue on Page 2 →
-  </div>
-)}
+        {page2Education.length > 0 &&
+  page1Education.length > 0 &&
+  pageBreakY != null &&
+  (MAX_HEIGHT - pageBreakY) < 20 && ( // 30px buffer
+    <div
+      style={{
+        marginTop: "10px",
+        fontStyle: "italic",
+        textAlign: "center",
+        opacity: 0.7,
+      }}
+    >
+      Continue on Page 2 →
+    </div>
+  )}
+
+
         </div>
 
         <div className="preview-right">
