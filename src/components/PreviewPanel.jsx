@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./PreviewPanel.css";
 import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaLinkedin } from "react-icons/fa";
+import { PaginateEntries } from "../utils/PaginateEntries";
 
-const MAX_HEIGHT = 986; // usable height (1016 - 30)
+const MAX_HEIGHT = 986;
 
 export default function PreviewPanel({
   formData = {},
@@ -37,71 +38,15 @@ export default function PreviewPanel({
     }
 
     const timer = setTimeout(() => {
-      const leftEl = leftRef.current;
-      const topEl = topSectionRef.current;
-      if (!leftEl || !topEl) {
-        setPage1Education(eduList.map((e, i) => ({ edu: e, idx: i })));
-        setPage2Education([]);
-        return;
-      }
+      const { page1, page2, breakY } = PaginateEntries({
+        containerEl: leftRef.current,
+        topSectionEl: topSectionRef.current,
+        entryList: eduList,
+      });
 
-      const leftRect = leftEl.getBoundingClientRect();
-
-      const leftStyle = window.getComputedStyle(leftEl);
-      const paddingTop = parseFloat(leftStyle.paddingTop) || 0;
-      const paddingRight = parseFloat(leftStyle.paddingRight) || 0;
-      const paddingBottom = parseFloat(leftStyle.paddingBottom) || 0;
-      const paddingLeft = parseFloat(leftStyle.paddingLeft) || 0;
-
-      const tempDiv = document.createElement("div");
-      tempDiv.style.position = "absolute";
-      tempDiv.style.visibility = "hidden";
-      tempDiv.style.width = `${Math.round(leftRect.width)}px`;
-      tempDiv.style.padding = `${paddingTop}px ${paddingRight}px ${paddingBottom}px ${paddingLeft}px`;
-      tempDiv.style.boxSizing = "border-box";
-      tempDiv.style.left = "-9999px";
-      tempDiv.style.top = "-9999px";
-      document.body.appendChild(tempDiv);
-
-      const topClone = topEl.cloneNode(true);
-      topClone.querySelectorAll && topClone.querySelectorAll(".education-entry").forEach((n) => n.remove());
-      tempDiv.appendChild(topClone);
-
-      const fit = [];
-      let overflow = [];
-
-      for (let i = 0; i < eduList.length; i++) {
-        const edu = eduList[i];
-        const testEl = document.createElement("div");
-        testEl.className = "education-entry border p-2 my-2 rounded";
-        testEl.style.boxSizing = "border-box";
-        testEl.innerHTML = `
-          <input type="checkbox" style="display:none" />
-          <div class="education-details">
-            <p class="edu-school">${edu.school || ""}</p>
-            <p class="edu-degree">${edu.degree || ""}</p>
-            <p class="edu-year">${edu.year || ""}</p>
-          </div>
-        `;
-
-        topClone.appendChild(testEl);
-
-        const totalHeight = tempDiv.getBoundingClientRect().height;
-
-        // ✅ compare with MAX_HEIGHT instead of leftHeight
-        if (totalHeight <= MAX_HEIGHT) {
-          fit.push({ edu, idx: i });
-        } else {
-          overflow = eduList.slice(i).map((e, j) => ({ edu: e, idx: i + j }));
-          break;
-        }
-      }
-
-      document.body.removeChild(tempDiv);
-
-      setPage1Education(fit);
-      setPage2Education(overflow);
-      setPageBreakY(MAX_HEIGHT); //
+      setPage1Education(page1);
+      setPage2Education(page2);
+      setPageBreakY(breakY);
     }, 140);
 
     return () => clearTimeout(timer);
@@ -180,23 +125,23 @@ export default function PreviewPanel({
               </div>
             </div>
           ))}
-        {page2Education.length > 0 &&
-  page1Education.length > 0 &&
-  pageBreakY != null &&
-  (MAX_HEIGHT - pageBreakY) < 20 && ( // 30px buffer
-    <div
-      style={{
-        marginTop: "10px",
-        fontStyle: "italic",
-        textAlign: "center",
-        opacity: 0.7,
-      }}
-    >
-      Continue on Page 2 →
-    </div>
-  )}
 
-
+          {/* Continue marker */}
+          {page2Education.length > 0 &&
+            page1Education.length > 0 &&
+            pageBreakY != null &&
+            (MAX_HEIGHT - pageBreakY) < 20 && (
+              <div
+                style={{
+                  marginTop: "10px",
+                  fontStyle: "italic",
+                  textAlign: "center",
+                  opacity: 0.7,
+                }}
+              >
+                Continue on Page 2 →
+              </div>
+            )}
         </div>
 
         <div className="preview-right">
