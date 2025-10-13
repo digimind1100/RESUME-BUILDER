@@ -4,17 +4,25 @@ import "./FormPanel.css";
 import "./ButtonSection.css"
 
 export default function FormPanel({
-  formData = {},                  // safe default
-  setFormData = () => {},         // safe default
-  selectedEducations = [],        // safe default
-  setSelectedEducations = () => {}, // safe default
+  formData = {},
+  setFormData = () => { },
+  selectedEducations = [],
+  setSelectedEducations = () => { },
+  jobTitle = "",
+  setJobTitle = () => { },
+  openWorkPopup = () => { },    // <-- NEW prop (default no-op)
+  onAddSkills = () => { },     // if you use skills too
+
 }) {
+
+  // add to top-level state in ResumeBuilder
+  const [isWorkExpPopupOpen, setIsWorkExpPopupOpen] = useState(false);
+
   const [education, setEducation] = useState({ school: "", degree: "", year: "" });
 
   // Personal info inputs -> update formData
   const handleChange = (e) => {
     const { name, value } = e.target;
-    // education local fields handled separately
     if (name === "school" || name === "degree" || name === "year") {
       setEducation((prev) => ({ ...prev, [name]: value }));
     } else {
@@ -43,21 +51,36 @@ export default function FormPanel({
     setEducation({ school: "", degree: "", year: "" });
   };
 
-  // Checkbox toggle for selection (functional updates)
+  // Checkbox toggle for selection
   const handleCheckboxChange = (index) => {
     setSelectedEducations((prev = []) =>
       prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
     );
   };
 
-  // Delete selected educations (safe)
+  // Delete selected educations
   const handleDeleteSelected = () => {
     setFormData((prev = {}) => ({
       ...prev,
       education: (prev.education || []).filter((_, idx) => !selectedEducations.includes(idx)),
     }));
-    setSelectedEducations([]); // reset selection
+    setSelectedEducations([]);
   };
+
+
+
+const handleOpenWorkPopup = () => {
+  if (!jobTitle.trim()) {
+    alert("Mention Job Title to get AI suggestions.");
+    return;
+  }
+
+  // Parent ka handler call karo (ResumeBuilder se aaya hai)
+  openWorkPopup();
+};
+
+
+
 
   return (
     <div className="form-panel">
@@ -71,9 +94,15 @@ export default function FormPanel({
         type="text"
         name="jobTitle"
         placeholder="e.g. Frontend Developer"
-        value={formData?.jobTitle || ""}
-        onChange={handleChange}
+        value={jobTitle}
+        onChange={(e) => {
+          const v = e.target.value;
+          setJobTitle(v);
+          setFormData(prev => ({ ...(prev || {}), jobTitle: v }));
+        }}
       />
+
+
 
       <label>Full Name</label>
       <input
@@ -169,26 +198,33 @@ export default function FormPanel({
         placeholder="Year"
       />
 
-     
-        <button className="add-edu-btn" type="button" onClick={handleAddEducation}>
-         ➕ Add Education
-        </button>
-   
-        <button
-        className="delete-btn"
-          type="button"
-          onClick={handleDeleteSelected}
-          disabled={(selectedEducations || []).length === 0}
-        >
-         🗑️ Delete Selected
-        </button>
-     
+      <button className="add-edu-btn" type="button" onClick={handleAddEducation}>
+        ➕ Add Education
+      </button>
 
-      {/* NOTE: we intentionally do NOT render the full education list here to avoid duplication.
-          The preview panel handles displaying entries with checkboxes.
-          If you want to render a small list inside the form as well, map safely:
-            (formData.education || []).map(...)
-      */}
+      <button
+        className="delete-btn"
+        type="button"
+        onClick={handleDeleteSelected}
+        disabled={(selectedEducations || []).length === 0}
+      >
+        🗑️ Delete Selected
+      </button>
+
+      {/* --- NEW BUTTONS --- */}
+      <button
+  className="add-exp-btn"
+  type="button"
+  onClick={handleOpenWorkPopup}
+>
+  + Add Work Experience
+</button>
+
+
+
+      <button className="add-skill-btn" type="button">
+        + Add Skills
+      </button>
     </div>
   );
 }

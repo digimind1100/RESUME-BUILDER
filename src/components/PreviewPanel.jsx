@@ -1,14 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./PreviewPanel.css";
 import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaLinkedin } from "react-icons/fa";
+import { paginateEntries } from "../utils/paginateEntries";
 
-const MAX_HEIGHT = 986; // usable height (1016 - 30)
+const MAX_HEIGHT = 986;
 
 export default function PreviewPanel({
-  formData = {},
-  selectedEducations = [],
-  setSelectedEducations,
+  formData,
+  selectedEducations,
   handleCheckboxChange,
+  jobTitle,
+  workExperiences,
+  deleteWorkExperience,
 }) {
   const leftRef = useRef(null);
   const topSectionRef = useRef(null);
@@ -20,10 +23,6 @@ export default function PreviewPanel({
   const localToggleCheckbox = (globalIndex) => {
     if (typeof handleCheckboxChange === "function") {
       handleCheckboxChange(globalIndex);
-    } else if (typeof setSelectedEducations === "function") {
-      setSelectedEducations((prev = []) =>
-        prev.includes(globalIndex) ? prev.filter((i) => i !== globalIndex) : [...prev, globalIndex]
-      );
     }
   };
 
@@ -37,71 +36,15 @@ export default function PreviewPanel({
     }
 
     const timer = setTimeout(() => {
-      const leftEl = leftRef.current;
-      const topEl = topSectionRef.current;
-      if (!leftEl || !topEl) {
-        setPage1Education(eduList.map((e, i) => ({ edu: e, idx: i })));
-        setPage2Education([]);
-        return;
-      }
+      const { page1, page2, breakY } = paginateEntries({
+        containerEl: leftRef.current,
+        topSectionEl: topSectionRef.current,
+        entryList: eduList,
+      });
 
-      const leftRect = leftEl.getBoundingClientRect();
-
-      const leftStyle = window.getComputedStyle(leftEl);
-      const paddingTop = parseFloat(leftStyle.paddingTop) || 0;
-      const paddingRight = parseFloat(leftStyle.paddingRight) || 0;
-      const paddingBottom = parseFloat(leftStyle.paddingBottom) || 0;
-      const paddingLeft = parseFloat(leftStyle.paddingLeft) || 0;
-
-      const tempDiv = document.createElement("div");
-      tempDiv.style.position = "absolute";
-      tempDiv.style.visibility = "hidden";
-      tempDiv.style.width = `${Math.round(leftRect.width)}px`;
-      tempDiv.style.padding = `${paddingTop}px ${paddingRight}px ${paddingBottom}px ${paddingLeft}px`;
-      tempDiv.style.boxSizing = "border-box";
-      tempDiv.style.left = "-9999px";
-      tempDiv.style.top = "-9999px";
-      document.body.appendChild(tempDiv);
-
-      const topClone = topEl.cloneNode(true);
-      topClone.querySelectorAll && topClone.querySelectorAll(".education-entry").forEach((n) => n.remove());
-      tempDiv.appendChild(topClone);
-
-      const fit = [];
-      let overflow = [];
-
-      for (let i = 0; i < eduList.length; i++) {
-        const edu = eduList[i];
-        const testEl = document.createElement("div");
-        testEl.className = "education-entry border p-2 my-2 rounded";
-        testEl.style.boxSizing = "border-box";
-        testEl.innerHTML = `
-          <input type="checkbox" style="display:none" />
-          <div class="education-details">
-            <p class="edu-school">${edu.school || ""}</p>
-            <p class="edu-degree">${edu.degree || ""}</p>
-            <p class="edu-year">${edu.year || ""}</p>
-          </div>
-        `;
-
-        topClone.appendChild(testEl);
-
-        const totalHeight = tempDiv.getBoundingClientRect().height;
-
-        // ✅ compare with MAX_HEIGHT instead of leftHeight
-        if (totalHeight <= MAX_HEIGHT) {
-          fit.push({ edu, idx: i });
-        } else {
-          overflow = eduList.slice(i).map((e, j) => ({ edu: e, idx: i + j }));
-          break;
-        }
-      }
-
-      document.body.removeChild(tempDiv);
-
-      setPage1Education(fit);
-      setPage2Education(overflow);
-      setPageBreakY(MAX_HEIGHT); //
+      setPage1Education(page1);
+      setPage2Education(page2);
+      setPageBreakY(breakY);
     }, 140);
 
     return () => clearTimeout(timer);
@@ -111,7 +54,12 @@ export default function PreviewPanel({
     <>
       {/* PAGE 1 */}
       <div className="preview-section" style={{ position: "relative" }}>
-        <div className="preview-left" ref={leftRef} style={{ boxSizing: "border-box", position: "relative" }}>
+        {/* LEFT SIDE */}
+        <div
+          className="preview-left"
+          ref={leftRef}
+          style={{ boxSizing: "border-box", position: "relative" }}
+        >
           {pageBreakY != null && (
             <div
               style={{
@@ -152,8 +100,12 @@ export default function PreviewPanel({
                 <FaMapMarkerAlt className="icon" />
                 <p>{formData?.address || "Street Address"}</p>
               </div>
-              <div className="icon-block"><p>{formData?.city || "City / State"}</p></div>
-              <div className="icon-block"><p>{formData?.country || "Country"}</p></div>
+              <div className="icon-block">
+                <p>{formData?.city || "City / State / Zip Code"}</p>
+              </div>
+              <div className="icon-block">
+                <p>{formData?.country || "Country"}</p>
+              </div>
               <div className="icon-block">
                 <FaLinkedin className="icon" />
                 <p>{formData?.linkedin || "linkedin.com/in/username"}</p>
@@ -180,28 +132,78 @@ export default function PreviewPanel({
               </div>
             </div>
           ))}
-        {page2Education.length > 0 &&
-  page1Education.length > 0 &&
-  pageBreakY != null &&
-  (MAX_HEIGHT - pageBreakY) < 20 && ( // 30px buffer
-    <div
-      style={{
-        marginTop: "10px",
-        fontStyle: "italic",
-        textAlign: "center",
-        opacity: 0.7,
-      }}
-    >
-      Continue on Page 2 →
-    </div>
-  )}
 
-
+          {/* Continue marker */}
+          {page2Education.length > 0 &&
+            page1Education.length > 0 &&
+            pageBreakY != null &&
+            MAX_HEIGHT - pageBreakY < 20 && (
+              <div
+                style={{
+                  marginTop: "10px",
+                  fontStyle: "italic",
+                  textAlign: "center",
+                  opacity: 0.7,
+                }}
+              >
+                Continue on Page 2 →
+              </div>
+            )}
         </div>
 
-        <div className="preview-right">
-          <h3 className="section-heading">Work Experience</h3>
-          <p>Coming soon...</p>
+        {/* RIGHT SIDE */}
+        <div className="flex-1 p-4">
+          <div className="max-w-2xl mx-auto">
+            {/* Job Title Box */}
+            <div className="job-title-box text-center mb-6">
+              <h1 className="text-2xl font-bold job-title-banner">
+                {jobTitle || formData.jobTitle || "Job Title"}
+              </h1>
+            </div>
+
+            {/* ---- Work Experience Box ---- */}
+<div className="preview-box work-box mb-6">
+  <h2 className="text-lg font-bold mb-3 border-b pb-2">Work Experience</h2>
+
+  {workExperiences && workExperiences.length > 0 ? (
+    workExperiences.map((exp, index) => (
+      <div key={exp.id || index} className="work-exp-item">
+        <div className="checkbox-bullet-wrapper">
+          <input type="checkbox" className="exp-checkbox" />
+          <span className="bullet">•</span>
+        </div>
+        <div className="exp-text">
+          {typeof exp === "object" ? exp.title || exp.text || "Job Role" : exp}
+        </div>
+      </div>
+    ))
+  ) : (
+    <p className="text-sm text-gray-500 italic">
+      No work experience added yet.
+    </p>
+  )}
+</div>
+
+
+
+
+
+            {/* ---- Skills Box ---- */}
+            <div className="preview-box skills-box">
+              <h2 className="text-lg font-bold mb-3 border-b pb-2">Skills</h2>
+              {formData.skills && formData.skills.length > 0 ? (
+                <ul className="list-disc pl-5">
+                  {formData.skills.map((skill, index) => (
+                    <li key={index} className="text-sm">
+                      {skill}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="text-sm text-gray-500 italic">No skills added yet.</p>
+              )}
+            </div>
+          </div>
         </div>
       </div>
 
@@ -228,7 +230,7 @@ export default function PreviewPanel({
 
           <div className="preview-right">
             <h3 className="section-heading">Work Experience (Page 2)</h3>
-            <p>Coming soon...</p>
+            <p>Continued if needed...</p>
           </div>
         </div>
       )}
