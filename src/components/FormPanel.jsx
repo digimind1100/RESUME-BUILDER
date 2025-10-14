@@ -4,14 +4,14 @@ import "./FormPanel.css";
 import "./ButtonSection.css"
 
 export default function FormPanel({
-  formData = {},
-  setFormData = () => { },
+formData = {},
+  setFormData = () => {},
   selectedEducations = [],
-  setSelectedEducations = () => { },
+  setSelectedEducations = () => {},
   jobTitle = "",
-  setJobTitle = () => { },
-  openWorkPopup = () => { },    // <-- NEW prop (default no-op)
-  onAddSkills = () => { },     // if you use skills too
+  setJobTitle = () => {},
+  openWorkPopup = () => {},     // Work Exp popup trigger
+  onAddSkillsClick = () => {},  // Skills popup trigger
 
 }) {
 
@@ -79,6 +79,14 @@ const handleOpenWorkPopup = () => {
   openWorkPopup();
 };
 
+// 🔹 Add Skills button handler
+  const handleAddSkillsClick = () => {
+    if (!jobTitle.trim()) {
+      alert("Mention Job Title to get AI suggestions.");
+      return;
+    }
+    onAddSkillsClick(); // ✅ parent ka state trigger karega
+  };
 
 
 
@@ -221,10 +229,15 @@ const handleOpenWorkPopup = () => {
 </button>
 
 
+<button
+  type="button"
+  className=" add-skill-btn btn btn-primary mt-2"
+  onClick={handleAddSkillsClick}
+>
+  Add Skills
+</button>
 
-      <button className="add-skill-btn" type="button">
-        + Add Skills
-      </button>
+
     </div>
   );
 }

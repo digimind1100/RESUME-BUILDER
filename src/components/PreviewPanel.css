@@ -177,8 +177,8 @@
 
 .education-entry {
   display: flex;
-  align-items: flex-start;
-  gap: 10px;                /* space between checkbox and text */
+  align-items:center;
+  gap: 0;                /* space between checkbox and text */
   width: 100%;
   padding: 8px 10px;
   border: 1px solid #ccc;
@@ -292,6 +292,7 @@
 
 .bullet {
   margin-top: 2px;  /* bullet slightly below checkbox, adjust if needed */
+  
 }
 
 .exp-text {
@@ -299,3 +300,8 @@
   line-height: 1.4;
 }
 
+.editable-box {
+  border: 2px dotted #007bff;
+  padding: 10px;
+  border-radius: 8px;
+}

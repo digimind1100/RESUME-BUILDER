@@ -3,6 +3,8 @@ import FormPanel from "./FormPanel";
 import PreviewPanel from "./PreviewPanel";
 import ButtonSection from "./ButtonSection";
 import WorkExpPopup from "./WorkExpPopup";
+import SkillsPopup from "./SkillsPopup";
+
 import "./ButtonSection.css";
 
 export default function ResumeBuilder() {
@@ -13,6 +15,15 @@ export default function ResumeBuilder() {
   // Work Experience state + popup toggle
   const [workExperiences, setWorkExperiences] = useState([]);
   const [showWorkPopup, setShowWorkPopup] = useState(false);
+  // Skills state + popup toggle
+  const [showSkillsPopup, setShowSkillsPopup] = useState(false);
+  const [skills, setSkills] = useState([]);
+
+  const [isEditing, setIsEditing] = useState(false);
+
+  const handleToggleEdit = () => {
+    setIsEditing((prev) => !prev);
+  };
 
   // Education checkbox handler
   const handleCheckboxChange = (index) => {
@@ -38,8 +49,36 @@ export default function ResumeBuilder() {
   };
 
   const openWorkPopup = () => {
-  setShowWorkPopup(true);
+    setShowWorkPopup(true);
+  };
+
+  // ✅ New handler for Skills
+  const handleAddSkill = (newSkill) => {
+    console.log("📌 New Skill received:", newSkill);
+    setSkills((prev) => {
+      const updated = [...prev, newSkill];
+      console.log("✅ Updated skills state:", updated);
+      return updated;
+    });
+  };
+
+  // Inside ResumeBuilder.jsx
+const handleDeleteSelected = () => {
+  console.log("🗑 Deleting selected items...");
+
+  // Work Experiences filter
+  setWorkExperiences((prev) =>
+    prev.filter((exp) => !exp.selected) // remove where exp.selected = true
+  );
+
+  // Skills filter
+  setSkills((prev) =>
+    prev.filter((skill) => !skill.selected) // remove where skill.selected = true
+  );
 };
+
+
+
 
   return (
     <div className="resume-builder flex flex-col items-center">
@@ -58,6 +97,7 @@ export default function ResumeBuilder() {
             openWorkPopup={openWorkPopup}
             // When form's "+ Add Work Experience" button is clicked
             onAddWorkExp={() => setShowWorkPopup(true)}
+            onAddSkillsClick={() => setShowSkillsPopup(true)} // ✅ Skills ke liye
           />
         </div>
 
@@ -66,33 +106,48 @@ export default function ResumeBuilder() {
           {console.log("📌 Passing workExperiences to PreviewPanel:", workExperiences)}
           <PreviewPanel
             formData={formData}
-            jobTitle={jobTitle}
             selectedEducations={selectedEducations}
             handleCheckboxChange={handleCheckboxChange}
-            workExperiences={workExperiences}
-            deleteWorkExperience={(id) =>
-              setWorkExperiences((prev) => prev.filter((exp) => exp.id !== id))
-            }
+            jobTitle={jobTitle}
+            workExperiences={workExperiences}   // ✅ real state
+            skills={skills}                     // ✅ real state
+            isEditing={isEditing}
           />
         </div>
       </div>
 
       {/* Work Experience Popup (single source of truth) */}
       {showWorkPopup && (
-  <WorkExpPopup
-    jobTitle={jobTitle}
-    onClose={() => setShowWorkPopup(false)}
-    onSelect={(newExp) => {
-      handleAddWorkExp(newExp);
-    }}
-  />
-)}
+        <WorkExpPopup
+          jobTitle={jobTitle}
+          onClose={() => setShowWorkPopup(false)}
+          onSelect={(newExp) => {
+            handleAddWorkExp(newExp);
+          }}
+        />
+      )}
+
+      {showSkillsPopup && (
+        <SkillsPopup
+          jobTitle={jobTitle}
+          onClose={() => setShowSkillsPopup(false)}
+          onSelect={(newSkill) => {
+            handleAddSkill(newSkill);
+          }}
+        />
+      )}
+
+
 
 
       {/* Bottom: Buttons */}
       <div className="mt-6">
-        <ButtonSection />
+     <ButtonSection isEditing={isEditing} setIsEditing={setIsEditing} />
       </div>
+
+
+
+
     </div>
   );
 }

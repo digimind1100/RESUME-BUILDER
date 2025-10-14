@@ -40,29 +40,29 @@ export default function WorkExpPopup({ jobTitle, onClose, onSelect }) {
 
   return (
     <div className="popup-overlay">
-      <div className="popup-content" role="dialog" aria-modal="true"  style={{ position: "relative" }}>
-         {/* Top-right close button */}
-  <button
-    className="top-close-btn"
-    onClick={() => {
-      console.log("📌 Top-right close clicked");
-      if (typeof onClose === "function") onClose();
-    }}
-    style={{
-      position: "absolute",
-      top: "8px",
-      right: "8px",
-      border: "none",
-      background: "transparent",
-      fontSize: "18px",
-      cursor: "pointer",
-      fontWeight: "bold",
-    }}
-  >
-    ✖
-  </button>
+      <div className="popup-content" role="dialog" aria-modal="true" style={{ position: "relative" }}>
+        {/* Top-right close button */}
+        <button
+          className="top-close-btn"
+          onClick={() => {
+            console.log("📌 Top-right close clicked");
+            if (typeof onClose === "function") onClose();
+          }}
+          style={{
+            position: "absolute",
+            top: "8px",
+            right: "8px",
+            border: "none",
+            background: "transparent",
+            fontSize: "18px",
+            cursor: "pointer",
+            fontWeight: "bold",
+          }}
+        >
+          ✖
+        </button>
 
-  {/* Popup title */}
+        {/* Popup title */}
 
         <h3 className="popup-title">AI Work Experience Suggestions</h3>
 

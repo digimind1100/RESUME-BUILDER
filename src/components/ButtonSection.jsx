@@ -2,7 +2,7 @@ import React from "react";
 import "./ButtonSection.css"; // custom styling for button area
 import DownloadPDF from "./DownloadPDF"; // ✅ keep this import!
 
-const ButtonSection = () => {
+export default function ButtonSection({  isEditing, setIsEditing }) {
   return (
     <div className="button-section-container">
       <div className="button-section-inner">
@@ -10,9 +10,12 @@ const ButtonSection = () => {
         <button className="common-btn" disabled>
           Download Word Doc
         </button>
-        <button className="common-btn" disabled>
-          Edit Preview
-        </button>
+       <button
+        className="common-btn"
+        onClick={() => setIsEditing(prev => !prev)}  // ✅ yeh sahi tarika
+      >
+        {isEditing ? "Lock Preview" : "Edit Preview"}
+      </button>
         <button className="common-btn" disabled>
           Delete Selected
         </button>
@@ -30,4 +33,4 @@ const ButtonSection = () => {
   );
 };
 
-export default ButtonSection;
+

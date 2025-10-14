@@ -12,6 +12,10 @@ export default function PreviewPanel({
   jobTitle,
   workExperiences,
   deleteWorkExperience,
+  skills = [],
+  deleteSkill,
+  selectedSkills,
+  isEditing
 }) {
   const leftRef = useRef(null);
   const topSectionRef = useRef(null);
@@ -161,19 +165,25 @@ export default function PreviewPanel({
               </h1>
             </div>
 
+
+
             {/* ---- Work Experience Box ---- */}
-<div className="preview-box work-box mb-6">
+<div
+  className={`preview-box work-box mb-6 ${isEditing ? "editable-box" : ""}`}
+  contentEditable={isEditing}
+  suppressContentEditableWarning={true}
+>
   <h2 className="text-lg font-bold mb-3 border-b pb-2">Work Experience</h2>
 
   {workExperiences && workExperiences.length > 0 ? (
     workExperiences.map((exp, index) => (
-      <div key={exp.id || index} className="work-exp-item">
-        <div className="checkbox-bullet-wrapper">
+      <div key={exp.id || index} className="work-exp-item flex items-start mb-2">
+        <div className="checkbox-bullet-wrapper flex items-center mr-2">
           <input type="checkbox" className="exp-checkbox" />
-          <span className="bullet">•</span>
+          <span className="bullet ml-1">•</span>
         </div>
         <div className="exp-text">
-          {typeof exp === "object" ? exp.title || exp.text || "Job Role" : exp}
+          {typeof exp === "object" ? exp.title || exp.text || "Experience" : exp}
         </div>
       </div>
     ))
@@ -184,25 +194,38 @@ export default function PreviewPanel({
   )}
 </div>
 
+{/* ---- Skills Box ---- */}
+<div
+  className={`preview-box skills-box mb-6 ${isEditing ? "editable-box" : ""}`}
+  contentEditable={isEditing}
+  suppressContentEditableWarning={true}
+>
+  <h2 className="text-lg font-bold mb-3 border-b pb-2">Skills</h2>
+
+  {skills && skills.length > 0 ? (
+    skills.map((skill, index) => (
+      <div key={skill.id || index} className="work-exp-item flex items-start mb-2">
+        <div className="checkbox-bullet-wrapper flex items-center mr-2">
+          <input type="checkbox" className="exp-checkbox" />
+          <span className="bullet ml-1">•</span>
+        </div>
+        <div className="exp-text">
+          {typeof skill === "object" ? skill.title || skill.text || "Skill" : skill}
+        </div>
+      </div>
+    ))
+  ) : (
+    <p className="text-sm text-gray-500 italic">
+      No skills added yet.
+    </p>
+  )}
+</div>
 
 
 
 
-            {/* ---- Skills Box ---- */}
-            <div className="preview-box skills-box">
-              <h2 className="text-lg font-bold mb-3 border-b pb-2">Skills</h2>
-              {formData.skills && formData.skills.length > 0 ? (
-                <ul className="list-disc pl-5">
-                  {formData.skills.map((skill, index) => (
-                    <li key={index} className="text-sm">
-                      {skill}
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p className="text-sm text-gray-500 italic">No skills added yet.</p>
-              )}
-            </div>
+
+
           </div>
         </div>
       </div>
