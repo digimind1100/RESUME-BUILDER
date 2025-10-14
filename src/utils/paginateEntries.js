@@ -1,7 +1,11 @@
 // utils/paginateEntries.js
 const MAX_HEIGHT = 986; // usable height (1016 - 30)
 
+<<<<<<< HEAD
 export function paginateEntries({
+=======
+export function PaginateEntries({
+>>>>>>> b1d9ccf5f419725006a193637db38b181b5aba26
   containerEl,   // left column element
   topSectionEl,  // profile + dob + heading section ref
   entryList,     // array of educations

@@ -1,7 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./PreviewPanel.css";
 import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaLinkedin } from "react-icons/fa";
+<<<<<<< HEAD
 import { paginateEntries } from "../utils/paginateEntries";
+=======
+import { PaginateEntries } from "../utils/PaginateEntries";
+>>>>>>> b1d9ccf5f419725006a193637db38b181b5aba26
 
 const MAX_HEIGHT = 986;
 
@@ -40,7 +44,11 @@ export default function PreviewPanel({
     }
 
     const timer = setTimeout(() => {
+<<<<<<< HEAD
       const { page1, page2, breakY } = paginateEntries({
+=======
+      const { page1, page2, breakY } = PaginateEntries({
+>>>>>>> b1d9ccf5f419725006a193637db38b181b5aba26
         containerEl: leftRef.current,
         topSectionEl: topSectionRef.current,
         entryList: eduList,
@@ -141,7 +149,11 @@ export default function PreviewPanel({
           {page2Education.length > 0 &&
             page1Education.length > 0 &&
             pageBreakY != null &&
+<<<<<<< HEAD
             MAX_HEIGHT - pageBreakY < 20 && (
+=======
+            (MAX_HEIGHT - pageBreakY) < 20 && (
+>>>>>>> b1d9ccf5f419725006a193637db38b181b5aba26
               <div
                 style={{
                   marginTop: "10px",
