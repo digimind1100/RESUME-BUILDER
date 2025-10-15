@@ -103,7 +103,7 @@ export default function PreviewPanel({
                 <FaPhone className="icon" />
                 <p>{formData?.phone || "+123 456 7890"}</p>
               </div>
-              <div className="icon-block"> 
+              <div className="icon-block">
                 <FaMapMarkerAlt className="icon" />
                 <p>{formData?.address || "Street Address"}</p>
               </div>
@@ -170,59 +170,61 @@ export default function PreviewPanel({
 
 
 
-            {/* ---- Work Experience Box ---- */}
-<div
-  className={`preview-box work-box mb-6 ${isEditing ? "editable-box" : ""}`}
-  contentEditable={isEditing}
-  suppressContentEditableWarning={true}
->
+         {/* ---- Work Experience Box ---- */}
+<div className={`preview-box work-box mb-6 ${isEditing ? "editable-box" : ""}`}>
   <h2 className="text-lg font-bold mb-3 border-b pb-2">Work Experience</h2>
 
   {workExperiences && workExperiences.length > 0 ? (
     workExperiences.map((exp, index) => (
-      <div key={exp.id || index} className="work-exp-item flex items-start mb-2">
+      <div
+        key={exp.id || index}
+        className="work-exp-item flex items-start mb-2"
+        contentEditable={isEditing}
+        suppressContentEditableWarning={true}
+      >
         <div className="checkbox-bullet-wrapper flex items-center mr-2">
           <input type="checkbox" className="exp-checkbox" />
           <span className="bullet ml-1">•</span>
         </div>
-        <div className="exp-text">
+
+        <div className="exp-text flex-1">
           {typeof exp === "object" ? exp.title || exp.text || "Experience" : exp}
         </div>
       </div>
     ))
   ) : (
-    <p className="text-sm text-gray-500 italic">
-      No work experience added yet.
-    </p>
+    <p className="text-sm text-gray-500 italic">No work experience added yet.</p>
   )}
 </div>
 
+
 {/* ---- Skills Box ---- */}
-<div
-  className={`preview-box skills-box mb-6 ${isEditing ? "editable-box" : ""}`}
-  contentEditable={isEditing}
-  suppressContentEditableWarning={true}
->
+<div className={`preview-box skills-box mb-6 ${isEditing ? "editable-box" : ""}`}>
   <h2 className="text-lg font-bold mb-3 border-b pb-2">Skills</h2>
 
   {skills && skills.length > 0 ? (
     skills.map((skill, index) => (
-      <div key={skill.id || index} className="work-exp-item flex items-start mb-2">
+      <div
+        key={skill.id || index}
+        className="skill-item flex items-start mb-2"
+        contentEditable={isEditing}
+        suppressContentEditableWarning={true}
+      >
         <div className="checkbox-bullet-wrapper flex items-center mr-2">
-          <input type="checkbox" className="exp-checkbox" />
+          <input type="checkbox" className="skill-checkbox" />
           <span className="bullet ml-1">•</span>
         </div>
-        <div className="exp-text">
+
+        <div className="skill-text flex-1">
           {typeof skill === "object" ? skill.title || skill.text || "Skill" : skill}
         </div>
       </div>
     ))
   ) : (
-    <p className="text-sm text-gray-500 italic">
-      No skills added yet.
-    </p>
+    <p className="text-sm text-gray-500 italic">No skills added yet.</p>
   )}
 </div>
+
 
 
           </div>
