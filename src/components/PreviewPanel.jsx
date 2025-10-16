@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./PreviewPanel.css";
 import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaLinkedin } from "react-icons/fa";
-
 import { paginateEntries } from "../utils/paginateEntries";
 
 const MAX_HEIGHT = 986;
@@ -12,11 +11,10 @@ export default function PreviewPanel({
   handleCheckboxChange,
   jobTitle,
   workExperiences,
-  deleteWorkExperience,
   skills = [],
-  deleteSkill,
-  selectedSkills,
-  isEditing
+  isEditing,
+  toggleWorkCheckbox,   // ✅ new prop from ResumeBuilder
+  toggleSkillCheckbox   // ✅ new prop from ResumeBuilder
 }) {
   const leftRef = useRef(null);
   const topSectionRef = useRef(null);
@@ -41,9 +39,7 @@ export default function PreviewPanel({
     }
 
     const timer = setTimeout(() => {
-
       const { page1, page2, breakY } = paginateEntries({
-
         containerEl: leftRef.current,
         topSectionEl: topSectionRef.current,
         entryList: eduList,
@@ -144,7 +140,7 @@ export default function PreviewPanel({
           {page2Education.length > 0 &&
             page1Education.length > 0 &&
             pageBreakY != null &&
-            (MAX_HEIGHT - pageBreakY) < 20 && (
+            MAX_HEIGHT - pageBreakY < 20 && (
               <div
                 style={{
                   marginTop: "10px",
@@ -168,65 +164,73 @@ export default function PreviewPanel({
               </h1>
             </div>
 
+            {/* ---- Work Experience Box ---- */}
+            <div className={`preview-box work-box mb-6 ${isEditing ? "editable-box" : ""}`}>
+              <h2 className="text-lg font-bold mb-3 border-b pb-2">Work Experience</h2>
 
+              {workExperiences && workExperiences.length > 0 ? (
+                workExperiences.map((exp, index) => (
+                  <div
+                    key={exp.id || index}
+                    className="work-exp-item flex items-start mb-2"
+                    contentEditable={isEditing}
+                    suppressContentEditableWarning={true}
+                  >
+                    <div className="checkbox-bullet-wrapper flex items-center mr-2">
+                      <input
+                        type="checkbox"
+                        className="exp-checkbox"
+                        checked={!!exp.selected}
+                        onChange={() => toggleWorkCheckbox(index)} // ✅ linked
+                      />
+                      <span className="bullet ml-1">•</span>
+                    </div>
 
-         {/* ---- Work Experience Box ---- */}
-<div className={`preview-box work-box mb-6 ${isEditing ? "editable-box" : ""}`}>
-  <h2 className="text-lg font-bold mb-3 border-b pb-2">Work Experience</h2>
+                    <div className="exp-text flex-1">
+                      {typeof exp === "object"
+                        ? exp.title || exp.text || "Experience"
+                        : exp}
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p className="text-sm text-gray-500 italic">No work experience added yet.</p>
+              )}
+            </div>
 
-  {workExperiences && workExperiences.length > 0 ? (
-    workExperiences.map((exp, index) => (
-      <div
-        key={exp.id || index}
-        className="work-exp-item flex items-start mb-2"
-        contentEditable={isEditing}
-        suppressContentEditableWarning={true}
-      >
-        <div className="checkbox-bullet-wrapper flex items-center mr-2">
-          <input type="checkbox" className="exp-checkbox" />
-          <span className="bullet ml-1">•</span>
-        </div>
+            {/* ---- Skills Box ---- */}
+            <div className={`preview-box skills-box mb-6 ${isEditing ? "editable-box" : ""}`}>
+              <h2 className="text-lg font-bold mb-3 border-b pb-2">Skills</h2>
 
-        <div className="exp-text flex-1">
-          {typeof exp === "object" ? exp.title || exp.text || "Experience" : exp}
-        </div>
-      </div>
-    ))
-  ) : (
-    <p className="text-sm text-gray-500 italic">No work experience added yet.</p>
-  )}
-</div>
+              {skills && skills.length > 0 ? (
+                skills.map((skill, index) => (
+                  <div
+                    key={skill.id || index}
+                    className="skill-item flex items-start mb-2"
+                    contentEditable={isEditing}
+                    suppressContentEditableWarning={true}
+                  >
+                    <div className="checkbox-bullet-wrapper flex items-center mr-2">
+                      <input
+                        type="checkbox"
+                        className="skill-checkbox"
+                        checked={!!skill.selected}
+                        onChange={() => toggleSkillCheckbox(index)} // ✅ linked
+                      />
+                      <span className="bullet ml-1">•</span>
+                    </div>
 
-
-{/* ---- Skills Box ---- */}
-<div className={`preview-box skills-box mb-6 ${isEditing ? "editable-box" : ""}`}>
-  <h2 className="text-lg font-bold mb-3 border-b pb-2">Skills</h2>
-
-  {skills && skills.length > 0 ? (
-    skills.map((skill, index) => (
-      <div
-        key={skill.id || index}
-        className="skill-item flex items-start mb-2"
-        contentEditable={isEditing}
-        suppressContentEditableWarning={true}
-      >
-        <div className="checkbox-bullet-wrapper flex items-center mr-2">
-          <input type="checkbox" className="skill-checkbox" />
-          <span className="bullet ml-1">•</span>
-        </div>
-
-        <div className="skill-text flex-1">
-          {typeof skill === "object" ? skill.title || skill.text || "Skill" : skill}
-        </div>
-      </div>
-    ))
-  ) : (
-    <p className="text-sm text-gray-500 italic">No skills added yet.</p>
-  )}
-</div>
-
-
-
+                    <div className="skill-text flex-1">
+                      {typeof skill === "object"
+                        ? skill.title || skill.text || "Skill"
+                        : skill}
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p className="text-sm text-gray-500 italic">No skills added yet.</p>
+              )}
+            </div>
           </div>
         </div>
       </div>
