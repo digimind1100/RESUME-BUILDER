@@ -1,10 +1,10 @@
-// utils/paginateWorkEntries.js
-const MAX_HEIGHT = 1200; // Work Experience usable height
+// utils/paginateSkillsEntries.js
+const MAX_HEIGHT = 1250; // Skills usable height
 
-export function paginateWorkEntries({
-  containerEl,   // right column element (work box container)
+export function paginateSkillsEntries({
+  containerEl,   // right column element (skills box container)
   topSectionEl,  // job title / heading section ref
-  entryList,     // array of work experiences
+  entryList,     // array of skills
 }) {
   if (!containerEl || !topSectionEl || !Array.isArray(entryList)) {
     return { page1: [], page2: [], breakY: null };
@@ -32,40 +32,32 @@ export function paginateWorkEntries({
   tempDiv.style.top = "-9999px";
   document.body.appendChild(tempDiv);
 
-  // clone top section (remove old work entries if any)
+  // clone top section (remove old skill entries if any)
   const topClone = topSectionEl.cloneNode(true);
-  topClone.querySelectorAll(".work-entry").forEach((n) => n.remove());
+  topClone.querySelectorAll(".skill-item").forEach((n) => n.remove());
   tempDiv.appendChild(topClone);
 
   const fit = [];
   let overflow = [];
 
   for (let i = 0; i < entryList.length; i++) {
-    const work = entryList[i];
-
-    // create test element
+    const skill = entryList[i];
     const testEl = document.createElement("div");
-    testEl.className = "work-entry border p-2 my-2 rounded";
+    testEl.className = "skill-item flex items-start mb-2";
     testEl.style.boxSizing = "border-box";
     testEl.innerHTML = `
       <input type="checkbox" style="display:none" />
-      <div class="work-details">
-        <p class="work-title">${work.title || ""}</p>
-        <p class="work-company">${work.company || ""}</p>
-        <p class="work-duration">${work.duration || ""}</p>
-      </div>
+      <span class="bullet ml-1">•</span>
+      <div class="skill-text flex-1">${typeof skill === "object" ? (skill.title || skill.text || "Skill") : skill}</div>
     `;
 
     topClone.appendChild(testEl);
 
-    // measure after adding
     const totalHeight = tempDiv.getBoundingClientRect().height;
-
     if (totalHeight <= MAX_HEIGHT) {
-      fit.push({ work, idx: i });
+      fit.push({ skill, idx: i });
     } else {
-      // ✅ overflow entries -> page 2
-      overflow = entryList.slice(i).map((e, j) => ({ work: e, idx: i + j }));
+      overflow = entryList.slice(i).map((e, j) => ({ skill: e, idx: i + j }));
       break;
     }
   }

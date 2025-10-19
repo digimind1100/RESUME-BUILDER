@@ -34,6 +34,22 @@ export default function PreviewPanel({
   const [page2Work, setPage2Work] = useState([]);
   const [workBreakY, setWorkBreakY] = useState(null);
 
+  //===============================
+
+  const rePaginateWork = () => {
+  if (!Array.isArray(workExperiences) || workExperiences.length === 0) return;
+  const { page1, page2, breakY } = paginateWorkEntries({
+    containerEl: rightPanelRef.current,
+    topSectionEl: jobTitleRef.current,
+    entryList: workExperiences,
+  });
+  setPage1Work(page1);
+  setPage2Work(page2);
+  setWorkBreakY(breakY);
+};
+
+  //==========================
+
   useEffect(() => {
     const eduList = Array.isArray(formData.education) ? formData.education : [];
     if (eduList.length === 0) {
@@ -42,6 +58,7 @@ export default function PreviewPanel({
       setPageBreakY(null);
       return;
     }
+
     const timer = setTimeout(() => {
       const { page1, page2, breakY } = paginateEntries({
         containerEl: leftRef.current,
@@ -201,6 +218,7 @@ export default function PreviewPanel({
                     className="work-entry flex items-start mb-2"
                     contentEditable={isEditing}
                     suppressContentEditableWarning={true}
+                     onInput={rePaginateWork}
                   >
                     <div className="checkbox-bullet-wrapper flex items-center mr-2">
                       <input
@@ -269,6 +287,7 @@ export default function PreviewPanel({
                       className="work-entry flex items-start mb-2"
                       contentEditable={isEditing}
                       suppressContentEditableWarning={true}
+                       onInput={rePaginateWork}
                     >
                       <div className="checkbox-bullet-wrapper flex items-center mr-2">
                         <input

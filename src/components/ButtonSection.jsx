@@ -12,12 +12,13 @@ export default function ButtonSection({ isEditing, setIsEditing, onDeleteSelecte
           Download Word Doc
         </button>
 
-        <button
-          className="common-btn"
-          onClick={() => setIsEditing(prev => !prev)}
-        >
-          {isEditing ? "Lock Preview" : "Edit Preview"}
-        </button>
+   <button
+  className="common-btn"
+  onClick={() => setIsEditing(prev => !prev)}
+>
+  {isEditing ? "Lock Preview" : "Edit Preview"}
+</button>
+
 
         {/* ✅ Activated Delete Selected */}
         <button 
