@@ -1,39 +1,34 @@
+// WorkPagination.jsx
 import React from "react";
 
-export default function WorkPagination({
-  workList,
-  workBoxRef,
-  toggleWorkCheckbox,
-  isEditing,
-}) {
-  if (!workList || workList.length === 0) return null;
+export default function WorkPagination({ workExperiences = [], toggleWorkCheckbox, isEditing }) {
+  if (!Array.isArray(workExperiences) || workExperiences.length === 0) {
+    return <p className="text-gray-500">No work experience added yet.</p>;
+  }
 
   return (
-    <div ref={workBoxRef}>
-      {workList.map((work, index) => (
-        <div
-          key={work.id || index}
-          className="work-item mb-3"
-          contentEditable={isEditing}
-          suppressContentEditableWarning={true}
-        >
-          <div className="checkbox-bullet-wrapper flex items-center mb-1">
-            <input
-              type="checkbox"
-              className="work-checkbox mr-2"
-              checked={!!work.selected}
-              onChange={() =>
-                typeof toggleWorkCheckbox === "function"
-                  ? toggleWorkCheckbox(index)
-                  : null
-              }
-            />
-            <span className="bullet">•</span>
+    <div className="preview-box work-box mb-6">
+      <h3 className="section-heading">Work Experience</h3>
+      {workExperiences.map((work, index) => (
+        <div key={work.id || index} className="work-entry flex items-start mb-2">
+          {/* Checkbox + bullet */}
+          <div className="checkbox-bullet-wrapper flex items-center mr-2">
+            {isEditing && (
+              <input
+                type="checkbox"
+                className="work-checkbox"
+                checked={!!work.selected}
+                onChange={() =>
+                  typeof toggleWorkCheckbox === "function" ? toggleWorkCheckbox(index) : null
+                }
+              />
+            )}
+            <span className="bullet ml-1">•</span>
           </div>
-          <div className="work-text ml-4">
-            {typeof work === "object"
-              ? work.title || work.text || "Work Experience"
-              : work}
+
+          {/* Work text */}
+          <div className="work-text flex-1">
+            {typeof work === "object" ? work.text || "Work Item" : work}
           </div>
         </div>
       ))}
