@@ -21,7 +21,6 @@ export default function PreviewPanel({
   const leftRef = useRef(null);
   const topSectionRef = useRef(null);
 
-  // ✅ NEW Refs for Work Pagination
   const rightPanelRef = useRef(null);
   const jobTitleRef = useRef(null);
 
@@ -35,7 +34,6 @@ export default function PreviewPanel({
   const [page2Work, setPage2Work] = useState([]);
   const [workBreakY, setWorkBreakY] = useState(null);
 
-  // --- Education ---
   useEffect(() => {
     const eduList = Array.isArray(formData.education) ? formData.education : [];
     if (eduList.length === 0) {
@@ -44,23 +42,19 @@ export default function PreviewPanel({
       setPageBreakY(null);
       return;
     }
-
     const timer = setTimeout(() => {
       const { page1, page2, breakY } = paginateEntries({
         containerEl: leftRef.current,
         topSectionEl: topSectionRef.current,
         entryList: eduList,
       });
-
       setPage1Education(page1);
       setPage2Education(page2);
       setPageBreakY(breakY);
     }, 140);
-
     return () => clearTimeout(timer);
   }, [formData]);
 
-  // --- Work ---
   useEffect(() => {
     if (!Array.isArray(workExperiences) || workExperiences.length === 0) {
       setPage1Work([]);
@@ -68,19 +62,16 @@ export default function PreviewPanel({
       setWorkBreakY(null);
       return;
     }
-
     const timer = setTimeout(() => {
       const { page1, page2, breakY } = paginateWorkEntries({
         containerEl: rightPanelRef.current,
         topSectionEl: jobTitleRef.current,
         entryList: workExperiences,
       });
-
       setPage1Work(page1);
       setPage2Work(page2);
       setWorkBreakY(breakY);
     }, 140);
-
     return () => clearTimeout(timer);
   }, [workExperiences, jobTitle]);
 
@@ -90,16 +81,52 @@ export default function PreviewPanel({
     }
   };
 
+  // 🔹 Helper: skills JSX block
+  const renderSkillsBox = () => (
+    <div className="preview-box skills-box mb-6">
+      <h2 className="text-lg font-bold mb-3 border-b pb-2">Skills</h2>
+      {skills && skills.length > 0 ? (
+        skills.map((skill, index) => (
+          <div
+            key={skill.id || index}
+            className="skill-item flex items-start mb-2"
+            contentEditable={isEditing}
+            suppressContentEditableWarning={true}
+          >
+            <div className="checkbox-bullet-wrapper flex items-center mr-2">
+              <input
+                type="checkbox"
+                className="skill-checkbox"
+                checked={!!skill.selected}
+                onChange={() =>
+                  typeof toggleSkillCheckbox === "function"
+                    ? toggleSkillCheckbox(index)
+                    : null
+                }
+              />
+              <span className="bullet ml-1">•</span>
+            </div>
+            <div className="skill-text flex-1">
+              {typeof skill === "object"
+                ? skill.title || skill.text || "Skill"
+                : skill}
+            </div>
+          </div>
+        ))
+      ) : (
+        <p className="text-sm text-gray-500 italic">
+          No skills added yet.
+        </p>
+      )}
+    </div>
+  );
+
   return (
     <>
       {/* PAGE 1 */}
       <div className="preview-section" style={{ position: "relative" }}>
         {/* LEFT SIDE */}
-        <div
-          className="preview-left"
-          ref={leftRef}
-          style={{ boxSizing: "border-box", position: "relative" }}
-        >
+        <div className="preview-left" ref={leftRef} style={{ boxSizing: "border-box", position: "relative" }}>
           <div ref={topSectionRef}>
             <div className="profile-pic-wrapper">
               <img
@@ -108,9 +135,7 @@ export default function PreviewPanel({
                 alt="Profile"
               />
             </div>
-
             <h2 className="preview-name">{formData?.fullName || "Your Name"}</h2>
-
             <div className="contact-info">
               <div className="icon-block">
                 <FaEnvelope className="icon" />
@@ -135,10 +160,8 @@ export default function PreviewPanel({
                 <p>{formData?.linkedin || "linkedin.com/in/username"}</p>
               </div>
             </div>
-
             <h3 className="section-heading">Date of Birth</h3>
             <p>{formData?.dob || "DD/MM/YYYY"}</p>
-
             <h3 className="section-heading">Education (Page 1)</h3>
           </div>
 
@@ -161,7 +184,7 @@ export default function PreviewPanel({
         {/* RIGHT SIDE */}
         <div className="flex-1 p-4" ref={rightPanelRef}>
           <div className="max-w-2xl mx-auto">
-            {/* Job Title */}
+            {/* Job Title - only page 1 */}
             <div ref={jobTitleRef} className="job-title-box text-center mb-6">
               <h1 className="text-2xl font-bold job-title-banner">
                 {jobTitle || formData.jobTitle || "Job Title"}
@@ -200,45 +223,14 @@ export default function PreviewPanel({
                   </div>
                 ))
               ) : (
-                <p className="text-sm text-gray-500 italic">No work experience added yet.</p>
+                <p className="text-sm text-gray-500 italic">
+                  No work experience added yet.
+                </p>
               )}
             </div>
 
-            {/* Skills Box (Page 1 for now) */}
-            <div className="preview-box skills-box mb-6">
-              <h2 className="text-lg font-bold mb-3 border-b pb-2">Skills</h2>
-              {skills && skills.length > 0 ? (
-                skills.map((skill, index) => (
-                  <div
-                    key={skill.id || index}
-                    className="skill-item flex items-start mb-2"
-                    contentEditable={isEditing}
-                    suppressContentEditableWarning={true}
-                  >
-                    <div className="checkbox-bullet-wrapper flex items-center mr-2">
-                      <input
-                        type="checkbox"
-                        className="skill-checkbox"
-                        checked={!!skill.selected}
-                        onChange={() =>
-                          typeof toggleSkillCheckbox === "function"
-                            ? toggleSkillCheckbox(index)
-                            : null
-                        }
-                      />
-                      <span className="bullet ml-1">•</span>
-                    </div>
-                    <div className="skill-text flex-1">
-                      {typeof skill === "object"
-                        ? skill.title || skill.text || "Skill"
-                        : skill}
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <p className="text-sm text-gray-500 italic">No skills added yet.</p>
-              )}
-            </div>
+            {/* Skills - show only if NO overflow to page2 */}
+            {page2Work.length === 0 && renderSkillsBox()}
           </div>
         </div>
       </div>
@@ -268,7 +260,6 @@ export default function PreviewPanel({
           {/* RIGHT SIDE PAGE 2 */}
           <div className="flex-1 p-4">
             <div className="max-w-2xl mx-auto">
-              {/* Work Page 2 */}
               {page2Work.length > 0 && (
                 <div className="preview-box work-box mb-6">
                   <h2 className="text-lg font-bold mb-3 border-b pb-2">Work Experience (Page 2)</h2>
@@ -301,6 +292,9 @@ export default function PreviewPanel({
                   ))}
                 </div>
               )}
+
+              {/* Skills - if work overflowed, render here under work */}
+              {page2Work.length > 0 && renderSkillsBox()}
             </div>
           </div>
         </div>
