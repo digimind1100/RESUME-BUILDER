@@ -1,5 +1,5 @@
 // utils/paginateSkillsEntries.js
-const MAX_HEIGHT = 1250; // Skills usable height
+const MAX_HEIGHT = 600; // Skills usable height
 
 export function paginateSkillsEntries({
   containerEl,   // right column element (skills box container)

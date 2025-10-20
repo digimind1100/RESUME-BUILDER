@@ -2,7 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import "./PreviewPanel.css";
 import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaLinkedin } from "react-icons/fa";
 import { paginateEntries } from "../utils/paginateEntries";
-import { paginateWorkEntries } from "../utils/paginateWorkEntries"; // new util
+import { paginateWorkEntries } from "../utils/paginateWorkEntries";
+import { paginateSkillsEntries } from "../utils/paginateSkillsEntries"; // ✅ NEW util
 
 export default function PreviewPanel({
   formData,
@@ -20,7 +21,6 @@ export default function PreviewPanel({
 }) {
   const leftRef = useRef(null);
   const topSectionRef = useRef(null);
-
   const rightPanelRef = useRef(null);
   const jobTitleRef = useRef(null);
 
@@ -34,22 +34,38 @@ export default function PreviewPanel({
   const [page2Work, setPage2Work] = useState([]);
   const [workBreakY, setWorkBreakY] = useState(null);
 
-  //===============================
+  // --- Skills pagination ---
+  const [page1Skills, setPage1Skills] = useState([]);
+  const [page2Skills, setPage2Skills] = useState([]);
+  const [skillsBreakY, setSkillsBreakY] = useState(null);
 
+  // --- Recalculate Work ---
   const rePaginateWork = () => {
-  if (!Array.isArray(workExperiences) || workExperiences.length === 0) return;
-  const { page1, page2, breakY } = paginateWorkEntries({
-    containerEl: rightPanelRef.current,
-    topSectionEl: jobTitleRef.current,
-    entryList: workExperiences,
-  });
-  setPage1Work(page1);
-  setPage2Work(page2);
-  setWorkBreakY(breakY);
-};
+    if (!Array.isArray(workExperiences) || workExperiences.length === 0) return;
+    const { page1, page2, breakY } = paginateWorkEntries({
+      containerEl: rightPanelRef.current,
+      topSectionEl: jobTitleRef.current,
+      entryList: workExperiences,
+    });
+    setPage1Work(page1);
+    setPage2Work(page2);
+    setWorkBreakY(breakY);
+  };
 
-  //==========================
+  // --- Recalculate Skills ---
+  const rePaginateSkills = () => {
+    if (!Array.isArray(skills) || skills.length === 0) return;
+    const { page1, page2, breakY } = paginateSkillsEntries({
+      containerEl: rightPanelRef.current,
+      topSectionEl: jobTitleRef.current,
+      entryList: skills,
+    });
+    setPage1Skills(page1);
+    setPage2Skills(page2);
+    setSkillsBreakY(breakY);
+  };
 
+  // --- Education effect ---
   useEffect(() => {
     const eduList = Array.isArray(formData.education) ? formData.education : [];
     if (eduList.length === 0) {
@@ -72,6 +88,7 @@ export default function PreviewPanel({
     return () => clearTimeout(timer);
   }, [formData]);
 
+  // --- Work effect ---
   useEffect(() => {
     if (!Array.isArray(workExperiences) || workExperiences.length === 0) {
       setPage1Work([]);
@@ -80,32 +97,40 @@ export default function PreviewPanel({
       return;
     }
     const timer = setTimeout(() => {
-      const { page1, page2, breakY } = paginateWorkEntries({
-        containerEl: rightPanelRef.current,
-        topSectionEl: jobTitleRef.current,
-        entryList: workExperiences,
-      });
-      setPage1Work(page1);
-      setPage2Work(page2);
-      setWorkBreakY(breakY);
+      rePaginateWork();
     }, 140);
     return () => clearTimeout(timer);
   }, [workExperiences, jobTitle]);
 
+  // --- Skills effect ---
+  useEffect(() => {
+    if (!Array.isArray(skills) || skills.length === 0) {
+      setPage1Skills([]);
+      setPage2Skills([]);
+      setSkillsBreakY(null);
+      return;
+    }
+    const timer = setTimeout(() => {
+      rePaginateSkills();
+    }, 140);
+    return () => clearTimeout(timer);
+  }, [skills, jobTitle]);
+
+  // --- Local checkbox ---
   const localToggleCheckbox = (globalIndex) => {
     if (typeof handleCheckboxChange === "function") {
       handleCheckboxChange(globalIndex);
     }
   };
 
-  // 🔹 Helper: skills JSX block
-  const renderSkillsBox = () => (
+  // --- Skills JSX block ---
+  const renderSkillsBox = (skillsArr) => (
     <div className="preview-box skills-box mb-6">
       <h2 className="text-lg font-bold mb-3 border-b pb-2">Skills</h2>
-      {skills && skills.length > 0 ? (
-        skills.map((skill, index) => (
+      {skillsArr && skillsArr.length > 0 ? (
+        skillsArr.map(({ skill, idx }) => (
           <div
-            key={skill.id || index}
+            key={idx}
             className="skill-item flex items-start mb-2"
             contentEditable={isEditing}
             suppressContentEditableWarning={true}
@@ -117,7 +142,7 @@ export default function PreviewPanel({
                 checked={!!skill.selected}
                 onChange={() =>
                   typeof toggleSkillCheckbox === "function"
-                    ? toggleSkillCheckbox(index)
+                    ? toggleSkillCheckbox(idx)
                     : null
                 }
               />
@@ -131,9 +156,7 @@ export default function PreviewPanel({
           </div>
         ))
       ) : (
-        <p className="text-sm text-gray-500 italic">
-          No skills added yet.
-        </p>
+        <p className="text-sm text-gray-500 italic">No skills added yet.</p>
       )}
     </div>
   );
@@ -143,7 +166,7 @@ export default function PreviewPanel({
       {/* PAGE 1 */}
       <div className="preview-section" style={{ position: "relative" }}>
         {/* LEFT SIDE */}
-        <div className="preview-left" ref={leftRef} style={{ boxSizing: "border-box", position: "relative" }}>
+        <div className="preview-left" ref={leftRef}>
           <div ref={topSectionRef}>
             <div className="profile-pic-wrapper">
               <img
@@ -201,7 +224,7 @@ export default function PreviewPanel({
         {/* RIGHT SIDE */}
         <div className="flex-1 p-4" ref={rightPanelRef}>
           <div className="max-w-2xl mx-auto">
-            {/* Job Title - only page 1 */}
+            {/* Job Title */}
             <div ref={jobTitleRef} className="job-title-box text-center mb-6">
               <h1 className="text-2xl font-bold job-title-banner">
                 {jobTitle || formData.jobTitle || "Job Title"}
@@ -218,7 +241,7 @@ export default function PreviewPanel({
                     className="work-entry flex items-start mb-2"
                     contentEditable={isEditing}
                     suppressContentEditableWarning={true}
-                     onInput={rePaginateWork}
+                    onInput={rePaginateWork}
                   >
                     <div className="checkbox-bullet-wrapper flex items-center mr-2">
                       <input
@@ -247,14 +270,14 @@ export default function PreviewPanel({
               )}
             </div>
 
-            {/* Skills - show only if NO overflow to page2 */}
-            {page2Work.length === 0 && renderSkillsBox()}
+            {/* Skills Page 1 */}
+            {page2Work.length === 0 && renderSkillsBox(page1Skills)}
           </div>
         </div>
       </div>
 
       {/* PAGE 2 */}
-      {(page2Education.length > 0 || page2Work.length > 0) && (
+      {(page2Education.length > 0 || page2Work.length > 0 || page2Skills.length > 0) && (
         <div className="preview-section mt-8">
           {/* LEFT SIDE PAGE 2 */}
           <div className="preview-left">
@@ -287,7 +310,7 @@ export default function PreviewPanel({
                       className="work-entry flex items-start mb-2"
                       contentEditable={isEditing}
                       suppressContentEditableWarning={true}
-                       onInput={rePaginateWork}
+                      onInput={rePaginateWork}
                     >
                       <div className="checkbox-bullet-wrapper flex items-center mr-2">
                         <input
@@ -312,8 +335,8 @@ export default function PreviewPanel({
                 </div>
               )}
 
-              {/* Skills - if work overflowed, render here under work */}
-              {page2Work.length > 0 && renderSkillsBox()}
+              {/* Skills Page 2 */}
+              {renderSkillsBox(page2Skills)}
             </div>
           </div>
         </div>
