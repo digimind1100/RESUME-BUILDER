@@ -281,7 +281,7 @@
 }
 .skill-item {
   display: flex;
-  gap: 8px;
+  gap: 0px;
   margin-bottom: 8px;
   align-items: flex-start; /* ensures everything aligns at top of first line */
 }
@@ -296,11 +296,12 @@
 
 .exp-checkbox {
   display: block;
-  margin: 0;  /* remove default top/bottom margin */
+  margin: 3px 3px 3px 4px;  /* remove default top/bottom margin */
 }
 
 .bullet {
   margin-top: 2px;  /* bullet slightly below checkbox, adjust if needed */
+  margin-right: 5px;
   
   
 }

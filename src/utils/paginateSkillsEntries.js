@@ -1,16 +1,17 @@
 // utils/paginateSkillsEntries.js
-const MAX_HEIGHT = 600; // Skills usable height
-
 export function paginateSkillsEntries({
   containerEl,   // right column element (skills box container)
   topSectionEl,  // job title / heading section ref
+  workBoxEl,     // Work box ref
   entryList,     // array of skills
 }) {
   if (!containerEl || !topSectionEl || !Array.isArray(entryList)) {
     return { page1: [], page2: [], breakY: null };
   }
 
-  const rightRect = containerEl.getBoundingClientRect();
+  const MAX_HEIGHT = 1250; // total usable height
+
+  const containerRect = containerEl.getBoundingClientRect();
 
   // get computed paddings
   const style = window.getComputedStyle(containerEl);
@@ -25,7 +26,7 @@ export function paginateSkillsEntries({
   const tempDiv = document.createElement("div");
   tempDiv.style.position = "absolute";
   tempDiv.style.visibility = "hidden";
-  tempDiv.style.width = `${Math.round(rightRect.width)}px`;
+  tempDiv.style.width = `${Math.round(containerRect.width)}px`;
   tempDiv.style.padding = `${padding.top}px ${padding.right}px ${padding.bottom}px ${padding.left}px`;
   tempDiv.style.boxSizing = "border-box";
   tempDiv.style.left = "-9999px";
@@ -36,6 +37,19 @@ export function paginateSkillsEntries({
   const topClone = topSectionEl.cloneNode(true);
   topClone.querySelectorAll(".skill-item").forEach((n) => n.remove());
   tempDiv.appendChild(topClone);
+
+  // calculate available height by subtracting work box height
+  let workHeight = 0;
+  if (workBoxEl) {
+    const workClone = workBoxEl.cloneNode(true);
+    workClone.style.position = "absolute";
+    workClone.style.visibility = "hidden";
+    tempDiv.appendChild(workClone);
+    workHeight = workClone.getBoundingClientRect().height;
+    workClone.remove();
+  }
+
+  const availableHeight = MAX_HEIGHT - workHeight;
 
   const fit = [];
   let overflow = [];
@@ -50,11 +64,10 @@ export function paginateSkillsEntries({
       <span class="bullet ml-1">•</span>
       <div class="skill-text flex-1">${typeof skill === "object" ? (skill.title || skill.text || "Skill") : skill}</div>
     `;
-
     topClone.appendChild(testEl);
 
-    const totalHeight = tempDiv.getBoundingClientRect().height;
-    if (totalHeight <= MAX_HEIGHT) {
+    const totalHeight = tempDiv.getBoundingClientRect().height - workHeight;
+    if (totalHeight <= availableHeight) {
       fit.push({ skill, idx: i });
     } else {
       overflow = entryList.slice(i).map((e, j) => ({ skill: e, idx: i + j }));
@@ -64,5 +77,5 @@ export function paginateSkillsEntries({
 
   document.body.removeChild(tempDiv);
 
-  return { page1: fit, page2: overflow, breakY: MAX_HEIGHT };
+  return { page1: fit, page2: overflow, breakY: availableHeight };
 }

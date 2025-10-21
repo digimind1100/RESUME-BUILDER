@@ -7,7 +7,7 @@ export function paginateEntries({
   entryList,     // array of educations
 }) {
   if (!containerEl || !topSectionEl || !Array.isArray(entryList)) {
-    return { page1: [], page2: [], breakY: null };
+    return { page1: [], page2: [], breakY: null, hideSkillsOnPage2: false };
   }
 
   const leftRect = containerEl.getBoundingClientRect();
@@ -67,5 +67,8 @@ export function paginateEntries({
 
   document.body.removeChild(tempDiv);
 
-  return { page1: fit, page2: overflow, breakY: MAX_HEIGHT };
+  // if overflow exists, we know page2 created due to education overflow
+  const hideSkillsOnPage2 = overflow.length > 0;
+
+  return { page1: fit, page2: overflow, breakY: MAX_HEIGHT, hideSkillsOnPage2 };
 }

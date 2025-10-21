@@ -1,3 +1,4 @@
+// PreviewPanel.jsx
 import React, { useEffect, useRef, useState } from "react";
 import "./PreviewPanel.css";
 import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaLinkedin } from "react-icons/fa";
@@ -23,6 +24,8 @@ export default function PreviewPanel({
   const topSectionRef = useRef(null);
   const rightPanelRef = useRef(null);
   const jobTitleRef = useRef(null);
+  const workBoxRef = useRef(null); // 🔹 ref for Work box
+  const skillsBoxRef = useRef(null); // ✅ added missing skills box ref
 
   // --- Education pagination ---
   const [page1Education, setPage1Education] = useState([]);
@@ -41,7 +44,12 @@ export default function PreviewPanel({
 
   // --- Recalculate Work ---
   const rePaginateWork = () => {
-    if (!Array.isArray(workExperiences) || workExperiences.length === 0) return;
+    if (!Array.isArray(workExperiences) || workExperiences.length === 0) {
+      setPage1Work([]);
+      setPage2Work([]);
+      setWorkBreakY(null);
+      return;
+    }
     const { page1, page2, breakY } = paginateWorkEntries({
       containerEl: rightPanelRef.current,
       topSectionEl: jobTitleRef.current,
@@ -54,10 +62,16 @@ export default function PreviewPanel({
 
   // --- Recalculate Skills ---
   const rePaginateSkills = () => {
-    if (!Array.isArray(skills) || skills.length === 0) return;
+    if (!Array.isArray(skills) || skills.length === 0) {
+      setPage1Skills([]);
+      setPage2Skills([]);
+      setSkillsBreakY(null);
+      return;
+    }
     const { page1, page2, breakY } = paginateSkillsEntries({
       containerEl: rightPanelRef.current,
       topSectionEl: jobTitleRef.current,
+      workBoxEl: workBoxRef.current, // pass Work box ref so skills util can compute combined height
       entryList: skills,
     });
     setPage1Skills(page1);
@@ -110,11 +124,16 @@ export default function PreviewPanel({
       setSkillsBreakY(null);
       return;
     }
+
+    // Run immediately and slightly delayed to stabilize after reflow/paint
+    rePaginateSkills();
     const timer = setTimeout(() => {
       rePaginateSkills();
     }, 140);
+
     return () => clearTimeout(timer);
-  }, [skills, jobTitle]);
+    // include page1Work/page2Work so skills recompute when work overflows/moves
+  }, [skills, jobTitle, page1Work, page2Work]);
 
   // --- Local checkbox ---
   const localToggleCheckbox = (globalIndex) => {
@@ -123,9 +142,9 @@ export default function PreviewPanel({
     }
   };
 
-  // --- Skills JSX block ---
-  const renderSkillsBox = (skillsArr) => (
-    <div className="preview-box skills-box mb-6">
+  // --- Skills JSX block helper (keeps markup consistent) ---
+  const renderSkillsBlock = (skillsArr, onInputHandler) => (
+    <div className="preview-box skills-box mb-6" ref={skillsBoxRef}>
       <h2 className="text-lg font-bold mb-3 border-b pb-2">Skills</h2>
       {skillsArr && skillsArr.length > 0 ? (
         skillsArr.map(({ skill, idx }) => (
@@ -134,6 +153,7 @@ export default function PreviewPanel({
             className="skill-item flex items-start mb-2"
             contentEditable={isEditing}
             suppressContentEditableWarning={true}
+            onInput={onInputHandler}
           >
             <div className="checkbox-bullet-wrapper flex items-center mr-2">
               <input
@@ -149,9 +169,7 @@ export default function PreviewPanel({
               <span className="bullet ml-1">•</span>
             </div>
             <div className="skill-text flex-1">
-              {typeof skill === "object"
-                ? skill.title || skill.text || "Skill"
-                : skill}
+              {typeof skill === "object" ? skill.title || skill.text || "Skill" : skill}
             </div>
           </div>
         ))
@@ -232,7 +250,7 @@ export default function PreviewPanel({
             </div>
 
             {/* Work Page 1 */}
-            <div className="preview-box work-box mb-6">
+            <div ref={workBoxRef} className="preview-box work-box mb-6">
               <h2 className="text-lg font-bold mb-3 border-b pb-2">Work Experience</h2>
               {page1Work.length > 0 ? (
                 page1Work.map(({ work, idx }) => (
@@ -249,29 +267,23 @@ export default function PreviewPanel({
                         className="exp-checkbox"
                         checked={!!work.selected}
                         onChange={() =>
-                          typeof toggleWorkCheckbox === "function"
-                            ? toggleWorkCheckbox(idx)
-                            : null
+                          typeof toggleWorkCheckbox === "function" ? toggleWorkCheckbox(idx) : null
                         }
                       />
                       <span className="bullet ml-1">•</span>
                     </div>
                     <div className="exp-text flex-1">
-                      {typeof work === "object"
-                        ? work.title || work.text || "Experience"
-                        : work}
+                      {typeof work === "object" ? work.title || work.text || "Experience" : work}
                     </div>
                   </div>
                 ))
               ) : (
-                <p className="text-sm text-gray-500 italic">
-                  No work experience added yet.
-                </p>
+                <p className="text-sm text-gray-500 italic">No work experience added yet.</p>
               )}
             </div>
 
-            {/* Skills Page 1 */}
-            {page2Work.length === 0 && renderSkillsBox(page1Skills)}
+            {/* Skills Page 1 - same structure as Work Page 1 */}
+            {page2Work.length === 0 && renderSkillsBlock(page1Skills, rePaginateSkills)}
           </div>
         </div>
       </div>
@@ -318,25 +330,21 @@ export default function PreviewPanel({
                           className="exp-checkbox"
                           checked={!!work.selected}
                           onChange={() =>
-                            typeof toggleWorkCheckbox === "function"
-                              ? toggleWorkCheckbox(idx)
-                              : null
+                            typeof toggleWorkCheckbox === "function" ? toggleWorkCheckbox(idx) : null
                           }
                         />
                         <span className="bullet ml-1">•</span>
                       </div>
                       <div className="exp-text flex-1">
-                        {typeof work === "object"
-                          ? work.title || work.text || "Experience"
-                          : work}
+                        {typeof work === "object" ? work.title || work.text || "Experience" : work}
                       </div>
                     </div>
                   ))}
                 </div>
               )}
 
-              {/* Skills Page 2 */}
-              {renderSkillsBox(page2Skills)}
+              {/* Skills Page 2 - same structure as Page1 so input & checkboxes behave the same */}
+              {page2Skills.length > 0 && renderSkillsBlock(page2Skills, rePaginateSkills)}
             </div>
           </div>
         </div>
