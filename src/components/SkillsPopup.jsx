@@ -7,7 +7,6 @@ export default function SkillsPopup({ jobTitle, onClose, onSelect }) {
 
   useEffect(() => {
     if (!jobTitle) return;
-
     const fetchSkills = async () => {
       try {
         setLoading(true);
@@ -16,18 +15,14 @@ export default function SkillsPopup({ jobTitle, onClose, onSelect }) {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ type: "skills", jobTitle }),
         });
-
         const data = await res.json();
-        console.log("✅ AI Skills response:", data);
+        console.log("✅ AI Skills:", data);
 
-        // Clean & set data
-       // Clean & set data
-if (data?.skills?.length) {
-  setSkills(data.skills);
-} else {
-  setSkills(["No skills found. Try another Job Title."]);
-}
-
+        if (Array.isArray(data.skills) && data.skills.length > 0) {
+          setSkills(data.skills);
+        } else {
+          setSkills(["No skills found. Try another Job Title."]);
+        }
       } catch (err) {
         console.error("❌ Error fetching AI skills:", err);
         setSkills(["Error fetching skills."]);
@@ -41,15 +36,10 @@ if (data?.skills?.length) {
 
   return (
     <div className="popup-overlay">
-      <div className="popup-content" role="dialog" aria-modal="true" style={{ position: "relative" }}>
-        <div className="popup-header">
-          
-          <button
+      <div className="popup-content" style={{ position: "relative" }}>
+        <button
           className="top-close-btn"
-          onClick={() => {
-            console.log("📌 Top-right close clicked");
-            if (typeof onClose === "function") onClose();
-          }}
+          onClick={onClose}
           style={{
             position: "absolute",
             top: "8px",
@@ -63,15 +53,19 @@ if (data?.skills?.length) {
         >
           ✖
         </button>
+
         <h3>AI Suggested Skills for "{jobTitle}"</h3>
-        </div>
 
         {loading ? (
           <p>⏳ Fetching skills...</p>
         ) : (
           <ul className="popup-list">
             {skills.map((skill, idx) => {
-              const cleanText = skill.replace(/^[-•\s]+/, ""); // remove bullet/dash if AI adds
+              const cleanText =
+                typeof skill === "string"
+                  ? skill.replace(/^[-•\s]+/, "")
+                  : skill.text || skill.title || "";
+
               return (
                 <li
                   key={idx}
@@ -86,20 +80,16 @@ if (data?.skills?.length) {
                     const newSkill = {
                       id: Date.now() + idx,
                       text: cleanText,
+                      checked: false,
                     };
-
-                    console.log("👉 Popup selected skill:", newSkill);
-
+                    console.log("👉 Skill selected:", newSkill);
                     if (typeof onSelect === "function") {
                       onSelect(newSkill);
                     }
-
-                    // DO NOT close popup automatically
+                    // DO NOT CLOSE POPUP
                   }}
                 >
-                  <span className="plus-btn" aria-hidden>
-                    +
-                  </span>
+                  <span className="plus-btn">+</span>
                   <span className="suggestion-text">{cleanText}</span>
                 </li>
               );

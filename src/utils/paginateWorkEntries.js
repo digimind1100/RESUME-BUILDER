@@ -1,76 +1,35 @@
-// utils/paginateWorkEntries.js
-const MAX_HEIGHT = 1200; // Work Experience usable height
+export function paginateWorkEntries({ containerEl, topSectionEl, entryList }) {
+  const MAX_HEIGHT = 2400; // your updated limit
+  const page1 = [];
+  const page2 = [];
 
-export function paginateWorkEntries({
-  containerEl,   // right column element (work box container)
-  topSectionEl,  // job title / heading section ref
-  entryList,     // array of work experiences
-}) {
-  if (!containerEl || !topSectionEl || !Array.isArray(entryList)) {
-    return { page1: [], page2: [], breakY: null };
+  if (!containerEl || !entryList.length) {
+return {
+  page1,
+  page2,
+  includeSkillsOnPage1: page2.length === 0, // ✅ if only one page, show Skills on page1
+  includeSkillsOnPage2: page2.length > 0,   // ✅ if we have page2, move Skills there
+};
+
   }
 
-  const rightRect = containerEl.getBoundingClientRect();
-
-  // get computed paddings
-  const style = window.getComputedStyle(containerEl);
-  const padding = {
-    top: parseFloat(style.paddingTop) || 0,
-    right: parseFloat(style.paddingRight) || 0,
-    bottom: parseFloat(style.paddingBottom) || 0,
-    left: parseFloat(style.paddingLeft) || 0,
-  };
-
-  // hidden clone container
-  const tempDiv = document.createElement("div");
-  tempDiv.style.position = "absolute";
-  tempDiv.style.visibility = "hidden";
-  tempDiv.style.width = `${Math.round(rightRect.width)}px`;
-  tempDiv.style.padding = `${padding.top}px ${padding.right}px ${padding.bottom}px ${padding.left}px`;
-  tempDiv.style.boxSizing = "border-box";
-  tempDiv.style.left = "-9999px";
-  tempDiv.style.top = "-9999px";
-  document.body.appendChild(tempDiv);
-
-  // clone top section (remove old work entries if any)
-  const topClone = topSectionEl.cloneNode(true);
-  topClone.querySelectorAll(".work-entry").forEach((n) => n.remove());
-  tempDiv.appendChild(topClone);
-
-  const fit = [];
-  let overflow = [];
+  let usedHeight = topSectionEl?.offsetHeight || 0;
 
   for (let i = 0; i < entryList.length; i++) {
-    const work = entryList[i];
+    const el = containerEl.querySelector(`#work-item-${entryList[i].id}`);
+    const entryHeight = el?.offsetHeight || 160;
 
-    // create test element
-    const testEl = document.createElement("div");
-    testEl.className = "work-entry border p-2 my-2 rounded";
-    testEl.style.boxSizing = "border-box";
-    testEl.innerHTML = `
-      <input type="checkbox" style="display:none" />
-      <div class="work-details">
-        <p class="work-title">${work.title || ""}</p>
-        <p class="work-company">${work.company || ""}</p>
-        <p class="work-duration">${work.duration || ""}</p>
-      </div>
-    `;
-
-    topClone.appendChild(testEl);
-
-    // measure after adding
-    const totalHeight = tempDiv.getBoundingClientRect().height;
-
-    if (totalHeight <= MAX_HEIGHT) {
-      fit.push({ work, idx: i });
+    if (usedHeight + entryHeight <= MAX_HEIGHT) {
+      page1.push({ work: entryList[i], idx: i });
+      usedHeight += entryHeight;
     } else {
-      // ✅ overflow entries -> page 2
-      overflow = entryList.slice(i).map((e, j) => ({ work: e, idx: i + j }));
-      break;
+      page2.push({ work: entryList[i], idx: i });
     }
   }
 
-  document.body.removeChild(tempDiv);
+  // ✅ If any content goes to page2, remove skills from page1
+  const includeSkillsOnPage1 = page2.length === 0;
+  const includeSkillsOnPage2 = page2.length > 0;
 
-  return { page1: fit, page2: overflow, breakY: MAX_HEIGHT };
+  return { page1, page2, includeSkillsOnPage2, includeSkillsOnPage1 };
 }

@@ -2,52 +2,44 @@ import React, { useEffect, useState } from "react";
 import "./WorkExpPopup.css";
 
 export default function WorkExpPopup({ jobTitle, onClose, onSelect }) {
-  const [workList, setWorkList] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [workList, setWorkList] = useState([]);
 
   useEffect(() => {
-    let mounted = true;
-    const fetchWorkSuggestions = async () => {
+    if (!jobTitle) return;
+    const fetchWork = async () => {
       try {
         setLoading(true);
-        const resp = await fetch("http://localhost:3001/api/suggest", {
+        const res = await fetch("http://localhost:3001/api/suggest", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ jobTitle: jobTitle || "Software Engineer", type: "work" }),
+          body: JSON.stringify({ type: "work", jobTitle }),
         });
-        const data = await resp.json();
-        console.log("✅ AI Work Experience Suggestions:", data);
-        if (!mounted) return;
-        if (data && Array.isArray(data.work)) {
-          // ensure everything is string and trimmed
-          setWorkList(data.work.map((it) => (typeof it === "string" ? it.trim() : JSON.stringify(it))));
+        const data = await res.json();
+        console.log("✅ AI Work Exp:", data);
+
+        if (Array.isArray(data.work) && data.work.length > 0) {
+          setWorkList(data.work);
         } else {
-          setWorkList(["⚠️ No suggestions found. Try another job title."]);
+          setWorkList(["No work experience suggestions found."]);
         }
       } catch (err) {
-        console.error("❌ Error fetching work experience:", err);
-        if (mounted) setWorkList(["⚠️ Failed to fetch suggestions. Check server."]);
+        console.error("❌ Error fetching AI work:", err);
+        setWorkList(["Error fetching work experience."]);
       } finally {
-        if (mounted) setLoading(false);
+        setLoading(false);
       }
     };
 
-    fetchWorkSuggestions();
-    return () => {
-      mounted = false;
-    };
+    fetchWork();
   }, [jobTitle]);
 
   return (
     <div className="popup-overlay">
-      <div className="popup-content" role="dialog" aria-modal="true" style={{ position: "relative" }}>
-        {/* Top-right close button */}
+      <div className="popup-content" style={{ position: "relative" }}>
         <button
           className="top-close-btn"
-          onClick={() => {
-            console.log("📌 Top-right close clicked");
-            if (typeof onClose === "function") onClose();
-          }}
+          onClick={onClose}
           style={{
             position: "absolute",
             top: "8px",
@@ -62,68 +54,55 @@ export default function WorkExpPopup({ jobTitle, onClose, onSelect }) {
           ✖
         </button>
 
-        {/* Popup title */}
-
-        <h3 className="popup-title">AI Work Experience Suggestions</h3>
+        <h3>AI Work Experience for "{jobTitle}"</h3>
 
         {loading ? (
-          <p className="loading-text">⏳ Loading suggestions...</p>
+          <p>⏳ Fetching work experience...</p>
         ) : (
-          <ul className="suggestion-list">
-            {workList.map((item, index) => {
-              const cleanText = String(item).trim();
+          <ul className="popup-list">
+            {workList.map((work, idx) => {
+              const cleanText =
+                typeof work === "string"
+                  ? work.replace(/^[-•\s]+/, "")
+                  : work.text || work.title || "";
 
               return (
                 <li
-                  key={index}
+                  key={idx}
                   className="suggestion-item"
-                  role="button"
-                  tabIndex={0}
-                  style={{ cursor: "pointer", display: "flex", alignItems: "center", gap: "8px" }}
                   onClick={() => {
-                    const newExp = {
-                      id: Date.now() + index,
+                    const newWork = {
+                      id: Date.now() + idx,
                       title: cleanText,
                       text: cleanText,
                       company: "",
                       years: "",
+                      checked: false,
                     };
-
-                    console.log("👉 Popup selected (will send to parent):", newExp);
-
+                    console.log("👉 Work selected:", newWork);
                     if (typeof onSelect === "function") {
-                      onSelect(newExp);
-                    } else if (typeof onAddWork === "function") {
-                      onAddWork(newExp);
-                    } else if (typeof onAdd === "function") {
-                      onAdd(newExp);
-                    } else {
-                      console.warn("No add handler provided by parent (onSelect / onAddWork / onAdd).");
+                      onSelect(newWork);
                     }
+                    // DO NOT CLOSE POPUP
+                  }}
+                  style={{
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "8px",
                   }}
                 >
-                  <span className="plus-btn" aria-hidden style={{ userSelect: "none" }}>+</span>
+                  <span className="plus-btn">+</span>
                   <span className="suggestion-text">{cleanText}</span>
                 </li>
-
               );
             })}
-
           </ul>
         )}
 
-        <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 12 }}>
-          <button
-            type="button"
-            className="close-btn"
-            onClick={() => {
-              console.log("📌 WorkExpPopup: close clicked");
-              if (typeof onClose === "function") onClose();
-            }}
-          >
-            Close
-          </button>
-        </div>
+        <button className="close-btn" onClick={onClose}>
+          Close
+        </button>
       </div>
     </div>
   );

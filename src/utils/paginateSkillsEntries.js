@@ -10,7 +10,6 @@ export function paginateSkillsEntries({
   }
 
   const MAX_HEIGHT = 1250; // total usable height
-
   const containerRect = containerEl.getBoundingClientRect();
 
   // get computed paddings
@@ -55,22 +54,48 @@ export function paginateSkillsEntries({
   let overflow = [];
 
   for (let i = 0; i < entryList.length; i++) {
-    const skill = entryList[i];
+    const skillItem = entryList[i];
+    // ✅ Normalize skill structure
+    const normalizedSkill = (() => {
+      const skillObj = skillItem?.skill || skillItem;
+      return {
+        title:
+          typeof skillObj === "object"
+            ? skillObj.title || skillObj.text || "Skill"
+            : skillObj,
+        selected: skillObj?.selected ?? false,
+      };
+    })();
+
     const testEl = document.createElement("div");
     testEl.className = "skill-item flex items-start mb-2";
     testEl.style.boxSizing = "border-box";
     testEl.innerHTML = `
-      <input type="checkbox" style="display:none" />
+      <input type="checkbox" style="display:none" ${
+        normalizedSkill.selected ? "checked" : ""
+      } />
       <span class="bullet ml-1">•</span>
-      <div class="skill-text flex-1">${typeof skill === "object" ? (skill.title || skill.text || "Skill") : skill}</div>
+      <div class="skill-text flex-1">${normalizedSkill.title}</div>
     `;
     topClone.appendChild(testEl);
 
     const totalHeight = tempDiv.getBoundingClientRect().height - workHeight;
     if (totalHeight <= availableHeight) {
-      fit.push({ skill, idx: i });
+      fit.push({ skill: normalizedSkill, idx: i });
     } else {
-      overflow = entryList.slice(i).map((e, j) => ({ skill: e, idx: i + j }));
+      overflow = entryList.slice(i).map((e, j) => {
+        const s = e?.skill || e;
+        return {
+          skill: {
+            title:
+              typeof s === "object"
+                ? s.title || s.text || "Skill"
+                : s,
+            selected: s?.selected ?? false,
+          },
+          idx: i + j,
+        };
+      });
       break;
     }
   }

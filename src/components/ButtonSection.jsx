@@ -2,7 +2,7 @@ import React from "react";
 import "./ButtonSection.css"; 
 import DownloadPDF from "./DownloadPDF"; 
 
-export default function ButtonSection({ isEditing, setIsEditing, onDeleteSelected }) {
+export default function ButtonSection({ isEditing, setIsEditing, handleDeleteSelected }) {
   return (
     <div className="button-section-container">
       <div className="button-section-inner">
@@ -23,7 +23,8 @@ export default function ButtonSection({ isEditing, setIsEditing, onDeleteSelecte
         {/* ✅ Activated Delete Selected */}
         <button 
           className="common-btn" 
-          onClick={onDeleteSelected}
+          onClick={handleDeleteSelected}
+
         >
           Delete Selected
         </button>

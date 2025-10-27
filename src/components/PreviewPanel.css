@@ -289,8 +289,10 @@
 .checkbox-bullet-wrapper {
   display: flex;
   flex-direction: row; /* stack checkbox and bullet if needed */
-  align-items: center;    /* optional, to center bullet under checkbox */
+  align-items: top;    /* optional, to center bullet under checkbox */
+  
   margin-top: 0px;        /* fine-tune vertical alignment with first line */
+  
   flex-shrink: 0;
 }
 
@@ -300,9 +302,11 @@
 }
 
 .bullet {
-  margin-top: 2px;  /* bullet slightly below checkbox, adjust if needed */
+  margin-top: 0px;  /* bullet slightly below checkbox, adjust if needed */
   margin-right: 5px;
-  
+   font-size: 20px; /* or 22px, depending on your taste */
+  font-weight: bold; /* optional, thoda thick look ke liye */
+  padding-top: 0px;
   
 }
 
@@ -317,3 +321,6 @@
   padding: 10px;
   border-radius: 8px;
 }
+
+
+

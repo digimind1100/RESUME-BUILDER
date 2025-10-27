@@ -1,89 +1,121 @@
 import React, { useState } from "react";
 import FormPanel from "./FormPanel";
 import PreviewPanel from "./PreviewPanel";
-import ButtonSection from "./ButtonSection";
-import WorkExpPopup from "./WorkExpPopup";
+import WorkPopup from "./WorkExpPopup";
 import SkillsPopup from "./SkillsPopup";
+import ButtonSection from "./ButtonSection";
 
-import "./ButtonSection.css";
-
-export default function ResumeBuilder() {
+const ResumeBuilder = () => {
   const [formData, setFormData] = useState({});
   const [selectedEducations, setSelectedEducations] = useState([]);
   const [jobTitle, setJobTitle] = useState("");
-
-  // Work Experience state + popup toggle
   const [workExperiences, setWorkExperiences] = useState([]);
-  const [showWorkPopup, setShowWorkPopup] = useState(false);
-  // Skills state + popup toggle
-  const [showSkillsPopup, setShowSkillsPopup] = useState(false);
   const [skills, setSkills] = useState([]);
-
   const [isEditing, setIsEditing] = useState(false);
 
-  const handleToggleEdit = () => {
-    setIsEditing((prev) => !prev);
+  // Popup visibility states
+  const [showWorkPopup, setShowWorkPopup] = useState(false);
+  const [showSkillsPopup, setShowSkillsPopup] = useState(false);
+
+  // --- Education ---
+  const addEducation = (education) => {
+    setSelectedEducations((prev) => [...prev, education]);
   };
 
-  // Education checkbox handler
+
+  const toggleSkillCheckbox = (id) => {
+    setSkills((prev) =>
+      prev.map((skill) =>
+        skill.id === id ? { ...skill, checked: !skill.checked } : skill
+      )
+    );
+  };
+
+
+// ================= WORK CHECKBOX FIX =================
+const toggleWorkCheckbox = (id) => {
+  setWorkExperiences((prev) =>
+    prev.map((work) =>
+      work.id === id ? { ...work, checked: !work.checked } : work
+    )
+  );
+};
+
+ // Education checkbox handler
   const handleCheckboxChange = (index) => {
     setSelectedEducations((prev) =>
       prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
     );
   };
 
-  // Add education helper
-  const addEducation = (newEntry) => {
-    if (!newEntry || typeof newEntry !== "object") return;
-    setFormData((prev) => ({
-      ...prev,
-      education: [...(prev.education || []), newEntry],
-    }));
+  // --- Popup Handlers ---
+  const handleOpenWorkPopup = () => setShowWorkPopup(true);
+  const handleCloseWorkPopup = () => setShowWorkPopup(false);
+  const handleAddSkillsClick = () => setShowSkillsPopup(true);
+  const handleCloseSkillsPopup = () => setShowSkillsPopup(false);
+
+  // --- AI Selection Handlers ---
+  const handleWorkSelect = (item) => {
+    const textValue =
+      typeof item === "string"
+        ? item.trim()
+        : item.text || item.title || JSON.stringify(item);
+
+    if (!textValue) return;
+
+    const newWork = {
+      id: Date.now(),
+      title: textValue,
+      text: textValue,
+      company: "",
+      years: "",
+      checked: false,
+    };
+
+    setWorkExperiences((prev) => {
+      const alreadyExists = prev.some((w) => w.text === textValue);
+      if (alreadyExists) return prev; // prevent duplicates
+      return [...prev, newWork];
+    });
+
+    console.log("✅ Added Work:", textValue);
+
+  
   };
 
-  // Work Exp add
-  const handleAddWorkExp = (newExp) => {
-    setWorkExperiences((prev) => [...prev, { ...newExp, selected: false }]);
+  const handleSkillSelect = (item) => {
+    const textValue =
+      typeof item === "string" ? item.trim() : item.text || "";
+
+    if (!textValue) return;
+
+    const newSkill = {
+      id: Date.now(),
+      text: textValue,
+      checked: false,
+    };
+
+    setSkills((prev) => {
+      const alreadyExists = prev.some((s) => s.text === textValue);
+      if (alreadyExists) return prev;
+      return [...prev, newSkill];
+    });
+
+    console.log("✅ Added Skill:", textValue);
+
   };
 
-  const openWorkPopup = () => {
-    setShowWorkPopup(true);
-  };
-
-  // Skills add
-  const handleAddSkill = (newSkill) => {
-    setSkills((prev) => [...prev, { ...newSkill, selected: false }]);
-  };
-
-  // Checkbox toggle for work exp
-  const toggleWorkCheckbox = (index) => {
-    setWorkExperiences((prev) =>
-      prev.map((item, i) =>
-        i === index ? { ...item, selected: !item.selected } : item
-      )
-    );
-  };
-
-  // Checkbox toggle for skills
-  const toggleSkillCheckbox = (index) => {
-    setSkills((prev) =>
-      prev.map((item, i) =>
-        i === index ? { ...item, selected: !item.selected } : item
-      )
-    );
-  };
-
-  // Delete Selected items
+  // --- Delete Selected Items (Work + Skills) ---
   const handleDeleteSelected = () => {
-    console.log("🗑 Deleting selected items...");
-    setWorkExperiences((prev) => prev.filter((exp) => !exp.selected));
-    setSkills((prev) => prev.filter((skill) => !skill.selected));
+    setWorkExperiences((prev) => prev.filter((exp) => !exp.checked));
+    setSkills((prev) => prev.filter((skill) => !skill.checked));
   };
+
+
 
   return (
-    <div className="resume-builder flex flex-col items-center">
-      {/* Top area */}
-      <div className="flex w-full">
+    <div className="flex flex-col">
+      <div className="flex">
         {/* Left: Form */}
         <div className="w-1/3 p-4">
           <FormPanel
@@ -94,9 +126,9 @@ export default function ResumeBuilder() {
             addEducation={addEducation}
             jobTitle={jobTitle}
             setJobTitle={setJobTitle}
-            openWorkPopup={openWorkPopup}
-            onAddWorkExp={() => setShowWorkPopup(true)}
-            onAddSkillsClick={() => setShowSkillsPopup(true)}
+            openWorkPopup={handleOpenWorkPopup}
+            onAddWorkExp={handleOpenWorkPopup}
+            onAddSkillsClick={handleAddSkillsClick}
           />
         </div>
 
@@ -112,36 +144,44 @@ export default function ResumeBuilder() {
             isEditing={isEditing}
             toggleWorkCheckbox={toggleWorkCheckbox}
             toggleSkillCheckbox={toggleSkillCheckbox}
+            handleOpenWorkPopup={handleOpenWorkPopup}
+            handleAddSkillsClick={handleAddSkillsClick}
           />
         </div>
       </div>
 
-      {/* Work Experience Popup */}
+      {/* --- Work Popup --- */}
       {showWorkPopup && (
-        <WorkExpPopup
+        <WorkPopup
           jobTitle={jobTitle}
-          onClose={() => setShowWorkPopup(false)}
-          onSelect={(newExp) => handleAddWorkExp(newExp)}
+          onClose={handleCloseWorkPopup}
+          workExperiences={workExperiences}
+          setWorkExperiences={setWorkExperiences}
+          onSelect={handleWorkSelect}
         />
       )}
 
-      {/* Skills Popup */}
+      {/* --- Skills Popup --- */}
       {showSkillsPopup && (
         <SkillsPopup
           jobTitle={jobTitle}
-          onClose={() => setShowSkillsPopup(false)}
-          onSelect={(newSkill) => handleAddSkill(newSkill)}
+          onClose={handleCloseSkillsPopup}
+          skills={skills}
+          setSkills={setSkills}
+          onSelect={handleSkillSelect}
         />
       )}
 
-      {/* Bottom: Buttons */}
-      <div className="mt-6">
+      {/* --- Bottom Buttons Section --- */}
+      <div className="mt-6 px-4">
         <ButtonSection
           isEditing={isEditing}
           setIsEditing={setIsEditing}
-          onDeleteSelected={handleDeleteSelected} // ✅ new prop
+          handleDeleteSelected={handleDeleteSelected}
         />
       </div>
     </div>
   );
-}
+};
+
+export default ResumeBuilder;
