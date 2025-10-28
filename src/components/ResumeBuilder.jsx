@@ -30,8 +30,6 @@ const ResumeBuilder = () => {
       )
     );
   };
-
-
 // ================= WORK CHECKBOX FIX =================
 const toggleWorkCheckbox = (id) => {
   setWorkExperiences((prev) =>

@@ -225,12 +225,16 @@ export default function PreviewPanel({
             />
            
             {/* Keep Skills on Page 1 for now */}
-            <SkillsPreview
-              skillsList={skills}
-              toggleSkillCheckbox={toggleSkillCheckbox}
-              handleDeleteSelectedSkills={deleteSkill}
-              isEditing={isEditing}
-            />
+       {/* ✅ Show Skills only if Work fits on Page 1 */}
+{includePage2Work ? null : (
+  <SkillsPreview
+    skillsList={skills}
+    toggleSkillCheckbox={toggleSkillCheckbox}
+    handleDeleteSelectedSkills={deleteSkill}
+    isEditing={isEditing}
+  />
+)}
+
             
 
 
