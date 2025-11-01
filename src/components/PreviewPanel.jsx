@@ -32,28 +32,33 @@ export default function PreviewPanel({
   // ================= STATES =================
   const [page1Education, setPage1Education] = useState([]);
   const [page2Education, setPage2Education] = useState([]);
+  const [pageBreakY, setPageBreakY] = useState(null);
 
   const [page1Work, setPage1Work] = useState([]);
   const [page2Work, setPage2Work] = useState([]);
   const [includePage2Work, setIncludePage2Work] = useState(false);
 
   // ================= EFFECT: EDUCATION PAGINATION =================
+  // --- Education pagination ---
   useEffect(() => {
-    const eduList = Array.isArray(formData?.education) ? formData.education : [];
+    const eduList = Array.isArray(formData.education) ? formData.education : [];
     if (eduList.length === 0) {
       setPage1Education([]);
       setPage2Education([]);
+      setPageBreakY(null);
       return;
     }
 
     const timer = setTimeout(() => {
-      const { page1, page2 } = paginateEntries({
+      const { page1, page2, breakY } = paginateEntries({
         containerEl: leftRef.current,
         topSectionEl: topSectionRef.current,
         entryList: eduList,
       });
+
       setPage1Education(page1);
       setPage2Education(page2);
+      setPageBreakY(breakY);
     }, 140);
 
     return () => clearTimeout(timer);
@@ -204,6 +209,21 @@ export default function PreviewPanel({
               </div>
             </div>
           ))}
+             {page2Education.length > 0 &&
+            page1Education.length > 0 &&
+            pageBreakY != null &&
+            (1016 - pageBreakY) > 20 && (
+              <div
+                style={{
+                  marginTop: "10px",
+                  fontStyle: "italic",
+                  textAlign: "center",
+                  opacity: 0.7,
+                }}
+              >
+                Continue on Page 2 →
+              </div>
+            )}
         </div>
 
         {/* RIGHT SIDE: WORK + SKILLS (PAGE 1) */}
@@ -236,8 +256,6 @@ export default function PreviewPanel({
 )}
 
             
-
-
           </div>
         </div>
       </div>
