@@ -93,3 +93,13 @@
 .mb-2{
   margin-bottom: 8px;
 }
+
+
+.popup-container {
+  will-change: transform;
+  transition: opacity 0.2s ease-out;
+}
+
+body {
+  scroll-behavior: smooth;
+}

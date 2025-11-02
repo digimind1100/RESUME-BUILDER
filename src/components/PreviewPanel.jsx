@@ -1,9 +1,11 @@
-// PreviewPanel.jsx — minimal fixes: ensure toggleWorkCheckbox & delete wrapper exist
+// PreviewPanel.jsx — updated for Skills pagination
 import React, { useEffect, useRef, useState } from "react";
 import "./PreviewPanel.css";
 import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaLinkedin } from "react-icons/fa";
 import { paginateEntries } from "../utils/paginateEntries";
 import { paginateWorkEntries } from "../utils/paginateWorkEntries";
+import { paginateSkillsEntries } from "../utils/paginateSkillsEntries";
+
 import WorkPreview from "./WorkPreview";
 import SkillsPreview from "./SkillsPreview";
 
@@ -13,11 +15,11 @@ export default function PreviewPanel({
   handleCheckboxChange,
   jobTitle,
   workExperiences = [],
-  deleteWorkExperience, // parent-prop (may accept updated list or be a no-arg handler)
+  deleteWorkExperience,
   skills = [],
   deleteSkill,
   isEditing,
-  toggleWorkCheckbox, // optional prop from parent
+  toggleWorkCheckbox,
   toggleSkillCheckbox,
   handleOpenWorkPopup,
   handleAddSkillsClick,
@@ -28,6 +30,9 @@ export default function PreviewPanel({
   const rightPanelRef = useRef(null);
   const jobTitleRef = useRef(null);
 
+  // NEW: refs for Work + Skills containers (for pagination)
+  const workPanelRef = useRef(null);
+  const skillsPanelRef = useRef(null);
 
   // ================= STATES =================
   const [page1Education, setPage1Education] = useState([]);
@@ -38,8 +43,10 @@ export default function PreviewPanel({
   const [page2Work, setPage2Work] = useState([]);
   const [includePage2Work, setIncludePage2Work] = useState(false);
 
+  const [page1Skills, setPage1Skills] = useState([]); // Skills on Page 1
+  const [page2Skills, setPage2Skills] = useState([]); // Skills overflow to Page 2
+
   // ================= EFFECT: EDUCATION PAGINATION =================
-  // --- Education pagination ---
   useEffect(() => {
     const eduList = Array.isArray(formData.education) ? formData.education : [];
     if (eduList.length === 0) {
@@ -88,46 +95,53 @@ export default function PreviewPanel({
     return () => clearTimeout(timer);
   }, [workExperiences]);
 
-  // ================= EDUCATION CHECKBOX FIX =================
+  // ================= EFFECT: INITIALIZE SKILLS =================
+  useEffect(() => {
+    setPage1Skills(skills); // all skills start on Page 1
+    setPage2Skills([]);      // clear Page 2
+  }, [skills]);
+
+  // ================= EFFECT: SKILLS PAGINATION =================
+  useEffect(() => {
+    paginateSkillsEntries(
+      workPanelRef,
+      skillsPanelRef,
+      page1Skills,
+      page2Skills,
+      setPage1Skills,
+      setPage2Skills
+    );
+  }, [page1Skills, page1Work]);
+  //================================================= 
+
+//=================== hander ==================
+
+//=======================================
+
+  // ================= EDUCATION CHECKBOX =================
   const localToggleCheckbox = (globalIndex) => {
     if (typeof handleCheckboxChange === "function") {
       handleCheckboxChange(globalIndex);
     }
   };
 
-  // Helper to calculate global index for page 2 education
   const getGlobalEduIndex = (page1Length, localIdx) => page1Length + localIdx;
 
-  // ================================================
-  // SAFE WRAPPERS for Work checkbox & delete
-  // - These ensure PreviewPanel always has working handlers,
-  //   forwarding to parent props if they exist.
-  // ================================================
-  // Wrapper to toggle a work checkbox (forwards to parent toggle if provided)
+  // ================= WORK HANDLERS =================
   const handleWorkCheckboxToggle = (id) => {
     if (typeof toggleWorkCheckbox === "function") {
-      // If parent provided toggle function, forward to it
       toggleWorkCheckbox(id);
       return;
     }
-
-    // No parent toggle provided — attempt to update workExperiences if parent expects us to call deleteWorkExperience
-    // We cannot reliably mutate parent state here (no setter), so we just log for debugging.
     console.warn("toggleWorkCheckbox not provided to PreviewPanel. id:", id);
   };
 
-  // Wrapper to delete selected works. Tries two strategies:
-  // 1) If parent deleteWorkExperience expects no args (like a handler that reads checked flags), call it.
-  // 2) Otherwise attempt to compute a filtered array and pass it to parent.
   const handleDeleteSelectedWork = () => {
     if (typeof deleteWorkExperience === "function") {
       try {
-        // Try calling with no args first (most safe)
         const result = deleteWorkExperience();
-        // If parent expects an argument and returns undefined, fallback below
         if (result === undefined) return;
       } catch (err) {
-        // Parent may expect an updated array argument — compute and pass it
         if (Array.isArray(workExperiences)) {
           const remaining = workExperiences.filter((item) => {
             const w = item.work || item;
@@ -209,7 +223,8 @@ export default function PreviewPanel({
               </div>
             </div>
           ))}
-             {page2Education.length > 0 &&
+
+          {page2Education.length > 0 &&
             page1Education.length > 0 &&
             pageBreakY != null &&
             (1016 - pageBreakY) > 20 && (
@@ -237,31 +252,33 @@ export default function PreviewPanel({
             </div>
 
             {/* Paginated Work Section (Page 1) */}
-            <WorkPreview
-              workList={page1Work}
-              toggleWorkCheckbox={handleWorkCheckboxToggle} // wrapper used
-              handleDeleteSelectedWork={handleDeleteSelectedWork} // wrapper used
-              isEditing={isEditing}
-            />
-           
-            {/* Keep Skills on Page 1 for now */}
-       {/* ✅ Show Skills only if Work fits on Page 1 */}
-{includePage2Work ? null : (
-  <SkillsPreview
-    skillsList={skills}
-    toggleSkillCheckbox={toggleSkillCheckbox}
-    handleDeleteSelectedSkills={deleteSkill}
-    isEditing={isEditing}
-  />
+            <div ref={workPanelRef} className="preview-box work-box">
+              <WorkPreview
+                workList={page1Work}
+                toggleWorkCheckbox={handleWorkCheckboxToggle} 
+                handleDeleteSelectedWork={handleDeleteSelectedWork} 
+                isEditing={isEditing}
+              />
+            </div>
+
+            {/* ✅ Skills on Page 1 only if Work does not overflow */}
+{!includePage2Work && (
+  <div ref={skillsPanelRef} className="preview-box skills-box">
+    <SkillsPreview
+      skillsList={page1Skills.length ? page1Skills : skills}
+      toggleSkillCheckbox={toggleSkillCheckbox}
+      handleDeleteSelectedSkills={deleteSkill}
+      isEditing={isEditing}
+    />
+  </div>
 )}
 
-            
           </div>
         </div>
       </div>
 
       {/* ================= PAGE 2 ================= */}
-      {(page2Education.length > 0 || page2Work.length > 0) && (
+      {(page2Education.length > 0 || page2Work.length > 0 || page2Skills.length > 0) && (
         <div className="preview-section mt-8">
           {/* LEFT SIDE: EDUCATION PAGE 2 */}
           <div className="preview-left">
@@ -285,7 +302,7 @@ export default function PreviewPanel({
             })}
           </div>
 
-          {/* RIGHT SIDE: WORK PAGE 2 + (Skills in next phase) */}
+          {/* RIGHT SIDE: WORK PAGE 2 + Skills PAGE 2 */}
           <div className="flex-1 p-4">
             <div className="max-w-2xl mx-auto">
               {page2Work.length > 0 && (
@@ -301,13 +318,16 @@ export default function PreviewPanel({
               )}
 
               {/* ✅ If Work overflows, move Skills to Page 2 */}
-{includePage2Work && (
-  <SkillsPreview
-    skillsList={skills}
-    toggleSkillCheckbox={toggleSkillCheckbox}
-    handleDeleteSelectedSkills={deleteSkill}
-    isEditing={isEditing}
-  />
+{(includePage2Work || page2Skills.length > 0) && (
+  <>
+    <h3 className="section-heading mt-6">Skills (Page 2)</h3>
+    <SkillsPreview
+      skillsList={page2Skills.length ? page2Skills : skills}
+      toggleSkillCheckbox={toggleSkillCheckbox}
+      handleDeleteSelectedSkills={deleteSkill}
+      isEditing={isEditing}
+    />
+  </>
 )}
 
             </div>
