@@ -4,6 +4,7 @@ import PreviewPanel from "./PreviewPanel";
 import WorkPopup from "./WorkExpPopup";
 import SkillsPopup from "./SkillsPopup";
 import ButtonSection from "./ButtonSection";
+import FormatButtons from "./FormatButtons";
 
 const ResumeBuilder = () => {
   const [formData, setFormData] = useState({});
@@ -21,7 +22,38 @@ const ResumeBuilder = () => {
   const addEducation = (education) => {
     setSelectedEducations((prev) => [...prev, education]);
   };
+ //============================================================== 
+const handleFormat = (action) => {
+  const selection = window.getSelection();
+  if (!selection.rangeCount) return;
 
+  const range = selection.getRangeAt(0);
+  const selectedText = range.extractContents();
+  const span = document.createElement("span");
+
+  switch (action) {
+    case "bold":
+      span.style.fontWeight = "bold";
+      break;
+    case "italic":
+      span.style.fontStyle = "italic";
+      break;
+    case "underline":
+      span.style.textDecoration = "underline";
+      break;
+    case "font":
+      span.style.fontFamily = "Georgia, serif";
+      break;
+    default:
+      break;
+  }
+
+  span.appendChild(selectedText);
+  range.insertNode(span);
+};
+
+
+ //======================================================
 
   const toggleSkillCheckbox = (id) => {
     setSkills((prev) =>
@@ -30,16 +62,16 @@ const ResumeBuilder = () => {
       )
     );
   };
-// ================= WORK CHECKBOX FIX =================
-const toggleWorkCheckbox = (id) => {
-  setWorkExperiences((prev) =>
-    prev.map((work) =>
-      work.id === id ? { ...work, checked: !work.checked } : work
-    )
-  );
-};
+  // ================= WORK CHECKBOX FIX =================
+  const toggleWorkCheckbox = (id) => {
+    setWorkExperiences((prev) =>
+      prev.map((work) =>
+        work.id === id ? { ...work, checked: !work.checked } : work
+      )
+    );
+  };
 
- // Education checkbox handler
+  // Education checkbox handler
   const handleCheckboxChange = (index) => {
     setSelectedEducations((prev) =>
       prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
@@ -78,7 +110,7 @@ const toggleWorkCheckbox = (id) => {
 
     console.log("✅ Added Work:", textValue);
 
-  
+
   };
 
   const handleSkillSelect = (item) => {
@@ -145,7 +177,20 @@ const toggleWorkCheckbox = (id) => {
             handleOpenWorkPopup={handleOpenWorkPopup}
             handleAddSkillsClick={handleAddSkillsClick}
           />
+
+         {isEditing && <FormatButtons />}
+
+
+          {/* --- Bottom Buttons Section --- */}
+          <div className="mt-6 px-4 flex flex-col justify-end item-center w-[738px]">
+            <ButtonSection
+              isEditing={isEditing}
+              setIsEditing={setIsEditing}
+              handleDeleteSelected={handleDeleteSelected}
+            />
+          </div>
         </div>
+
       </div>
 
       {/* --- Work Popup --- */}
@@ -170,14 +215,7 @@ const toggleWorkCheckbox = (id) => {
         />
       )}
 
-      {/* --- Bottom Buttons Section --- */}
-      <div className="mt-6 px-4">
-        <ButtonSection
-          isEditing={isEditing}
-          setIsEditing={setIsEditing}
-          handleDeleteSelected={handleDeleteSelected}
-        />
-      </div>
+
     </div>
   );
 };

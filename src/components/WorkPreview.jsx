@@ -30,11 +30,9 @@ export default function WorkPreview({
       {/* ==== Work Entries ==== */}
       {workList.length > 0 ? (
         workList.map((entry, idx) => {
-          const work = entry.work || entry; // ✅ Handles nested { work: {...} } or flat objects
+          const work = entry.work || entry;
           const id = work.id ?? idx;
           const checked = !!work.checked;
-
-          // Display text logic (company, title, or fallback)
           const display =
             typeof work === "object"
               ? work.text || work.title || work.company || "Work"
@@ -42,13 +40,12 @@ export default function WorkPreview({
 
           return (
             <div
-              id={`work-item-${id}`} // ✅ Required for paginateWorkEntries.js height measurement
+              id={`work-item-${id}`}
               key={`work-${id}`}
               className="work-entry flex items-start mb-2"
               contentEditable={isEditing}
               suppressContentEditableWarning={true}
             >
-              {/* Checkbox & bullet */}
               <div className="checkbox-bullet-wrapper flex items-center mr-2">
                 <input
                   type="checkbox"
@@ -62,7 +59,6 @@ export default function WorkPreview({
                 <span className="bullet ml-1">•</span>
               </div>
 
-              {/* Work text */}
               <div className="work-text flex-1">{display}</div>
             </div>
           );

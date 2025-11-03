@@ -2,7 +2,7 @@ import React from "react";
 import "./PreviewPanel.css";
 
 export default function SkillsPreview({
-  skillsList = [], // array of plain skill objects: { id, text, checked, ... }
+  skillsList = [],
   toggleSkillCheckbox,
   handleDeleteSelectedSkills,
   isEditing,
@@ -30,7 +30,8 @@ export default function SkillsPreview({
         skillsList.map((skill, idx) => {
           const key = skill.id ?? `skill-${idx}`;
           const checked = !!skill.checked;
-          const display = typeof skill === "object" ? skill.text || skill.title || "Skill" : skill;
+          const display =
+            typeof skill === "object" ? skill.text || skill.title || "Skill" : skill;
 
           return (
             <div
@@ -51,6 +52,7 @@ export default function SkillsPreview({
                 />
                 <span className="bullet ml-1">•</span>
               </div>
+
               <div className="skill-text flex-1">{display}</div>
             </div>
           );

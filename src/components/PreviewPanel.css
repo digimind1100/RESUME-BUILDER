@@ -9,8 +9,6 @@
   width:738px;
   gap: 12px;
   box-sizing: border-box;
-  border: solid 1px;
-  
 }
 
 .preview-left {
@@ -24,7 +22,7 @@
 .preview-left {
   width: 30%;
   border: 1px solid #ccc;
-  padding: 15px;
+  padding: 6px;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -259,9 +257,9 @@
 }
 
 .preview-box {
-  border: 1px solid;
+  border: 1px solid #ccc;
   /* border: 1px solid #ccc; */
-  padding: 15px;
+  padding: 6px;
   border-radius: 8px;
   background-color: #f9f9f9;
 }

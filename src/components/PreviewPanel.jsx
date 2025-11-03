@@ -94,6 +94,12 @@ export default function PreviewPanel({
 
     return () => clearTimeout(timer);
   }, [workExperiences]);
+  //================================================================================ 
+useEffect(() => {
+  console.log("PreviewPanel re-rendered");
+}, []);
+
+  //================================================================== 
 
   // ================= EFFECT: INITIALIZE SKILLS =================
   useEffect(() => {
@@ -113,10 +119,6 @@ export default function PreviewPanel({
     );
   }, [page1Skills, page1Work]);
   //================================================= 
-
-//=================== hander ==================
-
-//=======================================
 
   // ================= EDUCATION CHECKBOX =================
   const localToggleCheckbox = (globalIndex) => {
@@ -252,26 +254,26 @@ export default function PreviewPanel({
             </div>
 
             {/* Paginated Work Section (Page 1) */}
-            <div ref={workPanelRef} className="preview-box work-box">
+            <div ref={workPanelRef} className="preview-box work-box ">
               <WorkPreview
                 workList={page1Work}
-                toggleWorkCheckbox={handleWorkCheckboxToggle} 
-                handleDeleteSelectedWork={handleDeleteSelectedWork} 
+                toggleWorkCheckbox={handleWorkCheckboxToggle}
+                handleDeleteSelectedWork={handleDeleteSelectedWork}
                 isEditing={isEditing}
               />
             </div>
 
             {/* ✅ Skills on Page 1 only if Work does not overflow */}
-{!includePage2Work && (
-  <div ref={skillsPanelRef} className="preview-box skills-box">
-    <SkillsPreview
-      skillsList={page1Skills.length ? page1Skills : skills}
-      toggleSkillCheckbox={toggleSkillCheckbox}
-      handleDeleteSelectedSkills={deleteSkill}
-      isEditing={isEditing}
-    />
-  </div>
-)}
+            {!includePage2Work && (
+              <div ref={skillsPanelRef} className="preview-box skills-box">
+                <SkillsPreview
+                  skillsList={page1Skills.length ? page1Skills : skills}
+                  toggleSkillCheckbox={toggleSkillCheckbox}
+                  handleDeleteSelectedSkills={deleteSkill}
+                  isEditing={isEditing}
+                />
+              </div>
+            )}
 
           </div>
         </div>
@@ -318,17 +320,17 @@ export default function PreviewPanel({
               )}
 
               {/* ✅ If Work overflows, move Skills to Page 2 */}
-{(includePage2Work || page2Skills.length > 0) && (
-  <>
-    <h3 className="section-heading mt-6">Skills (Page 2)</h3>
-    <SkillsPreview
-      skillsList={page2Skills.length ? page2Skills : skills}
-      toggleSkillCheckbox={toggleSkillCheckbox}
-      handleDeleteSelectedSkills={deleteSkill}
-      isEditing={isEditing}
-    />
-  </>
-)}
+              {(includePage2Work || page2Skills.length > 0) && (
+                <>
+                  <h3 className="section-heading mt-6">Skills (Page 2)</h3>
+                  <SkillsPreview
+                    skillsList={page2Skills.length ? page2Skills : skills}
+                    toggleSkillCheckbox={toggleSkillCheckbox}
+                    handleDeleteSelectedSkills={deleteSkill}
+                    isEditing={isEditing}
+                  />
+                </>
+              )}
 
             </div>
           </div>

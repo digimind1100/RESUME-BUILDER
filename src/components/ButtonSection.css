@@ -2,7 +2,6 @@
 
 /* Wrapper container */
 .button-section-container {
-  width: 100%;
   display: flex;
   justify-content: center;
   margin-top: 24px;
@@ -185,4 +184,10 @@
   transform: translateY(-1px);
 }
 
+/* ButtonSection ko print me hide kar do */
+@media print {
+  .button-section {
+    display: none !important;
+  }
+}
 
