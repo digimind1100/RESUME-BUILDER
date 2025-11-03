@@ -9,7 +9,7 @@ export default function DownloadPDF() {
 
     // Hide checkboxes before export
     const checkboxes = container.querySelectorAll("input[type='checkbox']");
-    checkboxes.forEach(cb => (cb.style.display = "none"));
+    checkboxes.forEach((cb) => (cb.style.display = "none"));
 
     // Clone container for PDF
     const clone = container.cloneNode(true);
@@ -17,6 +17,10 @@ export default function DownloadPDF() {
     // ✅ Remove ButtonSection from clone (if present)
     const buttonSection = clone.querySelector(".button-section");
     if (buttonSection) buttonSection.remove();
+
+    // ✅ Remove Theme Selector (so it doesn’t print in PDF)
+    const themeSelector = clone.querySelector(".theme-selector-container");
+    if (themeSelector) themeSelector.remove();
 
     // Add header
     const header = document.createElement("div");
@@ -73,7 +77,7 @@ export default function DownloadPDF() {
         }
       })
       .save()
-      .finally(() => checkboxes.forEach(cb => (cb.style.display = "")));
+      .finally(() => checkboxes.forEach((cb) => (cb.style.display = "")));
   };
 
   return (

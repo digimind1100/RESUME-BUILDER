@@ -5,6 +5,7 @@ import WorkPopup from "./WorkExpPopup";
 import SkillsPopup from "./SkillsPopup";
 import ButtonSection from "./ButtonSection";
 import FormatButtons from "./FormatButtons";
+import ThemeSelector from "./ThemeSelector";
 
 const ResumeBuilder = () => {
   const [formData, setFormData] = useState({});
@@ -22,38 +23,46 @@ const ResumeBuilder = () => {
   const addEducation = (education) => {
     setSelectedEducations((prev) => [...prev, education]);
   };
- //============================================================== 
-const handleFormat = (action) => {
-  const selection = window.getSelection();
-  if (!selection.rangeCount) return;
+  //======================Theme===================== 
+  const [theme, setTheme] = useState({
+    left: "#17639F",
+    job: "#F4ECE1",
+    text: "#000",
+  });
 
-  const range = selection.getRangeAt(0);
-  const selectedText = range.extractContents();
-  const span = document.createElement("span");
+  //============================
+  //============================================================== 
+  const handleFormat = (action) => {
+    const selection = window.getSelection();
+    if (!selection.rangeCount) return;
 
-  switch (action) {
-    case "bold":
-      span.style.fontWeight = "bold";
-      break;
-    case "italic":
-      span.style.fontStyle = "italic";
-      break;
-    case "underline":
-      span.style.textDecoration = "underline";
-      break;
-    case "font":
-      span.style.fontFamily = "Georgia, serif";
-      break;
-    default:
-      break;
-  }
+    const range = selection.getRangeAt(0);
+    const selectedText = range.extractContents();
+    const span = document.createElement("span");
 
-  span.appendChild(selectedText);
-  range.insertNode(span);
-};
+    switch (action) {
+      case "bold":
+        span.style.fontWeight = "bold";
+        break;
+      case "italic":
+        span.style.fontStyle = "italic";
+        break;
+      case "underline":
+        span.style.textDecoration = "underline";
+        break;
+      case "font":
+        span.style.fontFamily = "Georgia, serif";
+        break;
+      default:
+        break;
+    }
+
+    span.appendChild(selectedText);
+    range.insertNode(span);
+  };
 
 
- //======================================================
+  //======================================================
 
   const toggleSkillCheckbox = (id) => {
     setSkills((prev) =>
@@ -164,6 +173,8 @@ const handleFormat = (action) => {
 
         {/* Right: Preview */}
         <div className="w-2/3 p-4" id="resumeContainer">
+          {/* 🎨 Theme Selector Bar */}
+          <ThemeSelector onThemeChange={setTheme} />
           <PreviewPanel
             formData={formData}
             selectedEducations={selectedEducations}
@@ -176,9 +187,10 @@ const handleFormat = (action) => {
             toggleSkillCheckbox={toggleSkillCheckbox}
             handleOpenWorkPopup={handleOpenWorkPopup}
             handleAddSkillsClick={handleAddSkillsClick}
+            theme={theme}
           />
 
-         {isEditing && <FormatButtons />}
+          {isEditing && <FormatButtons />}
 
 
           {/* --- Bottom Buttons Section --- */}

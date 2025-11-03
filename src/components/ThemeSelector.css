@@ -1,0 +1,30 @@
+.theme-selector {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+  max-width: 738px;
+  
+}
+
+.theme-circle {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid #ccc;
+  transition: transform 0.2s, border 0.2s;
+}
+
+.theme-circle:hover {
+  transform: scale(1.2);
+  border-color: #000;
+}
+@media print {
+  .theme-selector-container {
+    display: none !important;
+  }
+}

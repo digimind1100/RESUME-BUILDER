@@ -23,6 +23,7 @@ export default function PreviewPanel({
   toggleSkillCheckbox,
   handleOpenWorkPopup,
   handleAddSkillsClick,
+  theme
 }) {
   // ================= REFS =================
   const leftRef = useRef(null);
@@ -95,9 +96,9 @@ export default function PreviewPanel({
     return () => clearTimeout(timer);
   }, [workExperiences]);
   //================================================================================ 
-useEffect(() => {
-  console.log("PreviewPanel re-rendered");
-}, []);
+  useEffect(() => {
+    console.log("PreviewPanel re-rendered");
+  }, []);
 
   //================================================================== 
 
@@ -167,7 +168,9 @@ useEffect(() => {
       {/* ================= PAGE 1 ================= */}
       <div className="preview-section" style={{ position: "relative" }}>
         {/* LEFT SIDE: PROFILE + EDUCATION PAGE 1 */}
-        <div className="preview-left" ref={leftRef}>
+        <div className="preview-left"
+          style={{ backgroundColor: theme.left }}
+          ref={leftRef}>
           <div ref={topSectionRef}>
             {/* Profile Info */}
             <div className="profile-pic-wrapper">
@@ -248,7 +251,12 @@ useEffect(() => {
           <div className="max-w-2xl mx-auto">
             {/* Job Title */}
             <div ref={jobTitleRef} className="job-title-box text-center mb-6">
-              <h1 className="text-2xl font-bold job-title-banner">
+              <h1 className="text-2xl font-bold job-title-banner"
+                style={{
+                  backgroundColor: theme.job,
+                  color: theme.text,
+                }}
+              >
                 {jobTitle || formData.jobTitle || "Job Title"}
               </h1>
             </div>

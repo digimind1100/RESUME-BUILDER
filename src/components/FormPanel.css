@@ -84,3 +84,54 @@
 .checkbox-block {
   margin-top: 4px; /* thoda space deta hai taki text ke sath align ho */
 }
+
+
+/* Upload Profile Picture Input Styling */
+.profile-input {
+  width: 100%;
+  max-width: 300px;
+  padding: 8px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  font-size: 14px;
+  color: #555;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+/* Style the "Choose File" button text */
+.profile-input::file-selector-button {
+  background-color: #007bff;
+  color: white; /* 👈 changes "Choose File" font color */
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  font-weight: 500;
+}
+
+.profile-input::file-selector-button:hover {
+  background-color: #0056b3;
+}
+
+/* Optional hover/focus for input box */
+.profile-input:hover {
+  border-color: #007bff;
+}
+
+.profile-input:focus {
+  outline: none;
+  border-color: #0056b3;
+  box-shadow: 0 0 3px rgba(0, 123, 255, 0.5);
+}
+
+/* Label styling */
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #333;
+  font-size: 15px;
+}

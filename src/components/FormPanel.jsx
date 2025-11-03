@@ -95,7 +95,7 @@ const handleOpenWorkPopup = () => {
       <h2>Personal Information</h2>
 
       <label>Upload Profile Picture</label>
-      <input type="file" accept="image/*" onChange={handleFileChange} />
+      <input type="file" className="profile-input"  accept="image/*" onChange={handleFileChange} />
 
       <label>Job Title</label>
       <input
