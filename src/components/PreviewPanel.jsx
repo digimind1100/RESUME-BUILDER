@@ -47,6 +47,10 @@ export default function PreviewPanel({
   const [page1Skills, setPage1Skills] = useState([]); // Skills on Page 1
   const [page2Skills, setPage2Skills] = useState([]); // Skills overflow to Page 2
 
+  // safe fallback at top of component (you probably already have selectedTheme in props)
+
+
+
   // ================= EFFECT: EDUCATION PAGINATION =================
   useEffect(() => {
     const eduList = Array.isArray(formData.education) ? formData.education : [];
@@ -215,7 +219,11 @@ export default function PreviewPanel({
 
           {/* Education Page 1 Entries */}
           {page1Education.map(({ edu, idx }) => (
-            <div key={idx} className="education-entry border p-2 my-2 rounded">
+            <div key={idx} className="education-entry border p-2 my-2 rounded"
+              style={{
+                backgroundColor: theme?.left || "#ffffff", // box background
+                color: theme?.text || "#000",              // text color for contrast
+              }}>
               <input
                 type="checkbox"
                 checked={selectedEducations?.includes(idx)}
@@ -291,12 +299,22 @@ export default function PreviewPanel({
       {(page2Education.length > 0 || page2Work.length > 0 || page2Skills.length > 0) && (
         <div className="preview-section mt-8">
           {/* LEFT SIDE: EDUCATION PAGE 2 */}
-          <div className="preview-left">
+          <div className="preview-left"
+            style={{
+              backgroundColor: theme?.left || "#ffffff", // left panel background
+              color: theme?.text || "#000"              // default text color
+            }}
+          >
             <h3 className="section-heading">Education (Page 2)</h3>
             {page2Education.map(({ edu, idx }, localIdx) => {
               const globalIdx = getGlobalEduIndex(page1Education.length, localIdx);
               return (
-                <div key={globalIdx} className="education-entry border p-2 my-2 rounded">
+                <div key={globalIdx} className="education-entry border p-2 my-2 rounded"
+                  style={{
+                    backgroundColor: theme?.left || "#ffffff", // Page 2 box background
+                    color: theme?.text || "#000",              // Page 2 text color
+                  }}
+                >
                   <input
                     type="checkbox"
                     checked={selectedEducations?.includes(globalIdx)}
