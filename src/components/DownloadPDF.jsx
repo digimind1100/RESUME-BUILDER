@@ -3,24 +3,26 @@ import html2pdf from "html2pdf.js";
 
 export default function DownloadPDF() {
   const handleDownload = () => {
-    // ✅ Only include PreviewPanel, exclude ButtonSection
     const container = document.getElementById("resumeContainer");
     if (!container) return;
 
-    // Hide checkboxes before export
+    // Hide checkboxes
     const checkboxes = container.querySelectorAll("input[type='checkbox']");
     checkboxes.forEach((cb) => (cb.style.display = "none"));
 
-    // Clone container for PDF
+    // Hide theme selector temporarily
+    const themeSelector = container.querySelector(".theme-selector");
+    if (themeSelector) themeSelector.style.display = "none";
+
+    // Clone container
     const clone = container.cloneNode(true);
 
-    // ✅ Remove ButtonSection from clone (if present)
+    // Restore in DOM
+    if (themeSelector) themeSelector.style.display = "";
+
+    // Remove ButtonSection
     const buttonSection = clone.querySelector(".button-section");
     if (buttonSection) buttonSection.remove();
-
-    // ✅ Remove Theme Selector (so it doesn’t print in PDF)
-    const themeSelector = clone.querySelector(".theme-selector-container");
-    if (themeSelector) themeSelector.remove();
 
     // Add header
     const header = document.createElement("div");
@@ -32,27 +34,36 @@ export default function DownloadPDF() {
     header.style.fontSize = "14px";
     clone.prepend(header);
 
-    // Add footer container
+    // Add footer
     const footer = document.createElement("div");
     footer.style.width = "100%";
     footer.style.position = "relative";
     footer.style.marginTop = "3px";
-
     const line = document.createElement("div");
     line.style.width = "100%";
     line.style.borderTop = "1px solid #000";
 
-    // ✅ PDF options
+    // High-resolution, print-optimized options
     const opt = {
-      margin: [10, 8, 10, 8], // top, left, bottom, right in mm
+      margin: [10, 8, 10, 8],
       filename: "resume.pdf",
-      image: { type: "jpeg", quality: 1 },
-      html2canvas: { scale: 2, useCORS: true },
-      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+      image: { type: "jpeg", quality: 1 }, // highest image quality
+      html2canvas: {
+        scale: 4, // 🔥 higher DPI (default was 2)
+        useCORS: true,
+        letterRendering: true,
+        backgroundColor: "#ffffff", // ensures white background
+      },
+      jsPDF: {
+        unit: "mm",
+        format: "a4",
+        orientation: "portrait",
+        compress: false, // 🔥 prevents text compression, keeps crispness
+      },
       pagebreak: { mode: ["avoid-all", "css", "legacy"] },
     };
 
-    // ✅ Generate PDF and draw header/footer on each page
+    // Generate PDF
     html2pdf()
       .set(opt)
       .from(clone)
@@ -71,13 +82,16 @@ export default function DownloadPDF() {
           // Footer line
           pdf.line(10, 287, 200, 287);
 
-          // Page numbering (bottom right)
+          // Page numbering
           pdf.setFontSize(10);
           pdf.text(`Page ${i} of ${totalPages}`, 182, 291);
         }
       })
       .save()
-      .finally(() => checkboxes.forEach((cb) => (cb.style.display = "")));
+      .finally(() => {
+        // Restore checkboxes
+        checkboxes.forEach((cb) => (cb.style.display = ""));
+      });
   };
 
   return (

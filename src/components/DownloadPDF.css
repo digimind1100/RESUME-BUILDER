@@ -1,0 +1,6 @@
+/* Hide theme selector when printing (or generating PDF) */
+@media print {
+  .theme-selector-container {
+    display: none !important;
+  }
+}

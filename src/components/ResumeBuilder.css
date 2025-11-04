@@ -101,3 +101,45 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
 }
+
+
+/* Base desktop layout */
+.resume-builder-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+/* 📱 Mobile responsive view */
+@media (max-width: 768px) {
+  .resume-builder-container {
+    flex-direction: column; /* Stack vertically */
+  }
+
+  .form-panel,
+  .preview-panel {
+    width: 100%; /* Full width for both panels */
+  }
+
+  .preview-panel {
+    margin-top: 20px; /* Add spacing between Form and Preview */
+  }
+}
+
+/* Optional small-screen polish */
+@media (max-width: 480px) {
+  .resume-builder-container {
+    gap: 10px;
+  }
+
+  .form-panel input,
+  .form-panel textarea {
+    font-size: 14px;
+  }
+
+  .preview-panel {
+    font-size: 15px;
+  }
+}
