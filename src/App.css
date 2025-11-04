@@ -3,7 +3,6 @@
 
 display: flex;
 flex-direction: column;
-flex-direction: column;
  justify-content: flex-start;
   border: 1px solid #ddd; /* Example */
   border-radius: 8px;
