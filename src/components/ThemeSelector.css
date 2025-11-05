@@ -10,6 +10,13 @@
   
 }
 
+.resume-theme {
+  display: flex;
+  flex-direction: column; /* vertical stacking */
+  align-items: flex-start;
+}
+
+
 .theme-circle {
   width: 25px;
   height: 25px;

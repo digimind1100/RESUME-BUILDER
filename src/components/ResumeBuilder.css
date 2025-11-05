@@ -1,145 +1,54 @@
-.resume-builder {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 20px;
-  background: #f4f4f4;
-  min-height: 100vh;
-}
-
-.builder-container {
-  display: flex;               /* ✅ change grid → flex */
-  flex-direction: row;         /* ✅ ensure horizontal layout */
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 20px;
-  width: 100%;
-  max-width: 1400px;
-}
-.form-section {
-  flex: 0 0 35%;
-}
-
-.preview-section {
-  flex: 0 0 65%;
-}
-
-
-.form-section {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  height: 1123px; /* ✅ Fix A4 Height for Left Side */
-  width: 100%;
-  box-sizing: border-box;
-}
-
-/* --- DOWNLOAD BUTTON --- */
-.download-container {
-  display: flex;
-  justify-content: center;
-  margin: 20px 0;
-  position: relative;
-  z-index: 10;
-}
-
-.download-btn {
-  background-color: #007bff;
-  color: white;
-  font-size: 16px;
-  padding: 10px 20px;
-  border: none;
-  margin-top: 20px; /* keep this line from the incoming version */
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.download-btn:hover {
-  background-color: #0056b3;
-}
-
-.a4-page {
-  width: 794px;       /* exact A4 width */
-  height: 1123px;     /* exact A4 height */
-  background: white;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
-  margin-bottom: 20px;
-}
-
-
-
-
-.resume-builder-container {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 20px;
-  width: 100%;
-  height: 100vh;
-  padding: 20px;
-  box-sizing: border-box;
-}
-
-.form-panel {
-  flex: 0 0 45%;
-  max-width: 45%;
-  background: #f9f9f9;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.preview-panel-container {
-  flex: 1;
-  max-width: 55%;
-  background: white;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  overflow-y: auto;
-}
-
-
-/* Base desktop layout */
-.resume-builder-container {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 20px;
-}
-
-/* 📱 Mobile responsive view */
-@media (max-width: 768px) {
+/* Large screen / Desktop layout */
+@media (min-width: 1024px) {
   .resume-builder-container {
-    flex-direction: column; /* Stack vertically */
+    display: flex;
+    flex-direction: row; /* form + right-side side by side */
+    gap: 20px; /* optional spacing between columns */
+    align-items: flex-start; /* align top edges */
   }
 
-  .form-panel,
-  .preview-panel {
-    width: 100%; /* Full width for both panels */
-  }
 
-  .preview-panel {
-    margin-top: 20px; /* Add spacing between Form and Preview */
+  /* PreviewPanel fixed height for desktop */
+@media (min-width: 1024px) {
+  #resumeContainer > .preview-panel-root { /* use your PreviewPanel root class */
+    height: 1040px;
+    overflow-y: auto;
   }
 }
 
-/* Optional small-screen polish */
-@media (max-width: 480px) {
-  .resume-builder-container {
+
+  /* Left side: Form Panel */
+  .form-panel {
+    width: 35%; /* adjust as needed */
+    min-width: 500px; /* optional minimum width */
+  }
+
+  /* Right side: Theme + Preview + Buttons */
+  .right-side {
+    width: 65%;
+    display: flex;
+    flex-direction: column; /* stack resume-theme + button section */
+    gap: 20px; /* spacing between preview and button section */
+  }
+
+  /* Theme + Preview container */
+  .resume-theme {
+    display: flex;
+    flex-direction: column;
     gap: 10px;
+    width: 100%;
   }
 
-  .form-panel input,
-  .form-panel textarea {
-    font-size: 14px;
+  /* Theme selector stays on top of preview */
+  .theme-selector-container {
+    width: 100%;
   }
 
-  .preview-panel {
-    font-size: 15px;
+
+
+  /* Button section below preview */
+  .button-section-container {
+    width: 100%;
+    margin-top: 0; /* already managed by gap */
   }
 }
