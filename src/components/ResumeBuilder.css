@@ -52,3 +52,92 @@
     margin-top: 0; /* already managed by gap */
   }
 }
+
+/* mobile css to make responsive START  */
+
+/* Default Desktop Layout (already fine) */
+
+/* --- 📱 Mobile Responsive Rules --- */
+@media (max-width: 768px) {
+  .resume-builder-container {
+    flex-direction: column; /* stack vertically */
+    align-items: stretch;
+  }
+
+  .form-panel {
+    width: 100% !important;
+    padding: 12px;
+  }
+
+  .resume-theme {
+    width: 100% !important;
+    margin-top: 10px;
+    padding: 12px;
+  }
+
+  .preview-section {
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  .button-section-container {
+    width: 100% !important;
+    margin-top: 12px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Optional: make theme selector look cleaner on mobile */
+  .theme-selector-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .resume-builder-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .form-panel {
+    width: 100% !important;
+    height: auto !important;
+    min-height: fit-content !important;
+    padding: 16px;
+    margin-bottom: 12px;
+    position: relative;
+    z-index: 2; /* ✅ ensures form is above */
+    background: white;
+  }
+
+  .resume-theme {
+    width: 100% !important;
+    height: auto !important;
+    margin-top: 0;
+    padding: 12px;
+    z-index: 1;
+    background: #f9f9f9;
+  }
+
+  .preview-section {
+    width: 100% !important;
+    height: 1040px !important;
+    overflow-x: auto;
+    overflow-y: visible;
+  }
+
+  .button-section-container {
+    width: 100%;
+    margin-top: 16px;
+    padding: 12px;
+  }
+}
+
+
+/* mobile css to make responsive END  */
