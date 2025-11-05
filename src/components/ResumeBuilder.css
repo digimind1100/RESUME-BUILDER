@@ -49,7 +49,7 @@
   /* Button section below preview */
   .button-section-container {
     width: 100%;
-    margin-top: 0; /* already managed by gap */
+    margin-top: 10px; /* already managed by gap */
   }
 }
 
@@ -81,7 +81,7 @@
   }
 
   .button-section-container {
-    width: 100% !important;
+    width: 738px !important;
     margin-top: 12px;
     padding: 12px;
     display: flex;

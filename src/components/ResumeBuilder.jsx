@@ -172,30 +172,30 @@ const ResumeBuilder = () => {
           <div className="theme-selector-container p-2">
             <ThemeSelector onThemeChange={setTheme} />
           </div>
-            <PreviewPanel
-              formData={formData}
-              selectedEducations={selectedEducations}
-              handleCheckboxChange={handleCheckboxChange}
-              jobTitle={jobTitle}
-              workExperiences={workExperiences}
-              skills={skills}
-              deleteWorkExperience={(arg) => {
-                // keep original behaviour if parent expects call with array or no-arg
-                // we pass through to remove selected if provided earlier — unchanged
-                console.warn("deleteWorkExperience placeholder - original handler lives in parent/context");
-              }}
-              deleteSkill={(idOrList) => {
-                // parent handles deleting; keep local deleteSkill behavior in parent components
-                console.warn("deleteSkill placeholder - original handler lives in parent/context");
-              }}
-              isEditing={isEditing}
-              toggleWorkCheckbox={toggleWorkCheckbox}
-              toggleSkillCheckbox={toggleSkillCheckbox}
-              handleOpenWorkPopup={handleOpenWorkPopup}
-              handleAddSkillsClick={handleAddSkillsClick}
-              theme={theme}
-            />
-          
+          <PreviewPanel
+            formData={formData}
+            selectedEducations={selectedEducations}
+            handleCheckboxChange={handleCheckboxChange}
+            jobTitle={jobTitle}
+            workExperiences={workExperiences}
+            skills={skills}
+            deleteWorkExperience={(arg) => {
+              // keep original behaviour if parent expects call with array or no-arg
+              // we pass through to remove selected if provided earlier — unchanged
+              console.warn("deleteWorkExperience placeholder - original handler lives in parent/context");
+            }}
+            deleteSkill={(idOrList) => {
+              // parent handles deleting; keep local deleteSkill behavior in parent components
+              console.warn("deleteSkill placeholder - original handler lives in parent/context");
+            }}
+            isEditing={isEditing}
+            toggleWorkCheckbox={toggleWorkCheckbox}
+            toggleSkillCheckbox={toggleSkillCheckbox}
+            handleOpenWorkPopup={handleOpenWorkPopup}
+            handleAddSkillsClick={handleAddSkillsClick}
+            theme={theme}
+          />
+
         </div>
 
         {/* Button Section (below resume-theme, but still inside main container) */}
@@ -206,15 +206,15 @@ const ResumeBuilder = () => {
             handleDeleteSelected={handleDeleteSelected}
           />
         </div>
-      </div>
 
+      
       {/* Format Buttons (floating below preview if editing) */}
       {isEditing && (
         <div className="format-buttons-wrapper">
           <FormatButtons handleFormat={handleFormat} />
         </div>
       )}
-
+</div>
       {/* Popups */}
       {showWorkPopup && (
         <WorkPopup
