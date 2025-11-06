@@ -4,8 +4,9 @@
 .button-section-container {
   display: flex;
   justify-content: center;
-  margin-top: 24px;
-  margin-bottom: 10px;
+  width:738px;
+  margin-top: 0px;
+  margin-bottom: 0px;
   position: relative;
   z-index: 5;
 }

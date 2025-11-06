@@ -172,6 +172,26 @@ const ResumeBuilder = () => {
           <div className="theme-selector-container p-2">
             <ThemeSelector onThemeChange={setTheme} />
           </div>
+
+        {/* Format Buttons (floating below preview if editing) */}
+        {isEditing && (
+          <div className="format-buttons-wrapper">
+            <FormatButtons 
+            handleFormat={handleFormat} 
+            />
+          </div>
+        )}
+
+        {/* Button Section (below resume-theme, but still inside main container) */}
+        <div className="button-section-container p-4 mt-4 md:mt-0">
+          <ButtonSection
+            isEditing={isEditing}
+            setIsEditing={setIsEditing}
+            handleDeleteSelected={handleDeleteSelected}
+          />
+        </div>
+
+
           <PreviewPanel
             formData={formData}
             selectedEducations={selectedEducations}
@@ -198,23 +218,12 @@ const ResumeBuilder = () => {
 
         </div>
 
-        {/* Button Section (below resume-theme, but still inside main container) */}
-        <div className="button-section-container w-full p-4 mt-4 md:mt-0">
-          <ButtonSection
-            isEditing={isEditing}
-            setIsEditing={setIsEditing}
-            handleDeleteSelected={handleDeleteSelected}
-          />
-        </div>
 
-      
-      {/* Format Buttons (floating below preview if editing) */}
-      {isEditing && (
-        <div className="format-buttons-wrapper">
-          <FormatButtons handleFormat={handleFormat} />
-        </div>
-      )}
-</div>
+
+      </div>
+
+
+
       {/* Popups */}
       {showWorkPopup && (
         <WorkPopup

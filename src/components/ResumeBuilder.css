@@ -28,14 +28,14 @@
     width: 65%;
     display: flex;
     flex-direction: column; /* stack resume-theme + button section */
-    gap: 20px; /* spacing between preview and button section */
+    gap: 10px; /* spacing between preview and button section */
   }
 
   /* Theme + Preview container */
   .resume-theme {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 0px;
     width: 100%;
   }
 
@@ -48,8 +48,8 @@
 
   /* Button section below preview */
   .button-section-container {
-    width: 100%;
-    margin-top: 10px; /* already managed by gap */
+    width: 738px;
+    margin-top: 0px; /* already managed by gap */
   }
 }
 
@@ -81,12 +81,13 @@
   }
 
   .button-section-container {
-    width: 738px !important;
-    margin-top: 12px;
+    width: 100% !important;
+    margin-top: 0px;
     padding: 12px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
   }
 
   /* Optional: make theme selector look cleaner on mobile */
@@ -94,7 +95,7 @@
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    margin-bottom: 10px;
+    margin-bottom: 0;
   }
 }
 
@@ -133,9 +134,9 @@
   }
 
   .button-section-container {
-    width: 100%;
-    margin-top: 16px;
-    padding: 12px;
+    width: 738px;
+    margin-top: 0px;
+    padding: 8px;
   }
 }
 

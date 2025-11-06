@@ -1,11 +1,11 @@
 /* Container matches Preview Panel width without overflowing */
 .format-buttons-container {
-  max-width: 738px; /* never exceed parent width */
+   /* never exceed parent width */
   width: 100%;     /* fill available space */
   display: flex;
   justify-content: flex-start;
   gap: 10px;       /* spacing between buttons */
-  margin: 12px 0;
+  margin: 4px 0;
   padding: 6px 10px;
   background-color: #f8f9fa; /* light gray background */
   border: 1px solid #ddd;
