@@ -4,7 +4,7 @@
 display: flex;
 flex-direction: column;
  justify-content: flex-start;
-  border: 1px solid #ddd; /* Example */
+  border: 2px solid #ddd; /* Example */
   border-radius: 8px;
   padding: 0px;
   margin-bottom: 5px;
@@ -16,7 +16,7 @@ flex-direction: column;
   align-items: center;
   gap: 0px;
   white-space: normal;
-   overflow-wrap: anywhere;
+  overflow-wrap: anywhere;
   text-overflow: clip;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   

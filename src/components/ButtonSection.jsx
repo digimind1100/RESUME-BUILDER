@@ -1,31 +1,39 @@
 import React from "react";
 import "./ButtonSection.css";
 import DownloadPDF from "./DownloadPDF";
+import DownloadWord from "./DownloadWord";
 
-export default function ButtonSection({ isEditing, setIsEditing, handleDeleteSelected }) {
+export default function ButtonSection({
+  isEditing,
+  setIsEditing,
+  handleDeleteSelected,
+  formData,
+  selectedEducations,
+  workExperiences,
+  skills,
+  jobTitle,
+}) {
   return (
     <div className="button-section-container button-section">
       <div className="button-section-inner">
         <DownloadPDF />
 
-        <button className="common-btn" disabled>
-          Download Word Doc
-        </button>
+        <DownloadWord
+          formData={formData}
+          selectedEducations={selectedEducations}
+          workExperiences={workExperiences}
+          skills={skills}
+          jobTitle={jobTitle}
+        />
 
         <button
           className="common-btn"
-          onClick={() => setIsEditing(prev => !prev)}
+          onClick={() => setIsEditing((prev) => !prev)}
         >
           {isEditing ? "Lock Preview" : "Edit Preview"}
         </button>
 
-
-        {/* ✅ Activated Delete Selected */}
-        <button
-          className="common-btn"
-          onClick={handleDeleteSelected}
-
-        >
+        <button className="common-btn" onClick={handleDeleteSelected}>
           Delete Selected
         </button>
       </div>

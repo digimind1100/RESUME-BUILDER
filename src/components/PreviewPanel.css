@@ -214,7 +214,7 @@
 .education-details p {
   margin: 4px 0;
   line-height: 1.4;
-  color: #333;
+  color: #0f0f0f;
   border-bottom: 1px dotted #ccc;  
 }
 .education-details p:last-child {
@@ -225,6 +225,7 @@
 .edu-degree,
 .edu-year {
   font-size: 14px;
+  font-weight: 600;
   word-break: break-word;
 }
 .edu-school{
