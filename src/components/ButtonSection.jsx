@@ -1,7 +1,7 @@
 import React from "react";
 import "./ButtonSection.css";
 import DownloadPDF from "./DownloadPDF";
-import DownloadWord from "./DownloadWord";
+
 
 export default function ButtonSection({
   isEditing,
@@ -17,14 +17,6 @@ export default function ButtonSection({
     <div className="button-section-container button-section">
       <div className="button-section-inner">
         <DownloadPDF />
-
-        <DownloadWord
-          formData={formData}
-          selectedEducations={selectedEducations}
-          workExperiences={workExperiences}
-          skills={skills}
-          jobTitle={jobTitle}
-        />
 
         <button
           className="common-btn"

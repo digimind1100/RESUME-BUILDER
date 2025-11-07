@@ -8,7 +8,7 @@ import ButtonSection from "./ButtonSection";
 import FormatButtons from "./FormatButtons";
 import ThemeSelector from "./ThemeSelector";
 import "./ResumeBuilder.css"
-import DownloadWord from "./DownloadWord";
+
 const ResumeBuilder = () => {
   const [formData, setFormData] = useState({});
   const [selectedEducations, setSelectedEducations] = useState([]);
@@ -184,22 +184,17 @@ const ResumeBuilder = () => {
 
           {/* Button Section (below resume-theme, but still inside main container) */}
           <div className="button-section-container p-4 mt-4 md:mt-0">
-         <ButtonSection
-  isEditing={isEditing}
-  setIsEditing={setIsEditing}
-  handleDeleteSelected={handleDeleteSelected}
-  formData={formData}
-  selectedEducations={selectedEducations}
-  workExperiences={workExperiences}
-  skills={skills}
-  jobTitle={jobTitle}
-/>
-
-
-
+            <ButtonSection
+              isEditing={isEditing}
+              setIsEditing={setIsEditing}
+              handleDeleteSelected={handleDeleteSelected}
+              formData={formData}
+              selectedEducations={selectedEducations}
+              workExperiences={workExperiences}
+              skills={skills}
+              jobTitle={jobTitle}
+            />
           </div>
-
-
           <PreviewPanel
             formData={formData}
             selectedEducations={selectedEducations}

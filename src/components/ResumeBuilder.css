@@ -19,13 +19,13 @@
 
   /* Left side: Form Panel */
   .form-panel {
-    width: 35%; /* adjust as needed */
-    min-width: 500px; /* optional minimum width */
+    width: 30%; /* adjust as needed */
+    min-width: 350px; /* optional minimum width */
   }
 
   /* Right side: Theme + Preview + Buttons */
   .right-side {
-    width: 65%;
+    width: 70%;
     display: flex;
     flex-direction: column; /* stack resume-theme + button section */
     gap: 10px; /* spacing between preview and button section */
