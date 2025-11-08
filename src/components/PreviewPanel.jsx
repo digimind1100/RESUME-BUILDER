@@ -5,7 +5,6 @@ import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaLinkedin } from "react-icons/fa"
 import { paginateEntries } from "../utils/paginateEntries";
 import { paginateWorkEntries } from "../utils/paginateWorkEntries";
 import { paginateSkillsEntries } from "../utils/paginateSkillsEntries";
-
 import WorkPreview from "./WorkPreview";
 import SkillsPreview from "./SkillsPreview";
 

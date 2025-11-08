@@ -39,6 +39,15 @@ export default function Navbar() {
           </Link>
         </li>
         <li>
+        <Link 
+        to="/templates" 
+        className={location.pathname === "/features" ? "active" : ""}
+        onClick={handleLinkClick}
+        >
+        Templates
+        </Link>
+        </li>
+        <li>
           <Link
             to="/features"
             className={location.pathname === "/features" ? "active" : ""}

@@ -218,15 +218,8 @@ const ResumeBuilder = () => {
             handleAddSkillsClick={handleAddSkillsClick}
             theme={theme}
           />
-
         </div>
-
-
-
       </div>
-
-
-
       {/* Popups */}
       {showWorkPopup && (
         <WorkPopup

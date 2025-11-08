@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from "react-route
 import Navbar from "./components/Navbar";
 import HomePage from "./components/Home";
 import ResumeBuilderPage from "./components/ResumeBuilderPage";
+import Templates from "./components/Templates";
 
 function AppContent() {
   const location = useLocation();
@@ -16,6 +17,7 @@ function AppContent() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/resume" element={<ResumeBuilderPage />} />
+        <Route path="/templates" element={<Templates />} />
       </Routes>
     </>
   );
