@@ -4,7 +4,6 @@ import Navbar from "./components/Navbar";
 import HomePage from "./components/Home";
 import ResumeBuilderPage from "./components/ResumeBuilderPage";
 import Templates from "./components/Templates";
-
 function AppContent() {
   const location = useLocation();
 
@@ -20,6 +19,9 @@ function AppContent() {
         <Route path="/templates" element={<Templates />} />
       </Routes>
     </>
+
+
+
   );
 }
 
@@ -28,5 +30,7 @@ export default function App() {
     <Router>
       <AppContent />
     </Router>
+
+
   );
 }

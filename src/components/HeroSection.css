@@ -1,6 +1,6 @@
 .hero-container {
   background: linear-gradient(135deg, #f9fafb, #eef2ff);
-  padding: 80px 40px;
+  padding: 80px 40px 40px 40px;
   display: flex;
   justify-content: center;
   align-items: center;
