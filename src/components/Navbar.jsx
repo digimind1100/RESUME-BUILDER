@@ -56,6 +56,15 @@ export default function Navbar() {
             Features
           </Link>
         </li>
+       <Link 
+       to="/coverletter" 
+       className={location.pathname === "/features" ? "active" : ""}
+       onClick={handleLinkClick}
+       >
+        Cover Letter
+        </Link>
+
+
         <li>
           <Link
             to="/pricing"

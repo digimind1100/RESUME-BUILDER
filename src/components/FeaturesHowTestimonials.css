@@ -1,124 +1,138 @@
-/* Section container */
 .features-section {
-  padding: 3rem 1rem;
-  background: linear-gradient(135deg, #f9fafb, #eef2ff);
+  background: #f9fafc;
+  padding: 80px 20px;
+  color: #1f2937;
+  font-family: "Inter", sans-serif;
 }
 
-/* Centered container */
-.container {
+/* Section container */
+.section-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1rem;
   text-align: center;
+  margin-bottom: 80px;
 }
 
-/* Section titles */
+/* Section title */
 .section-title {
-  font-size: 2rem; /* text-3xl */
+  font-size: 2.2rem;
   font-weight: 700;
-  margin-bottom: 2rem;
+  color: #111827;
+  margin-bottom: 40px;
+  position: relative;
 }
 
-@media(min-width: 768px) {
-  .section-title {
-    font-size: 2.25rem; /* text-4xl */
-  }
+.section-title::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 4px;
+  background: #4f46e5;
+  border-radius: 2px;
+  margin: 12px auto 0;
 }
 
-/* Grid layout for 3 columns */
-.grid-3 {
+/* Grid layout */
+.card-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  justify-items: center;
 }
 
-@media(min-width: 768px) {
-  .grid-3 {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-/* Cards */
+/* Card base */
 .card {
-  padding: 1.5rem;
-  background-color: #ffffff;
-  border-radius: 0.5rem;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-  transition: box-shadow 0.3s ease;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 28px 22px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  width: 100%;
+  max-width: 360px;
 }
 
 .card:hover {
-  box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+  transform: translateY(-6px);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12);
 }
 
-.card-img {
-  width: 4rem; /* 16 * 4px = 64px */
-  margin: 0 auto 1rem;
+/* Icons */
+.card-icon {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 18px;
 }
 
-.card-title {
-  font-size: 1.125rem; /* text-xl */
+/* Headings */
+.card-heading {
+  font-size: 1.25rem;
   font-weight: 600;
-  margin-bottom: 0.5rem;
+  margin-bottom: 10px;
+  color: #111827;
 }
 
+/* Text */
 .card-text {
-  color: #4b5563; /* Tailwind gray-600 */
-  font-size: 0.875rem;
-  line-height: 1.5;
+  color: #4b5563;
+  line-height: 1.6;
 }
 
-/* Step numbers */
+/* Step cards */
+.step-card {
+  position: relative;
+  padding-top: 50px;
+}
+
 .step-number {
-  font-size: 2.25rem; /* text-4xl */
-  font-weight: 700;
-  color: #6366f1; /* Tailwind indigo-600 */
-  margin-bottom: 1rem;
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #4f46e5;
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Testimonials */
+.testimonial-card {
+  background: white;
+  border-left: 4px solid #4f46e5;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+  max-width: 360px;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-5px);
+}
+
 .testimonial-text {
   font-style: italic;
-  color: #4b5563;
-  margin-bottom: 1rem;
+  color: #374151;
+  margin-bottom: 12px;
 }
 
 .testimonial-author {
   font-weight: 600;
-  color: #111827; /* Tailwind gray-900 */
+  color: #111827;
 }
 
-/* Gaps for How It Works section */
-.gap-10 {
-  gap: 2.5rem;
-}
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .features-section {
+    padding: 60px 16px;
+  }
 
-
-/* Section container */
-.features-section {
-  padding: 4rem 1rem;
-  background-color: #6366F1; /* same as hero section */
-  color: white; /* make text readable on dark background */
-}
-
-.card {
-  padding: 1.5rem;
-  background-color: #ffffff; /* keep cards white */
-  border-radius: 0.5rem;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-  transition: box-shadow 0.3s ease;
-  color: #111827; /* text color inside cards */
-}
-
-/* Section titles */
-.section-title {
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 2rem;
-  color: black; /* title on hero color */
-}
-
-/* Card text */
-.card-text {
-  color: #4b5563;
+  .section-title {
+    font-size: 1.8rem;
+  }
 }

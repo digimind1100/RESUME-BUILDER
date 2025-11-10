@@ -1,0 +1,88 @@
+/* src/components/Footer.css */
+
+.footer {
+  background: linear-gradient(135deg, #1f1f2e, #2e2e3e);
+  color: #f0f0f0;
+  padding: 60px 0 20px;
+  font-family: "Poppins", sans-serif;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 40px;
+}
+
+.footer-section h3.footer-title {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section ul li {
+  margin-bottom: 10px;
+}
+
+.footer-section ul li a {
+  color: #cfcfcf;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+  color: #00c6ff;
+}
+
+.footer-logo {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #00c6ff;
+  margin-bottom: 10px;
+}
+
+.footer-about {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #cfcfcf;
+}
+
+.footer-social a {
+  display: inline-block;
+  color: #cfcfcf;
+  margin-right: 10px;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+}
+
+.footer-social a:hover {
+  color: #00c6ff;
+  transform: translateY(-3px);
+}
+
+.footer-contact a {
+  color: #cfcfcf;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.footer-contact a:hover {
+  color: #00c6ff;
+}
+
+.footer-bottom {
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 40px;
+  padding-top: 15px;
+  font-size: 0.85rem;
+  color: #b0b0b0;
+}

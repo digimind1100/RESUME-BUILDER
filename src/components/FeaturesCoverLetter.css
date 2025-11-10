@@ -1,0 +1,84 @@
+.cover-letter-section {
+  padding: 80px 20px;
+  background-color: #f0f4f8; /* subtle soft background */
+}
+
+.cover-letter-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.cover-letter-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 16px;
+  color: #1f2937; /* dark elegant text */
+}
+
+.cover-letter-subtitle {
+  font-size: 1.125rem;
+  color: #4b5563; /* softer gray */
+  margin-bottom: 40px;
+}
+
+.cover-letter-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.cover-letter-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 24px;
+  flex: 0 0 300px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.cover-letter-card:hover {
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+  transform: translateY(-4px);
+}
+
+.cover-letter-icon {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 16px;
+}
+
+.cover-letter-card h3 {
+  font-size: 1.25rem;
+  margin-bottom: 12px;
+  color: #111827;
+}
+
+.cover-letter-card p {
+  font-size: 1rem;
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+.cover-letter-cta {
+  margin-top: 20px;
+}
+
+.cover-letter-button {
+  display: inline-block;
+  padding: 14px 28px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: #3b82f6; /* blue button */
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.cover-letter-button:hover {
+  background-color: #2563eb; /* darker blue on hover */
+}

@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import HomePage from "./components/Home";
 import ResumeBuilderPage from "./components/ResumeBuilderPage";
 import Templates from "./components/Templates";
+import CoverLetter from "./components/CoverLetter";
 function AppContent() {
   const location = useLocation();
 
@@ -17,6 +18,7 @@ function AppContent() {
         <Route path="/" element={<HomePage />} />
         <Route path="/resume" element={<ResumeBuilderPage />} />
         <Route path="/templates" element={<Templates />} />
+         <Route path="/cover-letter" element={<CoverLetter />} />
       </Routes>
     </>
 
