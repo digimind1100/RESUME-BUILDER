@@ -95,7 +95,7 @@ export default function Navbar() {
 
       {/* Desktop Resume Button */}
       <div className="navbar-btn">
-        <Link to="/resume" className="resume-btn">
+        <Link to="/resume" className="resume-btn" onClick={handleLinkClick}>
           Start Builder
         </Link>
       </div>
