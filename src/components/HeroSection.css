@@ -1,162 +1,107 @@
+/* ==== HERO SECTION ==== */
 .hero-container {
-  background: linear-gradient(135deg, #f9fafb, #eef2ff);
-  padding: 80px 40px 40px 40px;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 80px 0;
+  background-color: #f9fafc;
 }
 
 .hero-content {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  max-width: 1100px;
-  width: 100%;
+  justify-content: space-between;
   gap: 40px;
+  flex-wrap: wrap;
+  width: 90%;
+  max-width: 1200px;
 }
 
+/* LEFT SIDE TEXT */
 .hero-text {
-  flex: 1;
-  text-align: left;
+  flex: 1 1 420px;
 }
 
 .hero-title {
-  font-size: 2.8rem;
+  font-size: 2.5rem;
   font-weight: 700;
-  color: #111827;
   line-height: 1.2;
-  margin-bottom: 16px;
+  margin-bottom: 0.6rem;
 }
-    .hero-titleh3 {
-     font-size: 1.8rem;
-  font-weight: 700;
-  color: #111827;
-  line-height: 1.2;
-  margin-bottom: 16px;
-  }
 
 .hero-title span {
-  color: #2563eb;
+  color: #0077ff;
 }
+
 .hero-titleh3 span {
-  color: #2563eb;
+  color: #333;
+  font-weight: 600;
 }
 
 .hero-subtitle {
-  color: #4b5563;
-  font-size: 1.125rem;
-  margin-bottom: 24px;
-  max-width: 480px;
+  font-size: 1.1rem;
+  color: #555;
+  margin: 14px 0 24px;
 }
 
 .hero-btn {
-  background-color: #2563eb;
+  background: #0077ff;
   color: white;
-  padding: 12px 28px;
-  border: none;
+  padding: 12px 26px;
   border-radius: 8px;
-  cursor: pointer;
+  border: none;
   font-size: 1rem;
-  transition: background 0.3s ease;
+  cursor: pointer;
+  transition: 0.3s ease;
 }
 
 .hero-btn:hover {
-  background-color: #1e40af;
+  background: #005fcc;
 }
 
+/* ==== RIGHT SIDE MOCKUP ==== */
 .hero-illustration {
-  flex: 1;
+  flex: 1 1 380px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.hero-svg {
+/* Reduced mockup size + removed all black borders */
+.mockup-box {
+  position: relative;
   width: 100%;
-  max-width: 340px;
-  height: auto;
+  max-width: 400px;   /* reduced from 1284 to compact size */
+  aspect-ratio: 4 / 3; /* proportional, looks balanced */
+  overflow: hidden;
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  background: #000;
 }
 
-/* ✅ Mobile Responsive Fix */
-@media (max-width: 768px) {
-  .hero-container {
-    padding: 60px 20px;
-  }
+.mockup-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* covers box perfectly without any black edges */
+  border: none;
+  display: block;
+}
 
+/* ==== RESPONSIVE ==== */
+@media (max-width: 900px) {
   .hero-content {
     flex-direction: column;
     text-align: center;
-    gap: 32px;
   }
 
   .hero-text {
-    text-align: center;
+    margin-bottom: 30px;
   }
 
-  .hero-title {
-    font-size: 1.5rem;
-  }
-  .hero-titleh3 span {
-  font-size:1.2rem;
-}
-
-  .hero-subtitle {
-    font-size: 1rem;
-    margin: 0 auto 20px;
-  }
-
-  .hero-btn {
-    padding: 10px 24px;
-    font-size: 0.95rem;
-  }
-
-  .hero-illustration {
-    margin-bottom: 20px;
-  }
-
-  /* ✅ Add left/right padding on small screens */
-  .hero-container,
-  .hero-text {
-    padding-left: 16px;
-    padding-right: 16px;
+  .mockup-box {
+    max-width: 90%;
   }
 }
-
-/* Video CSS */
-
-.hero-video {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
-  background: #f5f5f5;
-}
-
-.hero-video-wrapper {
-  position: relative;
-  width: 100%;
-  max-width: 420px;
-  border-radius: 12px;
-  overflow: hidden;
-  flex-shrink: 0;
-}
-
-/* The video itself */
-.hero-video-player {
-  width: 100%;
-  height: auto;
-  display: block;
-  border-radius: 12px;
-}
-
-/* ✅ Overlay affects only the video */
-.hero-video::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(255, 255, 255, 0.25); /* light dull effect */
-  pointer-events: none;
-}
-

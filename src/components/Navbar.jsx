@@ -39,13 +39,13 @@ export default function Navbar() {
           </Link>
         </li>
         <li>
-        <Link 
-        to="/templates" 
-        className={location.pathname === "/features" ? "active" : ""}
-        onClick={handleLinkClick}
-        >
-        Templates
-        </Link>
+          <Link
+            to="/templates"
+            className={location.pathname === "/features" ? "active" : ""}
+            onClick={handleLinkClick}
+          >
+            Templates
+          </Link>
         </li>
         <li>
           <Link
@@ -56,14 +56,15 @@ export default function Navbar() {
             Features
           </Link>
         </li>
-       <Link 
-       to="/coverletter" 
-       className={location.pathname === "/features" ? "active" : ""}
-       onClick={handleLinkClick}
-       >
-        Cover Letter
-        </Link>
-
+        <li>
+          <Link
+            to="/Coverletter"
+            className={location.pathname === "/features" ? "active" : ""}
+            onClick={handleLinkClick}
+          >
+            Cover Letter
+          </Link>
+        </li>
 
         <li>
           <Link

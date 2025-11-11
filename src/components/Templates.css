@@ -1,36 +1,120 @@
-.templates-page {
-  padding: 40px;
-  background: #f8f8f8;
-  min-height: 100vh;
-}
-
-.templates-heading {
-  font-size: 2rem;
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-.templates-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 20px;
-  justify-items: center;
-}
-
-.template-card {
-  width: 240px;
-  height: 320px;
-  background: white;
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+/* ============ Main Container ============ */
+.templates-section {
   display: flex;
-  align-items: center;
   justify-content: center;
-  cursor: pointer;
-  transition: transform 0.3s ease;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 40px;
+  padding: 60px 0;
+  background: #f9fafb;
 }
 
-.template-card:hover {
+/* ============ Each Template Block ============ */
+.template-block {
+  position: relative;
+  width: 460px;
+  height: 600px;
+  border-radius: 18px;
+  overflow: hidden;
+   background: #f9fafb;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.template-block:hover {
   transform: translateY(-6px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+}
+
+/* ============ Video Style ============ */
+.template-video {
+  width: 102%;
+  height: 102%;
+  object-fit: cover;
+  object-position: center;
+  transform: scale(1.01);
+  margin: -1px 0 0 0;
+  display: block;
+}
+
+
+/* ============ Button Footer Area ============ */
+.template-footer {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* ============ Common Button Style ============ */
+.template-btn {
+  font-size: 17px;
+  font-weight: 600;
+  padding: 10px 24px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  background: #ffffff;
+  color: #000;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* ============ Hover Effect ============ */
+.template-btn:hover {
+  background: #0d6efd;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* ============ Individual Template Customizations ============ */
+.classic-btn {
+  background: #f8f9fa;
+}
+
+.classic-btn:hover {
+  background: #007bff;
+  color: #fff;
+}
+
+.professional-btn {
+  background: #e3f2fd;
+}
+
+.professional-btn:hover {
+  background: #0d6efd;
+  color: #fff;
+}
+
+/* ============ Responsive Layout ============ */
+@media (max-width: 992px) {
+  .template-block {
+    width: 400px;
+    height: 520px;
+  }
+}
+
+@media (max-width: 768px) {
+  .templates-section {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .template-block {
+    width: 90%;
+    height: auto;
+    aspect-ratio: 3 / 4;
+  }
+
+  .template-footer {
+    bottom: 15px;
+    right: 15px;
+  }
+
+  .template-btn {
+    font-size: 16px;
+    padding: 8px 20px;
+  }
 }

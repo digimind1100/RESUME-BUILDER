@@ -1,6 +1,7 @@
-// src/pages/CoverLetter.jsx
+// ./CoverLetter.jsx
 import React from "react";
 import "./CoverLetter.css";
+
 
 const CoverLetter = () => {
   return (
