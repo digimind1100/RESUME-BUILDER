@@ -135,3 +135,22 @@ label {
   color: #333;
   font-size: 15px;
 }
+
+
+
+/* Form Panel QR Code CSS  */
+.qr-btn {
+  background-color: #1a73e8;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+  font-weight: 500;
+}
+.qr-btn:hover {
+  background-color: #0c57b5;
+}

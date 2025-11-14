@@ -1,13 +1,13 @@
-// ResumeBuilder.jsx
+// ResumeBuilderQR.jsx
 import React, { useState } from "react";
-import FormPanel from "./FormPanel";
-import PreviewPanel from "./PreviewPanel";
+import FormPanelQR from "./FormPanelQR";
+import PreviewPanelQR from "./PreviewPanelQR";
 import WorkPopup from "./WorkExpPopup";
 import SkillsPopup from "./SkillsPopup";
 import ButtonSection from "./ButtonSection";
 import FormatButtons from "./FormatButtons";
 import ThemeSelector from "./ThemeSelector";
-import "./ResumeBuilder.css"
+import "./ResumeBuilder.css";
 
 const ResumeBuilderQR = () => {
   const [formData, setFormData] = useState({});
@@ -17,53 +17,21 @@ const ResumeBuilderQR = () => {
   const [skills, setSkills] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
 
-  // Popup visibility states
+  // Popup visibility
   const [showWorkPopup, setShowWorkPopup] = useState(false);
   const [showSkillsPopup, setShowSkillsPopup] = useState(false);
 
-  // Theme state (example default)
+  // Theme colors
   const [theme, setTheme] = useState({
-    left: "#17639F",
+    left: "#ffffff",
     job: "#F4ECE1",
     text: "#000",
   });
 
-  // --- Education add handler ---
-  const addEducation = (education) => {
-    setSelectedEducations((prev) => [...prev, education]);
-  };
+  // QR Code State
+  const [qrData, setQrData] = useState(null);
 
-  // --- Format handler (keeps previous behavior) ---
-  const handleFormat = (action) => {
-    const selection = window.getSelection();
-    if (!selection.rangeCount) return;
-
-    const range = selection.getRangeAt(0);
-    const selectedText = range.extractContents();
-    const span = document.createElement("span");
-
-    switch (action) {
-      case "bold":
-        span.style.fontWeight = "bold";
-        break;
-      case "italic":
-        span.style.fontStyle = "italic";
-        break;
-      case "underline":
-        span.style.textDecoration = "underline";
-        break;
-      case "font":
-        span.style.fontFamily = "Georgia, serif";
-        break;
-      default:
-        break;
-    }
-
-    span.appendChild(selectedText);
-    range.insertNode(span);
-  };
-
-  // --- Toggle skill checkbox ---
+  // --- Checkbox handlers ---
   const toggleSkillCheckbox = (id) => {
     setSkills((prev) =>
       prev.map((skill) =>
@@ -72,7 +40,6 @@ const ResumeBuilderQR = () => {
     );
   };
 
-  // --- Toggle work checkbox ---
   const toggleWorkCheckbox = (id) => {
     setWorkExperiences((prev) =>
       prev.map((work) =>
@@ -81,10 +48,11 @@ const ResumeBuilderQR = () => {
     );
   };
 
-  // --- Education checkbox handler ---
   const handleCheckboxChange = (index) => {
     setSelectedEducations((prev) =>
-      prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
+      prev.includes(index)
+        ? prev.filter((i) => i !== index)
+        : [...prev, index]
     );
   };
 
@@ -94,7 +62,7 @@ const ResumeBuilderQR = () => {
   const handleAddSkillsClick = () => setShowSkillsPopup(true);
   const handleCloseSkillsPopup = () => setShowSkillsPopup(false);
 
-  // --- AI selection handlers (work + skills) ---
+  // --- AI item selecting handlers ---
   const handleWorkSelect = (item) => {
     const textValue =
       typeof item === "string"
@@ -113,76 +81,84 @@ const ResumeBuilderQR = () => {
     };
 
     setWorkExperiences((prev) => {
-      const alreadyExists = prev.some((w) => w.text === textValue);
-      if (alreadyExists) return prev; // prevent duplicates
-      return [...prev, newWork];
+      const exists = prev.some((w) => w.text === textValue);
+      return exists ? prev : [...prev, newWork];
     });
-
-    console.log("✅ Added Work:", textValue);
   };
 
   const handleSkillSelect = (item) => {
-    const textValue =
-      typeof item === "string" ? item.trim() : item.text || "";
-
+    const textValue = typeof item === "string" ? item.trim() : item.text || "";
     if (!textValue) return;
 
-    const newSkill = {
-      id: Date.now(),
-      text: textValue,
-      checked: false,
-    };
+    const newSkill = { id: Date.now(), text: textValue, checked: false };
 
     setSkills((prev) => {
-      const alreadyExists = prev.some((s) => s.text === textValue);
-      if (alreadyExists) return prev;
-      return [...prev, newSkill];
+      const exists = prev.some((s) => s.text === textValue);
+      return exists ? prev : [...prev, newSkill];
     });
-
-    console.log("✅ Added Skill:", textValue);
   };
 
-  // --- Delete selected items (work + skills) ---
+  // Delete selected work+skills
   const handleDeleteSelected = () => {
     setWorkExperiences((prev) => prev.filter((exp) => !exp.checked));
     setSkills((prev) => prev.filter((skill) => !skill.checked));
   };
 
+  // --- Generate QR ---
+  const handleGenerateQR = () => {
+    if (!formData.fullName || !formData.email) {
+      alert("Please enter at least Name and Email before generating QR code.");
+      return;
+    }
+
+    const qrContent = {
+      fullName: formData.fullName,
+      email: formData.email,
+      phone: formData.phone,
+      address: formData.address,
+      city: formData.city,
+      country: formData.country,
+      linkedin: formData.linkedin,
+      dob: formData.dob,
+    };
+
+    setQrData(qrContent);
+
+    console.log("QR Generated:", qrContent);
+  };
+
   return (
     <div className="resume-builder-container flex flex-col md:flex-row md:items-start">
-      {/* Left side: Form Panel */}
+
+      {/* LEFT FORM PANEL */}
       <div className="form-panel w-full md:w-[40%] p-4">
-        <FormPanel
+        <FormPanelQR
           formData={formData}
           setFormData={setFormData}
           selectedEducations={selectedEducations}
           setSelectedEducations={setSelectedEducations}
-          addEducation={addEducation}
           jobTitle={jobTitle}
           setJobTitle={setJobTitle}
           openWorkPopup={handleOpenWorkPopup}
-          onAddWorkExp={handleOpenWorkPopup}
           onAddSkillsClick={handleAddSkillsClick}
+          onGenerateQR={handleGenerateQR}
         />
       </div>
 
-      {/* Right side: Theme + Preview */}
+      {/* RIGHT PREVIEW AREA */}
       <div className="right-side w-full lg:w-[60%] flex flex-col">
         <div className="resume-theme w-full flex flex-col p-4" id="resumeContainer">
+
           <div className="theme-selector-container p-2">
             <ThemeSelector onThemeChange={setTheme} />
           </div>
 
-          {/* Format Buttons (floating below preview if editing) */}
           {isEditing && (
             <div className="format-buttons-wrapper">
-              <FormatButtons
-                handleFormat={handleFormat}
-              />
+              <FormatButtons handleFormat={() => {}} />
             </div>
           )}
 
-          {/* Button Section (below resume-theme, but still inside main container) */}
           <div className="button-section-container p-4 mt-4 md:mt-0">
             <ButtonSection
               isEditing={isEditing}
@@ -195,32 +171,25 @@ const ResumeBuilderQR = () => {
               jobTitle={jobTitle}
             />
           </div>
-          <PreviewPanel
+
+          {/* PREVIEW PANEL */}
+          <PreviewPanelQR
             formData={formData}
             selectedEducations={selectedEducations}
             handleCheckboxChange={handleCheckboxChange}
             jobTitle={jobTitle}
             workExperiences={workExperiences}
             skills={skills}
-            deleteWorkExperience={(arg) => {
-              // keep original behaviour if parent expects call with array or no-arg
-              // we pass through to remove selected if provided earlier — unchanged
-              console.warn("deleteWorkExperience placeholder - original handler lives in parent/context");
-            }}
-            deleteSkill={(idOrList) => {
-              // parent handles deleting; keep local deleteSkill behavior in parent components
-              console.warn("deleteSkill placeholder - original handler lives in parent/context");
-            }}
+            theme={theme}
             isEditing={isEditing}
             toggleWorkCheckbox={toggleWorkCheckbox}
             toggleSkillCheckbox={toggleSkillCheckbox}
-            handleOpenWorkPopup={handleOpenWorkPopup}
-            handleAddSkillsClick={handleAddSkillsClick}
-            theme={theme}
+            qrData={qrData}
           />
         </div>
       </div>
-      {/* Popups */}
+
+      {/* POPUPS */}
       {showWorkPopup && (
         <WorkPopup
           jobTitle={jobTitle}

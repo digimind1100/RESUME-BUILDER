@@ -5,6 +5,8 @@ import HomePage from "./components/Home";
 import ResumeBuilderPage from "./components/ResumeBuilderPage";
 import Templates from "./components/Templates";
 import CoverLetter from "./components/CoverLetter";
+import ResumeBuilderQR from "./components/ResumeBuilderQR";
+
 function AppContent() {
   const location = useLocation();
 
@@ -20,6 +22,10 @@ function AppContent() {
         <Route path="/templates" element={<Templates />} />
          <Route path="/cover-letter" element={<CoverLetter />} />
       </Routes>
+
+      <div className="min-h-screen bg-gray-50">
+      <ResumeBuilderQR />
+    </div>
     </>
 
 
