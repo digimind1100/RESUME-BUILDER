@@ -7,6 +7,7 @@ import { paginateSkillsEntries } from "../utils/paginateSkillsEntries";
 import WorkPreview from "./WorkPreview";
 import SkillsPreview from "./SkillsPreview";
 
+
 // QR Code fixed import for Vite
 import { QRCodeCanvas } from "qrcode.react";
 
@@ -136,19 +137,22 @@ export default function PreviewPanelQR({
               />
             </div>
 
-            <div className="qr-box">
-              {qrData ? (
-                <QRCodeCanvas
-                  value={typeof qrData === "string" ? qrData : JSON.stringify(qrData)}
-                  size={190}
-                  bgColor="#ffffff"
-                  fgColor="#000000"
-                />
-              ) : (
-                <div className="qr-placeholder">QR Code Will Appear Here</div>
-              )}
-            </div>
+         <div className="qr-box">
+  {qrData ? (
+    <QRCodeCanvas
+      value={typeof qrData === "string" ? qrData : JSON.stringify(qrData)}
+      size={190}
+      bgColor="#ffffff"
+      fgColor="#000000"
+    />
+  ) : (
+    <div className="qr-placeholder">QR Code Will Appear Here</div>
+  )}
+</div>
 
+
+
+      
 
             {/* ===== Education heading for Page 1 ===== */}
             <h3 className="section-heading">Education (Page 1)</h3>

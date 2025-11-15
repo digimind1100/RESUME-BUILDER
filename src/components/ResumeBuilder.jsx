@@ -6,6 +6,7 @@ import SkillsPopup from "./SkillsPopup";
 import ButtonSection from "./ButtonSection";
 import FormatButtons from "./FormatButtons";
 import ThemeSelector from "./ThemeSelector";
+import PreviewPanel from "./PreviewPanel";
 import "./ResumeBuilder.css"
 
 const ResumeBuilder = () => {

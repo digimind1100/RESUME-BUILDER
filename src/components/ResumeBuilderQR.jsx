@@ -6,7 +6,9 @@ import SkillsPopup from "./SkillsPopup";
 import ButtonSection from "./ButtonSection";
 import FormatButtons from "./FormatButtons";
 import ThemeSelector from "./ThemeSelector";
+import PreviewPanelQR from "./PreviewPanelQR";
 import "./ResumeBuilder.css";
+
 
 
 const ResumeBuilderQR = () => {
