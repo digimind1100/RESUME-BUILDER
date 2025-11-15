@@ -142,7 +142,7 @@
 .section-heading,
 .preview-education h3,
 .preview-right h2 {
-  margin-top: 8px;
+  margin-top: 20px;
   margin-bottom: 8px;
 }
 
@@ -338,3 +338,20 @@ display: flex;
 }
 
 
+.qr-box {
+  width: 190px;
+  height: 190px;
+  background: #fff;
+  border: 2px dashed #c0c0c0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 18px auto 0;
+}
+
+.qr-placeholder {
+  font-size: 12px;
+  color: #888;
+  text-align: center;
+  padding: 10px;
+}

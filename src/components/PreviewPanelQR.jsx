@@ -136,23 +136,18 @@ export default function PreviewPanelQR({
               />
             </div>
 
-            {qrData && (
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  marginTop: 20,
-                  marginBottom: 20,
-                }}
-              >
+            <div className="qr-box">
+              {qrData ? (
                 <QRCodeCanvas
                   value={typeof qrData === "string" ? qrData : JSON.stringify(qrData)}
-                  size={180}
+                  size={190}
                   bgColor="#ffffff"
                   fgColor="#000000"
                 />
-              </div>
-            )}
+              ) : (
+                <div className="qr-placeholder">QR Code Will Appear Here</div>
+              )}
+            </div>
 
 
             {/* ===== Education heading for Page 1 ===== */}

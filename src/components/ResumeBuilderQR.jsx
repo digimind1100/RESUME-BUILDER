@@ -1,13 +1,13 @@
 // ResumeBuilderQR.jsx
 import React, { useState } from "react";
 import FormPanelQR from "./FormPanelQR";
-import PreviewPanelQR from "./PreviewPanelQR";
 import WorkPopup from "./WorkExpPopup";
 import SkillsPopup from "./SkillsPopup";
 import ButtonSection from "./ButtonSection";
 import FormatButtons from "./FormatButtons";
 import ThemeSelector from "./ThemeSelector";
 import "./ResumeBuilder.css";
+
 
 const ResumeBuilderQR = () => {
   const [formData, setFormData] = useState({});

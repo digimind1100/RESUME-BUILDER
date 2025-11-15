@@ -1,7 +1,6 @@
 // ResumeBuilder.jsx
 import React, { useState } from "react";
 import FormPanel from "./FormPanel";
-import PreviewPanel from "./PreviewPanel";
 import WorkPopup from "./WorkExpPopup";
 import SkillsPopup from "./SkillsPopup";
 import ButtonSection from "./ButtonSection";

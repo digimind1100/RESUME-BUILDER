@@ -1,44 +1,17 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import HomePage from "./components/Home";
-import ResumeBuilderPage from "./components/ResumeBuilderPage";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Templates from "./components/Templates";
-import CoverLetter from "./components/CoverLetter";
-import ResumeBuilderQR from "./components/ResumeBuilderQR";
 
-function AppContent() {
-  const location = useLocation();
-
-  // Hide Navbar on Resume Builder page
-  const hideNavbar = location.pathname === "/resume";
-
-  return (
-    <>
-      {!hideNavbar && <Navbar />}
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/resume" element={<ResumeBuilderPage />} />
-        <Route path="/templates" element={<Templates />} />
-         <Route path="/cover-letter" element={<CoverLetter />} />
-      </Routes>
-
-      <div className="min-h-screen bg-gray-50">
-      <ResumeBuilderQR />
-    </div>
-    </>
-
-
-
-  );
-}
+import ResumeBuilderQR from "./components/ResumeBuilderQR";   
+import ResumeBuilder from "./components/ResumeBuilder";      
 
 export default function App() {
   return (
     <Router>
-      <AppContent />
+      <Routes>
+        <Route path="/" element={<Templates />} />
+        <Route path="/resume-classic" element={<ResumeBuilderQR />} />
+        <Route path="/resume-professional" element={<ResumeBuilder />} />
+      </Routes>
     </Router>
-
-
   );
 }
