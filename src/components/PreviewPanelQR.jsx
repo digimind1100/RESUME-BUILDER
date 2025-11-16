@@ -152,8 +152,6 @@ export default function PreviewPanelQR({
 
 
 
-      
-
             {/* ===== Education heading for Page 1 ===== */}
             <h3 className="section-heading">Education (Page 1)</h3>
           </div>
@@ -162,7 +160,7 @@ export default function PreviewPanelQR({
           {page1Education.map(({ edu, idx }) => (
             <div
               key={idx}
-              className="education-entry border p-2 my-2 rounded"
+              className="education-entry-qr border p-2 my-2 rounded"
               style={{
                 backgroundColor: theme.left,
                 color: theme.text,
@@ -180,6 +178,22 @@ export default function PreviewPanelQR({
               </div>
             </div>
           ))}
+
+          {page2Education.length > 0 &&
+            page1Education.length > 0 &&
+            pageBreakY != null &&
+            (1016 - pageBreakY) > 20 && (
+              <div
+                style={{
+                  marginTop: "10px",
+                  fontStyle: "italic",
+                  textAlign: "center",
+                  opacity: 0.7,
+                }}
+              >
+                Continue on Page 2 →
+              </div>
+            )}
         </div>
 
         {/* ===== RIGHT SIDE: WORK + SKILLS (Page 1) ===== */}
@@ -235,7 +249,7 @@ export default function PreviewPanelQR({
                 return (
                   <div
                     key={globalIdx}
-                    className="education-entry border p-2 my-2 rounded"
+                    className="education-entry-qr border p-2 my-2 rounded"
                     style={{ backgroundColor: theme.left }}
                   >
                     <input

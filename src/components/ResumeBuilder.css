@@ -142,3 +142,14 @@
 
 
 /* mobile css to make responsive END  */
+@media (max-width: 1023px) and (min-width: 769px) {
+  #resumeContainer {
+    position: relative;  /* essential */
+    width: 100%;         /* full width below form panel */
+    margin-top: 1rem;    /* small spacing if needed */
+  }
+
+  .form-panel {
+    width: 100%;         /* full width */
+  }
+}

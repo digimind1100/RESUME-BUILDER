@@ -4,14 +4,14 @@ import "./FormPanel.css";
 import "./ButtonSection.css"
 
 export default function FormPanel({
-formData = {},
-  setFormData = () => {},
+  formData = {},
+  setFormData = () => { },
   selectedEducations = [],
-  setSelectedEducations = () => {},
+  setSelectedEducations = () => { },
   jobTitle = "",
-  setJobTitle = () => {},
-  openWorkPopup = () => {},     // Work Exp popup trigger
-  onAddSkillsClick = () => {},  // Skills popup trigger
+  setJobTitle = () => { },
+  openWorkPopup = () => { },     // Work Exp popup trigger
+  onAddSkillsClick = () => { },  // Skills popup trigger
 
 }) {
 
@@ -69,17 +69,17 @@ formData = {},
 
 
 
-const handleOpenWorkPopup = () => {
-  if (!jobTitle.trim()) {
-    alert("Mention Job Title to get AI suggestions.");
-    return;
-  }
+  const handleOpenWorkPopup = () => {
+    if (!jobTitle.trim()) {
+      alert("Mention Job Title to get AI suggestions.");
+      return;
+    }
 
-  // Parent ka handler call karo (ResumeBuilder se aaya hai)
-  openWorkPopup();
-};
+    // Parent ka handler call karo (ResumeBuilder se aaya hai)
+    openWorkPopup();
+  };
 
-// 🔹 Add Skills button handler
+  // 🔹 Add Skills button handler
   const handleAddSkillsClick = () => {
     if (!jobTitle.trim()) {
       alert("Mention Job Title to get AI suggestions.");
@@ -95,7 +95,7 @@ const handleOpenWorkPopup = () => {
       <h2>Personal Information</h2>
 
       <label>Upload Profile Picture</label>
-      <input type="file" className="profile-input"  accept="image/*" onChange={handleFileChange} />
+      <input type="file" className="profile-input" accept="image/*" onChange={handleFileChange} />
 
       <label>Job Title</label>
       <input
@@ -221,21 +221,21 @@ const handleOpenWorkPopup = () => {
 
       {/* --- NEW BUTTONS --- */}
       <button
-  className="add-exp-btn"
-  type="button"
-  onClick={handleOpenWorkPopup}
->
-  + Add Work Experience
-</button>
+        className="add-exp-btn"
+        type="button"
+        onClick={handleOpenWorkPopup}
+      >
+        + Add Work Experience
+      </button>
 
 
-<button
-  type="button"
-  className=" add-skill-btn btn btn-primary mt-2"
-  onClick={handleAddSkillsClick}
->
-  Add Skills
-</button>
+      <button
+        type="button"
+        className=" add-skill-btn btn btn-primary mt-2"
+        onClick={handleAddSkillsClick}
+      >
+        Add Skills
+      </button>
 
 
     </div>
