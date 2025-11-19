@@ -5,7 +5,7 @@ import Navbar from "./components/Navbar";
 import HomePage from "./components/Home";
 import ResumeBuilderPage from "./components/ResumeBuilderPage";
 import Templates from "./components/Templates";
-import CoverLetter from "./components/CoverLetter";
+import CoverLetterPanel from "./components/CoverLetterPanel";
 import PreviewPanelQRPage from "./components/PreviewPanelQRPage";
 
 // NEW builder pages
@@ -67,7 +67,12 @@ function AppContent() {
         <Route path="/resume-professional" element={<ResumeBuilder />} />
 
         <Route path="/templates" element={<Templates setResumeStyle={setResumeStyle} />} />
-        <Route path="/cover-letter" element={<CoverLetter />} />
+       <Route
+  path="/cover-letter"
+  element={<CoverLetterPanel resumeStyle={resumeStyle} />}
+/>
+
+
 
         <Route
           path="/preview-classic"

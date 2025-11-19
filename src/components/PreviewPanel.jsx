@@ -48,8 +48,6 @@ export default function PreviewPanel({
 
   // safe fallback at top of component (you probably already have selectedTheme in props)
 
-
-
   // ================= EFFECT: EDUCATION PAGINATION =================
   useEffect(() => {
     const eduList = Array.isArray(formData.education) ? formData.education : [];

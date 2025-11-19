@@ -12,21 +12,17 @@ app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 
 // ✅ Initialize OpenAI client
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY, // make sure your key is in .env
-});
+const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
-// ✅ Unified suggestion route
+// ===== Unified Suggestion Route =====
 app.post("/api/suggest", async (req, res) => {
   try {
     const { jobTitle, type } = req.body;
-    console.log(`✅ Received jobTitle: "${jobTitle}", type: "${type}"`);
 
     if (!type || !jobTitle) {
       return res.status(400).json({ error: "type and jobTitle required" });
     }
 
-    // Prompt
     let prompt;
     if (type === "skills") {
       prompt = `List 10 important professional skills for a ${jobTitle}. Respond only with a plain list.`;
@@ -36,36 +32,54 @@ app.post("/api/suggest", async (req, res) => {
       return res.status(400).json({ error: 'Invalid type. Must be "skills" or "work"' });
     }
 
-    // ✅ OpenAI API call
     const response = await client.chat.completions.create({
       model: "gpt-3.5-turbo",
       messages: [{ role: "user", content: prompt }],
     });
 
     const text = response.choices[0]?.message?.content || "";
-    console.log("📌 Raw AI Response:", text);
 
-    // ✅ Clean array
     const items = text
       .split("\n")
       .map((line) => line.replace(/^\d+[\).\s-]*/, "").trim())
       .filter((line) => line.length > 0);
 
-    console.log("📌 Parsed Items:", items);
-
-    if (type === "skills") {
-      return res.json({ skills: items });
-    } else {
-      return res.json({ work: items });
-    }
+    if (type === "skills") return res.json({ skills: items });
+    return res.json({ work: items });
   } catch (error) {
     console.error("❌ API Error:", error.response?.data || error.message);
     res.status(500).json({ error: "Failed to fetch suggestions" });
   }
 });
 
+// ===== Cover Letter Route =====
+app.post("/api/cover-letter", async (req, res) => {
+  const { companyName, jobTitle, attentionName, yourName } = req.body;
 
-// ✅ Example server start
-app.listen(3001, () => {
-  console.log("🚀 Server running on http://localhost:3001");
+  if (!companyName || !jobTitle || !yourName) {
+    return res.status(400).json({ error: "Missing required fields" });
+  }
+
+  try {
+    // Example simple cover letter
+    const coverLetter = `Dear ${attentionName || "Hiring Manager"} at ${companyName},
+
+I am excited to apply for the ${jobTitle} position.
+
+Sincerely,
+${yourName}`;
+
+    res.json({ coverLetter });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to generate cover letter" });
+  }
+});
+
+
+
+// ===== Start Server =====
+const PORT = 3001;
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on http://localhost:${PORT}`);
 });

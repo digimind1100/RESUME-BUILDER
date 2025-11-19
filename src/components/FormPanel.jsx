@@ -91,7 +91,7 @@ export default function FormPanel({
 
 
   return (
-    <div className="form-panel">
+    <div className="form-panel" autoComplete="off">
       <h2>Personal Information</h2>
 
       <label>Upload Profile Picture</label>
@@ -99,6 +99,7 @@ export default function FormPanel({
 
       <label>Job Title</label>
       <input
+      autoComplete="off"
         type="text"
         name="jobTitle"
         placeholder="e.g. Frontend Developer"
@@ -114,6 +115,7 @@ export default function FormPanel({
 
       <label>Full Name</label>
       <input
+      autoComplete="off"
         type="text"
         name="fullName"
         placeholder="e.g. John Doe"
