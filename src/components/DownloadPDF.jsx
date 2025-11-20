@@ -3,7 +3,8 @@ import html2pdf from "html2pdf.js";
 
 export default function DownloadPDF() {
   const handleDownload = () => {
-    const container = document.getElementById("resumeContainer");
+    const container = document.getElementById("resumeContainer") ||
+     document.getElementById("coverLetterContainer");
     if (!container) return;
 
     // ------- FIX QR CODE: Convert canvas → image before PDF -------

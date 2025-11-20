@@ -1,5 +1,7 @@
 import React, { useState, useRef } from "react";
 import "./CoverLetterPanel.css";
+import DownloadPDF from "./DownloadPDF";
+
 
 export default function CoverLetterPanel() {
   const [companyName, setCompanyName] = useState("");
@@ -71,7 +73,7 @@ export default function CoverLetterPanel() {
 
   return (
     <div className="cover-letter-page">
-      <div className="cover-letter-container">
+      <div className="cover-letter-container" >
 
         {/* LEFT FORM PANEL */}
         <div className={`form-panel ${isEditing ? "locked" : ""}`}>
@@ -150,42 +152,53 @@ export default function CoverLetterPanel() {
         <div className="preview-panel">
           <div className="preview-btn">
             <div className="preview-buttons">
-              <button className="download-btn" onClick={handleDownload}>Download PDF</button>
+              {isEditing && (
+                <div className="format-toolbar">
+                  <button onClick={() => execCommand("bold")}><b>B</b></button>
+                  <button onClick={() => execCommand("italic")}><i>I</i></button>
+                  <button onClick={() => execCommand("underline")}><u>U</u></button>
+                  <select onChange={(e) => execCommand("fontSize", e.target.value)} defaultValue="3">
+                    <option value="2">12px</option>
+                    <option value="3">14px</option>
+                    <option value="4">16px</option>
+                    <option value="5">18px</option>
+                  </select>
+                  <select onChange={(e) => execCommand("fontName", e.target.value)} defaultValue="Arial">
+                    <option value="Arial">Arial</option>
+                    <option value="Times New Roman">Times New Roman</option>
+                    <option value="Verdana">Verdana</option>
+                  </select>
+                </div>
+              )}
+              <DownloadPDF
+                elementRef={previewRef}
+                fileName="Cover-Letter.pdf"
+              >
+                <button className="download-btn">
+                  Download PDF
+                </button>
+              </DownloadPDF>
+
               <button className="edit-lock-btn" onClick={() => setIsEditing(!isEditing)}>
                 {isEditing ? "Lock Cover Letter" : "Edit Cover Letter"}
               </button>
+
             </div>
 
-            {isEditing && (
-              <div className="format-toolbar">
-                <button onClick={() => execCommand("bold")}><b>B</b></button>
-                <button onClick={() => execCommand("italic")}><i>I</i></button>
-                <button onClick={() => execCommand("underline")}><u>U</u></button>
-                <select onChange={(e) => execCommand("fontSize", e.target.value)} defaultValue="3">
-                  <option value="2">12px</option>
-                  <option value="3">14px</option>
-                  <option value="4">16px</option>
-                  <option value="5">18px</option>
-                </select>
-                <select onChange={(e) => execCommand("fontName", e.target.value)} defaultValue="Arial">
-                  <option value="Arial">Arial</option>
-                  <option value="Times New Roman">Times New Roman</option>
-                  <option value="Verdana">Verdana</option>
-                </select>
-              </div>
-            )}
+
           </div>
 
           {/* Cover Letter Preview */}
           <div
             ref={previewRef}
             className="cover-letter-preview"
+            id="coverLetterContainer"
             contentEditable={isEditing}
             suppressContentEditableWarning={true}
             style={{
               width: "100%",
-              maxWidth: "800px",
-              minHeight: "1122px",
+              maxWidth: "210mm",
+              minHeight: "276mm",
               padding: "40px",
               background: "white",
               fontFamily: "Arial, sans-serif",
