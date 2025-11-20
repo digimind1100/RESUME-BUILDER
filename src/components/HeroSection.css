@@ -1,5 +1,3 @@
-this is Hero section css please modify it for small screen responsive CSS plz do not change any thing else
-
 /* ==== HERO SECTION ==== */
 .hero-container {
   display: flex;
@@ -107,7 +105,3 @@ this is Hero section css please modify it for small screen responsive CSS plz do
     max-width: 90%;
   }
 }
-
-
-
-
