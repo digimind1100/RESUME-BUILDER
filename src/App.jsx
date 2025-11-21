@@ -7,6 +7,7 @@ import ResumeBuilderPage from "./components/ResumeBuilderPage";
 import Templates from "./components/Templates";
 import CoverLetterPanel from "./components/CoverLetterPanel";
 import PreviewPanelQRPage from "./components/PreviewPanelQRPage";
+import Home from "./components/Home";
 
 // NEW builder pages
 import ResumeBuilderQR from "./components/ResumeBuilderQR";     // CLASSIC (QR)
@@ -65,6 +66,8 @@ function AppContent() {
         {/* NEW Routes */}
         <Route path="/resume-classic" element={<ResumeBuilderQR />} />
         <Route path="/resume-professional" element={<ResumeBuilder />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/template" element={<Templates />} />
 
         <Route path="/templates" element={<Templates setResumeStyle={setResumeStyle} />} />
        <Route

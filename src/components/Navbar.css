@@ -45,6 +45,7 @@ html, body {
   color: #333;
   font-weight: 500;
   position: relative;
+  
 }
 
 .navbar-links li a.active::after,
@@ -63,7 +64,7 @@ html, body {
   transition: width 0.3s;
 }
 
-.navbar-btn .resume-btn {
+.navbar-btn .start-builder-btn {
   background: #17639f;
   color: white;
   padding: 10px 20px;
@@ -72,9 +73,10 @@ html, body {
   font-weight: 600;
   letter-spacing: 0.5px;
   transition: all 0.3s ease;
+  border: none;
 }
 
-.navbar-btn .resume-btn:hover {
+.navbar-btn .start-builder-btn:hover {
   background: #0f4e7b;
   transform: scale(1.05);
 }
@@ -93,11 +95,15 @@ html, body {
   transition: all 0.3s;
 }
 
+
+
 /* Responsive */
 @media screen and (max-width: 768px) {
   .hamburger {
     display: flex;
   }
+
+  
 
   .navbar-links {
     display: none;
@@ -128,3 +134,40 @@ html, body {
     display: block;
   }
 }
+
+
+/* ==== Medium Screens: 1023px to 768px ==== */
+@media (max-width: 1023px) and (min-width: 700px) {
+  /* Keep navbar links in a single row, no wrap */
+  .navbar-links {
+    flex-wrap: nowrap;
+    justify-content: flex-start;  /* align left */
+    gap: 12px;                    /* elegant gap between tabs */
+  }
+
+  /* Navbar link font size and padding */
+  .navbar-links li a {
+    font-size: 14px;          /* slightly smaller */
+    padding: 8px 10px;        /* compact padding */
+    white-space: nowrap;       /* prevent wrapping */
+  }
+
+  /* Desktop Start Builder button */
+  .navbar-btn .start-builder-btn {
+    font-size: 14px;           /* smaller text */
+    padding: 8px 16px;         /* maintain proportion */
+    white-space: nowrap;
+  }
+
+  /* Logo text slightly smaller */
+  .navbar-logo .logo-text {
+    font-size: 1.5rem;
+  }
+
+  /* Optional: reduce margin between list items if needed */
+  .navbar-links li {
+    margin: 0;                 /* gap handled by flex gap */
+  }
+}
+
+

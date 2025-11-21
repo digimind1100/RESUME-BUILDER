@@ -41,7 +41,7 @@ export default function Navbar() {
         <li>
           <Link
             to="/templates"
-            className={location.pathname === "/features" ? "active" : ""}
+            className={location.pathname === "/templates" ? "active" : ""}
             onClick={handleLinkClick}
           >
             Templates
@@ -58,14 +58,13 @@ export default function Navbar() {
         </li>
         <li>
           <Link
-            to="/Coverletter"
-            className={location.pathname === "/features" ? "active" : ""}
+            to="/coverletter"
+            className={location.pathname === "/coverletter" ? "active" : ""}
             onClick={handleLinkClick}
           >
             Cover Letter
           </Link>
         </li>
-
         <li>
           <Link
             to="/pricing"
@@ -95,8 +94,8 @@ export default function Navbar() {
 
       {/* Desktop Resume Button */}
       <div className="navbar-btn">
-        <Link to="/resume" className="resume-btn" onClick={handleLinkClick}>
-          Start Builder
+        <Link to="/template">
+          <button className="start-builder-btn">Start Builder</button>
         </Link>
       </div>
     </nav>
