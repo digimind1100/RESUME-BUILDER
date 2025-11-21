@@ -6,5 +6,10 @@
   "routes": [
     { "src": "/demo/(.*)", "dest": "/demo/$1" },
     { "src": "/(.*)", "dest": "/" }
+  ],
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/" }
   ]
 }
+
+
