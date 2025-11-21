@@ -12,7 +12,7 @@ export default function HeroMockup() {
           playsInline
           className="hero-video-player"
         >
-          <source src="public/demo/mockup.mp4" type="video/mp4" />
+          <source src="/demo/mockup.mp4" type="video/mp4" />
         </video>
       </div>
     </div>
