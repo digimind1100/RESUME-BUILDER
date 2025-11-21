@@ -29,6 +29,13 @@
   gap: 24px;
   margin-bottom: 40px;
 }
+.card-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 40px;
+}
 
 .cover-letter-card {
   background: #ffffff;
