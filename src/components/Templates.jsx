@@ -14,7 +14,30 @@ export default function Templates() {
   };
 
   return (
+
+
+    
     <section className="templates-section">
+
+ {/* 🌟 Top Header Block */}
+      <div className="template-header">
+        <h1 className="template-title">Choose Your Resume Template</h1>
+        <h2 className="template-subtitle">
+          Craft a stunning resume tailored to your style.
+        </h2>
+        <p className="template-description">
+          Each resume template is professionally designed, ATS-friendly, and fully
+          customizable. Whether you prefer a clean classic layout or a modern
+          professional look, choose the format that reflects your personality — 
+          and start building your resume with ease.
+        </p>
+      </div>
+
+
+
+
+
+
       {/* Template 1 - Classic */}
       <div className="template-block classic-template">
         <video
