@@ -208,3 +208,22 @@
     max-width: 360px;
   }
 }
+
+
+
+
+/* Force heading and button to stack vertically on small screens */
+@media (max-width: 768px) {
+  .template-card,
+  .template-block {
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    align-items: center;    /* Center them horizontally */
+    text-align: center;     /* Ensure text is centered */
+  }
+
+  .template-card .choose-template-btn,
+  .template-block .btn {
+    margin-top: 12px;       /* Space between heading and button */
+  }
+}

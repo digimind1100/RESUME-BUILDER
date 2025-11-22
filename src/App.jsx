@@ -3,21 +3,18 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from "react-route
 
 import Navbar from "./components/Navbar";
 import HomePage from "./components/Home";
-import ResumeBuilderPage from "./components/ResumeBuilderPage";
+import ResumeBuilder from "./components/ResumeBuilder";         // Unified builder
+import ResumeBuilderQR from "./components/ResumeBuilderQR";     // CLASSIC (QR)
 import Templates from "./components/Templates";
+import Templates10 from "./components/Templates10";
 import CoverLetterPanel from "./components/CoverLetterPanel";
 import PreviewPanelQRPage from "./components/PreviewPanelQRPage";
-import Home from "./components/Home";
-
-// NEW builder pages
-import ResumeBuilderQR from "./components/ResumeBuilderQR";     // CLASSIC (QR)
-import ResumeBuilder from "./components/ResumeBuilder";         // PROFESSIONAL
 
 function AppContent() {
   const location = useLocation();
-
   const hideNavbar = location.pathname === "/resume";
 
+  // Shared state for builder
   const [formData, setFormData] = useState({});
   const [selectedEducations, setSelectedEducations] = useState([]);
   const [workExperiences, setWorkExperiences] = useState([]);
@@ -30,7 +27,7 @@ function AppContent() {
   const [jobTitle, setJobTitle] = useState("");
   const [isEditing, setIsEditing] = useState(false);
 
-  const [resumeStyle, setResumeStyle] = useState("Classic");
+  const [resumeStyle, setResumeStyle] = useState("classic"); // default
 
   return (
     <>
@@ -39,10 +36,11 @@ function AppContent() {
       <Routes>
         <Route path="/" element={<HomePage />} />
 
+        {/* Unified Resume Builder */}
         <Route
-          path="/resume"
+          path="/resume/:templateId?"
           element={
-            <ResumeBuilderPage
+            <ResumeBuilder
               formData={formData}
               setFormData={setFormData}
               selectedEducations={selectedEducations}
@@ -63,20 +61,27 @@ function AppContent() {
           }
         />
 
-        {/* NEW Routes */}
+        {/* Legacy routes (optional) */}
         <Route path="/resume-classic" element={<ResumeBuilderQR />} />
         <Route path="/resume-professional" element={<ResumeBuilder />} />
-        <Route path="/" element={<Home />} />
-        <Route path="/template" element={<Templates />} />
 
-        <Route path="/templates" element={<Templates setResumeStyle={setResumeStyle} />} />
-       <Route
-  path="/cover-letter"
-  element={<CoverLetterPanel resumeStyle={resumeStyle} />}
-/>
+        {/* Templates Pages */}
+        <Route
+          path="/templates"
+          element={<Templates setResumeStyle={setResumeStyle} />}
+        />
+        <Route
+          path="/templates10"
+          element={<Templates10 setResumeStyle={setResumeStyle} />}
+        />
 
+        {/* Cover Letter */}
+        <Route
+          path="/cover-letter"
+          element={<CoverLetterPanel resumeStyle={resumeStyle} />}
+        />
 
-
+        {/* Preview */}
         <Route
           path="/preview-classic"
           element={
