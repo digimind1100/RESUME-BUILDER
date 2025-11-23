@@ -1,0 +1,47 @@
+.drawer-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0);
+  pointer-events: none;
+  transition: 0.3s ease;
+  z-index: 999;
+}
+
+.drawer-overlay.show {
+  background: rgba(0,0,0,0.5);
+  pointer-events: auto;
+}
+
+.drawer-panel {
+  position: fixed;
+  top: 0;
+  right: -500px;   /* hide drawer */
+  width: 500px;
+  height: 100vh;
+  background: #fff;
+  box-shadow: -4px 0 10px rgba(0,0,0,0.2);
+  transition: right 0.35s ease;
+  z-index: 1000;
+  overflow-y: auto;
+}
+
+.drawer-panel.open {
+  right: 0; /* slide in */
+}
+
+.drawer-close {
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  background: none;
+  border: none;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.drawer-content {
+  padding: 20px;
+}

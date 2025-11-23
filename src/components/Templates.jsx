@@ -1,43 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Templates.css";
 import { useNavigate } from "react-router-dom";
+import NewTemplatesFormPanel from "./NewTemplatesFormPanel";
 
-export default function Templates() {
+export default function Templates({ onSubmit }) {
   const navigate = useNavigate();
-
-  const handleUseClassic = () => {
-    navigate("/resume/classic"); // unified route
-  };
-
-  const handleUseProfessional = () => {
-    navigate("/resume/professional"); // unified route
-  };
-
-  const handleUseSimple = (templateNumber) => {
-    navigate(`/resume/simple-${templateNumber}`); // unified route
-  };
-
-  // Array of 10 simple templates
+  const [activePopup, setActivePopup] = useState(null);
   const simpleTemplates = Array.from({ length: 10 }, (_, i) => i + 1);
+
+  // Classic & Professional handlers
+  const handleUseClassic = () => navigate("/resume-classic");
+  const handleUseProfessional = () => navigate("/resume-professional");
+
+  // Open popup for selected simple template
+  const handleUseSimple = (num) => {
+    setActivePopup(num);
+  };
+
+  // Close popup
+  const closePopup = () => setActivePopup(null);
+
+  // Handle form submission from popup
+  const handleFormSubmit = (data, templateNumber) => {
+    closePopup();
+    if (onSubmit) {
+      onSubmit(data); // pass data to App.jsx
+    }
+    navigate(`/resume-modern/${templateNumber}`, { state: { formData: data } });
+  };
 
   return (
     <section className="templates-page">
-      {/* 🌟 Top Header Block */}
-      <div className="template-header">
-        <h1 className="template-title">Choose Your Resume Template</h1>
-        <h2 className="template-subtitle">
-          Craft a stunning resume tailored to your style.
-        </h2>
-        <p className="template-description">
-          Each resume template is professionally designed, ATS-friendly, and fully
-          customizable. Choose a template that suits your style — premium or
-          simple — and start building your resume quickly.
-        </p>
-      </div>
-
-      {/* ==================== Premium Templates ==================== */}
+      {/* =================== Premium Templates =================== */}
       <div className="templates-section">
-        {/* Template 1 - Classic */}
+        {/* Classic Template */}
         <div className="template-block classic-template">
           <video
             className="template-video"
@@ -46,15 +42,15 @@ export default function Templates() {
             loop
             muted
             playsInline
-          ></video>
-          <div className="template-footer classic-footer">
+          />
+          <div className="template-footer">
             <button onClick={handleUseClassic} className="btn">
               Use Classic
             </button>
           </div>
         </div>
 
-        {/* Template 2 - Professional */}
+        {/* Professional Template */}
         <div className="template-block professional-template">
           <video
             className="template-video"
@@ -63,8 +59,8 @@ export default function Templates() {
             loop
             muted
             playsInline
-          ></video>
-          <div className="template-footer professional-footer">
+          />
+          <div className="template-footer">
             <button onClick={handleUseProfessional} className="btn">
               Use Professional
             </button>
@@ -72,7 +68,7 @@ export default function Templates() {
         </div>
       </div>
 
-      {/* ==================== 10 Simple Templates ==================== */}
+      {/* =================== Simple Templates =================== */}
       <div className="template-header" style={{ marginTop: "60px" }}>
         <h2 className="template-subtitle">Quick & Simple Templates</h2>
         <p className="template-description">
@@ -88,14 +84,23 @@ export default function Templates() {
               alt={`Simple Template ${num}`}
             />
             <button
-              className="choose-template-btn"
               onClick={() => handleUseSimple(num)}
+              className="choose-template-btn"
             >
               Use Template {num}
             </button>
           </div>
         ))}
       </div>
+
+      {/* Render popup for the form */}
+      {activePopup && (
+        <NewTemplatesFormPanel
+          closePopup={closePopup}
+          templateNumber={activePopup}
+          onSubmit={handleFormSubmit}
+        />
+      )}
     </section>
   );
 }

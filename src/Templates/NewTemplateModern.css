@@ -1,0 +1,181 @@
+/* ===========================
+   Modern Resume Wrapper
+=========================== */
+.modern-wrapper {
+  width: 100%;
+  background: #f5f7fa;
+  padding: 40px 0;
+  display: flex;
+  justify-content: center;
+}
+
+/* A4-friendly container */
+.modern-container {
+  width: 800px;
+  background: #ffffff;
+  padding: 50px 60px;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.12);
+  border-radius: 8px;
+  font-family: "Inter", sans-serif;
+  color: #333;
+}
+
+/* ===========================
+   Header
+=========================== */
+.modern-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.modern-name {
+  font-size: 40px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  letter-spacing: 1px;
+}
+
+.modern-job-title {
+  font-size: 20px;
+  font-weight: 500;
+  color: #4a4a4a;
+  margin-bottom: 18px;
+}
+
+.modern-contact-row {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  font-size: 14px;
+  color: #666;
+}
+
+/* ===========================
+   Section Titles
+=========================== */
+.modern-section {
+  margin-bottom: 35px;
+}
+
+.modern-section-title {
+  font-size: 20px;
+  font-weight: 600;
+  border-bottom: 2px solid #e4e4e4;
+  padding-bottom: 6px;
+  margin-bottom: 15px;
+  letter-spacing: 0.5px;
+}
+
+/* ===========================
+   Summary Text
+=========================== */
+.modern-summary-text {
+  font-size: 15px;
+  line-height: 1.7;
+  color: #444;
+}
+
+/* ===========================
+   Skills
+=========================== */
+.modern-skill-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  padding-left: 20px;
+  row-gap: 8px;
+}
+
+.modern-skill-list li {
+  font-size: 15px;
+  color: #444;
+}
+
+/* ===========================
+   Experience
+=========================== */
+.modern-experience-block {
+  margin-bottom: 22px;
+  padding-left: 4px;
+}
+
+.modern-exp-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.modern-exp-header h3 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.modern-exp-header span {
+  font-size: 14px;
+  color: #555;
+}
+
+.modern-experience-block p {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #555;
+}
+
+/* ===========================
+   Education
+=========================== */
+.modern-edu-block {
+  margin-bottom: 12px;
+}
+
+.modern-edu-block h3 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.modern-edu-block span {
+  font-size: 14px;
+  color: #666;
+}
+
+/* ===========================
+   Print Optimization
+=========================== */
+@media print {
+  .modern-wrapper {
+    background: white;
+    padding: 0;
+  }
+
+  .modern-container {
+    box-shadow: none;
+    border-radius: 0;
+    width: 100%;
+    padding: 20px 30px;
+  }
+}
+
+
+.resume-top-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  padding: 15px;
+  background-color: #f4f4f4;
+  border-bottom: 1px solid #ddd;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+.resume-top-buttons button {
+  padding: 8px 16px;
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.resume-top-buttons button:hover {
+  background-color: #357abd;
+}
