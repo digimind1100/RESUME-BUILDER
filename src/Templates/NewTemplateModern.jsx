@@ -1,21 +1,35 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./NewTemplateModern.css";
 
-export default function NewTemplateModern({ formData }) {
-    
+export default function NewTemplateModern() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const formData = location.state; // Get data passed from form submission
+
+  // If no data, show message or redirect back
+  if (!formData) {
+    return (
+      <div style={{ textAlign: "center", marginTop: "100px" }}>
+        <h2>No resume data found.</h2>
+        <button onClick={() => navigate("/templates")} style={{ marginTop: "20px" }}>
+          Back to Templates
+        </button>
+      </div>
+    );
+  }
 
   const handleEdit = () => navigate("/templates");
   const handleDownloadPDF = () => {
-    // Implement PDF export logic here
+    // TODO: implement PDF download/export
     console.log("Download PDF clicked");
+    alert("Download PDF functionality will be implemented here.");
   };
-
-  if (!formData) return null; // Safety check
 
   return (
     <div className="modern-wrapper">
+
+        
       {/* ================= TOP BUTTONS ================= */}
       <div className="modern-top-buttons">
         <button onClick={handleDownloadPDF}>Download PDF</button>
@@ -62,7 +76,9 @@ export default function NewTemplateModern({ formData }) {
           {(formData.workExperiences || []).map((work, idx) => (
             <div key={idx} className="modern-experience-block">
               <div className="modern-exp-header">
-                <h3>{work.position || "Position"} – {work.company || "Company"}</h3>
+                <h3>
+                  {work.position || "Position"} – {work.company || "Company"}
+                </h3>
                 <span>{work.duration || "Start – End"}</span>
               </div>
               <p>{work.description || "Work description here."}</p>
@@ -76,7 +92,9 @@ export default function NewTemplateModern({ formData }) {
           {(formData.education || []).map((edu, idx) => (
             <div key={idx} className="modern-edu-block">
               <h3>{edu.degree || "Degree"}</h3>
-              <span>{edu.institution || "Institution"} – {edu.year || "Year"}</span>
+              <span>
+                {edu.institution || "Institution"} – {edu.year || "Year"}
+              </span>
             </div>
           ))}
         </section>

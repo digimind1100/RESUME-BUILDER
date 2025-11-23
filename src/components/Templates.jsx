@@ -21,13 +21,11 @@ export default function Templates({ onSubmit }) {
   const closePopup = () => setActivePopup(null);
 
   // Handle form submission from popup
-  const handleFormSubmit = (data, templateNumber) => {
-    closePopup();
-    if (onSubmit) {
-      onSubmit(data); // pass data to App.jsx
-    }
-    navigate(`/resume-modern/${templateNumber}`, { state: { formData: data } });
-  };
+const handleFormSubmit = (data) => {
+  setActivePopup(false); // close popup
+  navigate("/resume-modern", { state: data }); // pass data via state
+};
+
 
   return (
     <section className="templates-page">
