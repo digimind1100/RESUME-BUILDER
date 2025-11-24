@@ -4,20 +4,78 @@
 .modern-wrapper {
   width: 100%;
   background: #f5f7fa;
-  padding: 40px 0;
+  padding: 60px 100px;
+  display: flex;
+ justify-content:center;
+  flex-direction: column;
+}
+.modern-top-buttons{
+  width: 210mm !important;
+ 
+}
+
+/* ================== TOP BUTTONS ================== */
+.modern-top-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-bottom: 25px;
+}
+
+.modern-top-buttons button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+/* Download Button */
+.modern-top-buttons button:first-child {
+  background: #ffffff;
+  border: 1.5px solid #d0d0d0;
+  color: #333;
+}
+
+.modern-top-buttons button:first-child:hover {
+  background: #f2f2f2;
+  border-color: #b5b5b5;
+}
+
+/* Edit Button */
+.modern-top-buttons button:last-child {
+  background: #0077ff;
+  color: white;
+  
+}
+
+.modern-top-buttons button:last-child:hover {
+  background: #1c78e9;
+  box-shadow: 0 4px 14px rgba(0, 118, 255, 0.35);
+}
+
+
+.main-container{
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  padding: 0 120px;
+  width: 280mm;
 }
 
 /* A4-friendly container */
 .modern-container {
-  width: 800px;
+  width: 210mm !important;
+  height: 297mm !important;
   background: #ffffff;
   padding: 50px 60px;
   box-shadow: 0 0 25px rgba(0, 0, 0, 0.12);
   border-radius: 8px;
   font-family: "Inter", sans-serif;
   color: #333;
+
 }
 
 /* ===========================
@@ -26,6 +84,7 @@
 .modern-header {
   text-align: center;
   margin-bottom: 40px;
+  background-color: #edf760;
 }
 
 .modern-name {
@@ -111,7 +170,8 @@
 
 .modern-exp-header span {
   font-size: 14px;
-  color: #555;
+  color: #111111;
+  font-weight: 600;
 }
 
 .modern-experience-block p {

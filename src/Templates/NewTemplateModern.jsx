@@ -31,8 +31,9 @@ export default function NewTemplateModern() {
 
         
       {/* ================= TOP BUTTONS ================= */}
+      <div className="main-container">
       <div className="modern-top-buttons">
-        <button onClick={handleDownloadPDF}>Download PDF</button>
+        <button className="download-btn" onClick={handleDownloadPDF}>Download PDF</button>
         <button onClick={handleEdit}>Edit / Back to Templates</button>
       </div>
 
@@ -98,6 +99,7 @@ export default function NewTemplateModern() {
             </div>
           ))}
         </section>
+      </div>
       </div>
     </div>
   );
