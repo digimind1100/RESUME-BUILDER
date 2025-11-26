@@ -1,6 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./CoverLetterPage.css";
+import TutorialVideo from './TutorialVideo';
+
 
 export default function CoverLetter() {
   const navigate = useNavigate();
@@ -38,6 +40,11 @@ export default function CoverLetter() {
         Start Creating Cover Letter
       </button>
       </div>
+
+     
+<TutorialVideo />
+
+
 
     </section>
   );
