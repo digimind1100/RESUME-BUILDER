@@ -1,0 +1,66 @@
+/* ==== Cover Letter Section Wrapper ==== */
+.cl-wrapper {
+  max-width: 900px;
+  margin: 50px auto;
+  padding: 0 20px;
+  text-align: center;
+}
+
+/* ==== Subtitle ==== */
+.cl-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #222;
+}
+
+/* ==== SEO Content Styling ==== */
+.cl-seo-text {
+  margin: 0 auto;
+  max-width: 800px;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #444;
+}
+
+.cl-seo-text p {
+  margin-bottom: 18px;
+}
+
+/* ==== Button Styling ==== */
+.cl-btn-wrap {
+  margin-top: 30px;
+}
+
+.cl-start-btn {
+  background-color: #2563eb;
+  color: white;
+  padding: 14px 28px;
+  border: none;
+  cursor: pointer;
+  border-radius: 7px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  transition: 0.3s ease;
+}
+
+.cl-start-btn:hover {
+  background-color: #1e4fc9;
+  transform: translateY(-2px);
+}
+
+/* ==== Responsive ==== */
+@media (max-width: 600px) {
+  .cl-title {
+    font-size: 1.6rem;
+  }
+
+  .cl-seo-text {
+    font-size: 1rem;
+  }
+
+  .cl-start-btn {
+    width: 100%;
+    padding: 16px;
+  }
+}

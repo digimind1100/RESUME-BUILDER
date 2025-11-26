@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from "react-router-dom";
 
+
+
 import Navbar from "./components/Navbar";
 import HomePage from "./components/Home";
 
@@ -15,6 +17,8 @@ import PreviewPanelQRPage from "./components/PreviewPanelQRPage";
 
 import NewTemplateModern from "./Templates/NewTemplateModern";
 import NewTemplatesFormPanel from "./components/NewTemplatesFormPanel";
+
+import CoverLetterPage from "./components/CoverLetterPage";
 
 function AppContent() {
   const location = useLocation();
@@ -53,12 +57,15 @@ function AppContent() {
           path="/new-template-form"
           element={<NewTemplatesFormPanel />}
         />
-
-        {/* Modern Resume Page */}
         <Route
           path="/resume-modern"
           element={<NewTemplateModern />}
         />
+         <Route path="/coverletter" element={<CoverLetterPage />} />
+     <Route path="/coverletter-generator" element={<CoverLetterPanel />} />
+
+
+
       </Routes>
     </>
   );
