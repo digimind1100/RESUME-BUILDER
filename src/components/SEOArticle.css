@@ -1,0 +1,31 @@
+.seo-article-section {
+  padding: 30px 40px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  margin: 30px 0;
+}
+
+.seo-heading {
+  font-size: 26px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.seo-intro {
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.seo-subheading {
+  font-size: 20px;
+  font-weight: 600;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.seo-article-section p {
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}

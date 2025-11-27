@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./CoverLetterPage.css";
 import TutorialVideo from './TutorialVideo';
+import TemplatesPreview from './TemplatesPreview'
+import SEOArticle from "./SEOArticle";
+import FAQBlock from "./FAQBlock";
+import Footer from "./Footer";
 
 
-export default function CoverLetter() {
+
+const CoverLetterPage = () => {
+  const [resumeStyle, setResumeStyle] = useState("classic");
+
   const navigate = useNavigate();
 
   const handleStart = () => {
@@ -12,6 +19,7 @@ export default function CoverLetter() {
   };
 
   return (
+    <>
     <section className="cl-wrapper">
       
       {/* ===== SubTitle ===== */}
@@ -43,9 +51,20 @@ export default function CoverLetter() {
 
      
 <TutorialVideo />
-
+<TemplatesPreview
+    resumeStyle={resumeStyle}       // make sure resumeStyle state is defined
+    setResumeStyle={setResumeStyle} // and setter is available
+  />
+   <SEOArticle />
+  <FAQBlock />
+  
 
 
     </section>
+    <div style={{ width: "100%" }}>
+        <Footer />
+      </div>
+      </>
   );
 }
+export default CoverLetterPage;

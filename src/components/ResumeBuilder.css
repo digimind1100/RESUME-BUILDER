@@ -153,3 +153,38 @@
     width: 100%;         /* full width */
   }
 }
+
+
+.resume-builder-container {
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+}
+
+@media screen and (min-width: 768px) {
+  .resume-builder-container {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 20px;
+  }
+}
+
+.form-panel {
+  width: 100%;
+  padding: 15px;
+}
+
+.right-side {
+  width: 100%;
+  padding: 15px;
+}
+
+@media screen and (min-width: 768px) {
+  .form-panel {
+    width: 40%;
+  }
+
+  .right-side {
+    width: 60%;
+  }
+}
