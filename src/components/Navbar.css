@@ -169,5 +169,20 @@ html, body {
     margin: 0;                 /* gap handled by flex gap */
   }
 }
+/* Sticky Header */
+/* Fully Fixed Navbar */
+.fixed-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
+  background: #ffffff;
+  box-shadow: 0px 2px 8px rgba(0,0,0,0.08);
+}
 
+/* Prevent content from hiding under navbar */
+body {
+  padding-top: 80px; /* same height as your navbar */
+}
 

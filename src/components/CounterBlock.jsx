@@ -12,7 +12,10 @@ const CounterBlock = () => {
 
   return (
     <section id="counter-block" className="counter-block-section">
+
+
       <div className="counter-container">
+
         <h2 className="counter-title">Our Impact So Far</h2>
         <p className="counter-subtitle">
           Join thousands of users who created professional resumes with ease
@@ -49,6 +52,36 @@ const CounterBlock = () => {
             <p className="counter-label">AI Suggestions Generated</p>
           </div>
         </div>
+
+
+
+        <div className="rating-wrapper">
+          <div className="rating-block">
+
+            {/* Stars Centered on Border */}
+            <div className="stars-container-1">
+              <span className="star full">★</span>
+              <span className="star full">★</span>
+              <span className="star full">★</span>
+              <span className="star full">★</span>
+
+              {/* Partially Filled 5th Star (25% filled) */}
+              <span className="star partial">
+                <span className="partial-fill"></span>
+                ★
+              </span>
+            </div>
+
+            {/* Subtext Only */}
+            <p className="rating-sub-text">Trusted by 10,000+ users worldwide</p>
+
+          </div>
+        </div>
+
+
+
+
+
       </div>
     </section>
   );

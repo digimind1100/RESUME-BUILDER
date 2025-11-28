@@ -9,7 +9,7 @@ export default function Navbar() {
   const handleLinkClick = () => setMenuOpen(false); // close menu on link click
 
   return (
-    <nav className="navbar">
+    <nav className="navbar fixed-nav">
       {/* Logo */}
       <div className="navbar-logo">
         <Link to="/" className="logo-text">

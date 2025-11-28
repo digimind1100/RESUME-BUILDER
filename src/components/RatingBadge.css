@@ -1,67 +1,3 @@
-.counter-block-section {
-  background-color: #f4f7fc; /* soft hero background like Home page */
-  padding: 80px 20px;
-  padding-top: 40px;
-  text-align: center;
-}
-
-.counter-container {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.counter-title {
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: #1f2937; /* dark elegant text */
-  margin-bottom: 12px;
-}
-
-.counter-subtitle {
-  font-size: 1.1rem;
-  color: #4b5563; /* subtle gray for subtitle */
-  margin-bottom: 40px;
-}
-
-.counter-grid {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 24px;
-}
-
-.counter-card {
-  background-color: #ffffff;
-  padding: 30px 20px;
-  border-radius: 12px;
-  min-width: 180px;
-  flex: 1 1 200px;
-  max-width: 250px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.counter-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
-}
-
-.counter-number {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #3b82f6; /* bright accent color like Home hero */
-  margin-bottom: 8px;
-}
-
-.counter-label {
-  font-size: 1rem;
-  font-weight: 500;
-  color: #374151;
-}
-
-
-/* RATING CSS STRT  */
-
 /* Center Wrapper */
 .rating-wrapper {
   display: flex;
@@ -83,12 +19,12 @@
 }
 
 /* Stars Row (now centered on the border area) */
-.stars-container-1 {
+.stars-container {
   position: absolute;
   top: -27px;
   left: 50%;
   transform: translateX(-50%);
-  background: linear-gradient(to bottom, #f4f7fc 57%, white 43%);
+  background: linear-gradient(to bottom, white 50%, white 50%);
 
   padding: 0 8px;
 }

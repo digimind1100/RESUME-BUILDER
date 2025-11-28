@@ -6,6 +6,7 @@ import FeaturesCoverLetter from "./FeaturesCoverLetter";
 import CounterBlock from "./CounterBlock";
 import Footer from "./Footer";
 
+
 export default function Home() {
   const [loading, setLoading] = useState(true);
 
@@ -33,6 +34,7 @@ export default function Home() {
       <HeroSection />
       <FeaturesHowTestimonials />
       <FeaturesCoverLetter />
+      
       <CounterBlock />
       <Footer />
     </main>
