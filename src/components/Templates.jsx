@@ -21,10 +21,29 @@ export default function Templates({ onSubmit }) {
   const closePopup = () => setActivePopup(null);
 
   // Handle form submission from popup
+
+
 const handleFormSubmit = (data) => {
-  setActivePopup(false); // close popup
-  navigate("/resume-modern", { state: data }); // pass data via state
+  setActivePopup(false);
+
+  // If user selected Template 1 → Open NewTemplateModern
+  if (activePopup === 1) {
+    navigate("/resume-modern", { state: data });
+  }
+
+  // If user selected Template 2 → Open CleanProfessional
+  else if (activePopup === 2) {
+    navigate("/resume-clean", { state: data });
+  }
+
+  // You can add more templates later
+  else {
+    alert("This template does not have a page yet!");
+  }
 };
+
+
+
 
 
   return (
@@ -60,7 +79,7 @@ const handleFormSubmit = (data) => {
           />
           <div className="template-footer">
             <button onClick={handleUseProfessional} className="btn">
-              Use Professional
+               Use Clean Professional
             </button>
           </div>
         </div>

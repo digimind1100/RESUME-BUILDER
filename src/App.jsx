@@ -17,6 +17,7 @@ import PreviewPanelQRPage from "./components/PreviewPanelQRPage";
 
 import NewTemplateModern from "./Templates/NewTemplateModern";
 import NewTemplatesFormPanel from "./components/NewTemplatesFormPanel";
+import CleanProfessional from "./Templates/CleanProfessional"; 
 
 import CoverLetterPage from "./components/CoverLetterPage";
 
@@ -57,10 +58,10 @@ function AppContent() {
           path="/new-template-form"
           element={<NewTemplatesFormPanel />}
         />
-        <Route
-          path="/resume-modern"
-          element={<NewTemplateModern />}
-        />
+       <Route path="/resume-modern" element={<NewTemplateModern />} />
+<Route path="/resume-clean" element={<CleanProfessional />} />
+
+
          <Route path="/coverletter" element={<CoverLetterPage />} />
      <Route path="/coverletter-generator" element={<CoverLetterPanel />} />
 
