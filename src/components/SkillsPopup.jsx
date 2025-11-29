@@ -7,19 +7,23 @@ export default function SkillsPopup({ jobTitle, onClose, onSelect }) {
 
   useEffect(() => {
     if (!jobTitle) return;
+
     const fetchSkills = async () => {
       try {
         setLoading(true);
+
         const res = await fetch("http://localhost:3001/api/suggest", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ type: "skills", jobTitle }),
         });
+
         const data = await res.json();
         console.log("✅ AI Skills:", data);
 
-        if (Array.isArray(data.skills) && data.skills.length > 0) {
-          setSkills(data.skills);
+        // FIX → backend always returns { items: [...] }
+        if (Array.isArray(data.items) && data.items.length > 0) {
+          setSkills(data.items);
         } else {
           setSkills(["No skills found. Try another Job Title."]);
         }
@@ -82,11 +86,14 @@ export default function SkillsPopup({ jobTitle, onClose, onSelect }) {
                       text: cleanText,
                       checked: false,
                     };
+
                     console.log("👉 Skill selected:", newSkill);
+
                     if (typeof onSelect === "function") {
                       onSelect(newSkill);
                     }
-                    // DO NOT CLOSE POPUP
+
+                    // Do NOT close popup
                   }}
                 >
                   <span className="plus-btn">+</span>

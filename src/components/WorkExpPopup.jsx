@@ -18,8 +18,8 @@ export default function WorkExpPopup({ jobTitle, onClose, onSelect }) {
         const data = await res.json();
         console.log("✅ AI Work Exp:", data);
 
-        if (Array.isArray(data.work) && data.work.length > 0) {
-          setWorkList(data.work);
+        if (Array.isArray(data.items) && data.items.length > 0) {
+          setWorkList(data.items);
         } else {
           setWorkList(["No work experience suggestions found."]);
         }
@@ -33,6 +33,7 @@ export default function WorkExpPopup({ jobTitle, onClose, onSelect }) {
 
     fetchWork();
   }, [jobTitle]);
+
 
   return (
     <div className="popup-overlay">

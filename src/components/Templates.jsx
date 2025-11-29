@@ -1,48 +1,25 @@
-import React, { useState } from "react";
+import React from "react";
 import "./Templates.css";
 import { useNavigate } from "react-router-dom";
-import NewTemplatesFormPanel from "./NewTemplatesFormPanel";
 
-export default function Templates({ onSubmit }) {
+export default function Templates() {
   const navigate = useNavigate();
-  const [activePopup, setActivePopup] = useState(null);
   const simpleTemplates = Array.from({ length: 10 }, (_, i) => i + 1);
 
-  // Classic & Professional handlers
+  // Classic Template
   const handleUseClassic = () => navigate("/resume-classic");
   const handleUseProfessional = () => navigate("/resume-professional");
 
-  // Open popup for selected simple template
+
+  // Simple Template Navigation (opens direct without popup)
+  
   const handleUseSimple = (num) => {
-    setActivePopup(num);
-  };
-
-  // Close popup
-  const closePopup = () => setActivePopup(null);
-
-  // Handle form submission from popup
-
-
-const handleFormSubmit = (data) => {
-  setActivePopup(false);
-
-  // If user selected Template 1 → Open NewTemplateModern
-  if (activePopup === 1) {
-    navigate("/resume-modern", { state: data });
-  }
-
-  // If user selected Template 2 → Open CleanProfessional
-  else if (activePopup === 2) {
-    navigate("/resume-clean", { state: data });
-  }
-
-  // You can add more templates later
-  else {
-    alert("This template does not have a page yet!");
-  }
+  navigate(`/simple-template-${num}`);
 };
 
-
+const handleUseCleanProfessional = () => {
+  navigate("/clean-professional");
+};
 
 
 
@@ -50,6 +27,7 @@ const handleFormSubmit = (data) => {
     <section className="templates-page">
       {/* =================== Premium Templates =================== */}
       <div className="templates-section">
+
         {/* Classic Template */}
         <div className="template-block classic-template">
           <video
@@ -67,7 +45,7 @@ const handleFormSubmit = (data) => {
           </div>
         </div>
 
-        {/* Professional Template */}
+        {/* Professional (Clean Template) */}
         <div className="template-block professional-template">
           <video
             className="template-video"
@@ -79,10 +57,11 @@ const handleFormSubmit = (data) => {
           />
           <div className="template-footer">
             <button onClick={handleUseProfessional} className="btn">
-               Use Clean Professional
+              Use Clean Professional
             </button>
           </div>
         </div>
+
       </div>
 
       {/* =================== Simple Templates =================== */}
@@ -93,31 +72,29 @@ const handleFormSubmit = (data) => {
         </p>
       </div>
 
-      <div className="template-list">
-        {simpleTemplates.map((num) => (
-          <div key={num} className="template-card">
-            <img
-              src={`/templates/simple-${num}.png`}
-              alt={`Simple Template ${num}`}
-            />
-            <button
-              onClick={() => handleUseSimple(num)}
-              className="choose-template-btn"
-            >
-              Use Template {num}
-            </button>
-          </div>
-        ))}
-      </div>
+    <div className="template-list">
+  {simpleTemplates.map((num) => (
+    <div key={num} className="template-card">
+      <img
+        src={`/templates/simple-${num}.png`}
+        alt={`Simple Template ${num}`}
+      />
+      <button
+        onClick={() => handleUseSimple(num)}
+        className="choose-template-btn"
+      >
+        Use Template {num}
+      </button>
+      <button onClick={handleUseCleanProfessional} className="btn">
+   Use Clean Professional
+</button>
 
-      {/* Render popup for the form */}
-      {activePopup && (
-        <NewTemplatesFormPanel
-          closePopup={closePopup}
-          templateNumber={activePopup}
-          onSubmit={handleFormSubmit}
-        />
-      )}
+
+    </div>
+  ))}
+</div>
+
+
     </section>
   );
 }

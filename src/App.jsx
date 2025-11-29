@@ -59,7 +59,8 @@ function AppContent() {
           element={<NewTemplatesFormPanel />}
         />
        <Route path="/resume-modern" element={<NewTemplateModern />} />
-<Route path="/resume-clean" element={<CleanProfessional />} />
+<Route path="/clean-professional" element={<CleanProfessional />} />
+
 
 
          <Route path="/coverletter" element={<CoverLetterPage />} />
