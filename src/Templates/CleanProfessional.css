@@ -85,7 +85,7 @@
   top: 6px;
   background: #0d3f8c;
   position: relative;
-  top: -35px;
+  top: -55px;
   margin-bottom: 10px;
   z-index: 1 ;  /* keep this LOWER than circle */
 }

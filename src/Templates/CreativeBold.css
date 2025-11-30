@@ -1,0 +1,253 @@
+/* Wrapper and buttons */
+.cb-wrapper {
+  text-align: center;
+  padding: 20px;
+  background: #eef1f6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cb-buttons {
+  margin-bottom: 20px;
+}
+
+.cb-buttons button {
+  margin: 0 10px;
+  padding: 10px 18px;
+  font-size: 14px;
+  background: #111827;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.cb-buttons button:hover {
+  background: #0b1220;
+}
+
+/* A4 container */
+.cb-a4 {
+  width: 210mm;
+  min-height: 297mm;
+  background: white;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
+  margin: 0 auto 40px;
+}
+
+/* Resume main layout */
+.cb-resume {
+  display: flex;
+  height: 100%;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
+  color: #111827;
+}
+
+/* Left red column */
+.cb-left {
+  width: 32%;
+  height: 1122px;
+  background: #e53935;
+  color: #ffffff;
+  padding: 40px 32px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;   /* ensures top items are aligned */
+}
+
+
+/* Profile photo */
+.cb-photo-wrapper {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  overflow: hidden;
+
+  margin-bottom: 24px;
+  cursor: pointer;
+}
+
+.cb-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Left column role text (job title) */
+.cb-left-role {
+  text-align: center;
+  margin-top: 200px;
+  margin-bottom: auto;   /* pushes Skills + Contact to bottom */
+}
+
+
+
+.cb-left-role-text {
+  margin: 20px 0 0;    /* pushes text downward */
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+
+/* Left sections */
+.cb-left-section {
+  width: 100%;
+  margin-bottom: 70px;
+}
+.cb-left-section-skills {
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+
+.cb-left-heading {
+  margin: 0 0 12px;
+  font-size: 13px;
+  letter-spacing: 0.15em;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.cb-left-list {
+  list-style: disc;
+  padding-left: 18px;
+  margin: 0;
+  font-size: 13px;
+}
+
+.cb-left-list li + li {
+  margin-top: 4px;
+}
+
+.cb-left-contact p {
+  margin: 2px 0;
+  font-size: 13px;
+}
+
+/* Right white column */
+.cb-right {
+  width: 68%;
+  padding: 40px 48px;
+  box-sizing: border-box;
+  background: #f9fafb;
+}
+
+/* Name + Title */
+.cb-header-text {
+  margin-bottom: 32px;
+}
+
+.cb-name {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: #111827; /* dark gray/black tone */
+  text-transform: uppercase;
+}
+
+.cb-title {
+  margin: 6px 0 0;
+  font-size: 15px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #4b5563;
+}
+
+/* Sections on right */
+.cb-section {
+  margin-bottom: 12px;
+}
+
+.cb-section-heading {
+  margin: 0 0 8px;
+  font-size: 13px;
+  letter-spacing: 0.15em;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.cb-section-paragraph {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.35;
+  color: #374151;
+}
+
+/* Entries */
+.cb-entry {
+  margin-top: 12px;
+}
+
+.cb-entry-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.cb-entry-subtitle {
+  margin: 2px 0 4px;
+  font-size: 13px;
+  color: #4b5563;
+}
+
+.cb-entry-text {
+  margin: 0;
+  font-size: 13px;
+  color: #374151;
+}
+
+.cb-entry-list {
+  margin: 4px 0 0;
+  padding-left: 18px;
+  font-size: 13px;
+  color: #374151;
+}
+
+.cb-entry-list li + li {
+  margin-top: 1px;
+}
+
+/* contentEditable behaviour */
+[contenteditable="true"] {
+  cursor: text;
+  outline: none;
+}
+
+[contenteditable="true"]:hover {
+  background: rgba(17, 24, 39, 0.04);
+}
+
+[contenteditable="true"]:focus {
+  background: rgba(17, 24, 39, 0.08);
+}
+
+/* Responsive (basic) */
+@media (max-width: 900px) {
+  .cb-a4 {
+    width: 100%;
+  }
+}
+
+@media (max-width: 760px) {
+  .cb-resume {
+    flex-direction: column;
+  }
+
+  .cb-left,
+  .cb-right {
+    width: 100%;
+  }
+
+  .cb-right {
+    padding: 24px 20px;
+  }
+}

@@ -11,18 +11,35 @@ export default function Templates() {
   const handleUseProfessional = () => navigate("/resume-professional");
 
 
-  // Simple Template Navigation (opens direct without popup)
-  
- const handleUseSimple = (num) => {
-  if (num === 2) {
-    navigate("/clean-professional"); 
-  } else {
-    navigate(`/simple-template-${num}`);
-  }
+const templateNames = {
+  1: "Modern Template",
+  2: "Clean Professional",
+  3: "Creative Bold",
+  4: "Template 4 (Coming Soon)",
+  5: "Template 5 (Coming Soon)",
+  6: "Template 6 (Coming Soon)",
+  7: "Template 7 (Coming Soon)",
+  8: "Template 8 (Coming Soon)",
+  9: "Template 9 (Coming Soon)",
+  10: "Template 10 (Coming Soon)",
 };
 
 
 
+
+  // Simple Template Navigation (opens direct without popup)
+
+const handleUseSimple = (num) => {
+  if (num === 1) {
+    navigate("/resume-modern");   // Template 1
+  } else if (num === 2) {
+    navigate("/clean-professional");  // Template 2
+  } else if (num === 3) {
+    navigate("/creative-bold");    // Template 3
+  } else {
+    alert("This template is not created yet.");
+  }
+};
 
 
 
@@ -75,25 +92,24 @@ export default function Templates() {
         </p>
       </div>
 
-    <div className="template-list">
+      <div className="template-list">
   {simpleTemplates.map((num) => (
     <div key={num} className="template-card">
       <img
-        src={`/templates/simple-${num}.png`}
+        src={`/images/simple-${num}.png`}
         alt={`Simple Template ${num}`}
       />
+
       <button
         onClick={() => handleUseSimple(num)}
         className="choose-template-btn"
       >
-        Use Template {num}
+        {templateNames[num]}
       </button>
-     
-
-
     </div>
   ))}
 </div>
+
 
 
     </section>
