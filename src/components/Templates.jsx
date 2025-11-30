@@ -13,13 +13,16 @@ export default function Templates() {
 
   // Simple Template Navigation (opens direct without popup)
   
-  const handleUseSimple = (num) => {
-  navigate(`/simple-template-${num}`);
+ const handleUseSimple = (num) => {
+  if (num === 2) {
+    navigate("/clean-professional"); 
+  } else {
+    navigate(`/simple-template-${num}`);
+  }
 };
 
-const handleUseCleanProfessional = () => {
-  navigate("/clean-professional");
-};
+
+
 
 
 
@@ -85,9 +88,7 @@ const handleUseCleanProfessional = () => {
       >
         Use Template {num}
       </button>
-      <button onClick={handleUseCleanProfessional} className="btn">
-   Use Clean Professional
-</button>
+     
 
 
     </div>
