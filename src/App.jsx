@@ -18,6 +18,7 @@ import CreativeBold from "./Templates/CreativeBold";
 import MinimalAccent from "./Templates/MinimalAccent";
 import ElegantClassic from "./Templates/ElegantClassic";
 import MedicalElites from "./Templates/MedicalElite";
+import EngineerQR from "./Templates/EngineerQR";
 
 
 function AppContent() {
@@ -57,6 +58,7 @@ function AppContent() {
          <Route path="/minimal-accent" element={<MinimalAccent />} />
        <Route path="/elegant-classic" element={<ElegantClassic />} />
        <Route path="/medical-elites" element={<MedicalElites />} />
+       <Route path="/engineer-qr" element={<EngineerQR />} />
 
 
 
