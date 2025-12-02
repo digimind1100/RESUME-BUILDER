@@ -1,241 +1,386 @@
-/* ===========================
-   Modern Resume Wrapper
-=========================== */
-.modern-wrapper {
-  width: 100%;
-  background: #f5f7fa;
-  padding: 60px 100px;
-  display: flex;
- justify-content:center;
-  flex-direction: column;
-}
-.modern-top-buttons{
-  width: 210mm !important;
- 
-}
-
-/* ================== TOP BUTTONS ================== */
-.modern-top-buttons {
-  display: flex;
-  justify-content: flex-end;
-  gap: 12px;
-  margin-bottom: 25px;
-}
-
-.modern-top-buttons button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.25s ease;
-}
-
-/* Download Button */
-.modern-top-buttons button:first-child {
-  background: #ffffff;
-  border: 1.5px solid #d0d0d0;
-  color: #333;
-}
-
-.modern-top-buttons button:first-child:hover {
-  background: #f2f2f2;
-  border-color: #b5b5b5;
-}
-
-/* Edit Button */
-.modern-top-buttons button:last-child {
-  background: #0077ff;
-  color: white;
-  
-}
-
-.modern-top-buttons button:last-child:hover {
-  background: #1c78e9;
-  box-shadow: 0 4px 14px rgba(0, 118, 255, 0.35);
-}
-
-
-.main-container{
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  padding: 0 120px;
-  width: 280mm;
-}
-
-/* A4-friendly container */
-.modern-container {
-  width: 210mm !important;
-  height: 297mm !important;
-  background: #ffffff;
-  padding: 50px 60px;
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.12);
-  border-radius: 8px;
-  font-family: "Inter", sans-serif;
-  color: #333;
-
-}
-
-/* ===========================
-   Header
-=========================== */
-.modern-header {
+/* Page wrapper */
+.mt-wrapper {
   text-align: center;
+  padding: 20px;
+  background: #e5e7eb;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Top buttons */
+.mt-buttons {
+  margin-bottom: 20px;
+}
+
+.mt-buttons button {
+  margin: 0 10px;
+  padding: 10px 18px;
+  font-size: 14px;
+  background: #2e3239;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.mt-buttons button:hover {
+  background: #1f2328;
+}
+
+/* A4 Container */
+.mt-a4 {
+  width: 210mm;
+  min-height: 297mm;
+  background: #ffffff;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.16);
   margin-bottom: 40px;
-  background-color: #edf760;
 }
 
-.modern-name {
-  font-size: 40px;
-  font-weight: 700;
-  margin-bottom: 8px;
-  letter-spacing: 1px;
+/* Inner resume layout */
+.mt-resume {
+  position: relative;
+  height: 100%;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
+  color: #111827;
 }
 
-.modern-job-title {
-  font-size: 20px;
-  font-weight: 500;
-  color: #4a4a4a;
-  margin-bottom: 18px;
+/* Yellow angled header bar */
+/* HEADER AREA */
+.mt-header {
+  display: flex;
+  align-items: center;
+  padding: 20px 40px 10px;  /* reduced height */
+  position: relative;
+  background: white;
+  z-index: 10;
 }
 
-.modern-contact-row {
+.mt-sidebar-photo-block {
   display: flex;
   justify-content: center;
-  gap: 25px;
-  font-size: 14px;
-  color: #666;
+  margin-bottom: 20px;
+  margin-top: 20px;
 }
 
-/* ===========================
-   Section Titles
-=========================== */
-.modern-section {
-  margin-bottom: 35px;
+
+/* Profile circle inside header */
+.mt-header-photo-wrapper {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 5px solid #F3A811;
+  cursor: pointer;
 }
 
-.modern-section-title {
-  font-size: 20px;
-  font-weight: 600;
-  border-bottom: 2px solid #e4e4e4;
-  padding-bottom: 6px;
-  margin-bottom: 15px;
-  letter-spacing: 0.5px;
+.mt-header-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-/* ===========================
-   Summary Text
-=========================== */
-.modern-summary-text {
-  font-size: 15px;
-  line-height: 1.7;
-  color: #444;
+.mt-header-right {
+  margin-left: 200px;
 }
 
-/* ===========================
-   Skills
-=========================== */
-.modern-skill-list {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  padding-left: 20px;
-  row-gap: 8px;
+.mt-header-name {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #2e3239;
 }
 
-.modern-skill-list li {
-  font-size: 15px;
-  color: #444;
+.mt-header-title {
+  margin: 6px 0 0;
+  font-size: 16px;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
-/* ===========================
-   Experience
-=========================== */
-.modern-experience-block {
-  margin-bottom: 22px;
-  padding-left: 4px;
+
+/* Perfect angled CUT bar */
+.mt-yellow-bar {
+  width: 100%;
+  height: 55px;
+  background: #F3A811;
+  position: relative;
+  margin-top: -5px;
 }
 
-.modern-exp-header {
+/* The angled BLACK SLASH */
+.mt-yellow-bar::after {
+  content: "";
+  position: absolute;
+  left: 180px;       /* adjust horizontal position */
+  top: 0;
+  width: 40px;       /* thickness of angled cut */
+  height: 100%;
+  background: #2E3239;  /* same as sidebar */
+  transform: skewX(-25deg);
+  transform-origin: top left;
+}
+
+
+
+
+/* Main Flex Layout */
+.mt-layout {
   display: flex;
-  justify-content: space-between;
+  position: relative;
+  z-index: 1;
+  min-height: 1122px; /* approx A4 at 96dpi */
+}
+
+/* Sidebar */
+.mt-sidebar {
+  width: 32%;
+  background: #2e3239;
+  color: #f9fafb;
+  padding: 40px 24px 40px; /* reduced top padding */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;         /* sidebar starts at top */
+  left: 0;
+  bottom: 0;      /* reaches full height */
+  z-index: 5;
+}
+
+
+/* Profile photo circle */
+.mt-photo-wrapper {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid #f3a811;
+  margin: 8px auto 20px;
+  cursor: pointer;
+}
+
+.mt-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Sidebar name + role */
+.mt-sidebar-name-block {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.mt-sidebar-name {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.mt-sidebar-role {
+  margin: 6px 0 0;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #e5e7eb;
+}
+
+/* Sidebar sections */
+.mt-sidebar-section {
+  margin-bottom: 24px;
+}
+
+.mt-sidebar-heading {
+  margin: 0 0 10px;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #f3a811;
+}
+
+/* Contact list */
+.mt-contact-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 12px;
+}
+
+.mt-contact-list li {
+  display: flex;
+  align-items: center;
   margin-bottom: 6px;
 }
 
-.modern-exp-header h3 {
-  font-size: 16px;
+.mt-icon-wrapper {
+  width: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 6px;
+}
+
+.mt-contact-text {
+  color: #f9fafb;
+}
+
+/* Skills / Awards bullets */
+.mt-bullet-list {
+  list-style: disc;
+  padding-left: 18px;
+  margin: 0;
+  font-size: 12px;
+}
+
+.mt-bullet-list li + li {
+  margin-top: 4px;
+}
+
+/* Main Right Column */
+.mt-main {
+  margin-left: 32%; /* shifts right content beside sidebar */
+}
+
+
+/* Right sections */
+.mt-section {
+  margin-bottom: 20px;
+}
+
+.mt-section-title {
+  margin: 0;
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #111827;
+}
+
+.mt-section-underline {
+  width: 64px;
+  height: 3px;
+  background: #f3a811;
+  margin: 6px 0 10px;
+}
+
+.mt-section-text {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #4b5563;
+}
+
+/* Education */
+.mt-edu-item {
+  margin-top: 4px;
+}
+
+.mt-edu-degree {
+  margin: 0;
+  font-size: 13px;
   font-weight: 600;
+  color: #111827;
 }
 
-.modern-exp-header span {
-  font-size: 14px;
-  color: #111111;
-  font-weight: 600;
+.mt-edu-meta {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: #6b7280;
 }
 
-.modern-experience-block p {
-  font-size: 15px;
-  line-height: 1.6;
-  color: #555;
+/* Jobs */
+.mt-job {
+  margin-top: 8px;
 }
 
-/* ===========================
-   Education
-=========================== */
-.modern-edu-block {
-  margin-bottom: 12px;
-}
-
-.modern-edu-block h3 {
-  font-size: 16px;
-  font-weight: 600;
-}
-
-.modern-edu-block span {
-  font-size: 14px;
-  color: #666;
-}
-
-/* ===========================
-   Print Optimization
-=========================== */
-@media print {
-  .modern-wrapper {
-    background: white;
-    padding: 0;
-  }
-
-  .modern-container {
-    box-shadow: none;
-    border-radius: 0;
-    width: 100%;
-    padding: 20px 30px;
-  }
-}
-
-
-.resume-top-buttons {
+.mt-job-header {
   display: flex;
-  justify-content: flex-end;
-  gap: 15px;
-  padding: 15px;
-  background-color: #f4f4f4;
-  border-bottom: 1px solid #ddd;
-  position: sticky;
-  top: 0;
-  z-index: 999;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
 }
 
-.resume-top-buttons button {
-  padding: 8px 16px;
-  background-color: #4a90e2;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+.mt-job-title {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: #111827;
 }
 
-.resume-top-buttons button:hover {
-  background-color: #357abd;
+.mt-job-dates {
+  margin: 0;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.mt-job-list {
+  margin: 4px 0 0;
+  padding-left: 18px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #4b5563;
+}
+
+.mt-job-list li + li {
+  margin-top: 3px;
+}
+
+/* Last section: keep bottom ~40–50px free */
+.mt-section-last {
+  margin-bottom: 40px;
+}
+
+/* Editable behaviour */
+[contenteditable="true"] {
+  cursor: text;
+  outline: none;
+}
+
+[contenteditable="true"]:hover {
+  background: rgba(243, 168, 17, 0.06);
+}
+
+[contenteditable="true"]:focus {
+  background: rgba(243, 168, 17, 0.12);
+}
+
+
+.mt-sidebar {
+  margin-top: -20px;  /* overlap enough to hide the white gap */
+  z-index: 5;         /* sidebar stays under yellow bar */
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .mt-a4 {
+    width: 100%;
+  }
+}
+
+@media (max-width: 760px) {
+  .mt-layout {
+    flex-direction: column;
+    min-height: auto;
+  }
+
+  .mt-sidebar {
+    width: 100%;
+  }
+
+  .mt-main {
+    width: 100%;
+    padding: 24px 20px 32px;
+  }
+
+  .mt-header-accent {
+    left: 0;
+    clip-path: polygon(0 0, 100% 0, 100% 65%, 0 100%, 0 100%);
+  }
 }

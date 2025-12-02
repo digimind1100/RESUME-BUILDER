@@ -1,0 +1,299 @@
+/* WRAPPER */
+.ec-wrapper {
+  text-align: center;
+  padding: 20px;
+  background: #e5e7eb;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Top buttons */
+.ec-buttons {
+  margin-bottom: 20px;
+}
+
+.ec-buttons button {
+  margin: 0 10px;
+  padding: 10px 18px;
+  font-size: 14px;
+  background: #1f2933;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.ec-buttons button:hover {
+  background: #111827;
+}
+
+/* A4 container */
+.ec-a4 {
+  width: 210mm;
+  min-height: 297mm;
+  background: #ffffff;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.16);
+  margin-bottom: 40px;
+}
+
+.ec-resume {
+  height: 100%;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
+  color: #111827;
+}
+
+/* HEADER */
+.ec-header {
+  background: #1f2c3b;
+  color: #f9fafb;
+  text-align: center;
+  padding: 26px 40px 30px;
+}
+
+.ec-name {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.ec-title {
+  margin: 6px 0 0;
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #d1b57a;
+}
+
+/* BODY LAYOUT */
+.ec-body {
+  display: flex;
+  padding: 28px 40px 32px;
+}
+
+/* LEFT SIDEBAR */
+.ec-sidebar {
+  width: 30%;
+  padding-right: 32px;
+  box-sizing: border-box;
+  border-right: 1px solid #e5e7eb;
+}
+
+.ec-sidebar-section + .ec-sidebar-section {
+  margin-top: 26px;
+}
+
+.ec-sidebar-heading {
+  margin: 0 0 10px;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #4b5563;
+}
+
+/* Contact */
+.ec-contact-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 12px;
+}
+
+.ec-contact-list li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.ec-icon-circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  border: 1px solid #d1b57a;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  margin-right: 8px;
+  color: #d1b57a;
+}
+
+.ec-contact-text {
+  color: #374151;
+}
+
+/* Skills */
+.ec-skill-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 12px;
+  color: #374151;
+}
+
+.ec-skill-list li + li {
+  margin-top: 4px;
+}
+
+/* Sidebar education */
+.ec-edu-block {
+  margin-top: 8px;
+}
+
+.ec-edu-degree {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.ec-edu-meta {
+  margin: 2px 0 0;
+  font-size: 11px;
+  color: #4b5563;
+}
+
+/* RIGHT MAIN COLUMN */
+.ec-main {
+  flex: 1;
+  padding-left: 32px;
+  box-sizing: border-box;
+}
+
+/* Sections */
+.ec-section {
+  margin-bottom: 22px;
+}
+
+.ec-section-title {
+  margin: 0;
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #1f2c3b;
+}
+
+.ec-section-rule {
+  width: 70px;
+  height: 2px;
+  background: #d1b57a;
+  margin: 6px 0 10px;
+}
+
+.ec-section-text {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #4b5563;
+}
+
+/* Jobs */
+.ec-job {
+  margin-top: 10px;
+}
+
+.ec-job-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.ec-job-title {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.ec-job-company {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: #4b5563;
+}
+
+.ec-job-dates {
+  margin: 0;
+  font-size: 12px;
+  color: #4b5563;
+}
+
+.ec-job-list {
+  margin: 4px 0 0;
+  padding-left: 18px;
+  font-size: 12px;
+  line-height: 1.55;
+  color: #4b5563;
+}
+
+.ec-job-list li + li {
+  margin-top: 4px;
+}
+
+/* Main education at bottom */
+.ec-main-edu {
+  margin-top: 6px;
+}
+
+.ec-main-edu-degree {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.ec-main-edu-meta {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: #4b5563;
+}
+
+.ec-section-last {
+  margin-bottom: 40px;
+}
+
+/* Editable behaviour */
+[contenteditable="true"] {
+  cursor: text;
+  outline: none;
+}
+
+[contenteditable="true"]:hover {
+  background: rgba(209, 181, 122, 0.06);
+}
+
+[contenteditable="true"]:focus {
+  background: rgba(209, 181, 122, 0.12);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .ec-a4 {
+    width: 100%;
+  }
+}
+
+@media (max-width: 760px) {
+  .ec-body {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .ec-sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #e5e7eb;
+    padding-right: 0;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+  }
+
+  .ec-main {
+    padding-left: 0;
+  }
+}

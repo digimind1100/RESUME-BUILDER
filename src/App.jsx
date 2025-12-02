@@ -15,6 +15,9 @@ import CoverLetterPage from "./components/CoverLetterPage";
 import NewTemplateModern from "./Templates/NewTemplateModern";
 import CleanProfessional from "./Templates/CleanProfessional";
 import CreativeBold from "./Templates/CreativeBold";
+import MinimalAccent from "./Templates/MinimalAccent";
+import ElegantClassic from "./Templates/ElegantClassic";
+import MedicalElites from "./Templates/MedicalElite";
 
 
 function AppContent() {
@@ -51,6 +54,9 @@ function AppContent() {
         <Route path="/resume-modern" element={<NewTemplateModern />} />
         <Route path="/clean-professional" element={<CleanProfessional />} />
         <Route path="/creative-bold" element={<CreativeBold />} />
+         <Route path="/minimal-accent" element={<MinimalAccent />} />
+       <Route path="/elegant-classic" element={<ElegantClassic />} />
+       <Route path="/medical-elites" element={<MedicalElites />} />
 
 
 

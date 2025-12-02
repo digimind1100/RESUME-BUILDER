@@ -1,0 +1,159 @@
+/* Wrapper */
+.me-wrapper {
+  padding: 20px;
+  background: #eef2f5;
+  min-height: 100vh;
+  text-align: center;
+}
+
+/* Buttons */
+.me-buttons { margin-bottom: 20px; }
+.me-buttons button {
+  padding: 10px 18px;
+  margin: 0 8px;
+  background: #1C4E80;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* A4 */
+.me-a4 {
+  width: 210mm;
+  min-height: 297mm;
+  background: white;
+  box-shadow: 0 0 20px rgba(0,0,0,0.15);
+}
+
+/* Layout */
+.me-resume {
+  display: flex;
+  height: 100%;
+}
+
+/* Sidebar */
+.me-sidebar {
+  width: 32%;
+  height: 1122px;
+  background: linear-gradient(#1C4E80, #163D63);
+  color: white;
+  padding: 30px 24px;
+  box-sizing: border-box;
+}
+
+/* Profile */
+.me-photo-wrapper {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 5px solid #43C1D9;
+  overflow: hidden;
+  margin: 10px auto 20px;
+  cursor: pointer;
+}
+.me-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Sidebar Titles */
+.me-name {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 800;
+}
+.me-role {
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+/* Sidebar Sections */
+.me-section { margin-top: 30px; text-align: left; }
+.me-section-title {
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  margin-bottom: 10px;
+}
+.me-list {
+  list-style: none;
+  padding: 0;
+  font-size: 12px;
+}
+.me-list li { margin-bottom: 6px; }
+
+/* MAIN SIDE */
+.me-main {
+  width: 68%;
+  padding: 40px;
+  box-sizing: border-box;
+}
+
+/* Blocks */
+.me-block { margin-bottom: 28px; }
+.me-block-title {
+  margin: 0;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #1C4E80;
+}
+.me-block-text {
+  margin-top: 10px;
+  font-size: 13px;
+  color: #444;
+  line-height: 1.6;
+}
+
+/* Jobs */
+.me-job { margin-top: 16px; }
+.me-job-header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+}
+.me-job-location { font-size: 12px; color: #555; }
+.me-job-list {
+  padding-left: 18px;
+  margin-top: 6px;
+  line-height: 1.5;
+  font-size: 12.5px;
+  color: #444;
+}
+
+/* Education */
+.me-edu-title {
+  margin: 0;
+  font-weight: 600;
+}
+.me-edu-meta {
+  font-size: 12px;
+  margin-top: 3px;
+  color: #777;
+}
+
+.me-last { margin-bottom: 40px; }
+
+/* Editable */
+[contenteditable="true"]:hover { background: rgba(28,78,128,0.05); }
+[contenteditable="true"]:focus { background: rgba(28,78,128,0.1); outline: none; }
+
+
+/* Centers the whole resume in the page */
+/* Center entire template */
+.me-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;     /* centers horizontally */
+  justify-content: flex-start;
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Center the A4 page */
+.me-a4 {
+  margin: 0 auto;          /* ensures centered position */
+  display: block;
+}

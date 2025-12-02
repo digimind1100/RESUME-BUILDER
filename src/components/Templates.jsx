@@ -15,9 +15,9 @@ const templateNames = {
   1: "Modern Template",
   2: "Clean Professional",
   3: "Creative Bold",
-  4: "Template 4 (Coming Soon)",
-  5: "Template 5 (Coming Soon)",
-  6: "Template 6 (Coming Soon)",
+  4: "Minimal Accent",
+  5: "Elegant Classic",
+  6: "Medical Elites",
   7: "Template 7 (Coming Soon)",
   8: "Template 8 (Coming Soon)",
   9: "Template 9 (Coming Soon)",
@@ -36,7 +36,17 @@ const handleUseSimple = (num) => {
     navigate("/clean-professional");  // Template 2
   } else if (num === 3) {
     navigate("/creative-bold");    // Template 3
-  } else {
+  } else if (num === 4) {
+    navigate ("/minimal-accent"); //Template 4
+  } else if (num === 5) {
+    navigate ("/elegant-classic"); // Template 5
+  } else if (num === 6)
+  {
+    navigate ("/medical-elites"); // Template 6
+  }
+  
+else
+  {
     alert("This template is not created yet.");
   }
 };
