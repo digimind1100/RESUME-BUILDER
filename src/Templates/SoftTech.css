@@ -1,0 +1,422 @@
+/* Wrapper */
+.st-wrapper {
+  min-height: 100vh;
+  background: #e5e7eb;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Top buttons */
+.st-buttons {
+  margin-bottom: 16px;
+}
+
+.st-buttons button {
+  margin: 0 8px;
+  padding: 9px 16px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  background: #111827;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.st-buttons button:hover {
+  background: #0f172a;
+}
+
+/* Personal info form */
+.st-form {
+  width: 210mm;
+  max-width: 100%;
+  background: #ffffff;
+  border-radius: 6px;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
+  padding: 16px 20px 14px;
+  box-sizing: border-box;
+  margin-bottom: 18px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, sans-serif;
+}
+
+.st-form-title {
+  margin: 0 0 10px;
+  font-size: 14px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #111827;
+}
+
+.st-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 16px;
+}
+
+.st-form-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.st-form-field.st-form-full {
+  grid-column: 1 / -1;
+}
+
+.st-form-field label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #6b7280;
+  margin-bottom: 3px;
+}
+
+.st-form-field input {
+  border-radius: 4px;
+  border: 1px solid #d1d5db;
+  padding: 6px 8px;
+  font-size: 13px;
+}
+
+.st-form-field input:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.25);
+}
+
+.st-form-actions {
+  margin-top: 10px;
+  text-align: right;
+}
+
+.st-form-actions button {
+  padding: 7px 16px;
+  border-radius: 4px;
+  border: none;
+  font-size: 13px;
+  cursor: pointer;
+  background: #2563eb;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.st-form-actions button:hover {
+  background: #1d4ed8;
+}
+
+/* A4 area */
+.st-a4 {
+  width: 210mm;
+  min-height: 297mm;
+  background: #ffffff;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.16);
+}
+
+/* Resume layout */
+.st-resume {
+  display: flex;
+  height: 100%;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, sans-serif;
+}
+
+/* Sidebar */
+.st-sidebar {
+  width: 35%;
+  height: 1122px;
+  background: #1a73e8; /* Google blue */
+  color: #f9fafb;
+  padding: 26px 22px 26px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+/* QR wrappers */
+.st-qr-wrapper {
+  width: 100%;
+  background: #0f4fb1;
+  border-radius: 4px;
+  padding: 6px;
+  box-sizing: border-box;
+  margin-bottom: 18px;
+}
+
+.st-qr-image {
+  width: 100%;
+  display: block;
+}
+
+.st-qr-placeholder {
+  width: 100%;
+  padding: 18px 8px;
+  text-align: center;
+  font-size: 12px;
+  color: #e5e7eb;
+}
+
+.st-qr-small-text {
+  display: block;
+  font-size: 10px;
+  margin-top: 4px;
+  color: #d1d5db;
+}
+
+.st-qr-bottom {
+  margin-top: auto;
+}
+
+/* Sidebar sections */
+.st-side-section + .st-side-section {
+  margin-top: 20px;
+}
+
+.st-side-heading {
+  margin: 0 0 6px;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.st-contact-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 12px;
+}
+
+.st-contact-list li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.st-icon-wrapper {
+  width: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 6px;
+}
+
+.st-contact-text {
+  color: #f9fafb;
+}
+
+.st-side-list {
+  list-style: square;
+  padding-left: 18px;
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.st-side-text {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+/* Main column */
+.st-main {
+  width: 65%;
+  height: 1122px;
+  padding: 30px 38px 34px;
+  box-sizing: border-box;
+}
+
+/* Header */
+.st-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2px;
+}
+
+.st-header-left {
+  max-width: 70%;
+}
+
+.st-name {
+  margin: 0;
+  font-size: 30px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 800;
+  color: #111827;
+}
+
+.st-title {
+  margin: 4px 0 10px;
+  font-size: 13px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #4b5563;
+}
+
+.st-header-line {
+  height: 2px;
+  background: #1a73e8;
+}
+
+/* Header profile image */
+.st-header-photo {
+  width: 110px;
+  height: 110px;
+  border-radius: 999px;
+  overflow: hidden;
+  border: 4px solid #e5e7eb;
+  cursor: pointer;
+}
+
+.st-header-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Sections */
+.st-section {
+  margin-bottom: 20px;
+}
+
+.st-section-title {
+  margin: 0 0 6px;
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #111827;
+}
+
+.st-section-text {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.2;
+  color: #4b5563;
+}
+
+/* Jobs */
+.st-job {
+  margin-top: 8px;
+}
+
+.st-job-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.st-job-title {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.st-job-company {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: #4b5563;
+}
+
+.st-job-dates {
+  margin: 0;
+  font-size: 12px;
+  color: #4b5563;
+}
+
+.st-job-list {
+  margin: 4px 0 0;
+  padding-left: 18px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #4b5563;
+}
+
+.st-job-list li + li {
+  margin-top: 3px;
+}
+
+/* Projects */
+.st-project {
+  margin-top: 6px;
+}
+
+.st-project-title {
+  margin: 0 0 2px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.st-project-text {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: #4b5563;
+}
+
+/* Education */
+.st-edu-item {
+  margin-top: 6px;
+}
+
+.st-edu-degree {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.st-edu-meta {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: #4b5563;
+}
+
+.st-last {
+  margin-bottom: 36px;
+}
+
+/* Editable behaviour */
+[contenteditable="true"] {
+  cursor: text;
+  outline: none;
+}
+
+[contenteditable="true"]:hover {
+  background: rgba(37, 99, 235, 0.04);
+}
+
+[contenteditable="true"]:focus {
+  background: rgba(37, 99, 235, 0.1);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .st-a4,
+  .st-form {
+    width: 100%;
+  }
+}
+
+@media (max-width: 760px) {
+  .st-resume {
+    flex-direction: column;
+  }
+
+  .st-sidebar,
+  .st-main {
+    width: 100%;
+  }
+
+  .st-main {
+    padding: 24px 20px 30px;
+  }
+
+  .st-form-grid {
+    grid-template-columns: 1fr;
+  }
+}

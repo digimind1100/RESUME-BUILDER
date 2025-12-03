@@ -19,6 +19,8 @@ import MinimalAccent from "./Templates/MinimalAccent";
 import ElegantClassic from "./Templates/ElegantClassic";
 import MedicalElites from "./Templates/MedicalElite";
 import EngineerElites from "./Templates/EngineerElite";
+import SoftTech from "./Templates/SoftTech";
+import DataElite from "./Templates/DataElite";
 
 
 function AppContent() {
@@ -59,6 +61,8 @@ function AppContent() {
        <Route path="/elegant-classic" element={<ElegantClassic />} />
        <Route path="/medical-elites" element={<MedicalElites />} />
        <Route path="/engineer-elites" element={<EngineerElites />} />
+       <Route path="/soft-tech" element={<SoftTech />} />
+       <Route path="/data-elite" element={<DataElite />} />
 
 
 
