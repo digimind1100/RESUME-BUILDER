@@ -132,7 +132,7 @@ export default function PreviewPanelQR({
             <div className="profile-pic-wrapper">
               <img
                 id="profilePicPreview"
-                src={formData?.profilePic || "https://via.placeholder.com/120"}
+                src={formData?.profilePic || "images/cleanprofileimage.png"}
                 alt="Profile"
               />
             </div>

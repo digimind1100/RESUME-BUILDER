@@ -140,7 +140,7 @@ export default function PreviewPanel({
             <div className="profile-pic-wrapper">
               <img
                 id="profilePicPreview"
-                src={formData?.profilePic || "https://via.placeholder.com/120"}
+                src={formData?.profilePic || "images/engineereliteprofileimage.png"}
                 alt="Profile"
               />
             </div>

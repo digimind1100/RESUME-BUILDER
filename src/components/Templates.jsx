@@ -18,7 +18,7 @@ const templateNames = {
   4: "Minimal Accent",
   5: "Elegant Classic",
   6: "Medical Elites",
-  7: "Engineer QR",
+  7: "Engineer Elites",
   8: "Template 8 (Coming Soon)",
   9: "Template 9 (Coming Soon)",
   10: "Template 10 (Coming Soon)",
@@ -45,7 +45,7 @@ const handleUseSimple = (num) => {
     navigate ("/medical-elites"); // Template 6
   } else if(num === 7 )
   {
-    navigate ("/engineer-qr"); // Template 7
+    navigate ("/engineer-elites"); // Template 7
   }
   
 else
