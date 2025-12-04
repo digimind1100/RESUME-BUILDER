@@ -35,11 +35,9 @@ const handleUseSimple = (num) => {
     navigate ("/minimal-accent"); //Template 4
   } else if (num === 5) {
     navigate ("/elegant-classic"); // Template 5
-  } else if (num === 6)
-  {
+  } else if (num === 6) {
     navigate ("/medical-elites"); // Template 6
-  } else if(num === 7 )
-  {
+  } else if(num === 7 ) {
     navigate ("/engineer-elites"); // Template 7
   } else if(num === 8){
     navigate ("/soft-tech"); // Template 8
@@ -47,6 +45,9 @@ const handleUseSimple = (num) => {
     navigate ("/data-elite"); // Template 9
   }else if (num === 10){
     navigate ("/engineer-prime"); // Template 10
+
+
+
   }
   
 else

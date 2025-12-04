@@ -9,7 +9,6 @@ import Templates from "./components/Templates";
 import CoverLetterPanel from "./components/CoverLetterPanel";
 import PreviewPanelQRPage from "./components/PreviewPanelQRPage";
 import CoverLetterPage from "./components/CoverLetterPage";
-
 import NewTemplateModern from "./Templates/NewTemplateModern";
 import CleanProfessional from "./Templates/CleanProfessional";
 import CreativeBold from "./Templates/CreativeBold";
@@ -20,6 +19,9 @@ import EngineerElites from "./Templates/EngineerElite";
 import SoftTech from "./Templates/SoftTech";
 import DataElite from "./Templates/DataElite";
 import EngineerPrime from "./Templates/EngineerPrime";
+import DataElite from "./Templates/DataElite";
+import EngineerPrime from "./Templates/EngineerPrime";
+
 
 
 function AppContent() {
@@ -60,9 +62,15 @@ function AppContent() {
        <Route path="/elegant-classic" element={<ElegantClassic />} />
        <Route path="/medical-elites" element={<MedicalElites />} />
        <Route path="/engineer-elites" element={<EngineerElites />} />
+
        <Route path="/soft-tech" element={<SoftTech />} />
        <Route path="/data-elite" element={<DataElite />} />
+
        <Route path="/engineer-prime" element={<EngineerPrime />} />
+
+       <Route path="/data-elite" element={<DataElite />} />
+       <Route path="/engineer-prime" element={<EngineerPrime />} />
+
 
 
 

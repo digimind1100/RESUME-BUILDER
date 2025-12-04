@@ -90,7 +90,11 @@ LinkedIn: ${linkedin}
         <div className="ep-mini-row">
           <input placeholder="Los Angeles" onChange={(e) => setCity(e.target.value)} />
           <input placeholder="CA" onChange={(e) => setState(e.target.value)} />
+
           <input placeholder="Z90001" onChange={(e) => setZip(e.target.value)} />
+
+          <input placeholder="90001" onChange={(e) => setZip(e.target.value)} />
+
         </div>
         <input placeholder="linkedin.com/in/username" onChange={(e) => setLinkedin(e.target.value)} />
 
@@ -203,6 +207,30 @@ LinkedIn: ${linkedin}
                   <li contentEditable>Prepared detailed CAD drawings and calculation reports.</li>
                 </ul>
               </div>
+
+              {/* PROJECTS */}
+<section className="ep-section ep-last">
+  <h2 className="ep-section-title">MAJOR PROJECTS</h2>
+
+  <div className="ep-edu-item">
+    <p contentEditable className="ep-edu-degree">
+      Downtown Metro Bridge Expansion – Lead Structural Engineer
+    </p>
+    <p contentEditable className="ep-edu-meta">
+      Designed high-load steel components and coordinated seismic analysis.
+    </p>
+  </div>
+
+  <div className="ep-edu-item">
+    <p contentEditable className="ep-edu-degree">
+      Coastal Flood Mitigation Project – Civil Team Lead
+    </p>
+    <p contentEditable className="ep-edu-meta">
+      Developed water-channel flow simulations and optimized protective barriers.
+    </p>
+  </div>
+</section>
+
 
               {/* EXTRA ADDED CONTENT FOR FULL PAGE */}
               <section className="ep-section">
