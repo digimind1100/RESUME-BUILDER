@@ -12,7 +12,11 @@ export default function DataElite() {
 
   /* -------- PROFILE IMAGE UPLOAD -------- */
   const [profileImage, setProfileImage] = useState(
+<<<<<<< HEAD
     "/images/dataelite-profile.png" // yahan apni default image rakh lena
+=======
+    "/images/Softtechprofileimage.png" // yahan apni default image rakh lena
+>>>>>>> dd9e698 (add)
   );
   const profileInputRef = useRef(null);
 
