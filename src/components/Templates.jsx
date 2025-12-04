@@ -19,13 +19,8 @@ const templateNames = {
   5: "Elegant Classic",
   6: "Medical Elites",
   7: "Engineer Elites",
-<<<<<<< HEAD
   8: "Soft-Tech",
   9: "Data Analyst",
-=======
-  8: "Data Analyst",
-  9: "Engineer Prime",
->>>>>>> dd9e698 (add)
   10: "Template 10 (Coming Soon)",
 };
 
@@ -49,17 +44,11 @@ const handleUseSimple = (num) => {
     navigate ("/medical-elites"); // Template 6
   } else if(num === 7 ) {
     navigate ("/engineer-elites"); // Template 7
-<<<<<<< HEAD
   } else if(num === 8){
     navigate ("/soft-tech"); // Template 8
   }else if (num === 9){
     navigate ("/data-elite"); // Template 9
-=======
-  } else if (num === 8) {
-    navigate ("/data-elite"); // Template 8
-  } else if (num === 9){
-    navigate ("/engineer-prime"); // Template 9
->>>>>>> dd9e698 (add)
+
   }
   
 else
