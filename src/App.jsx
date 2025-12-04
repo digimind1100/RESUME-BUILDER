@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from "react-router-dom";
 
-
-
 import Navbar from "./components/Navbar";
 import HomePage from "./components/Home";
 import ResumeBuilder from "./components/ResumeBuilder";
@@ -21,6 +19,7 @@ import MedicalElites from "./Templates/MedicalElite";
 import EngineerElites from "./Templates/EngineerElite";
 import SoftTech from "./Templates/SoftTech";
 import DataElite from "./Templates/DataElite";
+import EngineerPrime from "./Templates/EngineerPrime";
 
 
 function AppContent() {
@@ -63,6 +62,7 @@ function AppContent() {
        <Route path="/engineer-elites" element={<EngineerElites />} />
        <Route path="/soft-tech" element={<SoftTech />} />
        <Route path="/data-elite" element={<DataElite />} />
+       <Route path="/engineer-prime" element={<EngineerPrime />} />
 
 
 

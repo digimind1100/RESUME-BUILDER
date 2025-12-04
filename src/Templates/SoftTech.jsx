@@ -12,7 +12,7 @@ export default function SoftTech() {
 
   /* ---------- PROFILE IMAGE ---------- */
   const [profileImage, setProfileImage] = useState(
-    "/images/cleanprofileimage.png" // apni default image yahan rakhna
+    "/images/minimalaccentprofileimage.png" // apni default image yahan rakhna
   );
   const profileInputRef = useRef(null);
 

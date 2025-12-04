@@ -10,7 +10,6 @@ export default function Templates() {
   const handleUseClassic = () => navigate("/resume-classic");
   const handleUseProfessional = () => navigate("/resume-professional");
 
-
 const templateNames = {
   1: "Modern Template",
   2: "Clean Professional",
@@ -21,14 +20,10 @@ const templateNames = {
   7: "Engineer Elites",
   8: "Soft-Tech",
   9: "Data Analyst",
-  10: "Template 10 (Coming Soon)",
+  10: "Engineer Prime",
 };
 
-
-
-
   // Simple Template Navigation (opens direct without popup)
-
 const handleUseSimple = (num) => {
   if (num === 1) {
     navigate("/resume-modern");   // Template 1
@@ -50,6 +45,8 @@ const handleUseSimple = (num) => {
     navigate ("/soft-tech"); // Template 8
   }else if (num === 9){
     navigate ("/data-elite"); // Template 9
+  }else if (num === 10){
+    navigate ("/engineer-prime"); // Template 10
   }
   
 else
