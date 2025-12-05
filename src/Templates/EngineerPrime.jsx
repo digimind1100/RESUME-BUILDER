@@ -10,7 +10,7 @@ export default function EngineerPrime() {
   const navigate = useNavigate();
 
   // PROFILE IMAGE
-  const [profileImage, setProfileImage] = useState("/images/cleanprofileimage.png");
+  const [profileImage, setProfileImage] = useState("/images/cleanProfileImage.png");
   const fileInputRef = useRef(null);
 
   const handleImageUpload = (event) => {
