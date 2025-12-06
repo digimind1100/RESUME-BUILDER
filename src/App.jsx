@@ -9,7 +9,6 @@ import Templates from "./components/Templates";
 import CoverLetterPanel from "./components/CoverLetterPanel";
 import PreviewPanelQRPage from "./components/PreviewPanelQRPage";
 import CoverLetterPage from "./components/CoverLetterPage";
-import NewTemplateModern from "./Templates/NewTemplateModern";
 import CleanProfessional from "./Templates/CleanProfessional";
 import CreativeBold from "./Templates/CreativeBold";
 import MinimalAccent from "./Templates/MinimalAccent";
@@ -20,6 +19,7 @@ import SoftTech from "./Templates/SoftTech";
 import EngineerPrime from "./Templates/EngineerPrime";
 import DataElite from "./Templates/DataElite";
 import AviationPro from "./Templates/AviationPro";
+import TeacherElite from "./Templates/TeacherElite";
 
 
 
@@ -55,7 +55,6 @@ function AppContent() {
         {/* Preview */}
         <Route path="/preview-classic" element={<PreviewPanelQRPage formData={formData} />} />
 
-        <Route path="/resume-modern" element={<NewTemplateModern />} />
         <Route path="/clean-professional" element={<CleanProfessional />} />
         <Route path="/creative-bold" element={<CreativeBold />} />
          <Route path="/minimal-accent" element={<MinimalAccent />} />
@@ -66,12 +65,9 @@ function AppContent() {
        <Route path="/data-elite" element={<DataElite />} />
        <Route path="/engineer-prime" element={<EngineerPrime />} />
        <Route path="/aviation-pro" element={<AviationPro />} />
-
+       <Route path="/teacher-elite" element={<TeacherElite />} />
       
     
-
-
-
 
         <Route path="/coverletter" element={<CoverLetterPage />} />
         <Route path="/coverletter-generator" element={<CoverLetterPanel />} />

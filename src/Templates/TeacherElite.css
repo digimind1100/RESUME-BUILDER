@@ -1,0 +1,412 @@
+/* ========= WRAPPER ========= */
+.te-wrapper {
+  min-height: 100vh;
+  background: #eef1f7;
+  padding: 20px 0 40px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
+}
+
+/* ========= TOP BUTTONS ========= */
+.te-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.te-buttons button {
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  background: #1d4ed8;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.te-buttons button:hover {
+  background: #1437a6;
+}
+
+/* ========= QR FORM ========= */
+.te-qr-form {
+  width: 900px;
+  max-width: 95%;
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 16px 18px 18px;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.12);
+  margin-bottom: 16px;
+  box-sizing: border-box;
+}
+
+.te-qr-form h3 {
+  margin: 0 0 10px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.te-qr-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.te-qr-grid input {
+  padding: 6px 8px;
+  border-radius: 4px;
+  border: 1px solid #d1d5db;
+  font-size: 13px;
+}
+
+.te-qr-btn {
+  margin-top: 10px;
+  padding: 6px 14px;
+  border: none;
+  border-radius: 4px;
+  background: #1d4ed8;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.te-qr-btn:hover {
+  background: #1437a6;
+}
+
+/* ========= TABS ========= */
+.te-tabs {
+  width: 900px;
+  max-width: 95%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.te-tab {
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 12px;
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  cursor: pointer;
+}
+.te-tab.active {
+  background: #1d4ed8;
+  color: #ffffff;
+  border-color: #1d4ed8;
+}
+
+/* ========= A4 PAGE ========= */
+.te-a4 {
+  width: 210mm;
+  min-height: 297mm;
+  background: #ffffff;
+  box-shadow: 0 24px 50px rgba(15, 23, 42, 0.16);
+  box-sizing: border-box;
+}
+
+/* ========= INNER ========= */
+.te-resume {
+  width: 100%;
+  height: 100%;
+}
+
+/* ========= HEADER (DECORATIVE WAVE) ========= */
+.te-header {
+  position: relative;
+  overflow: hidden;
+  height: 180px;
+}
+
+.te-header-inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  padding: 28px 40px 20px;
+  box-sizing: border-box;
+}
+
+/* Wave background */
+.te-header::before {
+  content: "";
+  position: absolute;
+  left: -20%;
+  top: 0;
+  width: 140%;
+  height: 180px;
+  background: linear-gradient(90deg, #dbeafe 0%, #bfdbfe 35%, #93c5fd 80%);
+  border-bottom-left-radius: 120px;
+  border-bottom-right-radius: 120px;
+}
+
+/* Header LEFT (text) */
+.te-header-left {
+  max-width: 60%;
+  color: #0f172a;
+}
+
+.te-header-name {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #0f172a;
+}
+
+.te-header-role {
+  margin: 4px 0 10px;
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #1f2937;
+}
+
+.te-header-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 13px;
+  color: #374151;
+}
+
+/* Header RIGHT (photo + wave) */
+.te-header-right {
+  position: relative;
+  width: 210px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* Extra decorative soft wave behind photo */
+.te-header-wave {
+  position: absolute;
+  right: -40px;
+  top: -18px;
+  width: 210px;
+  height: 210px;
+  background: #dbeafe;
+  border-radius: 60% 40% 60% 40%;
+  opacity: 0.85;
+}
+
+/* Photo wrap */
+.te-header-photo-wrap {
+  position: relative;
+  z-index: 3;
+  width: 130px;
+  height: 130px;
+}
+
+/* subtle shadow circle */
+.te-header-photo-bg {
+  position: absolute;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  background: #bfdbfe;
+  top: 8px;
+  left: 6px;
+}
+
+/* profile circle */
+.te-header-photo-circle {
+  position: absolute;
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid #ffffff;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.25);
+  top: 12px;
+  left: 12px;
+  cursor: pointer;
+}
+
+.te-header-photo-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ========= LAYOUT BELOW HEADER ========= */
+.te-layout {
+  display: flex;
+  min-height: calc(297mm - 180px);
+}
+
+/* ========= SIDEBAR ========= */
+.te-sidebar {
+  width: 260px;
+  background: #111827; /* dark grey */
+  color: #f9fafb;
+  padding: 24px 20px 24px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* QR cards */
+.te-qr-card {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.35);
+  margin-bottom: 18px;
+}
+
+.te-qr-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.te-qr-placeholder {
+  font-size: 11px;
+  color: #4b5563;
+  text-align: center;
+  padding: 16px 4px;
+}
+
+/* Sidebar sections */
+.te-side-section {
+  margin-bottom: 16px;
+}
+
+.te-side-heading {
+  margin: 0 0 6px;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #93c5fd;
+}
+
+.te-side-list {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 12px;
+  color: #e5e7eb;
+}
+.te-side-list li + li {
+  margin-top: 4px;
+}
+
+/* ========= MAIN CONTENT ========= */
+.te-main {
+  flex: 1;
+  padding: 26px 40px 32px;
+  box-sizing: border-box;
+  color: #111827;
+}
+
+/* Section titles */
+.te-section {
+  margin-bottom: 20px;
+}
+
+.te-section-title {
+  margin: 0 0 6px;
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #0f172a;
+}
+
+.te-section-text {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #374151;
+}
+
+/* Jobs */
+.te-job {
+  margin-top: 8px;
+}
+
+.te-job-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+}
+.te-job-header h3 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+}
+.te-job-header span {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.te-job-sub {
+  margin: 2px 0 4px;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.te-job-list {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 12px;
+  color: #374151;
+}
+.te-job-list li + li {
+  margin-top: 3px;
+}
+
+/* Education / Extra grid */
+.te-section-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1.1fr;
+  gap: 30px;
+}
+
+.te-edu-line {
+  margin: 2px 0 4px;
+  font-size: 13px;
+}
+
+/* ========= Editable ========= */
+[contenteditable="true"] {
+  outline: none;
+}
+[contenteditable="true"]:hover {
+  background: rgba(37, 99, 235, 0.05);
+}
+[contenteditable="true"]:focus {
+  background: rgba(37, 99, 235, 0.12);
+}
+
+/* ========= RESPONSIVE (basic) ========= */
+@media (max-width: 1000px) {
+  .te-qr-form,
+  .te-tabs {
+    width: 100%;
+  }
+  .te-a4 {
+    width: 100%;
+  }
+}
+
+@media (max-width: 800px) {
+  .te-qr-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .te-layout {
+    flex-direction: column;
+  }
+  .te-sidebar {
+    width: 100%;
+  }
+}

@@ -7,8 +7,8 @@ const SIMPLE_TEMPLATES = Array.from({ length: 11 }, (_, i) => i + 1);
 
 const TEMPLATE_META = {
   1: {
-    name: "Modern Template",
-    shortLabel: "Modern",
+    name: "Teacher Elite",
+    shortLabel: "Teacher Elite",
     category: "All Roles",
     tagline: "Crisp layout with bold headings for modern applications.",
   },
@@ -84,7 +84,7 @@ export default function Templates() {
   // Simple template navigation
   const handleUseSimple = (num) => {
     if (num === 1) {
-      navigate("/resume-modern");
+      navigate("/teacher-elite");
     } else if (num === 2) {
       navigate("/clean-professional");
     } else if (num === 3) {
