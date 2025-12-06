@@ -5,6 +5,10 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import QRCode from "qrcode";
 
+
+const [isEditable, setIsEditable] = useState(true);
+
+
 const TABS = [
   "Kindergarten",
   "Elementary",
@@ -123,6 +127,13 @@ Subject: ${qrForm.subject}
           Back to Templates
         </button>
         <button onClick={handleReset}>Reset</button>
+        <button 
+  onClick={() => setIsEditable(!isEditable)}
+  className={isEditable ? "edit-btn on" : "edit-btn off"}
+>
+  {isEditable ? "Editing: ON" : "Editing: OFF"}
+</button>
+
       </div>
 
       {/* QR FORM */}
@@ -205,14 +216,14 @@ Subject: ${qrForm.subject}
               <div className="te-header-left">
                 <h1
                   className="te-header-name"
-                  contentEditable
+                  contentEditable={isEditable}
                   suppressContentEditableWarning
                 >
                   EMMA ROBERTS
                 </h1>
                 <p
                   className="te-header-role"
-                  contentEditable
+                  contentEditable={isEditable}
                   suppressContentEditableWarning
                 >
                   {currentTitle}
@@ -220,19 +231,19 @@ Subject: ${qrForm.subject}
 
                 <div className="te-header-contact">
                   <span
-                    contentEditable
+                    contentEditable={isEditable}
                     suppressContentEditableWarning
                   >
                     +1 (555) 908-2211
                   </span>
                   <span
-                    contentEditable
+                    contentEditable={isEditable}
                     suppressContentEditableWarning
                   >
                     emma.roberts@schoolmail.com
                   </span>
                   <span
-                    contentEditable
+                    contentEditable={isEditable}
                     suppressContentEditableWarning
                   >
                     New York, NY
@@ -279,38 +290,38 @@ Subject: ${qrForm.subject}
               <section className="te-side-section">
                 <h3 className="te-side-heading">CORE TEACHING SKILLS</h3>
                 <ul className="te-side-list">
-                  <li contentEditable>Lesson Planning & Delivery</li>
-                  <li contentEditable>Classroom Management</li>
-                  <li contentEditable>Student Assessment</li>
-                  <li contentEditable>Parent Communication</li>
-                  <li contentEditable>Inclusive Education</li>
+                  <li contentEditable={isEditable}>Lesson Planning & Delivery</li>
+                  <li contentEditable={isEditable}>Classroom Management</li>
+                  <li contentEditable={isEditable}>Student Assessment</li>
+                  <li contentEditable={isEditable}>Parent Communication</li>
+                  <li contentEditable={isEditable}>Inclusive Education</li>
                 </ul>
               </section>
 
               <section className="te-side-section">
                 <h3 className="te-side-heading">CERTIFICATIONS</h3>
                 <ul className="te-side-list">
-                  <li contentEditable>State Teaching License (Active)</li>
-                  <li contentEditable>ESL / TESOL Certification</li>
-                  <li contentEditable>Child Psychology Workshop</li>
+                  <li contentEditable={isEditable}>State Teaching License (Active)</li>
+                  <li contentEditable={isEditable}>ESL / TESOL Certification</li>
+                  <li contentEditable={isEditable}>Child Psychology Workshop</li>
                 </ul>
               </section>
 
               <section className="te-side-section">
                 <h3 className="te-side-heading">LANGUAGES</h3>
                 <ul className="te-side-list">
-                  <li contentEditable>English — Native</li>
-                  <li contentEditable>Spanish — Professional</li>
-                  <li contentEditable>French — Basic</li>
+                  <li contentEditable={isEditable}>English — Native</li>
+                  <li contentEditable={isEditable}>Spanish — Professional</li>
+                  <li contentEditable={isEditable}>French — Basic</li>
                 </ul>
               </section>
 
               <section className="te-side-section">
                 <h3 className="te-side-heading">ACHIEVEMENTS</h3>
                 <ul className="te-side-list">
-                  <li contentEditable>Teacher of the Year — 2022</li>
-                  <li contentEditable>Reading Program Lead — 2021</li>
-                  <li contentEditable>Debate Club Mentor</li>
+                  <li contentEditable={isEditable}>Teacher of the Year — 2022</li>
+                  <li contentEditable={isEditable}>Reading Program Lead — 2021</li>
+                  <li contentEditable={isEditable}>Debate Club Mentor</li>
                 </ul>
               </section>
 
@@ -333,7 +344,7 @@ Subject: ${qrForm.subject}
                 <h2 className="te-section-title">PROFESSIONAL SUMMARY</h2>
                 <p
                   className="te-section-text"
-                  contentEditable
+                  contentEditable={isEditable}
                   suppressContentEditableWarning
                 >
                   Dedicated {activeTab.toLowerCase()} teacher with over 8 years
@@ -351,30 +362,30 @@ Subject: ${qrForm.subject}
 
                 <div className="te-job">
                   <div className="te-job-header">
-                    <h3 contentEditable>Lead {activeTab} Teacher</h3>
-                    <span contentEditable>2018 – Present</span>
+                    <h3 contentEditable={isEditable}>Lead {activeTab} Teacher</h3>
+                    <span contentEditable={isEditable}>2018 – Present</span>
                   </div>
                   <p
                     className="te-job-sub"
-                    contentEditable
+                    contentEditable={isEditable}
                     suppressContentEditableWarning
                   >
                     Bright Future Academy — New York, NY
                   </p>
                   <ul className="te-job-list">
-                    <li contentEditable>
+                    <li contentEditable={isEditable}>
                       Designed engaging lessons aligned with curriculum and
                       state standards.
                     </li>
-                    <li contentEditable>
+                    <li contentEditable={isEditable}>
                       Used technology, group activities, and projects to support
                       different learning styles.
                     </li>
-                    <li contentEditable>
+                    <li contentEditable={isEditable}>
                       Communicated regularly with parents and guardians about
                       student progress.
                     </li>
-                    <li contentEditable>
+                    <li contentEditable={isEditable}>
                       Mentored new teachers and supported classroom management
                       strategies.
                     </li>
@@ -383,25 +394,25 @@ Subject: ${qrForm.subject}
 
                 <div className="te-job">
                   <div className="te-job-header">
-                    <h3 contentEditable>Classroom Teacher</h3>
+                    <h3 contentEditable={isEditable}>Classroom Teacher</h3>
                     <span contentEditable>2013 – 2018</span>
                   </div>
                   <p
                     className="te-job-sub"
-                    contentEditable
+                    contentEditable={isEditable}
                     suppressContentEditableWarning
                   >
                     Greenfield Public School — Boston, MA
                   </p>
                   <ul className="te-job-list">
-                    <li contentEditable>
+                    <li contentEditable={isEditable}>
                       Taught core subjects and developed creative assessment
                       methods.
                     </li>
-                    <li contentEditable>
+                    <li contentEditable={isEditable}>
                       Organized school events, clubs, and after-school programs.
                     </li>
-                    <li contentEditable>
+                    <li contentEditable={isEditable}>
                       Provided additional academic support through tutoring and
                       small group work.
                     </li>
@@ -415,14 +426,14 @@ Subject: ${qrForm.subject}
                   <h2 className="te-section-title">EDUCATION</h2>
                   <p
                     className="te-edu-line"
-                    contentEditable
+                    contentEditable={isEditable}
                     suppressContentEditableWarning
                   >
                     M.A. in Education — Columbia University, NY (2011 – 2013)
                   </p>
                   <p
                     className="te-edu-line"
-                    contentEditable
+                    contentEditable={isEditable}
                     suppressContentEditableWarning
                   >
                     B.A. in English Literature — Boston University (2007 – 2011)
@@ -431,21 +442,21 @@ Subject: ${qrForm.subject}
                   <h2 className="te-section-title">WORKSHOPS & TRAININGS</h2>
                   <p
                     className="te-edu-line"
-                    contentEditable
+                    contentEditable={isEditable}
                     suppressContentEditableWarning
                   >
                     Advanced Classroom Management — 2021
                   </p>
                   <p
                     className="te-edu-line"
-                    contentEditable
+                    contentEditable={isEditable}
                     suppressContentEditableWarning
                   >
                     Inclusive Education & Differentiated Instruction — 2019
                   </p>
                   <p
                     className="te-edu-line"
-                    contentEditable
+                    contentEditable={isEditable}
                     suppressContentEditableWarning
                   >
                     Digital Tools for Remote Teaching — 2020
@@ -455,33 +466,33 @@ Subject: ${qrForm.subject}
                 <div>
                   <h2 className="te-section-title">SUBJECTS TAUGHT</h2>
                   <ul className="te-job-list">
-                    <li contentEditable>English Language & Literature</li>
-                    <li contentEditable>Reading & Writing Skills</li>
-                    <li contentEditable>Exam Preparation & Study Skills</li>
+                    <li contentEditable={isEditable}>English Language & Literature</li>
+                    <li contentEditable={isEditable}>Reading & Writing Skills</li>
+                    <li contentEditable={isEditable}>Exam Preparation & Study Skills</li>
                   </ul>
 
                   <h2 className="te-section-title">
                     SCHOOL PROJECTS & ACTIVITIES
                   </h2>
                   <ul className="te-job-list">
-                    <li contentEditable>
+                    <li contentEditable={isEditable}>
                       Led a school-wide reading initiative improving literacy
                       rates by 20%.
                     </li>
-                    <li contentEditable>
+                    <li contentEditable={isEditable}>
                       Organized annual book fair and student writing
                       competitions.
                     </li>
-                    <li contentEditable>
+                    <li contentEditable={isEditable}>
                       Coordinated debate and public speaking events for students.
                     </li>
                   </ul>
 
                   <h2 className="te-section-title">EXTRA ACTIVITIES</h2>
                   <ul className="te-job-list">
-                    <li contentEditable>Literature Club Advisor</li>
-                    <li contentEditable>Debate & Public Speaking Coach</li>
-                    <li contentEditable>Volunteer Community Tutor</li>
+                    <li contentEditable={isEditable}>Literature Club Advisor</li>
+                    <li contentEditable={isEditable}>Debate & Public Speaking Coach</li>
+                    <li contentEditable={isEditable}>Volunteer Community Tutor</li>
                   </ul>
                 </div>
               </section>

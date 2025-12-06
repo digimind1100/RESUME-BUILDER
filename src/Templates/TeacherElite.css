@@ -410,3 +410,11 @@
     width: 100%;
   }
 }
+[contenteditable="true"] {
+  outline: 1px dashed #60a5fa;
+  border-radius: 3px;
+}
+
+[contenteditable="false"] {
+  outline: none;
+}
