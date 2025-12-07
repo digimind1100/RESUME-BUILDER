@@ -1,5 +1,5 @@
 // src/Templates/ElegantClassic.jsx
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import "./ElegantClassic.css";
 import { useNavigate } from "react-router-dom";
 import jsPDF from "jspdf";
@@ -8,6 +8,9 @@ import html2canvas from "html2canvas";
 const ElegantClassic = () => {
     const resumeRef = useRef(null);
     const navigate = useNavigate();
+
+    /* ========== EDIT MODE ========== */
+    const [isEditable, setIsEditable] = useState(false);
 
     const handleDownloadPDF = async () => {
         const element = resumeRef.current;
@@ -33,6 +36,7 @@ const ElegantClassic = () => {
 
     return (
         <div className="ec-wrapper">
+
             {/* Top Buttons */}
             <div className="ec-buttons">
                 <button onClick={handleDownloadPDF}>Download PDF</button>
@@ -40,24 +44,31 @@ const ElegantClassic = () => {
                     Back to Templates
                 </button>
                 <button onClick={handleReset}>Reset</button>
+
+                {/* EDIT BUTTON */}
+                <button
+                    onClick={() => setIsEditable(!isEditable)}
+                    className={isEditable ? "edit-toggle on" : "edit-toggle off"}
+                >
+                    {isEditable ? "Editing: ON" : "Editing: OFF"}
+                </button>
             </div>
 
             {/* A4 Resume */}
             <div className="ec-a4" ref={resumeRef}>
                 <div className="ec-resume">
+
                     {/* HEADER */}
                     <header className="ec-header">
                         <h1
                             className="ec-name"
-                            contentEditable
-                            suppressContentEditableWarning
+                            contentEditable={isEditable}
                         >
                             EMERSON REED
                         </h1>
                         <p
                             className="ec-title"
-                            contentEditable
-                            suppressContentEditableWarning
+                            contentEditable={isEditable}
                         >
                             PROFESSIONAL TITLE
                         </p>
@@ -65,59 +76,61 @@ const ElegantClassic = () => {
 
                     {/* BODY */}
                     <div className="ec-body">
+
                         {/* LEFT COLUMN */}
                         <aside className="ec-sidebar">
+
                             {/* CONTACT */}
                             <section className="ec-sidebar-section">
                                 <h3
                                     className="ec-sidebar-heading"
-                                    contentEditable
-                                    suppressContentEditableWarning
+                                    contentEditable={isEditable}
                                 >
                                     CONTACT
                                 </h3>
 
                                 <ul className="ec-contact-list">
+
                                     <li>
                                         <span className="ec-icon-circle">✉</span>
                                         <span
                                             className="ec-contact-text"
-                                            contentEditable
-                                            suppressContentEditableWarning
+                                            contentEditable={isEditable}
                                         >
                                             youremail@mail.com
                                         </span>
                                     </li>
+
                                     <li>
                                         <span className="ec-icon-circle">✆</span>
                                         <span
                                             className="ec-contact-text"
-                                            contentEditable
-                                            suppressContentEditableWarning
+                                            contentEditable={isEditable}
                                         >
                                             555.555.5555
                                         </span>
                                     </li>
+
                                     <li>
                                         <span className="ec-icon-circle">📍</span>
                                         <span
                                             className="ec-contact-text"
-                                            contentEditable
-                                            suppressContentEditableWarning
+                                            contentEditable={isEditable}
                                         >
                                             Your City, State
                                         </span>
                                     </li>
+
                                     <li>
                                         <span className="ec-icon-circle">in</span>
                                         <span
                                             className="ec-contact-text"
-                                            contentEditable
-                                            suppressContentEditableWarning
+                                            contentEditable={isEditable}
                                         >
                                             linkedin.com/in/yourusername
                                         </span>
                                     </li>
+
                                 </ul>
                             </section>
 
@@ -125,36 +138,20 @@ const ElegantClassic = () => {
                             <section className="ec-sidebar-section">
                                 <h3
                                     className="ec-sidebar-heading"
-                                    contentEditable
-                                    suppressContentEditableWarning
+                                    contentEditable={isEditable}
                                 >
                                     SKILLS
                                 </h3>
+
                                 <ul className="ec-skill-list">
-                                    <li contentEditable suppressContentEditableWarning>
-                                        Process Improvement
-                                    </li>
-                                    <li contentEditable suppressContentEditableWarning>
-                                        Contracts &amp; Negotiations
-                                    </li>
-                                    <li contentEditable suppressContentEditableWarning>
-                                        Project Planning
-                                    </li>
-                                    <li contentEditable suppressContentEditableWarning>
-                                        Reporting &amp; Analytics
-                                    </li>
-                                    <li contentEditable suppressContentEditableWarning>
-                                        Risk Assessment
-                                    </li>
-                                    <li contentEditable suppressContentEditableWarning>
-                                        Resource Management
-                                    </li>
-                                    <li contentEditable suppressContentEditableWarning>
-                                        Adaptability
-                                    </li>
-                                    <li contentEditable suppressContentEditableWarning>
-                                        Conflict Resolution
-                                    </li>
+                                    <li contentEditable={isEditable}>Process Improvement</li>
+                                    <li contentEditable={isEditable}>Contracts & Negotiations</li>
+                                    <li contentEditable={isEditable}>Project Planning</li>
+                                    <li contentEditable={isEditable}>Reporting & Analytics</li>
+                                    <li contentEditable={isEditable}>Risk Assessment</li>
+                                    <li contentEditable={isEditable}>Resource Management</li>
+                                    <li contentEditable={isEditable}>Adaptability</li>
+                                    <li contentEditable={isEditable}>Conflict Resolution</li>
                                 </ul>
                             </section>
 
@@ -162,8 +159,7 @@ const ElegantClassic = () => {
                             <section className="ec-sidebar-section">
                                 <h3
                                     className="ec-sidebar-heading"
-                                    contentEditable
-                                    suppressContentEditableWarning
+                                    contentEditable={isEditable}
                                 >
                                     EDUCATION
                                 </h3>
@@ -171,15 +167,13 @@ const ElegantClassic = () => {
                                 <div className="ec-edu-block">
                                     <p
                                         className="ec-edu-degree"
-                                        contentEditable
-                                        suppressContentEditableWarning
+                                        contentEditable={isEditable}
                                     >
                                         NAME OF DEGREE
                                     </p>
                                     <p
                                         className="ec-edu-meta"
-                                        contentEditable
-                                        suppressContentEditableWarning
+                                        contentEditable={isEditable}
                                     >
                                         Concentration (if any)
                                         <br />
@@ -190,18 +184,10 @@ const ElegantClassic = () => {
                                 </div>
 
                                 <div className="ec-edu-block">
-                                    <p
-                                        className="ec-edu-degree"
-                                        contentEditable
-                                        suppressContentEditableWarning
-                                    >
+                                    <p className="ec-edu-degree" contentEditable={isEditable}>
                                         CERTIFICATION HERE
                                     </p>
-                                    <p
-                                        className="ec-edu-meta"
-                                        contentEditable
-                                        suppressContentEditableWarning
-                                    >
+                                    <p className="ec-edu-meta" contentEditable={isEditable}>
                                         Certifying Organization
                                         <br />
                                         Completion Year
@@ -209,78 +195,60 @@ const ElegantClassic = () => {
                                 </div>
 
                                 <div className="ec-edu-block">
-                                    <p
-                                        className="ec-edu-degree"
-                                        contentEditable
-                                        suppressContentEditableWarning
-                                    >
+                                    <p className="ec-edu-degree" contentEditable={isEditable}>
                                         CERTIFICATION HERE
                                     </p>
-                                    <p
-                                        className="ec-edu-meta"
-                                        contentEditable
-                                        suppressContentEditableWarning
-                                    >
+                                    <p className="ec-edu-meta" contentEditable={isEditable}>
                                         Certifying Organization
                                         <br />
                                         Completion Year
                                     </p>
                                 </div>
+
                             </section>
                         </aside>
 
                         {/* RIGHT MAIN COLUMN */}
                         <main className="ec-main">
+
                             {/* SUMMARY */}
                             <section className="ec-section">
                                 <h2
                                     className="ec-section-title"
-                                    contentEditable
-                                    suppressContentEditableWarning
+                                    contentEditable={isEditable}
                                 >
                                     SUMMARY
                                 </h2>
                                 <div className="ec-section-rule" />
                                 <p
                                     className="ec-section-text"
-                                    contentEditable
-                                    suppressContentEditableWarning
+                                    contentEditable={isEditable}
                                 >
-                                    Seasoned professional with a strong background in operations, project
-                                    coordination, and organizational leadership. Adept at optimizing internal
-                                    processes, driving team performance, and developing actionable strategies
-                                    that improve efficiency and profitability. Recognized for delivering
-                                    high-quality results in fast-paced environments, building strong
-                                    cross-functional relationships, and managing complex workflows from
-                                    planning through execution. Passionate about continuous improvement,
-                                    problem-solving, and providing value that supports company objectives.
+                                    Seasoned professional with a strong background in operations...
                                 </p>
-
                             </section>
 
-
+                            {/* CORE COMPETENCIES */}
                             <section className="ec-section">
-  <h2 className="ec-section-title" contentEditable>CORE COMPETENCIES</h2>
-  <div className="ec-section-rule" />
+                              <h2 className="ec-section-title" contentEditable={isEditable}>
+                                CORE COMPETENCIES
+                              </h2>
+                              <div className="ec-section-rule" />
 
-  <p className="ec-section-text">
-    • Strategic Planning &nbsp;• Workflow Optimization &nbsp;• Coordination  
-    <br />
-    • Leadership Support &nbsp;• Documentation & Reporting  
-    <br />
-    • Communication &nbsp;• Problem Solving &nbsp;• Time Management
-  </p>
-</section>
-
-
-
+                              <p className="ec-section-text" contentEditable={isEditable}>
+                                • Strategic Planning • Workflow Optimization • Coordination  
+                                <br />
+                                • Leadership Support • Documentation & Reporting  
+                                <br />
+                                • Communication • Problem Solving • Time Management
+                              </p>
+                            </section>
 
                             {/* PROFESSIONAL EXPERIENCE */}
                             <section className="ec-section">
                                 <h2
                                     className="ec-section-title"
-                                    contentEditable
-                                    suppressContentEditableWarning
+                                    contentEditable={isEditable}
                                 >
                                     PROFESSIONAL EXPERIENCE
                                 </h2>
@@ -290,66 +258,80 @@ const ElegantClassic = () => {
                                 <div className="ec-job">
                                     <div className="ec-job-header">
                                         <div>
-                                            <p
-                                                className="ec-job-title"
-                                                contentEditable
-                                                suppressContentEditableWarning
-                                            >
+                                            <p className="ec-job-title" contentEditable={isEditable}>
                                                 POSITION TITLE HERE
                                             </p>
-                                            <p
-                                                className="ec-job-company"
-                                                contentEditable
-                                                suppressContentEditableWarning
-                                            >
+                                            <p className="ec-job-company" contentEditable={isEditable}>
                                                 Company, Location
                                             </p>
                                         </div>
-                                        <p
-                                            className="ec-job-dates"
-                                            contentEditable
-                                            suppressContentEditableWarning
-                                        >
+
+                                        <p className="ec-job-dates" contentEditable={isEditable}>
                                             Date – Date
                                         </p>
                                     </div>
-                                    <ul className="ec-job-list">
-                                        <li contentEditable>Re-wrote internal process guides to reduce training time by 30%.</li>
-                                        <li contentEditable>Developed reporting dashboards used by leadership to track KPIs.</li>
-                                        <li contentEditable>Streamlined communication between departments, reducing delays.</li>
-                                        <li contentEditable>Coordinated project timelines and delivered 95% of tasks on schedule.</li>
-                                        <li contentEditable>Led quality assurance reviews to ensure compliance with company standards.</li>
-                                        <li contentEditable>Resolved client issues by identifying root causes and implementing sustainable solutions.</li>
-                                    </ul>
 
+                                    <ul className="ec-job-list">
+                                        <li contentEditable={isEditable}>
+                                            Re-wrote internal process guides to reduce training time...
+                                        </li>
+                                        <li contentEditable={isEditable}>
+                                            Developed reporting dashboards used by leadership...
+                                        </li>
+                                        <li contentEditable={isEditable}>
+                                            Streamlined communication between departments...
+                                        </li>
+                                        <li contentEditable={isEditable}>
+                                            Coordinated project timelines and delivered tasks...
+                                        </li>
+                                        <li contentEditable={isEditable}>
+                                            Led quality assurance reviews...
+                                        </li>
+                                        <li contentEditable={isEditable}>
+                                            Resolved client issues with root-cause analysis...
+                                        </li>
+                                    </ul>
                                 </div>
 
                                 {/* Job 2 */}
                                 <div className="ec-job">
                                     <div className="ec-job-header">
                                         <div>
-                                            <p className="ec-job-title" contentEditable>Administrative Assistant</p>
-                                            <p className="ec-job-company" contentEditable>Prime Solutions • 2014 – 2016</p>
+                                            <p className="ec-job-title" contentEditable={isEditable}>
+                                                Administrative Assistant
+                                            </p>
+                                            <p className="ec-job-company" contentEditable={isEditable}>
+                                                Prime Solutions • 2014 – 2016
+                                            </p>
                                         </div>
-                                        <p className="ec-job-dates" contentEditable>2014 – 2016</p>
+
+                                        <p className="ec-job-dates" contentEditable={isEditable}>
+                                            2014 – 2016
+                                        </p>
                                     </div>
 
                                     <ul className="ec-job-list">
-                                        <li contentEditable>Supported office operations including record keeping and correspondence.</li>
-                                        <li contentEditable>Organized company events, meetings, and travel arrangements.</li>
-                                        <li contentEditable>Maintained confidential files and ensured accurate documentation.</li>
-                                        <li contentEditable>Provided high-quality customer service to internal and external clients.</li>
+                                        <li contentEditable={isEditable}>
+                                            Supported office operations including record keeping...
+                                        </li>
+                                        <li contentEditable={isEditable}>
+                                            Organized company events, meetings, travel...
+                                        </li>
+                                        <li contentEditable={isEditable}>
+                                            Maintained confidential documents...
+                                        </li>
+                                        <li contentEditable={isEditable}>
+                                            Provided high-quality customer service...
+                                        </li>
                                     </ul>
                                 </div>
-
                             </section>
 
-                            {/* EDUCATION (MAIN SIDE) */}
+                            {/* EDUCATION (Main Area) */}
                             <section className="ec-section ec-section-last">
                                 <h2
                                     className="ec-section-title"
-                                    contentEditable
-                                    suppressContentEditableWarning
+                                    contentEditable={isEditable}
                                 >
                                     EDUCATION
                                 </h2>
@@ -358,43 +340,45 @@ const ElegantClassic = () => {
                                 <div className="ec-main-edu">
                                     <p
                                         className="ec-main-edu-degree"
-                                        contentEditable
-                                        suppressContentEditableWarning
+                                        contentEditable={isEditable}
                                     >
                                         DIPLOMA – (2003–2005)
                                     </p>
                                     <p
                                         className="ec-main-edu-meta"
-                                        contentEditable
-                                        suppressContentEditableWarning
+                                        contentEditable={isEditable}
                                     >
                                         School Name – City, Country
                                     </p>
                                 </div>
-                                <div className="ec-main-edu">
-  <p className="ec-main-edu-degree" contentEditable>Certificate — Project Coordination</p>
-  <p className="ec-main-edu-meta" contentEditable>Online Certification — 2020</p>
-</div>
 
+                                <div className="ec-main-edu">
+                                    <p className="ec-main-edu-degree" contentEditable={isEditable}>
+                                        Certificate — Project Coordination
+                                    </p>
+                                    <p className="ec-main-edu-meta" contentEditable={isEditable}>
+                                        Online Certification — 2020
+                                    </p>
+                                </div>
 
                                 <div className="ec-main-edu">
                                     <p
                                         className="ec-main-edu-degree"
-                                        contentEditable
-                                        suppressContentEditableWarning
+                                        contentEditable={isEditable}
                                     >
                                         DIPLOMA – (2000–2003)
                                     </p>
                                     <p
                                         className="ec-main-edu-meta"
-                                        contentEditable
-                                        suppressContentEditableWarning
+                                        contentEditable={isEditable}
                                     >
                                         School Name – City, Country
                                     </p>
                                 </div>
                             </section>
+
                         </main>
+
                     </div>
                 </div>
             </div>

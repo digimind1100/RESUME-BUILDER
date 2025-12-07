@@ -8,6 +8,9 @@ const CreativeBold = () => {
   const resumeRef = useRef(null);
   const navigate = useNavigate();
 
+  /* ===== EDIT MODE TOGGLE ===== */
+  const [isEditable, setIsEditable] = useState(false);
+
   // ----- Profile Image Upload -----
   const [profileImage, setProfileImage] = useState("/images/creativeboldimage.png");
   const fileInputRef = useRef(null);
@@ -51,11 +54,20 @@ const CreativeBold = () => {
 
   return (
     <div className="cb-wrapper">
+
       {/* Top Buttons */}
       <div className="cb-buttons">
         <button onClick={handleDownloadPDF}>Download PDF</button>
         <button onClick={() => navigate("/templates")}>Back to Templates</button>
         <button onClick={handleReset}>Reset</button>
+
+        {/* EDIT MODE BUTTON */}
+        <button
+          onClick={() => setIsEditable(!isEditable)}
+          className={isEditable ? "edit-toggle on" : "edit-toggle off"}
+        >
+          {isEditable ? "Editing: ON" : "Editing: OFF"}
+        </button>
       </div>
 
       {/* A4 Resume Area */}
@@ -81,7 +93,7 @@ const CreativeBold = () => {
             <div className="cb-left-role">
               <h2
                 className="cb-left-role-text"
-                contentEditable
+                contentEditable={isEditable}
                 suppressContentEditableWarning
               >
                 MARKETING SPECIALIST
@@ -90,26 +102,26 @@ const CreativeBold = () => {
 
             {/* Skills */}
             <section className="cb-left-section">
-              <h3 className="cb-left-heading" contentEditable suppressContentEditableWarning>
+              <h3 className="cb-left-heading" contentEditable={isEditable} suppressContentEditableWarning>
                 SKILLS
               </h3>
               <ul className="cb-left-list">
-                <li contentEditable suppressContentEditableWarning>SEO and SEM</li>
-                <li contentEditable suppressContentEditableWarning>Content Marketing</li>
-                <li contentEditable suppressContentEditableWarning>Social Media Management</li>
-                <li contentEditable suppressContentEditableWarning>Analytics & Reporting</li>
+                <li contentEditable={isEditable} suppressContentEditableWarning>SEO and SEM</li>
+                <li contentEditable={isEditable} suppressContentEditableWarning>Content Marketing</li>
+                <li contentEditable={isEditable} suppressContentEditableWarning>Social Media Management</li>
+                <li contentEditable={isEditable} suppressContentEditableWarning>Analytics & Reporting</li>
               </ul>
             </section>
 
             {/* Contact */}
             <section className="cb-left-section">
-              <h3 className="cb-left-heading" contentEditable suppressContentEditableWarning>
+              <h3 className="cb-left-heading" contentEditable={isEditable} suppressContentEditableWarning>
                 CONTACT
               </h3>
               <div className="cb-left-contact">
-                <p contentEditable suppressContentEditableWarning>123-456-7860</p>
-                <p contentEditable suppressContentEditableWarning>amanda.smith@mail.com</p>
-                <p contentEditable suppressContentEditableWarning>Los Angeles, CA</p>
+                <p contentEditable={isEditable} suppressContentEditableWarning>123-456-7860</p>
+                <p contentEditable={isEditable} suppressContentEditableWarning>amanda.smith@mail.com</p>
+                <p contentEditable={isEditable} suppressContentEditableWarning>Los Angeles, CA</p>
               </div>
             </section>
           </aside>
@@ -121,7 +133,7 @@ const CreativeBold = () => {
             <header className="cb-header-text">
               <h1
                 className="cb-name"
-                contentEditable
+                contentEditable={isEditable}
                 suppressContentEditableWarning
               >
                 AMANDA SMITH
@@ -129,7 +141,7 @@ const CreativeBold = () => {
 
               <p
                 className="cb-title"
-                contentEditable
+                contentEditable={isEditable}
                 suppressContentEditableWarning
               >
                 Marketing Specialist
@@ -138,105 +150,81 @@ const CreativeBold = () => {
 
             {/* Profile Section */}
             <section className="cb-section">
-              <h2 className="cb-section-heading" contentEditable>PROFILE</h2>
-              <p className="cb-section-paragraph" contentEditable>
+              <h2 className="cb-section-heading" contentEditable={isEditable}>PROFILE</h2>
+              <p className="cb-section-paragraph" contentEditable={isEditable}>
                 Dynamic marketing specialist with 6+ years of experience in planning and executing
-                multi-channel marketing campaigns. Skilled in SEO, SEM, content strategy, paid
-                advertising, and analytics. Proven ability to improve lead generation, strengthen
-                brand awareness, and collaborate with cross-functional teams to deliver measurable
-                results. Passionate about data-driven optimization, audience insights, and creative
-                storytelling that drives engagement.
+                multi-channel marketing campaigns...
               </p>
             </section>
 
             {/* Experience Section */}
             <section className="cb-section">
-              <h2 className="cb-section-heading" contentEditable>EXPERIENCE</h2>
+              <h2 className="cb-section-heading" contentEditable={isEditable}>EXPERIENCE</h2>
 
               {/* Job 1 */}
               <div className="cb-entry">
-                <p className="cb-entry-title" contentEditable>
+                <p className="cb-entry-title" contentEditable={isEditable}>
                   Marketing Specialist
                 </p>
-                <p className="cb-entry-subtitle" contentEditable>
-                  XYZ Corporation &nbsp;&nbsp;|&nbsp;&nbsp; 2020 – Present
+                <p className="cb-entry-subtitle" contentEditable={isEditable}>
+                  XYZ Corporation | 2020 – Present
                 </p>
                 <ul className="cb-entry-list">
-                  <li contentEditable>
-                    Led digital marketing campaigns across Google Ads, Meta Ads, and LinkedIn,
-                    increasing qualified leads by 38%.
-                  </li>
-                  <li contentEditable>
-                    Managed a $180K yearly budget, optimizing spending using performance analytics.
-                  </li>
-                  <li contentEditable>
-                    Conducted market research, competitor analysis, and trend forecasting to refine
-                    messaging and targeting.
-                  </li>
-                  <li contentEditable>
-                    Collaborated with creative teams to execute content calendars and launch campaigns.
-                  </li>
-                  <li contentEditable>
-                    Created A/B testing strategies that improved CTR by 27% and reduced CPL by 22%.
-                  </li>
+                  <li contentEditable={isEditable}>Led digital campaigns increasing leads by 38%.</li>
+                  <li contentEditable={isEditable}>Managed $180K yearly ad spend.</li>
+                  <li contentEditable={isEditable}>Conducted market research & analysis.</li>
+                  <li contentEditable={isEditable}>Collaborated with creative teams.</li>
+                  <li contentEditable={isEditable}>Improved CTR by 27% via A/B testing.</li>
                 </ul>
               </div>
 
               {/* Job 2 */}
               <div className="cb-entry">
-                <p className="cb-entry-title" contentEditable>
+                <p className="cb-entry-title" contentEditable={isEditable}>
                   Marketing Coordinator
                 </p>
-                <p className="cb-entry-subtitle" contentEditable>
-                  ABC Company &nbsp;&nbsp;|&nbsp;&nbsp; 2016 – 2020
+                <p className="cb-entry-subtitle" contentEditable={isEditable}>
+                  ABC Company | 2016 – 2020
                 </p>
                 <ul className="cb-entry-list">
-                  <li contentEditable>
-                    Managed social media platforms, increasing engagement by 45% in one year.
-                  </li>
-                  <li contentEditable>
-                    Assisted in planning digital & print campaigns, events, and promotions.
-                  </li>
-                  <li contentEditable>
-                    Analyzed weekly performance reports and suggested optimization strategies.
-                  </li>
-                  <li contentEditable>
-                    Supported brand development initiatives across various marketing channels.
-                  </li>
+                  <li contentEditable={isEditable}>Boosted engagement by 45%.</li>
+                  <li contentEditable={isEditable}>Assisted with digital & print campaigns.</li>
+                  <li contentEditable={isEditable}>Analyzed performance & suggested improvements.</li>
+                  <li contentEditable={isEditable}>Supported brand initiatives.</li>
                 </ul>
               </div>
             </section>
 
             {/* Certifications */}
             <section className="cb-section">
-              <h2 className="cb-section-heading" contentEditable>CERTIFICATIONS</h2>
+              <h2 className="cb-section-heading" contentEditable={isEditable}>CERTIFICATIONS</h2>
               <ul className="cb-entry-list">
-                <li contentEditable>Google Analytics Certification</li>
-                <li contentEditable>Facebook Blueprint Certified</li>
-                <li contentEditable>HubSpot Content Marketing Certification</li>
-                <li contentEditable>SEO Specialization – Coursera</li>
+                <li contentEditable={isEditable}>Google Analytics Certification</li>
+                <li contentEditable={isEditable}>Facebook Blueprint Certified</li>
+                <li contentEditable={isEditable}>HubSpot Content Marketing Certification</li>
+                <li contentEditable={isEditable}>SEO Specialization – Coursera</li>
               </ul>
             </section>
 
             {/* Tools */}
             <section className="cb-section">
-              <h2 className="cb-section-heading" contentEditable>TOOLS & TECHNOLOGIES</h2>
+              <h2 className="cb-section-heading" contentEditable={isEditable}>TOOLS & TECHNOLOGIES</h2>
               <ul className="cb-entry-list">
-                <li contentEditable>Google Analytics, Google Ads Manager</li>
-                <li contentEditable>Meta Business Suite, LinkedIn Campaign Manager</li>
-                <li contentEditable>SEMrush, Ahrefs, Moz</li>
-                <li contentEditable>HubSpot, Mailchimp</li>
-                <li contentEditable>Figma, Canva, Adobe Express</li>
+                <li contentEditable={isEditable}>Google Analytics, Ads Manager</li>
+                <li contentEditable={isEditable}>Meta Business Suite, LinkedIn Ads</li>
+                <li contentEditable={isEditable}>SEMrush, Ahrefs, Moz</li>
+                <li contentEditable={isEditable}>HubSpot, Mailchimp</li>
+                <li contentEditable={isEditable}>Figma, Canva</li>
               </ul>
             </section>
 
             {/* Achievements */}
             <section className="cb-section">
-              <h2 className="cb-section-heading" contentEditable>ACHIEVEMENTS</h2>
+              <h2 className="cb-section-heading" contentEditable={isEditable}>ACHIEVEMENTS</h2>
               <ul className="cb-entry-list">
-                <li contentEditable>Increased lead quality by 40% within 6 months.</li>
-                <li contentEditable>Reduced cost-per-lead by 22% through campaign optimization.</li>
-                <li contentEditable>Successfully managed a brand-wide digital transformation project.</li>
+                <li contentEditable={isEditable}>Increased lead quality by 40%.</li>
+                <li contentEditable={isEditable}>Reduced cost-per-lead by 22%.</li>
+                <li contentEditable={isEditable}>Managed a digital transformation project.</li>
               </ul>
             </section>
 

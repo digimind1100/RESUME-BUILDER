@@ -9,6 +9,9 @@ export default function EngineerPrime() {
   const resumeRef = useRef(null);
   const navigate = useNavigate();
 
+  // ⭐ EDITABLE SYSTEM
+  const [isEditable, setIsEditable] = useState(false);
+
   // PROFILE IMAGE
   const [profileImage, setProfileImage] = useState("/images/cleanProfileImage.png");
   const fileInputRef = useRef(null);
@@ -44,7 +47,7 @@ City: ${city}
 State: ${state}
 ZIP: ${zip}
 LinkedIn: ${linkedin}
-    `;
+`;
 
     try {
       const qr = await QRCode.toDataURL(qrData);
@@ -79,6 +82,14 @@ LinkedIn: ${linkedin}
         <button onClick={handleDownloadPDF}>Download PDF</button>
         <button onClick={() => navigate("/templates")}>Back</button>
         <button onClick={handleReset}>Reset</button>
+
+        {/* ⭐ NEW EDIT BUTTON */}
+        <button
+          onClick={() => setIsEditable(!isEditable)}
+          className={isEditable ? "edit-toggle on" : "edit-toggle off"}
+        >
+          {isEditable ? "Editing: ON" : "Editing: OFF"}
+        </button>
       </div>
 
       {/* ==== MINI FORM FOR QR GENERATION ==== */}
@@ -90,15 +101,13 @@ LinkedIn: ${linkedin}
         <div className="ep-mini-row">
           <input placeholder="Los Angeles" onChange={(e) => setCity(e.target.value)} />
           <input placeholder="CA" onChange={(e) => setState(e.target.value)} />
-
-          <input placeholder="Z90001" onChange={(e) => setZip(e.target.value)} />
-
           <input placeholder="90001" onChange={(e) => setZip(e.target.value)} />
-
         </div>
         <input placeholder="linkedin.com/in/username" onChange={(e) => setLinkedin(e.target.value)} />
 
-        <button className="ep-qr-btn" onClick={generateQRCode}>Create QR Code</button>
+        <button className="ep-qr-btn" onClick={generateQRCode}>
+          Create QR Code
+        </button>
       </div>
 
       {/* ==== A4 PAGE ==== */}
@@ -127,23 +136,27 @@ LinkedIn: ${linkedin}
 
             {/* SIDEBAR SECTIONS */}
             <section className="ep-section">
-              <h3 className="ep-section-heading">CORE SKILLS</h3>
+              <h3 className="ep-section-heading" contentEditable={isEditable}>
+                CORE SKILLS
+              </h3>
               <ul className="ep-list">
-                <li contentEditable>Structural Analysis</li>
-                <li contentEditable>Foundation Design</li>
-                <li contentEditable>AutoCAD / Civil 3D</li>
-                <li contentEditable>Seismic Load Calculations</li>
-                <li contentEditable>Project Coordination</li>
+                <li contentEditable={isEditable}>Structural Analysis</li>
+                <li contentEditable={isEditable}>Foundation Design</li>
+                <li contentEditable={isEditable}>AutoCAD / Civil 3D</li>
+                <li contentEditable={isEditable}>Seismic Load Calculations</li>
+                <li contentEditable={isEditable}>Project Coordination</li>
               </ul>
             </section>
 
             <section className="ep-section">
-              <h3 className="ep-section-heading">SOFTWARE</h3>
+              <h3 className="ep-section-heading" contentEditable={isEditable}>
+                SOFTWARE
+              </h3>
               <ul className="ep-list">
-                <li contentEditable>ETABS</li>
-                <li contentEditable>SAP2000</li>
-                <li contentEditable>STAAD Pro</li>
-                <li contentEditable>Revit</li>
+                <li contentEditable={isEditable}>ETABS</li>
+                <li contentEditable={isEditable}>SAP2000</li>
+                <li contentEditable={isEditable}>STAAD Pro</li>
+                <li contentEditable={isEditable}>Revit</li>
               </ul>
             </section>
 
@@ -159,96 +172,108 @@ LinkedIn: ${linkedin}
 
             {/* NAME & TITLE */}
             <section className="ep-header-block">
-              <h1 className="ep-name" contentEditable suppressContentEditableWarning>
+              <h1 className="ep-name" contentEditable={isEditable}>
                 JONATHAN KELVIN
               </h1>
-              <p className="ep-title" contentEditable suppressContentEditableWarning>
+              <p className="ep-title" contentEditable={isEditable}>
                 CIVIL ENGINEER
               </p>
             </section>
 
             {/* SUMMARY */}
             <section className="ep-section-block">
-              <h2 className="ep-section-title">SUMMARY</h2>
-              <p className="ep-text" contentEditable>
+              <h2 className="ep-section-title" contentEditable={isEditable}>SUMMARY</h2>
+              <p className="ep-text" contentEditable={isEditable}>
                 Civil engineer with 8+ years of experience specializing in structural design,
-                site planning, and infrastructure development. Skilled in seismic analysis,
-                load calculations, and multi-disciplinary coordination.
+                site planning, and infrastructure development.
               </p>
             </section>
 
             {/* EXPERIENCE */}
             <section className="ep-section-block">
-              <h2 className="ep-section-title">EXPERIENCE</h2>
+              <h2 className="ep-section-title" contentEditable={isEditable}>EXPERIENCE</h2>
 
+              {/* Job 1 */}
               <div className="ep-job">
                 <div className="ep-job-header">
-                  <h3 contentEditable>Senior Civil Engineer</h3>
-                  <p contentEditable>2019 – Present</p>
+                  <h3 contentEditable={isEditable}>Senior Civil Engineer</h3>
+                  <p contentEditable={isEditable}>2019 – Present</p>
                 </div>
-                <p className="ep-job-location" contentEditable>BlueStone Engineering, NY</p>
+
+                <p className="ep-job-location" contentEditable={isEditable}>
+                  BlueStone Engineering, NY
+                </p>
+
                 <ul className="ep-job-list">
-                  <li contentEditable>Performed seismic load analysis for high-rise structures.</li>
-                  <li contentEditable>Led a team of 6 engineers for commercial structural projects.</li>
-                  <li contentEditable>Optimized foundation systems reducing cost by 14%.</li>
-                  <li contentEditable>Conducted site inspections and ensured regulatory compliance.</li>
+                  <li contentEditable={isEditable}>Performed seismic load analysis...</li>
+                  <li contentEditable={isEditable}>Led a team of 6 engineers...</li>
+                  <li contentEditable={isEditable}>Optimized foundation systems...</li>
+                  <li contentEditable={isEditable}>Conducted site inspections...</li>
                 </ul>
               </div>
 
+              {/* Job 2 */}
               <div className="ep-job">
                 <div className="ep-job-header">
-                  <h3 contentEditable>Structural Engineer</h3>
-                  <p contentEditable>2015 – 2019</p>
+                  <h3 contentEditable={isEditable}>Structural Engineer</h3>
+                  <p contentEditable={isEditable}>2015 – 2019</p>
                 </div>
-                <p className="ep-job-location" contentEditable>Skyline Consultants, CA</p>
+
+                <p className="ep-job-location" contentEditable={isEditable}>
+                  Skyline Consultants, CA
+                </p>
+
                 <ul className="ep-job-list">
-                  <li contentEditable>Designed reinforced concrete and steel structural components.</li>
-                  <li contentEditable>Performed soil and geotechnical analysis for major bridge projects.</li>
-                  <li contentEditable>Prepared detailed CAD drawings and calculation reports.</li>
+                  <li contentEditable={isEditable}>Designed reinforced concrete...</li>
+                  <li contentEditable={isEditable}>Performed soil and geotechnical analysis...</li>
+                  <li contentEditable={isEditable}>Prepared detailed CAD drawings...</li>
                 </ul>
               </div>
 
               {/* PROJECTS */}
-<section className="ep-section ep-last">
-  <h2 className="ep-section-title">MAJOR PROJECTS</h2>
+              <section className="ep-section ep-last">
+                <h2 className="ep-section-title" contentEditable={isEditable}>MAJOR PROJECTS</h2>
 
-  <div className="ep-edu-item">
-    <p contentEditable className="ep-edu-degree">
-      Downtown Metro Bridge Expansion – Lead Structural Engineer
-    </p>
-    <p contentEditable className="ep-edu-meta">
-      Designed high-load steel components and coordinated seismic analysis.
-    </p>
-  </div>
+                <div className="ep-edu-item">
+                  <p contentEditable={isEditable} className="ep-edu-degree">
+                    Downtown Metro Bridge Expansion – Lead Engineer
+                  </p>
+                  <p contentEditable={isEditable} className="ep-edu-meta">
+                    Designed high-load steel components
+                  </p>
+                </div>
 
-  <div className="ep-edu-item">
-    <p contentEditable className="ep-edu-degree">
-      Coastal Flood Mitigation Project – Civil Team Lead
-    </p>
-    <p contentEditable className="ep-edu-meta">
-      Developed water-channel flow simulations and optimized protective barriers.
-    </p>
-  </div>
-</section>
+                <div className="ep-edu-item">
+                  <p contentEditable={isEditable} className="ep-edu-degree">
+                    Coastal Flood Mitigation Project – Team Lead
+                  </p>
+                  <p contentEditable={isEditable} className="ep-edu-meta">
+                    Developed water-channel simulations
+                  </p>
+                </div>
+              </section>
 
-
-              {/* EXTRA ADDED CONTENT FOR FULL PAGE */}
+              {/* EXTRA CONTENT */}
               <section className="ep-section">
-                <h2 className="ep-section-title">PROJECT HIGHLIGHTS</h2>
+                <h2 className="ep-section-title" contentEditable={isEditable}>
+                  PROJECT HIGHLIGHTS
+                </h2>
                 <ul className="ep-job-list">
-                  <li contentEditable>Structural design lead for a $45M commercial tower.</li>
-                  <li contentEditable>Improved BIM workflow reducing errors by 18%.</li>
-                  <li contentEditable>Conducted soil tests for a major urban bridge expansion.</li>
+                  <li contentEditable={isEditable}>Structural design lead...</li>
+                  <li contentEditable={isEditable}>Improved BIM workflow...</li>
+                  <li contentEditable={isEditable}>Conducted soil tests...</li>
                 </ul>
               </section>
 
               <section className="ep-section">
-                <h2 className="ep-section-title">TECHNICAL SPECIALIZATION</h2>
+                <h2 className="ep-section-title" contentEditable={isEditable}>
+                  TECHNICAL SPECIALIZATION
+                </h2>
                 <ul className="ep-job-list">
-                  <li contentEditable>Finite Element Modeling (FEM)</li>
-                  <li contentEditable>Geotechnical Engineering</li>
-                  <li contentEditable>Hydraulic Systems</li>
-                  <li contentEditable>Cost Estimation</li>
+                  <li contentEditable={isEditable}>Finite Element Modeling</li>
+                  <li contentEditable={isEditable}>Geotechnical Engineering</li>
+                  <li contentEditable={isEditable}>Hydraulic Systems</li>
+                  <li contentEditable={isEditable}>Cost Estimation</li>
                 </ul>
               </section>
 
@@ -256,22 +281,24 @@ LinkedIn: ${linkedin}
 
             {/* EDUCATION */}
             <section className="ep-section-block ep-last">
-              <h2 className="ep-section-title">EDUCATION</h2>
+              <h2 className="ep-section-title" contentEditable={isEditable}>
+                EDUCATION
+              </h2>
 
               <div className="ep-edu-item">
-                <p className="ep-edu-degree" contentEditable>
+                <p className="ep-edu-degree" contentEditable={isEditable}>
                   M.S. Civil Engineering
                 </p>
-                <p className="ep-edu-meta" contentEditable>
+                <p className="ep-edu-meta" contentEditable={isEditable}>
                   University of California — 2013–2015
                 </p>
               </div>
 
               <div className="ep-edu-item">
-                <p className="ep-edu-degree" contentEditable>
+                <p className="ep-edu-degree" contentEditable={isEditable}>
                   B.S. Civil Engineering
                 </p>
-                <p className="ep-edu-meta" contentEditable>
+                <p className="ep-edu-meta" contentEditable={isEditable}>
                   University of Texas — 2009–2013
                 </p>
               </div>

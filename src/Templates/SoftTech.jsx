@@ -10,17 +10,18 @@ export default function SoftTech() {
   const navigate = useNavigate();
   const resumeRef = useRef(null);
 
+  /* ---------- GLOBAL EDIT MODE ---------- */
+  const [isEditable, setIsEditable] = useState(false);
+
   /* ---------- PROFILE IMAGE ---------- */
   const [profileImage, setProfileImage] = useState(
-    "/images/minimalaccentprofileimage.png" // apni default image yahan rakhna
+    "/images/minimalaccentprofileimage.png"
   );
   const profileInputRef = useRef(null);
 
   const handleProfileUpload = (e) => {
     const file = e.target.files[0];
-    if (file) {
-      setProfileImage(URL.createObjectURL(file));
-    }
+    if (file) setProfileImage(URL.createObjectURL(file));
   };
 
   const triggerProfileSelect = () => {
@@ -42,37 +43,22 @@ export default function SoftTech() {
   });
 
   const handleInfoChange = (e) => {
+    if (!isEditable) return; // prevent typing when not editable
     const { name, value } = e.target;
     setInfo((prev) => ({ ...prev, [name]: value }));
   };
 
-  /* ---------- QR CODE STATE ---------- */
+  /* ---------- QR CODE ---------- */
   const [qrDataUrl, setQrDataUrl] = useState("");
 
   const handleCreateQr = async () => {
-    const payload = JSON.stringify(
-      {
-        name: info.fullName,
-        email: info.email,
-        phone: info.phone,
-        address: info.address,
-        state: info.state,
-        city: info.city,
-        zip: info.zip,
-        linkedin: info.linkedin,
-        github: info.github,
-        portfolio: info.portfolio,
-      },
-      null,
-      0
-    );
+    const payload = JSON.stringify(info, null, 0);
 
     try {
       const url = await QRCode.toDataURL(payload);
       setQrDataUrl(url);
     } catch (err) {
       console.error("QR error:", err);
-      alert("QR Code generate karte waqt error aaya (console check karein).");
     }
   };
 
@@ -81,13 +67,11 @@ export default function SoftTech() {
     const element = resumeRef.current;
     if (!element) return;
 
-    const canvas = await html2canvas(element, {
-      scale: 2,
-      useCORS: true,
-    });
+    const canvas = await html2canvas(element, { scale: 2, useCORS: true });
 
     const imgData = canvas.toDataURL("image/png");
     const pdf = new jsPDF("p", "mm", "a4");
+
     const pdfWidth = 210;
     const imgHeight = (canvas.height * pdfWidth) / canvas.width;
 
@@ -99,26 +83,41 @@ export default function SoftTech() {
 
   return (
     <div className="st-wrapper">
+
       {/* ---------- TOP BUTTONS ---------- */}
       <div className="st-buttons">
         <button onClick={handleDownloadPDF}>Download PDF</button>
-        <button onClick={() => navigate("/templates")}>Back to Templates</button>
+        <button onClick={() => navigate("/templates")}>Back</button>
         <button onClick={handleReset}>Reset</button>
+
+        {/* EDIT TOGGLE BUTTON */}
+        <button
+          className="edit-toggle-btn"
+          onClick={() => setIsEditable(!isEditable)}
+        >
+          {isEditable ? "Lock Editing" : "Enable Editing"}
+        </button>
       </div>
 
-      {/* ---------- PERSONAL INFO FORM (FOR QR) ---------- */}
+      {/* ---------- PERSONAL INFO FORM (QR) ---------- */}
       <div className="st-form">
-        <h3 className="st-form-title">Personal Info (QR Code)</h3>
+        <h3 className="st-form-title" >
+          Personal Info (QR Code)
+        </h3>
+
         <div className="st-form-grid">
+
           <div className="st-form-field">
             <label>Full Name</label>
             <input
               name="fullName"
               value={info.fullName}
               onChange={handleInfoChange}
+              disabled={!isEditable}
               placeholder="Emma Roberts"
             />
           </div>
+
           <div className="st-form-field">
             <label>Email</label>
             <input
@@ -126,238 +125,149 @@ export default function SoftTech() {
               type="email"
               value={info.email}
               onChange={handleInfoChange}
+              disabled={!isEditable}
               placeholder="emma@mail.com"
             />
           </div>
+
           <div className="st-form-field">
             <label>Telephone</label>
             <input
               name="phone"
               value={info.phone}
               onChange={handleInfoChange}
+              disabled={!isEditable}
               placeholder="+1 555-123-4567"
             />
           </div>
+
           <div className="st-form-field">
             <label>Address</label>
             <input
               name="address"
               value={info.address}
               onChange={handleInfoChange}
+              disabled={!isEditable}
               placeholder="123 Main Street"
             />
           </div>
+
           <div className="st-form-field">
             <label>State</label>
             <input
               name="state"
               value={info.state}
               onChange={handleInfoChange}
+              disabled={!isEditable}
               placeholder="CA"
             />
           </div>
+
           <div className="st-form-field">
             <label>City</label>
             <input
               name="city"
               value={info.city}
               onChange={handleInfoChange}
+              disabled={!isEditable}
               placeholder="San Francisco"
             />
           </div>
+
           <div className="st-form-field">
             <label>Zip Code</label>
             <input
               name="zip"
               value={info.zip}
               onChange={handleInfoChange}
+              disabled={!isEditable}
               placeholder="94105"
             />
           </div>
+
           <div className="st-form-field">
             <label>LinkedIn</label>
             <input
               name="linkedin"
               value={info.linkedin}
               onChange={handleInfoChange}
+              disabled={!isEditable}
               placeholder="linkedin.com/in/username"
             />
           </div>
+
           <div className="st-form-field">
             <label>GitHub</label>
             <input
               name="github"
               value={info.github}
               onChange={handleInfoChange}
+              disabled={!isEditable}
               placeholder="github.com/username"
             />
           </div>
+
           <div className="st-form-field st-form-full">
             <label>Portfolio</label>
             <input
               name="portfolio"
               value={info.portfolio}
               onChange={handleInfoChange}
+              disabled={!isEditable}
               placeholder="https://your-portfolio.com"
             />
           </div>
         </div>
 
         <div className="st-form-actions">
-          <button onClick={handleCreateQr}>Create QR Code</button>
+          <button onClick={handleCreateQr} disabled={!isEditable}>
+            Create QR Code
+          </button>
         </div>
       </div>
 
-      {/* ---------- A4 RESUME AREA ---------- */}
+      {/* ---------- A4 RESUME ---------- */}
       <div className="st-a4" ref={resumeRef}>
         <div className="st-resume">
+
           {/* ===== LEFT SIDEBAR ===== */}
           <aside className="st-sidebar">
-            {/* QR #1 TOP */}
+
+            {/* QR TOP */}
             <div className="st-qr-wrapper">
               {qrDataUrl ? (
                 <img src={qrDataUrl} alt="QR Code" className="st-qr-image" />
               ) : (
-                <div className="st-qr-placeholder">
-                  <span>QR CODE</span>
-                  <span className="st-qr-small-text">
-                    Fill form & Create QR Code
-                  </span>
+                <div className="st-qr-placeholder" contentEditable={isEditable}>
+                  QR CODE
                 </div>
               )}
             </div>
 
             {/* CONTACT */}
             <section className="st-side-section">
-              <h3 className="st-side-heading">CONTACT</h3>
+              <h3 className="st-side-heading" contentEditable={isEditable}>
+                CONTACT
+              </h3>
+
               <ul className="st-contact-list">
                 <li>
-                  <span className="st-icon-wrapper">
-                    {/* phone SVG */}
-                    <svg
-                      width="14"
-                      height="14"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M5 4C5 3.44772 5.44772 3 6 3H9L11 7L9.5 8.5C10.3284 10.3284 11.6716 11.6716 13.5 12.5L15 11L19 13V16C19 16.5523 18.5523 17 18 17C11.9249 17 7 12.0751 7 6C7 5.44772 6.55228 5 6 5C5.44772 5 5 4.55228 5 4Z"
-                        fill="#ffffff"
-                      />
-                    </svg>
-                  </span>
-                  <span
-                    className="st-contact-text"
-                    contentEditable
-                    suppressContentEditableWarning
-                  >
+                  <span className="st-contact-text" contentEditable={isEditable}>
                     +1 555-789-3320
                   </span>
                 </li>
-
                 <li>
-                  <span className="st-icon-wrapper">
-                    {/* mail svg */}
-                    <svg
-                      width="14"
-                      height="14"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M4 6C4 4.89543 4.89543 4 6 4H18C19.1046 4 20 4.89543 20 6V18C20 19.1046 19.1046 20 18 20H6C4.89543 20 4 19.1046 4 18V6Z"
-                        stroke="#ffffff"
-                        strokeWidth="1.4"
-                      />
-                      <path
-                        d="M5 7L12 12L19 7"
-                        stroke="#ffffff"
-                        strokeWidth="1.4"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </span>
-                  <span
-                    className="st-contact-text"
-                    contentEditable
-                    suppressContentEditableWarning
-                  >
+                  <span className="st-contact-text" contentEditable={isEditable}>
                     emma.roberts@mail.com
                   </span>
                 </li>
-
                 <li>
-                  <span className="st-icon-wrapper">
-                    {/* location svg */}
-                    <svg
-                      width="14"
-                      height="14"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M12 3C9.23858 3 7 5.23858 7 8C7 11.866 12 19 12 19C12 19 17 11.866 17 8C17 5.23858 14.7614 3 12 3Z"
-                        stroke="#ffffff"
-                        strokeWidth="1.4"
-                      />
-                      <circle cx="12" cy="8" r="2" fill="#ffffff" />
-                    </svg>
-                  </span>
-                  <span
-                    className="st-contact-text"
-                    contentEditable
-                    suppressContentEditableWarning
-                  >
+                  <span className="st-contact-text" contentEditable={isEditable}>
                     San Francisco, CA
                   </span>
                 </li>
-
                 <li>
-                  <span className="st-icon-wrapper">
-                    {/* globe svg */}
-                    <svg
-                      width="14"
-                      height="14"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <circle
-                        cx="12"
-                        cy="12"
-                        r="8"
-                        stroke="#ffffff"
-                        strokeWidth="1.4"
-                      />
-                      <path
-                        d="M4 12H20"
-                        stroke="#ffffff"
-                        strokeWidth="1.4"
-                        strokeLinecap="round"
-                      />
-                      <path
-                        d="M12 4C14 7 15 9.5 15 12C15 14.5 14 17 12 20"
-                        stroke="#ffffff"
-                        strokeWidth="1.4"
-                        strokeLinecap="round"
-                      />
-                      <path
-                        d="M12 4C10 7 9 9.5 9 12C9 14.5 10 17 12 20"
-                        stroke="#ffffff"
-                        strokeWidth="1.4"
-                        strokeLinecap="round"
-                      />
-                    </svg>
-                  </span>
-                  <span
-                    className="st-contact-text"
-                    contentEditable
-                    suppressContentEditableWarning
-                  >
+                  <span className="st-contact-text" contentEditable={isEditable}>
                     www.emmadev.com
                   </span>
                 </li>
@@ -366,49 +276,43 @@ export default function SoftTech() {
 
             {/* SKILLS */}
             <section className="st-side-section">
-              <h3 className="st-side-heading">SKILLS</h3>
+              <h3 className="st-side-heading" contentEditable={isEditable}>SKILLS</h3>
               <ul className="st-side-list">
-                <li contentEditable>JavaScript (ES6+)</li>
-                <li contentEditable>React &amp; Next.js</li>
-                <li contentEditable>Node.js &amp; Express</li>
-                <li contentEditable>REST &amp; GraphQL APIs</li>
+                <li contentEditable={isEditable}>JavaScript (ES6+)</li>
+                <li contentEditable={isEditable}>React & Next.js</li>
+                <li contentEditable={isEditable}>Node.js & Express</li>
+                <li contentEditable={isEditable}>REST & GraphQL APIs</li>
               </ul>
             </section>
 
             {/* TECH STACK */}
             <section className="st-side-section">
-              <h3 className="st-side-heading">TECH STACK</h3>
+              <h3 className="st-side-heading" contentEditable={isEditable}>TECH STACK</h3>
               <ul className="st-side-list">
-                <li contentEditable>TypeScript</li>
-                <li contentEditable>Python / Django</li>
-                <li contentEditable>PostgreSQL, MongoDB</li>
-                <li contentEditable>AWS / Docker / CI-CD</li>
+                <li contentEditable={isEditable}>TypeScript</li>
+                <li contentEditable={isEditable}>Python / Django</li>
+                <li contentEditable={isEditable}>PostgreSQL, MongoDB</li>
+                <li contentEditable={isEditable}>AWS / Docker / CI-CD</li>
               </ul>
             </section>
 
             {/* CERTIFICATIONS */}
             <section className="st-side-section">
-              <h3 className="st-side-heading">CERTIFICATIONS</h3>
-              <p
-                className="st-side-text"
-                contentEditable
-                suppressContentEditableWarning
-              >
-                AWS Certified Solutions Architect – Associate
-                <br />
-                Google Cloud Professional Developer
-                <br />
+              <h3 className="st-side-heading" contentEditable={isEditable}>CERTIFICATIONS</h3>
+              <p className="st-side-text" contentEditable={isEditable}>
+                AWS Certified Solutions Architect  
+                Google Cloud Developer  
                 Scrum Master (PSM I)
               </p>
             </section>
 
-            {/* QR #2 BOTTOM */}
+            {/* QR BOTTOM */}
             <div className="st-qr-wrapper st-qr-bottom">
               {qrDataUrl ? (
                 <img src={qrDataUrl} alt="QR Code" className="st-qr-image" />
               ) : (
-                <div className="st-qr-placeholder">
-                  <span>QR CODE</span>
+                <div className="st-qr-placeholder" contentEditable={isEditable}>
+                  QR CODE
                 </div>
               )}
             </div>
@@ -416,21 +320,14 @@ export default function SoftTech() {
 
           {/* ===== RIGHT MAIN ===== */}
           <main className="st-main">
+
             {/* HEADER */}
             <header className="st-header">
               <div className="st-header-left">
-                <h1
-                  className="st-name"
-                  contentEditable
-                  suppressContentEditableWarning
-                >
+                <h1 className="st-name" contentEditable={isEditable}>
                   EMMA ROBERTS
                 </h1>
-                <p
-                  className="st-title"
-                  contentEditable
-                  suppressContentEditableWarning
-                >
+                <p className="st-title" contentEditable={isEditable}>
                   FULL STACK DEVELOPER
                 </p>
                 <div className="st-header-line" />
@@ -450,110 +347,68 @@ export default function SoftTech() {
 
             {/* ABOUT ME */}
             <section className="st-section">
-              <h2 className="st-section-title" contentEditable>
+              <h2 className="st-section-title" contentEditable={isEditable}>
                 ABOUT ME
               </h2>
-              <p
-                className="st-section-text"
-                contentEditable
-                suppressContentEditableWarning
-              >
+              <p className="st-section-text" contentEditable={isEditable}>
                 Passionate full stack developer with 7+ years of experience
-                designing and implementing scalable web applications. Proficient
-                in React, Node.js, and modern cloud-native architectures.
-                Comfortable owning features end-to-end from discovery and
-                design through deployment and monitoring.
+                designing and implementing scalable applications.
               </p>
             </section>
 
             {/* EXPERIENCE */}
             <section className="st-section">
-              <h2 className="st-section-title" contentEditable>
+              <h2 className="st-section-title" contentEditable={isEditable}>
                 EXPERIENCE
               </h2>
 
               <div className="st-job">
                 <div className="st-job-header">
                   <div>
-                    <p
-                      className="st-job-title"
-                      contentEditable
-                      suppressContentEditableWarning
-                    >
+                    <p className="st-job-title" contentEditable={isEditable}>
                       Senior Full Stack Developer
                     </p>
-                    <p
-                      className="st-job-company"
-                      contentEditable
-                      suppressContentEditableWarning
-                    >
-                      Meta &mdash; Menlo Park, CA
+                    <p className="st-job-company" contentEditable={isEditable}>
+                      Meta — Menlo Park, CA
                     </p>
                   </div>
-                  <p
-                    className="st-job-dates"
-                    contentEditable
-                    suppressContentEditableWarning
-                  >
-                    2019 &ndash; Present
+                  <p className="st-job-dates" contentEditable={isEditable}>
+                    2019 – Present
                   </p>
                 </div>
+
                 <ul className="st-job-list">
-                  <li contentEditable>
-                    Lead development of scalable web applications using React,
-                    Node.js, and GraphQL.
-                  </li>
-                  <li contentEditable>
-                    Collaborated with cross-functional teams to deliver highly
-                    available, secure solutions.
-                  </li>
-                  <li contentEditable>
-                    Improved application performance, reducing load times by
-                    30%.
-                  </li>
-                  <li contentEditable>
-                    Mentored junior developers and introduced best practices for
-                    testing and code review.
-                  </li>
+                  <li contentEditable={isEditable}>Lead development of scalable web apps.</li>
+                  <li contentEditable={isEditable}>Collaborated with cross-functional teams.</li>
+                  <li contentEditable={isEditable}>Improved app performance by 30%.</li>
+                  <li contentEditable={isEditable}>Mentored junior developers.</li>
                 </ul>
               </div>
 
               <div className="st-job">
                 <div className="st-job-header">
                   <div>
-                    <p
-                      className="st-job-title"
-                      contentEditable
-                      suppressContentEditableWarning
-                    >
+                    <p className="st-job-title" contentEditable={isEditable}>
                       Full Stack Developer
                     </p>
-                    <p
-                      className="st-job-company"
-                      contentEditable
-                      suppressContentEditableWarning
-                    >
-                      Web-Solutions Inc. &mdash; San Francisco, CA
+                    <p className="st-job-company" contentEditable={isEditable}>
+                      Web Solutions Inc. — San Francisco, CA
                     </p>
                   </div>
-                  <p
-                    className="st-job-dates"
-                    contentEditable
-                    suppressContentEditableWarning
-                  >
-                    2015 &ndash; 2019
+                  <p className="st-job-dates" contentEditable={isEditable}>
+                    2015 – 2019
                   </p>
                 </div>
+
                 <ul className="st-job-list">
-                  <li contentEditable>
-                    Built responsive web applications for enterprise clients
-                    using Django and React.
+                  <li contentEditable={isEditable}>
+                    Built responsive applications using Django & React.
                   </li>
-                  <li contentEditable>
-                    Integrated third-party APIs and payment gateways.
+                  <li contentEditable={isEditable}>
+                    Integrated APIs and payment systems.
                   </li>
-                  <li contentEditable>
-                    Established CI/CD pipelines to streamline deployments.
+                  <li contentEditable={isEditable}>
+                    Created CI/CD pipelines for deployments.
                   </li>
                 </ul>
               </div>
@@ -561,124 +416,81 @@ export default function SoftTech() {
 
             {/* PROJECTS */}
             <section className="st-section">
-              <h2 className="st-section-title" contentEditable>
+              <h2 className="st-section-title" contentEditable={isEditable}>
                 FEATURED PROJECTS
               </h2>
 
               <div className="st-project">
-                <p
-                  className="st-project-title"
-                  contentEditable
-                  suppressContentEditableWarning
-                >
+                <p className="st-project-title" contentEditable={isEditable}>
                   Real-Time Analytics Dashboard
                 </p>
-                <p
-                  className="st-project-text"
-                  contentEditable
-                  suppressContentEditableWarning
-                >
-                  Designed and implemented a real-time analytics dashboard using
-                  React, WebSockets, and Node.js to visualize streaming data for
-                  10k+ concurrent users. Deployed on AWS using Docker and ECS.
+                <p className="st-project-text" contentEditable={isEditable}>
+                  Designed analytics dashboard using React, WebSockets & Node.js.
                 </p>
               </div>
 
               <div className="st-project">
-                <p
-                  className="st-project-title"
-                  contentEditable
-                  suppressContentEditableWarning
-                >
+                <p className="st-project-title" contentEditable={isEditable}>
                   Multi-Tenant SaaS Platform
                 </p>
-                <p
-                  className="st-project-text"
-                  contentEditable
-                  suppressContentEditableWarning
-                >
-                  Developed a multi-tenant SaaS platform with role-based access
-                  control and subscription billing. Implemented RESTful APIs,
-                  background jobs, and automated testing.
+                <p className="st-project-text" contentEditable={isEditable}>
+                  Developed SaaS platform with RBAC and automated billing.
                 </p>
               </div>
             </section>
 
-            {/* TOOLS & ACHIEVEMENTS */}
+            {/* TOOLS */}
             <section className="st-section">
-              <h2 className="st-section-title" contentEditable>
-                TOOLS &amp; TECHNOLOGIES
+              <h2 className="st-section-title" contentEditable={isEditable}>
+                TOOLS & TECHNOLOGIES
               </h2>
-              <p
-                className="st-section-text"
-                contentEditable
-                suppressContentEditableWarning
-              >
-                React, Next.js, Node.js, Express, TypeScript, Python, Django,
-                PostgreSQL, MongoDB, Redis, Docker, Kubernetes, AWS, Git,
-                GitHub Actions, Jest, Cypress.
+              <p className="st-section-text" contentEditable={isEditable}>
+                React, Node.js, TypeScript, PostgreSQL, Docker, AWS, CI/CD, etc.
               </p>
             </section>
 
+            {/* ACHIEVEMENTS */}
             <section className="st-section">
-              <h2 className="st-section-title" contentEditable>
+              <h2 className="st-section-title" contentEditable={isEditable}>
                 ACHIEVEMENTS
               </h2>
               <ul className="st-job-list">
-                <li contentEditable>
-                  Increased conversion rate by 15% after redesigning checkout
-                  flow.
+                <li contentEditable={isEditable}>
+                  Improved conversion rates by 15%.
                 </li>
-                <li contentEditable>
-                  Reduced cloud infrastructure cost by 20% through performance
-                  tuning and resource optimization.
+                <li contentEditable={isEditable}>
+                  Reduced infrastructure cost by 20%.
                 </li>
-                <li contentEditable>
-                  Presented best practices for React performance at internal
-                  engineering meetup.
+                <li contentEditable={isEditable}>
+                  Delivered internal React performance seminar.
                 </li>
               </ul>
             </section>
 
             {/* EDUCATION */}
             <section className="st-section st-last">
-              <h2 className="st-section-title" contentEditable>
+              <h2 className="st-section-title" contentEditable={isEditable}>
                 EDUCATION
               </h2>
 
               <div className="st-edu-item">
-                <p
-                  className="st-edu-degree"
-                  contentEditable
-                  suppressContentEditableWarning
-                >
+                <p className="st-edu-degree" contentEditable={isEditable}>
                   B.S. in Computer Science
                 </p>
-                <p
-                  className="st-edu-meta"
-                  contentEditable
-                  suppressContentEditableWarning
-                >
-                  University of California, Berkeley &mdash; 2011 &ndash; 2015
+                <p className="st-edu-meta" contentEditable={isEditable}>
+                  UC Berkeley — 2011 – 2015
                 </p>
               </div>
 
               <div className="st-edu-item">
-                <p
-                  className="st-edu-degree"
-                  contentEditable
-                  suppressContentEditableWarning
-                >
-                  Full Stack Web Development Nanodegree
+                <p className="st-edu-degree" contentEditable={isEditable}>
+                  Full Stack Nanodegree
                 </p>
-                <p
-                  className="st-edu-meta"
-                  contentEditable
-                  suppressContentEditableWarning
-                >
-                  Udacity &mdash; 2016
+                <p className="st-edu-meta" contentEditable={isEditable}>
+                  Udacity — 2016
                 </p>
               </div>
+
             </section>
           </main>
         </div>

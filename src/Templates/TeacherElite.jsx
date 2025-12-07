@@ -6,7 +6,7 @@ import html2canvas from "html2canvas";
 import QRCode from "qrcode";
 
 
-const [isEditable, setIsEditable] = useState(true);
+
 
 
 const TABS = [
@@ -42,6 +42,8 @@ const TAB_TITLE_MAP = {
 export default function TeacherElite() {
   const navigate = useNavigate();
   const resumeRef = useRef(null);
+
+  const [isEditable, setIsEditable] = useState(false);
 
   /* ---------- PROFILE IMAGE ---------- */
   const [profileImage, setProfileImage] = useState(
@@ -127,6 +129,7 @@ Subject: ${qrForm.subject}
           Back to Templates
         </button>
         <button onClick={handleReset}>Reset</button>
+
         <button 
   onClick={() => setIsEditable(!isEditable)}
   className={isEditable ? "edit-btn on" : "edit-btn off"}

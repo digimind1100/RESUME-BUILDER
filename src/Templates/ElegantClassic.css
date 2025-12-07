@@ -297,3 +297,40 @@
     padding-left: 0;
   }
 }
+
+
+
+[contenteditable="true"] {
+  outline: 1px dashed #60a5fa;
+  border-radius: 3px;
+}
+
+[contenteditable="false"] {
+  outline: none;
+}
+
+.ec-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.ec-buttons button,
+.edit-toggle {
+  padding: 10px 18px;
+  font-size: 14px;
+  background: #2e3239;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.edit-toggle.on {
+  background: #2563eb; /* blue */
+}
+
+.edit-toggle.off {
+  background: #6b7280; /* gray */
+}
