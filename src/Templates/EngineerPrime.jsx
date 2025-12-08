@@ -13,7 +13,7 @@ export default function EngineerPrime() {
   const [isEditable, setIsEditable] = useState(false);
 
   // PROFILE IMAGE
-  const [profileImage, setProfileImage] = useState("/images/cleanProfileImage.png");
+  const [profileImage, setProfileImage] = useState("/images/cleanprofileimage.png");
   const fileInputRef = useRef(null);
 
   const handleImageUpload = (event) => {

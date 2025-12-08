@@ -1,0 +1,257 @@
+/* ======= SECTION / LAYOUT – premium but simple ======= */
+
+.simple-templates-section {
+  background: linear-gradient(180deg, #f9fafc 0%, #eef2ff 100%);
+  border-top: 1px solid #e5e7eb;
+  padding: 40px 0 64px;
+}
+
+.simple-templates-inner {
+  text-align: center;
+}
+
+.simple-templates-header {
+  max-width: 720px;
+  margin: 0 auto 28px;
+}
+
+.simple-templates-eyebrow {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: #9ca3af;
+  margin-bottom: 6px;
+}
+
+.simple-templates-title {
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 8px;
+}
+
+.simple-templates-title span {
+  color: #0077ff;
+}
+
+.simple-templates-subtitle {
+  font-size: 0.98rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+/* ======= SLIDER AREA ======= */
+
+.simple-templates-slider {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.simple-templates-window {
+  width: 100%;
+  overflow: hidden; /* ✅ no scroll visible */
+}
+
+.simple-templates-track {
+  display: flex;
+  align-items: stretch;
+  transition: transform 0.35s ease;
+}
+
+/* Individual slide */
+
+.simple-template-slide {
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
+.simple-template-frame {
+  background: #ffffff;
+  border-radius: 18px;
+  border: 1px solid #e0e7ff;
+  padding: 16px;
+  box-shadow:
+    0 12px 30px rgba(15, 23, 42, 0.06),
+    0 0 0 1px rgba(255, 255, 255, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 260px;
+}
+
+.simple-template-image {
+  display: block;
+  max-width: 100%;
+  max-height: 420px; /* portrait height limit */
+  height: auto;
+  width: auto;
+  object-fit: contain; /* ✅ no stretch, no crop */
+}
+
+/* Caption under image */
+
+.simple-template-caption {
+  margin-top: 8px;
+  font-size: 0.85rem;
+  color: #4b5563;
+}
+
+/* ======= CONTROLS ======= */
+
+.simple-templates-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.simple-templates-arrow {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  color: #111827;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  transition:
+    background 0.15s ease,
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.simple-templates-arrow:not(:disabled):hover {
+  background: #e0edff;
+  border-color: #3b82f6;
+  box-shadow: 0 10px 26px rgba(37, 99, 235, 0.24);
+  transform: translateY(-1px);
+}
+
+.simple-templates-arrow:disabled {
+  opacity: 0.4;
+  cursor: default;
+  box-shadow: none;
+  transform: none;
+  border-color: #e5e7eb;
+}
+
+.simple-templates-indicator {
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+/* ======= FOOTER CTA BUTTON ======= */
+
+.simple-templates-footer {
+  margin-top: 18px;
+  display: flex;
+  justify-content: center;
+}
+
+.simple-templates-main-btn {
+  border: none;
+  border-radius: 999px;
+  padding: 10px 26px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  background: linear-gradient(135deg, #0077ff, #00b4ff);
+  color: #ffffff;
+  box-shadow: 0 16px 30px rgba(37, 99, 235, 0.35);
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    filter 0.18s ease;
+}
+
+.simple-templates-main-btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.03);
+  box-shadow: 0 22px 45px rgba(37, 99, 235, 0.45);
+}
+
+/* ======= RESPONSIVE ======= */
+
+/* Tablet-ish */
+@media (max-width: 1024px) {
+  .simple-templates-title {
+    font-size: 1.6rem;
+  }
+
+  .simple-template-frame {
+    padding: 14px;
+    min-height: 220px;
+  }
+}
+
+/* General mobile */
+@media (max-width: 768px) {
+  .simple-templates-section {
+    padding: 32px 0 48px;
+  }
+
+  .simple-templates-header {
+    margin-bottom: 20px;
+    padding: 0 8px;
+  }
+
+  .simple-templates-title {
+    font-size: 1.5rem;
+  }
+
+  .simple-templates-subtitle {
+    font-size: 0.9rem;
+  }
+
+  .simple-template-frame {
+    padding: 12px;
+    min-height: 200px;
+    box-shadow: 0 8px 18px rgba(15, 23, 42, 0.06);
+  }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+  .simple-templates-section {
+    padding: 28px 0 40px;
+  }
+
+  .simple-templates-title {
+    font-size: 1.3rem;
+  }
+
+  .simple-templates-subtitle {
+    font-size: 0.85rem;
+  }
+
+  .simple-template-frame {
+    padding: 10px;
+    min-height: 180px;
+  }
+
+  .simple-template-caption {
+    font-size: 0.8rem;
+  }
+
+  .simple-templates-controls {
+    margin-top: 10px;
+  }
+
+  .simple-templates-arrow {
+    width: 32px;
+    height: 32px;
+    font-size: 1.05rem;
+  }
+
+  .simple-templates-main-btn {
+    padding: 9px 22px;
+    font-size: 0.85rem;
+  }
+}

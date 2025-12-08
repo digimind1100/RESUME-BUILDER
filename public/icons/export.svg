@@ -1,0 +1,28 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none"
+     xmlns="http://www.w3.org/2000/svg">
+  <!-- Card / window -->
+  <rect x="10" y="12" width="44" height="40" rx="12"
+        fill="url(#paint0_linear)" stroke="#e5e7eb" stroke-width="1.5"/>
+
+  <!-- Top bar -->
+  <rect x="18" y="18" width="28" height="4" rx="2" fill="#eef2ff" opacity="0.9"/>
+
+  <!-- Download arrow -->
+  <path d="M32 24V36"
+        stroke="#0f172a" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M27 32L32 37L37 32"
+        stroke="#0f172a" stroke-width="1.7"
+        stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Bottom pill (showing formats / share) -->
+  <rect x="20" y="38" width="24" height="6" rx="3"
+        fill="#eff6ff" opacity="0.95"/>
+
+  <defs>
+    <linearGradient id="paint0_linear" x1="10" y1="12" x2="54" y2="52"
+                    gradientUnits="userSpaceOnUse">
+      <stop stop-color="#e0f2fe"/>
+      <stop offset="1" stop-color="#bfdbfe"/>
+    </linearGradient>
+  </defs>
+</svg>

@@ -5,6 +5,8 @@ import FeaturesHowTestimonials from "./FeaturesHowTestimonials";
 import FeaturesCoverLetter from "./FeaturesCoverLetter"; 
 import CounterBlock from "./CounterBlock";
 import Footer from "./Footer";
+import TemplateShowcase from "./TemplateShowcase";
+import AiTutorialVideo from "./AiTutorialVideo"
 
 
 export default function Home() {
@@ -33,6 +35,8 @@ export default function Home() {
     <main className="home-page">
       <HeroSection />
       <FeaturesHowTestimonials />
+      <TemplateShowcase/>
+      <AiTutorialVideo/>
       <FeaturesCoverLetter />
       
       <CounterBlock />

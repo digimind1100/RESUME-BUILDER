@@ -432,3 +432,33 @@
 .edit-toggle.off {
   background: #6b7280; /* gray */
 }
+
+
+
+
+
+.av-bullet-controls {
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.av-add-bullet-btn {
+  background: #28a745;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.av-remove-bullet-btn {
+  background: #d9534f;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+}
