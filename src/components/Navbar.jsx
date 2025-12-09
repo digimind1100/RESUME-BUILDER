@@ -90,14 +90,9 @@ export default function Navbar() {
             Start Builder
           </Link>
         </li>
-      </ul>
 
-      {/* Desktop Resume Button */}
-      <div className="navbar-btn">
-        <Link to="/template">
-          <button className="start-builder-btn">Start Builder</button>
-        </Link>
-      </div>
+        
+      </ul>
     </nav>
   );
 }
