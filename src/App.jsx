@@ -20,6 +20,11 @@ import EngineerPrime from "./Templates/EngineerPrime";
 import DataElite from "./Templates/DataElite";
 import AviationPro from "./Templates/AviationPro";
 import TeacherElite from "./Templates/TeacherElite";
+import BuilderGuard from "./components/guards/BuilderGuard";
+import { Toaster } from "react-hot-toast";
+
+import PaymentPage from "./components/payment/PaymentPage";
+
 
 
 
@@ -34,9 +39,10 @@ function AppContent() {
   return (
     <>
       {!hideNavbar && <Navbar />}
-
+<Toaster position="top-center" />
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/payment" element={<PaymentPage />} />
         {/* Unified builder */}
         <Route
           path="/resume/:templateId?"
@@ -62,7 +68,9 @@ function AppContent() {
        <Route path="/medical-elites" element={<MedicalElites />} />
        <Route path="/engineer-elites" element={<EngineerElites />} />
        <Route path="/soft-tech" element={<SoftTech />} />
-       <Route path="/data-elite" element={<DataElite />} />
+
+       <Route  path="/data-elite"element={<BuilderGuard><DataElite/> </BuilderGuard>} />
+       
        <Route path="/engineer-prime" element={<EngineerPrime />} />
        <Route path="/aviation-pro" element={<AviationPro />} />
        <Route path="/teacher-elite" element={<TeacherElite />} />
@@ -75,6 +83,7 @@ function AppContent() {
 
 
       </Routes>
+      
     </>
   );
 }

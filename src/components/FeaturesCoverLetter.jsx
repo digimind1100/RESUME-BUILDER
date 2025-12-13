@@ -21,7 +21,7 @@ const FeaturesCoverLetter = () => {
           </div>
 
           <div className="cover-letter-card">
-            <img src="/icons/edit.svg" alt="Easy Edit" className="cover-letter-icon" />
+            <img src="/icons/easy-edit.svg" alt="Easy Edit" className="cover-letter-icon" />
             <h3>Easy Editing</h3>
             <p>Modify any part of your cover letter with our intuitive editor in real time.</p>
           </div>
