@@ -81,6 +81,9 @@ function AppContent() {
         <Route path="/coverletter-generator" element={<CoverLetterPanel />} />
 
 
+        <Route path="/payment" element={<PaymentPage />} />
+
+
 
       </Routes>
       

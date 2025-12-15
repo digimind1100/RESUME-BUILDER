@@ -9,8 +9,10 @@ import TemplateShowcase from "./TemplateShowcase";
 import AiTutorialVideo from "./AiTutorialVideo"
 
 
+
 export default function Home() {
   const [loading, setLoading] = useState(true);
+  
 
   useEffect(() => {
     // Simulate loading or wait for API/data
@@ -41,6 +43,7 @@ export default function Home() {
       
       <CounterBlock />
       <Footer />
+      
     </main>
   );
 }

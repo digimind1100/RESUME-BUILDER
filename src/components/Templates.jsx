@@ -2,8 +2,12 @@ import React from "react";
 import "./Templates.css";
 import { useNavigate } from "react-router-dom";
 import Footer from "./Footer";
+import { useState } from "react";
+import { useAuth } from "../context/AuthContext";
+import SignupModal from "./auth/SignupModal";
 
-const SIMPLE_TEMPLATES = Array.from({ length: 11 }, (_, i) => i + 1);
+
+const SIMPLE_TEMPLATES = Array.from({ length: 12 }, (_, i) => i + 1);
 
 const TEMPLATE_META = {
   1: {
@@ -77,12 +81,32 @@ const TEMPLATE_META = {
 export default function Templates() {
   const navigate = useNavigate();
 
+  const { isAuthenticated } = useAuth();
+
+const [showSignup, setShowSignup] = useState(false);
+const [pendingTemplate, setPendingTemplate] = useState(null);
+
+
   // Premium template navigation
   const handleUseClassic = () => navigate("/resume-classic");
   const handleUseProfessional = () => navigate("/resume-professional");
 
+const handleUseSimple = (num) => {
+  // 🔐 If NOT logged in → open signup first
+  if (!isAuthenticated) {
+    setPendingTemplate(num);
+    setShowSignup(true);
+    return;
+  }
+
+  // ✅ Logged in → open template directly
+  openTemplate(num);
+};
+
+console.log("showSignup:", showSignup);
+
   // Simple template navigation
-  const handleUseSimple = (num) => {
+  const openTemplate = (num) => {
     if (num === 1) {
       navigate("/teacher-elite");
     } else if (num === 2) {
@@ -267,6 +291,22 @@ export default function Templates() {
             );
           })}
         </div>
+        {showSignup && (
+  <SignupModal
+    isOpen={showSignup}
+    onClose={() => setShowSignup(false)}
+    onSuccess={() => {
+      setShowSignup(false);
+      if (pendingTemplate) {
+        openTemplate(pendingTemplate);
+        setPendingTemplate(null);
+      }
+    }}
+  />
+)}
+
+
+
       </section>
    
     </section>

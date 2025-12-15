@@ -1,37 +1,34 @@
-import { useAuth } from "../../context/AuthContext";
 import { Navigate, useLocation } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 export default function BuilderGuard({ children }) {
   const { user, initializing } = useAuth();
   const location = useLocation();
 
-  // Global loader while checking auth
+console.log("FINAL GUARD CHECK:", user, initializing);
+
+
+  // 🔄 wait until auth finishes loading
   if (initializing) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600 mx-auto mb-3"></div>
-          <p className="text-gray-600 text-sm">Checking access…</p>
-        </div>
-      </div>
-    );
+    return <div className="p-6">Checking access...</div>;
   }
 
-  // Not logged in → go home
+  // ❌ not logged in
   if (!user) {
     return <Navigate to="/" replace />;
   }
 
-  // Logged in but not paid → redirect to payment
+  // ❌ logged in but not paid
   if (!user.isPaid) {
     return (
       <Navigate
         to="/payment"
         replace
-        state={{ from: location.pathname }} // 👈 important
+        state={{ from: location.pathname }}
       />
     );
   }
 
+  // ✅ logged in + paid
   return children;
 }

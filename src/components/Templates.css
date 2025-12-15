@@ -451,3 +451,25 @@
     padding: 16px;
   }
 }
+
+.template-card {
+  cursor: pointer;
+}
+
+.template-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+.template-card img,
+.template-thumbnail,
+.template-preview img {
+  pointer-events: auto;
+}
+.template-overlay {
+  position: absolute;
+  inset: 0;
+}
+.template-overlay {
+  pointer-events: none; /* 🔥 allow click to pass through */
+}

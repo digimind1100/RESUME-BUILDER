@@ -30,15 +30,14 @@ export function AuthProvider({ children }) {
       const result = await getCurrentUser(savedToken);
 
       if (result.ok && result.user) {
-        setUser(result.user);
-      } else {
-        localStorage.removeItem(TOKEN_KEY);
-        setUser(null);
-        setToken(null);
-      }
+  setUser(result.user);
+} else {
+  console.warn("Auth check failed, keeping user temporarily");
+}
+setInitializing(false);
 
-      setInitializing(false);
-    })();
+    }
+  )();
   }, []);
 
   function applyAuth(result) {
@@ -49,7 +48,6 @@ export function AuthProvider({ children }) {
     }
   }
 
-  // SIGNUP
   async function signup({ fullName, email, password }) {
     setLoading(true);
     const result = await signupApi({ fullName, email, password });
@@ -58,7 +56,6 @@ export function AuthProvider({ children }) {
     return result;
   }
 
-  // LOGIN
   async function login({ email, password }) {
     setLoading(true);
     const result = await loginApi({ email, password });
@@ -67,15 +64,16 @@ export function AuthProvider({ children }) {
     return result;
   }
 
-  // LOGOUT
   function logout() {
     setUser(null);
     setToken(null);
     localStorage.removeItem(TOKEN_KEY);
   }
 
+  // ✅ IMPORTANT FIX: expose setUser
   const value = {
     user,
+    setUser, // 🔥 REQUIRED for payment update
     token,
     loading,
     initializing,
