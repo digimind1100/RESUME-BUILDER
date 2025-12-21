@@ -7,6 +7,9 @@ import html2canvas from "html2canvas";
 import QRCode from "qrcode";
 import PaymentModal from "../components/payment/PaymentModal";
 import { useAuth } from "../context/AuthContext";
+import usePaymentGuard from "../hooks/usePaymentGuard";
+import PaymentGate from "../components/payment/PaymentGate";
+
 
 
 const TABS = [
@@ -48,14 +51,20 @@ export default function TeacherElite() {
 
   const [isEditable, setIsEditable] = useState(false);
 
-const [showPaymentModal, setShowPaymentModal] = useState(false);
+
 
 const { user, setUser } = useAuth();
 
+const {
+  isPaid,
+  showPaymentModal,
+  setShowPaymentModal,
+  requirePayment,
+  handlePaymentSuccess,
+} = usePaymentGuard("TeacherElite");
 
-
-const isPaid = user?.isPaid === true;
 const canEdit = isPaid;
+
 
 console.log("isPaid:", isPaid);
 
@@ -162,15 +171,13 @@ Subject: ${qrForm.subject}
  <button
   className={isEditable ? "edit-btn on" : "edit-btn off"}
   onClick={() => {
-    if (!isPaid) {
-      setShowPaymentModal(true);
-      return;
-    }
+    if (!requirePayment()) return;
     setIsEditable((prev) => !prev);
   }}
 >
   {isEditable ? "Editing: ON" : "Editing: OFF"}
 </button>
+
 
 
 
@@ -571,6 +578,16 @@ Subject: ${qrForm.subject}
             </main>
           </div>
         </div>
+
+
+<PaymentGate
+  open={showPaymentModal}
+  onClose={() => setShowPaymentModal(false)}
+  onSuccess={handlePaymentSuccess}
+/>
+
+
+
 {showPaymentModal && (
   <PaymentModal
     onClose={() => setShowPaymentModal(false)}
