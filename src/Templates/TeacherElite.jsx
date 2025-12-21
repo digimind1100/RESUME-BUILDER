@@ -1,12 +1,12 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
+
 import "./TeacherElite.css";
 import { useNavigate } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import QRCode from "qrcode";
-
-
-
+import PaymentModal from "../components/payment/PaymentModal";
+import { useAuth } from "../context/AuthContext";
 
 
 const TABS = [
@@ -40,10 +40,35 @@ const TAB_TITLE_MAP = {
 };
 
 export default function TeacherElite() {
+
+
+
   const navigate = useNavigate();
   const resumeRef = useRef(null);
 
   const [isEditable, setIsEditable] = useState(false);
+
+const [showPaymentModal, setShowPaymentModal] = useState(false);
+
+const { user, setUser } = useAuth();
+
+
+
+const isPaid = user?.isPaid === true;
+const canEdit = isPaid;
+
+console.log("isPaid:", isPaid);
+
+useEffect(() => {
+  if (!canEdit) {
+    const editableEls = document.querySelectorAll("[contenteditable]");
+    editableEls.forEach(el => {
+      el.setAttribute("contenteditable", "false");
+    });
+  }
+}, [canEdit]);
+
+
 
   /* ---------- PROFILE IMAGE ---------- */
   const [profileImage, setProfileImage] = useState(
@@ -120,22 +145,34 @@ Subject: ${qrForm.subject}
   const [activeTab, setActiveTab] = useState("High School");
   const currentTitle = TAB_TITLE_MAP[activeTab];
 
+
+
+
   return (
     <div className="te-wrapper">
       {/* TOP BUTTONS */}
-      <div className="te-buttons">
+      <div className="te-buttons" contentEditable={false}>
+
         <button onClick={handleDownloadPDF}>Download PDF</button>
         <button onClick={() => navigate("/templates")}>
           Back to Templates
         </button>
         <button onClick={handleReset}>Reset</button>
 
-        <button 
-  onClick={() => setIsEditable(!isEditable)}
+ <button
   className={isEditable ? "edit-btn on" : "edit-btn off"}
+  onClick={() => {
+    if (!isPaid) {
+      setShowPaymentModal(true);
+      return;
+    }
+    setIsEditable((prev) => !prev);
+  }}
 >
   {isEditable ? "Editing: ON" : "Editing: OFF"}
 </button>
+
+
 
       </div>
 
@@ -219,14 +256,15 @@ Subject: ${qrForm.subject}
               <div className="te-header-left">
                 <h1
                   className="te-header-name"
-                  contentEditable={isEditable}
+                    contentEditable={canEdit && isEditable}
+                  
                   suppressContentEditableWarning
                 >
                   EMMA ROBERTS
                 </h1>
                 <p
                   className="te-header-role"
-                  contentEditable={isEditable}
+                  contentEditable={canEdit && isEditable}
                   suppressContentEditableWarning
                 >
                   {currentTitle}
@@ -234,19 +272,19 @@ Subject: ${qrForm.subject}
 
                 <div className="te-header-contact">
                   <span
-                    contentEditable={isEditable}
+                      contentEditable={canEdit && isEditable}
                     suppressContentEditableWarning
                   >
                     +1 (555) 908-2211
                   </span>
                   <span
-                    contentEditable={isEditable}
+                      contentEditable={canEdit && isEditable}
                     suppressContentEditableWarning
                   >
                     emma.roberts@schoolmail.com
                   </span>
                   <span
-                    contentEditable={isEditable}
+                      contentEditable={canEdit && isEditable}
                     suppressContentEditableWarning
                   >
                     New York, NY
@@ -254,9 +292,26 @@ Subject: ${qrForm.subject}
                 </div>
               </div>
 
+
               <div className="te-header-right">
                 <div className="te-header-wave" />
-                <div className="te-header-photo-wrap" onClick={triggerFileSelect}>
+
+                <div
+                  className="te-header-photo-wrap"
+                  contentEditable={false}
+                  onMouseDown={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+               if (!isPaid) {
+                      setShowPaymentModal(true);
+                      return;
+                    }
+                    triggerFileSelect();
+                  }}
+                >
+
+
                   <div className="te-header-photo-bg" />
                   <div className="te-header-photo-circle">
                     <img src={profileImage} alt="Profile" />
@@ -269,6 +324,13 @@ Subject: ${qrForm.subject}
                   ref={fileInputRef}
                   style={{ display: "none" }}
                   onChange={handleImageUpload}
+                  onClick={() => {
+   if (!isPaid) {
+                      e.preventDefault();
+                      setShowPaymentModal(true);
+                    }
+                  }}
+
                 />
               </div>
             </div>
@@ -293,39 +355,46 @@ Subject: ${qrForm.subject}
               <section className="te-side-section">
                 <h3 className="te-side-heading">CORE TEACHING SKILLS</h3>
                 <ul className="te-side-list">
-                  <li contentEditable={isEditable}>Lesson Planning & Delivery</li>
-                  <li contentEditable={isEditable}>Classroom Management</li>
-                  <li contentEditable={isEditable}>Student Assessment</li>
-                  <li contentEditable={isEditable}>Parent Communication</li>
-                  <li contentEditable={isEditable}>Inclusive Education</li>
+                  <li   contentEditable={canEdit && isEditable}>Lesson Planning & Delivery</li>
+                  <li   contentEditable={canEdit && isEditable}>Classroom Management</li>
+                  <li   contentEditable={canEdit && isEditable}>Student Assessment</li>
+                  <li   contentEditable={canEdit && isEditable}>Parent Communication</li>
+                  <li   contentEditable={canEdit && isEditable}>Inclusive Education</li>
                 </ul>
               </section>
 
               <section className="te-side-section">
                 <h3 className="te-side-heading">CERTIFICATIONS</h3>
                 <ul className="te-side-list">
-                  <li contentEditable={isEditable}>State Teaching License (Active)</li>
-                  <li contentEditable={isEditable}>ESL / TESOL Certification</li>
-                  <li contentEditable={isEditable}>Child Psychology Workshop</li>
+                  <li   contentEditable={canEdit && isEditable}>State Teaching License (Active)</li>
+                  <li   contentEditable={canEdit && isEditable}>ESL / TESOL Certification</li>
+                  <li   contentEditable={canEdit && isEditable}>Child Psychology Workshop</li>
                 </ul>
               </section>
 
               <section className="te-side-section">
                 <h3 className="te-side-heading">LANGUAGES</h3>
                 <ul className="te-side-list">
-                  <li contentEditable={isEditable}>English — Native</li>
-                  <li contentEditable={isEditable}>Spanish — Professional</li>
-                  <li contentEditable={isEditable}>French — Basic</li>
+                  <li   contentEditable={canEdit && isEditable}>English — Native</li>
+                  <li   contentEditable={canEdit && isEditable}>Spanish — Professional</li>
+                  <li   contentEditable={canEdit && isEditable}>French — Basic</li>
                 </ul>
               </section>
+{/* 🔒 WATERMARK FOR UNPAID USERS */}
+{!isPaid && (
+  <div className="resume-watermark">
+    PREVIEW • UNLOCK TO EDIT
+  </div>
+)}
 
               <section className="te-side-section">
                 <h3 className="te-side-heading">ACHIEVEMENTS</h3>
                 <ul className="te-side-list">
-                  <li contentEditable={isEditable}>Teacher of the Year — 2022</li>
-                  <li contentEditable={isEditable}>Reading Program Lead — 2021</li>
-                  <li contentEditable={isEditable}>Debate Club Mentor</li>
+                  <li   contentEditable={canEdit && isEditable}>Teacher of the Year — 2022</li>
+                  <li   contentEditable={canEdit && isEditable}>Reading Program Lead — 2021</li>
+                  <li   contentEditable={canEdit && isEditable}>Debate Club Mentor</li>
                 </ul>
+                
               </section>
 
               {/* Bottom QR */}
@@ -347,7 +416,7 @@ Subject: ${qrForm.subject}
                 <h2 className="te-section-title">PROFESSIONAL SUMMARY</h2>
                 <p
                   className="te-section-text"
-                  contentEditable={isEditable}
+                    contentEditable={canEdit && isEditable}
                   suppressContentEditableWarning
                 >
                   Dedicated {activeTab.toLowerCase()} teacher with over 8 years
@@ -365,30 +434,30 @@ Subject: ${qrForm.subject}
 
                 <div className="te-job">
                   <div className="te-job-header">
-                    <h3 contentEditable={isEditable}>Lead {activeTab} Teacher</h3>
-                    <span contentEditable={isEditable}>2018 – Present</span>
+                    <h3   contentEditable={canEdit && isEditable}>Lead {activeTab} Teacher</h3>
+                    <span   contentEditable={canEdit && isEditable}>2018 – Present</span>
                   </div>
                   <p
                     className="te-job-sub"
-                    contentEditable={isEditable}
+                      contentEditable={canEdit && isEditable}
                     suppressContentEditableWarning
                   >
                     Bright Future Academy — New York, NY
                   </p>
                   <ul className="te-job-list">
-                    <li contentEditable={isEditable}>
+                    <li   contentEditable={canEdit && isEditable}>
                       Designed engaging lessons aligned with curriculum and
                       state standards.
                     </li>
-                    <li contentEditable={isEditable}>
+                    <li   contentEditable={canEdit && isEditable}>
                       Used technology, group activities, and projects to support
                       different learning styles.
                     </li>
-                    <li contentEditable={isEditable}>
+                    <li   contentEditable={canEdit && isEditable}>
                       Communicated regularly with parents and guardians about
                       student progress.
                     </li>
-                    <li contentEditable={isEditable}>
+                    <li   contentEditable={canEdit && isEditable}>
                       Mentored new teachers and supported classroom management
                       strategies.
                     </li>
@@ -397,25 +466,25 @@ Subject: ${qrForm.subject}
 
                 <div className="te-job">
                   <div className="te-job-header">
-                    <h3 contentEditable={isEditable}>Classroom Teacher</h3>
+                    <h3   contentEditable={canEdit && isEditable}>Classroom Teacher</h3>
                     <span contentEditable>2013 – 2018</span>
                   </div>
                   <p
                     className="te-job-sub"
-                    contentEditable={isEditable}
+                      contentEditable={canEdit && isEditable}
                     suppressContentEditableWarning
                   >
                     Greenfield Public School — Boston, MA
                   </p>
                   <ul className="te-job-list">
-                    <li contentEditable={isEditable}>
+                    <li   contentEditable={canEdit && isEditable}>
                       Taught core subjects and developed creative assessment
                       methods.
                     </li>
-                    <li contentEditable={isEditable}>
+                    <li   contentEditable={canEdit && isEditable}>
                       Organized school events, clubs, and after-school programs.
                     </li>
-                    <li contentEditable={isEditable}>
+                    <li   contentEditable={canEdit && isEditable}>
                       Provided additional academic support through tutoring and
                       small group work.
                     </li>
@@ -429,14 +498,14 @@ Subject: ${qrForm.subject}
                   <h2 className="te-section-title">EDUCATION</h2>
                   <p
                     className="te-edu-line"
-                    contentEditable={isEditable}
+                      contentEditable={canEdit && isEditable}
                     suppressContentEditableWarning
                   >
                     M.A. in Education — Columbia University, NY (2011 – 2013)
                   </p>
                   <p
                     className="te-edu-line"
-                    contentEditable={isEditable}
+                      contentEditable={canEdit && isEditable}
                     suppressContentEditableWarning
                   >
                     B.A. in English Literature — Boston University (2007 – 2011)
@@ -445,21 +514,21 @@ Subject: ${qrForm.subject}
                   <h2 className="te-section-title">WORKSHOPS & TRAININGS</h2>
                   <p
                     className="te-edu-line"
-                    contentEditable={isEditable}
+                      contentEditable={canEdit && isEditable}
                     suppressContentEditableWarning
                   >
                     Advanced Classroom Management — 2021
                   </p>
                   <p
                     className="te-edu-line"
-                    contentEditable={isEditable}
+                      contentEditable={canEdit && isEditable}
                     suppressContentEditableWarning
                   >
                     Inclusive Education & Differentiated Instruction — 2019
                   </p>
                   <p
                     className="te-edu-line"
-                    contentEditable={isEditable}
+                      contentEditable={canEdit && isEditable}
                     suppressContentEditableWarning
                   >
                     Digital Tools for Remote Teaching — 2020
@@ -469,39 +538,79 @@ Subject: ${qrForm.subject}
                 <div>
                   <h2 className="te-section-title">SUBJECTS TAUGHT</h2>
                   <ul className="te-job-list">
-                    <li contentEditable={isEditable}>English Language & Literature</li>
-                    <li contentEditable={isEditable}>Reading & Writing Skills</li>
-                    <li contentEditable={isEditable}>Exam Preparation & Study Skills</li>
+                    <li   contentEditable={canEdit && isEditable}>English Language & Literature</li>
+                    <li   contentEditable={canEdit && isEditable}>Reading & Writing Skills</li>
+                    <li   contentEditable={canEdit && isEditable}>Exam Preparation & Study Skills</li>
                   </ul>
 
                   <h2 className="te-section-title">
                     SCHOOL PROJECTS & ACTIVITIES
                   </h2>
                   <ul className="te-job-list">
-                    <li contentEditable={isEditable}>
+                    <li   contentEditable={canEdit && isEditable}>
                       Led a school-wide reading initiative improving literacy
                       rates by 20%.
                     </li>
-                    <li contentEditable={isEditable}>
+                    <li   contentEditable={canEdit && isEditable}>
                       Organized annual book fair and student writing
                       competitions.
                     </li>
-                    <li contentEditable={isEditable}>
+                    <li   contentEditable={canEdit && isEditable}>
                       Coordinated debate and public speaking events for students.
                     </li>
                   </ul>
 
                   <h2 className="te-section-title">EXTRA ACTIVITIES</h2>
                   <ul className="te-job-list">
-                    <li contentEditable={isEditable}>Literature Club Advisor</li>
-                    <li contentEditable={isEditable}>Debate & Public Speaking Coach</li>
-                    <li contentEditable={isEditable}>Volunteer Community Tutor</li>
+                    <li   contentEditable={canEdit && isEditable}>Literature Club Advisor</li>
+                    <li   contentEditable={canEdit && isEditable}>Debate & Public Speaking Coach</li>
+                    <li   contentEditable={canEdit && isEditable}>Volunteer Community Tutor</li>
                   </ul>
                 </div>
               </section>
             </main>
           </div>
         </div>
+{showPaymentModal && (
+  <PaymentModal
+    onClose={() => setShowPaymentModal(false)}
+    onSuccess={async () => {
+      try {
+        const token = localStorage.getItem("rb_auth_token");
+
+        const res = await fetch(
+          "http://localhost:3001/api/payments/mark-paid",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+              template: "TeacherElite",
+            }),
+          }
+        );
+
+        const data = await res.json();
+        console.log("MARK PAID RESPONSE:", data);
+
+        if (data.success && data.user) {
+          setUser(data.user);      // 🔥 FIXES avatar + auth sync
+          setIsEditable(true);
+          setShowPaymentModal(false);
+        } else {
+          alert("Payment failed on server");
+        }
+      } catch (err) {
+        console.error("Payment error:", err);
+        alert("Server error during payment");
+      }
+    }}
+  />
+)}
+
+
       </div>
     </div>
   );

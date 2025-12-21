@@ -1,21 +1,41 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
   {
-    fullName: { type: String, required: true },
-    email: { type: String, required: true, unique: true, lowercase: true },
-    passwordHash: { type: String, required: true },
-    role: { type: String, enum: ["user", "admin"], default: "user" },
-
-    // 🔐 payment fields
-    isPaid: { type: Boolean, default: false },
-    plan: {
+    fullName: {
       type: String,
-      enum: ["free", "lifetime"],
-      default: "free",
+      required: true, // 🔥 VERY IMPORTANT
+      trim: true,
     },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true,
+    },
+    passwordHash: {
+      type: String,
+      required: true,
+    },
+    role: {
+      type: String,
+      default: "user",
+    },
+    isPaid: {
+  type: Boolean,
+  default: false,
+},
+paidTemplate: {
+  type: String,
+  default: null,
+},
+paidAt: {
+  type: Date,
+  default: null,
+}
+
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("User", userSchema);
+export default mongoose.model("User", userSchema);

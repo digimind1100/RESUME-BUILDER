@@ -1,0 +1,167 @@
+/* ===== OVERLAY ===== */
+.payment-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+/* ===== MODAL ===== */
+.payment-modal {
+  background: linear-gradient(180deg, #ffffff, #f7f7f7);
+  width: 420px;
+  max-width: 92%;
+  border-radius: 18px;
+  padding: 28px 26px 24px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  animation: popIn 0.35s ease;
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* ===== TEXT ===== */
+.payment-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: #222;
+}
+
+.payment-subtitle {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 18px;
+}
+
+.payment-price {
+  font-size: 34px;
+  font-weight: 800;
+  color: #0d6efd;
+  margin-bottom: 22px;
+}
+
+/* ===== METHODS ===== */
+.payment-methods {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.payment-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1.5px solid #ddd;
+  cursor: pointer;
+  font-size: 15px;
+  transition: all 0.25s ease;
+  background: #fff;
+}
+
+.payment-option input {
+  accent-color: #0d6efd;
+}
+
+.payment-option:hover {
+  border-color: #0d6efd;
+}
+
+.payment-option.active {
+  border-color: #0d6efd;
+  background: #eef4ff;
+  font-weight: 600;
+}
+
+/* ===== BUTTON ===== */
+.unlock-btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 14px;
+  border: none;
+  background: linear-gradient(135deg, #0d6efd, #0053cc);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.unlock-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 25px rgba(13, 110, 253, 0.35);
+}
+
+.unlock-btn:disabled {
+  background: #bfc8d6;
+  cursor: not-allowed;
+}
+
+/* ===== SPINNER ===== */
+.spinner {
+  width: 22px;
+  height: 22px;
+  border: 3px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+  display: inline-block;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ===== SUCCESS ===== */
+.payment-success {
+  margin-top: 14px;
+  padding: 14px;
+  border-radius: 14px;
+  background: #e6f7ec;
+  color: #1e7e34;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+/* ===== CANCEL ===== */
+.close-btn {
+  margin-top: 16px;
+  background: none;
+  border: none;
+  font-size: 14px;
+  color: #777;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  color: #000;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 480px) {
+  .payment-modal {
+    padding: 24px 20px;
+  }
+
+  .payment-price {
+    font-size: 30px;
+  }
+}

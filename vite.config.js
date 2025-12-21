@@ -1,10 +1,11 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
-import tailwindcss from '@tailwindcss/vite'; // ✅ use the official Vite plugin
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 
 export default defineConfig({
-  plugins: [
-    react(),
-    tailwindcss(), // <-- this ensures Tailwind is compiled correctly in Vite
-  ],
+  plugins: [react()],
+  server: {
+    proxy: {
+      "/api": "http://localhost:3001",
+    },
+  },
 });

@@ -446,3 +446,31 @@
 .edit-toggle.off {
   background: #6b7280; /* gray */
 }
+.te-buttons {
+  position: sticky;
+  top: 0;
+  z-index: 999999;
+  pointer-events: auto;
+}
+
+.te-buttons * {
+  pointer-events: auto;
+}
+
+
+.resume-watermark {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+
+  font-size: 48px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  color: rgba(0, 0, 0, 0.08);
+  transform: rotate(-30deg);
+  user-select: none;
+}

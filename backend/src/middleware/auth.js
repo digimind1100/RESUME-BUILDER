@@ -1,8 +1,7 @@
-// src/middleware/authMiddleware.js
-const { verifyToken } = require("../utils/jwt");
+import { verifyToken } from "../utils/jwt.js";
 
 function requireAuth(req, res, next) {
-  const authHeader = req.headers["authorization"];
+  const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
     return res.status(401).json({
@@ -35,4 +34,5 @@ function requireAdmin(req, res, next) {
   next();
 }
 
-module.exports = { requireAuth, requireAdmin };
+export default requireAuth;
+export { requireAdmin };

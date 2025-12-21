@@ -1,20 +1,27 @@
 // src/utils/jwt.js
-const jwt = require("jsonwebtoken");
+import jwt from "jsonwebtoken";
 
-const JWT_SECRET = process.env.JWT_SECRET;
-const JWT_EXPIRES_IN = "7d";
+export function createToken(user) {
+  const secret = process.env.JWT_SECRET;
 
-function createToken(user) {
+  if (!secret) {
+    throw new Error("JWT_SECRET is missing in environment variables");
+  }
+
   const payload = {
     id: user._id.toString(),
     role: user.role,
   };
 
-  return jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
+  return jwt.sign(payload, secret, { expiresIn: "7d" });
 }
 
-function verifyToken(token) {
-  return jwt.verify(token, JWT_SECRET); // agar invalid hoga to error throw karega
-}
+export function verifyToken(token) {
+  const secret = process.env.JWT_SECRET;
 
-module.exports = { createToken, verifyToken };
+  if (!secret) {
+    throw new Error("JWT_SECRET is missing in environment variables");
+  }
+
+  return jwt.verify(token, secret);
+}

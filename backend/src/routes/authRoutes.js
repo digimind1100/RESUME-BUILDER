@@ -1,9 +1,9 @@
 // src/routes/authRoutes.js
-const express = require("express");
-const bcrypt = require("bcrypt");
-const User = require("../models/User");
-const { createToken } = require("../utils/jwt");
-const { requireAuth } = require("../middleware/authMiddleware");
+import express from "express";
+import bcrypt from "bcrypt";
+import User from "../models/User.js";
+import { createToken } from "../utils/jwt.js";
+import requireAuth from "../middleware/auth.js";
 
 const router = express.Router();
 
@@ -17,7 +17,7 @@ function toPublicUser(user) {
   };
 }
 
-// POST /api/auth/signup
+/* ---------- SIGNUP ---------- */
 router.post("/signup", async (req, res) => {
   try {
     const { fullName, email, password } = req.body;
@@ -25,15 +25,7 @@ router.post("/signup", async (req, res) => {
     if (!fullName || !email || !password) {
       return res.status(400).json({
         success: false,
-        message: "Please provide full name, email, and password.",
-      });
-    }
-
-    // basic password length check
-    if (password.length < 6) {
-      return res.status(400).json({
-        success: false,
-        message: "Password must be at least 6 characters.",
+        message: "All fields required",
       });
     }
 
@@ -41,7 +33,7 @@ router.post("/signup", async (req, res) => {
     if (existing) {
       return res.status(409).json({
         success: false,
-        message: "An account with this email already exists.",
+        message: "Email already registered",
       });
     }
 
@@ -58,7 +50,6 @@ router.post("/signup", async (req, res) => {
 
     return res.status(201).json({
       success: true,
-      message: "Account created successfully.",
       user: toPublicUser(user),
       token,
     });
@@ -66,28 +57,21 @@ router.post("/signup", async (req, res) => {
     console.error("Signup error:", err);
     return res.status(500).json({
       success: false,
-      message: "Something went wrong. Please try again.",
+      message: "Server error",
     });
   }
 });
 
-// POST /api/auth/login
+/* ---------- LOGIN ---------- */
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-
-    if (!email || !password) {
-      return res.status(400).json({
-        success: false,
-        message: "Please provide email and password.",
-      });
-    }
 
     const user = await User.findOne({ email: email.toLowerCase() });
     if (!user) {
       return res.status(401).json({
         success: false,
-        message: "Invalid email or password.",
+        message: "Invalid credentials",
       });
     }
 
@@ -95,15 +79,14 @@ router.post("/login", async (req, res) => {
     if (!isMatch) {
       return res.status(401).json({
         success: false,
-        message: "Invalid email or password.",
+        message: "Invalid credentials",
       });
     }
 
     const token = createToken(user);
 
-    return res.status(200).json({
+    return res.json({
       success: true,
-      message: "Logged in successfully.",
       user: toPublicUser(user),
       token,
     });
@@ -111,34 +94,47 @@ router.post("/login", async (req, res) => {
     console.error("Login error:", err);
     return res.status(500).json({
       success: false,
-      message: "Something went wrong. Please try again.",
+      message: "Server error",
     });
   }
 });
 
+/* ---------- ME ---------- */
 // GET /api/auth/me
 router.get("/me", requireAuth, async (req, res) => {
   try {
-    const user = await User.findById(req.user.id);
+    const user = await User.findById(req.user.id).select(
+      "_id fullName email role isPaid paidTemplate paidAt"
+    );
 
     if (!user) {
       return res.status(404).json({
         success: false,
-        message: "User not found.",
+        message: "User not found",
       });
     }
 
-    return res.status(200).json({
+    return res.json({
       success: true,
-      user: toPublicUser(user),
+      user: {
+        id: user._id.toString(),
+        fullName: user.fullName,
+        email: user.email,
+        role: user.role,
+        isPaid: user.isPaid,
+        paidTemplate: user.paidTemplate,
+        paidAt: user.paidAt,
+      },
     });
   } catch (err) {
-    console.error("Me error:", err);
+    console.error("ME ERROR:", err);
     return res.status(500).json({
       success: false,
-      message: "Something went wrong. Please try again.",
+      message: "Server error",
     });
   }
 });
 
-module.exports = router;
+
+
+export default router;

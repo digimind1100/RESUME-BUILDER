@@ -1,9 +1,9 @@
 const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:3001";
 
-export async function markUserPaid(token) {
+export async function markPaid(token) {
   try {
-    const res = await fetch(`${API_BASE_URL}/api/payment/mark-paid`, {
+    const res = await fetch(`${API_BASE_URL}/api/payments/mark-paid`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -12,17 +12,9 @@ export async function markUserPaid(token) {
     });
 
     const data = await res.json();
-
-    return {
-      ok: data.success === true,
-      user: data.user || null,
-      message: data.message || "",
-    };
+    return data;
   } catch (err) {
-    return {
-      ok: false,
-      user: null,
-      message: "Payment request failed",
-    };
+    console.error("markPaid error:", err);
+    return { success: false };
   }
 }

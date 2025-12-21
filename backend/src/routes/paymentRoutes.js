@@ -1,31 +1,42 @@
-const express = require("express");
-const router = express.Router();
-const User = require("../models/User");
-const { requireAuth } = require("../middleware/authMiddleware");
+import express from "express";
+import User from "../models/User.js";
+import requireAuth from "../middleware/auth.js"; // ✅ CORRECT
 
-// Phase-1: mark user as paid (mock, but DB-backed)
+const router = express.Router();
+
 router.post("/mark-paid", requireAuth, async (req, res) => {
   try {
     const userId = req.user.id;
+    const { template } = req.body;
+
+    if (!template) {
+      return res.status(400).json({
+        success: false,
+        message: "Template missing",
+      });
+    }
 
     const user = await User.findByIdAndUpdate(
       userId,
-      { isPaid: true, plan: "lifetime" },
+      {
+        isPaid: true,
+        paidTemplate: template,
+        paidAt: new Date(),
+      },
       { new: true }
     ).select("-passwordHash");
 
     return res.json({
       success: true,
-      message: "Payment marked successfully",
       user,
     });
   } catch (err) {
-    console.error("Payment error:", err);
-    res.status(500).json({
+    console.error("MARK PAID ERROR:", err); // 🔥 THIS WILL LOG REAL ISSUE
+    return res.status(500).json({
       success: false,
-      message: "Failed to update payment status",
+      message: "Server error",
     });
   }
 });
 
-module.exports = router;
+export default router;

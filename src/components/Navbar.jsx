@@ -11,6 +11,8 @@ export default function Navbar() {
   const [showMenu, setShowMenu] = useState(false);
 const { user, isAuthenticated, logout } = useAuth();
 
+console.log("FULL NAME:", user?.fullName);
+console.log("INITIALS:", getInitials(user?.fullName));
 
 
   const [menuOpen, setMenuOpen] = useState(false);
@@ -67,7 +69,8 @@ const { user, isAuthenticated, logout } = useAuth();
           </li>
         </ul>
 {/* RIGHT SIDE */}
-{isAuthenticated && user && (
+{isAuthenticated && user?.fullName && (
+
   <div className="avatar-wrapper">
     <div
       className="avatar-circle"
@@ -91,7 +94,6 @@ const { user, isAuthenticated, logout } = useAuth();
     )}
   </div>
 )}
-
 
       
       </nav>

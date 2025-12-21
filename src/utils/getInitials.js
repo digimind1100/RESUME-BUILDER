@@ -1,17 +1,11 @@
-// src/utils/getInitials.js
-export function getInitials(fullName = "") {
-  if (!fullName) return "";
+export function getInitials(name = "") {
+  if (!name || typeof name !== "string") return "";
 
-  const parts = fullName.trim().split(/\s+/);
+  const words = name.trim().split(" ").filter(Boolean);
 
-  // One word name → first letter
-  if (parts.length === 1) {
-    return parts[0][0].toUpperCase();
+  if (words.length === 1) {
+    return words[0][0].toUpperCase();
   }
 
-  // Two or more words → first letter of first two words
-  return (
-    parts[0][0].toUpperCase() +
-    parts[1][0].toUpperCase()
-  );
+  return (words[0][0] + words[1][0]).toUpperCase();
 }

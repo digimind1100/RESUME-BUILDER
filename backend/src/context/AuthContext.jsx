@@ -1,10 +1,5 @@
-// src/context/AuthContext.jsx
 import React, { createContext, useContext, useEffect, useState } from "react";
-import {
-  signup as signupApi,
-  login as loginApi,
-  getCurrentUser,
-} from "../api/authApi";
+import * as authApi from "../api/authApi";
 
 const AuthContext = createContext(null);
 const TOKEN_KEY = "rb_auth_token";
@@ -12,13 +7,12 @@ const TOKEN_KEY = "rb_auth_token";
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
-  const [initializing, setInitializing] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [initializing, setInitializing] = useState(true);
 
-  // On app load: check local token & fetch /me
+  // 🔁 Restore session on reload
   useEffect(() => {
     const savedToken = localStorage.getItem(TOKEN_KEY);
-
     if (!savedToken) {
       setInitializing(false);
       return;
@@ -26,42 +20,41 @@ export function AuthProvider({ children }) {
 
     setToken(savedToken);
 
-    (async () => {
-      const result = await getCurrentUser(savedToken);
-
-      if (result.ok && result.user) {
-  setUser(result.user);
-} else {
-  console.warn("Auth check failed, keeping user temporarily");
-}
-setInitializing(false);
-
-    }
-  )();
+    authApi
+      .getCurrentUser(savedToken)
+      .then((res) => {
+        if (res.success && res.user) {
+          setUser(res.user);
+        } else {
+          localStorage.removeItem(TOKEN_KEY);
+          setToken(null);
+        }
+      })
+      .finally(() => setInitializing(false));
   }, []);
 
-  function applyAuth(result) {
-    if (result.ok && result.token && result.user) {
-      setToken(result.token);
-      setUser(result.user);
-      localStorage.setItem(TOKEN_KEY, result.token);
+  async function signup(data) {
+    setLoading(true);
+    const res = await authApi.signup(data);
+    if (res.success) {
+      setUser(res.user);
+      setToken(res.token);
+      localStorage.setItem(TOKEN_KEY, res.token);
     }
+    setLoading(false);
+    return res;
   }
 
-  async function signup({ fullName, email, password }) {
+  async function login(data) {
     setLoading(true);
-    const result = await signupApi({ fullName, email, password });
-    applyAuth(result);
+    const res = await authApi.login(data);
+    if (res.success) {
+      setUser(res.user);
+      setToken(res.token);
+      localStorage.setItem(TOKEN_KEY, res.token);
+    }
     setLoading(false);
-    return result;
-  }
-
-  async function login({ email, password }) {
-    setLoading(true);
-    const result = await loginApi({ email, password });
-    applyAuth(result);
-    setLoading(false);
-    return result;
+    return res;
   }
 
   function logout() {
@@ -70,21 +63,23 @@ setInitializing(false);
     localStorage.removeItem(TOKEN_KEY);
   }
 
-  // ✅ IMPORTANT FIX: expose setUser
-  const value = {
-    user,
-    setUser, // 🔥 REQUIRED for payment update
-    token,
-    loading,
-    initializing,
-    isAuthenticated: !!user,
-    isAdmin: user?.role === "admin",
-    signup,
-    login,
-    logout,
-  };
-
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider
+      value={{
+        user,
+        setUser, // 🔥 required for payment later
+        token,
+        loading,
+        initializing,
+        isAuthenticated: !!user,
+        signup,
+        login,
+        logout,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
 }
 
 export function useAuth() {

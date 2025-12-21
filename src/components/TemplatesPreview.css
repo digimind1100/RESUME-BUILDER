@@ -242,3 +242,72 @@
     font-size: 12px;
   }
 }
+
+
+.tp-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.editing-btn {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.editing-btn.off {
+  background: #e5e7eb;
+  color: #111;
+}
+
+.editing-btn.on {
+  background: #22c55e;
+  color: #fff;
+}
+
+.tp-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+
+.tp-topbar {
+  position: relative;
+  z-index: 100000;
+  pointer-events: auto;
+}
+
+.editing-btn,
+.tp-avatar {
+  pointer-events: auto !important;
+}
+.templates-preview-section {
+  pointer-events: auto;
+}
+.editor,
+.resume-canvas,
+.page-wrapper {
+  pointer-events: none;
+}
+.locked {
+  user-select: none;
+}
+
+
+.template-topbar {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 999999;
+  pointer-events: auto;
+}
+
+.template-topbar * {
+  pointer-events: auto;
+}

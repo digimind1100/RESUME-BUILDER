@@ -23,11 +23,6 @@ import TeacherElite from "./Templates/TeacherElite";
 import BuilderGuard from "./components/guards/BuilderGuard";
 import { Toaster } from "react-hot-toast";
 
-import PaymentPage from "./components/payment/PaymentPage";
-
-
-
-
 
 function AppContent() {
   const location = useLocation();
@@ -42,7 +37,7 @@ function AppContent() {
 <Toaster position="top-center" />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/payment" element={<PaymentPage />} />
+     
         {/* Unified builder */}
         <Route
           path="/resume/:templateId?"
@@ -81,7 +76,7 @@ function AppContent() {
         <Route path="/coverletter-generator" element={<CoverLetterPanel />} />
 
 
-        <Route path="/payment" element={<PaymentPage />} />
+      
 
 
 
