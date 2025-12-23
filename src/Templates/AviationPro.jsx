@@ -6,12 +6,27 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import QRCode from "qrcode";
 
+import usePaymentGuard from "../hooks/usePaymentGuard";
+import PaymentGate from "../components/payment/PaymentGate";
+import { useAuth } from "../context/AuthContext";
+
 export default function AviationPro() {
   const resumeRef = useRef(null);
   const navigate = useNavigate();
 
+      const { user, setUser } = useAuth();
+    
+    const {
+      isPaid,
+      showPaymentModal,
+      setShowPaymentModal,
+      requirePayment,
+      handlePaymentSuccess,
+    } = usePaymentGuard("CleanProfessional"); // 🔴 TEMPLATE NAME
+    
+    const canEdit = isPaid;
   // ---------- EDIT MODE ----------
-  const [isEditable, setIsEditable] = useState(false);
+
 
   // ---------- PROFILE IMAGE ----------
   const [profileImage, setProfileImage] = useState(
@@ -391,11 +406,13 @@ Profile: ${profileLink}
 
         {/* EDIT TOGGLE */}
         <button
-          onClick={() => setIsEditable(!isEditable)}
-          className={isEditable ? "edit-toggle on" : "edit-toggle off"}
-        >
-          {isEditable ? "Editing: ON" : "Editing: OFF"}
-        </button>
+  className={canEdit ? "edit-btn on" : "edit-btn off"}
+  onClick={() => {
+    if (requirePayment()) return;
+  }}
+>
+  {canEdit ? "Editing: ON" : "Editing: OFF"}
+</button>
       </div>
 
       {/* QR FORM */}
@@ -405,16 +422,20 @@ Profile: ${profileLink}
             placeholder="Full Name"
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
+            disabled={!canEdit}
           />
+
           <input
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+             disabled={!canEdit}
           />
           <input
             placeholder="Phone"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
+             disabled={!canEdit}
           />
         </div>
 
@@ -422,6 +443,7 @@ Profile: ${profileLink}
           placeholder="Address"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
+           disabled={!canEdit}
         />
 
         <div className="av-qr-row">
@@ -429,16 +451,19 @@ Profile: ${profileLink}
             placeholder="City"
             value={city}
             onChange={(e) => setCity(e.target.value)}
+             disabled={!canEdit}
           />
           <input
             placeholder="State"
             value={stateVal}
             onChange={(e) => setStateVal(e.target.value)}
+             disabled={!canEdit}
           />
           <input
             placeholder="ZIP"
             value={zip}
             onChange={(e) => setZip(e.target.value)}
+             disabled={!canEdit}
           />
         </div>
 
@@ -447,11 +472,13 @@ Profile: ${profileLink}
             placeholder="LinkedIn Profile URL"
             value={linkedin}
             onChange={(e) => setLinkedin(e.target.value)}
+             disabled={!canEdit}
           />
           <input
             placeholder="Portfolio / Profile Link"
             value={profileLink}
             onChange={(e) => setProfileLink(e.target.value)}
+             disabled={!canEdit}
           />
         </div>
 
@@ -497,7 +524,7 @@ Profile: ${profileLink}
               <div className="av-header-text">
                 <h1
                   className="av-name"
-                  contentEditable={isEditable}
+                  contentEditable={canEdit}
                   suppressContentEditableWarning
                 >
                   ALEXANDER MORGAN
@@ -505,7 +532,7 @@ Profile: ${profileLink}
 
                 <p
                   className="av-role"
-                  contentEditable={isEditable}
+                  contentEditable={canEdit}
                   suppressContentEditableWarning
                 >
                   {activeData.title.toUpperCase()}
@@ -519,7 +546,7 @@ Profile: ${profileLink}
                 <img src={qrImage} alt="QR Code" className="av-qr-img" />
                 <p
                   className="av-qr-text"
-                  contentEditable={isEditable}
+                  contentEditable={canEdit}
                   suppressContentEditableWarning
                 >
                   Scan for licenses, flight log &amp; full profile
@@ -538,7 +565,7 @@ Profile: ${profileLink}
               <section className="av-section">
                 <h2
                   className="av-section-title"
-                  contentEditable={isEditable}
+                  contentEditable={canEdit}
                   suppressContentEditableWarning
                 >
                   PROFESSIONAL SUMMARY
@@ -546,7 +573,7 @@ Profile: ${profileLink}
 
                 <p
                   className="av-section-text"
-                  contentEditable={isEditable}
+                  contentEditable={canEdit}
                   suppressContentEditableWarning
                 >
                   {activeData.summary}
@@ -557,7 +584,7 @@ Profile: ${profileLink}
               <section className="av-section">
                 <h2
                   className="av-section-title"
-                  contentEditable={isEditable}
+                  contentEditable={canEdit}
                   suppressContentEditableWarning
                 >
                   EXPERIENCE
@@ -569,14 +596,14 @@ Profile: ${profileLink}
                       <div>
                         <p
                           className="av-job-title"
-                          contentEditable={isEditable}
+                          contentEditable={canEdit}
                           suppressContentEditableWarning
                         >
                           {exp.title}
                         </p>
                         <p
                           className="av-job-company"
-                          contentEditable={isEditable}
+                          contentEditable={canEdit}
                           suppressContentEditableWarning
                         >
                           {exp.company}
@@ -585,7 +612,7 @@ Profile: ${profileLink}
 
                       <p
                         className="av-job-dates"
-                        contentEditable={isEditable}
+                        contentEditable={canEdit}
                         suppressContentEditableWarning
                       >
                         {exp.dates}
@@ -596,7 +623,7 @@ Profile: ${profileLink}
                       {exp.bullets.map((item, bIndex) => (
                         <li
                           key={bIndex}
-                          contentEditable={isEditable}
+                          contentEditable={canEdit}
                           suppressContentEditableWarning
                         >
                           {item}
@@ -604,7 +631,7 @@ Profile: ${profileLink}
                       ))}
                     </ul>
 
-                    {isEditable && (
+                    {canEdit && (
                       <button
                         type="button"
                         className="av-add-bullet-btn"
@@ -616,7 +643,7 @@ Profile: ${profileLink}
                   </div>
                 ))}
 
-                {isEditable && (
+                {canEdit && (
                   <button
                     type="button"
                     className="av-add-exp-btn"
@@ -631,7 +658,7 @@ Profile: ${profileLink}
               <section className="av-section av-section-last">
                 <h2
                   className="av-section-title"
-                  contentEditable={isEditable}
+                  contentEditable={canEdit}
                   suppressContentEditableWarning
                 >
                   KEY HIGHLIGHTS
@@ -641,7 +668,7 @@ Profile: ${profileLink}
                   {activeData.highlights.map((item, idx) => (
                     <li
                       key={idx}
-                      contentEditable={isEditable}
+                      contentEditable={canEdit}
                       suppressContentEditableWarning
                     >
                       {item}
@@ -649,7 +676,7 @@ Profile: ${profileLink}
                   ))}
                 </ul>
 
-                {isEditable && (
+                {canEdit && (
                   <button
                     type="button"
                     className="av-add-highlight-btn"
@@ -667,16 +694,16 @@ Profile: ${profileLink}
               <section className="av-side-section">
                 <h3 className="av-side-heading">CONTACT</h3>
                 <ul className="av-side-list">
-                  <li contentEditable={isEditable} suppressContentEditableWarning>
+                  <li contentEditable={canEdit} suppressContentEditableWarning>
                     ✉️ alex.morgan@mail.com
                   </li>
-                  <li contentEditable={isEditable} suppressContentEditableWarning>
+                  <li contentEditable={canEdit} suppressContentEditableWarning>
                     📞 +1 (555) 214-8790
                   </li>
-                  <li contentEditable={isEditable} suppressContentEditableWarning>
+                  <li contentEditable={canEdit} suppressContentEditableWarning>
                     📍 New York, USA
                   </li>
-                  <li contentEditable={isEditable} suppressContentEditableWarning>
+                  <li contentEditable={canEdit} suppressContentEditableWarning>
                     🌐 linkedin.com/in/alexmorgan
                   </li>
                 </ul>
@@ -689,7 +716,7 @@ Profile: ${profileLink}
                   <img src={qrImage} alt="QR" className="av-side-qr-img" />
                   <p
                     className="av-side-qr-text"
-                    contentEditable={isEditable}
+                    contentEditable={canEdit}
                     suppressContentEditableWarning
                   >
                     QR code links to updated digital profile, licenses, and
@@ -702,19 +729,19 @@ Profile: ${profileLink}
               <section className="av-side-section">
                 <h3 className="av-side-heading">CORE SKILLS</h3>
                 <ul className="av-side-list">
-                  <li contentEditable={isEditable} suppressContentEditableWarning>
+                  <li contentEditable={canEdit} suppressContentEditableWarning>
                     Safety &amp; Compliance
                   </li>
-                  <li contentEditable={isEditable} suppressContentEditableWarning>
+                  <li contentEditable={canEdit} suppressContentEditableWarning>
                     Crew Resource Management
                   </li>
-                  <li contentEditable={isEditable} suppressContentEditableWarning>
+                  <li contentEditable={canEdit} suppressContentEditableWarning>
                     Emergency Procedures
                   </li>
-                  <li contentEditable={isEditable} suppressContentEditableWarning>
+                  <li contentEditable={canEdit} suppressContentEditableWarning>
                     Communication &amp; Briefing
                   </li>
-                  <li contentEditable={isEditable} suppressContentEditableWarning>
+                  <li contentEditable={canEdit} suppressContentEditableWarning>
                     Passenger &amp; Client Service
                   </li>
                 </ul>
@@ -724,13 +751,13 @@ Profile: ${profileLink}
               <section className="av-side-section">
                 <h3 className="av-side-heading">LICENSES &amp; CERTS</h3>
                 <ul className="av-side-list">
-                  <li contentEditable={isEditable} suppressContentEditableWarning>
+                  <li contentEditable={canEdit} suppressContentEditableWarning>
                     Valid Passport &amp; Travel Documents
                   </li>
-                  <li contentEditable={isEditable} suppressContentEditableWarning>
+                  <li contentEditable={canEdit} suppressContentEditableWarning>
                     Medical Certificate – Class 1 / 2
                   </li>
-                  <li contentEditable={isEditable} suppressContentEditableWarning>
+                  <li contentEditable={canEdit} suppressContentEditableWarning>
                     Recurrent Safety &amp; Emergency Training
                   </li>
                 </ul>
@@ -740,18 +767,26 @@ Profile: ${profileLink}
               <section className="av-side-section">
                 <h3 className="av-side-heading">LANGUAGES</h3>
                 <ul className="av-side-list">
-                  <li contentEditable={isEditable} suppressContentEditableWarning>
+                  <li contentEditable={canEdit} suppressContentEditableWarning>
                     English — Native / Fluent
                   </li>
-                  <li contentEditable={isEditable} suppressContentEditableWarning>
+                  <li contentEditable={canEdit} suppressContentEditableWarning>
                     Spanish — Conversational
                   </li>
-                  <li contentEditable={isEditable} suppressContentEditableWarning>
+                  <li contentEditable={canEdit} suppressContentEditableWarning>
                     French — Basic
                   </li>
                 </ul>
               </section>
             </aside>
+             <PaymentGate
+                        open={showPaymentModal}
+                        onClose={() => setShowPaymentModal(false)}
+                        onSuccess={(user) => {
+                          setUser(user);              // 🔥 update AuthContext
+                          handlePaymentSuccess(user); // 🔓 unlock template
+                        }}
+                      />
           </div>
         </div>
       </div>

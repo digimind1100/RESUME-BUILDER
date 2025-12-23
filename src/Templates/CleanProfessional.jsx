@@ -4,12 +4,27 @@ import { useNavigate } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 
+import usePaymentGuard from "../hooks/usePaymentGuard";
+import PaymentGate from "../components/payment/PaymentGate";
+import { useAuth } from "../context/AuthContext";
+
 const CleanProfessional = () => {
   const resumeRef = useRef(null);
   const navigate = useNavigate();
 
+      const { user, setUser } = useAuth();
+  
+  const {
+    isPaid,
+    showPaymentModal,
+    setShowPaymentModal,
+    requirePayment,
+    handlePaymentSuccess,
+  } = usePaymentGuard("CleanProfessional"); // 🔴 TEMPLATE NAME
+  
+  const canEdit = isPaid;
   /* ---------------- EDIT MODE TOGGLE ---------------- */
-  const [isEditable, setIsEditable] = useState(false);
+  
 
   /* ---------------- PROFILE IMAGE UPLOAD ---------------- */
   const [profileImage, setProfileImage] = useState("/images/cleanprofileimage.png");
@@ -63,12 +78,14 @@ const CleanProfessional = () => {
         <button onClick={handleReset}>Reset</button>
 
         {/* --- EDIT TOGGLE BUTTON --- */}
-        <button
-          onClick={() => setIsEditable(!isEditable)}
-          className={isEditable ? "edit-toggle on" : "edit-toggle off"}
-        >
-          {isEditable ? "Editing: ON" : "Editing: OFF"}
-        </button>
+         <button
+  className={canEdit ? "edit-btn on" : "edit-btn off"}
+  onClick={() => {
+    if (requirePayment()) return;
+  }}
+>
+  {canEdit ? "Editing: ON" : "Editing: OFF"}
+</button>
       </div>
 
       {/* ========= A4 RESUME AREA ========= */}
@@ -93,11 +110,11 @@ const CleanProfessional = () => {
 
             {/* Name + Title Right */}
             <div className="cp-header-text">
-              <h1 className="cp-name" contentEditable={isEditable} suppressContentEditableWarning>
+              <h1 className="cp-name" contentEditable={canEdit} suppressContentEditableWarning>
                 ANTHONY ROBERTS
               </h1>
 
-              <p className="cp-title" contentEditable={isEditable} suppressContentEditableWarning>
+              <p className="cp-title" contentEditable={canEdit} suppressContentEditableWarning>
                 Senior Project Manager
               </p>
             </div>
@@ -113,9 +130,9 @@ const CleanProfessional = () => {
             {/* LEFT SIDEBAR */}
             <aside className="cp-sidebar">
               <section className="cp-sidebar-section">
-                <h3 className="cp-sidebar-heading" contentEditable={isEditable}>PROFILE SUMMARY</h3>
+                <h3 className="cp-sidebar-heading" contentEditable={canEdit}>PROFILE SUMMARY</h3>
                 <div className="cp-heading-underline" />
-                <p className="cp-sidebar-text" contentEditable={isEditable}>
+                <p className="cp-sidebar-text" contentEditable={canEdit}>
                   Dynamic senior project manager with expertise in planning,
                   leading, and delivering complex initiatives on time and within
                   budget.
@@ -123,34 +140,34 @@ const CleanProfessional = () => {
               </section>
 
               <section className="cp-sidebar-section">
-                <h3 className="cp-sidebar-heading" contentEditable={isEditable}>EDUCATION</h3>
+                <h3 className="cp-sidebar-heading" contentEditable={canEdit}>EDUCATION</h3>
                 <div className="cp-heading-underline" />
 
                 <div className="cp-edu-entry">
-                  <p className="cp-edu-degree" contentEditable={isEditable}>
+                  <p className="cp-edu-degree" contentEditable={canEdit}>
                     Master of Business Admin.
                   </p>
-                  <p className="cp-edu-year" contentEditable={isEditable}>2011</p>
+                  <p className="cp-edu-year" contentEditable={canEdit}>2011</p>
                 </div>
 
                 <div className="cp-edu-entry">
-                  <p className="cp-edu-degree" contentEditable={isEditable}>
+                  <p className="cp-edu-degree" contentEditable={canEdit}>
                     Bachelor of Science in Business Management
                   </p>
-                  <p className="cp-edu-year" contentEditable={isEditable}>2013</p>
+                  <p className="cp-edu-year" contentEditable={canEdit}>2013</p>
                 </div>
               </section>
 
               <section className="cp-sidebar-section">
-                <h3 className="cp-sidebar-heading" contentEditable={isEditable}>SKILLS</h3>
+                <h3 className="cp-sidebar-heading" contentEditable={canEdit}>SKILLS</h3>
                 <div className="cp-heading-underline" />
 
                 <ul className="cp-skill-list">
-                  <li contentEditable={isEditable}>Project Planning & Execution</li>
-                  <li contentEditable={isEditable}>Risk Management</li>
-                  <li contentEditable={isEditable}>Budget Management</li>
-                  <li contentEditable={isEditable}>Team Leadership</li>
-                  <li contentEditable={isEditable}>Agile & Scrum</li>
+                  <li contentEditable={canEdit}>Project Planning & Execution</li>
+                  <li contentEditable={canEdit}>Risk Management</li>
+                  <li contentEditable={canEdit}>Budget Management</li>
+                  <li contentEditable={canEdit}>Team Leadership</li>
+                  <li contentEditable={canEdit}>Agile & Scrum</li>
                 </ul>
               </section>
             </aside>
@@ -160,28 +177,28 @@ const CleanProfessional = () => {
               <section className="cp-contact">
                 <div className="cp-contact-row">
                   <span className="cp-contact-icon">📞</span>
-                  <span className="cp-contact-text" contentEditable={isEditable}>
+                  <span className="cp-contact-text" contentEditable={canEdit}>
                     +1 254-878-9700
                   </span>
                 </div>
 
                 <div className="cp-contact-row">
                   <span className="cp-contact-icon">✉️</span>
-                  <span className="cp-contact-text" contentEditable={isEditable}>
+                  <span className="cp-contact-text" contentEditable={canEdit}>
                     anthony.roberta@email.com
                   </span>
                 </div>
 
                 <div className="cp-contact-row">
                   <span className="cp-contact-icon">📍</span>
-                  <span className="cp-contact-text" contentEditable={isEditable}>
+                  <span className="cp-contact-text" contentEditable={canEdit}>
                     New York, NY
                   </span>
                 </div>
 
                 <div className="cp-contact-row">
                   <span className="cp-contact-icon">in</span>
-                  <span className="cp-contact-text" contentEditable={isEditable}>
+                  <span className="cp-contact-text" contentEditable={canEdit}>
                     linkedin.com/in/anthonyroberts
                   </span>
                 </div>
@@ -189,28 +206,28 @@ const CleanProfessional = () => {
 
               {/* EXPERIENCE */}
               <section className="cp-section">
-                <h2 className="cp-section-title" contentEditable={isEditable}>EXPERIENCE</h2>
+                <h2 className="cp-section-title" contentEditable={canEdit}>EXPERIENCE</h2>
                 <div className="cp-section-underline" />
 
                 <div className="cp-job">
                   <div className="cp-job-header">
                     <div className="cp-job-title-wrapper">
-                      <h3 className="cp-job-title" contentEditable={isEditable}>
+                      <h3 className="cp-job-title" contentEditable={canEdit}>
                         Senior Project Manager
                       </h3>
-                      <p className="cp-job-company" contentEditable={isEditable}>Company Name</p>
+                      <p className="cp-job-company" contentEditable={canEdit}>Company Name</p>
                     </div>
-                    <p className="cp-job-dates" contentEditable={isEditable}>2018 – Present</p>
+                    <p className="cp-job-dates" contentEditable={canEdit}>2018 – Present</p>
                   </div>
 
                   <ul className="cp-job-list">
-                    <li contentEditable={isEditable}>
+                    <li contentEditable={canEdit}>
                       Lead cross-functional teams to plan, execute, and deliver strategic projects.
                     </li>
-                    <li contentEditable={isEditable}>
+                    <li contentEditable={canEdit}>
                       Ensure project scope, timelines, and budgets are met.
                     </li>
-                    <li contentEditable={isEditable}>
+                    <li contentEditable={canEdit}>
                       Drive improvements to optimize performance.
                     </li>
                   </ul>
@@ -219,17 +236,17 @@ const CleanProfessional = () => {
                 <div className="cp-job">
                   <div className="cp-job-header">
                     <div className="cp-job-title-wrapper">
-                      <h3 className="cp-job-title" contentEditable={isEditable}>Project Manager</h3>
-                      <p className="cp-job-company" contentEditable={isEditable}>Company Name</p>
+                      <h3 className="cp-job-title" contentEditable={canEdit}>Project Manager</h3>
+                      <p className="cp-job-company" contentEditable={canEdit}>Company Name</p>
                     </div>
-                    <p className="cp-job-dates" contentEditable={isEditable}>2014 – 2018</p>
+                    <p className="cp-job-dates" contentEditable={canEdit}>2014 – 2018</p>
                   </div>
 
                   <ul className="cp-job-list">
-                    <li contentEditable={isEditable}>
+                    <li contentEditable={canEdit}>
                       Managed multiple projects from concept through completion.
                     </li>
-                    <li contentEditable={isEditable}>
+                    <li contentEditable={canEdit}>
                       Coordinated with vendors and stakeholders.
                     </li>
                   </ul>
@@ -238,19 +255,19 @@ const CleanProfessional = () => {
                 <div className="cp-job">
                   <div className="cp-job-header">
                     <div className="cp-job-title-wrapper">
-                      <h3 className="cp-job-title" contentEditable={isEditable}>
+                      <h3 className="cp-job-title" contentEditable={canEdit}>
                         Assistant Project Manager
                       </h3>
-                      <p className="cp-job-company" contentEditable={isEditable}>Company Name</p>
+                      <p className="cp-job-company" contentEditable={canEdit}>Company Name</p>
                     </div>
-                    <p className="cp-job-dates" contentEditable={isEditable}>2011 – 2014</p>
+                    <p className="cp-job-dates" contentEditable={canEdit}>2011 – 2014</p>
                   </div>
 
                   <ul className="cp-job-list">
-                    <li contentEditable={isEditable}>
+                    <li contentEditable={canEdit}>
                       Assisted senior project managers with scheduling and documentation.
                     </li>
-                    <li contentEditable={isEditable}>
+                    <li contentEditable={canEdit}>
                       Maintained timelines and deliverables.
                     </li>
                   </ul>
@@ -259,25 +276,32 @@ const CleanProfessional = () => {
 
               {/* EDUCATION */}
               <section className="cp-section">
-                <h2 className="cp-section-title" contentEditable={isEditable}>EDUCATION</h2>
+                <h2 className="cp-section-title" contentEditable={canEdit}>EDUCATION</h2>
                 <div className="cp-section-underline" />
 
                 <div className="cp-edu-main-entry">
-                  <p className="cp-edu-main-degree" contentEditable={isEditable}>
+                  <p className="cp-edu-main-degree" contentEditable={canEdit}>
                     Master of Business Administration
                   </p>
-                  <p className="cp-edu-main-year" contentEditable={isEditable}>2011</p>
+                  <p className="cp-edu-main-year" contentEditable={canEdit}>2011</p>
                 </div>
 
                 <div className="cp-edu-main-entry">
-                  <p className="cp-edu-main-degree" contentEditable={isEditable}>
+                  <p className="cp-edu-main-degree" contentEditable={canEdit}>
                     Bachelor of Science in Business Management
                   </p>
-                  <p className="cp-edu-main-year" contentEditable={isEditable}>2008</p>
+                  <p className="cp-edu-main-year" contentEditable={canEdit}>2008</p>
                 </div>
               </section>
             </main>
-
+            <PaymentGate
+            open={showPaymentModal}
+            onClose={() => setShowPaymentModal(false)}
+            onSuccess={(user) => {
+              setUser(user);              // 🔥 update AuthContext
+              handlePaymentSuccess(user); // 🔓 unlock template
+            }}
+          />
           </div>
 
         </div>

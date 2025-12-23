@@ -5,12 +5,28 @@ import { useNavigate } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 
+import usePaymentGuard from "../hooks/usePaymentGuard";
+import PaymentGate from "../components/payment/PaymentGate";
+import { useAuth } from "../context/AuthContext";
+
+
 const ElegantClassic = () => {
     const resumeRef = useRef(null);
     const navigate = useNavigate();
 
-    /* ========== EDIT MODE ========== */
-    const [isEditable, setIsEditable] = useState(false);
+    const { user, setUser } = useAuth();
+
+const {
+  isPaid,
+  showPaymentModal,
+  setShowPaymentModal,
+  requirePayment,
+  handlePaymentSuccess,
+} = usePaymentGuard("ElegantClassic"); // 🔴 TEMPLATE NAME
+
+const canEdit = isPaid;
+
+
 
     const handleDownloadPDF = async () => {
         const element = resumeRef.current;
@@ -46,12 +62,15 @@ const ElegantClassic = () => {
                 <button onClick={handleReset}>Reset</button>
 
                 {/* EDIT BUTTON */}
-                <button
-                    onClick={() => setIsEditable(!isEditable)}
-                    className={isEditable ? "edit-toggle on" : "edit-toggle off"}
-                >
-                    {isEditable ? "Editing: ON" : "Editing: OFF"}
-                </button>
+              <button
+  className={canEdit ? "edit-btn on" : "edit-btn off"}
+  onClick={() => {
+    if (requirePayment()) return;
+  }}
+>
+  {canEdit ? "Editing: ON" : "Editing: OFF"}
+</button>
+
             </div>
 
             {/* A4 Resume */}
@@ -62,13 +81,13 @@ const ElegantClassic = () => {
                     <header className="ec-header">
                         <h1
                             className="ec-name"
-                            contentEditable={isEditable}
+                            contentEditable={canEdit}
                         >
                             EMERSON REED
                         </h1>
                         <p
                             className="ec-title"
-                            contentEditable={isEditable}
+                            contentEditable={canEdit}
                         >
                             PROFESSIONAL TITLE
                         </p>
@@ -84,7 +103,7 @@ const ElegantClassic = () => {
                             <section className="ec-sidebar-section">
                                 <h3
                                     className="ec-sidebar-heading"
-                                    contentEditable={isEditable}
+                                    contentEditable={canEdit}
                                 >
                                     CONTACT
                                 </h3>
@@ -95,7 +114,7 @@ const ElegantClassic = () => {
                                         <span className="ec-icon-circle">✉</span>
                                         <span
                                             className="ec-contact-text"
-                                            contentEditable={isEditable}
+                                            contentEditable={canEdit}
                                         >
                                             youremail@mail.com
                                         </span>
@@ -105,7 +124,7 @@ const ElegantClassic = () => {
                                         <span className="ec-icon-circle">✆</span>
                                         <span
                                             className="ec-contact-text"
-                                            contentEditable={isEditable}
+                                            contentEditable={canEdit}
                                         >
                                             555.555.5555
                                         </span>
@@ -115,7 +134,7 @@ const ElegantClassic = () => {
                                         <span className="ec-icon-circle">📍</span>
                                         <span
                                             className="ec-contact-text"
-                                            contentEditable={isEditable}
+                                            contentEditable={canEdit}
                                         >
                                             Your City, State
                                         </span>
@@ -125,7 +144,7 @@ const ElegantClassic = () => {
                                         <span className="ec-icon-circle">in</span>
                                         <span
                                             className="ec-contact-text"
-                                            contentEditable={isEditable}
+                                            contentEditable={canEdit}
                                         >
                                             linkedin.com/in/yourusername
                                         </span>
@@ -138,20 +157,20 @@ const ElegantClassic = () => {
                             <section className="ec-sidebar-section">
                                 <h3
                                     className="ec-sidebar-heading"
-                                    contentEditable={isEditable}
+                                    contentEditable={canEdit}
                                 >
                                     SKILLS
                                 </h3>
 
                                 <ul className="ec-skill-list">
-                                    <li contentEditable={isEditable}>Process Improvement</li>
-                                    <li contentEditable={isEditable}>Contracts & Negotiations</li>
-                                    <li contentEditable={isEditable}>Project Planning</li>
-                                    <li contentEditable={isEditable}>Reporting & Analytics</li>
-                                    <li contentEditable={isEditable}>Risk Assessment</li>
-                                    <li contentEditable={isEditable}>Resource Management</li>
-                                    <li contentEditable={isEditable}>Adaptability</li>
-                                    <li contentEditable={isEditable}>Conflict Resolution</li>
+                                    <li contentEditable={canEdit}>Process Improvement</li>
+                                    <li contentEditable={canEdit}>Contracts & Negotiations</li>
+                                    <li contentEditable={canEdit}>Project Planning</li>
+                                    <li contentEditable={canEdit}>Reporting & Analytics</li>
+                                    <li contentEditable={canEdit}>Risk Assessment</li>
+                                    <li contentEditable={canEdit}>Resource Management</li>
+                                    <li contentEditable={canEdit}>Adaptability</li>
+                                    <li contentEditable={canEdit}>Conflict Resolution</li>
                                 </ul>
                             </section>
 
@@ -159,7 +178,7 @@ const ElegantClassic = () => {
                             <section className="ec-sidebar-section">
                                 <h3
                                     className="ec-sidebar-heading"
-                                    contentEditable={isEditable}
+                                    contentEditable={canEdit}
                                 >
                                     EDUCATION
                                 </h3>
@@ -167,13 +186,13 @@ const ElegantClassic = () => {
                                 <div className="ec-edu-block">
                                     <p
                                         className="ec-edu-degree"
-                                        contentEditable={isEditable}
+                                        contentEditable={canEdit}
                                     >
                                         NAME OF DEGREE
                                     </p>
                                     <p
                                         className="ec-edu-meta"
-                                        contentEditable={isEditable}
+                                        contentEditable={canEdit}
                                     >
                                         Concentration (if any)
                                         <br />
@@ -184,10 +203,10 @@ const ElegantClassic = () => {
                                 </div>
 
                                 <div className="ec-edu-block">
-                                    <p className="ec-edu-degree" contentEditable={isEditable}>
+                                    <p className="ec-edu-degree" contentEditable={canEdit}>
                                         CERTIFICATION HERE
                                     </p>
-                                    <p className="ec-edu-meta" contentEditable={isEditable}>
+                                    <p className="ec-edu-meta" contentEditable={canEdit}>
                                         Certifying Organization
                                         <br />
                                         Completion Year
@@ -195,10 +214,10 @@ const ElegantClassic = () => {
                                 </div>
 
                                 <div className="ec-edu-block">
-                                    <p className="ec-edu-degree" contentEditable={isEditable}>
+                                    <p className="ec-edu-degree" contentEditable={canEdit}>
                                         CERTIFICATION HERE
                                     </p>
-                                    <p className="ec-edu-meta" contentEditable={isEditable}>
+                                    <p className="ec-edu-meta" contentEditable={canEdit}>
                                         Certifying Organization
                                         <br />
                                         Completion Year
@@ -215,14 +234,14 @@ const ElegantClassic = () => {
                             <section className="ec-section">
                                 <h2
                                     className="ec-section-title"
-                                    contentEditable={isEditable}
+                                    contentEditable={canEdit}
                                 >
                                     SUMMARY
                                 </h2>
                                 <div className="ec-section-rule" />
                                 <p
                                     className="ec-section-text"
-                                    contentEditable={isEditable}
+                                    contentEditable={canEdit}
                                 >
                                     Seasoned professional with a strong background in operations...
                                 </p>
@@ -230,12 +249,12 @@ const ElegantClassic = () => {
 
                             {/* CORE COMPETENCIES */}
                             <section className="ec-section">
-                              <h2 className="ec-section-title" contentEditable={isEditable}>
+                              <h2 className="ec-section-title" contentEditable={canEdit}>
                                 CORE COMPETENCIES
                               </h2>
                               <div className="ec-section-rule" />
 
-                              <p className="ec-section-text" contentEditable={isEditable}>
+                              <p className="ec-section-text" contentEditable={canEdit}>
                                 • Strategic Planning • Workflow Optimization • Coordination  
                                 <br />
                                 • Leadership Support • Documentation & Reporting  
@@ -248,7 +267,7 @@ const ElegantClassic = () => {
                             <section className="ec-section">
                                 <h2
                                     className="ec-section-title"
-                                    contentEditable={isEditable}
+                                    contentEditable={canEdit}
                                 >
                                     PROFESSIONAL EXPERIENCE
                                 </h2>
@@ -258,36 +277,36 @@ const ElegantClassic = () => {
                                 <div className="ec-job">
                                     <div className="ec-job-header">
                                         <div>
-                                            <p className="ec-job-title" contentEditable={isEditable}>
+                                            <p className="ec-job-title" contentEditable={canEdit}>
                                                 POSITION TITLE HERE
                                             </p>
-                                            <p className="ec-job-company" contentEditable={isEditable}>
+                                            <p className="ec-job-company" contentEditable={canEdit}>
                                                 Company, Location
                                             </p>
                                         </div>
 
-                                        <p className="ec-job-dates" contentEditable={isEditable}>
+                                        <p className="ec-job-dates" contentEditable={canEdit}>
                                             Date – Date
                                         </p>
                                     </div>
 
                                     <ul className="ec-job-list">
-                                        <li contentEditable={isEditable}>
+                                        <li contentEditable={canEdit}>
                                             Re-wrote internal process guides to reduce training time...
                                         </li>
-                                        <li contentEditable={isEditable}>
+                                        <li contentEditable={canEdit}>
                                             Developed reporting dashboards used by leadership...
                                         </li>
-                                        <li contentEditable={isEditable}>
+                                        <li contentEditable={canEdit}>
                                             Streamlined communication between departments...
                                         </li>
-                                        <li contentEditable={isEditable}>
+                                        <li contentEditable={canEdit}>
                                             Coordinated project timelines and delivered tasks...
                                         </li>
-                                        <li contentEditable={isEditable}>
+                                        <li contentEditable={canEdit}>
                                             Led quality assurance reviews...
                                         </li>
-                                        <li contentEditable={isEditable}>
+                                        <li contentEditable={canEdit}>
                                             Resolved client issues with root-cause analysis...
                                         </li>
                                     </ul>
@@ -297,30 +316,30 @@ const ElegantClassic = () => {
                                 <div className="ec-job">
                                     <div className="ec-job-header">
                                         <div>
-                                            <p className="ec-job-title" contentEditable={isEditable}>
+                                            <p className="ec-job-title" contentEditable={canEdit}>
                                                 Administrative Assistant
                                             </p>
-                                            <p className="ec-job-company" contentEditable={isEditable}>
+                                            <p className="ec-job-company" contentEditable={canEdit}>
                                                 Prime Solutions • 2014 – 2016
                                             </p>
                                         </div>
 
-                                        <p className="ec-job-dates" contentEditable={isEditable}>
+                                        <p className="ec-job-dates" contentEditable={canEdit}>
                                             2014 – 2016
                                         </p>
                                     </div>
 
                                     <ul className="ec-job-list">
-                                        <li contentEditable={isEditable}>
+                                        <li contentEditable={canEdit}>
                                             Supported office operations including record keeping...
                                         </li>
-                                        <li contentEditable={isEditable}>
+                                        <li contentEditable={canEdit}>
                                             Organized company events, meetings, travel...
                                         </li>
-                                        <li contentEditable={isEditable}>
+                                        <li contentEditable={canEdit}>
                                             Maintained confidential documents...
                                         </li>
-                                        <li contentEditable={isEditable}>
+                                        <li contentEditable={canEdit}>
                                             Provided high-quality customer service...
                                         </li>
                                     </ul>
@@ -331,7 +350,7 @@ const ElegantClassic = () => {
                             <section className="ec-section ec-section-last">
                                 <h2
                                     className="ec-section-title"
-                                    contentEditable={isEditable}
+                                    contentEditable={canEdit}
                                 >
                                     EDUCATION
                                 </h2>
@@ -340,23 +359,23 @@ const ElegantClassic = () => {
                                 <div className="ec-main-edu">
                                     <p
                                         className="ec-main-edu-degree"
-                                        contentEditable={isEditable}
+                                        contentEditable={canEdit}
                                     >
                                         DIPLOMA – (2003–2005)
                                     </p>
                                     <p
                                         className="ec-main-edu-meta"
-                                        contentEditable={isEditable}
+                                        contentEditable={canEdit}
                                     >
                                         School Name – City, Country
                                     </p>
                                 </div>
 
                                 <div className="ec-main-edu">
-                                    <p className="ec-main-edu-degree" contentEditable={isEditable}>
+                                    <p className="ec-main-edu-degree" contentEditable={canEdit}>
                                         Certificate — Project Coordination
                                     </p>
-                                    <p className="ec-main-edu-meta" contentEditable={isEditable}>
+                                    <p className="ec-main-edu-meta" contentEditable={canEdit}>
                                         Online Certification — 2020
                                     </p>
                                 </div>
@@ -364,13 +383,13 @@ const ElegantClassic = () => {
                                 <div className="ec-main-edu">
                                     <p
                                         className="ec-main-edu-degree"
-                                        contentEditable={isEditable}
+                                        contentEditable={canEdit}
                                     >
                                         DIPLOMA – (2000–2003)
                                     </p>
                                     <p
                                         className="ec-main-edu-meta"
-                                        contentEditable={isEditable}
+                                        contentEditable={canEdit}
                                     >
                                         School Name – City, Country
                                     </p>
@@ -378,6 +397,14 @@ const ElegantClassic = () => {
                             </section>
 
                         </main>
+<PaymentGate
+  open={showPaymentModal}
+  onClose={() => setShowPaymentModal(false)}
+  onSuccess={(user) => {
+    setUser(user);              // 🔥 update AuthContext
+    handlePaymentSuccess(user); // 🔓 unlock template
+  }}
+/>
 
                     </div>
                 </div>

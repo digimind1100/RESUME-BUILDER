@@ -192,48 +192,56 @@ Subject: ${qrForm.subject}
             placeholder="Full Name"
             value={qrForm.name}
             onChange={handleFormChange}
+             disabled={!canEdit}
           />
           <input
             name="email"
             placeholder="Email"
             value={qrForm.email}
             onChange={handleFormChange}
+             disabled={!canEdit}
           />
           <input
             name="phone"
             placeholder="Phone"
             value={qrForm.phone}
             onChange={handleFormChange}
+             disabled={!canEdit}
           />
           <input
             name="address"
             placeholder="Address"
             value={qrForm.address}
             onChange={handleFormChange}
+             disabled={!canEdit}
           />
           <input
             name="linkedin"
             placeholder="LinkedIn Profile Link"
             value={qrForm.linkedin}
             onChange={handleFormChange}
+             disabled={!canEdit}
           />
           <input
             name="website"
             placeholder="Personal Website"
             value={qrForm.website}
             onChange={handleFormChange}
+             disabled={!canEdit}
           />
           <input
             name="license"
             placeholder="Teaching License / ID"
             value={qrForm.license}
             onChange={handleFormChange}
+             disabled={!canEdit}
           />
           <input
             name="subject"
             placeholder="Main Subject Area"
             value={qrForm.subject}
             onChange={handleFormChange}
+             disabled={!canEdit}
           />
         </div>
         <button className="te-qr-btn" onClick={handleGenerateQR}>

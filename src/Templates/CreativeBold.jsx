@@ -4,13 +4,29 @@ import { useNavigate } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 
+import usePaymentGuard from "../hooks/usePaymentGuard";
+import PaymentGate from "../components/payment/PaymentGate";
+import { useAuth } from "../context/AuthContext";
+
 const CreativeBold = () => {
   const resumeRef = useRef(null);
   const navigate = useNavigate();
 
-  /* ===== EDIT MODE TOGGLE ===== */
-  const [isEditable, setIsEditable] = useState(false);
+    const { user, setUser } = useAuth();
 
+const {
+  isPaid,
+  showPaymentModal,
+  setShowPaymentModal,
+  requirePayment,
+  handlePaymentSuccess,
+} = usePaymentGuard("CreativeBold"); // 🔴 TEMPLATE NAME
+
+const canEdit = isPaid;
+
+
+  /* ===== EDIT MODE TOGGLE ===== */
+  
   // ----- Profile Image Upload -----
   const [profileImage, setProfileImage] = useState("/images/creativeboldimage.png");
   const fileInputRef = useRef(null);
@@ -62,12 +78,14 @@ const CreativeBold = () => {
         <button onClick={handleReset}>Reset</button>
 
         {/* EDIT MODE BUTTON */}
-        <button
-          onClick={() => setIsEditable(!isEditable)}
-          className={isEditable ? "edit-toggle on" : "edit-toggle off"}
-        >
-          {isEditable ? "Editing: ON" : "Editing: OFF"}
-        </button>
+                      <button
+  className={canEdit ? "edit-btn on" : "edit-btn off"}
+  onClick={() => {
+    if (requirePayment()) return;
+  }}
+>
+  {canEdit ? "Editing: ON" : "Editing: OFF"}
+</button>
       </div>
 
       {/* A4 Resume Area */}
@@ -93,7 +111,7 @@ const CreativeBold = () => {
             <div className="cb-left-role">
               <h2
                 className="cb-left-role-text"
-                contentEditable={isEditable}
+                contentEditable={canEdit}
                 suppressContentEditableWarning
               >
                 MARKETING SPECIALIST
@@ -102,26 +120,26 @@ const CreativeBold = () => {
 
             {/* Skills */}
             <section className="cb-left-section">
-              <h3 className="cb-left-heading" contentEditable={isEditable} suppressContentEditableWarning>
+              <h3 className="cb-left-heading" contentEditable={canEdit} suppressContentEditableWarning>
                 SKILLS
               </h3>
               <ul className="cb-left-list">
-                <li contentEditable={isEditable} suppressContentEditableWarning>SEO and SEM</li>
-                <li contentEditable={isEditable} suppressContentEditableWarning>Content Marketing</li>
-                <li contentEditable={isEditable} suppressContentEditableWarning>Social Media Management</li>
-                <li contentEditable={isEditable} suppressContentEditableWarning>Analytics & Reporting</li>
+                <li contentEditable={canEdit} suppressContentEditableWarning>SEO and SEM</li>
+                <li contentEditable={canEdit} suppressContentEditableWarning>Content Marketing</li>
+                <li contentEditable={canEdit} suppressContentEditableWarning>Social Media Management</li>
+                <li contentEditable={canEdit} suppressContentEditableWarning>Analytics & Reporting</li>
               </ul>
             </section>
 
             {/* Contact */}
             <section className="cb-left-section">
-              <h3 className="cb-left-heading" contentEditable={isEditable} suppressContentEditableWarning>
+              <h3 className="cb-left-heading" contentEditable={canEdit} suppressContentEditableWarning>
                 CONTACT
               </h3>
               <div className="cb-left-contact">
-                <p contentEditable={isEditable} suppressContentEditableWarning>123-456-7860</p>
-                <p contentEditable={isEditable} suppressContentEditableWarning>amanda.smith@mail.com</p>
-                <p contentEditable={isEditable} suppressContentEditableWarning>Los Angeles, CA</p>
+                <p contentEditable={canEdit} suppressContentEditableWarning>123-456-7860</p>
+                <p contentEditable={canEdit} suppressContentEditableWarning>amanda.smith@mail.com</p>
+                <p contentEditable={canEdit} suppressContentEditableWarning>Los Angeles, CA</p>
               </div>
             </section>
           </aside>
@@ -133,7 +151,7 @@ const CreativeBold = () => {
             <header className="cb-header-text">
               <h1
                 className="cb-name"
-                contentEditable={isEditable}
+                contentEditable={canEdit}
                 suppressContentEditableWarning
               >
                 AMANDA SMITH
@@ -141,7 +159,7 @@ const CreativeBold = () => {
 
               <p
                 className="cb-title"
-                contentEditable={isEditable}
+                contentEditable={canEdit}
                 suppressContentEditableWarning
               >
                 Marketing Specialist
@@ -150,8 +168,8 @@ const CreativeBold = () => {
 
             {/* Profile Section */}
             <section className="cb-section">
-              <h2 className="cb-section-heading" contentEditable={isEditable}>PROFILE</h2>
-              <p className="cb-section-paragraph" contentEditable={isEditable}>
+              <h2 className="cb-section-heading" contentEditable={canEdit}>PROFILE</h2>
+              <p className="cb-section-paragraph" contentEditable={canEdit}>
                 Dynamic marketing specialist with 6+ years of experience in planning and executing
                 multi-channel marketing campaigns...
               </p>
@@ -159,76 +177,85 @@ const CreativeBold = () => {
 
             {/* Experience Section */}
             <section className="cb-section">
-              <h2 className="cb-section-heading" contentEditable={isEditable}>EXPERIENCE</h2>
+              <h2 className="cb-section-heading" contentEditable={canEdit}>EXPERIENCE</h2>
 
               {/* Job 1 */}
               <div className="cb-entry">
-                <p className="cb-entry-title" contentEditable={isEditable}>
+                <p className="cb-entry-title" contentEditable={canEdit}>
                   Marketing Specialist
                 </p>
-                <p className="cb-entry-subtitle" contentEditable={isEditable}>
+                <p className="cb-entry-subtitle" contentEditable={canEdit}>
                   XYZ Corporation | 2020 – Present
                 </p>
                 <ul className="cb-entry-list">
-                  <li contentEditable={isEditable}>Led digital campaigns increasing leads by 38%.</li>
-                  <li contentEditable={isEditable}>Managed $180K yearly ad spend.</li>
-                  <li contentEditable={isEditable}>Conducted market research & analysis.</li>
-                  <li contentEditable={isEditable}>Collaborated with creative teams.</li>
-                  <li contentEditable={isEditable}>Improved CTR by 27% via A/B testing.</li>
+                  <li contentEditable={canEdit}>Led digital campaigns increasing leads by 38%.</li>
+                  <li contentEditable={canEdit}>Managed $180K yearly ad spend.</li>
+                  <li contentEditable={canEdit}>Conducted market research & analysis.</li>
+                  <li contentEditable={canEdit}>Collaborated with creative teams.</li>
+                  <li contentEditable={canEdit}>Improved CTR by 27% via A/B testing.</li>
                 </ul>
               </div>
 
               {/* Job 2 */}
               <div className="cb-entry">
-                <p className="cb-entry-title" contentEditable={isEditable}>
+                <p className="cb-entry-title" contentEditable={canEdit}>
                   Marketing Coordinator
                 </p>
-                <p className="cb-entry-subtitle" contentEditable={isEditable}>
+                <p className="cb-entry-subtitle" contentEditable={canEdit}>
                   ABC Company | 2016 – 2020
                 </p>
                 <ul className="cb-entry-list">
-                  <li contentEditable={isEditable}>Boosted engagement by 45%.</li>
-                  <li contentEditable={isEditable}>Assisted with digital & print campaigns.</li>
-                  <li contentEditable={isEditable}>Analyzed performance & suggested improvements.</li>
-                  <li contentEditable={isEditable}>Supported brand initiatives.</li>
+                  <li contentEditable={canEdit}>Boosted engagement by 45%.</li>
+                  <li contentEditable={canEdit}>Assisted with digital & print campaigns.</li>
+                  <li contentEditable={canEdit}>Analyzed performance & suggested improvements.</li>
+                  <li contentEditable={canEdit}>Supported brand initiatives.</li>
                 </ul>
               </div>
             </section>
 
             {/* Certifications */}
             <section className="cb-section">
-              <h2 className="cb-section-heading" contentEditable={isEditable}>CERTIFICATIONS</h2>
+              <h2 className="cb-section-heading" contentEditable={canEdit}>CERTIFICATIONS</h2>
               <ul className="cb-entry-list">
-                <li contentEditable={isEditable}>Google Analytics Certification</li>
-                <li contentEditable={isEditable}>Facebook Blueprint Certified</li>
-                <li contentEditable={isEditable}>HubSpot Content Marketing Certification</li>
-                <li contentEditable={isEditable}>SEO Specialization – Coursera</li>
+                <li contentEditable={canEdit}>Google Analytics Certification</li>
+                <li contentEditable={canEdit}>Facebook Blueprint Certified</li>
+                <li contentEditable={canEdit}>HubSpot Content Marketing Certification</li>
+                <li contentEditable={canEdit}>SEO Specialization – Coursera</li>
               </ul>
             </section>
 
             {/* Tools */}
             <section className="cb-section">
-              <h2 className="cb-section-heading" contentEditable={isEditable}>TOOLS & TECHNOLOGIES</h2>
+              <h2 className="cb-section-heading" contentEditable={canEdit}>TOOLS & TECHNOLOGIES</h2>
               <ul className="cb-entry-list">
-                <li contentEditable={isEditable}>Google Analytics, Ads Manager</li>
-                <li contentEditable={isEditable}>Meta Business Suite, LinkedIn Ads</li>
-                <li contentEditable={isEditable}>SEMrush, Ahrefs, Moz</li>
-                <li contentEditable={isEditable}>HubSpot, Mailchimp</li>
-                <li contentEditable={isEditable}>Figma, Canva</li>
+                <li contentEditable={canEdit}>Google Analytics, Ads Manager</li>
+                <li contentEditable={canEdit}>Meta Business Suite, LinkedIn Ads</li>
+                <li contentEditable={canEdit}>SEMrush, Ahrefs, Moz</li>
+                <li contentEditable={canEdit}>HubSpot, Mailchimp</li>
+                <li contentEditable={canEdit}>Figma, Canva</li>
               </ul>
             </section>
 
             {/* Achievements */}
             <section className="cb-section">
-              <h2 className="cb-section-heading" contentEditable={isEditable}>ACHIEVEMENTS</h2>
+              <h2 className="cb-section-heading" contentEditable={canEdit}>ACHIEVEMENTS</h2>
               <ul className="cb-entry-list">
-                <li contentEditable={isEditable}>Increased lead quality by 40%.</li>
-                <li contentEditable={isEditable}>Reduced cost-per-lead by 22%.</li>
-                <li contentEditable={isEditable}>Managed a digital transformation project.</li>
+                <li contentEditable={canEdit}>Increased lead quality by 40%.</li>
+                <li contentEditable={canEdit}>Reduced cost-per-lead by 22%.</li>
+                <li contentEditable={canEdit}>Managed a digital transformation project.</li>
               </ul>
             </section>
 
           </main>
+
+          <PaymentGate
+            open={showPaymentModal}
+            onClose={() => setShowPaymentModal(false)}
+            onSuccess={(user) => {
+              setUser(user);              // 🔥 update AuthContext
+              handlePaymentSuccess(user); // 🔓 unlock template
+            }}
+          />
         </div>
       </div>
     </div>

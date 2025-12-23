@@ -5,12 +5,28 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import QRCode from "qrcode";
 
+import usePaymentGuard from "../hooks/usePaymentGuard";
+import PaymentGate from "../components/payment/PaymentGate";
+import { useAuth } from "../context/AuthContext";
+
+
 export default function EngineerPrime() {
   const resumeRef = useRef(null);
   const navigate = useNavigate();
 
-  // ⭐ EDITABLE SYSTEM
-  const [isEditable, setIsEditable] = useState(false);
+const { user, setUser } = useAuth();
+
+const {
+  isPaid,
+  showPaymentModal,
+  setShowPaymentModal,
+  requirePayment,
+  handlePaymentSuccess,
+} = usePaymentGuard("EngineerPrime"); // 🔴 TEMPLATE NAME
+
+const canEdit = isPaid;
+
+
 
   // PROFILE IMAGE
   const [profileImage, setProfileImage] = useState("/images/cleanprofileimage.png");
@@ -84,28 +100,31 @@ LinkedIn: ${linkedin}
         <button onClick={handleReset}>Reset</button>
 
         {/* ⭐ NEW EDIT BUTTON */}
-        <button
-          onClick={() => setIsEditable(!isEditable)}
-          className={isEditable ? "edit-toggle on" : "edit-toggle off"}
-        >
-          {isEditable ? "Editing: ON" : "Editing: OFF"}
-        </button>
+      <button
+  className={canEdit ? "edit-btn on" : "edit-btn off"}
+  onClick={() => {
+    if (requirePayment()) return;
+  }}
+>
+  {canEdit ? "Editing: ON" : "Editing: OFF"}
+</button>
+
       </div>
 
       {/* ==== MINI FORM FOR QR GENERATION ==== */}
       <div className="ep-mini-form">
-        <input placeholder="Emma Roberts" onChange={(e) => setFullName(e.target.value)} />
-        <input placeholder="emma@mail.com" onChange={(e) => setEmail(e.target.value)} />
-        <input placeholder="+1 555-123-4567" onChange={(e) => setTelephone(e.target.value)} />
-        <input placeholder="123 Main Street" onChange={(e) => setAddress(e.target.value)} />
+        <input placeholder="Emma Roberts" onChange={(e) => setFullName(e.target.value)} disabled={!canEdit} />
+        <input placeholder="emma@mail.com" onChange={(e) => setEmail(e.target.value)}disabled={!canEdit} />
+        <input placeholder="+1 555-123-4567" onChange={(e) => setTelephone(e.target.value)} disabled={!canEdit}/>
+        <input placeholder="123 Main Street" onChange={(e) => setAddress(e.target.value)}disabled={!canEdit} />
         <div className="ep-mini-row">
-          <input placeholder="Los Angeles" onChange={(e) => setCity(e.target.value)} />
-          <input placeholder="CA" onChange={(e) => setState(e.target.value)} />
-          <input placeholder="90001" onChange={(e) => setZip(e.target.value)} />
+          <input placeholder="Los Angeles" onChange={(e) => setCity(e.target.value)}disabled={!canEdit} />
+          <input placeholder="CA" onChange={(e) => setState(e.target.value)}disabled={!canEdit} />
+          <input placeholder="90001" onChange={(e) => setZip(e.target.value)}disabled={!canEdit} />
         </div>
-        <input placeholder="linkedin.com/in/username" onChange={(e) => setLinkedin(e.target.value)} />
+        <input placeholder="linkedin.com/in/username" onChange={(e) => setLinkedin(e.target.value)}disabled={!canEdit} />
 
-        <button className="ep-qr-btn" onClick={generateQRCode}>
+        <button className="ep-qr-btn" onClick={generateQRCode} >
           Create QR Code
         </button>
       </div>
@@ -136,27 +155,27 @@ LinkedIn: ${linkedin}
 
             {/* SIDEBAR SECTIONS */}
             <section className="ep-section">
-              <h3 className="ep-section-heading" contentEditable={isEditable}>
+              <h3 className="ep-section-heading" contentEditable={canEdit}>
                 CORE SKILLS
               </h3>
               <ul className="ep-list">
-                <li contentEditable={isEditable}>Structural Analysis</li>
-                <li contentEditable={isEditable}>Foundation Design</li>
-                <li contentEditable={isEditable}>AutoCAD / Civil 3D</li>
-                <li contentEditable={isEditable}>Seismic Load Calculations</li>
-                <li contentEditable={isEditable}>Project Coordination</li>
+                <li contentEditable={canEdit}>Structural Analysis</li>
+                <li contentEditable={canEdit}>Foundation Design</li>
+                <li contentEditable={canEdit}>AutoCAD / Civil 3D</li>
+                <li contentEditable={canEdit}>Seismic Load Calculations</li>
+                <li contentEditable={canEdit}>Project Coordination</li>
               </ul>
             </section>
 
             <section className="ep-section">
-              <h3 className="ep-section-heading" contentEditable={isEditable}>
+              <h3 className="ep-section-heading" contentEditable={canEdit}>
                 SOFTWARE
               </h3>
               <ul className="ep-list">
-                <li contentEditable={isEditable}>ETABS</li>
-                <li contentEditable={isEditable}>SAP2000</li>
-                <li contentEditable={isEditable}>STAAD Pro</li>
-                <li contentEditable={isEditable}>Revit</li>
+                <li contentEditable={canEdit}>ETABS</li>
+                <li contentEditable={canEdit}>SAP2000</li>
+                <li contentEditable={canEdit}>STAAD Pro</li>
+                <li contentEditable={canEdit}>Revit</li>
               </ul>
             </section>
 
@@ -172,18 +191,18 @@ LinkedIn: ${linkedin}
 
             {/* NAME & TITLE */}
             <section className="ep-header-block">
-              <h1 className="ep-name" contentEditable={isEditable}>
+              <h1 className="ep-name" contentEditable={canEdit}>
                 JONATHAN KELVIN
               </h1>
-              <p className="ep-title" contentEditable={isEditable}>
+              <p className="ep-title" contentEditable={canEdit}>
                 CIVIL ENGINEER
               </p>
             </section>
 
             {/* SUMMARY */}
             <section className="ep-section-block">
-              <h2 className="ep-section-title" contentEditable={isEditable}>SUMMARY</h2>
-              <p className="ep-text" contentEditable={isEditable}>
+              <h2 className="ep-section-title" contentEditable={canEdit}>SUMMARY</h2>
+              <p className="ep-text" contentEditable={canEdit}>
                 Civil engineer with 8+ years of experience specializing in structural design,
                 site planning, and infrastructure development.
               </p>
@@ -191,63 +210,63 @@ LinkedIn: ${linkedin}
 
             {/* EXPERIENCE */}
             <section className="ep-section-block">
-              <h2 className="ep-section-title" contentEditable={isEditable}>EXPERIENCE</h2>
+              <h2 className="ep-section-title" contentEditable={canEdit}>EXPERIENCE</h2>
 
               {/* Job 1 */}
               <div className="ep-job">
                 <div className="ep-job-header">
-                  <h3 contentEditable={isEditable}>Senior Civil Engineer</h3>
-                  <p contentEditable={isEditable}>2019 – Present</p>
+                  <h3 contentEditable={canEdit}>Senior Civil Engineer</h3>
+                  <p contentEditable={canEdit}>2019 – Present</p>
                 </div>
 
-                <p className="ep-job-location" contentEditable={isEditable}>
+                <p className="ep-job-location" contentEditable={canEdit}>
                   BlueStone Engineering, NY
                 </p>
 
                 <ul className="ep-job-list">
-                  <li contentEditable={isEditable}>Performed seismic load analysis...</li>
-                  <li contentEditable={isEditable}>Led a team of 6 engineers...</li>
-                  <li contentEditable={isEditable}>Optimized foundation systems...</li>
-                  <li contentEditable={isEditable}>Conducted site inspections...</li>
+                  <li contentEditable={canEdit}>Performed seismic load analysis...</li>
+                  <li contentEditable={canEdit}>Led a team of 6 engineers...</li>
+                  <li contentEditable={canEdit}>Optimized foundation systems...</li>
+                  <li contentEditable={canEdit}>Conducted site inspections...</li>
                 </ul>
               </div>
 
               {/* Job 2 */}
               <div className="ep-job">
                 <div className="ep-job-header">
-                  <h3 contentEditable={isEditable}>Structural Engineer</h3>
-                  <p contentEditable={isEditable}>2015 – 2019</p>
+                  <h3 contentEditable={canEdit}>Structural Engineer</h3>
+                  <p contentEditable={canEdit}>2015 – 2019</p>
                 </div>
 
-                <p className="ep-job-location" contentEditable={isEditable}>
+                <p className="ep-job-location" contentEditable={canEdit}>
                   Skyline Consultants, CA
                 </p>
 
                 <ul className="ep-job-list">
-                  <li contentEditable={isEditable}>Designed reinforced concrete...</li>
-                  <li contentEditable={isEditable}>Performed soil and geotechnical analysis...</li>
-                  <li contentEditable={isEditable}>Prepared detailed CAD drawings...</li>
+                  <li contentEditable={canEdit}>Designed reinforced concrete...</li>
+                  <li contentEditable={canEdit}>Performed soil and geotechnical analysis...</li>
+                  <li contentEditable={canEdit}>Prepared detailed CAD drawings...</li>
                 </ul>
               </div>
 
               {/* PROJECTS */}
               <section className="ep-section ep-last">
-                <h2 className="ep-section-title" contentEditable={isEditable}>MAJOR PROJECTS</h2>
+                <h2 className="ep-section-title" contentEditable={canEdit}>MAJOR PROJECTS</h2>
 
                 <div className="ep-edu-item">
-                  <p contentEditable={isEditable} className="ep-edu-degree">
+                  <p contentEditable={canEdit} className="ep-edu-degree">
                     Downtown Metro Bridge Expansion – Lead Engineer
                   </p>
-                  <p contentEditable={isEditable} className="ep-edu-meta">
+                  <p contentEditable={canEdit} className="ep-edu-meta">
                     Designed high-load steel components
                   </p>
                 </div>
 
                 <div className="ep-edu-item">
-                  <p contentEditable={isEditable} className="ep-edu-degree">
+                  <p contentEditable={canEdit} className="ep-edu-degree">
                     Coastal Flood Mitigation Project – Team Lead
                   </p>
-                  <p contentEditable={isEditable} className="ep-edu-meta">
+                  <p contentEditable={canEdit} className="ep-edu-meta">
                     Developed water-channel simulations
                   </p>
                 </div>
@@ -255,25 +274,25 @@ LinkedIn: ${linkedin}
 
               {/* EXTRA CONTENT */}
               <section className="ep-section">
-                <h2 className="ep-section-title" contentEditable={isEditable}>
+                <h2 className="ep-section-title" contentEditable={canEdit}>
                   PROJECT HIGHLIGHTS
                 </h2>
                 <ul className="ep-job-list">
-                  <li contentEditable={isEditable}>Structural design lead...</li>
-                  <li contentEditable={isEditable}>Improved BIM workflow...</li>
-                  <li contentEditable={isEditable}>Conducted soil tests...</li>
+                  <li contentEditable={canEdit}>Structural design lead...</li>
+                  <li contentEditable={canEdit}>Improved BIM workflow...</li>
+                  <li contentEditable={canEdit}>Conducted soil tests...</li>
                 </ul>
               </section>
 
               <section className="ep-section">
-                <h2 className="ep-section-title" contentEditable={isEditable}>
+                <h2 className="ep-section-title" contentEditable={canEdit}>
                   TECHNICAL SPECIALIZATION
                 </h2>
                 <ul className="ep-job-list">
-                  <li contentEditable={isEditable}>Finite Element Modeling</li>
-                  <li contentEditable={isEditable}>Geotechnical Engineering</li>
-                  <li contentEditable={isEditable}>Hydraulic Systems</li>
-                  <li contentEditable={isEditable}>Cost Estimation</li>
+                  <li contentEditable={canEdit}>Finite Element Modeling</li>
+                  <li contentEditable={canEdit}>Geotechnical Engineering</li>
+                  <li contentEditable={canEdit}>Hydraulic Systems</li>
+                  <li contentEditable={canEdit}>Cost Estimation</li>
                 </ul>
               </section>
 
@@ -281,30 +300,38 @@ LinkedIn: ${linkedin}
 
             {/* EDUCATION */}
             <section className="ep-section-block ep-last">
-              <h2 className="ep-section-title" contentEditable={isEditable}>
+              <h2 className="ep-section-title" contentEditable={canEdit}>
                 EDUCATION
               </h2>
 
               <div className="ep-edu-item">
-                <p className="ep-edu-degree" contentEditable={isEditable}>
+                <p className="ep-edu-degree" contentEditable={canEdit}>
                   M.S. Civil Engineering
                 </p>
-                <p className="ep-edu-meta" contentEditable={isEditable}>
+                <p className="ep-edu-meta" contentEditable={canEdit}>
                   University of California — 2013–2015
                 </p>
               </div>
 
               <div className="ep-edu-item">
-                <p className="ep-edu-degree" contentEditable={isEditable}>
+                <p className="ep-edu-degree" contentEditable={canEdit}>
                   B.S. Civil Engineering
                 </p>
-                <p className="ep-edu-meta" contentEditable={isEditable}>
+                <p className="ep-edu-meta" contentEditable={canEdit}>
                   University of Texas — 2009–2013
                 </p>
               </div>
             </section>
 
           </main>
+<PaymentGate
+  open={showPaymentModal}
+  onClose={() => setShowPaymentModal(false)}
+  onSuccess={(user) => {
+    setUser(user);              // 🔥 update AuthContext
+    handlePaymentSuccess(user); // 🔓 unlock template
+  }}
+/>
 
         </div>
       </div>

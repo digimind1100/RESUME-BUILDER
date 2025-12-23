@@ -4,13 +4,32 @@ import "./MinimalAccent.css";
 import { useNavigate } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+// for payments start
+import usePaymentGuard from "../hooks/usePaymentGuard";
+import PaymentGate from "../components/payment/PaymentGate";
+import { useAuth } from "../context/AuthContext";
+// end
 
 const MinimalAccent = () => {
   const resumeRef = useRef(null);
   const navigate = useNavigate();
 
+// for payment start
+const { user, setUser } = useAuth();
+
+const {
+  isPaid,
+  showPaymentModal,
+  setShowPaymentModal,
+  requirePayment,
+  handlePaymentSuccess,
+} = usePaymentGuard("MinimalAccent"); // 🔴 TEMPLATE NAME
+
+const canEdit = isPaid;
+
+// end
+
   // ⭐ EDIT FEATURE
-  const [isEditable, setIsEditable] = useState(false);
 
   // Profile Image Upload
   const [profileImage, setProfileImage] = useState(
@@ -66,12 +85,19 @@ const MinimalAccent = () => {
         <button onClick={handleReset}>Reset</button>
 
         {/* ⭐ EDIT BUTTON */}
-        <button
-          onClick={() => setIsEditable(!isEditable)}
-          className={isEditable ? "edit-toggle on" : "edit-toggle off"}
-        >
-          {isEditable ? "Editing: ON" : "Editing: OFF"}
-        </button>
+     {/* for payment start     */}
+
+     <button
+  className={canEdit ? "edit-btn on" : "edit-btn off"}
+  onClick={() => {
+    if (requirePayment()) return;
+  }}
+>
+  {canEdit ? "Editing: ON" : "Editing: OFF"}
+</button>
+
+       
+{/* end  */}
       </div>
 
       {/* A4 Resume Area */}
@@ -99,28 +125,28 @@ const MinimalAccent = () => {
 
             {/* Contact Card */}
             <section className="ma-card">
-              <p className="ma-card-line" contentEditable={isEditable}>
+              <p className="ma-card-line" contentEditable={canEdit}>
                 Street Address
               </p>
-              <p className="ma-card-line" contentEditable={isEditable}>
+              <p className="ma-card-line" contentEditable={canEdit}>
                 City, State ZIP Code
               </p>
-              <p className="ma-card-line" contentEditable={isEditable}>
+              <p className="ma-card-line" contentEditable={canEdit}>
                 (123) 456-7890
               </p>
-              <p className="ma-card-line" contentEditable={isEditable}>
+              <p className="ma-card-line" contentEditable={canEdit}>
                 email@address.com
               </p>
             </section>
 
             {/* Skills */}
             <section className="ma-sidebar-section">
-              <h3 className="ma-sidebar-heading" contentEditable={isEditable}>
+              <h3 className="ma-sidebar-heading" contentEditable={canEdit}>
                 SKILLS
               </h3>
 
               <div className="ma-skill">
-                <div className="ma-skill-label" contentEditable={isEditable}>
+                <div className="ma-skill-label" contentEditable={canEdit}>
                   Skill 1
                 </div>
                 <div className="ma-skill-bar">
@@ -129,7 +155,7 @@ const MinimalAccent = () => {
               </div>
 
               <div className="ma-skill">
-                <div className="ma-skill-label" contentEditable={isEditable}>
+                <div className="ma-skill-label" contentEditable={canEdit}>
                   Skill 2
                 </div>
                 <div className="ma-skill-bar">
@@ -138,7 +164,7 @@ const MinimalAccent = () => {
               </div>
 
               <div className="ma-skill">
-                <div className="ma-skill-label" contentEditable={isEditable}>
+                <div className="ma-skill-label" contentEditable={canEdit}>
                   Skill 3
                 </div>
                 <div className="ma-skill-bar">
@@ -147,7 +173,7 @@ const MinimalAccent = () => {
               </div>
 
               <div className="ma-skill">
-                <div className="ma-skill-label" contentEditable={isEditable}>
+                <div className="ma-skill-label" contentEditable={canEdit}>
                   Skill 4
                 </div>
                 <div className="ma-skill-bar">
@@ -158,30 +184,30 @@ const MinimalAccent = () => {
 
             {/* References */}
             <section className="ma-sidebar-section">
-              <h3 className="ma-sidebar-heading" contentEditable={isEditable}>
+              <h3 className="ma-sidebar-heading" contentEditable={canEdit}>
                 REFERENCES
               </h3>
 
               <div className="ma-ref-block">
-                <p className="ma-ref-name" contentEditable={isEditable}>
+                <p className="ma-ref-name" contentEditable={canEdit}>
                   James Smith
                 </p>
-                <p className="ma-ref-line" contentEditable={isEditable}>
+                <p className="ma-ref-line" contentEditable={canEdit}>
                   Job Title – Company Name
                 </p>
-                <p className="ma-ref-line" contentEditable={isEditable}>
+                <p className="ma-ref-line" contentEditable={canEdit}>
                   Phone / Email
                 </p>
               </div>
 
               <div className="ma-ref-block">
-                <p className="ma-ref-name" contentEditable={isEditable}>
+                <p className="ma-ref-name" contentEditable={canEdit}>
                   Sarah Johnson
                 </p>
-                <p className="ma-ref-line" contentEditable={isEditable}>
+                <p className="ma-ref-line" contentEditable={canEdit}>
                   Job Title – Company Name
                 </p>
-                <p className="ma-ref-line" contentEditable={isEditable}>
+                <p className="ma-ref-line" contentEditable={canEdit}>
                   Phone / Email
                 </p>
               </div>
@@ -192,10 +218,10 @@ const MinimalAccent = () => {
           <div className="ma-main">
             {/* HEADER */}
             <header className="ma-header">
-              <h1 className="ma-name" contentEditable={isEditable}>
+              <h1 className="ma-name" contentEditable={canEdit}>
                 ANNA MARIA
               </h1>
-              <p className="ma-title" contentEditable={isEditable}>
+              <p className="ma-title" contentEditable={canEdit}>
                 GRAPHIC DESIGNER
               </p>
               <div className="ma-header-line" />
@@ -203,10 +229,10 @@ const MinimalAccent = () => {
 
             {/* PROFILE */}
             <section className="ma-section">
-              <h2 className="ma-section-title" contentEditable={isEditable}>
+              <h2 className="ma-section-title" contentEditable={canEdit}>
                 PROFILE
               </h2>
-              <p className="ma-section-text" contentEditable={isEditable}>
+              <p className="ma-section-text" contentEditable={canEdit}>
                 Ut enim ad minim veniam, quis nostrud exerc. Iure dolor in
                 reprehenderit in voluptate velit esse cillum dolore magna
                 aliqua...
@@ -215,7 +241,7 @@ const MinimalAccent = () => {
 
             {/* EXPERIENCE */}
             <section className="ma-section">
-              <h2 className="ma-section-title" contentEditable={isEditable}>
+              <h2 className="ma-section-title" contentEditable={canEdit}>
                 EXPERIENCE
               </h2>
 
@@ -227,13 +253,13 @@ const MinimalAccent = () => {
                 </div>
 
                 <div className="ma-exp-content">
-                  <p className="ma-exp-title" contentEditable={isEditable}>
+                  <p className="ma-exp-title" contentEditable={canEdit}>
                     JOB TITLE – (DEC 2010 – PRESENT)
                   </p>
-                  <p className="ma-exp-company" contentEditable={isEditable}>
+                  <p className="ma-exp-company" contentEditable={canEdit}>
                     COMPANY NAME – City, Country
                   </p>
-                  <p className="ma-section-text" contentEditable={isEditable}>
+                  <p className="ma-section-text" contentEditable={canEdit}>
                     Ut enim ad minim veniam, quis nostrud exerc...
                   </p>
                 </div>
@@ -247,13 +273,13 @@ const MinimalAccent = () => {
                 </div>
 
                 <div className="ma-exp-content">
-                  <p className="ma-exp-title" contentEditable={isEditable}>
+                  <p className="ma-exp-title" contentEditable={canEdit}>
                     JOB TITLE – (DEC 2006 – 2010)
                   </p>
-                  <p className="ma-exp-company" contentEditable={isEditable}>
+                  <p className="ma-exp-company" contentEditable={canEdit}>
                     COMPANY NAME – City, Country
                   </p>
-                  <p className="ma-section-text" contentEditable={isEditable}>
+                  <p className="ma-section-text" contentEditable={canEdit}>
                     Ut enim ad minim veniam, quis nostrud exerc...
                   </p>
                 </div>
@@ -262,7 +288,7 @@ const MinimalAccent = () => {
 
             {/* EDUCATION */}
             <section className="ma-section ma-section-last">
-              <h2 className="ma-section-title" contentEditable={isEditable}>
+              <h2 className="ma-section-title" contentEditable={canEdit}>
                 EDUCATION
               </h2>
 
@@ -274,13 +300,13 @@ const MinimalAccent = () => {
                 </div>
 
                 <div className="ma-exp-content">
-                  <p className="ma-exp-title" contentEditable={isEditable}>
+                  <p className="ma-exp-title" contentEditable={canEdit}>
                     DIPLOMA – (2003–2005)
                   </p>
-                  <p className="ma-exp-company" contentEditable={isEditable}>
+                  <p className="ma-exp-company" contentEditable={canEdit}>
                     SCHOOL NAME – City, Country
                   </p>
-                  <p className="ma-section-text" contentEditable={isEditable}>
+                  <p className="ma-section-text" contentEditable={canEdit}>
                     Ut enim ad minim veniam...
                   </p>
                 </div>
@@ -294,18 +320,28 @@ const MinimalAccent = () => {
                 </div>
 
                 <div className="ma-exp-content">
-                  <p className="ma-exp-title" contentEditable={isEditable}>
+                  <p className="ma-exp-title" contentEditable={canEdit}>
                     DIPLOMA – (2000–2003)
                   </p>
-                  <p className="ma-exp-company" contentEditable={isEditable}>
+                  <p className="ma-exp-company" contentEditable={canEdit}>
                     SCHOOL NAME – City, Country
                   </p>
-                  <p className="ma-section-text" contentEditable={isEditable}>
+                  <p className="ma-section-text" contentEditable={canEdit}>
                     Ut enim ad minim veniam...
                   </p>
                 </div>
               </div>
             </section>
+
+  <PaymentGate
+  open={showPaymentModal}
+  onClose={() => setShowPaymentModal(false)}
+  onSuccess={(user) => {
+    setUser(user);              // 🔥 update AuthContext
+    handlePaymentSuccess(user); // 🔓 unlock template
+  }}
+/>
+
           </div>
         </div>
       </div>

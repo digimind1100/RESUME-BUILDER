@@ -4,11 +4,28 @@ import { useNavigate } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 
+//payment start 
+import usePaymentGuard from "../hooks/usePaymentGuard";
+import PaymentGate from "../components/payment/PaymentGate";
+import { useAuth } from "../context/AuthContext";
+//end
+
 export default function MedicalElites() {
   const resumeRef = useRef(null);
   const navigate = useNavigate();
 
-  const [isEditable, setIsEditable] = useState(false);
+  const { user, setUser } = useAuth();
+
+const {
+  isPaid,
+  showPaymentModal,
+  setShowPaymentModal,
+  requirePayment,
+  handlePaymentSuccess,
+} = usePaymentGuard("MedicalElite"); // 🔴 TEMPLATE NAME
+
+const canEdit = isPaid;
+
 
   const [profileImage, setProfileImage] = useState("/images/medicalelitesprofileimage.png");
   const fileInputRef = useRef(null);
@@ -45,12 +62,17 @@ export default function MedicalElites() {
         <button onClick={handleReset}>Reset</button>
 
         {/* EDIT TOGGLE BUTTON */}
-        <button
-          onClick={() => setIsEditable(!isEditable)}
-          className={isEditable ? "edit-toggle on" : "edit-toggle off"}
-        >
-          {isEditable ? "Editing: ON" : "Editing: OFF"}
-        </button>
+       {/* payment start  */}
+       <button
+  className={canEdit ? "edit-btn on" : "edit-btn off"}
+  onClick={() => {
+    if (requirePayment()) return;
+  }}
+>
+  {canEdit ? "Editing: ON" : "Editing: OFF"}
+</button>
+{/* end   */}
+
       </div>
 
       {/* A4 PAGE */}
@@ -65,11 +87,11 @@ export default function MedicalElites() {
               <input type="file" accept="image/*" ref={fileInputRef} style={{ display: "none" }} onChange={handleImageUpload} />
             </div>
 
-            <h1 className="me-name" contentEditable={isEditable} suppressContentEditableWarning>
+            <h1 className="me-name" contentEditable={canEdit} suppressContentEditableWarning>
               DR. EMMA WILLIAMS
             </h1>
 
-            <p className="me-role" contentEditable={isEditable} suppressContentEditableWarning>
+            <p className="me-role" contentEditable={canEdit} suppressContentEditableWarning>
               CONSULTANT CARDIOLOGIST
             </p>
 
@@ -85,7 +107,7 @@ export default function MedicalElites() {
                       <path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1V21a1 1 0 01-1 1C10.52 22 2 13.48 2 3a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.46.57 3.58a1 1 0 01-.24 1.01l-2.2 2.2z"/>
                     </svg>
                   </span>
-                  <span contentEditable={isEditable} suppressContentEditableWarning>
+                  <span contentEditable={canEdit} suppressContentEditableWarning>
                     +1 (555) 245-8890
                   </span>
                 </li>
@@ -98,7 +120,7 @@ export default function MedicalElites() {
                       <path d="M2 8l10 6 10-6v10a2 2 0 01-2 2H4a2 2 0 01-2-2V8z" />
                     </svg>
                   </span>
-                  <span contentEditable={isEditable} suppressContentEditableWarning>
+                  <span contentEditable={canEdit} suppressContentEditableWarning>
                     dr.emma.williams@mail.com
                   </span>
                 </li>
@@ -110,7 +132,7 @@ export default function MedicalElites() {
                       <path d="M12 2a7 7 0 017 7c0 5.25-7 13-7 13S5 14.25 5 9a7 7 0 017-7zm0 9.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z" />
                     </svg>
                   </span>
-                  <span contentEditable={isEditable} suppressContentEditableWarning>
+                  <span contentEditable={canEdit} suppressContentEditableWarning>
                     New York, USA
                   </span>
                 </li>
@@ -123,7 +145,7 @@ export default function MedicalElites() {
                       <path d="M2 12h20" stroke="#0066cc" strokeWidth="1.5" />
                     </svg>
                   </span>
-                  <span contentEditable={isEditable} suppressContentEditableWarning>
+                  <span contentEditable={canEdit} suppressContentEditableWarning>
                     www.doctoremma.com
                   </span>
                 </li>
@@ -135,11 +157,11 @@ export default function MedicalElites() {
             <section className="me-section">
               <h3 className="me-section-title">SPECIALTIES</h3>
               <ul className="me-list">
-                <li contentEditable={isEditable}>Cardiac Diagnostics & Imaging</li>
-                <li contentEditable={isEditable}>Heart Failure Management</li>
-                <li contentEditable={isEditable}>Coronary Artery Disease</li>
-                <li contentEditable={isEditable}>Post-Operative Cardiac Care</li>
-                <li contentEditable={isEditable}>Arrhythmia & ECG Interpretation</li>
+                <li contentEditable={canEdit}>Cardiac Diagnostics & Imaging</li>
+                <li contentEditable={canEdit}>Heart Failure Management</li>
+                <li contentEditable={canEdit}>Coronary Artery Disease</li>
+                <li contentEditable={canEdit}>Post-Operative Cardiac Care</li>
+                <li contentEditable={canEdit}>Arrhythmia & ECG Interpretation</li>
               </ul>
             </section>
 
@@ -147,10 +169,10 @@ export default function MedicalElites() {
             <section className="me-section">
               <h3 className="me-section-title">CERTIFICATIONS</h3>
               <ul className="me-list">
-                <li contentEditable={isEditable}>Advanced Cardiac Life Support (ACLS)</li>
-                <li contentEditable={isEditable}>Basic Life Support (BLS)</li>
-                <li contentEditable={isEditable}>Board Certified – Cardiology</li>
-                <li contentEditable={isEditable}>USMLE Step 1, 2 & 3 Passed</li>
+                <li contentEditable={canEdit}>Advanced Cardiac Life Support (ACLS)</li>
+                <li contentEditable={canEdit}>Basic Life Support (BLS)</li>
+                <li contentEditable={canEdit}>Board Certified – Cardiology</li>
+                <li contentEditable={canEdit}>USMLE Step 1, 2 & 3 Passed</li>
               </ul>
             </section>
 
@@ -158,8 +180,8 @@ export default function MedicalElites() {
             <section className="me-section">
               <h3 className="me-section-title">MEMBERSHIPS</h3>
               <ul className="me-list">
-                <li contentEditable={isEditable}>American Heart Association (AHA)</li>
-                <li contentEditable={isEditable}>American College of Cardiology (ACC)</li>
+                <li contentEditable={canEdit}>American Heart Association (AHA)</li>
+                <li contentEditable={canEdit}>American College of Cardiology (ACC)</li>
               </ul>
             </section>
 
@@ -171,7 +193,7 @@ export default function MedicalElites() {
             {/* SUMMARY */}
             <section className="me-block">
               <h2 className="me-block-title">SUMMARY</h2>
-              <p className="me-block-text" contentEditable={isEditable} suppressContentEditableWarning>
+              <p className="me-block-text" contentEditable={canEdit} suppressContentEditableWarning>
                 Dedicated and compassionate cardiologist with over 12 years of clinical experience
                 handling complex cardiovascular cases. Expertise includes advanced heart diagnostics,
                 emergency cardiac care, patient counseling, and developing long-term treatment plans.
@@ -184,32 +206,32 @@ export default function MedicalElites() {
 
               <div className="me-job">
                 <div className="me-job-header">
-                  <h3 contentEditable={isEditable}>Senior Consultant Cardiologist</h3>
-                  <p contentEditable={isEditable}>2018 – Present</p>
+                  <h3 contentEditable={canEdit}>Senior Consultant Cardiologist</h3>
+                  <p contentEditable={canEdit}>2018 – Present</p>
                 </div>
-                <p className="me-job-location" contentEditable={isEditable}>New York Heart Institute</p>
+                <p className="me-job-location" contentEditable={canEdit}>New York Heart Institute</p>
 
                 <ul className="me-job-list">
-                  <li contentEditable={isEditable}>Managed emergency cardiac interventions.</li>
-                  <li contentEditable={isEditable}>Performed catheterizations & stress tests.</li>
-                  <li contentEditable={isEditable}>Developed long-term rehabilitation plans.</li>
-                  <li contentEditable={isEditable}>Led conferences & awareness workshops.</li>
-                  <li contentEditable={isEditable}>Worked in pre/post-operative cardiac care.</li>
+                  <li contentEditable={canEdit}>Managed emergency cardiac interventions.</li>
+                  <li contentEditable={canEdit}>Performed catheterizations & stress tests.</li>
+                  <li contentEditable={canEdit}>Developed long-term rehabilitation plans.</li>
+                  <li contentEditable={canEdit}>Led conferences & awareness workshops.</li>
+                  <li contentEditable={canEdit}>Worked in pre/post-operative cardiac care.</li>
                 </ul>
               </div>
 
               <div className="me-job">
                 <div className="me-job-header">
-                  <h3 contentEditable={isEditable}>Cardiology Resident</h3>
-                  <p contentEditable={isEditable}>2014 – 2018</p>
+                  <h3 contentEditable={canEdit}>Cardiology Resident</h3>
+                  <p contentEditable={canEdit}>2014 – 2018</p>
                 </div>
-                <p className="me-job-location" contentEditable={isEditable}>Mercy General Hospital</p>
+                <p className="me-job-location" contentEditable={canEdit}>Mercy General Hospital</p>
 
                 <ul className="me-job-list">
-                  <li contentEditable={isEditable}>Assisted in cardiac surgeries & ICU care.</li>
-                  <li contentEditable={isEditable}>Followed chronic heart-disease patients.</li>
-                  <li contentEditable={isEditable}>Performed ECG, Echo & treadmill tests.</li>
-                  <li contentEditable={isEditable}>Conducted patient education sessions.</li>
+                  <li contentEditable={canEdit}>Assisted in cardiac surgeries & ICU care.</li>
+                  <li contentEditable={canEdit}>Followed chronic heart-disease patients.</li>
+                  <li contentEditable={canEdit}>Performed ECG, Echo & treadmill tests.</li>
+                  <li contentEditable={canEdit}>Conducted patient education sessions.</li>
                 </ul>
               </div>
             </section>
@@ -218,9 +240,9 @@ export default function MedicalElites() {
             <section className="me-block">
               <h2 className="me-block-title">RESEARCH & PUBLICATIONS</h2>
               <ul className="me-job-list">
-                <li contentEditable={isEditable}>“Modern Approaches to Hypertension Treatment” – 2022</li>
-                <li contentEditable={isEditable}>Research on early detection of heart failure – 2021</li>
-                <li contentEditable={isEditable}>Contributor to Cardiology Today Journal</li>
+                <li contentEditable={canEdit}>“Modern Approaches to Hypertension Treatment” – 2022</li>
+                <li contentEditable={canEdit}>Research on early detection of heart failure – 2021</li>
+                <li contentEditable={canEdit}>Contributor to Cardiology Today Journal</li>
               </ul>
             </section>
 
@@ -229,19 +251,19 @@ export default function MedicalElites() {
               <h2 className="me-block-title">EDUCATION</h2>
 
               <div className="me-edu">
-                <p className="me-edu-title" contentEditable={isEditable}>
+                <p className="me-edu-title" contentEditable={canEdit}>
                   Doctor of Medicine (MD) – Cardiology
                 </p>
-                <p className="me-edu-meta" contentEditable={isEditable}>
+                <p className="me-edu-meta" contentEditable={canEdit}>
                   Harvard Medical School — 2010 – 2014
                 </p>
               </div>
 
               <div className="me-edu">
-                <p className="me-edu-title" contentEditable={isEditable}>
+                <p className="me-edu-title" contentEditable={canEdit}>
                   Bachelor of Science in Biology
                 </p>
-                <p className="me-edu-meta" contentEditable={isEditable}>
+                <p className="me-edu-meta" contentEditable={canEdit}>
                   University of California — 2006 – 2010
                 </p>
               </div>
@@ -249,6 +271,14 @@ export default function MedicalElites() {
             </section>
 
           </main>
+<PaymentGate
+  open={showPaymentModal}
+  onClose={() => setShowPaymentModal(false)}
+  onSuccess={(user) => {
+    setUser(user);              // 🔥 update AuthContext
+    handlePaymentSuccess(user); // 🔓 unlock template
+  }}
+/>
 
         </div>
       </div>
