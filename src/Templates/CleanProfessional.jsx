@@ -295,13 +295,11 @@ const CleanProfessional = () => {
               </section>
             </main>
             <PaymentGate
-            open={showPaymentModal}
-            onClose={() => setShowPaymentModal(false)}
-            onSuccess={(user) => {
-              setUser(user);              // 🔥 update AuthContext
-              handlePaymentSuccess(user); // 🔓 unlock template
-            }}
-          />
+  open={showPaymentModal}
+  onClose={() => setShowPaymentModal(false)}
+  onSuccess={handlePaymentSuccess}
+/>
+
           </div>
 
         </div>

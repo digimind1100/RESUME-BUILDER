@@ -7,10 +7,17 @@ export default function PaymentGate({
 }) {
   if (!open) return null;
 
+  const handleSuccess = async () => {
+    if (typeof onSuccess === "function") {
+      await onSuccess(); // 🔥 MUST call handlePaymentSuccess
+    }
+    onClose();
+  };
+
   return (
     <PaymentModal
       onClose={onClose}
-      onSuccess={onSuccess}
+      onSuccess={handleSuccess}
     />
   );
 }

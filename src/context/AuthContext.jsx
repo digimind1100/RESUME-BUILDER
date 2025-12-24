@@ -1,6 +1,10 @@
 ﻿/* src/context/AuthContext.jsx */
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { signup as signupApi, login as loginApi, getCurrentUser } from "../api/authApi";
+import {
+  signup as signupApi,
+  login as loginApi,
+  getCurrentUser,
+} from "../api/authApi";
 
 const AuthContext = createContext(null);
 const TOKEN_KEY = "rb_auth_token";
@@ -11,27 +15,35 @@ export function AuthProvider({ children }) {
   const [initializing, setInitializing] = useState(true);
   const [loading, setLoading] = useState(false);
 
+  // 🔹 Restore session on app load
   useEffect(() => {
     const savedToken = localStorage.getItem(TOKEN_KEY);
+
     if (!savedToken) {
       setInitializing(false);
       return;
     }
+
     setToken(savedToken);
 
     (async () => {
-      const result = await getCurrentUser(savedToken);
-      if (result.ok && result.user) {
-        setUser(result.user);
-      } else {
-        localStorage.removeItem(TOKEN_KEY);
-        setToken(null);
-        setUser(null);
+      try {
+        const result = await getCurrentUser(savedToken);
+
+        if (result?.ok && result.user) {
+          setUser(result.user);
+        } else {
+          localStorage.removeItem(TOKEN_KEY);
+          setToken(null);
+          setUser(null);
+        }
+      } finally {
+        setInitializing(false);
       }
-      setInitializing(false);
     })();
   }, []);
 
+  // 🔹 Centralized auth application
   function applyAuth(result) {
     if (result?.ok && result.token && result.user) {
       setToken(result.token);
@@ -40,22 +52,31 @@ export function AuthProvider({ children }) {
     }
   }
 
+  // 🔹 Signup → auto login (UNCHANGED BEHAVIOR)
   async function signup({ fullName, email, password }) {
     setLoading(true);
-    const result = await signupApi({ fullName, email, password });
-    applyAuth(result);
-    setLoading(false);
-    return result;
+    try {
+      const result = await signupApi({ fullName, email, password });
+      applyAuth(result);
+      return result;
+    } finally {
+      setLoading(false);
+    }
   }
 
+  // 🔹 Login for returning users
   async function login({ email, password }) {
     setLoading(true);
-    const result = await loginApi({ email, password });
-    applyAuth(result);
-    setLoading(false);
-    return result;
+    try {
+      const result = await loginApi({ email, password });
+      applyAuth(result);
+      return result;
+    } finally {
+      setLoading(false);
+    }
   }
 
+  // 🔹 Logout (explicit & clean)
   function logout() {
     setUser(null);
     setToken(null);

@@ -1,28 +1,18 @@
 import express from "express";
 import User from "../models/User.js";
-import requireAuth from "../middleware/auth.js"; // ✅ CORRECT
+import requireAuth from "../middleware/auth.js";
+
 
 const router = express.Router();
 
+// ✅ MARK PAID (PERSIST PAYMENT)
 router.post("/mark-paid", requireAuth, async (req, res) => {
   try {
     const userId = req.user.id;
-    const { template } = req.body;
-
-    if (!template) {
-      return res.status(400).json({
-        success: false,
-        message: "Template missing",
-      });
-    }
 
     const user = await User.findByIdAndUpdate(
       userId,
-      {
-        isPaid: true,
-        paidTemplate: template,
-        paidAt: new Date(),
-      },
+      { isPaid: true, plan: "lifetime" },
       { new: true }
     ).select("-passwordHash");
 
@@ -31,11 +21,25 @@ router.post("/mark-paid", requireAuth, async (req, res) => {
       user,
     });
   } catch (err) {
-    console.error("MARK PAID ERROR:", err); // 🔥 THIS WILL LOG REAL ISSUE
-    return res.status(500).json({
-      success: false,
-      message: "Server error",
+    console.error("mark-paid error:", err);
+    res.status(500).json({ success: false });
+  }
+});
+
+// ✅ CHECK PAYMENT (USED AFTER LOGIN / REFRESH)
+router.get("/check", requireAuth, async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    const user = await User.findById(userId).select("isPaid plan");
+
+    return res.json({
+      isPaid: user?.isPaid === true,
+      plan: user?.plan || null,
     });
+  } catch (err) {
+    console.error("check payment error:", err);
+    res.status(500).json({ isPaid: false });
   }
 });
 

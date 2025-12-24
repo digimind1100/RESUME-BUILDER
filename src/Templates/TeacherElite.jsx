@@ -587,54 +587,11 @@ Subject: ${qrForm.subject}
           </div>
         </div>
 
-
 <PaymentGate
   open={showPaymentModal}
   onClose={() => setShowPaymentModal(false)}
   onSuccess={handlePaymentSuccess}
 />
-
-
-
-{showPaymentModal && (
-  <PaymentModal
-    onClose={() => setShowPaymentModal(false)}
-    onSuccess={async () => {
-      try {
-        const token = localStorage.getItem("rb_auth_token");
-
-        const res = await fetch(
-          "http://localhost:3001/api/payments/mark-paid",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify({
-              template: "TeacherElite",
-            }),
-          }
-        );
-
-        const data = await res.json();
-        console.log("MARK PAID RESPONSE:", data);
-
-        if (data.success && data.user) {
-          setUser(data.user);      // 🔥 FIXES avatar + auth sync
-          setIsEditable(true);
-          setShowPaymentModal(false);
-        } else {
-          alert("Payment failed on server");
-        }
-      } catch (err) {
-        console.error("Payment error:", err);
-        alert("Server error during payment");
-      }
-    }}
-  />
-)}
-
 
       </div>
     </div>

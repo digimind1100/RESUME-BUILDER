@@ -14,20 +14,20 @@ const MinimalAccent = () => {
   const resumeRef = useRef(null);
   const navigate = useNavigate();
 
-// for payment start
-const { user, setUser } = useAuth();
+  // for payment start
+  const { user, setUser } = useAuth();
 
-const {
-  isPaid,
-  showPaymentModal,
-  setShowPaymentModal,
-  requirePayment,
-  handlePaymentSuccess,
-} = usePaymentGuard("MinimalAccent"); // 🔴 TEMPLATE NAME
+  const {
+    isPaid,
+    showPaymentModal,
+    setShowPaymentModal,
+    requirePayment,
+    handlePaymentSuccess,
+  } = usePaymentGuard("MinimalAccent"); // 🔴 TEMPLATE NAME
 
-const canEdit = isPaid;
+  const canEdit = isPaid;
 
-// end
+  // end
 
   // ⭐ EDIT FEATURE
 
@@ -85,19 +85,19 @@ const canEdit = isPaid;
         <button onClick={handleReset}>Reset</button>
 
         {/* ⭐ EDIT BUTTON */}
-     {/* for payment start     */}
+        {/* for payment start     */}
 
-     <button
-  className={canEdit ? "edit-btn on" : "edit-btn off"}
-  onClick={() => {
-    if (requirePayment()) return;
-  }}
->
-  {canEdit ? "Editing: ON" : "Editing: OFF"}
-</button>
+        <button
+          className={canEdit ? "edit-btn on" : "edit-btn off"}
+          onClick={() => {
+            if (!requirePayment()) return;
+          }}
+        >
+          {canEdit ? "Editing: ON" : "Editing: OFF"}
+        </button>
 
-       
-{/* end  */}
+
+        {/* end  */}
       </div>
 
       {/* A4 Resume Area */}
@@ -333,14 +333,11 @@ const canEdit = isPaid;
               </div>
             </section>
 
-  <PaymentGate
-  open={showPaymentModal}
-  onClose={() => setShowPaymentModal(false)}
-  onSuccess={(user) => {
-    setUser(user);              // 🔥 update AuthContext
-    handlePaymentSuccess(user); // 🔓 unlock template
-  }}
-/>
+            <PaymentGate
+              open={showPaymentModal}
+              onClose={() => setShowPaymentModal(false)}
+              onSuccess={handlePaymentSuccess}
+            />
 
           </div>
         </div>

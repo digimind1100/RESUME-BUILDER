@@ -13,17 +13,17 @@ import { useAuth } from "../context/AuthContext";
 export default function SoftTech() {
   const navigate = useNavigate();
   const resumeRef = useRef(null);
-const { user, setUser } = useAuth();
+  const { user, setUser } = useAuth();
 
-const {
-  isPaid,
-  showPaymentModal,
-  setShowPaymentModal,
-  requirePayment,
-  handlePaymentSuccess,
-} = usePaymentGuard("SoftTech");
+  const {
+    isPaid,
+    showPaymentModal,
+    setShowPaymentModal,
+    requirePayment,
+    handlePaymentSuccess,
+  } = usePaymentGuard("SoftTech");
 
-const canEdit = isPaid;
+  const canEdit = isPaid;
 
 
   /* ---------- GLOBAL EDIT MODE ---------- */
@@ -107,15 +107,13 @@ const canEdit = isPaid;
 
         {/* EDIT TOGGLE BUTTON */}
         <button
-  className={canEdit ? "edit-btn on" : "edit-btn off"}
-onClick={() => {
-  if (requirePayment()) return;
-}}
-
->
-  {canEdit ? "Editing: ON" : "Editing: OFF"}
-
-</button>
+          className={canEdit ? "edit-btn on" : "edit-btn off"}
+          onClick={() => {
+            if (!requirePayment()) return;
+          }}
+        >
+          {canEdit ? "Editing: ON" : "Editing: OFF"}
+        </button>
 
       </div>
 
@@ -320,8 +318,8 @@ onClick={() => {
             <section className="st-side-section">
               <h3 className="st-side-heading" contentEditable={canEdit}>CERTIFICATIONS</h3>
               <p className="st-side-text" contentEditable={canEdit}>
-                AWS Certified Solutions Architect  
-                Google Cloud Developer  
+                AWS Certified Solutions Architect
+                Google Cloud Developer
                 Scrum Master (PSM I)
               </p>
             </section>
@@ -354,7 +352,7 @@ onClick={() => {
               </div>
 
               <div className="st-header-photo" onClick={triggerProfileSelect}
->
+              >
                 <img src={profileImage} alt="Profile" />
                 <input
                   type="file"
@@ -514,16 +512,11 @@ onClick={() => {
 
             </section>
 
-<PaymentGate
-  open={showPaymentModal}
-  onClose={() => setShowPaymentModal(false)}
-  onSuccess={(user) => {
-    setUser(user);                 // update auth context
-    handlePaymentSuccess(user);    // unlock this template
-  }}
-/>
-
-
+            <PaymentGate
+              open={showPaymentModal}
+              onClose={() => setShowPaymentModal(false)}
+              onSuccess={handlePaymentSuccess}
+            />
 
 
           </main>
