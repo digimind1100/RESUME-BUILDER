@@ -457,3 +457,6 @@
 .edit-toggle.off {
   background: #6b7280; /* gray */
 }
+.st-header-photo {
+  cursor: pointer;
+}

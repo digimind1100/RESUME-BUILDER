@@ -9,22 +9,24 @@ import QRCode from "qrcode";
 import usePaymentGuard from "../hooks/usePaymentGuard";
 import PaymentGate from "../components/payment/PaymentGate";
 import { useAuth } from "../context/AuthContext";
+import Watermark from "../components/Watermark";
+
 
 export default function AviationPro() {
   const resumeRef = useRef(null);
   const navigate = useNavigate();
 
-      const { user, setUser } = useAuth();
-    
-    const {
-      isPaid,
-      showPaymentModal,
-      setShowPaymentModal,
-      requirePayment,
-      handlePaymentSuccess,
-    } = usePaymentGuard("CleanProfessional"); // 🔴 TEMPLATE NAME
-    
-    const canEdit = isPaid;
+  const { user, setUser } = useAuth();
+
+  const {
+    isPaid,
+    showPaymentModal,
+    setShowPaymentModal,
+    requirePayment,
+    handlePaymentSuccess,
+  } = usePaymentGuard("AviationPro"); // 🔴 TEMPLATE NAME
+
+  const canEdit = isPaid;
   // ---------- EDIT MODE ----------
 
 
@@ -33,16 +35,23 @@ export default function AviationPro() {
     "/images/cleanprofileimage.png"
   );
   const fileInputRef = useRef(null);
-
   const handleImageUpload = (e) => {
+    if (!canEdit) return; // 🔒 premium guard
+
     const file = e.target.files[0];
     if (!file) return;
+
     setProfileImage(URL.createObjectURL(file));
   };
-
   const triggerFileSelect = () => {
+    if (!canEdit) {
+      requirePayment(); // 🔥 open payment modal
+      return;
+    }
+
     if (fileInputRef.current) fileInputRef.current.click();
   };
+
 
   // ---------- QR FORM STATE ----------
   const [fullName, setFullName] = useState("");
@@ -323,12 +332,12 @@ Profile: ${profileLink}
       const experiences = role.experiences.map((exp, idx) =>
         idx === expIndex
           ? {
-              ...exp,
-              bullets: [
-                ...exp.bullets,
-                "New responsibility or achievement bullet.",
-              ],
-            }
+            ...exp,
+            bullets: [
+              ...exp.bullets,
+              "New responsibility or achievement bullet.",
+            ],
+          }
           : exp
       );
       copy[activeRole] = { ...role, experiences };
@@ -406,13 +415,13 @@ Profile: ${profileLink}
 
         {/* EDIT TOGGLE */}
         <button
-  className={canEdit ? "edit-btn on" : "edit-btn off"}
-  onClick={() => {
-    if (requirePayment()) return;
-  }}
->
-  {canEdit ? "Editing: ON" : "Editing: OFF"}
-</button>
+          className={canEdit ? "edit-btn on" : "edit-btn off"}
+          onClick={() => {
+            if (!requirePayment()) return;
+          }}
+        >
+          {canEdit ? "Editing: ON" : "Editing: OFF"}
+        </button>
       </div>
 
       {/* QR FORM */}
@@ -429,13 +438,13 @@ Profile: ${profileLink}
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-             disabled={!canEdit}
+            disabled={!canEdit}
           />
           <input
             placeholder="Phone"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
-             disabled={!canEdit}
+            disabled={!canEdit}
           />
         </div>
 
@@ -443,7 +452,7 @@ Profile: ${profileLink}
           placeholder="Address"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
-           disabled={!canEdit}
+          disabled={!canEdit}
         />
 
         <div className="av-qr-row">
@@ -451,19 +460,19 @@ Profile: ${profileLink}
             placeholder="City"
             value={city}
             onChange={(e) => setCity(e.target.value)}
-             disabled={!canEdit}
+            disabled={!canEdit}
           />
           <input
             placeholder="State"
             value={stateVal}
             onChange={(e) => setStateVal(e.target.value)}
-             disabled={!canEdit}
+            disabled={!canEdit}
           />
           <input
             placeholder="ZIP"
             value={zip}
             onChange={(e) => setZip(e.target.value)}
-             disabled={!canEdit}
+            disabled={!canEdit}
           />
         </div>
 
@@ -472,13 +481,13 @@ Profile: ${profileLink}
             placeholder="LinkedIn Profile URL"
             value={linkedin}
             onChange={(e) => setLinkedin(e.target.value)}
-             disabled={!canEdit}
+            disabled={!canEdit}
           />
           <input
             placeholder="Portfolio / Profile Link"
             value={profileLink}
             onChange={(e) => setProfileLink(e.target.value)}
-             disabled={!canEdit}
+            disabled={!canEdit}
           />
         </div>
 
@@ -492,9 +501,8 @@ Profile: ${profileLink}
         {roles.map((role) => (
           <button
             key={role}
-            className={`av-tab ${
-              activeRole === role ? "av-tab-active" : ""
-            }`}
+            className={`av-tab ${activeRole === role ? "av-tab-active" : ""
+              }`}
             onClick={() => setActiveRole(role)}
           >
             {roleLabels[role]}
@@ -503,13 +511,20 @@ Profile: ${profileLink}
       </div>
 
       {/* A4 PAGE */}
-      <div className="av-a4" ref={resumeRef}>
+      <div className="av-a4" ref={resumeRef} style={{ position: "relative" }}>
+        <Watermark show={!canEdit} />
         <div className="av-resume">
+
           {/* HEADER */}
           <header className="av-header">
+
             <div className="av-header-left">
               {/* PHOTO */}
-              <div className="av-profile-wrapper" onClick={triggerFileSelect}>
+              <div
+                className={`av-profile-wrapper ${!canEdit ? "locked" : ""}`}
+                onClick={triggerFileSelect}
+                title={!canEdit ? "Unlock to change profile image" : "Click to change photo"}
+              >
                 <img src={profileImage} alt="Profile" className="av-profile" />
                 <input
                   type="file"
@@ -519,6 +534,7 @@ Profile: ${profileLink}
                   onChange={handleImageUpload}
                 />
               </div>
+
 
               {/* NAME + TITLE */}
               <div className="av-header-text">
@@ -631,27 +647,10 @@ Profile: ${profileLink}
                       ))}
                     </ul>
 
-                    {canEdit && (
-                      <button
-                        type="button"
-                        className="av-add-bullet-btn"
-                        onClick={() => handleAddExperienceBullet(idx)}
-                      >
-                        + Add bullet to this job
-                      </button>
-                    )}
                   </div>
                 ))}
 
-                {canEdit && (
-                  <button
-                    type="button"
-                    className="av-add-exp-btn"
-                    onClick={handleAddExperience}
-                  >
-                    + Add new experience block
-                  </button>
-                )}
+            
               </section>
 
               {/* HIGHLIGHTS */}
@@ -676,15 +675,6 @@ Profile: ${profileLink}
                   ))}
                 </ul>
 
-                {canEdit && (
-                  <button
-                    type="button"
-                    className="av-add-highlight-btn"
-                    onClick={handleAddHighlight}
-                  >
-                    + Add highlight
-                  </button>
-                )}
               </section>
             </main>
 
@@ -779,14 +769,11 @@ Profile: ${profileLink}
                 </ul>
               </section>
             </aside>
-             <PaymentGate
-                        open={showPaymentModal}
-                        onClose={() => setShowPaymentModal(false)}
-                        onSuccess={(user) => {
-                          setUser(user);              // 🔥 update AuthContext
-                          handlePaymentSuccess(user); // 🔓 unlock template
-                        }}
-                      />
+            <PaymentGate
+              open={showPaymentModal}
+              onClose={() => setShowPaymentModal(false)}
+              onSuccess={handlePaymentSuccess}
+            />
           </div>
         </div>
       </div>

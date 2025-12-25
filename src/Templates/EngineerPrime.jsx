@@ -9,22 +9,24 @@ import usePaymentGuard from "../hooks/usePaymentGuard";
 import PaymentGate from "../components/payment/PaymentGate";
 import { useAuth } from "../context/AuthContext";
 
+import Watermark from "../components/Watermark";
+
 
 export default function EngineerPrime() {
   const resumeRef = useRef(null);
   const navigate = useNavigate();
 
-const { user, setUser } = useAuth();
+  const { user, setUser } = useAuth();
 
-const {
-  isPaid,
-  showPaymentModal,
-  setShowPaymentModal,
-  requirePayment,
-  handlePaymentSuccess,
-} = usePaymentGuard("EngineerPrime"); // 🔴 TEMPLATE NAME
+  const {
+    isPaid,
+    showPaymentModal,
+    setShowPaymentModal,
+    requirePayment,
+    handlePaymentSuccess,
+  } = usePaymentGuard("EngineerPrime"); // 🔴 TEMPLATE NAME
 
-const canEdit = isPaid;
+  const canEdit = isPaid;
 
 
 
@@ -32,11 +34,15 @@ const canEdit = isPaid;
   const [profileImage, setProfileImage] = useState("/images/cleanprofileimage.png");
   const fileInputRef = useRef(null);
 
-  const handleImageUpload = (event) => {
-    const file = event.target.files[0];
-    if (!file) return;
-    setProfileImage(URL.createObjectURL(file));
-  };
+const handleImageUpload = (event) => {
+  if (!canEdit) return; // 🔒 premium lock safety
+
+  const file = event.target.files[0];
+  if (!file) return;
+
+  setProfileImage(URL.createObjectURL(file));
+};
+
 
   const triggerFileSelect = () => fileInputRef.current.click();
 
@@ -100,29 +106,29 @@ LinkedIn: ${linkedin}
         <button onClick={handleReset}>Reset</button>
 
         {/* ⭐ NEW EDIT BUTTON */}
-      <button
-  className={canEdit ? "edit-btn on" : "edit-btn off"}
-  onClick={() => {
-    if (requirePayment()) return;
-  }}
->
-  {canEdit ? "Editing: ON" : "Editing: OFF"}
-</button>
+        <button
+          className={canEdit ? "edit-btn on" : "edit-btn off"}
+          onClick={() => {
+            if (!requirePayment()) return;
+          }}
+        >
+          {canEdit ? "Editing: ON" : "Editing: OFF"}
+        </button>
 
       </div>
 
       {/* ==== MINI FORM FOR QR GENERATION ==== */}
       <div className="ep-mini-form">
         <input placeholder="Emma Roberts" onChange={(e) => setFullName(e.target.value)} disabled={!canEdit} />
-        <input placeholder="emma@mail.com" onChange={(e) => setEmail(e.target.value)}disabled={!canEdit} />
-        <input placeholder="+1 555-123-4567" onChange={(e) => setTelephone(e.target.value)} disabled={!canEdit}/>
-        <input placeholder="123 Main Street" onChange={(e) => setAddress(e.target.value)}disabled={!canEdit} />
+        <input placeholder="emma@mail.com" onChange={(e) => setEmail(e.target.value)} disabled={!canEdit} />
+        <input placeholder="+1 555-123-4567" onChange={(e) => setTelephone(e.target.value)} disabled={!canEdit} />
+        <input placeholder="123 Main Street" onChange={(e) => setAddress(e.target.value)} disabled={!canEdit} />
         <div className="ep-mini-row">
-          <input placeholder="Los Angeles" onChange={(e) => setCity(e.target.value)}disabled={!canEdit} />
-          <input placeholder="CA" onChange={(e) => setState(e.target.value)}disabled={!canEdit} />
-          <input placeholder="90001" onChange={(e) => setZip(e.target.value)}disabled={!canEdit} />
+          <input placeholder="Los Angeles" onChange={(e) => setCity(e.target.value)} disabled={!canEdit} />
+          <input placeholder="CA" onChange={(e) => setState(e.target.value)} disabled={!canEdit} />
+          <input placeholder="90001" onChange={(e) => setZip(e.target.value)} disabled={!canEdit} />
         </div>
-        <input placeholder="linkedin.com/in/username" onChange={(e) => setLinkedin(e.target.value)}disabled={!canEdit} />
+        <input placeholder="linkedin.com/in/username" onChange={(e) => setLinkedin(e.target.value)} disabled={!canEdit} />
 
         <button className="ep-qr-btn" onClick={generateQRCode} >
           Create QR Code
@@ -130,8 +136,11 @@ LinkedIn: ${linkedin}
       </div>
 
       {/* ==== A4 PAGE ==== */}
-      <div className="ep-a4" ref={resumeRef}>
-        <div className="ep-resume">
+     <div className="ep-a4" ref={resumeRef} style={{ position: "relative" }}>
+  <Watermark show={!canEdit} />
+
+  <div className="ep-resume">
+
 
           {/* ==== LEFT SIDEBAR ==== */}
           <aside className="ep-sidebar">
@@ -142,16 +151,25 @@ LinkedIn: ${linkedin}
             </div>
 
             {/* HEXAGON PROFILE */}
-            <div className="ep-photo-hex" onClick={triggerFileSelect}>
-              <img src={profileImage} className="ep-photo" />
-              <input
-                type="file"
-                accept="image/*"
-                ref={fileInputRef}
-                onChange={handleImageUpload}
-                style={{ display: "none" }}
-              />
-            </div>
+           {/* PROFILE IMAGE (PREMIUM LOCKED) */}
+<div
+  className={`ep-photo-hex ${!canEdit ? "locked" : ""}`}
+  onClick={() => {
+    if (!requirePayment()) return; // unpaid → payment modal
+    triggerFileSelect();           // paid → file picker
+  }}
+  title={canEdit ? "Click to change photo" : "Unlock to change photo"}
+>
+  <img src={profileImage} className="ep-photo" alt="Profile" />
+  <input
+    type="file"
+    accept="image/*"
+    ref={fileInputRef}
+    onChange={handleImageUpload}
+    style={{ display: "none" }}
+  />
+</div>
+
 
             {/* SIDEBAR SECTIONS */}
             <section className="ep-section">
@@ -324,14 +342,11 @@ LinkedIn: ${linkedin}
             </section>
 
           </main>
-<PaymentGate
-  open={showPaymentModal}
-  onClose={() => setShowPaymentModal(false)}
-  onSuccess={(user) => {
-    setUser(user);              // 🔥 update AuthContext
-    handlePaymentSuccess(user); // 🔓 unlock template
-  }}
-/>
+          <PaymentGate
+            open={showPaymentModal}
+            onClose={() => setShowPaymentModal(false)}
+            onSuccess={handlePaymentSuccess}
+          />
 
         </div>
       </div>

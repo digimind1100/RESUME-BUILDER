@@ -9,7 +9,7 @@ import PaymentModal from "../components/payment/PaymentModal";
 import { useAuth } from "../context/AuthContext";
 import usePaymentGuard from "../hooks/usePaymentGuard";
 import PaymentGate from "../components/payment/PaymentGate";
-
+import Watermark from "../components/Watermark";
 
 
 const TABS = [
@@ -80,18 +80,25 @@ useEffect(() => {
 
 
   /* ---------- PROFILE IMAGE ---------- */
-  const [profileImage, setProfileImage] = useState(
-    "/images/creativeboldimage.png"
+ const [profileImage, setProfileImage] = useState(
+    "/images/minimalaccentprofileimage.png"
   );
   const fileInputRef = useRef(null);
 
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) setProfileImage(URL.createObjectURL(file));
+  const handleImageUpload = (event) => {
+    if (!canEdit) return;
+
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const imageUrl = URL.createObjectURL(file);
+    setProfileImage(imageUrl);
   };
 
   const triggerFileSelect = () => {
-    if (fileInputRef.current) fileInputRef.current.click();
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
   };
 
   /* ---------- QR FORM STATE ---------- */
@@ -263,7 +270,8 @@ Subject: ${qrForm.subject}
       </div>
 
       {/* A4 RESUME */}
-      <div className="te-a4" ref={resumeRef}>
+      <div className="te-a4" ref={resumeRef} style={{ position: "relative" }}>
+        <Watermark show={!canEdit} />
         <div className="te-resume">
           {/* HEADER with decorative wave + profile */}
           <header className="te-header">
@@ -395,12 +403,6 @@ Subject: ${qrForm.subject}
                   <li   contentEditable={canEdit && isEditable}>French — Basic</li>
                 </ul>
               </section>
-{/* 🔒 WATERMARK FOR UNPAID USERS */}
-{!isPaid && (
-  <div className="resume-watermark">
-    PREVIEW • UNLOCK TO EDIT
-  </div>
-)}
 
               <section className="te-side-section">
                 <h3 className="te-side-heading">ACHIEVEMENTS</h3>

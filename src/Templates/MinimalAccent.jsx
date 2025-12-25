@@ -9,6 +9,7 @@ import usePaymentGuard from "../hooks/usePaymentGuard";
 import PaymentGate from "../components/payment/PaymentGate";
 import { useAuth } from "../context/AuthContext";
 // end
+import Watermark from "../components/Watermark";
 
 const MinimalAccent = () => {
   const resumeRef = useRef(null);
@@ -32,14 +33,18 @@ const MinimalAccent = () => {
   // ⭐ EDIT FEATURE
 
   // Profile Image Upload
+   // Profile Image
   const [profileImage, setProfileImage] = useState(
     "/images/minimalaccentprofileimage.png"
   );
   const fileInputRef = useRef(null);
 
   const handleImageUpload = (event) => {
+    if (!canEdit) return;
+
     const file = event.target.files[0];
     if (!file) return;
+
     const imageUrl = URL.createObjectURL(file);
     setProfileImage(imageUrl);
   };
@@ -49,6 +54,7 @@ const MinimalAccent = () => {
       fileInputRef.current.click();
     }
   };
+
 
   // Download PDF
   const handleDownloadPDF = async () => {
@@ -101,26 +107,36 @@ const MinimalAccent = () => {
       </div>
 
       {/* A4 Resume Area */}
-      <div className="ma-a4" ref={resumeRef}>
-        <div className="ma-resume">
+      <div className="ma-a4" ref={resumeRef} style={{ position: "relative" }}>
+  <Watermark show={!canEdit} />
+
+  <div className="ma-resume">
+
+
           {/* LEFT BLUE SIDEBAR */}
           <aside className="ma-sidebar">
             {/* Profile Photo */}
-            <div className="ma-photo-block">
-              <div
-                className="ma-photo-wrapper"
-                onClick={triggerFileSelect}
-                title="Click to change photo"
-              >
-                <img src={profileImage} alt="Profile" className="ma-photo" />
-                <input
-                  type="file"
-                  accept="image/*"
-                  ref={fileInputRef}
-                  style={{ display: "none" }}
-                  onChange={handleImageUpload}
-                />
-              </div>
+              {/* Profile Photo */}
+            <div
+              className={`ma-photo-wrapper ${!canEdit ? "locked" : ""}`}
+              onClick={() => {
+                if (!requirePayment()) return;
+                triggerFileSelect();
+              }}
+              title={
+                canEdit
+                  ? "Click to change photo"
+                  : "Unlock to change photo"
+              }
+            >
+              <img src={profileImage} alt="Profile" className="ma-photo" />
+              <input
+                type="file"
+                accept="image/*"
+                ref={fileInputRef}
+                style={{ display: "none" }}
+                onChange={handleImageUpload}
+              />
             </div>
 
             {/* Contact Card */}

@@ -10,6 +10,8 @@ import usePaymentGuard from "../hooks/usePaymentGuard";
 import PaymentGate from "../components/payment/PaymentGate";
 import { useAuth } from "../context/AuthContext";
 
+import Watermark from "../components/Watermark";
+
 
 export default function EngineerElite() {
   const resumeRef = useRef(null);
@@ -17,34 +19,40 @@ export default function EngineerElite() {
 
   const { user, setUser } = useAuth();
 
-const {
-  isPaid,
-  showPaymentModal,
-  setShowPaymentModal,
-  requirePayment,
-  handlePaymentSuccess,
-} = usePaymentGuard("EngineerElite"); // 🔴 TEMPLATE NAME
+  const {
+    isPaid,
+    showPaymentModal,
+    setShowPaymentModal,
+    requirePayment,
+    handlePaymentSuccess,
+  } = usePaymentGuard("EngineerElite"); // 🔴 TEMPLATE NAME
 
-const canEdit = isPaid;
+  const canEdit = isPaid;
 
   /* ================= EDIT MODE ================= */
 
-  // ---- Profile image (square) ----
-  const [profileImage, setProfileImage] = useState(
-    "/images/engineereliteprofileimage.png"
-  );
-  const profileInputRef = useRef(null);
+// ---- Profile image (square - PREMIUM) ----
+const [profileImage, setProfileImage] = useState(
+  "/images/engineereliteprofileimage.png"
+);
+const profileInputRef = useRef(null);
 
-  const handleProfileUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setProfileImage(URL.createObjectURL(file));
-    }
-  };
+const handleProfileUpload = (e) => {
+  if (!canEdit) return; // 🔒 safety
+  const file = e.target.files[0];
+  if (file) {
+    setProfileImage(URL.createObjectURL(file));
+  }
+};
 
-  const triggerProfileSelect = () => {
-    if (profileInputRef.current) profileInputRef.current.click();
-  };
+const handleProfileClick = () => {
+  if (!canEdit) {
+    requirePayment(); // 🔥 open payment modal
+    return;
+  }
+  profileInputRef.current?.click();
+};
+
 
   // ---- Personal info form state ----
   const [info, setInfo] = useState({
@@ -121,14 +129,14 @@ const canEdit = isPaid;
         <button onClick={handleReset}>Reset</button>
 
         {/* EDIT BUTTON */}
-     <button
-  className={canEdit ? "edit-btn on" : "edit-btn off"}
-  onClick={() => {
-    if (requirePayment()) return;
-  }}
->
-  {canEdit ? "Editing: ON" : "Editing: OFF"}
-</button>
+        <button
+          className={canEdit ? "edit-btn on" : "edit-btn off"}
+          onClick={() => {
+            if (!requirePayment()) return;
+          }}
+        >
+          {canEdit ? "Editing: ON" : "Editing: OFF"}
+        </button>
 
       </div>
 
@@ -140,111 +148,111 @@ const canEdit = isPaid;
 
           <div className="ee-form-field">
             <label>Full Name</label>
-            <input name="fullName" value={info.fullName} onChange={handleInfoChange}   disabled={!canEdit}
-    onFocus={() => {
-      if (!canEdit) {
-        requirePayment();
-      }
-    }}
-    placeholder="Enter your full name"
-  />
- 
+            <input name="fullName" value={info.fullName} onChange={handleInfoChange} disabled={!canEdit}
+              onFocus={() => {
+                if (!canEdit) {
+                  requirePayment();
+                }
+              }}
+              placeholder="Enter your full name"
+            />
+
           </div>
 
           <div className="ee-form-field">
             <label>Email</label>
-            <input name="email" value={info.email} onChange={handleInfoChange}  disabled={!canEdit}
-    onFocus={() => {
-      if (!canEdit) {
-        requirePayment();
-      }
-    }}
-    placeholder="Enter your Email"
-  /> 
+            <input name="email" value={info.email} onChange={handleInfoChange} disabled={!canEdit}
+              onFocus={() => {
+                if (!canEdit) {
+                  requirePayment();
+                }
+              }}
+              placeholder="Enter your Email"
+            />
           </div>
 
           <div className="ee-form-field">
             <label>Telephone</label>
             <input name="phone" value={info.phone} onChange={handleInfoChange} disabled={!canEdit}
-    onFocus={() => {
-      if (!canEdit) {
-        requirePayment();
-      }
-    }}
-    placeholder="Enter your Telephone"
- />
+              onFocus={() => {
+                if (!canEdit) {
+                  requirePayment();
+                }
+              }}
+              placeholder="Enter your Telephone"
+            />
           </div>
 
           <div className="ee-form-field">
             <label>Address</label>
-            <input name="address" value={info.address} onChange={handleInfoChange}  disabled={!canEdit}
-    onFocus={() => {
-      if (!canEdit) {
-        requirePayment();
-      }
-    }}
-    placeholder="Address"
-  /> 
+            <input name="address" value={info.address} onChange={handleInfoChange} disabled={!canEdit}
+              onFocus={() => {
+                if (!canEdit) {
+                  requirePayment();
+                }
+              }}
+              placeholder="Address"
+            />
           </div>
 
           <div className="ee-form-field">
             <label>State</label>
-            <input name="state" value={info.state} onChange={handleInfoChange}  disabled={!canEdit}
-    onFocus={() => {
-      if (!canEdit) {
-        requirePayment();
-      }
-    }}
-    placeholder="Enter your State"
-  />
+            <input name="state" value={info.state} onChange={handleInfoChange} disabled={!canEdit}
+              onFocus={() => {
+                if (!canEdit) {
+                  requirePayment();
+                }
+              }}
+              placeholder="Enter your State"
+            />
           </div>
 
           <div className="ee-form-field">
             <label>City</label>
-            <input name="city" value={info.city} onChange={handleInfoChange}  disabled={!canEdit}
-    onFocus={() => {
-      if (!canEdit) {
-        requirePayment();
-      }
-    }}
-    placeholder="Enter your City"
-  /> 
+            <input name="city" value={info.city} onChange={handleInfoChange} disabled={!canEdit}
+              onFocus={() => {
+                if (!canEdit) {
+                  requirePayment();
+                }
+              }}
+              placeholder="Enter your City"
+            />
           </div>
 
           <div className="ee-form-field">
             <label>Zip Code</label>
-            <input name="zip" value={info.zip} onChange={handleInfoChange}  disabled={!canEdit}
-    onFocus={() => {
-      if (!canEdit) {
-        requirePayment();
-      }
-    }}
-    placeholder="Enter Zip Code"
-  />
+            <input name="zip" value={info.zip} onChange={handleInfoChange} disabled={!canEdit}
+              onFocus={() => {
+                if (!canEdit) {
+                  requirePayment();
+                }
+              }}
+              placeholder="Enter Zip Code"
+            />
           </div>
 
           <div className="ee-form-field">
             <label>LinkedIn</label>
-            <input name="linkedin" value={info.linkedin} onChange={handleInfoChange}  disabled={!canEdit}
-    onFocus={() => {
-      if (!canEdit) {
-        requirePayment();
-      }
-    }}
-    placeholder="Enter your LinkedIn Profile link"
-  />
+            <input name="linkedin" value={info.linkedin} onChange={handleInfoChange} disabled={!canEdit}
+              onFocus={() => {
+                if (!canEdit) {
+                  requirePayment();
+                }
+              }}
+              placeholder="Enter your LinkedIn Profile link"
+            />
           </div>
 
           <div className="ee-form-field ee-form-full">
             <label>Engineer ID</label>
-            <input name="engineerId" value={info.engineerId} onChange={handleInfoChange}  disabled={!canEdit}
-    onFocus={() => {
-      if (!canEdit) {
-        requirePayment();
-      }
-    }}
-    placeholder="Enter your eignineer ID"
-   />
+            <input name="engineerId" value={info.engineerId} onChange={handleInfoChange} disabled={!canEdit}
+              onFocus={() => {
+                if (!canEdit) {
+                  requirePayment();
+                }
+              }}
+              placeholder="Enter your eignineer ID"
+            />
           </div>
 
         </div>
@@ -255,16 +263,38 @@ const canEdit = isPaid;
       </div>
 
       {/* ---------- A4 RESUME ---------- */}
-      <div className="ee-a4" ref={resumeRef}>
-        <div className="ee-resume">
+      <div className="ee-a4" ref={resumeRef} style={{ position: "relative" }}>
+  <Watermark show={!canEdit} />
+
+  <div className="ee-resume">
+
 
           {/* LEFT SIDEBAR */}
           <aside className="ee-sidebar">
 
-            <div className="ee-photo-wrapper" onClick={triggerProfileSelect}>
-              <img src={profileImage} alt="Profile" className="ee-photo" />
-              <input type="file" accept="image/*" ref={profileInputRef} style={{ display: "none" }} onChange={handleProfileUpload} />
-            </div>
+           
+           <div
+  className={`ee-photo-wrapper ${!canEdit ? "locked" : ""}`}
+  onClick={handleProfileClick}
+  title={canEdit ? "Click to change photo" : "Unlock to change photo"}
+>
+  <img src={profileImage} alt="Profile" className="ee-photo" />
+
+  <input
+    type="file"
+    accept="image/*"
+    ref={profileInputRef}
+    style={{ display: "none" }}
+    onChange={handleProfileUpload}
+  />
+
+  {!canEdit && (
+    <div className="ee-photo-lock">
+      🔒 Premium
+    </div>
+  )}
+</div>
+
 
             <div className="ee-qr-wrapper">
               {qrDataUrl ? (
@@ -398,13 +428,10 @@ const canEdit = isPaid;
           </main>
 
           <PaymentGate
-  open={showPaymentModal}
-  onClose={() => setShowPaymentModal(false)}
-  onSuccess={(user) => {
-    setUser(user);              // 🔥 update AuthContext
-    handlePaymentSuccess(user); // 🔓 unlock template
-  }}
-/>
+            open={showPaymentModal}
+            onClose={() => setShowPaymentModal(false)}
+            onSuccess={handlePaymentSuccess}
+          />
 
         </div>
       </div>

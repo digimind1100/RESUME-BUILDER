@@ -1,0 +1,16 @@
+.resume-watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-25deg);
+  opacity: 0.20;               /* very light */
+  pointer-events: none;        /* not clickable */
+  user-select: none;           /* not selectable */
+  z-index: 5;                  /* above content */
+}
+
+.resume-watermark img {
+  width: 420px;                /* adjust if needed */
+  max-width: 80%;
+  filter: grayscale(100%);
+}

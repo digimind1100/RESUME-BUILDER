@@ -462,3 +462,20 @@
   cursor: pointer;
   font-size: 12px;
 }
+.av-profile-wrapper.locked {
+  cursor: not-allowed;
+  position: relative;
+}
+
+.av-profile-wrapper.locked::after {
+  content: "🔒";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  color: white;
+  border-radius: 50%;
+}

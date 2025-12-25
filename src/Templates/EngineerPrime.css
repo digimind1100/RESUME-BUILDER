@@ -62,17 +62,23 @@
 /* -----------------------------------------------------
    A4 PAGE
 ----------------------------------------------------- */
+/* FORCE SAME CENTERING AS MINI FORM */
 .ep-a4 {
-  width: 210mm;
-  min-height: 297mm;
-  margin: auto;
-  background: #fff;
-  box-shadow: 0 0 30px rgba(0,0,0,0.2);
+  max-width: 210mm;          /* 🔥 same as A4 */
+  margin: 40px auto;         /* 🔥 centers under mini form */
+  padding: 0;
+  box-sizing: border-box;
 }
 
 .ep-resume {
+  width: 100%;
+  min-height: 297mm;
+  background: #ffffff;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
   display: flex;
+  box-sizing: border-box;
 }
+
 
 /* -----------------------------------------------------
    SIDEBAR

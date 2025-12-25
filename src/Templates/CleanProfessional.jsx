@@ -7,13 +7,14 @@ import html2canvas from "html2canvas";
 import usePaymentGuard from "../hooks/usePaymentGuard";
 import PaymentGate from "../components/payment/PaymentGate";
 import { useAuth } from "../context/AuthContext";
+import Watermark from "../components/Watermark";
 
 const CleanProfessional = () => {
   const resumeRef = useRef(null);
   const navigate = useNavigate();
 
-      const { user, setUser } = useAuth();
-  
+  const { user, setUser } = useAuth();
+
   const {
     isPaid,
     showPaymentModal,
@@ -21,28 +22,35 @@ const CleanProfessional = () => {
     requirePayment,
     handlePaymentSuccess,
   } = usePaymentGuard("CleanProfessional"); // 🔴 TEMPLATE NAME
-  
+
   const canEdit = isPaid;
   /* ---------------- EDIT MODE TOGGLE ---------------- */
-  
+
 
   /* ---------------- PROFILE IMAGE UPLOAD ---------------- */
   const [profileImage, setProfileImage] = useState("/images/cleanprofileimage.png");
   const fileInputRef = useRef(null);
 
   const handleImageUpload = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setProfileImage(imageUrl);
-    }
-  };
+    if (!canEdit) return; // 🔒 premium guard
 
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const imageUrl = URL.createObjectURL(file);
+    setProfileImage(imageUrl);
+  };
   const triggerFileSelect = () => {
+    if (!canEdit) {
+      requirePayment(); // 🔥 open payment modal
+      return;
+    }
+
     if (fileInputRef.current) {
       fileInputRef.current.click();
     }
   };
+
 
   /* ---------------- DOWNLOAD PDF ---------------- */
   const handleDownloadPDF = async () => {
@@ -78,25 +86,31 @@ const CleanProfessional = () => {
         <button onClick={handleReset}>Reset</button>
 
         {/* --- EDIT TOGGLE BUTTON --- */}
-         <button
-  className={canEdit ? "edit-btn on" : "edit-btn off"}
-  onClick={() => {
-    if (requirePayment()) return;
-  }}
->
-  {canEdit ? "Editing: ON" : "Editing: OFF"}
-</button>
+        <button
+          className={canEdit ? "edit-btn on" : "edit-btn off"}
+          onClick={() => {
+            if (!requirePayment()) return;
+          }}
+        >
+          {canEdit ? "Editing: ON" : "Editing: OFF"}
+        </button>
       </div>
 
       {/* ========= A4 RESUME AREA ========= */}
-      <div className="clean-professional-a4" ref={resumeRef}>
-        <div className="clean-professional-resume">
+      <div className="cp-a4" ref={resumeRef} style={{ position: "relative" }}>
+        <Watermark show={!canEdit} />
+        <div className="cp-resume">
+
 
           {/* ============= HEADER ============= */}
           <header className="cp-header">
 
             {/* Profile Photo Left */}
-            <div className="cp-photo-wrapper cp-photo-overlap" onClick={triggerFileSelect}>
+            <div
+              className={`cp-photo-wrapper cp-photo-overlap ${!canEdit ? "locked" : ""}`}
+              onClick={triggerFileSelect}
+              title={!canEdit ? "Unlock to change profile image" : "Click to change photo"}
+            >
               <img src={profileImage} alt="Profile" className="cp-photo" />
 
               <input
@@ -107,6 +121,7 @@ const CleanProfessional = () => {
                 onChange={handleImageUpload}
               />
             </div>
+
 
             {/* Name + Title Right */}
             <div className="cp-header-text">
@@ -295,10 +310,10 @@ const CleanProfessional = () => {
               </section>
             </main>
             <PaymentGate
-  open={showPaymentModal}
-  onClose={() => setShowPaymentModal(false)}
-  onSuccess={handlePaymentSuccess}
-/>
+              open={showPaymentModal}
+              onClose={() => setShowPaymentModal(false)}
+              onSuccess={handlePaymentSuccess}
+            />
 
           </div>
 

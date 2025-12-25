@@ -9,23 +9,24 @@ import QRCode from "qrcode";
 import usePaymentGuard from "../hooks/usePaymentGuard";
 import PaymentGate from "../components/payment/PaymentGate";
 import { useAuth } from "../context/AuthContext";
+import Watermark from "../components/Watermark";
 
 
 export default function DataElite() {
   const navigate = useNavigate();
   const resumeRef = useRef(null);
 
- const { user, setUser } = useAuth();
+  const { user, setUser } = useAuth();
 
-const {
-  isPaid,
-  showPaymentModal,
-  setShowPaymentModal,
-  requirePayment,
-  handlePaymentSuccess,
-} = usePaymentGuard("DataElite"); // 🔴 TEMPLATE NAME
+  const {
+    isPaid,
+    showPaymentModal,
+    setShowPaymentModal,
+    requirePayment,
+    handlePaymentSuccess,
+  } = usePaymentGuard("DataElite"); // 🔴 TEMPLATE NAME
 
-const canEdit = isPaid;
+  const canEdit = isPaid;
 
 
   /* -------- PROFILE IMAGE UPLOAD -------- */
@@ -34,15 +35,21 @@ const canEdit = isPaid;
   );
   const profileInputRef = useRef(null);
 
-  const handleProfileUpload = (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    setProfileImage(URL.createObjectURL(file));
-  };
+const handleProfileUpload = (e) => {
+  if (!canEdit) return; // 🔒 safety
+  const file = e.target.files[0];
+  if (!file) return;
+  setProfileImage(URL.createObjectURL(file));
+};
 
-  const triggerProfileSelect = () => {
-    if (profileInputRef.current) profileInputRef.current.click();
-  };
+const triggerProfileSelect = () => {
+  if (!canEdit) {
+    requirePayment(); // 🔥 open payment modal
+    return;
+  }
+  profileInputRef.current?.click();
+};
+
 
   /* -------- QR CODE GENERATION -------- */
   const [qrContent, setQrContent] = useState(
@@ -91,13 +98,13 @@ const canEdit = isPaid;
 
         {/* EDIT BUTTON */}
         <button
-  className={canEdit ? "edit-btn on" : "edit-btn off"}
-  onClick={() => {
-    if (requirePayment()) return;
-  }}
->
-  {canEdit ? "Editing: ON" : "Editing: OFF"}
-</button>
+          className={canEdit ? "edit-btn on" : "edit-btn off"}
+          onClick={() => {
+            if (!requirePayment()) return;
+          }}
+        >
+          {canEdit ? "Editing: ON" : "Editing: OFF"}
+        </button>
 
       </div>
 
@@ -119,22 +126,32 @@ const canEdit = isPaid;
       </div>
 
       {/* ========== A4 RESUME AREA ========== */}
-      <div className="de-a4" ref={resumeRef}>
+      <div className="de-a4" ref={resumeRef} style={{ position: "relative" }}>
+        <Watermark show={!canEdit} />
         <div className="de-resume">
+
           {/* ===== LEFT SIDEBAR ===== */}
           <aside className="de-sidebar">
 
             {/* Profile image */}
-            <div className="de-photo-wrapper" onClick={triggerProfileSelect}>
-              <img src={profileImage} alt="Profile" className="de-photo" />
-              <input
-                type="file"
-                accept="image/*"
-                ref={profileInputRef}
-                style={{ display: "none" }}
-                onChange={handleProfileUpload}
-              />
-            </div>
+           <div
+  className={`de-photo-wrapper ${!canEdit ? "locked" : ""}`}
+  onClick={triggerProfileSelect}
+  title={canEdit ? "Click to change photo" : "Unlock to change photo"}
+>
+  <img src={profileImage} alt="Profile" className="de-photo" />
+
+  <input
+    type="file"
+    accept="image/*"
+    ref={profileInputRef}
+    style={{ display: "none" }}
+    onChange={handleProfileUpload}
+  />
+
+  {!canEdit && <div className="de-photo-lock">🔒 Premium</div>}
+</div>
+
 
             {/* CONTACT */}
             <section className="de-side-section">
@@ -370,13 +387,10 @@ const canEdit = isPaid;
           </main>
 
           <PaymentGate
-  open={showPaymentModal}
-  onClose={() => setShowPaymentModal(false)}
-  onSuccess={(user) => {
-    setUser(user);              // 🔥 update AuthContext
-    handlePaymentSuccess(user); // 🔓 unlock template
-  }}
-/>
+            open={showPaymentModal}
+            onClose={() => setShowPaymentModal(false)}
+            onSuccess={handlePaymentSuccess}
+          />
 
         </div>
       </div>

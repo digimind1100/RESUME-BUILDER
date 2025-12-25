@@ -9,6 +9,8 @@ import usePaymentGuard from "../hooks/usePaymentGuard";
 import PaymentGate from "../components/payment/PaymentGate";
 import { useAuth } from "../context/AuthContext";
 //end
+import Watermark from "../components/Watermark";
+
 
 export default function MedicalElites() {
   const resumeRef = useRef(null);
@@ -16,24 +18,29 @@ export default function MedicalElites() {
 
   const { user, setUser } = useAuth();
 
-const {
-  isPaid,
-  showPaymentModal,
-  setShowPaymentModal,
-  requirePayment,
-  handlePaymentSuccess,
-} = usePaymentGuard("MedicalElite"); // 🔴 TEMPLATE NAME
+  const {
+    isPaid,
+    showPaymentModal,
+    setShowPaymentModal,
+    requirePayment,
+    handlePaymentSuccess,
+  } = usePaymentGuard("MedicalElite"); // 🔴 TEMPLATE NAME
 
-const canEdit = isPaid;
+  const canEdit = isPaid;
 
 
   const [profileImage, setProfileImage] = useState("/images/medicalelitesprofileimage.png");
   const fileInputRef = useRef(null);
 
   const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) setProfileImage(URL.createObjectURL(file));
-  };
+  if (!canEdit) return; // 🔒 safety
+
+  const file = e.target.files[0];
+  if (!file) return;
+
+  setProfileImage(URL.createObjectURL(file));
+};
+
 
   const triggerFileSelect = () => fileInputRef.current.click();
 
@@ -62,30 +69,48 @@ const canEdit = isPaid;
         <button onClick={handleReset}>Reset</button>
 
         {/* EDIT TOGGLE BUTTON */}
-       {/* payment start  */}
-       <button
-  className={canEdit ? "edit-btn on" : "edit-btn off"}
-  onClick={() => {
-    if (requirePayment()) return;
-  }}
->
-  {canEdit ? "Editing: ON" : "Editing: OFF"}
-</button>
-{/* end   */}
+        {/* payment start  */}
+        <button
+          className={canEdit ? "edit-btn on" : "edit-btn off"}
+          onClick={() => {
+            if (!requirePayment()) return;
+          }}
+        >
+          {canEdit ? "Editing: ON" : "Editing: OFF"}
+        </button>
+        {/* end   */}
 
       </div>
 
       {/* A4 PAGE */}
-      <div className="me-a4" ref={resumeRef}>
+      <div className="me-a4" ref={resumeRef} style={{ position: "relative" }}>
+        <Watermark show={!canEdit} />
+
         <div className="me-resume">
+
 
           {/* LEFT SIDEBAR */}
           <aside className="me-sidebar">
 
-            <div className="me-photo-wrapper" onClick={triggerFileSelect}>
-              <img src={profileImage} alt="Profile" className="me-photo" />
-              <input type="file" accept="image/*" ref={fileInputRef} style={{ display: "none" }} onChange={handleImageUpload} />
-            </div>
+          {/* PROFILE IMAGE (PREMIUM LOCKED) */}
+<div
+  className={`me-photo-wrapper ${!canEdit ? "locked" : ""}`}
+  onClick={() => {
+    if (!requirePayment()) return; // unpaid → payment modal
+    triggerFileSelect();           // paid → file picker
+  }}
+  title={canEdit ? "Click to change photo" : "Unlock to change photo"}
+>
+  <img src={profileImage} alt="Profile" className="me-photo" />
+  <input
+    type="file"
+    accept="image/*"
+    ref={fileInputRef}
+    style={{ display: "none" }}
+    onChange={handleImageUpload}
+  />
+</div>
+
 
             <h1 className="me-name" contentEditable={canEdit} suppressContentEditableWarning>
               DR. EMMA WILLIAMS
@@ -104,7 +129,7 @@ const canEdit = isPaid;
                   <span className="me-icon">
                     {/* Phone SVG */}
                     <svg width="16" height="16" fill="#0066cc" viewBox="0 0 24 24">
-                      <path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1V21a1 1 0 01-1 1C10.52 22 2 13.48 2 3a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.46.57 3.58a1 1 0 01-.24 1.01l-2.2 2.2z"/>
+                      <path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1V21a1 1 0 01-1 1C10.52 22 2 13.48 2 3a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.46.57 3.58a1 1 0 01-.24 1.01l-2.2 2.2z" />
                     </svg>
                   </span>
                   <span contentEditable={canEdit} suppressContentEditableWarning>
@@ -271,15 +296,11 @@ const canEdit = isPaid;
             </section>
 
           </main>
-<PaymentGate
-  open={showPaymentModal}
-  onClose={() => setShowPaymentModal(false)}
-  onSuccess={(user) => {
-    setUser(user);              // 🔥 update AuthContext
-    handlePaymentSuccess(user); // 🔓 unlock template
-  }}
-/>
-
+          <PaymentGate
+            open={showPaymentModal}
+            onClose={() => setShowPaymentModal(false)}
+            onSuccess={handlePaymentSuccess}
+          />
         </div>
       </div>
     </div>

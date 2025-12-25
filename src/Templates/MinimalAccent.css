@@ -346,3 +346,12 @@
 .edit-toggle.off {
   background: #6b7280; /* gray */
 }
+.ma-photo-wrapper {
+  cursor: pointer;
+}
+
+.ma-photo-wrapper.locked {
+  cursor: not-allowed;
+  opacity: 0.85;
+}
+

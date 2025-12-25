@@ -1,34 +1,18 @@
-import { Navigate, useLocation } from "react-router-dom";
+// src/components/guards/BuilderGuard.jsx
+import { useEffect } from "react";
 import { useAuth } from "../../context/AuthContext";
+import usePaymentGuard from "../../hooks/usePaymentGuard";
 
 export default function BuilderGuard({ children }) {
-  const { user, initializing } = useAuth();
-  const location = useLocation();
+  const { user } = useAuth();
+  const { isPaid, requirePayment } = usePaymentGuard();
 
-console.log("FINAL GUARD CHECK:", user, initializing);
+  useEffect(() => {
+    if (user && !isPaid) {
+      requirePayment(); // 🔥 open modal instead of redirect
+    }
+  }, [user, isPaid]);
 
-
-  // 🔄 wait until auth finishes loading
-  if (initializing) {
-    return <div className="p-6">Checking access...</div>;
-  }
-
-  // ❌ not logged in
-  if (!user) {
-    return <Navigate to="/" replace />;
-  }
-
-  // ❌ logged in but not paid
-  if (!user.isPaid) {
-    return (
-      <Navigate
-        to="/payment"
-        replace
-        state={{ from: location.pathname }}
-      />
-    );
-  }
-
-  // ✅ logged in + paid
+  // ✅ ALWAYS render children (modal controls access)
   return children;
 }

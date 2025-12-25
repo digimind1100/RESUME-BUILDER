@@ -337,7 +337,7 @@
     max-width: 100%;
   }
 }
-.clean-professional-a4 {
+.cp-a4 {
   width: 210mm;
   min-height: 297mm;
   background: white;
@@ -437,4 +437,21 @@
 
 .edit-toggle.off {
   background: #6b7280; /* gray */
+}
+.cp-photo-wrapper.locked {
+  cursor: not-allowed;
+  position: relative;
+}
+
+.cp-photo-wrapper.locked::after {
+  content: "🔒";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  color: white;
+  border-radius: 50%;
 }

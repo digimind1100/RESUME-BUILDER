@@ -8,6 +8,8 @@ import QRCode from "qrcode";
 import usePaymentGuard from "../hooks/usePaymentGuard";
 import PaymentGate from "../components/payment/PaymentGate";
 import { useAuth } from "../context/AuthContext";
+import Watermark from "../components/Watermark";
+
 
 
 export default function SoftTech() {
@@ -35,9 +37,11 @@ export default function SoftTech() {
   const profileInputRef = useRef(null);
 
   const handleProfileUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) setProfileImage(URL.createObjectURL(file));
-  };
+  if (!canEdit) return;   // extra safety
+  const file = e.target.files[0];
+  if (file) setProfileImage(URL.createObjectURL(file));
+};
+
 
   const triggerProfileSelect = () => {
     if (profileInputRef.current) profileInputRef.current.click();
@@ -245,8 +249,10 @@ export default function SoftTech() {
       </div>
 
       {/* ---------- A4 RESUME ---------- */}
-      <div className="st-a4" ref={resumeRef}>
+      <div className="st-a4" ref={resumeRef} style={{ position: "relative" }}>
+        <Watermark show={!canEdit} />
         <div className="st-resume">
+
 
           {/* ===== LEFT SIDEBAR ===== */}
           <aside className="st-sidebar">
@@ -351,17 +357,17 @@ export default function SoftTech() {
                 <div className="st-header-line" />
               </div>
 
-              <div className="st-header-photo" onClick={triggerProfileSelect}
-              >
-                <img src={profileImage} alt="Profile" />
-                <input
-                  type="file"
-                  accept="image/*"
-                  ref={profileInputRef}
-                  style={{ display: "none" }}
-                  onChange={handleProfileUpload}
-                />
-              </div>
+              <div
+        className="st-header-photo"onClick={() => {if (!requirePayment()) return; triggerProfileSelect();}}>
+        <img src={profileImage} alt="Profile" />
+          <input
+            type="file"
+            accept="image/*"
+            ref={profileInputRef}
+            style={{ display: "none" }}
+            onChange={handleProfileUpload}
+       />
+             </div>
             </header>
 
             {/* ABOUT ME */}
@@ -509,16 +515,12 @@ export default function SoftTech() {
                   Udacity — 2016
                 </p>
               </div>
-
             </section>
-
             <PaymentGate
               open={showPaymentModal}
               onClose={() => setShowPaymentModal(false)}
               onSuccess={handlePaymentSuccess}
             />
-
-
           </main>
         </div>
       </div>

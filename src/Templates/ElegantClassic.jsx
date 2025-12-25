@@ -8,6 +8,7 @@ import html2canvas from "html2canvas";
 import usePaymentGuard from "../hooks/usePaymentGuard";
 import PaymentGate from "../components/payment/PaymentGate";
 import { useAuth } from "../context/AuthContext";
+import Watermark from "../components/Watermark";
 
 
 const ElegantClassic = () => {
@@ -16,15 +17,15 @@ const ElegantClassic = () => {
 
     const { user, setUser } = useAuth();
 
-const {
-  isPaid,
-  showPaymentModal,
-  setShowPaymentModal,
-  requirePayment,
-  handlePaymentSuccess,
-} = usePaymentGuard("ElegantClassic"); // 🔴 TEMPLATE NAME
+    const {
+        isPaid,
+        showPaymentModal,
+        setShowPaymentModal,
+        requirePayment,
+        handlePaymentSuccess,
+    } = usePaymentGuard("ElegantClassic"); // 🔴 TEMPLATE NAME
 
-const canEdit = isPaid;
+    const canEdit = isPaid;
 
 
 
@@ -62,20 +63,23 @@ const canEdit = isPaid;
                 <button onClick={handleReset}>Reset</button>
 
                 {/* EDIT BUTTON */}
-              <button
-  className={canEdit ? "edit-btn on" : "edit-btn off"}
-  onClick={() => {
-    if (requirePayment()) return;
-  }}
->
-  {canEdit ? "Editing: ON" : "Editing: OFF"}
-</button>
+                <button
+                    className={canEdit ? "edit-btn on" : "edit-btn off"}
+                    onClick={() => {
+                        if (!requirePayment()) return;
+                    }}
+                >
+                    {canEdit ? "Editing: ON" : "Editing: OFF"}
+                </button>
 
             </div>
 
             {/* A4 Resume */}
-            <div className="ec-a4" ref={resumeRef}>
+            <div className="ec-a4" ref={resumeRef} style={{ position: "relative" }}>
+                <Watermark show={!canEdit} />
+
                 <div className="ec-resume">
+
 
                     {/* HEADER */}
                     <header className="ec-header">
@@ -249,18 +253,18 @@ const canEdit = isPaid;
 
                             {/* CORE COMPETENCIES */}
                             <section className="ec-section">
-                              <h2 className="ec-section-title" contentEditable={canEdit}>
-                                CORE COMPETENCIES
-                              </h2>
-                              <div className="ec-section-rule" />
+                                <h2 className="ec-section-title" contentEditable={canEdit}>
+                                    CORE COMPETENCIES
+                                </h2>
+                                <div className="ec-section-rule" />
 
-                              <p className="ec-section-text" contentEditable={canEdit}>
-                                • Strategic Planning • Workflow Optimization • Coordination  
-                                <br />
-                                • Leadership Support • Documentation & Reporting  
-                                <br />
-                                • Communication • Problem Solving • Time Management
-                              </p>
+                                <p className="ec-section-text" contentEditable={canEdit}>
+                                    • Strategic Planning • Workflow Optimization • Coordination
+                                    <br />
+                                    • Leadership Support • Documentation & Reporting
+                                    <br />
+                                    • Communication • Problem Solving • Time Management
+                                </p>
                             </section>
 
                             {/* PROFESSIONAL EXPERIENCE */}
@@ -397,14 +401,11 @@ const canEdit = isPaid;
                             </section>
 
                         </main>
-<PaymentGate
-  open={showPaymentModal}
-  onClose={() => setShowPaymentModal(false)}
-  onSuccess={(user) => {
-    setUser(user);              // 🔥 update AuthContext
-    handlePaymentSuccess(user); // 🔓 unlock template
-  }}
-/>
+                        <PaymentGate
+                            open={showPaymentModal}
+                            onClose={() => setShowPaymentModal(false)}
+                            onSuccess={handlePaymentSuccess}
+                        />
 
                     </div>
                 </div>
