@@ -7,6 +7,10 @@ import { paginateWorkEntries } from "../utils/paginateWorkEntries";
 import { paginateSkillsEntries } from "../utils/paginateSkillsEntries";
 import WorkPreview from "./WorkPreview";
 import SkillsPreview from "./SkillsPreview";
+import usePaymentGuard from "../hooks/usePaymentGuard";
+import PaymentGate from "../components/payment/PaymentGate";
+import { useAuth } from "../context/AuthContext";
+
 
 export default function PreviewPanel({
   formData,
@@ -45,6 +49,37 @@ export default function PreviewPanel({
 
   const [page1Skills, setPage1Skills] = useState([]);
   const [page2Skills, setPage2Skills] = useState([]);
+
+
+  const { user, setUser } = useAuth();
+
+const {
+  isPaid,
+  showPaymentModal,
+  setShowPaymentModal,
+  requirePayment,
+  handlePaymentSuccess,
+} = usePaymentGuard("ClassicPreview"); // or "ProfessionalQRPreview"
+
+const canEdit = isPaid;
+const triggerProfileSelect = () => {
+  if (!canEdit) {
+    requirePayment();
+    return;
+  }
+  fileInputRef.current?.click();
+};
+
+const handleProfileUpload = (e) => {
+  if (!canEdit) return;
+
+  const file = e.target.files[0];
+  if (!file) return;
+
+  setProfileImage(URL.createObjectURL(file));
+};
+
+
 
   // ================= EFFECTS =================
   useEffect(() => {
@@ -137,7 +172,9 @@ export default function PreviewPanel({
         <div className="preview-left" style={{ backgroundColor: theme.left }} ref={leftRef}>
           <div ref={topSectionRef}>
             {/* Profile Info */}
-            <div className="profile-pic-wrapper">
+         
+            <div className="profile-pic-wrapper" onClick={() => {if (!requirePayment()) return;triggerProfileSelect();}}>
+
               <img
                 id="profilePicPreview"
                 src={formData?.profilePic || "images/engineereliteprofileimage.png"}
@@ -282,6 +319,14 @@ export default function PreviewPanel({
           </div>
         </div>
       )}
+         <PaymentGate
+        open={showPaymentModal}
+        onClose={() => setShowPaymentModal(false)}
+        onSuccess={(user) => {
+          setUser(user);
+          handlePaymentSuccess(user);
+        }}
+      />
     </div>
   );
 }

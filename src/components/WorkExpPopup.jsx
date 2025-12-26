@@ -10,7 +10,7 @@ export default function WorkExpPopup({ jobTitle, onClose, onSelect }) {
     const fetchWork = async () => {
       try {
         setLoading(true);
-        const res = await fetch("http://localhost:3001/api/suggest", {
+        const res = await fetch("http://localhost:3002/api/suggest", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ type: "work", jobTitle }),
@@ -105,6 +105,7 @@ export default function WorkExpPopup({ jobTitle, onClose, onSelect }) {
           Close
         </button>
       </div>
-    </div>
+   
+   </div>
   );
 }

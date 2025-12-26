@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
-dotenv.config();
+dotenv.config(); // 🔴 MUST be on top
+
 import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
@@ -7,22 +8,19 @@ import mongoose from "mongoose";
 import authRoutes from "./routes/authRoutes.js";
 import paymentRoutes from "./routes/paymentRoutes.js";
 
-
-dotenv.config();
-
 const app = express();
 
 /* ---------- MIDDLEWARE ---------- */
 app.use(cors());
-app.use(express.json()); // 🔴 VERY IMPORTANT
+app.use(express.json());
 
 /* ---------- ROUTES ---------- */
-app.use("/api/auth", authRoutes);        // ✅ THIS FIXES 404
-app.use("/api/payments", paymentRoutes); // (later use)
+app.use("/api/auth", authRoutes);
+app.use("/api/payments", paymentRoutes);
 
 /* ---------- TEST ROUTE ---------- */
 app.get("/", (req, res) => {
-  res.send("API running");
+  res.send("Backend API running");
 });
 
 /* ---------- DB ---------- */
@@ -34,9 +32,8 @@ mongoose
 /* ---------- SERVER ---------- */
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Backend running on http://localhost:${PORT}`);
 });
 
-console.log("JWT_SECRET:", process.env.JWT_SECRET);
-
-
+/* ---------- DEBUG ---------- */
+console.log("JWT_SECRET:", process.env.JWT_SECRET ? "FOUND" : "MISSING");
