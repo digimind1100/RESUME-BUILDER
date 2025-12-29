@@ -474,3 +474,30 @@
   transform: rotate(-30deg);
   user-select: none;
 }
+
+/* ===============================
+   PREMIUM LOCK – TeacherElite
+================================ */
+
+.te-header-photo-wrap {
+  position: relative;
+}
+
+.te-header-photo-wrap.locked::after {
+  content: "🔒";
+  position: absolute;
+  inset: 0;
+
+  background: rgba(0, 0, 0, 0.45);
+  border-radius: 50%;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;   /* 👈 lock goes down */
+
+  padding-bottom: 14px;   /* 👈 keeps face clear */
+  font-size: 26px;
+  color: white;
+
+  pointer-events: none;   /* 👈 clicks go through */
+}

@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import QRCode from "qrcode";
-import PaymentModal from "../components/payment/PaymentModal";
 import { useAuth } from "../context/AuthContext";
 import usePaymentGuard from "../hooks/usePaymentGuard";
 import PaymentGate from "../components/payment/PaymentGate";
@@ -320,7 +319,7 @@ Subject: ${qrForm.subject}
                 <div className="te-header-wave" />
 
                 <div
-                  className="te-header-photo-wrap"
+                 className={`te-header-photo-wrap ${!canEdit ? "locked" : ""}`}
                   contentEditable={false}
                   onMouseDown={(e) => {
                     e.preventDefault();

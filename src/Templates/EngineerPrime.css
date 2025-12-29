@@ -277,3 +277,31 @@
 .edit-toggle.off {
   background: #6b7280; /* gray */
 }
+/* ===============================
+   PREMIUM LOCK – EngineerPrime
+================================ */
+
+.ep-photo-hex {
+  position: relative;
+}
+
+/* Dark overlay that follows hex shape */
+.ep-photo-hex.locked::after {
+  content: "🔒";
+  position: absolute;
+  inset: 0;
+
+  background: rgba(0, 0, 0, 0.45);
+  clip-path: inherit;      /* 👈 keeps hexagon shape */
+  border-radius: inherit;  /* safety */
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;   /* 👈 move lock downward */
+
+  padding-bottom: 14px;    /* 👈 keep face clear */
+  font-size: 26px;         /* 👈 reduced size */
+  color: #fff;
+
+  pointer-events: none;
+}

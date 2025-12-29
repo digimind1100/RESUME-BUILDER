@@ -55,7 +55,7 @@ const MinimalAccent = () => {
     }
   };
 
-
+  
   // Download PDF
   const handleDownloadPDF = async () => {
     const element = resumeRef.current;

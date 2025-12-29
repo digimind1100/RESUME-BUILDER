@@ -196,3 +196,30 @@
 .edit-toggle.off {
   background: #6b7280; /* gray */
 }
+
+/* ===============================
+   PREMIUM LOCK – MedicalElite
+================================ */
+
+.me-photo-wrapper {
+  position: relative;
+}
+
+.me-photo-wrapper.locked::after {
+  content: "🔒";
+  position: absolute;
+  inset: 0;
+
+  background: rgba(0, 0, 0, 0.30);
+  border-radius: 50%;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;   /* 👈 move lock downward */
+
+  padding-bottom: 14px;   /* 👈 keeps face visible */
+  font-size: 26px;
+  color: white;
+
+  pointer-events: none;   /* 👈 click still goes to wrapper */
+}

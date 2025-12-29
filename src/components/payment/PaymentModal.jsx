@@ -39,7 +39,7 @@ export default function PaymentModal({ onClose, onSuccess }) {
     setPromoLoading(true);
 
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("rb_auth_token");
 
       const res = await fetch("/api/promo/redeem", {
         method: "POST",
@@ -77,6 +77,10 @@ export default function PaymentModal({ onClose, onSuccess }) {
         </p>
 
         <div className="payment-price">Rs 999</div>
+        <div className="payment-note">
+  One-time payment · Valid for 30 days
+</div>
+
 
         {/* PAYMENT METHODS */}
         {!success && (

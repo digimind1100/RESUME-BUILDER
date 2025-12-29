@@ -460,3 +460,29 @@
 .st-header-photo {
   cursor: pointer;
 }
+/* ===============================
+   PREMIUM LOCK – SoftTech
+================================ */
+
+.st-header-photo {
+  position: relative;
+}
+
+.st-header-photo.locked::after {
+  content: "🔒";
+  position: absolute;
+  inset: 0;
+
+  background: rgba(0, 0, 0, 0.45);
+  border-radius: 50%;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;   /* 👈 lock goes down */
+
+  padding-bottom: 5px;   /* 👈 keeps face visible */
+  font-size: 20px;
+  color: white;
+
+  pointer-events: none;   /* 👈 click passes through */
+}

@@ -358,7 +358,8 @@ export default function SoftTech() {
               </div>
 
               <div
-        className="st-header-photo"onClick={() => {if (!requirePayment()) return; triggerProfileSelect();}}>
+        className={`st-header-photo ${!canEdit ? "locked" : ""}`}
+      onClick={() => {if (!requirePayment()) return; triggerProfileSelect();}}>
         <img src={profileImage} alt="Profile" />
           <input
             type="file"

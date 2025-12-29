@@ -459,3 +459,30 @@
   pointer-events: none;
   border-radius: inherit;
 }
+/* ===============================
+   PREMIUM LOCK – DataElite
+================================ */
+
+.de-photo-wrapper {
+  position: relative;
+}
+
+.de-photo-lock {
+  position: absolute;
+  inset: 0;
+
+  background: rgba(0, 0, 0, 0.45);
+  border-radius: 50%;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;   /* 👈 push lock down */
+
+  padding-bottom: 14px;   /* 👈 keeps face clear */
+
+  font-size: 20px;        /* 👈 smaller & elegant */
+  font-weight: 600;
+  color: #fff;
+
+  pointer-events: none;   /* 👈 click passes through */
+}

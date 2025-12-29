@@ -421,6 +421,7 @@ Profile: ${profileLink}
           }}
         >
           {canEdit ? "Editing: ON" : "Editing: OFF"}
+          {!canEdit && <span className="premium-badge">PRO</span>}
         </button>
       </div>
 

@@ -9,6 +9,9 @@ import authRoutes from "./routes/authRoutes.js";
 import paymentRoutes from "./routes/paymentRoutes.js";
 import "./cron/expiryCron.js";
 import adminPromoRoutes from "./routes/adminPromoRoutes.js";
+import promoRoutes from "./routes/promoRoutes.js";
+
+
 
 const app = express();
 
