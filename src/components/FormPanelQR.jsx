@@ -13,6 +13,8 @@ export default function FormPanelQR({
   openWorkPopup = () => {},
   onAddSkillsClick = () => {},
   onGenerateQR = () => {}, // ✅ new prop for QR code generation
+    canEdit = false,
+  requirePayment = () => {},
 }) {
   const [education, setEducation] = useState({ school: "", degree: "", year: "" });
 
@@ -26,16 +28,22 @@ export default function FormPanelQR({
     }
   };
 
-  // Handle profile picture upload
-  const handleFileChange = (e) => {
-    const file = e.target?.files?.[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      setFormData((prev = {}) => ({ ...prev, profilePic: reader.result }));
-    };
-    reader.readAsDataURL(file);
-  };
+const handleWorkClickWithGuard = () => {
+  if (!canEdit) {
+    requirePayment();
+    return;
+  }
+  openWorkPopup();
+};
+
+const handleSkillsClickWithGuard = () => {
+  if (!canEdit) {
+    requirePayment();
+    return;
+  }
+  onAddSkillsClick();
+};
+
 
   // Add Education Entry
   const handleAddEducation = () => {
@@ -105,14 +113,6 @@ export default function FormPanelQR({
   return (
     <div className="form-panel">
       <h2>Personal Information</h2>
-
-      <label>Upload Profile Picture</label>
-      <input
-        type="file"
-        className="profile-input"
-        accept="image/*"
-        onChange={handleFileChange}
-      />
 
       <label>Job Title</label>
       <input
@@ -245,20 +245,22 @@ export default function FormPanelQR({
       </button>
 
       <button
-        className="add-exp-btn"
-        type="button"
-        onClick={handleOpenWorkPopup}
-      >
-        + Add Work Experience
-      </button>
+  type="button"
+  className="add-exp-btn premium-btn"
+  onClick={handleWorkClickWithGuard}
+>
+  + Add Work Experience
+  {!canEdit && <span className="lock-icon">🔒</span>}
+</button>
+<button
+  type="button"
+  className="add-skill-btn btn btn-primary mt-2 premium-btn"
+  onClick={handleSkillsClickWithGuard}
+>
+  Add Skills
+  {!canEdit && <span className="lock-icon">🔒</span>}
+</button>
 
-      <button
-        type="button"
-        className="add-skill-btn btn btn-primary mt-2"
-        onClick={handleAddSkillsClick}
-      >
-        Add Skills
-      </button>
     </div>
   );
 }

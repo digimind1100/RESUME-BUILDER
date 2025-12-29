@@ -14,6 +14,7 @@ import { useAuth } from "../context/AuthContext";
 
 export default function PreviewPanel({
   formData,
+  setFormData,
   selectedEducations,
   handleCheckboxChange,
   jobTitle,
@@ -34,7 +35,7 @@ export default function PreviewPanel({
   const topSectionRef = useRef(null);
   const rightPanelRef = useRef(null);
   const jobTitleRef = useRef(null);
-
+  const fileInputRef = useRef(null);
   const workPanelRef = useRef(null);
   const skillsPanelRef = useRef(null);
 
@@ -53,31 +54,39 @@ export default function PreviewPanel({
 
   const { user, setUser } = useAuth();
 
-const {
-  isPaid,
-  showPaymentModal,
-  setShowPaymentModal,
-  requirePayment,
-  handlePaymentSuccess,
-} = usePaymentGuard("ClassicPreview"); // or "ProfessionalQRPreview"
+  const {
+    isPaid,
+    showPaymentModal,
+    setShowPaymentModal,
+    requirePayment,
+    handlePaymentSuccess,
+  } = usePaymentGuard("ClassicProfessionalPreview"); // or "ProfessionalQRPreview"
 
-const canEdit = isPaid;
-const triggerProfileSelect = () => {
-  if (!canEdit) {
-    requirePayment();
-    return;
-  }
-  fileInputRef.current?.click();
-};
+  const canEdit = isPaid;
 
-const handleProfileUpload = (e) => {
-  if (!canEdit) return;
+  const triggerProfileSelect = () => {
+    if (!canEdit) {
+      requirePayment();
+      return;
+    }
+    fileInputRef.current?.click();
+  };
 
-  const file = e.target.files[0];
-  if (!file) return;
 
-  setProfileImage(URL.createObjectURL(file));
-};
+  const handleProfileUpload = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      setFormData(prev => ({
+        ...prev,
+        profilePic: reader.result
+      }));
+    };
+    reader.readAsDataURL(file);
+  };
+
 
 
 
@@ -172,15 +181,32 @@ const handleProfileUpload = (e) => {
         <div className="preview-left" style={{ backgroundColor: theme.left }} ref={leftRef}>
           <div ref={topSectionRef}>
             {/* Profile Info */}
-         
-            <div className="profile-pic-wrapper" onClick={() => {if (!requirePayment()) return;triggerProfileSelect();}}>
 
+            <div 
+            className="profile-pic-wrapper" 
+            onClick={triggerProfileSelect}>
               <img
-                id="profilePicPreview"
                 src={formData?.profilePic || "images/engineereliteprofileimage.png"}
                 alt="Profile"
+                style={{ cursor: "pointer" }}
               />
+
+              {!canEdit && (
+                <div className="lock-overlay" style={{ pointerEvents: "none" }}>
+                  🔒
+                </div>
+              )}
             </div>
+            <input
+              type="file"
+              accept="image/*"
+              ref={fileInputRef}
+              style={{ display: "none" }}
+              onChange={handleProfileUpload}
+            />
+
+
+
             <h2 className="preview-name">{formData?.fullName || "Your Name"}</h2>
 
             <div className="contact-info">
@@ -262,6 +288,12 @@ const handleProfileUpload = (e) => {
                 />
               </div>
             )}
+            <PaymentGate
+  open={showPaymentModal}
+  onClose={() => setShowPaymentModal(false)}
+  onSuccess={handlePaymentSuccess}
+/>
+
           </div>
         </div>
       </div>
@@ -319,14 +351,8 @@ const handleProfileUpload = (e) => {
           </div>
         </div>
       )}
-         <PaymentGate
-        open={showPaymentModal}
-        onClose={() => setShowPaymentModal(false)}
-        onSuccess={(user) => {
-          setUser(user);
-          handlePaymentSuccess(user);
-        }}
-      />
+
+
     </div>
   );
 }

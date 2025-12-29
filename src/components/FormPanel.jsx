@@ -1,7 +1,6 @@
-// FormPanel.jsx
 import React, { useState } from "react";
 import "./FormPanel.css";
-import "./ButtonSection.css"
+import "./ButtonSection.css";
 
 export default function FormPanel({
   formData = {},
@@ -10,19 +9,22 @@ export default function FormPanel({
   setSelectedEducations = () => { },
   jobTitle = "",
   setJobTitle = () => { },
-  openWorkPopup = () => { },     // Work Exp popup trigger
-  onAddSkillsClick = () => { },  // Skills popup trigger
-
+  openWorkPopup = () => { },
+  onAddSkillsClick = () => { },
+  canEdit={canEdit}
 }) {
 
-  // add to top-level state in ResumeBuilder
   const [isWorkExpPopupOpen, setIsWorkExpPopupOpen] = useState(false);
 
-  const [education, setEducation] = useState({ school: "", degree: "", year: "" });
+  const [education, setEducation] = useState({
+    school: "",
+    degree: "",
+    year: "",
+  });
 
-  // Personal info inputs -> update formData
   const handleChange = (e) => {
     const { name, value } = e.target;
+
     if (name === "school" || name === "degree" || name === "year") {
       setEducation((prev) => ({ ...prev, [name]: value }));
     } else {
@@ -30,76 +32,61 @@ export default function FormPanel({
     }
   };
 
-  // File upload
-  const handleFileChange = (e) => {
-    const file = e.target?.files?.[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      setFormData((prev = {}) => ({ ...prev, profilePic: reader.result }));
-    };
-    reader.readAsDataURL(file);
-  };
-
-  // Add new education (safe)
   const handleAddEducation = () => {
     if (!education.school || !education.degree || !education.year) return;
+
     setFormData((prev = {}) => ({
       ...prev,
       education: [...(prev.education || []), education],
     }));
+
     setEducation({ school: "", degree: "", year: "" });
   };
 
-  // Checkbox toggle for selection
   const handleCheckboxChange = (index) => {
     setSelectedEducations((prev = []) =>
-      prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
+      prev.includes(index)
+        ? prev.filter((i) => i !== index)
+        : [...prev, index]
     );
   };
 
-  // Delete selected educations
   const handleDeleteSelected = () => {
     setFormData((prev = {}) => ({
       ...prev,
-      education: (prev.education || []).filter((_, idx) => !selectedEducations.includes(idx)),
+      education: (prev.education || []).filter(
+        (_, idx) => !selectedEducations.includes(idx)
+      ),
     }));
+
     setSelectedEducations([]);
   };
-
-
 
   const handleOpenWorkPopup = () => {
     if (!jobTitle.trim()) {
       alert("Mention Job Title to get AI suggestions.");
       return;
     }
-
-    // Parent ka handler call karo (ResumeBuilder se aaya hai)
     openWorkPopup();
   };
 
-  // 🔹 Add Skills button handler
   const handleAddSkillsClick = () => {
     if (!jobTitle.trim()) {
       alert("Mention Job Title to get AI suggestions.");
       return;
     }
-    onAddSkillsClick(); // ✅ parent ka state trigger karega
+    onAddSkillsClick();requirePayment
   };
-
-
 
   return (
     <div className="form-panel" autoComplete="off">
       <h2>Personal Information</h2>
 
-      <label>Upload Profile Picture</label>
-      <input type="file" className="profile-input" accept="image/*" onChange={handleFileChange} />
+      {/* ⛔ PROFILE UPLOAD REMOVED */}
 
       <label>Job Title</label>
       <input
-      autoComplete="off"
+        autoComplete="off"
         type="text"
         name="jobTitle"
         placeholder="e.g. Frontend Developer"
@@ -107,15 +94,13 @@ export default function FormPanel({
         onChange={(e) => {
           const v = e.target.value;
           setJobTitle(v);
-          setFormData(prev => ({ ...(prev || {}), jobTitle: v }));
+          setFormData((prev = {}) => ({ ...(prev || {}), jobTitle: v }));
         }}
       />
 
-
-
       <label>Full Name</label>
       <input
-      autoComplete="off"
+        autoComplete="off"
         type="text"
         name="fullName"
         placeholder="e.g. John Doe"
@@ -186,6 +171,7 @@ export default function FormPanel({
       />
 
       <h2>Education</h2>
+
       <input
         type="text"
         name="school"
@@ -221,22 +207,19 @@ export default function FormPanel({
         🗑️ Delete Selected
       </button>
 
-      {/* --- NEW BUTTONS --- */}
       <button
         className="add-exp-btn"
         type="button"
-        onClick={handleOpenWorkPopup}
+        onClick={openWorkPopup}
       >
-        + Add Work Experience
+        + Add Work Experience {!canEdit && <span className="lock-icon">🔒</span>}
       </button>
-
-
       <button
         type="button"
-        className=" add-skill-btn btn btn-primary mt-2"
-        onClick={handleAddSkillsClick}
+        className="add-skill-btn btn btn-primary mt-2"
+        onClick={onAddSkillsClick}
       >
-        Add Skills
+        Add Skills {!canEdit && <span className="lock-icon">🔒</span>}
       </button>
 
 

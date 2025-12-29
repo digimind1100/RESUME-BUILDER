@@ -5,14 +5,23 @@ import requireAuth from "../middleware/auth.js";
 
 const router = express.Router();
 
-// ✅ MARK PAID (PERSIST PAYMENT)
+// ✅ MARK PAID (30-DAY PRO ACCESS)
 router.post("/mark-paid", requireAuth, async (req, res) => {
   try {
     const userId = req.user.id;
 
+    // ⏱️ 30 days from now
+    const THIRTY_DAYS = 30 * 24 * 60 * 60 * 1000;
+    const accessUntil = new Date(Date.now() + THIRTY_DAYS);
+
     const user = await User.findByIdAndUpdate(
       userId,
-      { isPaid: true, plan: "lifetime" },
+      {
+        isPaid: true,
+        plan: "monthly",
+        accessUntil,
+        paidAt: new Date(),
+      },
       { new: true }
     ).select("-passwordHash");
 

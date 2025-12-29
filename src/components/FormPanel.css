@@ -9,6 +9,7 @@
   font-family: Arial, sans-serif;
 }
 
+
 /* Headings */
 .form-panel h2 {
   font-size: 24px;
@@ -153,4 +154,15 @@ label {
 }
 .qr-btn:hover {
   background-color: #0c57b5;
+}
+.lock-icon {
+  margin-left: 6px;
+  font-size: 14px;
+  opacity: 0.8;
+}
+.add-exp-btn,
+.add-skill-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }

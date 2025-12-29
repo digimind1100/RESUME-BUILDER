@@ -9,6 +9,18 @@ import FormatButtons from "./FormatButtons";
 import ThemeSelector from "./ThemeSelector";
 import PreviewPanel from "./PreviewPanel";
 import "./ResumeBuilder.css";
+import PaymentGate from "../components/payment/PaymentGate";
+import { useAuth } from "../context/AuthContext";
+import usePaymentGuard from "../hooks/usePaymentGuard";
+
+// ✅ ONE of these — depending on export
+
+// DEFAULT export
+
+
+// OR named export
+// import { usePaymentGuard } from "../hooks/usePaymentGuard";
+
 
 const ResumeBuilder = () => {
   const { templateId } = useParams(); // classic | professional | 1...10
@@ -28,8 +40,42 @@ const ResumeBuilder = () => {
     text: "#000",
   });
 
+  const { setUser } = useAuth();
+
   const [resumeStyle, setResumeStyle] = useState(templateId || "classic");
 
+  //--- payment guard 
+
+const {
+  isPaid,
+  showPaymentModal,
+  setShowPaymentModal,
+  requirePayment,
+  handlePaymentSuccess,
+} = usePaymentGuard("ClassicProfessionalPreview");
+
+const canEdit = isPaid;
+
+// 🔒 Guarded handlers
+const handleWorkClickWithGuard = () => {
+  if (!canEdit) {
+    requirePayment();
+    return;
+  }
+  setShowWorkPopup(true);
+};
+
+const handleSkillsClickWithGuard = () => {
+  if (!canEdit) {
+    requirePayment();
+    return;
+  }
+  setShowSkillPopup(true);
+};
+
+
+
+  // -- payment guard END
   // --- Load CSS dynamically for simple templates ---
   useEffect(() => {
     if (templateId && !["classic", "professional"].includes(templateId)) {
@@ -166,9 +212,11 @@ const ResumeBuilder = () => {
           addEducation={addEducation}
           jobTitle={jobTitle}
           setJobTitle={setJobTitle}
-          openWorkPopup={handleOpenWorkPopup}
           onAddWorkExp={handleOpenWorkPopup}
-          onAddSkillsClick={handleAddSkillsClick}
+          openWorkPopup={handleWorkClickWithGuard}
+          onAddSkillsClick={handleSkillsClickWithGuard}
+           canEdit={canEdit}
+           requirePayment={requirePayment}
         />
       </div>
 
@@ -238,6 +286,18 @@ const ResumeBuilder = () => {
           onSelect={handleSkillSelect}
         />
       )}
+
+      <>
+  {/* your existing JSX like FormPanel, PreviewPanel etc */}
+
+<PaymentGate
+  open={showPaymentModal}
+  onClose={() => setShowPaymentModal(false)}
+  onSuccess={handlePaymentSuccess}
+/>
+
+</>
+
     </div>
   );
 };

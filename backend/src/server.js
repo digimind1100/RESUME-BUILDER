@@ -7,15 +7,18 @@ import mongoose from "mongoose";
 
 import authRoutes from "./routes/authRoutes.js";
 import paymentRoutes from "./routes/paymentRoutes.js";
+import "./cron/expiryCron.js";
+import adminPromoRoutes from "./routes/adminPromoRoutes.js";
 
 const app = express();
 
 /* ---------- MIDDLEWARE ---------- */
 app.use(cors());
 app.use(express.json());
-
+app.use("/api/admin", adminPromoRoutes);
 /* ---------- ROUTES ---------- */
 app.use("/api/auth", authRoutes);
+app.use("/api/promo", promoRoutes);
 app.use("/api/payments", paymentRoutes);
 
 /* ---------- TEST ROUTE ---------- */

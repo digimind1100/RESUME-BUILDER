@@ -6,6 +6,11 @@ import { paginateWorkEntries } from "../utils/paginateWorkEntries";
 import { paginateSkillsEntries } from "../utils/paginateSkillsEntries";
 import WorkPreview from "./WorkPreview";
 import SkillsPreview from "./SkillsPreview";
+// payment Guard
+import usePaymentGuard from "../hooks/usePaymentGuard";
+import PaymentGate from "../components/payment/PaymentGate";
+import { useAuth } from "../context/AuthContext";
+
 
 
 // QR Code fixed import for Vite
@@ -14,6 +19,7 @@ import { QRCodeCanvas } from "qrcode.react";
 
 export default function PreviewPanelQR({
   formData,
+  setFormData,
   selectedEducations,
   handleCheckboxChange,
   jobTitle,
@@ -44,6 +50,54 @@ export default function PreviewPanelQR({
 
   const [page1Skills, setPage1Skills] = useState([]);
   const [page2Skills, setPage2Skills] = useState([]);
+
+
+  const fileInputRef = useRef(null);
+
+
+  // ===== Profile Image Upload (QR) =====
+
+  const handleProfileUpload = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      setFormData(prev => ({
+        ...prev,
+        profilePic: reader.result,
+      }));
+    };
+    reader.readAsDataURL(file);
+  };
+
+  // Payment Guard Start
+  const { setUser } = useAuth();
+
+  const {
+    isPaid,
+    showPaymentModal,
+    setShowPaymentModal,
+    requirePayment,
+    handlePaymentSuccess,
+  } = usePaymentGuard("ClassicPreview");
+
+  const canEdit = isPaid;
+
+  const triggerProfileSelect = () => {
+    if (!canEdit) {
+      requirePayment();   // 🔥 opens payment modal
+      return;
+    }
+    fileInputRef.current?.click();
+  };
+
+  // Payment Guard End
+
+  useEffect(() => {
+  console.log("showPaymentModal =", showPaymentModal);
+}, [showPaymentModal]);
+
 
   // ========= EDUCATION PAGINATION =========
   useEffect(() => {
@@ -129,26 +183,43 @@ export default function PreviewPanelQR({
         >
           <div ref={topSectionRef}>
             {/* ===== PROFILE PICTURE ONLY (No personal info) ===== */}
-            <div className="profile-pic-wrapper">
+            <div
+              className="profile-pic-wrapper"
+              onClick={triggerProfileSelect}
+              style={{ cursor: "pointer" }}
+            >
               <img
-                id="profilePicPreview"
                 src={formData?.profilePic || "images/cleanprofileimage.png"}
                 alt="Profile"
               />
-            </div>
 
-         <div className="qr-box">
-  {qrData ? (
-    <QRCodeCanvas
-      value={typeof qrData === "string" ? qrData : JSON.stringify(qrData)}
-      size={190}
-      bgColor="#ffffff"
-      fgColor="#000000"
-    />
-  ) : (
-    <div className="qr-placeholder">QR Code Will Appear Here</div>
-  )}
-</div>
+              {!canEdit && (
+                <div className="lock-overlay" style={{ pointerEvents: "none" }}>
+                  🔒
+                </div>
+              )}
+            </div>
+            <input
+              type="file"
+              accept="image/*"
+              ref={fileInputRef}
+              style={{ display: "none" }}
+              onChange={handleProfileUpload}
+            />
+
+
+            <div className="qr-box">
+              {qrData ? (
+                <QRCodeCanvas
+                  value={typeof qrData === "string" ? qrData : JSON.stringify(qrData)}
+                  size={190}
+                  bgColor="#ffffff"
+                  fgColor="#000000"
+                />
+              ) : (
+                <div className="qr-placeholder">QR Code Will Appear Here</div>
+              )}
+            </div>
 
 
 
@@ -230,6 +301,11 @@ export default function PreviewPanelQR({
                 />
               </div>
             )}
+            <PaymentGate
+  open={showPaymentModal}
+  onClose={() => setShowPaymentModal(false)}
+  onSuccess={handlePaymentSuccess}
+/>
           </div>
         </div>
       </div>
@@ -293,6 +369,7 @@ export default function PreviewPanelQR({
                     />
                   </>
                 )}
+        
               </div>
             </div>
           </div>

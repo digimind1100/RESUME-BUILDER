@@ -8,6 +8,8 @@ import FormatButtons from "./FormatButtons";
 import ThemeSelector from "./ThemeSelector";
 import PreviewPanelQR from "./PreviewPanelQR";
 import "./ResumeBuilder.css";
+import PaymentGate from "../components/payment/PaymentGate";
+import usePaymentGuard from "../hooks/usePaymentGuard";
 
 
 
@@ -18,11 +20,35 @@ const ResumeBuilderQR = () => {
   const [workExperiences, setWorkExperiences] = useState([]);
   const [skills, setSkills] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
-
-  // Popup visibility
-  const [showWorkPopup, setShowWorkPopup] = useState(false);
+ const [showWorkPopup, setShowWorkPopup] = useState(false);
   const [showSkillsPopup, setShowSkillsPopup] = useState(false);
+  // Popup visibility
+  const {
+  isPaid,
+  showPaymentModal,
+  setShowPaymentModal,
+  requirePayment,
+  handlePaymentSuccess,
+} = usePaymentGuard("ClassicPreview");
 
+const canEdit = isPaid;
+
+const handleWorkClickWithGuard = () => {
+  if (!canEdit) {
+    requirePayment();
+    return;
+  }
+  setShowWorkPopup(true);
+};
+
+const handleSkillsClickWithGuard = () => {
+  if (!canEdit) {
+    requirePayment();
+    return;
+  }
+  setShowSkillsPopup(true);
+};
+//payment Guard End
   // Theme colors
   const [theme, setTheme] = useState({
     left: "#ffffff",
@@ -141,9 +167,11 @@ const ResumeBuilderQR = () => {
           setSelectedEducations={setSelectedEducations}
           jobTitle={jobTitle}
           setJobTitle={setJobTitle}
-          openWorkPopup={handleOpenWorkPopup}
-          onAddSkillsClick={handleAddSkillsClick}
+          openWorkPopup={handleWorkClickWithGuard}
+          onAddSkillsClick={handleSkillsClickWithGuard}
           onGenerateQR={handleGenerateQR}
+          canEdit={canEdit}
+  requirePayment={requirePayment}
         />
       </div>
 
@@ -157,7 +185,7 @@ const ResumeBuilderQR = () => {
 
           {isEditing && (
             <div className="format-buttons-wrapper">
-              <FormatButtons handleFormat={() => {}} />
+              <FormatButtons handleFormat={() => { }} />
             </div>
           )}
 
@@ -177,6 +205,7 @@ const ResumeBuilderQR = () => {
           {/* PREVIEW PANEL */}
           <PreviewPanelQR
             formData={formData}
+            setFormData={setFormData}
             selectedEducations={selectedEducations}
             handleCheckboxChange={handleCheckboxChange}
             jobTitle={jobTitle}
@@ -211,6 +240,13 @@ const ResumeBuilderQR = () => {
           onSelect={handleSkillSelect}
         />
       )}
+
+<PaymentGate
+  open={showPaymentModal}
+  onClose={() => setShowPaymentModal(false)}
+  onSuccess={handlePaymentSuccess}
+/>
+
     </div>
   );
 };

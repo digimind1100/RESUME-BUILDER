@@ -150,17 +150,18 @@
 
 /* CSS FOR PROFILE PICTUER  */
 .profile-pic-wrapper {
-  width: 120px;
-  height: 120px;
+  position: relative;          /* 🔥 REQUIRED */
+  width: 140px;
+  height: 140px;
+  margin: auto;
   border-radius: 50%;
-  background-color: #f0f0f0; /* elegant background */
-  overflow: hidden; /* ensures image never overflows */
+  background-color: #f0f0f0;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 15px; /* center in column */
-  border: 3px solid #ddd; /* optional nice border */
-  flex-shrink: 0;
+  border: 3px solid #ddd;
+  cursor: pointer;
 }
 
 .profile-pic-wrapper img {
@@ -384,6 +385,49 @@ display: flex;
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
   transition: all 0.2s ease-in-out;
 }
+
+
+
+
+.profile-pic-wrapper {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  margin: auto;
+  cursor: pointer;
+}
+
+.profile-pic-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* 🔥 THIS IS IMPORTANT */
+.lock-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  color: white;
+  z-index: 5;
+  pointer-events:none;
+}
+
+.payment-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;   /* 🔥 VERY IMPORTANT */
+}
+
 
 /* Horizontal layout on larger screens */
 @media (min-width: 640px) {
