@@ -277,3 +277,15 @@ margin-bottom: 20px;
     padding: 20px !important;       /* better for small screens */
   }
 }
+
+/* 🔒 Kill mobile browser editing UI */
+.cover-letter-preview {
+  -webkit-user-modify: read-only;
+}
+
+@media (max-width: 767px) {
+  [contenteditable] {
+    -webkit-user-modify: read-only !important;
+    user-modify: read-only !important;
+  }
+}

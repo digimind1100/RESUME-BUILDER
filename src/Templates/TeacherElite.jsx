@@ -182,6 +182,7 @@ Subject: ${qrForm.subject}
   }}
 >
   {isEditable ? "Editing: ON" : "Editing: OFF"}
+    {!canEdit && <span className="edit-crown">👑</span>}
 </button>
 
 

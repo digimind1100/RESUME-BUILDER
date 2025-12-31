@@ -33,7 +33,7 @@ function AppContent() {
 
   return (
     <>
-      {!hideNavbar && <Navbar />}
+        <Navbar />
 <Toaster position="top-center" />
       <Routes>
         <Route path="/" element={<HomePage />} />

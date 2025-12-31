@@ -47,10 +47,10 @@ export default function TemplatesPreview({ resumeStyle, setResumeStyle }) {
   }, []);
 
   useEffect(() => {
-  if (showPaymentModal) {
-    alert("Payment modal state is TRUE");
-  }
-}, [showPaymentModal]);
+    if (showPaymentModal) {
+      alert("Payment modal state is TRUE");
+    }
+  }, [showPaymentModal]);
 
 
   return (
@@ -58,30 +58,7 @@ export default function TemplatesPreview({ resumeStyle, setResumeStyle }) {
 
     <section className="templates-preview-section">
 
-      {/* 🔝 Top Bar */}
-<div
-  className="template-topbar"
-  contentEditable={false}
->
-  <button
-    onClick={(e) => {
-      e.stopPropagation();
-      e.preventDefault();
-      setShowPaymentModal(true);
-    }}
-  >
-    🔒 Editing: OFF
-  </button>
-
-  <img
-    src="/avatar.png"
-    onClick={(e) => {
-      e.stopPropagation();
-      e.preventDefault();
-      setShowPaymentModal(true);
-    }}
-  />
-</div>
+     
 
 
       <h2 className="tp-heading">Choose a Resume Template</h2>
@@ -114,20 +91,6 @@ export default function TemplatesPreview({ resumeStyle, setResumeStyle }) {
       )}
 
 
-      <div
-        style={{
-          position: "fixed",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          background: "red",
-          color: "white",
-          padding: "20px",
-          zIndex: 99999999
-        }}
-      >
-        TEST MODAL BOX
-      </div>
 
     </section>
   );

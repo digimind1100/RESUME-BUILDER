@@ -100,6 +100,7 @@ const MinimalAccent = () => {
           }}
         >
           {canEdit ? "Editing: ON" : "Editing: OFF"}
+           {!canEdit && <span className="edit-crown">👑</span>}
         </button>
 
 

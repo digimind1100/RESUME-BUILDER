@@ -496,8 +496,31 @@
   align-items: flex-end;   /* 👈 lock goes down */
 
   padding-bottom: 14px;   /* 👈 keeps face clear */
-  font-size: 26px;
+  font-size: 20px;
   color: white;
 
   pointer-events: none;   /* 👈 clicks go through */
+}
+/* ===============================
+   EDIT BUTTON – CROWN PREMIUM
+================================ */
+
+.edit-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  font-weight: 600;
+}
+
+/* Crown styling */
+.edit-crown {
+  position: absolute;
+  top: -12px;        /* 👈 thora bahar */
+  right: -2px;      /* 👈 corner pe */
+
+  font-size: 18px;
+  line-height: 1;
+
+  pointer-events: none;
 }

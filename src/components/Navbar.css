@@ -1,3 +1,6 @@
+/* ===============================
+   RESET
+================================ */
 * {
   box-sizing: border-box;
 }
@@ -9,227 +12,85 @@ html, body {
   overflow-x: hidden;
 }
 
-.navbar {
-  width: 100%;
-  max-width: 100vw;
-  height: 70px;
-  justify-content: center;
-  background: white;
-  border-bottom: 1px solid #eaeaea;
-  padding: 0 2rem;
-  position: sticky;
-  top: 0;
-  z-index: 9999;
-   isolation: isolate; 
-}
-
-.navbar .navbar-logo a.logo-text {
-  font-size: 1.8rem;
-  font-weight: 700;
-  text-decoration: none;
-  color: #17639f !important;
-}
-
-
-.navbar-links {
-  list-style: none;
-  display: flex;
-  gap: 2rem;
-  flex: 1;
-  justify-content: center;
-  z-index: 1000;
-   pointer-events: none;
-}
-
-.navbar-links li a {
-  text-decoration: none;
-  font-size: 1.8rem;
-  color: #333;
-  font-weight: 500;
-  position: relative;
-  
-}
-
-.navbar-links li a.active::after,
-.navbar-links li a:hover::after {
-  width: 100%;
-}
-
-.navbar-links li a::after {
-  content: "";
-  position: absolute;
-  width: 0%;
-  height: 2px;
-  left: 0;
-  bottom: -5px;
-  background: #17639f;
-  transition: width 0.3s;
-}
-
-/* Hamburger Button */
-.hamburger {
-  display: none;
-  flex-direction: column;
-  cursor: pointer;
-  gap: 4px;
-}
-.hamburger .bar {
-  width: 25px;
-  height: 3px;
-  background-color: #333;
-  transition: all 0.3s;
-}
-
-
-
-/* Responsive */
-@media screen and (max-width: 768px) {
-  .hamburger {
-    display: flex;
-  }
-
-  
-
-  .navbar-links {
-    display: none;
-    flex-direction: column;
-    position: absolute;
-    top: 70px;
-    left: 0;
-    width: 100%;
-    background: white;
-    padding: 1rem 0;
-    z-index: 999;
-  }
-
-  .navbar-links.open {
-    display: flex;
-  }
-
-  .navbar-links li {
-    text-align: center;
-    margin: 10px 0;
-  }
-  .mobile-resume-btn {
-    display: block;
-  }
-}
-
-
-/* ==== Medium Screens: 1023px to 768px ==== */
-@media (max-width: 1023px) and (min-width: 700px) {
-  /* Keep navbar links in a single row, no wrap */
-  .navbar-links {
-    flex-wrap: nowrap;
-    justify-content: flex-start;  /* align left */
-    gap: 12px;                    /* elegant gap between tabs */
-  }
-
-  /* Navbar link font size and padding */
-  .navbar-links li a {
-    font-size: 14px;          /* slightly smaller */
-    padding: 8px 10px;        /* compact padding */
-    white-space: nowrap;       /* prevent wrapping */
-  }
-
-  /* Logo text slightly smaller */
-  .navbar-logo .logo-text {
-    font-size: 1.5rem;
-  }
-
-  /* Optional: reduce margin between list items if needed */
-  .navbar-links li {
-    margin: 0;                 /* gap handled by flex gap */
-  }
-}
-/* Sticky Header */
-/* Fully Fixed Navbar */
-.fixed-nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 9999;
-  background: #ffffff;
-  box-shadow: 0px 2px 8px rgba(0,0,0,0.08);
-}
-
-/* Prevent content from hiding under navbar */
-body {
-  padding-top: 80px; /* same height as your navbar */
-}
-
-
-
 /* ===============================
-   BASE NAVBAR
+   NAVBAR BASE
 ================================ */
 .navbar {
   position: fixed;
   top: 0;
+  left: 0;
   width: 100%;
-  background: #fff;
-  border-bottom: 1px solid #e5e5e5;
+  height: 70px;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
   display: flex;
   align-items: center;
-  padding: 16px 60px;
-  z-index: 2000; /* ⬅ navbar on top */
+  padding: 0 60px;
+  z-index: 3000;
 }
 
+/* Space below navbar */
+body {
+  padding-top: 70px;
+}
+
+/* ===============================
+   LOGO
+================================ */
 .navbar-logo .logo-text {
   font-size: 22px;
   font-weight: 700;
+  color: #17639f;
   text-decoration: none;
-  color: #111;
+  white-space: nowrap;
 }
 
 /* ===============================
-   NAV LINKS (DESKTOP)
+   NAV LINKS (DESKTOP + iPAD)
 ================================ */
 .navbar-links {
-  display: flex;
   list-style: none;
+  display: flex;
   gap: 24px;
   margin-left: 40px;
-  z-index: 1000;
+  flex: 1;
+  justify-content: center;
 }
 
 .navbar-links li a {
   text-decoration: none;
-  font-size: 19px;
+  font-size: 18px;
+  font-weight: 500;
   color: #333;
-}
-
-/* ===============================
-   RIGHT SIDE (Signup / Avatar / Hamburger)
-================================ */
-.navbar-right {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  z-index: 3000; /* ⬅ ABOVE links */
-}
-
-/* ===============================
-   SIGNUP BUTTON
-================================ */
-.btn-signup {
-  padding: 8px 16px;
-  background: #2563eb;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
   position: relative;
-  z-index: 4000;      /* ⬅ highest */
+  white-space: nowrap;
+}
+
+/* Active / hover underline */
+.navbar-links li a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0;
+  height: 2px;
+  background: #17639f;
+  transition: width 0.25s ease;
+}
+
+.navbar-links li a:hover::after,
+.navbar-links li a.active::after {
+  width: 100%;
 }
 
 /* ===============================
-   AVATAR
+   AVATAR (DESKTOP + iPAD)
 ================================ */
+.avatar-wrapper {
+  position: relative;
+  margin-left: auto;
+}
+
 .avatar-circle {
   width: 42px;
   height: 42px;
@@ -241,38 +102,21 @@ body {
   justify-content: center;
   font-weight: 700;
   font-size: 15px;
-  cursor: pointer;              /* 👈 IMPORTANT */
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  cursor: pointer;
 }
 
-.avatar-circle:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
-}
-
-.avatar-wrapper {
-  position: relative;
-}
-
-/* Dropdown container */
 .avatar-dropdown {
   position: absolute;
+  top: 52px;
   right: 0;
-  top: 54px;
   min-width: 140px;
   background: #fff;
   border-radius: 8px;
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 14px 30px rgba(0,0,0,0.12);
   border: 1px solid #e5e7eb;
-  z-index: 3000;
-
-  /* Animation */
-  opacity: 0;
-  transform: translateY(-8px);
-  animation: dropdownFade 0.2s ease forwards;
+  z-index: 4000;
 }
 
-/* Sign out button */
 .avatar-logout-btn {
   width: 100%;
   padding: 12px 16px;
@@ -280,41 +124,12 @@ body {
   border: none;
   text-align: left;
   font-size: 14px;
-  font-weight: 500;
-  color: #111;
   cursor: pointer;
-  border-radius: 8px;
 }
 
 .avatar-logout-btn:hover {
   background: #f3f4f6;
-  color: #dc2626; /* red-ish signout */
-}
-
-/* Animation keyframes */
-@keyframes dropdownFade {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Mobile tweak */
-@media (max-width: 768px) {
-  .avatar-dropdown {
-    top: 48px;
-    min-width: 120px;
-  }
-}
-
-
-
-@media (max-width: 768px) {
-  .avatar-circle {
-    width: 36px;
-    height: 36px;
-    font-size: 14px;
-  }
+  color: #dc2626;
 }
 
 /* ===============================
@@ -324,6 +139,7 @@ body {
   display: none;
   flex-direction: column;
   cursor: pointer;
+  margin-left: auto;
 }
 
 .hamburger .bar {
@@ -334,60 +150,141 @@ body {
 }
 
 /* ===============================
-   MOBILE
+   TABLET OPTIMIZATION
 ================================ */
-@media (max-width: 768px) {
-  .hamburger {
-    display: flex;
+@media (max-width: 1024px) and (min-width: 768px) {
+  .navbar {
+    padding: 0 32px;
   }
 
-  /* 🔥 IMPORTANT FIX */
   .navbar-links {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background: #fff;
-    flex-direction: column;
-    display: none;
-    border-top: 1px solid #e5e5e5;
-    pointer-events: none;   /* ⬅ DO NOT block header clicks */
-  }
-
-  .navbar-links.open {
-    display: flex;
-    pointer-events: auto;  /* ⬅ clickable only when open */
+    gap: 16px;
   }
 
   .navbar-links li a {
-    padding: 16px 20px;
-    display: block;
+    font-size: 15px;
+  }
+
+  .navbar-logo .logo-text {
+    font-size: 20px;
   }
 }
 
-
 /* ===============================
-   NAV LINKS — CLICK FIX (ALL SCREENS)
+   MOBILE (<= 767px)
 ================================ */
+@media (max-width: 767px) {
 
-/* Navbar links container should NOT block clicks */
-.navbar-links {
-  pointer-events: none;
+  /* Top bar */
+  .navbar {
+    padding: 0 16px;
+    height: 64px;
+  }
+
+  /* Hide desktop elements */
+  .avatar-wrapper {
+    display: none;
+  }
+
+  /* Show hamburger */
+  .hamburger {
+    display: flex;
+  }
+  /* -------------------------------
+     RIGHT SIDE DRAWER MENU
+  -------------------------------- */
+  .navbar-links {
+    position: fixed;
+    top: 64px;                 /* below navbar */
+    right: -80%;               /* hidden initially */
+    width: 40%;                /* 👈 PARTIAL WIDTH */
+    background: #ffffff;
+    max-height: calc(100vh - 64px);
+overflow-y: auto;
+
+    display: flex;
+    flex-direction: column;
+    padding: 12px 0;
+    border-left: 1px solid #e5e7eb;
+    transition: right 0.3s ease;
+    z-index: 3500;
+  }
+  
+
+  .navbar-links.open {
+    right: 0;                  /* slide in */
+  }
+
+  .navbar-links li a {
+    padding: 14px 20px;
+    font-size: 16px;
+  }
+
+  /* ===============================
+     MOBILE AUTH
+  ================================ */
+  .mobile-auth {
+    padding: 16px 20px;
+    border-top: 1px solid #e5e7eb;
+  }
+
+  .mobile-signin-btn {
+    width: 100%;
+    padding: 12px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  .mobile-avatar {
+    width: 44px;
+    height: 44px;
+    background: #2563eb;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+
+.mobile-logout-btn {
+  width: 100%;
+  padding: 12px 14px;
+  background: #fff1f2;            /* soft red background */
+  color: #dc2626;                 /* danger red */
+  border: 1px solid #fecaca;      /* subtle border */
+  border-radius: 12px;            /* pill shape */
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
 }
 
-/* Actual links should still be clickable */
-.navbar-links li,
-.navbar-links li a {
-  pointer-events: auto;
+.mobile-logout-btn:hover {
+  background: #fee2e2;
 }
 
-/* Right side always clickable */
-.navbar-right {
-  position: relative;
-  z-index: 5000;
+.mobile-logout-btn:active {
+  transform: scale(0.98);
 }
 
-.btn-signup {
-  position: relative;
-  z-index: 6000;
+
+
+}
+
+/* Desktop & iPad → hide mobile auth */
+@media (min-width: 768px) {
+  .mobile-auth {
+    display: none;
+  }
 }

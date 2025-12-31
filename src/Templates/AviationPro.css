@@ -514,3 +514,26 @@
   font-weight: 700;
   letter-spacing: 0.3px;
 }
+/* ===============================
+   EDIT BUTTON – CROWN PREMIUM
+================================ */
+
+.edit-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  font-weight: 600;
+}
+
+/* Crown styling */
+.edit-crown {
+  position: absolute;
+  top: -12px;        /* 👈 thora bahar */
+  right: -2px;      /* 👈 corner pe */
+
+  font-size: 18px;
+  line-height: 1;
+
+  pointer-events: none;
+}
