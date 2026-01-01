@@ -52,7 +52,7 @@ export function AuthProvider({ children }) {
     }
   }
 
-  // 🔹 Signup → auto login (UNCHANGED BEHAVIOR)
+  // 🔹 Signup → auto login
   async function signup({ fullName, email, password }) {
     setLoading(true);
     try {
@@ -64,7 +64,7 @@ export function AuthProvider({ children }) {
     }
   }
 
-  // 🔹 Login for returning users
+  // 🔹 Login
   async function login({ email, password }) {
     setLoading(true);
     try {
@@ -76,11 +76,27 @@ export function AuthProvider({ children }) {
     }
   }
 
-  // 🔹 Logout (explicit & clean)
+  // 🔹 Logout
   function logout() {
     setUser(null);
     setToken(null);
     localStorage.removeItem(TOKEN_KEY);
+  }
+
+  // 🔥 NEW: Refresh user from backend (INSTANT UNLOCK MAGIC)
+  async function refreshUser() {
+    const savedToken = localStorage.getItem(TOKEN_KEY);
+    if (!savedToken) return;
+
+    try {
+      const result = await getCurrentUser(savedToken);
+
+      if (result?.ok && result.user) {
+        setUser(result.user); // 🔥 updates isPaid, plan, role instantly
+      }
+    } catch (err) {
+      console.error("refreshUser failed", err);
+    }
   }
 
   const value = {
@@ -94,6 +110,7 @@ export function AuthProvider({ children }) {
     signup,
     login,
     logout,
+    refreshUser, // 👈 EXPOSED HERE
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

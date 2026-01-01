@@ -24,6 +24,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/promo", promoRoutes);
 app.use("/api/payments", paymentRoutes);
 
+
+
 /* ---------- TEST ROUTE ---------- */
 app.get("/", (req, res) => {
   res.send("Backend API running");

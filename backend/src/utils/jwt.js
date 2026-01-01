@@ -1,27 +1,26 @@
-// src/utils/jwt.js
 import jwt from "jsonwebtoken";
 
+// CREATE JWT TOKEN
 export function createToken(user) {
-  const secret = process.env.JWT_SECRET;
-
-  if (!secret) {
-    throw new Error("JWT_SECRET is missing in environment variables");
+  if (!process.env.JWT_SECRET) {
+    throw new Error("JWT_SECRET is missing");
   }
 
-  const payload = {
-    id: user._id.toString(),
-    role: user.role,
-  };
-
-  return jwt.sign(payload, secret, { expiresIn: "7d" });
+  return jwt.sign(
+    {
+      id: user._id.toString(),
+      role: user.role,
+    },
+    process.env.JWT_SECRET,
+    { expiresIn: "7d" }
+  );
 }
 
+// VERIFY JWT TOKEN
 export function verifyToken(token) {
-  const secret = process.env.JWT_SECRET;
-
-  if (!secret) {
-    throw new Error("JWT_SECRET is missing in environment variables");
+  if (!process.env.JWT_SECRET) {
+    throw new Error("JWT_SECRET is missing");
   }
 
-  return jwt.verify(token, secret);
+  return jwt.verify(token, process.env.JWT_SECRET);
 }

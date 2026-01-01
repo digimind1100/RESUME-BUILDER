@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from "react-router-dom";
-
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import HomePage from "./components/Home";
 import ResumeBuilder from "./components/ResumeBuilder";
@@ -22,7 +21,7 @@ import AviationPro from "./Templates/AviationPro";
 import TeacherElite from "./Templates/TeacherElite";
 import BuilderGuard from "./components/guards/BuilderGuard";
 import { Toaster } from "react-hot-toast";
-
+import AdminPayments from "./components/AdminPayments";
 
 function AppContent() {
   const location = useLocation();
@@ -75,6 +74,7 @@ function AppContent() {
 
         <Route path="/coverletter" element={<CoverLetterPage />} />
         <Route path="/coverletter-generator" element={<CoverLetterPanel />} />
+        <Route path="/admin/payments" element={<AdminPayments />} />
 
 
       
@@ -88,9 +88,5 @@ function AppContent() {
 }
 
 export default function App() {
-  return (
-    <Router>
-      <AppContent />
-    </Router>
-  );
+  return <AppContent />;
 }

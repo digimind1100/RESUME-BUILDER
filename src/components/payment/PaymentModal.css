@@ -258,3 +258,12 @@
   color: #6b7280;
   text-align: center;
 }
+
+.payment-instructions {
+  background: #f8fafc;
+  border: 1px dashed #cbd5e1;
+  padding: 12px;
+  margin-top: 14px;
+  border-radius: 8px;
+  font-size: 14px;
+}

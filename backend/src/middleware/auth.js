@@ -1,6 +1,5 @@
 import { verifyToken } from "../utils/jwt.js";
 
-
 function requireAuth(req, res, next) {
   const authHeader = req.headers.authorization;
 
@@ -11,13 +10,13 @@ function requireAuth(req, res, next) {
     });
   }
 
-  const token = authHeader.replace("Bearer ", "").trim();
+  const token = authHeader.split(" ")[1];
 
   try {
-    const payload = verifyToken(token); // { id, role, iat, exp }
+    const payload = verifyToken(token);
     req.user = { id: payload.id, role: payload.role };
     next();
-  } catch (err) {
+  } catch {
     return res.status(401).json({
       success: false,
       message: "Invalid or expired token.",

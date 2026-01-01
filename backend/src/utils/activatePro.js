@@ -1,6 +1,14 @@
-// utils/activatePro.js
+// backend/src/utils/activatePro.js
 
-export function activateMonthlyPro(user) {
+/**
+ * Activate Monthly Pro plan for a user
+ * Duration: 30 days
+ */
+export async function activateMonthlyPro(user) {
+  if (!user) {
+    throw new Error("User not provided to activateMonthlyPro");
+  }
+
   const now = new Date();
 
   const accessUntil = new Date(now);
@@ -10,7 +18,10 @@ export function activateMonthlyPro(user) {
   user.plan = "monthly";
   user.paidAt = now;
   user.accessUntil = accessUntil;
+
+  // reset expiry email flag if you use cron
   user.lastExpiryEmailSent = false;
 
-  return user.save();
+  await user.save();
+  return user;
 }

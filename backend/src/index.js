@@ -12,7 +12,7 @@ const app = express();
 // middleware
 app.use(express.json());
 
-app.use("/api/payment", paymentRoutes);
+app.use("/api/payments", paymentRoutes);
 
 
 // CORS - allow Vite dev server at 5173
