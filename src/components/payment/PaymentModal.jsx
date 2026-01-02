@@ -5,8 +5,6 @@ import easypaisaLogo from "../../assets/payments/easypaisa.png";
 import jazzcashLogo from "../../assets/payments/jazzcash.png";
 import sadapayLogo from "../../assets/payments/sadapay.png";
 
-
-
 export default function PaymentModal({ onClose }) {
   const modalRoot = document.getElementById("modal-root");
 
@@ -22,30 +20,71 @@ export default function PaymentModal({ onClose }) {
 
   if (!modalRoot) return null;
 
-  // 🔐 YOUR PAYMENT ACCOUNTS (SAFE, READ-ONLY)
- const PAYMENT_ACCOUNTS = {
-  easypaisa: {
-    name: "EasyPaisa",
-    number: "0300-2463822",
-    holder: "DigiMind",
-    logo: easypaisaLogo,
-  },
-  jazzcash: {
-    name: "JazzCash",
-    number: "03XX-XXXXXXX",
-    holder: "DigiMind",
-    logo: jazzcashLogo,
-  },
-  sadapay: {
-    name: "SadaPay",
-    number: "03XX-XXXXXXX",
-    holder: "DigiMind",
-    logo: sadapayLogo,
-  },
-};
+  // 🔐 MANUAL PAYMENT ACCOUNTS
+  const PAYMENT_ACCOUNTS = {
+    easypaisa: {
+      name: "EasyPaisa",
+      number: "0300-2463822",
+      holder: "DigiMind",
+      logo: easypaisaLogo,
+    },
+    jazzcash: {
+      name: "JazzCash",
+      number: "03XX-XXXXXXX",
+      holder: "DigiMind",
+      logo: jazzcashLogo,
+    },
+    sadapay: {
+      name: "SadaPay",
+      number: "03XX-XXXXXXX",
+      holder: "DigiMind",
+      logo: sadapayLogo,
+    },
+  };
 
+  /* ===============================
+     🚀 PAYFAST – INSTANT PAYMENT
+     =============================== */
+  const startPayFastPayment = async () => {
+    try {
+      const res = await fetch("/api/payfast/create-payment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
 
-  // ---------------- REAL PAYMENT SUBMIT ----------------
+      const data = await res.json();
+
+      if (!data.success) {
+        alert("Unable to start PayFast payment");
+        return;
+      }
+
+      const form = document.createElement("form");
+      form.method = "POST";
+      form.action = data.paymentUrl;
+
+      Object.entries(data.paymentData).forEach(([key, value]) => {
+        const input = document.createElement("input");
+        input.type = "hidden";
+        input.name = key;
+        input.value = value;
+        form.appendChild(input);
+      });
+
+      document.body.appendChild(form);
+      form.submit();
+    } catch (err) {
+      console.error(err);
+      alert("Something went wrong. Please try again.");
+    }
+  };
+
+  /* ===============================
+     🐢 MANUAL PAYMENT SUBMIT
+     =============================== */
   const handlePayment = async () => {
     if (!method || !transactionId || loading) {
       alert("Please select payment method and enter transaction ID");
@@ -78,7 +117,6 @@ export default function PaymentModal({ onClose }) {
         return;
       }
 
-      // ⏳ WAIT FOR ADMIN APPROVAL
       setStatus("pending");
     } catch (err) {
       setLoading(false);
@@ -86,7 +124,9 @@ export default function PaymentModal({ onClose }) {
     }
   };
 
-  // ---------------- PROMO REDEEM ----------------
+  /* ===============================
+     🎟 PROMO CODE
+     =============================== */
   const redeemPromo = async () => {
     if (!promoCode || promoLoading) return;
 
@@ -133,10 +173,28 @@ export default function PaymentModal({ onClose }) {
 
         <div className="payment-price">Rs 999</div>
         <div className="payment-note">
-          One-time payment · Valid for 30 days
+          Valid for 30 days · Instant access via PayFast
         </div>
 
-        {/* PAYMENT METHODS */}
+        {/* 🚀 PAYFAST PRIMARY BUTTON */}
+        {status === "idle" && (
+          <button
+            className="unlock-btn"
+            style={{ background: "#1a1a1a", marginBottom: 12 }}
+            onClick={startPayFastPayment}
+          >
+            Pay Instantly with PayFast
+          </button>
+        )}
+
+        {/* DIVIDER */}
+        {status === "idle" && (
+          <div style={{ textAlign: "center", margin: "10px 0", color: "#777" }}>
+            — or pay manually —
+          </div>
+        )}
+
+        {/* MANUAL PAYMENT METHODS */}
         {status === "idle" && (
           <div className="payment-methods">
             {Object.keys(PAYMENT_ACCOUNTS).map((p) => (
@@ -162,29 +220,16 @@ export default function PaymentModal({ onClose }) {
           </div>
         )}
 
-        {/* PAYMENT INSTRUCTIONS */}
+        {/* MANUAL INSTRUCTIONS */}
         {status === "idle" && selectedAccount && (
           <div className="payment-instructions">
-            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-              <img
-                src={selectedAccount.logo}
-                alt={selectedAccount.name}
-                style={{ width: 36, height: 36 }}
-              />
-              <strong>{selectedAccount.name} Payment</strong>
-            </div>
-
-            <p style={{ marginTop: 8 }}>
+            <strong>{selectedAccount.name} Payment</strong>
+            <p>
               Send <b>Rs 999</b> to:
             </p>
-
             <p>
-              <b>Account Number:</b> {selectedAccount.number}<br />
-              <b>Account Name:</b> {selectedAccount.holder}
-            </p>
-
-            <p style={{ fontSize: 13, color: "#555", marginTop: 6 }}>
-              After payment, copy the Transaction ID and enter it below.
+              <b>Account:</b> {selectedAccount.number}<br />
+              <b>Name:</b> {selectedAccount.holder}
             </p>
           </div>
         )}
@@ -200,22 +245,25 @@ export default function PaymentModal({ onClose }) {
           />
         )}
 
-        {/* ACTION BUTTON */}
-        {status === "idle" ? (
+        {/* MANUAL SUBMIT */}
+        {status === "idle" && method && (
           <button
             className="unlock-btn"
-            disabled={!method || !transactionId || loading}
+            disabled={!transactionId || loading}
             onClick={handlePayment}
           >
-            {loading ? <span className="spinner" /> : "Submit Payment"}
+            {loading ? "Submitting..." : "Submit Manual Payment"}
           </button>
-        ) : (
+        )}
+
+        {/* STATUS */}
+        {status === "pending" && (
           <div className="payment-success">
-            ⏳ Payment submitted. Verification in progress (2–12 hours).
+            ⏳ Payment submitted. Verification in progress.
           </div>
         )}
 
-        {/* PROMO TOGGLE */}
+        {/* PROMO */}
         {status === "idle" && (
           <button
             className="promo-toggle-btn"
@@ -225,7 +273,6 @@ export default function PaymentModal({ onClose }) {
           </button>
         )}
 
-        {/* PROMO INPUT */}
         {showPromo && status === "idle" && (
           <div className="promo-container">
             <input
@@ -235,7 +282,6 @@ export default function PaymentModal({ onClose }) {
               onChange={(e) => setPromoCode(e.target.value)}
               className="promo-input"
             />
-
             <button
               className="promo-redeem-btn"
               onClick={redeemPromo}
@@ -246,12 +292,13 @@ export default function PaymentModal({ onClose }) {
           </div>
         )}
 
-        {/* CANCEL */}
+        {/* CLOSE */}
         {!loading && status === "idle" && (
           <button className="close-btn" onClick={onClose}>
             Cancel
           </button>
         )}
+
       </div>
     </div>,
     modalRoot

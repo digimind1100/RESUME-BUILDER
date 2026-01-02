@@ -10,6 +10,7 @@ import paymentRoutes from "./routes/paymentRoutes.js";
 import "./cron/expiryCron.js";
 import adminPromoRoutes from "./routes/adminPromoRoutes.js";
 import promoRoutes from "./routes/promoRoutes.js";
+import payfastRoutes from "./routes/payfastRoutes.js";
 
 
 
@@ -23,6 +24,8 @@ app.use("/api/admin", adminPromoRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/promo", promoRoutes);
 app.use("/api/payments", paymentRoutes);
+app.use("/api/payfast", payfastRoutes);
+app.use("/api/payfast", webhookRoutes);
 
 
 

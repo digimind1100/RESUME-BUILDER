@@ -22,6 +22,8 @@ import TeacherElite from "./Templates/TeacherElite";
 import BuilderGuard from "./components/guards/BuilderGuard";
 import { Toaster } from "react-hot-toast";
 import AdminPayments from "./components/AdminPayments";
+import Policies from "./components/Policies";
+import Contact from "./components/Contact";
 
 function AppContent() {
   const location = useLocation();
@@ -48,10 +50,12 @@ function AppContent() {
         {/* Templates */}
         <Route path="/templates" element={<Templates />} />
 
-
         {/* Cover letter */}
         <Route path="/cover-letter" element={<CoverLetterPanel />} />
-
+       {/* Terms & policies */}
+         <Route path="/policies" element={<Policies />} />
+          {/* Contact Form */}
+         <Route path="/contact" element={<Contact />} />
         {/* Preview */}
         <Route path="/preview-classic" element={<PreviewPanelQRPage formData={formData} />} />
 

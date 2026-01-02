@@ -59,10 +59,25 @@ export default function Navbar() {
             </Link>
           </li>
           <li>
-            <Link to="/pricing" className={location.pathname === "/pricing" ? "active" : ""} onClick={handleLinkClick}>
-              Pricing
+            <Link
+              to="/policies"
+              className={location.pathname === "/policies" ? "active" : ""}
+              onClick={handleLinkClick}
+            >
+              Policies
             </Link>
           </li>
+          <li>
+            <Link
+              to="/contact"
+              className={location.pathname === "/contact" ? "active" : ""}
+              onClick={handleLinkClick}
+            >
+              Contact
+            </Link>
+          </li>
+
+
           <li>
             <Link to="/faq" className={location.pathname === "/faq" ? "active" : ""} onClick={handleLinkClick}>
               FAQ
@@ -88,13 +103,13 @@ export default function Navbar() {
 
                 <button
                   className="mobile-logout-btn"
-                  
+
                   onClick={() => {
                     logout();
                     setMenuOpen(false);
                   }}
                 >
-                   <FiLogOut size={16} />
+                  <FiLogOut size={16} />
                   Logout
                 </button>
               </>
@@ -104,15 +119,15 @@ export default function Navbar() {
 
 
 
-{/* HAMBURGER (MOBILE ONLY) */}
-<div
-  className="hamburger"
-  onClick={() => setMenuOpen(prev => !prev)}
->
-  <span className="bar"></span>
-  <span className="bar"></span>
-  <span className="bar"></span>
-</div>
+        {/* HAMBURGER (MOBILE ONLY) */}
+        <div
+          className="hamburger"
+          onClick={() => setMenuOpen(prev => !prev)}
+        >
+          <span className="bar"></span>
+          <span className="bar"></span>
+          <span className="bar"></span>
+        </div>
 
 
 
