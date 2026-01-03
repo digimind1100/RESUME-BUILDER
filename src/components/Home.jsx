@@ -13,7 +13,6 @@ import AiTutorialVideo from "./AiTutorialVideo"
 export default function Home() {
   const [loading, setLoading] = useState(true);
   
-
   useEffect(() => {
     // Simulate loading or wait for API/data
     const timer = setTimeout(() => setLoading(false), 2000);

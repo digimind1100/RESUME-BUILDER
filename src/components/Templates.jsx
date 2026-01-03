@@ -128,7 +128,7 @@ const [isEditingUnlocked, setIsEditingUnlocked] = useState(false);
           </p>
         </div>
         <button
-          onClick={() => handleUseTemplate("/resume-professional")}
+          onClick={() => handleUseTemplate("/resume/professional")}
           className="template-btn template-btn--primary"
         >
           Use Clean Professional

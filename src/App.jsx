@@ -45,8 +45,7 @@ function AppContent() {
           element={<ResumeBuilder formData={formData} setFormData={setFormData} />}
         />
         <Route path="/resume-classic" element={<ResumeBuilderQR />} />
-        <Route path="/resume-professional" element={<ResumeBuilder />} />
-
+       
         {/* Templates */}
         <Route path="/templates" element={<Templates />} />
 

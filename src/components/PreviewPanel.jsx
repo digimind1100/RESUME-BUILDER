@@ -28,7 +28,7 @@ export default function PreviewPanel({
   handleOpenWorkPopup,
   handleAddSkillsClick,
   theme,
-  resumeStyle = "classic" // NEW: template ID from builder
+  resumeStyle = "professional" // NEW: template ID from builder
 }) {
   // ================= REFS =================
   const leftRef = useRef(null);
