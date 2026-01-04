@@ -32,10 +32,6 @@ export default function SignupModal({ isOpen, onClose, onSuccess }) {
     }
   }
 
-
-
-
-  
   return (
     <div className="signup-overlay">
       <div className="signup-modal animate-fadeIn">

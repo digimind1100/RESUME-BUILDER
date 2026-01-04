@@ -24,7 +24,8 @@ import { Toaster } from "react-hot-toast";
 import AdminPayments from "./components/AdminPayments";
 import Policies from "./components/Policies";
 import Contact from "./components/Contact";
-
+// import SignupModal from "./components/auth/SignupModal";
+// import LoginModal from "./components/auth/LoginModal";
 function AppContent() {
   const location = useLocation();
   const hideNavbar = location.pathname === "/resume";
@@ -85,6 +86,9 @@ function AppContent() {
 
 
       </Routes>
+
+      {/* <SignupModal />
+      <LoginModal /> */}
       
     </>
   );

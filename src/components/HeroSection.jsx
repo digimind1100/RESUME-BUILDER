@@ -1,14 +1,23 @@
-import React from "react";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 import "./HeroSection.css";
 
 export default function HeroSection() {
+  const { openAuthModal, isAuthenticated } = useAuth();
+  const navigate = useNavigate();
 
-  
+const handleStartBuilding = () => {
+  if (window.openAuth) {
+    window.openAuth();
+  } else {
+    console.warn("Auth system not ready");
+  }
+};
+
 
   return (
     <section className="hero-container">
       <div className="hero-content">
-        {/* LEFT TEXT */}
         <div className="hero-text">
           <h1 className="hero-title">
             Build a <span>Professional Resume</span> in Minutes
@@ -20,10 +29,11 @@ export default function HeroSection() {
             Create a stunning, job-winning resume effortlessly with our
             AI-powered Resume Builder. Save time. Land interviews. Stand out.
           </p>
-          <button className="hero-btn">Start Building</button>
+          <button onClick={handleStartBuilding} className="hero-btn">
+            Start Building
+          </button>
         </div>
 
-        {/* RIGHT MOCKUP VIDEO */}
         <div className="hero-illustration">
           <div className="mockup-box">
             <video
