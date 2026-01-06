@@ -1,5 +1,6 @@
 ﻿/* src/context/AuthContext.jsx */
 import React, { createContext, useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   signup as signupApi,
   login as loginApi,
@@ -10,10 +11,18 @@ const AuthContext = createContext(null);
 const TOKEN_KEY = "rb_auth_token";
 
 export function AuthProvider({ children }) {
+  const navigate = useNavigate(); // 🔥 NEW
+
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
   const [initializing, setInitializing] = useState(true);
   const [loading, setLoading] = useState(false);
+
+  // 🔥 NEW: auth modal state
+  const [authModal, setAuthModal] = useState({
+    open: false,
+    redirectTo: null,
+  });
 
   // 🔹 Restore session on app load
   useEffect(() => {
@@ -83,7 +92,33 @@ export function AuthProvider({ children }) {
     localStorage.removeItem(TOKEN_KEY);
   }
 
-  // 🔥 NEW: Refresh user from backend (INSTANT UNLOCK MAGIC)
+  // 🔥 NEW: open auth modal (used by Start Building)
+  function openAuthModal({ redirectTo }) {
+    setAuthModal({
+      open: true,
+      redirectTo: redirectTo || null,
+    });
+  }
+
+  // 🔥 NEW: close auth modal
+  function closeAuthModal() {
+    setAuthModal({
+      open: false,
+      redirectTo: null,
+    });
+  }
+
+  // 🔥 NEW: call this AFTER login/signup success
+  function onAuthSuccess() {
+    const path = authModal.redirectTo;
+    closeAuthModal();
+
+    if (path) {
+      navigate(path);
+    }
+  }
+
+  // 🔥 Refresh user from backend
   async function refreshUser() {
     const savedToken = localStorage.getItem(TOKEN_KEY);
     if (!savedToken) return;
@@ -92,7 +127,7 @@ export function AuthProvider({ children }) {
       const result = await getCurrentUser(savedToken);
 
       if (result?.ok && result.user) {
-        setUser(result.user); // 🔥 updates isPaid, plan, role instantly
+        setUser(result.user);
       }
     } catch (err) {
       console.error("refreshUser failed", err);
@@ -107,10 +142,17 @@ export function AuthProvider({ children }) {
     initializing,
     isAuthenticated: !!user,
     isAdmin: user?.role === "admin",
+
     signup,
     login,
     logout,
-    refreshUser, // 👈 EXPOSED HERE
+    refreshUser,
+
+    // 🔥 EXPOSED FOR START BUILDING FLOW
+    authModal,
+    openAuthModal,
+    closeAuthModal,
+    onAuthSuccess,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

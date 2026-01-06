@@ -24,7 +24,8 @@ import { Toaster } from "react-hot-toast";
 import AdminPayments from "./components/AdminPayments";
 import Policies from "./components/Policies";
 import Contact from "./components/Contact";
-
+// import SignupModal from "./components/auth/SignupModal";
+// import LoginModal from "./components/auth/LoginModal";
 function AppContent() {
   const location = useLocation();
   const hideNavbar = location.pathname === "/resume";
@@ -45,8 +46,7 @@ function AppContent() {
           element={<ResumeBuilder formData={formData} setFormData={setFormData} />}
         />
         <Route path="/resume-classic" element={<ResumeBuilderQR />} />
-        <Route path="/resume-professional" element={<ResumeBuilder />} />
-
+       
         {/* Templates */}
         <Route path="/templates" element={<Templates />} />
 
@@ -86,6 +86,9 @@ function AppContent() {
 
 
       </Routes>
+
+      {/* <SignupModal />
+      <LoginModal /> */}
       
     </>
   );

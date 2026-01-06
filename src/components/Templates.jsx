@@ -27,9 +27,11 @@ export default function Templates() {
 
   const [showSignup, setShowSignup] = useState(false);
   const pendingRouteRef = useRef(null);
+  
 
   const [showPaymentModal, setShowPaymentModal] = useState(false);
 const [isEditingUnlocked, setIsEditingUnlocked] = useState(false);
+
 
 
   // 🔥 ONE UNIVERSAL HANDLER (SIMPLE + PREMIUM)
@@ -128,7 +130,7 @@ const [isEditingUnlocked, setIsEditingUnlocked] = useState(false);
           </p>
         </div>
         <button
-          onClick={() => handleUseTemplate("/resume-professional")}
+          onClick={() => handleUseTemplate("/resume/professional")}
           className="template-btn template-btn--primary"
         >
           Use Clean Professional

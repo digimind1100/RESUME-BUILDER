@@ -288,3 +288,78 @@ overflow-y: auto;
     display: none;
   }
 }
+
+/* Avatar base (unchanged) */
+.avatar-circle {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #2563eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+  font-weight: 600;
+}
+
+/* Guest state */
+.avatar-circle.guest {
+  background: #f88e02;
+}
+
+/* ===== FLUORESCENT LIVE RING ===== */
+.live-ring {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+
+  /* gradient arc */
+  border: 2px solid transparent;
+  background:
+    linear-gradient(#0b0b0b, #0b0b0b) padding-box,
+    linear-gradient(
+      120deg,
+      #00fff0,
+      #7cff00,
+      #00fff0
+    ) border-box;
+
+  animation: spinSlow 9s linear infinite;
+
+  /* soft glow */
+  box-shadow:
+    0 0 6px rgba(0, 255, 240, 0.35),
+    0 0 12px rgba(124, 255, 0, 0.15);
+}
+
+/* Slow smooth rotation */
+@keyframes spinSlow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Hover enhancement (subtle) */
+.avatar-circle:hover .live-ring {
+  box-shadow:
+    0 0 10px rgba(0, 255, 240, 0.55),
+    0 0 18px rgba(124, 255, 0, 0.25);
+}
+
+/* Hide avatar when hamburger menu is visible (mobile) */
+@media (max-width: 767px) {
+  .avatar-wrapper {
+    display: none !important;
+  }
+}
+/* ================================
+   HIDE AVATAR WHEN HAMBURGER SHOWS
+   ================================ */
+
+

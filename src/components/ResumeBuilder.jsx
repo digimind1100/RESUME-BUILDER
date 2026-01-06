@@ -1,6 +1,7 @@
 // ResumeBuilder.jsx
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+
 import FormPanel from "./FormPanel";
 import WorkPopup from "./WorkExpPopup";
 import SkillsPopup from "./SkillsPopup";
@@ -8,80 +9,57 @@ import ButtonSection from "./ButtonSection";
 import FormatButtons from "./FormatButtons";
 import ThemeSelector from "./ThemeSelector";
 import PreviewPanel from "./PreviewPanel";
+
 import "./ResumeBuilder.css";
-import PaymentGate from "../components/payment/PaymentGate";
-import { useAuth } from "../context/AuthContext";
-import usePaymentGuard from "../hooks/usePaymentGuard";
-
-// ✅ ONE of these — depending on export
-
-// DEFAULT export
-
-
-// OR named export
-// import { usePaymentGuard } from "../hooks/usePaymentGuard";
-
 
 const ResumeBuilder = () => {
-  const { templateId } = useParams(); // classic | professional | 1...10
+  const { templateId } = useParams(); // e.g. classic | professional | creative-bold
 
-  // --- State ---
+  /* ---------------- TEMPLATE RESOLUTION ---------------- */
+  const resolvedTemplate =
+    templateId === "professional"
+      ? "clean-professional"
+      : templateId || "classic";
+
+
+      const entrySource =
+    new URLSearchParams(location.search).get("entry") || "template";
+
+  const isPreviewFlow = entrySource === "start";
+
+
+
+
+  /* ---------------- STATE ---------------- */
   const [formData, setFormData] = useState({});
   const [selectedEducations, setSelectedEducations] = useState([]);
   const [jobTitle, setJobTitle] = useState("");
   const [workExperiences, setWorkExperiences] = useState([]);
   const [skills, setSkills] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
+
   const [showWorkPopup, setShowWorkPopup] = useState(false);
   const [showSkillsPopup, setShowSkillsPopup] = useState(false);
+
+  const [resumeStyle, setResumeStyle] = useState(resolvedTemplate);
+
   const [theme, setTheme] = useState({
     left: "#17639F",
     job: "#F4ECE1",
     text: "#000",
   });
 
-  const { setUser } = useAuth();
+  /* ---------------- EFFECTS ---------------- */
+  useEffect(() => {
+    setResumeStyle(resolvedTemplate);
+  }, [resolvedTemplate]);
 
-  const [resumeStyle, setResumeStyle] = useState(templateId || "classic");
-
-  //--- payment guard 
-
-const {
-  isPaid,
-  showPaymentModal,
-  setShowPaymentModal,
-  requirePayment,
-  handlePaymentSuccess,
-} = usePaymentGuard("ClassicProfessionalPreview");
-
-const canEdit = isPaid;
-
-// 🔒 Guarded handlers
-const handleWorkClickWithGuard = () => {
-  if (!canEdit) {
-    requirePayment();
-    return;
-  }
-  setShowWorkPopup(true);
-};
-
-const handleSkillsClickWithGuard = () => {
-  if (!canEdit) {
-    requirePayment();
-    return;
-  }
-  setShowSkillPopup(true);
-};
-
-
-
-  // -- payment guard END
-  // --- Load CSS dynamically for simple templates ---
+  // Load CSS for simple templates only
   useEffect(() => {
     if (templateId && !["classic", "professional"].includes(templateId)) {
       const link = document.createElement("link");
       link.rel = "stylesheet";
-      link.href = `/templates/simple-${templateId}.css`; // your template CSS path
+      link.href = `/templates/simple-${templateId}.css`;
       link.id = "dynamic-template-css";
       document.head.appendChild(link);
 
@@ -92,12 +70,11 @@ const handleSkillsClickWithGuard = () => {
     }
   }, [templateId]);
 
-  // --- Education handler ---
+  /* ---------------- HANDLERS ---------------- */
   const addEducation = (education) => {
     setSelectedEducations((prev) => [...prev, education]);
   };
 
-  // --- Format handler ---
   const handleFormat = (action) => {
     const selection = window.getSelection();
     if (!selection.rangeCount) return;
@@ -106,22 +83,10 @@ const handleSkillsClickWithGuard = () => {
     const selectedText = range.extractContents();
     const span = document.createElement("span");
 
-    switch (action) {
-      case "bold":
-        span.style.fontWeight = "bold";
-        break;
-      case "italic":
-        span.style.fontStyle = "italic";
-        break;
-      case "underline":
-        span.style.textDecoration = "underline";
-        break;
-      case "font":
-        span.style.fontFamily = "Georgia, serif";
-        break;
-      default:
-        break;
-    }
+    if (action === "bold") span.style.fontWeight = "bold";
+    if (action === "italic") span.style.fontStyle = "italic";
+    if (action === "underline") span.style.textDecoration = "underline";
+    if (action === "font") span.style.fontFamily = "Georgia, serif";
 
     span.appendChild(selectedText);
     range.insertNode(span);
@@ -145,54 +110,46 @@ const handleSkillsClickWithGuard = () => {
 
   const handleCheckboxChange = (index) => {
     setSelectedEducations((prev) =>
-      prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
+      prev.includes(index)
+        ? prev.filter((i) => i !== index)
+        : [...prev, index]
     );
   };
 
-  const handleOpenWorkPopup = () => setShowWorkPopup(true);
-  const handleCloseWorkPopup = () => setShowWorkPopup(false);
-  const handleAddSkillsClick = () => setShowSkillsPopup(true);
-  const handleCloseSkillsPopup = () => setShowSkillsPopup(false);
-
   const handleWorkSelect = (item) => {
-    const textValue =
+    const text =
       typeof item === "string"
         ? item.trim()
-        : item.text || item.title || JSON.stringify(item);
-    if (!textValue) return;
+        : item.text || item.title || "";
 
-    const newWork = {
-      id: Date.now(),
-      title: textValue,
-      text: textValue,
-      company: "",
-      years: "",
-      checked: false,
-    };
+    if (!text) return;
 
-    setWorkExperiences((prev) => {
-      const alreadyExists = prev.some((w) => w.text === textValue);
-      if (alreadyExists) return prev;
-      return [...prev, newWork];
-    });
+    setWorkExperiences((prev) =>
+      prev.some((w) => w.text === text)
+        ? prev
+        : [
+            ...prev,
+            {
+              id: Date.now(),
+              title: text,
+              text,
+              company: "",
+              years: "",
+              checked: false,
+            },
+          ]
+    );
   };
 
   const handleSkillSelect = (item) => {
-    const textValue =
-      typeof item === "string" ? item.trim() : item.text || "";
-    if (!textValue) return;
+    const text = typeof item === "string" ? item.trim() : item.text || "";
+    if (!text) return;
 
-    const newSkill = {
-      id: Date.now(),
-      text: textValue,
-      checked: false,
-    };
-
-    setSkills((prev) => {
-      const alreadyExists = prev.some((s) => s.text === textValue);
-      if (alreadyExists) return prev;
-      return [...prev, newSkill];
-    });
+    setSkills((prev) =>
+      prev.some((s) => s.text === text)
+        ? prev
+        : [...prev, { id: Date.now(), text, checked: false }]
+    );
   };
 
   const handleDeleteSelected = () => {
@@ -200,11 +157,13 @@ const handleSkillsClickWithGuard = () => {
     setSkills((prev) => prev.filter((skill) => !skill.checked));
   };
 
+  /* ---------------- RENDER ---------------- */
   return (
     <div className="resume-builder-container flex flex-col md:flex-row md:items-start">
-      {/* Left: Form Panel */}
+      {/* LEFT: FORM PANEL */}
       <div className="form-panel w-full md:w-[40%] p-4">
         <FormPanel
+        isPreviewFlow={isPreviewFlow}
           formData={formData}
           setFormData={setFormData}
           selectedEducations={selectedEducations}
@@ -212,15 +171,15 @@ const handleSkillsClickWithGuard = () => {
           addEducation={addEducation}
           jobTitle={jobTitle}
           setJobTitle={setJobTitle}
-          onAddWorkExp={handleOpenWorkPopup}
-          openWorkPopup={handleWorkClickWithGuard}
-          onAddSkillsClick={handleSkillsClickWithGuard}
-           canEdit={canEdit}
-           requirePayment={requirePayment}
+          onAddWorkExp={() => setShowWorkPopup(true)}
+          openWorkPopup={() => setShowWorkPopup(true)}
+          onAddSkillsClick={() => setShowSkillsPopup(true)}
+          canEdit={true}          // payment handled inside PreviewPanel
+          requirePayment={() => {}}
         />
       </div>
 
-      {/* Right: Preview + Theme */}
+      {/* RIGHT: PREVIEW */}
       <div className="right-side w-full lg:w-[60%] flex flex-col">
         <div className="resume-theme w-full flex flex-col p-4" id="resumeContainer">
           <div className="theme-selector-container p-2">
@@ -233,7 +192,7 @@ const handleSkillsClickWithGuard = () => {
             </div>
           )}
 
-          <div className="button-section-container p-4 mt-4 md:mt-0">
+          <div className="button-section-container p-4">
             <ButtonSection
               isEditing={isEditing}
               setIsEditing={setIsEditing}
@@ -247,6 +206,8 @@ const handleSkillsClickWithGuard = () => {
           </div>
 
           <PreviewPanel
+          templateId={templateId}
+        entrySource={entrySource}
             formData={formData}
             selectedEducations={selectedEducations}
             handleCheckboxChange={handleCheckboxChange}
@@ -258,19 +219,19 @@ const handleSkillsClickWithGuard = () => {
             isEditing={isEditing}
             toggleWorkCheckbox={toggleWorkCheckbox}
             toggleSkillCheckbox={toggleSkillCheckbox}
-            handleOpenWorkPopup={handleOpenWorkPopup}
-            handleAddSkillsClick={handleAddSkillsClick}
+            handleOpenWorkPopup={() => setShowWorkPopup(true)}
+            handleAddSkillsClick={() => setShowSkillsPopup(true)}
             theme={theme}
-            resumeStyle={resumeStyle} // Pass dynamic template
+            resumeStyle={resumeStyle}
           />
         </div>
       </div>
 
-      {/* Popups */}
+      {/* POPUPS */}
       {showWorkPopup && (
         <WorkPopup
           jobTitle={jobTitle}
-          onClose={handleCloseWorkPopup}
+          onClose={() => setShowWorkPopup(false)}
           workExperiences={workExperiences}
           setWorkExperiences={setWorkExperiences}
           onSelect={handleWorkSelect}
@@ -280,24 +241,12 @@ const handleSkillsClickWithGuard = () => {
       {showSkillsPopup && (
         <SkillsPopup
           jobTitle={jobTitle}
-          onClose={handleCloseSkillsPopup}
+          onClose={() => setShowSkillsPopup(false)}
           skills={skills}
           setSkills={setSkills}
           onSelect={handleSkillSelect}
         />
       )}
-
-      <>
-  {/* your existing JSX like FormPanel, PreviewPanel etc */}
-
-<PaymentGate
-  open={showPaymentModal}
-  onClose={() => setShowPaymentModal(false)}
-  onSuccess={handlePaymentSuccess}
-/>
-
-</>
-
     </div>
   );
 };
