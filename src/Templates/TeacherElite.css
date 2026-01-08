@@ -524,3 +524,18 @@
 
   pointer-events: none;
 }
+.te-share-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: none;
+  background: #f1f1f1;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.te-share-btn:hover {
+  background: #e6e6e6;
+}

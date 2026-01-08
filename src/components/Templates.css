@@ -473,3 +473,9 @@
 .template-overlay {
   pointer-events: none; /* 🔥 allow click to pass through */
 }
+
+
+.templates-hidden {
+  visibility: hidden;
+  pointer-events: none;
+}

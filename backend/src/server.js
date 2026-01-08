@@ -12,7 +12,8 @@ import adminPromoRoutes from "./routes/adminPromoRoutes.js";
 import promoRoutes from "./routes/promoRoutes.js";
 import payfastRoutes from "./routes/payfastRoutes.js";
 import webhookRoutes from "./routes/payfastWebhook.js";
-
+import shareRoutes from "./routes/shareRoutes.js";
+import path from "path";
 
 
 const app = express();
@@ -27,8 +28,8 @@ app.use("/api/promo", promoRoutes);
 app.use("/api/payments", paymentRoutes);
 app.use("/api/payfast", payfastRoutes);
 app.use("/api/payfast", webhookRoutes);
-
-
+app.use("/api/share", shareRoutes);
+app.use("/resumes", express.static(path.join(process.cwd(), "public/resumes")));
 
 /* ---------- TEST ROUTE ---------- */
 app.get("/", (req, res) => {

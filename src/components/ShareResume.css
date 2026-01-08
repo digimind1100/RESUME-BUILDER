@@ -1,0 +1,66 @@
+.share-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.share-panel {
+  background: #fff;
+  padding: 22px;
+  border-radius: 12px;
+  width: 300px;
+  text-align: center;
+}
+
+.share-btn {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.whatsapp { background: #25d366; color: #fff; }
+.email { background: #0072c6; color: #fff; }
+
+.close-btn {
+  background: none;
+  border: none;
+  margin-top: 8px;
+  cursor: pointer;
+}
+.share-panel {
+  position: relative;
+}
+
+.share-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #555;
+}
+
+.share-close:hover {
+  color: #000;
+}
+
+.share-icon {
+  font-size: 18px;
+}
+.share-email-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}

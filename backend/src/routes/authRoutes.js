@@ -10,12 +10,16 @@ const router = express.Router();
 // Helper to shape user object for frontend
 function toPublicUser(user) {
   return {
-    id: user._id.toString(),
+    id: user._id,
     fullName: user.fullName,
     email: user.email,
     role: user.role,
+    isPaid: user.isPaid,
+    accessUntil: user.accessUntil, // ⭐ VERY IMPORTANT
+    plan: user.plan,
   };
 }
+
 
 /* ---------- SIGNUP ---------- */
 router.post("/signup", async (req, res) => {

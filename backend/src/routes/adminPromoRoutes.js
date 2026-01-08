@@ -17,7 +17,7 @@ router.post("/generate-promo", async (req, res) => {
     createdAt: { $gte: today },
   });
 
-  if (countToday >= 10) {
+  if (countToday >= 20) {
     return res
       .status(400)
       .json({ message: "Daily promo limit (10) reached" });

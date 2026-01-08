@@ -1,6 +1,6 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./Templates.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Footer from "./Footer";
 import { useAuth } from "../context/AuthContext";
 import SignupModal from "./auth/SignupModal";
@@ -23,38 +23,48 @@ const TEMPLATE_META = {
 
 export default function Templates() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { isAuthenticated } = useAuth();
 
   const [showSignup, setShowSignup] = useState(false);
   const pendingRouteRef = useRef(null);
-  
 
-  const [showPaymentModal, setShowPaymentModal] = useState(false);
-const [isEditingUnlocked, setIsEditingUnlocked] = useState(false);
+  // 🔥 Detect Start Building flow
+  const isStartBuildingFlow = Boolean(location.state?.startBuilding);
 
+  // 🔥 Auto open signup when coming from Start Building
+  useEffect(() => {
+    if (isStartBuildingFlow && !isAuthenticated) {
+      setShowSignup(true);
+    }
+  }, [isStartBuildingFlow, isAuthenticated]);
 
-
-  // 🔥 ONE UNIVERSAL HANDLER (SIMPLE + PREMIUM)
+  // 🔥 Existing template handler (UNCHANGED)
   const handleUseTemplate = (route) => {
     if (!isAuthenticated) {
       pendingRouteRef.current = route;
       setShowSignup(true);
       return;
     }
-
     navigate(route);
   };
 
-  // 🔥 AUTO OPEN AFTER SIGNUP
+  // 🔥 After signup success
   const handleSignupSuccess = () => {
-    const route = pendingRouteRef.current;
-    if (route) {
-      navigate(route);
+    // Case 1: Start Building flow
+    if (isStartBuildingFlow) {
+      navigate("/resume/professional");
+      return;
+    }
+
+    // Case 2: Normal template flow
+    if (pendingRouteRef.current) {
+      navigate(pendingRouteRef.current);
       pendingRouteRef.current = null;
     }
   };
 
-  return (
+ return (
     <>
       <section className="templates-page">
 

@@ -7,11 +7,13 @@ export default function BuilderGuard({ children }) {
   const { user } = useAuth();
   const { isPaid, requirePayment } = usePaymentGuard();
 
-  useEffect(() => {
-    if (user && !isPaid) {
-      requirePayment(); // 🔥 open modal instead of redirect
-    }
-  }, [user, isPaid]);
+useEffect(() => {
+  if (!user) return;           // 🔥 WAIT until user exists
+  if (!isPaid) {
+    requirePayment();
+  }
+}, [user, isPaid]);
+
 
   // ✅ ALWAYS render children (modal controls access)
   return children;

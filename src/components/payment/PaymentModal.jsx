@@ -4,8 +4,9 @@ import "./PaymentModal.css";
 import easypaisaLogo from "../../assets/payments/easypaisa.png";
 import jazzcashLogo from "../../assets/payments/jazzcash.png";
 import sadapayLogo from "../../assets/payments/sadapay.png";
+import { useAuth } from "../../context/AuthContext";
 
-export default function PaymentModal({ onClose }) {
+export default function PaymentModal({ onClose, onSuccess }) {
   const modalRoot = document.getElementById("modal-root");
 
   const [method, setMethod] = useState("");
@@ -17,6 +18,8 @@ export default function PaymentModal({ onClose }) {
   const [showPromo, setShowPromo] = useState(false);
   const [promoCode, setPromoCode] = useState("");
   const [promoLoading, setPromoLoading] = useState(false);
+
+  const { refreshUser } = useAuth();
 
   if (!modalRoot) return null;
 
@@ -30,13 +33,13 @@ export default function PaymentModal({ onClose }) {
     },
     jazzcash: {
       name: "JazzCash",
-      number: "03XX-XXXXXXX",
+      number: "0300-2463822",
       holder: "DigiMind",
       logo: jazzcashLogo,
     },
     sadapay: {
       name: "SadaPay",
-      number: "03XX-XXXXXXX",
+      number: "0300-2463822",
       holder: "DigiMind",
       logo: sadapayLogo,
     },
@@ -49,14 +52,11 @@ export default function PaymentModal({ onClose }) {
     try {
       const res = await fetch("/api/payfast/create-payment", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         credentials: "include",
       });
 
       const data = await res.json();
-
       if (!data.success) {
         alert("Unable to start PayFast payment");
         return;
@@ -86,6 +86,8 @@ export default function PaymentModal({ onClose }) {
      🐢 MANUAL PAYMENT SUBMIT
      =============================== */
   const handlePayment = async () => {
+    console.log("🔥 PaymentModal manual submit clicked");
+
     if (!method || !transactionId || loading) {
       alert("Please select payment method and enter transaction ID");
       return;
@@ -117,6 +119,13 @@ export default function PaymentModal({ onClose }) {
         return;
       }
 
+      // 🔥 CRITICAL FIX: trigger paid flow
+      console.log("🔥 Manual payment submitted, calling onSuccess");
+
+      if (typeof onSuccess === "function") {
+        await onSuccess(); // calls usePaymentGuard.handlePaymentSuccess
+      }
+
       setStatus("pending");
     } catch (err) {
       setLoading(false);
@@ -125,7 +134,7 @@ export default function PaymentModal({ onClose }) {
   };
 
   /* ===============================
-     🎟 PROMO CODE
+     🎟 PROMO CODE (INSTANT UNLOCK)
      =============================== */
   const redeemPromo = async () => {
     if (!promoCode || promoLoading) return;
@@ -152,8 +161,10 @@ export default function PaymentModal({ onClose }) {
         return;
       }
 
-      setStatus("pending");
-    } catch {
+      // ✅ PROMO SUCCESS → REFRESH USER & CLOSE
+      await refreshUser();
+      onClose();
+    } catch (err) {
       setPromoLoading(false);
       alert("Failed to redeem promo");
     }
@@ -165,7 +176,6 @@ export default function PaymentModal({ onClose }) {
     <div className="payment-overlay">
       <div className="payment-modal premium">
 
-        {/* HEADER */}
         <h2 className="payment-title">🔓 Unlock Resume</h2>
         <p className="payment-subtitle">
           One-time payment to unlock full editing
@@ -176,7 +186,6 @@ export default function PaymentModal({ onClose }) {
           Valid for 30 days · Instant access via PayFast
         </div>
 
-        {/* 🚀 PAYFAST PRIMARY BUTTON */}
         {status === "idle" && (
           <button
             className="unlock-btn"
@@ -187,14 +196,12 @@ export default function PaymentModal({ onClose }) {
           </button>
         )}
 
-        {/* DIVIDER */}
         {status === "idle" && (
           <div style={{ textAlign: "center", margin: "10px 0", color: "#777" }}>
             — or pay manually —
           </div>
         )}
 
-        {/* MANUAL PAYMENT METHODS */}
         {status === "idle" && (
           <div className="payment-methods">
             {Object.keys(PAYMENT_ACCOUNTS).map((p) => (
@@ -220,13 +227,10 @@ export default function PaymentModal({ onClose }) {
           </div>
         )}
 
-        {/* MANUAL INSTRUCTIONS */}
         {status === "idle" && selectedAccount && (
           <div className="payment-instructions">
             <strong>{selectedAccount.name} Payment</strong>
-            <p>
-              Send <b>Rs 999</b> to:
-            </p>
+            <p>Send <b>Rs 999</b> to:</p>
             <p>
               <b>Account:</b> {selectedAccount.number}<br />
               <b>Name:</b> {selectedAccount.holder}
@@ -234,7 +238,6 @@ export default function PaymentModal({ onClose }) {
           </div>
         )}
 
-        {/* TRANSACTION ID */}
         {status === "idle" && method && (
           <input
             type="text"
@@ -245,7 +248,6 @@ export default function PaymentModal({ onClose }) {
           />
         )}
 
-        {/* MANUAL SUBMIT */}
         {status === "idle" && method && (
           <button
             className="unlock-btn"
@@ -256,14 +258,12 @@ export default function PaymentModal({ onClose }) {
           </button>
         )}
 
-        {/* STATUS */}
         {status === "pending" && (
           <div className="payment-success">
             ⏳ Payment submitted. Verification in progress.
           </div>
         )}
 
-        {/* PROMO */}
         {status === "idle" && (
           <button
             className="promo-toggle-btn"
@@ -292,7 +292,6 @@ export default function PaymentModal({ onClose }) {
           </div>
         )}
 
-        {/* CLOSE */}
         {!loading && status === "idle" && (
           <button className="close-btn" onClick={onClose}>
             Cancel

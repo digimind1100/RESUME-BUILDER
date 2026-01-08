@@ -1,19 +1,15 @@
-import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import "./HeroSection.css";
 
 export default function HeroSection() {
-  const { openAuthModal, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
-const handleStartBuilding = () => {
-  if (window.openAuth) {
-    window.openAuth();
-  } else {
-    console.warn("Auth system not ready");
-  }
-};
-
+  const handleStartBuilding = () => {
+    // 🔥 Just go to Templates page
+    navigate("/templates", {
+      state: { startBuilding: true },
+    });
+  };
 
   return (
     <section className="hero-container">
@@ -27,8 +23,9 @@ const handleStartBuilding = () => {
           </h3>
           <p className="hero-subtitle">
             Create a stunning, job-winning resume effortlessly with our
-            AI-powered Resume Builder. Save time. Land interviews. Stand out.
+            AI-powered Resume Builder.
           </p>
+
           <button onClick={handleStartBuilding} className="hero-btn">
             Start Building
           </button>

@@ -26,7 +26,7 @@ const FeaturesHowTestimonials = () => {
             <img src="/icons/export.svg" alt="Export" className="card-icon" />
             <h3 className="card-heading">Export Instantly</h3>
             <p className="card-text">
-              Download your resume as PDF, DOCX, or share it online easily.
+              Download your resume as PDF, or share it online easily.
             </p>
           </div>
         </div>

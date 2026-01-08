@@ -2,6 +2,7 @@ import express from "express";
 import PromoCode from "../models/PromoCode.js";
 import User from "../models/User.js";
 import requireAuth from "../middleware/auth.js";
+import { activatePromoPro } from "../utils/activatePro.js";
 
 const router = express.Router();
 
@@ -15,30 +16,37 @@ router.post("/redeem", requireAuth, async (req, res) => {
     });
 
     if (!promo) {
-      return res.status(400).json({ message: "Invalid or already used promo code" });
+      return res.status(400).json({
+        success: false,
+        message: "Invalid or already used promo code",
+      });
     }
 
     const user = await User.findById(req.user.id);
 
-    // Activate 1-day premium
-    user.isPaid = true;
-    user.planExpiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
-
-    await user.save();
+    // ✅ USE CENTRAL LOGIC
+    await activatePromoPro(user);
 
     promo.isUsed = true;
     promo.usedBy = user._id;
     promo.usedAt = new Date();
-
     await promo.save();
 
     res.json({
       success: true,
-      message: "Premium activated for 24 hours",
-      expiresAt: user.planExpiresAt,
+      user: {
+        id: user._id,
+        fullName: user.fullName,
+        email: user.email,
+        role: user.role,
+        isPaid: user.isPaid,
+        plan: user.plan,
+        accessUntil: user.accessUntil,
+      },
     });
   } catch (err) {
-    res.status(500).json({ message: "Promo redemption failed" });
+    console.error("Promo redeem error:", err);
+    res.status(500).json({ success: false, message: "Promo redemption failed" });
   }
 });
 

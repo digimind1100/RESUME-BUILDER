@@ -9,6 +9,11 @@ import { useAuth } from "../context/AuthContext";
 import usePaymentGuard from "../hooks/usePaymentGuard";
 import PaymentGate from "../components/payment/PaymentGate";
 import Watermark from "../components/Watermark";
+import ShareResume from "../components/ShareResume";
+import { FaShareAlt } from "react-icons/fa";
+
+
+
 
 
 const TABS = [
@@ -49,8 +54,10 @@ export default function TeacherElite() {
   const resumeRef = useRef(null);
 
   const [isEditable, setIsEditable] = useState(false);
+const [showShare, setShowShare] = useState(false);
 
-
+const resumeId = "teacher-elite"; // or user-based later
+const resumePdfUrl = `${window.location.origin}/resumes/${resumeId}.pdf`;
 
 const { user, setUser } = useAuth();
 
@@ -167,6 +174,18 @@ Subject: ${qrForm.subject}
     <div className="te-wrapper">
       {/* TOP BUTTONS */}
       <div className="te-buttons" contentEditable={false}>
+<button
+  className="te-share-btn"
+  onClick={(e) => {
+    e.stopPropagation();
+    setShowShare(true);
+  }}
+>
+  <FaShareAlt />
+  <span>Share</span>
+</button>
+
+
 
         <button onClick={handleDownloadPDF}>Download PDF</button>
         <button onClick={() => navigate("/templates")}>
@@ -184,8 +203,6 @@ Subject: ${qrForm.subject}
   {isEditable ? "Editing: ON" : "Editing: OFF"}
     {!canEdit && <span className="edit-crown">👑</span>}
 </button>
-
-
 
 
       </div>
@@ -594,6 +611,13 @@ Subject: ${qrForm.subject}
   onClose={() => setShowPaymentModal(false)}
   onSuccess={handlePaymentSuccess}
 />
+
+{showShare && (
+  <ShareResume
+    resumeRef={resumeRef}
+    onClose={() => setShowShare(false)}
+  />
+)}
 
       </div>
     </div>

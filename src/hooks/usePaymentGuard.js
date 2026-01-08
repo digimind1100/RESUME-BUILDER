@@ -2,31 +2,35 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 
 export default function usePaymentGuard(templateName = "") {
-  const { user, setUser, token } = useAuth();
+  // 🔥 IMPORTANT: refreshUser added
+  const { user, setUser, token, refreshUser } = useAuth();
 
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [checking, setChecking] = useState(false);
 
-  // 🔐 FINAL: Date-based Pro check (30 days)
+  // 🔐 Date-based paid check (SINGLE SOURCE OF TRUTH)
   const isPaid =
-    user?.accessUntil &&
-    new Date(user.accessUntil) > new Date();
+    !!user &&
+    user.isPaid === true &&
+    user.accessUntil &&
+    new Date(user.accessUntil).getTime() > Date.now();
 
-  // 🔹 DEBUG
+  // 🔹 DEBUG (keep this)
   console.log("🧩 usePaymentGuard render", {
     templateName,
     isPaid,
     accessUntil: user?.accessUntil,
   });
 
-  // 🔹 Optional: auto-close modal when user becomes paid
+  // 🔥 AUTO-REACT when user becomes paid
   useEffect(() => {
     if (isPaid) {
+      console.log("mark-paid");
       setShowPaymentModal(false);
     }
   }, [isPaid]);
 
-  // 🔒 Guard trigger
+  // 🔒 Guard trigger (ONLY opens modal)
   const requirePayment = () => {
     console.log("🔐 requirePayment called, isPaid =", isPaid);
     if (!isPaid) {
@@ -36,20 +40,20 @@ export default function usePaymentGuard(templateName = "") {
     return true;
   };
 
-  // 💳 Called after successful payment
+  // 💳 Called after successful payment (EasyPaisa / manual)
   const handlePaymentSuccess = async () => {
     console.log("🔥 handlePaymentSuccess CALLED");
 
     try {
       const res = await fetch(
-        "http://localhost:3001/api/payments/mark-paid",
+        "http://localhost:3001/api/payments/submit",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({ plan: "monthly" }),
+          body: JSON.stringify({ plan: "lifetime" }),
         }
       );
 
@@ -57,9 +61,16 @@ export default function usePaymentGuard(templateName = "") {
       console.log("✅ mark-paid response:", data);
 
       if (data.success && data.user) {
-        // backend returns updated user with accessUntil
+        // 1️⃣ Immediate optimistic update
         setUser(data.user);
+
+        // 2️⃣ CLOSE modal
         setShowPaymentModal(false);
+
+        // 3️⃣ 🔥 FORCE fresh user from backend (THIS FIXES EVERYTHING)
+        setTimeout(() => {
+          refreshUser();
+        }, 0);
       }
     } catch (err) {
       console.error("❌ Payment failed:", err);
