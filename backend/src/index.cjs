@@ -22,6 +22,10 @@ app.use("/api/payment", paymentRoutes);
 app.get("/", (req, res) => {
   res.send("Backend is running on Vercel");
 });
+app.get("/favicon.ico", (req, res) => {
+  res.status(204).end();
+});
+
 
 // ❌ REMOVE app.listen()
 // ❌ DO NOT start server manually
