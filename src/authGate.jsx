@@ -1,5 +1,6 @@
 export function authGate() {
   const PASSWORD = "test123";
+alert("AUTH GATE PROD RUNNING");
 
   const saved = localStorage.getItem("staging_auth");
   if (saved === "ok") return;
