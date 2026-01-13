@@ -1,3 +1,8 @@
+import { authGate } from "./authGate"; // 🔒 staging lock (frontend only)
+
+// 🔐 Stop app here until correct password
+authGate();
+
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
@@ -11,4 +16,3 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     </AuthProvider>
   </BrowserRouter>
 );
-
