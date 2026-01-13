@@ -4,8 +4,12 @@ export function authGate() {
   const saved = localStorage.getItem("staging_auth");
   if (saved === "ok") return;
 
-  document.body.innerHTML = `
-    <div style="
+  document.documentElement.innerHTML = `
+    <head>
+      <title>Staging Access</title>
+    </head>
+    <body style="
+      margin:0;
       height:100vh;
       display:flex;
       align-items:center;
@@ -22,7 +26,7 @@ export function authGate() {
         <button id="btn" style="padding:10px 20px">Enter</button>
         <p id="err" style="color:#f87171"></p>
       </div>
-    </div>
+    </body>
   `;
 
   document.getElementById("btn").onclick = () => {
@@ -34,6 +38,4 @@ export function authGate() {
       document.getElementById("err").innerText = "Wrong password";
     }
   };
-
-  throw new Error("LOCKED");
 }

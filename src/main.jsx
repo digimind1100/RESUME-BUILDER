@@ -1,6 +1,5 @@
-import { authGate } from "./authGate"; // 🔒 staging lock (frontend only)
+import { authGate } from "./authGate";
 
-// 🔐 Stop app here until correct password
 authGate();
 
 import React from "react";
