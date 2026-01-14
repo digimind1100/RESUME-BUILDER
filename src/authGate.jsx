@@ -3,7 +3,7 @@ export function authGate() {
 
   const saved = localStorage.getItem("staging_auth");
   if (saved === "ok") return;
-
+console.log("PROD DEPLOY CONFIRMED");
   document.documentElement.innerHTML = `
     <head>
       <title>Staging Access</title>
