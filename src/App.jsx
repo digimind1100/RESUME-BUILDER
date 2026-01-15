@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import HomePage from "./components/Home";
 import ResumeBuilder from "./components/ResumeBuilder";
@@ -24,8 +24,7 @@ import { Toaster } from "react-hot-toast";
 import AdminPayments from "./components/AdminPayments";
 import Policies from "./components/Policies";
 import Contact from "./components/Contact";
-// import SignupModal from "./components/auth/SignupModal";
-// import LoginModal from "./components/auth/LoginModal";
+
 function AppContent() {
   const location = useLocation();
   const hideNavbar = location.pathname === "/resume";
@@ -33,63 +32,88 @@ function AppContent() {
   // Global form state
   const [formData, setFormData] = useState({});
 
+  // 🔧 TEMP: BACKEND HEALTH CHECK (REMOVE LATER)
+  useEffect(() => {
+    const API_BASE = import.meta.env.VITE_API_BASE_URL;
+
+    if (!API_BASE) {
+      console.error("❌ VITE_API_BASE_URL is NOT defined");
+      return;
+    }
+
+    fetch(`${API_BASE}/api/health`)
+      .then(res => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.json();
+      })
+      .then(data => {
+        console.log("✅ Backend health OK:", data);
+        alert("✅ Backend connected successfully (check console)");
+      })
+      .catch(err => {
+        console.error("❌ Backend health FAILED:", err);
+        alert("❌ Backend connection FAILED (check console)");
+      });
+  }, []);
+
   return (
     <>
-        <Navbar />
-<Toaster position="top-center" />
+      <Navbar />
+      <Toaster position="top-center" />
+
       <Routes>
         <Route path="/" element={<HomePage />} />
-     
+
         {/* Unified builder */}
         <Route
           path="/resume/:templateId?"
           element={<ResumeBuilder formData={formData} setFormData={setFormData} />}
         />
         <Route path="/resume-classic" element={<ResumeBuilderQR />} />
-       
+
         {/* Templates */}
         <Route path="/templates" element={<Templates />} />
 
         {/* Cover letter */}
         <Route path="/cover-letter" element={<CoverLetterPanel />} />
-       {/* Terms & policies */}
-         <Route path="/policies" element={<Policies />} />
-          {/* Contact Form */}
-         <Route path="/contact" element={<Contact />} />
+
+        {/* Terms & policies */}
+        <Route path="/policies" element={<Policies />} />
+
+        {/* Contact */}
+        <Route path="/contact" element={<Contact />} />
+
         {/* Preview */}
-        <Route path="/preview-classic" element={<PreviewPanelQRPage formData={formData} />} />
+        <Route
+          path="/preview-classic"
+          element={<PreviewPanelQRPage formData={formData} />}
+        />
 
         <Route path="/clean-professional" element={<CleanProfessional />} />
         <Route path="/creative-bold" element={<CreativeBold />} />
-         <Route path="/minimal-accent" element={<MinimalAccent />} />
-       <Route path="/elegant-classic" element={<ElegantClassic />} />
-       <Route path="/medical-elites" element={<MedicalElites />} />
-       <Route path="/engineer-elites" element={<EngineerElites />} />
-       <Route path="/soft-tech" element={<SoftTech />} />
-      
+        <Route path="/minimal-accent" element={<MinimalAccent />} />
+        <Route path="/elegant-classic" element={<ElegantClassic />} />
+        <Route path="/medical-elites" element={<MedicalElites />} />
+        <Route path="/engineer-elites" element={<EngineerElites />} />
+        <Route path="/soft-tech" element={<SoftTech />} />
 
-       <Route  path="/data-elite"element={<BuilderGuard><DataElite/> </BuilderGuard>} />
-       
-       <Route path="/engineer-prime" element={<EngineerPrime />} />
-       <Route path="/aviation-pro" element={<AviationPro />} />
-       <Route path="/teacher-elite" element={<TeacherElite />} />
-      
-    
+        <Route
+          path="/data-elite"
+          element={
+            <BuilderGuard>
+              <DataElite />
+            </BuilderGuard>
+          }
+        />
+
+        <Route path="/engineer-prime" element={<EngineerPrime />} />
+        <Route path="/aviation-pro" element={<AviationPro />} />
+        <Route path="/teacher-elite" element={<TeacherElite />} />
 
         <Route path="/coverletter" element={<CoverLetterPage />} />
         <Route path="/coverletter-generator" element={<CoverLetterPanel />} />
         <Route path="/admin/payments" element={<AdminPayments />} />
-
-
-      
-
-
-
       </Routes>
-
-      {/* <SignupModal />
-      <LoginModal /> */}
-      
     </>
   );
 }
