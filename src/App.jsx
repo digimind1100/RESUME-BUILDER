@@ -32,29 +32,6 @@ function AppContent() {
   // Global form state
   const [formData, setFormData] = useState({});
 
-  // 🔧 TEMP: BACKEND HEALTH CHECK (REMOVE LATER)
-  useEffect(() => {
-    const API_BASE = import.meta.env.VITE_API_BASE_URL;
-
-    if (!API_BASE) {
-      console.error("❌ VITE_API_BASE_URL is NOT defined");
-      return;
-    }
-
-    fetch(`${API_BASE}/api/health`)
-      .then(res => {
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        return res.json();
-      })
-      .then(data => {
-        console.log("✅ Backend health OK:", data);
-        alert("✅ Backend connected successfully (check console)");
-      })
-      .catch(err => {
-        console.error("❌ Backend health FAILED:", err);
-        alert("❌ Backend connection FAILED (check console)");
-      });
-  }, []);
 
   return (
     <>
