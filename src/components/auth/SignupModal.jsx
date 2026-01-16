@@ -12,31 +12,58 @@ export default function SignupModal({ isOpen, onClose, onSuccess }) {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
+  if (!isOpen) return null;
+
   async function handleSubmit(e) {
     e.preventDefault();
+    if (loading) return;
+
     setError("");
+
+    const payload =
+      mode === "signup"
+        ? {
+            fullName: fullName.trim(),
+            email: email.trim(),
+            password: password.trim(),
+          }
+        : {
+            email: email.trim(),
+            password: password.trim(),
+          };
 
     let result;
 
-    if (mode === "signup") {
-      result = await signup({ fullName, email, password });
-    } else {
-      result = await login({ email, password });
-    }
+    try {
+      result =
+        mode === "signup"
+          ? await signup(payload)
+          : await login(payload);
 
-    if (result?.ok) {
-      onSuccess && onSuccess(result.user);
-      onClose();
-    } else {
-      setError(result?.message || "Authentication failed. Please try again.");
+      if (result?.ok) {
+        onSuccess && onSuccess(result.user);
+        onClose();
+      } else {
+        setError(result?.message || "Authentication failed. Please try again.");
+      }
+    } catch {
+      setError("Something went wrong. Please try again.");
     }
+  }
+
+  function switchMode(nextMode) {
+    setMode(nextMode);
+    setError("");
+    setPassword("");
   }
 
   return (
     <div className="signup-overlay">
       <div className="signup-modal animate-fadeIn">
         <h2 className="signup-title">
-          {mode === "signup" ? "Create Your Account" : "Login to Your Account"}
+          {mode === "signup"
+            ? "Create Your Account"
+            : "Login to Your Account"}
         </h2>
 
         {error && <p className="signup-error">{error}</p>}
@@ -83,12 +110,14 @@ export default function SignupModal({ isOpen, onClose, onSuccess }) {
           {mode === "signup" ? (
             <>
               Already have an account?{" "}
-              <span onClick={() => setMode("login")}>Login</span>
+              <span onClick={() => switchMode("login")}>Login</span>
             </>
           ) : (
             <>
               New here?{" "}
-              <span onClick={() => setMode("signup")}>Create account</span>
+              <span onClick={() => switchMode("signup")}>
+                Create account
+              </span>
             </>
           )}
         </p>

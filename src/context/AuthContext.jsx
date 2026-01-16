@@ -5,46 +5,31 @@ import {
   signup as signupApi,
   login as loginApi,
   getCurrentUser,
+  logout as logoutApi,
 } from "../api/authApi";
 
 const AuthContext = createContext(null);
-const TOKEN_KEY = "rb_auth_token";
 
 export function AuthProvider({ children }) {
-  const navigate = useNavigate(); // 🔥 NEW
+  const navigate = useNavigate();
 
   const [user, setUser] = useState(null);
-  const [token, setToken] = useState(null);
   const [initializing, setInitializing] = useState(true);
   const [loading, setLoading] = useState(false);
 
-  // 🔥 NEW: auth modal state
+  // 🔥 Auth modal state
   const [authModal, setAuthModal] = useState({
     open: false,
     redirectTo: null,
   });
 
-  // 🔹 Restore session on app load
+  // 🔹 Restore session via cookie on app load
   useEffect(() => {
-    const savedToken = localStorage.getItem(TOKEN_KEY);
-
-    if (!savedToken) {
-      setInitializing(false);
-      return;
-    }
-
-    setToken(savedToken);
-
     (async () => {
       try {
-        const result = await getCurrentUser(savedToken);
-
+        const result = await getCurrentUser(); // 🔥 cookie-based
         if (result?.ok && result.user) {
           setUser(result.user);
-        } else {
-          localStorage.removeItem(TOKEN_KEY);
-          setToken(null);
-          setUser(null);
         }
       } finally {
         setInitializing(false);
@@ -52,16 +37,14 @@ export function AuthProvider({ children }) {
     })();
   }, []);
 
-  // 🔹 Centralized auth application
+  // 🔹 Apply auth result
   function applyAuth(result) {
-    if (result?.ok && result.token && result.user) {
-      setToken(result.token);
+    if (result?.ok && result.user) {
       setUser(result.user);
-      localStorage.setItem(TOKEN_KEY, result.token);
     }
   }
 
-  // 🔹 Signup → auto login
+  // 🔹 Signup
   async function signup({ fullName, email, password }) {
     setLoading(true);
     try {
@@ -86,13 +69,14 @@ export function AuthProvider({ children }) {
   }
 
   // 🔹 Logout
-  function logout() {
+  async function logout() {
+    try {
+      await logoutApi(); // clears cookie on backend
+    } catch {}
     setUser(null);
-    setToken(null);
-    localStorage.removeItem(TOKEN_KEY);
   }
 
-  // 🔥 NEW: open auth modal (used by Start Building)
+  // 🔥 Open auth modal
   function openAuthModal({ redirectTo }) {
     setAuthModal({
       open: true,
@@ -100,7 +84,7 @@ export function AuthProvider({ children }) {
     });
   }
 
-  // 🔥 NEW: close auth modal
+  // 🔥 Close auth modal
   function closeAuthModal() {
     setAuthModal({
       open: false,
@@ -108,24 +92,17 @@ export function AuthProvider({ children }) {
     });
   }
 
-  // 🔥 NEW: call this AFTER login/signup success
+  // 🔥 Call after successful auth
   function onAuthSuccess() {
     const path = authModal.redirectTo;
     closeAuthModal();
-
-    if (path) {
-      navigate(path);
-    }
+    if (path) navigate(path);
   }
 
   // 🔥 Refresh user from backend
   async function refreshUser() {
-    const savedToken = localStorage.getItem(TOKEN_KEY);
-    if (!savedToken) return;
-
     try {
-      const result = await getCurrentUser(savedToken);
-
+      const result = await getCurrentUser();
       if (result?.ok && result.user) {
         setUser(result.user);
       }
@@ -137,7 +114,6 @@ export function AuthProvider({ children }) {
   const value = {
     user,
     setUser,
-    token,
     loading,
     initializing,
     isAuthenticated: !!user,
@@ -148,7 +124,6 @@ export function AuthProvider({ children }) {
     logout,
     refreshUser,
 
-    // 🔥 EXPOSED FOR START BUILDING FLOW
     authModal,
     openAuthModal,
     closeAuthModal,
