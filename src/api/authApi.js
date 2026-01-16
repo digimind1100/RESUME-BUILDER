@@ -40,20 +40,30 @@ export async function signup({ fullName, email, password }) {
     return { ok: false, status: 0, user: null, token: null, message: "Unable to connect to server." };
   }
 }
-
 export async function login({ email, password }) {
   try {
     const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
+      credentials: "include", // 🔥 REQUIRED for httpOnly cookie
+      body: JSON.stringify({
+        email: email.trim(),
+        password: password.trim(),
+      }),
     });
+
     return await handleJsonResponse(res);
   } catch (error) {
     console.error("Login error (frontend):", error);
-    return { ok: false, status: 0, user: null, token: null, message: "Unable to connect to server." };
+    return {
+      ok: false,
+      status: 0,
+      user: null,
+      message: "Unable to connect to server.",
+    };
   }
 }
+
 
 export async function getCurrentUser(token) {
   if (!token) {
