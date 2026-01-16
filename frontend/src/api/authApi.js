@@ -1,6 +1,6 @@
 ﻿/* src/api/authApi.js */
 
-const API_BASE_URL = ""
+const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || "http://localhost:3001";
 
 async function handleJsonResponse(response) {
@@ -27,19 +27,38 @@ async function handleJsonResponse(response) {
   };
 }
 
+/* ======================
+   SIGNUP
+====================== */
 export async function signup({ fullName, email, password }) {
   try {
     const res = await fetch(`${API_BASE_URL}/api/auth/signup`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ fullName, email, password }),
+      credentials: "include", // 🔥 cookie set hoga
+      body: JSON.stringify({
+        fullName: fullName.trim(),
+        email: email.trim(),
+        password: password.trim(),
+      }),
     });
+
     return await handleJsonResponse(res);
   } catch (error) {
     console.error("Signup error (frontend):", error);
-    return { ok: false, status: 0, user: null, token: null, message: "Unable to connect to server." };
+    return {
+      ok: false,
+      status: 0,
+      user: null,
+      token: null,
+      message: "Unable to connect to server.",
+    };
   }
 }
+
+/* ======================
+   LOGIN
+====================== */
 export async function login({ email, password }) {
   try {
     const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
@@ -64,19 +83,41 @@ export async function login({ email, password }) {
   }
 }
 
-
-export async function getCurrentUser(token) {
-  if (!token) {
-    return { ok: false, status: 0, user: null, token: null, message: "Token missing." };
-  }
+/* ======================
+   GET CURRENT USER (COOKIE BASED)
+====================== */
+export async function getCurrentUser() {
   try {
     const res = await fetch(`${API_BASE_URL}/api/auth/me`, {
       method: "GET",
-      headers: { Authorization: `Bearer ${token}` },
+      credentials: "include", // 🔥 cookie bheji jayegi
     });
+
     return await handleJsonResponse(res);
   } catch (error) {
     console.error("Get current user error:", error);
-    return { ok: false, status: 0, user: null, token: null, message: "Unable to connect to server." };
+    return {
+      ok: false,
+      status: 0,
+      user: null,
+      token: null,
+      message: "Unable to connect to server.",
+    };
+  }
+}
+
+/* ======================
+   LOGOUT  ✅ (BUILD ERROR FIX)
+====================== */
+export async function logout() {
+  try {
+    await fetch(`${API_BASE_URL}/api/auth/logout`, {
+      method: "POST",
+      credentials: "include", // 🔥 cookie clear hogi
+    });
+    return { ok: true };
+  } catch (error) {
+    console.error("Logout error:", error);
+    return { ok: false };
   }
 }
