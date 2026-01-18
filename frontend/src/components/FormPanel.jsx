@@ -73,8 +73,10 @@ export default function FormPanel({
 
       <label>Job Title</label>
       <input
+        autoComplete="off"
         type="text"
         name="jobTitle"
+        placeholder="e.g. Frontend Developer"
         value={jobTitle}
         onChange={(e) => {
           const v = e.target.value;
@@ -83,16 +85,105 @@ export default function FormPanel({
         }}
       />
 
-      {/* ---- other inputs unchanged ---- */}
+      <label>Full Name</label>
+      <input
+        type="text"
+        name="fullName"
+        value={formData?.fullName || ""}
+        onChange={handleChange}
+      />
+
+      <label>Email</label>
+      <input
+        type="email"
+        name="email"
+        value={formData?.email || ""}
+        onChange={handleChange}
+      />
+
+      <label>Phone</label>
+      <input
+        type="text"
+        name="phone"
+        value={formData?.phone || ""}
+        onChange={handleChange}
+      />
+
+      <label>Address</label>
+      <input
+        type="text"
+        name="address"
+        value={formData?.address || ""}
+        onChange={handleChange}
+      />
+
+      <label>City / State / Zip Code</label>
+      <input
+        type="text"
+        name="city"
+        value={formData?.city || ""}
+        onChange={handleChange}
+      />
+
+      <label>Country</label>
+      <input
+        type="text"
+        name="country"
+        value={formData?.country || ""}
+        onChange={handleChange}
+      />
+
+      <label>Date of Birth</label>
+      <input
+        type="date"
+        name="dob"
+        value={formData?.dob || ""}
+        onChange={handleChange}
+      />
+
+      <label>LinkedIn / Portfolio</label>
+      <input
+        type="url"
+        name="linkedin"
+        value={formData?.linkedin || ""}
+        onChange={handleChange}
+      />
 
       <h2>Education</h2>
 
-      <input name="school" value={education.school} onChange={handleChange} />
-      <input name="degree" value={education.degree} onChange={handleChange} />
-      <input name="year" value={education.year} onChange={handleChange} />
+      <input
+        type="text"
+        name="school"
+        value={education.school}
+        onChange={handleChange}
+        placeholder="School"
+      />
+      <input
+        type="text"
+        name="degree"
+        value={education.degree}
+        onChange={handleChange}
+        placeholder="Degree"
+      />
+      <input
+        type="text"
+        name="year"
+        value={education.year}
+        onChange={handleChange}
+        placeholder="Year"
+      />
 
-      <button type="button" onClick={handleAddEducation}>
+      <button className="add-edu-btn" type="button" onClick={handleAddEducation}>
         ➕ Add Education
+      </button>
+
+      <button
+        className="delete-btn"
+        type="button"
+        onClick={handleDeleteSelected}
+        disabled={(selectedEducations || []).length === 0}
+      >
+        🗑️ Delete Selected
       </button>
 
       <button
@@ -105,7 +196,7 @@ export default function FormPanel({
 
       <button
         type="button"
-        className="add-skill-btn premium-btn"
+        className="add-skill-btn btn btn-primary mt-2 premium-btn"
         onClick={handleSkillsClickWithGuard}
       >
         Add Skills {!canEdit && <span className="lock-icon">🔒</span>}
