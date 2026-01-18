@@ -183,7 +183,7 @@ export default function PreviewPanel({
             className="profile-pic-wrapper" 
             onClick={triggerProfileSelect}>
               <img
-                src={formData?.profilePic || "images/engineereliteprofileimage.png"}
+                src={formData?.profilePic || "/images/engineereliteprofileimage.png"}
                 alt="Profile"
                 style={{ cursor: "pointer" }}
               />
