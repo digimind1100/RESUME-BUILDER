@@ -24,13 +24,15 @@ const TEMPLATE_META = {
 export default function Templates() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { isAuthenticated } = useAuth();
 
   const [showSignup, setShowSignup] = useState(false);
   const pendingRouteRef = useRef(null);
 
   // 🔥 Detect Start Building flow
   const isStartBuildingFlow = Boolean(location.state?.startBuilding);
+
+  const { isAuthenticated, openAuthModal } = useAuth();
+
 
   // 🔥 Auto open signup when coming from Start Building
   useEffect(() => {
@@ -166,27 +168,36 @@ export default function Templates() {
 
                 <h3>{TEMPLATE_META[num]?.name}</h3>
 
-                <button
-                  className="template-btn template-btn--outline"
-                  onClick={() => {
-                    const routes = {
-                      1: "/teacher-elite",
-                      2: "/clean-professional",
-                      3: "/creative-bold",
-                      4: "/minimal-accent",
-                      5: "/elegant-classic",
-                      6: "/medical-elites",
-                      7: "/engineer-elites",
-                      8: "/soft-tech",
-                      9: "/data-elite",
-                      10: "/engineer-prime",
-                      11: "/aviation-pro",
-                    };
-                    handleUseTemplate(routes[num]);
-                  }}
-                >
-                  Use {TEMPLATE_META[num]?.name}
-                </button>
+               <button
+  className="template-btn template-btn--outline"
+  onClick={() => {
+    const routes = {
+      1: "/teacher-elite",
+      2: "/clean-professional",
+      3: "/creative-bold",
+      4: "/minimal-accent",
+      5: "/elegant-classic",
+      6: "/medical-elites",
+      7: "/engineer-elites",
+      8: "/soft-tech",
+      9: "/data-elite",
+      10: "/engineer-prime",
+      11: "/aviation-pro",
+    };
+
+    if (!isAuthenticated) {
+      // 🔐 user not logged in → open signup modal
+      openAuthModal({ redirectTo: routes[num] });
+      return;
+    }
+
+    // ✅ user logged in → go to template
+    handleUseTemplate(routes[num]);
+  }}
+>
+  Use {TEMPLATE_META[num]?.name}
+</button>
+
               </article>
             ))}
           </div>
