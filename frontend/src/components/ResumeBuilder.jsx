@@ -9,6 +9,9 @@ import ButtonSection from "./ButtonSection";
 import FormatButtons from "./FormatButtons";
 import ThemeSelector from "./ThemeSelector";
 import PreviewPanel from "./PreviewPanel";
+import usePaymentGuard from "../hooks/usePaymentGuard";
+import PaymentGate from "../components/payment/PaymentGate";
+
 
 import "./ResumeBuilder.css";
 
@@ -21,14 +24,10 @@ const ResumeBuilder = () => {
       ? "clean-professional"
       : templateId || "classic";
 
-
       const entrySource =
     new URLSearchParams(location.search).get("entry") || "template";
 
   const isPreviewFlow = entrySource === "start";
-
-
-
 
   /* ---------------- STATE ---------------- */
   const [formData, setFormData] = useState({});
@@ -48,6 +47,14 @@ const ResumeBuilder = () => {
     job: "#F4ECE1",
     text: "#000",
   });
+
+  const {
+  isPaid,
+  showPaymentModal,
+  setShowPaymentModal,
+  requirePayment,
+  handlePaymentSuccess,
+} = usePaymentGuard("CleanProfessional");
 
   /* ---------------- EFFECTS ---------------- */
   useEffect(() => {
@@ -162,21 +169,21 @@ const ResumeBuilder = () => {
     <div className="resume-builder-container flex flex-col md:flex-row md:items-start">
       {/* LEFT: FORM PANEL */}
       <div className="form-panel w-full md:w-[40%] p-4">
-        <FormPanel
-        isPreviewFlow={isPreviewFlow}
-          formData={formData}
-          setFormData={setFormData}
-          selectedEducations={selectedEducations}
-          setSelectedEducations={setSelectedEducations}
-          addEducation={addEducation}
-          jobTitle={jobTitle}
-          setJobTitle={setJobTitle}
-          onAddWorkExp={() => setShowWorkPopup(true)}
-          openWorkPopup={() => setShowWorkPopup(true)}
-          onAddSkillsClick={() => setShowSkillsPopup(true)}
-          canEdit={canEdit}          // payment handled inside PreviewPanel
-          requirePayment={() => {}}
-        />
+       <FormPanel
+  formData={formData}
+  setFormData={setFormData}
+  selectedEducations={selectedEducations}
+  setSelectedEducations={setSelectedEducations}
+  jobTitle={jobTitle}
+  setJobTitle={setJobTitle}
+  openWorkPopup={() => setShowWorkPopup(true)}
+  onAddSkillsClick={() => setShowSkillsPopup(true)}
+  canEdit={isPaid}
+  requirePayment={requirePayment}
+/>
+
+
+
       </div>
 
       {/* RIGHT: PREVIEW */}
@@ -247,7 +254,16 @@ const ResumeBuilder = () => {
           onSelect={handleSkillSelect}
         />
       )}
+
+      <PaymentGate
+  open={showPaymentModal}
+  onClose={() => setShowPaymentModal(false)}
+  onSuccess={handlePaymentSuccess}
+/>
+
     </div>
+
+    
   );
 };
 
