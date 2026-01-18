@@ -32,6 +32,22 @@ export default function FormPanel({
     }
   };
 
+const handleWorkClickWithGuard = () => {
+  if (!canEdit) {
+    requirePayment();
+    return;
+  }
+  openWorkPopup();
+};
+
+const handleSkillsClickWithGuard = () => {
+  if (!canEdit) {
+    requirePayment();
+    return;
+  }
+  onAddSkillsClick();
+};
+
   const handleAddEducation = () => {
     if (!education.school || !education.degree || !education.year) return;
 
@@ -208,16 +224,16 @@ export default function FormPanel({
       </button>
 
       <button
-        className="add-exp-btn"
+        className="add-exp-btn premium-btn"
         type="button"
-        onClick={openWorkPopup}
+        onClick={handleWorkClickWithGuard}
       >
         + Add Work Experience {!canEdit && <span className="lock-icon">🔒</span>}
       </button>
       <button
         type="button"
-        className="add-skill-btn btn btn-primary mt-2"
-        onClick={onAddSkillsClick}
+        className="add-skill-btn btn btn-primary mt-2 premium-btn"
+        onClick={handleSkillsClickWithGuard}
       >
         Add Skills {!canEdit && <span className="lock-icon">🔒</span>}
       </button>
