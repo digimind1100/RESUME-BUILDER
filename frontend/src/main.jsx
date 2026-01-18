@@ -5,9 +5,6 @@ import App from "./App.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
 import { authGate } from "./authGate"; // 🔒 staging lock
 
-alert("🔥 NEW DEPLOYMENT IS LIVE AND PERFECT 🔥");
-
-
 // 🔐 Run gate BEFORE React renders
 authGate();
 

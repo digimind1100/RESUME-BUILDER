@@ -174,7 +174,7 @@ const ResumeBuilder = () => {
           onAddWorkExp={() => setShowWorkPopup(true)}
           openWorkPopup={() => setShowWorkPopup(true)}
           onAddSkillsClick={() => setShowSkillsPopup(true)}
-          canEdit={true}          // payment handled inside PreviewPanel
+          canEdit={canEdit}          // payment handled inside PreviewPanel
           requirePayment={() => {}}
         />
       </div>

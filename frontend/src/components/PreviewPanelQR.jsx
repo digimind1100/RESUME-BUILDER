@@ -221,8 +221,6 @@ export default function PreviewPanelQR({
               )}
             </div>
 
-
-
             {/* ===== Education heading for Page 1 ===== */}
             <h3 className="section-heading">Education (Page 1)</h3>
           </div>

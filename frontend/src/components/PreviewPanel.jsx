@@ -55,12 +55,12 @@ export default function PreviewPanel({
   const { user, setUser } = useAuth();
 
   const {
-    isPaid,
-    showPaymentModal,
-    setShowPaymentModal,
-    requirePayment,
-    handlePaymentSuccess,
-  } = usePaymentGuard("ClassicProfessionalPreview"); // or "ProfessionalQRPreview"
+  isPaid,
+  showPaymentModal,
+  setShowPaymentModal,
+  requirePayment,
+  handlePaymentSuccess,
+} = usePaymentGuard("CleanProfessional");
 
   const canEdit = isPaid;
 
@@ -86,9 +86,6 @@ export default function PreviewPanel({
     };
     reader.readAsDataURL(file);
   };
-
-
-
 
   // ================= EFFECTS =================
   useEffect(() => {
@@ -204,9 +201,6 @@ export default function PreviewPanel({
               style={{ display: "none" }}
               onChange={handleProfileUpload}
             />
-
-
-
             <h2 className="preview-name">{formData?.fullName || "Your Name"}</h2>
 
             <div className="contact-info">
