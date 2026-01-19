@@ -136,39 +136,42 @@ export default function PaymentModal({ onClose, onSuccess }) {
   /* ===============================
      🎟 PROMO CODE (INSTANT UNLOCK)
      =============================== */
-  const redeemPromo = async () => {
-    if (!promoCode || promoLoading) return;
+ const redeemPromo = async () => {
+  if (!promoCode || promoLoading) return;
 
-    setPromoLoading(true);
+  setPromoLoading(true);
 
-    try {
-      const token = localStorage.getItem("rb_auth_token");
-
-      const res = await fetch("/api/promo/redeem", {
+  try {
+    const res = await fetch(
+      "https://resume-builder-backend-production-116d.up.railway.app/api/promo/redeem",
+      {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ code: promoCode }),
-      });
-
-      const data = await res.json();
-      setPromoLoading(false);
-
-      if (!res.ok) {
-        alert(data.message || "Invalid promo code");
-        return;
       }
+    );
 
-      // ✅ PROMO SUCCESS → REFRESH USER & CLOSE
-      await refreshUser();
-      onClose();
-    } catch (err) {
-      setPromoLoading(false);
-      alert("Failed to redeem promo");
+    const data = await res.json();
+    setPromoLoading(false);
+
+    if (!res.ok) {
+      alert(data.message || "Invalid promo code");
+      return;
     }
-  };
+
+    // ✅ PROMO SUCCESS
+    await refreshUser();
+    onClose();
+  } catch (err) {
+    console.error("Redeem promo error:", err);
+    setPromoLoading(false);
+    alert("Failed to redeem promo");
+  }
+};
+
+
 
   const selectedAccount = method ? PAYMENT_ACCOUNTS[method] : null;
 
