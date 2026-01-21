@@ -1,29 +1,31 @@
 import React, { useState } from "react";
 import { createPortal } from "react-dom";
 import "./PaymentModal.css";
+
 import easypaisaLogo from "../../assets/payments/easypaisa.png";
 import jazzcashLogo from "../../assets/payments/jazzcash.png";
 import sadapayLogo from "../../assets/payments/sadapay.png";
+
 import { useAuth } from "../../context/AuthContext";
 
 export default function PaymentModal({ onClose, onSuccess }) {
   const modalRoot = document.getElementById("modal-root");
+  const { refreshUser } = useAuth();
 
   const [method, setMethod] = useState("");
   const [transactionId, setTransactionId] = useState("");
   const [loading, setLoading] = useState(false);
-  const [status, setStatus] = useState("idle"); // idle | pending
+  const [status, setStatus] = useState("idle");
 
-  // PROMO
   const [showPromo, setShowPromo] = useState(false);
   const [promoCode, setPromoCode] = useState("");
   const [promoLoading, setPromoLoading] = useState(false);
 
-  const { refreshUser } = useAuth();
-
   if (!modalRoot) return null;
 
-  // 🔐 MANUAL PAYMENT ACCOUNTS
+  /* ===============================
+     💳 PAYMENT ACCOUNTS
+     =============================== */
   const PAYMENT_ACCOUNTS = {
     easypaisa: {
       name: "EasyPaisa",
@@ -48,22 +50,27 @@ export default function PaymentModal({ onClose, onSuccess }) {
   /* ===============================
      🚀 PAYFAST – INSTANT PAYMENT
      =============================== */
- const token = localStorage.getItem("token");
+  const startPayFastPayment = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        alert("Please login again");
+        return;
+      }
 
-const res = await fetch(
-  "https://resume-builder-backend-production-116d.up.railway.app/api/payfast/create-payment",
-  {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`, // ✅ REQUIRED
-    },
-  }
-);
-
+      const res = await fetch(
+        "https://resume-builder-backend-production-116d.up.railway.app/api/payfast/create-payment",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       const data = await res.json();
-      if (!data.success) {
+      if (!res.ok || !data.success) {
         alert("Unable to start PayFast payment");
         return;
       }
@@ -83,7 +90,7 @@ const res = await fetch(
       document.body.appendChild(form);
       form.submit();
     } catch (err) {
-      console.error(err);
+      console.error("PayFast error:", err);
       alert("Something went wrong. Please try again.");
     }
   };
@@ -92,8 +99,6 @@ const res = await fetch(
      🐢 MANUAL PAYMENT SUBMIT
      =============================== */
   const handlePayment = async () => {
-    console.log("🔥 PaymentModal manual submit clicked");
-
     if (!method || !transactionId || loading) {
       alert("Please select payment method and enter transaction ID");
       return;
@@ -102,20 +107,23 @@ const res = await fetch(
     setLoading(true);
 
     try {
-      const token = localStorage.getItem("rb_auth_token");
+      const token = localStorage.getItem("token");
 
-      const res = await fetch("/api/payments/submit", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          method,
-          amount: 999,
-          transactionId,
-        }),
-      });
+      const res = await fetch(
+        "https://resume-builder-backend-production-116d.up.railway.app/api/payments/submit",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            method,
+            amount: 999,
+            transactionId,
+          }),
+        }
+      );
 
       const data = await res.json();
       setLoading(false);
@@ -125,11 +133,8 @@ const res = await fetch(
         return;
       }
 
-      // 🔥 CRITICAL FIX: trigger paid flow
-      console.log("🔥 Manual payment submitted, calling onSuccess");
-
       if (typeof onSuccess === "function") {
-        await onSuccess(); // calls usePaymentGuard.handlePaymentSuccess
+        await onSuccess();
       }
 
       setStatus("pending");
@@ -139,67 +144,59 @@ const res = await fetch(
     }
   };
 
- /* ===============================
-   🎟 PROMO CODE (INSTANT UNLOCK)
-   =============================== */
-const redeemPromo = async () => {
+  /* ===============================
+     🎟 PROMO CODE (INSTANT UNLOCK)
+     =============================== */
+  const redeemPromo = async () => {
+    if (!promoCode || promoLoading) return;
 
-  console.log("PROMO TOKEN:", localStorage.getItem("token"));
+    setPromoLoading(true);
 
-  if (!promoCode || promoLoading) return;
-
-  setPromoLoading(true);
-
-  try {
-    // 🔐 GET JWT TOKEN (SAME AS OTHER REQUESTS)
-    const token = localStorage.getItem("rb_auth_token");
-
-    if (!token) {
-      alert("Please login again");
-      setPromoLoading(false);
-      return;
-    }
-
-    const res = await fetch(
-      "https://resume-builder-backend-production-116d.up.railway.app/api/promo/redeem",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // ✅ CRITICAL FIX
-        },
-        body: JSON.stringify({ code: promoCode }),
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        alert("Please login again");
+        setPromoLoading(false);
+        return;
       }
-    );
 
-    const data = await res.json();
-    setPromoLoading(false);
+      const res = await fetch(
+        "https://resume-builder-backend-production-116d.up.railway.app/api/promo/redeem",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ code: promoCode }),
+        }
+      );
 
-    if (!res.ok) {
-      alert(data.message || "Invalid promo code");
-      return;
+      const data = await res.json();
+      setPromoLoading(false);
+
+      if (!res.ok) {
+        alert(data.message || "Invalid promo code");
+        return;
+      }
+
+      await refreshUser();
+      alert("🎉 Premium unlocked!");
+      onClose();
+    } catch (err) {
+      setPromoLoading(false);
+      alert("Failed to redeem promo");
     }
-
-    // ✅ PROMO SUCCESS → REFRESH USER STATE
-    await refreshUser();
-
-    // Optional: success feedback
-    alert("🎉 Premium unlocked!");
-
-    onClose();
-  } catch (err) {
-    console.error("Redeem promo error:", err);
-    setPromoLoading(false);
-    alert("Failed to redeem promo");
-  }
-};
+  };
 
   const selectedAccount = method ? PAYMENT_ACCOUNTS[method] : null;
 
+  /* ===============================
+     🧱 RENDER
+     =============================== */
   return createPortal(
     <div className="payment-overlay">
       <div className="payment-modal premium">
-
         <h2 className="payment-title">🔓 Unlock Resume</h2>
         <p className="payment-subtitle">
           One-time payment to unlock full editing
@@ -321,7 +318,6 @@ const redeemPromo = async () => {
             Cancel
           </button>
         )}
-
       </div>
     </div>,
     modalRoot
