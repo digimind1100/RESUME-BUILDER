@@ -83,29 +83,47 @@ export async function login({ email, password }) {
     };
   }
 }
-
 /* ======================
-   GET CURRENT USER (COOKIE BASED)
+   GET CURRENT USER (JWT BASED)
 ====================== */
-export async function getCurrentUser() {
+export async function getCurrentUser(token) {
   try {
+    if (!token) {
+      return {
+        success: false,
+        user: null,
+      };
+    }
+
     const res = await fetch(`${API_BASE_URL}/api/auth/me`, {
       method: "GET",
-      credentials: "include", // 🔥 cookie bheji jayegi
+      headers: {
+        Authorization: `Bearer ${token}`, // ✅ JWT
+      },
     });
 
-    return await handleJsonResponse(res);
+    const data = await res.json();
+
+    if (!res.ok) {
+      return {
+        success: false,
+        user: null,
+      };
+    }
+
+    return {
+      success: true,
+      user: data.user,
+    };
   } catch (error) {
     console.error("Get current user error:", error);
     return {
-      ok: false,
-      status: 0,
+      success: false,
       user: null,
-      token: null,
-      message: "Unable to connect to server.",
     };
   }
 }
+
 
 /* ======================
    LOGOUT  ✅ (BUILD ERROR FIX)

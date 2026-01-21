@@ -30,27 +30,51 @@ export function AuthProvider({ children }) {
      🔁 Restore session on app load
      =============================== */
   useEffect(() => {
-    (async () => {
-      try {
-        const token = localStorage.getItem(TOKEN_KEY);
-        if (!token) return;
-        await refreshUser();
-      } finally {
+  let isMounted = true;
+
+  (async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      if (token) {
+        const result = await getCurrentUser(token);
+
+        if (isMounted && result?.success && result.user) {
+          setUser(result.user);
+        }
+      }
+    } catch (err) {
+      console.error("Auth restore failed", err);
+    } finally {
+      if (isMounted) {
         setInitializing(false);
       }
-    })();
-  }, []);
-
-  /* ===============================
-     🔐 Apply auth result (CORE FIX)
-     =============================== */
-  function applyAuth(result) {
-    if (result?.success && result.token && result.user) {
-      // 🔥 STORE TOKEN (THIS WAS MISSING)
-      localStorage.setItem(TOKEN_KEY, result.token);
-      setUser(result.user);
     }
+  })();
+
+  return () => {
+    isMounted = false;
+  };
+}, []);
+
+
+ /* ===============================
+   🔐 Apply auth result (FINAL FIX)
+   =============================== */
+function applyAuth(result) {
+  if (!result) return;
+
+  // 🔐 Store token ONLY if provided
+  if (result.token) {
+    localStorage.setItem(TOKEN_KEY, result.token);
   }
+
+  // 👤 Always set user if available
+  if (result.user) {
+    setUser(result.user);
+  }
+}
+
 
   /* ===============================
      🔹 Signup
