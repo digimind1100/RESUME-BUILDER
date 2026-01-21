@@ -5,13 +5,26 @@ import SignupModal from "./auth/SignupModal";
 import { useAuth } from "../context/AuthContext";
 import { FiLogOut } from "react-icons/fi";
 
-/* 🔐 SAFE INITIALS HELPER */
+/* 🔐 SAFE INITIALS HELPER (FINAL) */
 function safeInitials(name) {
   if (!name || typeof name !== "string") return "?";
-  const trimmed = name.trim();
-  if (!trimmed) return "?";
-  return trimmed.charAt(0).toUpperCase();
+
+  const words = name
+    .trim()
+    .split(/\s+/)        // split by spaces
+    .filter(Boolean);    // remove empty
+
+  if (words.length === 0) return "?";
+
+  // Take first letter of first two words
+  const initials = words
+    .slice(0, 2)
+    .map(word => word.charAt(0).toUpperCase())
+    .join("");
+
+  return initials || "?";
 }
+
 
 export default function Navbar() {
   const location = useLocation();
