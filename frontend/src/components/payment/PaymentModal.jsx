@@ -133,21 +133,31 @@ export default function PaymentModal({ onClose, onSuccess }) {
     }
   };
 
-  /* ===============================
-     🎟 PROMO CODE (INSTANT UNLOCK)
-     =============================== */
- const redeemPromo = async () => {
+ /* ===============================
+   🎟 PROMO CODE (INSTANT UNLOCK)
+   =============================== */
+const redeemPromo = async () => {
   if (!promoCode || promoLoading) return;
 
   setPromoLoading(true);
 
   try {
+    // 🔐 GET JWT TOKEN (SAME AS OTHER REQUESTS)
+    const token = localStorage.getItem("rb_auth_token");
+
+    if (!token) {
+      alert("Please login again");
+      setPromoLoading(false);
+      return;
+    }
+
     const res = await fetch(
       "https://resume-builder-backend-production-116d.up.railway.app/api/promo/redeem",
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // ✅ CRITICAL FIX
         },
         body: JSON.stringify({ code: promoCode }),
       }
@@ -161,8 +171,12 @@ export default function PaymentModal({ onClose, onSuccess }) {
       return;
     }
 
-    // ✅ PROMO SUCCESS
+    // ✅ PROMO SUCCESS → REFRESH USER STATE
     await refreshUser();
+
+    // Optional: success feedback
+    alert("🎉 Premium unlocked!");
+
     onClose();
   } catch (err) {
     console.error("Redeem promo error:", err);
@@ -170,8 +184,6 @@ export default function PaymentModal({ onClose, onSuccess }) {
     alert("Failed to redeem promo");
   }
 };
-
-
 
   const selectedAccount = method ? PAYMENT_ACCOUNTS[method] : null;
 
