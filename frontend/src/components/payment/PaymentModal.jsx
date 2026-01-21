@@ -95,54 +95,65 @@ export default function PaymentModal({ onClose, onSuccess }) {
     }
   };
 
-  /* ===============================
-     🐢 MANUAL PAYMENT SUBMIT
-     =============================== */
-  const handlePayment = async () => {
-    if (!method || !transactionId || loading) {
-      alert("Please select payment method and enter transaction ID");
+ /* ===============================
+   🐢 MANUAL PAYMENT SUBMIT
+   =============================== */
+const handlePayment = async () => {
+  if (!method || !transactionId || loading) {
+    alert("Please select payment method and enter transaction ID");
+    return;
+  }
+
+  setLoading(true);
+
+  try {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setLoading(false);
+      alert("Please login again");
       return;
     }
 
-    setLoading(true);
-
-    try {
-      const token = localStorage.getItem("token");
-
-      const res = await fetch(
-        "https://resume-builder-backend-production-116d.up.railway.app/api/payments/submit",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            method,
-            amount: 999,
-            transactionId,
-          }),
-        }
-      );
-
-      const data = await res.json();
-      setLoading(false);
-
-      if (!res.ok) {
-        alert(data.message || "Payment submission failed");
-        return;
+    const res = await fetch(
+      "https://resume-builder-backend-production-116d.up.railway.app/api/payments/submit",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          method,
+          amount: 999,
+          transactionId,
+        }),
       }
+    );
 
-      if (typeof onSuccess === "function") {
-        await onSuccess();
-      }
+    const raw = await res.text();
+    console.log("RAW RESPONSE 👉", raw);
 
-      setStatus("pending");
-    } catch (err) {
-      setLoading(false);
-      alert("Network error. Try again.");
+    if (!res.ok) {
+      throw new Error(raw || "Payment submission failed");
     }
-  };
+
+    const data = JSON.parse(raw);
+    console.log("PARSED RESPONSE 👉", data);
+
+    setStatus("pending");
+    setLoading(false);
+
+    if (typeof onSuccess === "function") {
+      await onSuccess();
+    }
+
+  } catch (err) {
+    setLoading(false);
+    console.error("PAYMENT ERROR 👉", err);
+    alert(err.message || "Network error. Try again.");
+  }
+};
+
 
   /* ===============================
      🎟 PROMO CODE (INSTANT UNLOCK)
