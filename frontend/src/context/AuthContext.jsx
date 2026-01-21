@@ -10,6 +10,9 @@ import {
 
 const AuthContext = createContext(null);
 
+// 🔐 SINGLE SOURCE OF TRUTH
+const TOKEN_KEY = "token";
+
 export function AuthProvider({ children }) {
   const navigate = useNavigate();
 
@@ -23,28 +26,35 @@ export function AuthProvider({ children }) {
     redirectTo: null,
   });
 
-  // 🔹 Restore session via cookie on app load
+  /* ===============================
+     🔁 Restore session on app load
+     =============================== */
   useEffect(() => {
     (async () => {
       try {
-        const result = await getCurrentUser(); // 🔥 cookie-based
-        if (result?.ok && result.user) {
-          setUser(result.user);
-        }
+        const token = localStorage.getItem(TOKEN_KEY);
+        if (!token) return;
+        await refreshUser();
       } finally {
         setInitializing(false);
       }
     })();
   }, []);
 
-  // 🔹 Apply auth result
+  /* ===============================
+     🔐 Apply auth result (CORE FIX)
+     =============================== */
   function applyAuth(result) {
-    if (result?.ok && result.user) {
+    if (result?.success && result.token && result.user) {
+      // 🔥 STORE TOKEN (THIS WAS MISSING)
+      localStorage.setItem(TOKEN_KEY, result.token);
       setUser(result.user);
     }
   }
 
-  // 🔹 Signup
+  /* ===============================
+     🔹 Signup
+     =============================== */
   async function signup({ fullName, email, password }) {
     setLoading(true);
     try {
@@ -56,7 +66,9 @@ export function AuthProvider({ children }) {
     }
   }
 
-  // 🔹 Login
+  /* ===============================
+     🔹 Login
+     =============================== */
   async function login({ email, password }) {
     setLoading(true);
     try {
@@ -68,15 +80,39 @@ export function AuthProvider({ children }) {
     }
   }
 
-  // 🔹 Logout
+  /* ===============================
+     🔹 Logout
+     =============================== */
   async function logout() {
     try {
-      await logoutApi(); // clears cookie on backend
+      await logoutApi();
     } catch {}
+    localStorage.removeItem(TOKEN_KEY);
     setUser(null);
   }
 
-  // 🔥 Open auth modal
+  /* ===============================
+     🔁 Refresh user (JWT-based)
+     =============================== */
+  async function refreshUser() {
+    try {
+      const token = localStorage.getItem(TOKEN_KEY);
+      if (!token) return;
+
+      const result = await getCurrentUser(token);
+      if (result?.success && result.user) {
+        setUser(result.user);
+      }
+    } catch (err) {
+      console.error("refreshUser failed", err);
+      setUser(null);
+      localStorage.removeItem(TOKEN_KEY);
+    }
+  }
+
+  /* ===============================
+     🔥 Auth modal helpers
+     =============================== */
   function openAuthModal({ redirectTo }) {
     setAuthModal({
       open: true,
@@ -84,7 +120,6 @@ export function AuthProvider({ children }) {
     });
   }
 
-  // 🔥 Close auth modal
   function closeAuthModal() {
     setAuthModal({
       open: false,
@@ -92,23 +127,10 @@ export function AuthProvider({ children }) {
     });
   }
 
-  // 🔥 Call after successful auth
   function onAuthSuccess() {
     const path = authModal.redirectTo;
     closeAuthModal();
     if (path) navigate(path);
-  }
-
-  // 🔥 Refresh user from backend
-  async function refreshUser() {
-    try {
-      const result = await getCurrentUser();
-      if (result?.ok && result.user) {
-        setUser(result.user);
-      }
-    } catch (err) {
-      console.error("refreshUser failed", err);
-    }
   }
 
   const value = {
