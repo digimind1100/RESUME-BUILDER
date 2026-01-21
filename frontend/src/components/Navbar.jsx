@@ -5,6 +5,8 @@ import SignupModal from "./auth/SignupModal";
 import { useAuth } from "../context/AuthContext";
 import { FiLogOut } from "react-icons/fi";
 
+console.log("NAVBAR USER:", user);
+
 /* 🔐 SAFE INITIALS HELPER */
 function safeInitials(name) {
   if (!name || typeof name !== "string") return "?";
