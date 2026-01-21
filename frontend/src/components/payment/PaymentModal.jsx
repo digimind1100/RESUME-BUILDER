@@ -48,13 +48,19 @@ export default function PaymentModal({ onClose, onSuccess }) {
   /* ===============================
      🚀 PAYFAST – INSTANT PAYMENT
      =============================== */
-  const startPayFastPayment = async () => {
-    try {
-      const res = await fetch("/api/payfast/create-payment", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-      });
+ const token = localStorage.getItem("token");
+
+const res = await fetch(
+  "https://resume-builder-backend-production-116d.up.railway.app/api/payfast/create-payment",
+  {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`, // ✅ REQUIRED
+    },
+  }
+);
+
 
       const data = await res.json();
       if (!data.success) {
@@ -137,6 +143,9 @@ export default function PaymentModal({ onClose, onSuccess }) {
    🎟 PROMO CODE (INSTANT UNLOCK)
    =============================== */
 const redeemPromo = async () => {
+
+  console.log("PROMO TOKEN:", localStorage.getItem("token"));
+
   if (!promoCode || promoLoading) return;
 
   setPromoLoading(true);

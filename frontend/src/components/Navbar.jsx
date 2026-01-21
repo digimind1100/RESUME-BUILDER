@@ -3,19 +3,33 @@ import { Link, useLocation } from "react-router-dom";
 import "./Navbar.css";
 import SignupModal from "./auth/SignupModal";
 import { useAuth } from "../context/AuthContext";
-import { getInitials } from "../utils/getInitials";
 import { FiLogOut } from "react-icons/fi";
+
+/* 🔐 SAFE INITIALS HELPER */
+function safeInitials(name) {
+  if (!name || typeof name !== "string") return "?";
+  const trimmed = name.trim();
+  if (!trimmed) return "?";
+  return trimmed.charAt(0).toUpperCase();
+}
 
 export default function Navbar() {
   const location = useLocation();
 
   const [showMenu, setShowMenu] = useState(false);
-  const { user, isAuthenticated, logout } = useAuth();
-
   const [menuOpen, setMenuOpen] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
 
+  const { user, isAuthenticated, logout, initializing } = useAuth();
+
   const handleLinkClick = () => setMenuOpen(false);
+
+  /* ⏳ Avoid render while auth is initializing */
+  if (initializing) {
+    return null;
+  }
+
+  const avatarLetter = safeInitials(user?.fullName);
 
   return (
     <>
@@ -52,7 +66,7 @@ export default function Navbar() {
             ) : (
               <>
                 <div className="mobile-avatar">
-                  {getInitials(user?.fullName)}
+                  {avatarLetter}
                 </div>
                 <button
                   className="mobile-logout-btn"
@@ -76,46 +90,41 @@ export default function Navbar() {
           <span className="bar"></span>
         </div>
 
-        {/* RIGHT SIDE AVATAR (AUTH + GUEST) */}
-      {/* RIGHT SIDE AVATAR (HIDDEN WHEN HAMBURGER IS ACTIVE) */}
-{!menuOpen && (
-  <div className="avatar-wrapper">
-    <div
-      className={`avatar-circle ${!isAuthenticated ? "guest" : ""}`}
-      onClick={() => {
-        if (!isAuthenticated) {
-          setShowSignup(true);
-        } else {
-          setShowMenu(prev => !prev);
-        }
-      }}
-    >
-      {isAuthenticated ? (
-        getInitials(user?.fullName)
-      ) : (
-        <span className="live-ring"></span>
-      )}
-    </div>
+        {/* RIGHT SIDE AVATAR */}
+        {!menuOpen && (
+          <div className="avatar-wrapper">
+            <div
+              className={`avatar-circle ${!isAuthenticated ? "guest" : ""}`}
+              onClick={() => {
+                if (!isAuthenticated) {
+                  setShowSignup(true);
+                } else {
+                  setShowMenu(prev => !prev);
+                }
+              }}
+            >
+              {isAuthenticated ? (
+                avatarLetter
+              ) : (
+                <span className="live-ring"></span>
+              )}
+            </div>
 
-    {isAuthenticated && showMenu && (
-      <div className="avatar-dropdown">
-        <button
-          className="avatar-logout-btn"
-          onClick={() => {
-            logout();
-            setShowMenu(false);
-          }}
-        >
-          Sign Out
-        </button>
-      </div>
-    )}
-  </div>
-)}
-
-
-
-
+            {isAuthenticated && showMenu && (
+              <div className="avatar-dropdown">
+                <button
+                  className="avatar-logout-btn"
+                  onClick={() => {
+                    logout();
+                    setShowMenu(false);
+                  }}
+                >
+                  Sign Out
+                </button>
+              </div>
+            )}
+          </div>
+        )}
       </nav>
 
       {showSignup && <SignupModal onClose={() => setShowSignup(false)} />}
