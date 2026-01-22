@@ -21,9 +21,11 @@ import AviationPro from "./Templates/AviationPro";
 import TeacherElite from "./Templates/TeacherElite";
 import BuilderGuard from "./components/guards/BuilderGuard";
 import { Toaster } from "react-hot-toast";
-import AdminPayments from "./components/AdminPayments";
 import Policies from "./components/Policies";
 import Contact from "./components/Contact";
+import AdminPendingPayments from "./components/admin/AdminPendingPayments";
+import AdminGuard from "./components/admin/AdminGuard";
+
 
 function AppContent() {
   const location = useLocation();
@@ -83,13 +85,27 @@ function AppContent() {
           }
         />
 
+        <Route
+  path="/admin/payments"
+  element={
+    <AdminGuard>
+      <AdminPendingPayments />
+    </AdminGuard>
+  }
+/>
+
+
         <Route path="/engineer-prime" element={<EngineerPrime />} />
         <Route path="/aviation-pro" element={<AviationPro />} />
         <Route path="/teacher-elite" element={<TeacherElite />} />
-
         <Route path="/coverletter" element={<CoverLetterPage />} />
         <Route path="/coverletter-generator" element={<CoverLetterPanel />} />
-        <Route path="/admin/payments" element={<AdminPayments />} />
+        <Route path="/admin/payments" element={<AdminPendingPayments />}
+        
+        
+/>
+
+        
       </Routes>
     </>
   );
