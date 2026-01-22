@@ -102,7 +102,6 @@ export default function PaymentModal({ onClose, onSuccess }) {
      🐢 MANUAL PAYMENT SUBMIT
      =============================== */
   const handlePayment = async () => {
-
   if (!method || !transactionId || loading) {
     alert("Please select payment method and enter transaction ID");
     return;
@@ -137,22 +136,15 @@ export default function PaymentModal({ onClose, onSuccess }) {
       return;
     }
 
-    // 🔥 YAHAN ADMIN APPROVAL POPUP TRIGGER HOGA
+    // ✅ ONLY THIS FOR MANUAL PAYMENT
     setStatus("pending");
     setShowPendingPopup(true);
 
-    if (typeof onSuccess === "function") {
-      await onSuccess();
-    }
+    // ❌ DO NOT CALL onSuccess / handlePaymentSuccess here
 
   } catch (err) {
     setLoading(false);
     alert("Network error. Try again.");
-    if (!token) {
-      setLoading(false);
-      alert("Please login again");
-      return;
-    }
   }
 };
 
