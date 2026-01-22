@@ -267,3 +267,21 @@
   border-radius: 8px;
   font-size: 14px;
 }
+
+.pending-popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.pending-popup {
+  background: #fff;
+  padding: 24px;
+  border-radius: 10px;
+  max-width: 360px;
+  text-align: center;
+}

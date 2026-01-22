@@ -21,6 +21,9 @@ export default function PaymentModal({ onClose, onSuccess }) {
   const [promoCode, setPromoCode] = useState("");
   const [promoLoading, setPromoLoading] = useState(false);
 
+  const [showPendingPopup, setShowPendingPopup] = useState(false);
+
+
   if (!modalRoot) return null;
 
   /* ===============================
@@ -99,50 +102,54 @@ export default function PaymentModal({ onClose, onSuccess }) {
      🐢 MANUAL PAYMENT SUBMIT
      =============================== */
   const handlePayment = async () => {
-    if (!method || !transactionId || loading) {
-      alert("Please select payment method and enter transaction ID");
+  if (!method || !transactionId || loading) {
+    alert("Please select payment method and enter transaction ID");
+    return;
+  }
+
+  setLoading(true);
+
+  try {
+    const token = localStorage.getItem("token");
+
+    const res = await fetch(
+      "https://resume-builder-backend-production-116d.up.railway.app/api/payments/submit",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          method,
+          amount: 999,
+          transactionId,
+        }),
+      }
+    );
+
+    const data = await res.json();
+    setLoading(false);
+
+    if (!res.ok) {
+      alert(data.message || "Payment submission failed");
       return;
     }
 
-    setLoading(true);
+    // 🔥 YAHAN ADMIN APPROVAL POPUP TRIGGER HOGA
+    setStatus("pending");
+    setShowPendingPopup(true);
 
-    try {
-      const token = localStorage.getItem("token");
-
-      const res = await fetch(
-        "https://resume-builder-backend-production-116d.up.railway.app/api/payments/submit",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            method,
-            amount: 999,
-            transactionId,
-          }),
-        }
-      );
-
-      const data = await res.json();
-      setLoading(false);
-
-      if (!res.ok) {
-        alert(data.message || "Payment submission failed");
-        return;
-      }
-
-      if (typeof onSuccess === "function") {
-        await onSuccess();
-      }
-
-      setStatus("pending");
-    } catch (err) {
-      setLoading(false);
-      alert("Network error. Try again.");
+    if (typeof onSuccess === "function") {
+      await onSuccess();
     }
-  };
+
+  } catch (err) {
+    setLoading(false);
+    alert("Network error. Try again.");
+  }
+};
+
 
   /* ===============================
      🎟 PROMO CODE (INSTANT UNLOCK)
@@ -293,6 +300,31 @@ export default function PaymentModal({ onClose, onSuccess }) {
             I have a promo code
           </button>
         )}
+
+        {showPendingPopup && (
+  <div className="pending-popup-overlay">
+    <div className="pending-popup">
+      <h3>⏳ Payment Submitted</h3>
+      <p>
+        Your payment has been received and is pending admin approval.
+      </p>
+      <p>
+        Approval usually takes <b>5–30 minutes</b>.
+      </p>
+
+      <button
+        className="unlock-btn"
+        onClick={() => {
+          setShowPendingPopup(false);
+          onClose(); // close payment modal
+        }}
+      >
+        OK
+      </button>
+    </div>
+  </div>
+)}
+
 
         {showPromo && status === "idle" && (
           <div className="promo-container">
