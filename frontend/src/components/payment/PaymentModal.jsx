@@ -98,17 +98,11 @@ export default function PaymentModal({ onClose, onSuccess }) {
     }
   };
 
-<<<<<<< HEAD
   /* ===============================
      🐢 MANUAL PAYMENT SUBMIT
      =============================== */
   const handlePayment = async () => {
-=======
- /* ===============================
-   🐢 MANUAL PAYMENT SUBMIT
-   =============================== */
-const handlePayment = async () => {
->>>>>>> 5cc97ff9103550a9ffcd82577b8bed8c6954b3d8
+
   if (!method || !transactionId || loading) {
     alert("Please select payment method and enter transaction ID");
     return;
@@ -118,7 +112,6 @@ const handlePayment = async () => {
 
   try {
     const token = localStorage.getItem("token");
-<<<<<<< HEAD
 
     const res = await fetch(
       "https://resume-builder-backend-production-116d.up.railway.app/api/payments/submit",
@@ -155,51 +148,11 @@ const handlePayment = async () => {
   } catch (err) {
     setLoading(false);
     alert("Network error. Try again.");
-=======
     if (!token) {
       setLoading(false);
       alert("Please login again");
       return;
     }
-
-    const res = await fetch(
-      "https://resume-builder-backend-production-116d.up.railway.app/api/payments/submit",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          method,
-          amount: 999,
-          transactionId,
-        }),
-      }
-    );
-
-    const raw = await res.text();
-    console.log("RAW RESPONSE 👉", raw);
-
-    if (!res.ok) {
-      throw new Error(raw || "Payment submission failed");
-    }
-
-    const data = JSON.parse(raw);
-    console.log("PARSED RESPONSE 👉", data);
-
-    setStatus("pending");
-    setLoading(false);
-
-    if (typeof onSuccess === "function") {
-      await onSuccess();
-    }
-
-  } catch (err) {
-    setLoading(false);
-    console.error("PAYMENT ERROR 👉", err);
-    alert(err.message || "Network error. Try again.");
->>>>>>> 5cc97ff9103550a9ffcd82577b8bed8c6954b3d8
   }
 };
 
