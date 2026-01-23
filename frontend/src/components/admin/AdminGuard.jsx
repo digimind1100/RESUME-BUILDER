@@ -3,19 +3,18 @@ import { useAuth } from "../../context/AuthContext";
 
 export default function AdminGuard({ children }) {
   const { user, loading } = useAuth();
-console.log("AUTH USER:", user);
 
-  // jab tak user load ho raha hai
+  // 🔑 VERY IMPORTANT: wait until auth is resolved
   if (loading) {
-    return null; // ya loader
+    return null; // or a loader
   }
 
-  // login nahi hai
+  // not logged in
   if (!user) {
     return <Navigate to="/login" replace />;
   }
 
-  // login hai magar admin nahi
+  // logged in but not admin
   if (user.role !== "admin") {
     return <Navigate to="/" replace />;
   }

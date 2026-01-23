@@ -18,7 +18,7 @@ export function AuthProvider({ children }) {
 
   const [user, setUser] = useState(null);
   const [initializing, setInitializing] = useState(true);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   // 🔥 Auth modal state
   const [authModal, setAuthModal] = useState({
