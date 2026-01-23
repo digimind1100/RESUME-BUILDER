@@ -3,6 +3,7 @@ import { useAuth } from "../../context/AuthContext";
 
 export default function AdminGuard({ children }) {
   const { user, loading } = useAuth();
+console.log("AUTH USER:", user);
 
   // jab tak user load ho raha hai
   if (loading) {
