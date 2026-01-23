@@ -1,6 +1,10 @@
 ﻿import { createContext, useContext, useEffect, useState } from "react";
-import { getCurrentUser } from "../api/authApi";
-
+import {
+  signup as signupApi,
+  login as loginApi,
+  getCurrentUser,
+  logout as logoutApi,
+} from "../api/authApi";
 
 const AuthContext = createContext();
 
@@ -8,7 +12,7 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // 🔹 INITIAL AUTH CHECK (on app load)
+  // 🔹 App load → check existing login
   useEffect(() => {
     async function loadUser() {
       const token = localStorage.getItem("token");
@@ -23,40 +27,64 @@ export function AuthProvider({ children }) {
         setUser(res.user);
       }
 
-      setLoading(false); // ✅ auth resolved
+      setLoading(false);
     }
 
     loadUser();
   }, []);
 
-  // 🔹 LOGIN
-  const login = async (email, password) => {
-    const res = await API.post("/auth/login", { email, password });
-
-    localStorage.setItem("token", res.data.token);
-    setUser(res.data.user);
-
-    setLoading(false); // ✅ IMPORTANT
-  };
-
   // 🔹 SIGNUP
-  const signup = async (data) => {
-    const res = await API.post("/auth/signup", data);
+  const signup = async (payload) => {
+    setLoading(true);
 
-    localStorage.setItem("token", res.data.token);
-    setUser(res.data.user);
+    const res = await signupApi(payload);
 
-    setLoading(false); // ✅ IMPORTANT
+    if (res.ok) {
+      if (res.token) {
+        localStorage.setItem("token", res.token);
+      }
+      setUser(res.user);
+    }
+
+    setLoading(false);
+    return res; // 🔥 VERY IMPORTANT
   };
 
-  const logout = () => {
+  // 🔹 LOGIN
+  const login = async (payload) => {
+    setLoading(true);
+
+    const res = await loginApi(payload);
+
+    if (res.ok) {
+      if (res.token) {
+        localStorage.setItem("token", res.token);
+      }
+      setUser(res.user);
+    }
+
+    setLoading(false);
+    return res; // 🔥 VERY IMPORTANT
+  };
+
+  // 🔹 LOGOUT
+  const logout = async () => {
+    await logoutApi();
     localStorage.removeItem("token");
     setUser(null);
     setLoading(false);
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, signup, logout }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        loading,
+        signup,
+        login,
+        logout,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
