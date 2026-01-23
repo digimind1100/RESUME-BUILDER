@@ -1,186 +1,65 @@
-﻿/* src/context/AuthContext.jsx */
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import {
-  signup as signupApi,
-  login as loginApi,
-  getCurrentUser,
-  logout as logoutApi,
-} from "../api/authApi";
+﻿import { createContext, useContext, useEffect, useState } from "react";
+import { getCurrentUser } from "../api/authApi";
+import API from "../api/API";
 
-const AuthContext = createContext(null);
-
-// 🔐 SINGLE SOURCE OF TRUTH
-const TOKEN_KEY = "token";
+const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const navigate = useNavigate();
-
   const [user, setUser] = useState(null);
-  const [initializing, setInitializing] = useState(true);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-  // 🔥 Auth modal state
-  const [authModal, setAuthModal] = useState({
-    open: false,
-    redirectTo: null,
-  });
-
-  /* ===============================
-     🔁 Restore session on app load
-     =============================== */
+  // 🔹 INITIAL AUTH CHECK (on app load)
   useEffect(() => {
-  let isMounted = true;
-
-  (async () => {
-    try {
+    async function loadUser() {
       const token = localStorage.getItem("token");
 
-      if (token) {
-        const result = await getCurrentUser(token);
+      if (!token) {
+        setLoading(false);
+        return;
+      }
 
-        if (isMounted && result?.success && result.user) {
-          setUser(result.user);
-        }
+      const res = await getCurrentUser(token);
+      if (res.success) {
+        setUser(res.user);
       }
-    } catch (err) {
-      console.error("Auth restore failed", err);
-    } finally {
-      if (isMounted) {
-        setInitializing(false);
-      }
+
+      setLoading(false); // ✅ auth resolved
     }
-  })();
 
-  return () => {
-    isMounted = false;
+    loadUser();
+  }, []);
+
+  // 🔹 LOGIN
+  const login = async (email, password) => {
+    const res = await API.post("/auth/login", { email, password });
+
+    localStorage.setItem("token", res.data.token);
+    setUser(res.data.user);
+
+    setLoading(false); // ✅ IMPORTANT
   };
-}, []);
 
+  // 🔹 SIGNUP
+  const signup = async (data) => {
+    const res = await API.post("/auth/signup", data);
 
- /* ===============================
-   🔐 Apply auth result (FINAL FIX)
-   =============================== */
-function applyAuth(result) {
-  if (!result) return;
+    localStorage.setItem("token", res.data.token);
+    setUser(res.data.user);
 
-  // 🔐 Store token ONLY if provided
-  if (result.token) {
-    localStorage.setItem(TOKEN_KEY, result.token);
-  }
+    setLoading(false); // ✅ IMPORTANT
+  };
 
-  // 👤 Always set user if available
-  if (result.user) {
-    setUser(result.user);
-  }
-}
-
-
-  /* ===============================
-     🔹 Signup
-     =============================== */
-  async function signup({ fullName, email, password }) {
-    setLoading(true);
-    try {
-      const result = await signupApi({ fullName, email, password });
-      applyAuth(result);
-      return result;
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  /* ===============================
-     🔹 Login
-     =============================== */
-  async function login({ email, password }) {
-    setLoading(true);
-    try {
-      const result = await loginApi({ email, password });
-      applyAuth(result);
-      return result;
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  /* ===============================
-     🔹 Logout
-     =============================== */
-  async function logout() {
-    try {
-      await logoutApi();
-    } catch {}
-    localStorage.removeItem(TOKEN_KEY);
+  const logout = () => {
+    localStorage.removeItem("token");
     setUser(null);
-  }
-
-  /* ===============================
-     🔁 Refresh user (JWT-based)
-     =============================== */
-  async function refreshUser() {
-    try {
-      const token = localStorage.getItem(TOKEN_KEY);
-      if (!token) return;
-
-      const result = await getCurrentUser(token);
-      if (result?.success && result.user) {
-        setUser(result.user);
-      }
-    } catch (err) {
-      console.error("refreshUser failed", err);
-      setUser(null);
-      localStorage.removeItem(TOKEN_KEY);
-    }
-  }
-
-  /* ===============================
-     🔥 Auth modal helpers
-     =============================== */
-  function openAuthModal({ redirectTo }) {
-    setAuthModal({
-      open: true,
-      redirectTo: redirectTo || null,
-    });
-  }
-
-  function closeAuthModal() {
-    setAuthModal({
-      open: false,
-      redirectTo: null,
-    });
-  }
-
-  function onAuthSuccess() {
-    const path = authModal.redirectTo;
-    closeAuthModal();
-    if (path) navigate(path);
-  }
-
-  const value = {
-    user,
-    setUser,
-    loading,
-    initializing,
-    isAuthenticated: !!user,
-    isAdmin: user?.role === "admin",
-
-    signup,
-    login,
-    logout,
-    refreshUser,
-
-    authModal,
-    openAuthModal,
-    closeAuthModal,
-    onAuthSuccess,
+    setLoading(false);
   };
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ user, loading, login, signup, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
 }
 
-export function useAuth() {
-  const ctx = useContext(AuthContext);
-  if (!ctx) throw new Error("useAuth must be used inside AuthProvider");
-  return ctx;
-}
+export const useAuth = () => useContext(AuthContext);
