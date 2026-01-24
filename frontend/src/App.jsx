@@ -29,9 +29,7 @@ import AdminGuard from "./components/admin/AdminGuard";
 
 function AppContent() {
   const location = useLocation();
-  const hideNavbar = location.pathname === "/resume";
-
-  // Global form state
+   // Global form state
   const [formData, setFormData] = useState({});
 
 
@@ -41,6 +39,15 @@ function AppContent() {
       <Toaster position="top-center" />
 
       <Routes>
+
+      <Route
+          path="/admin/payments" 
+          element={
+            <AdminGuard>
+              <AdminPendingPayments />
+            </AdminGuard>
+          }
+        />
         <Route path="/" element={<HomePage />} />
 
         {/* Unified builder */}
@@ -85,24 +92,12 @@ function AppContent() {
           }
         />
 
-        <Route
-          path="/admin/payments"
-          element={<AdminPendingPayments />}
-        />
-
-
-
         <Route path="/engineer-prime" element={<EngineerPrime />} />
         <Route path="/aviation-pro" element={<AviationPro />} />
         <Route path="/teacher-elite" element={<TeacherElite />} />
         <Route path="/coverletter" element={<CoverLetterPage />} />
         <Route path="/coverletter-generator" element={<CoverLetterPanel />} />
-        <Route path="/admin/payments" element={<AdminPendingPayments />}
-
-
-        />
-
-
+        
       </Routes>
     </>
   );
