@@ -103,6 +103,11 @@ console.log("NAVBAR USER:", user);
           <span className="bar"></span>
         </div>
 
+        <div className="avatar-circle">
+  {getInitials(user?.fullName || user?.email || "")}
+</div>
+
+
         {/* RIGHT SIDE AVATAR */}
         {!menuOpen && (
           <div className="avatar-wrapper">
