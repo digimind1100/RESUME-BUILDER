@@ -4,35 +4,7 @@ import "./Navbar.css";
 import SignupModal from "./auth/SignupModal";
 import { useAuth } from "../context/AuthContext";
 import { FiLogOut } from "react-icons/fi";
-import { safeInitials } from "../utils/safeInitials"; // adjust path
-
-
-
-/* 🔐 SAFE INITIALS HELPER (FINAL) */
-function safeInitials(name) {
-  if (!name || typeof name !== "string") return "?";
-
-  const words = name
-    .trim()
-    .split(/\s+/)        // split by spaces
-    .filter(Boolean);    // remove empty
-
-  if (words.length === 0) return "?";
-
-  // Take first letter of first two words
-  const initials = words
-    .slice(0, 2)
-    .map(word => word.charAt(0).toUpperCase())
-    .join("");
-
-  return initials || "?";
-}
-
-const avatarLetter = safeInitials(
-  user?.fullName || user?.email
-);
-
-
+import { safeInitials } from "../utils/safeInitials";
 
 export default function Navbar() {
   const location = useLocation();
@@ -42,7 +14,9 @@ export default function Navbar() {
   const [showSignup, setShowSignup] = useState(false);
 
   const { user, isAuthenticated, logout, initializing } = useAuth();
-console.log("NAVBAR USER:", user);
+
+  console.log("NAVBAR USER:", user);
+
   const handleLinkClick = () => setMenuOpen(false);
 
   /* ⏳ Avoid render while auth is initializing */
@@ -50,7 +24,10 @@ console.log("NAVBAR USER:", user);
     return null;
   }
 
-  const avatarLetter = safeInitials(user?.fullName);
+  // ✅ FINAL AVATAR LETTER LOGIC
+  const avatarLetter = safeInitials(
+    user?.fullName || user?.email || ""
+  );
 
   return (
     <>
@@ -111,7 +88,6 @@ console.log("NAVBAR USER:", user);
           <span className="bar"></span>
         </div>
 
-      
         {/* RIGHT SIDE AVATAR */}
         {!menuOpen && (
           <div className="avatar-wrapper">
