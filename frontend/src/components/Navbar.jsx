@@ -19,20 +19,16 @@ export default function Navbar() {
   /* ⏳ Avoid render while auth is initializing */
   if (initializing) return null;
 
-  /* ✅ SAFE INITIALS (FINAL) */
+  /* ✅ SAFE INITIALS */
   function safeInitials(name) {
     if (!name || typeof name !== "string") return "?";
 
-    const words = name
-      .trim()
-      .split(/\s+/)
-      .filter(Boolean);
-
+    const words = name.trim().split(/\s+/).filter(Boolean);
     if (words.length === 0) return "?";
 
     return words
       .slice(0, 2)
-      .map(word => word.charAt(0).toUpperCase())
+      .map(word => word[0].toUpperCase())
       .join("");
   }
 
@@ -76,7 +72,16 @@ export default function Navbar() {
               </button>
             ) : (
               <>
-                <div className="mobile-avatar">{avatarLetter}</div>
+                <div
+                  className="mobile-avatar"
+                  style={{
+                    background: "#111",
+                    color: "#fff",
+                    fontWeight: "700",
+                  }}
+                >
+                  {avatarLetter}
+                </div>
                 <button
                   className="mobile-logout-btn"
                   onClick={() => {
@@ -104,6 +109,15 @@ export default function Navbar() {
           <div className="avatar-wrapper">
             <div
               className={`avatar-circle ${!isAuthenticated ? "guest" : ""}`}
+              style={{
+                backgroundColor: "#111",
+                color: "#fff",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontWeight: "700",
+                fontSize: "14px",
+              }}
               onClick={() => {
                 if (!isAuthenticated) setShowSignup(true);
                 else setShowMenu(p => !p);
