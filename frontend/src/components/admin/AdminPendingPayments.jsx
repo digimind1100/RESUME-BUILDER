@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 export default function AdminPendingPayments() {
   const [payments, setPayments] = useState([]);
 
+  console.log("🔥 ADMIN PAGE MOUNTED");
+
   useEffect(() => {
     fetchPending();
   }, []);
