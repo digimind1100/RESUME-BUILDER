@@ -105,5 +105,6 @@ function AppContent() {
 }
 
 export default function App() {
-  return <AppContent />;
+  return <h1 style={{ padding: 50 }}>APP IS ALIVE</h1>;
 }
+
