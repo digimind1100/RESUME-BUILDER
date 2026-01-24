@@ -86,13 +86,10 @@ function AppContent() {
         />
 
         <Route
-  path="/admin/payments"
-  element={
-    <AdminGuard>
-      <AdminPendingPayments />
-    </AdminGuard>
-  }
-/>
+          path="/admin/payments"
+          element={<AdminPendingPayments />}
+        />
+
 
 
         <Route path="/engineer-prime" element={<EngineerPrime />} />
@@ -101,11 +98,11 @@ function AppContent() {
         <Route path="/coverletter" element={<CoverLetterPage />} />
         <Route path="/coverletter-generator" element={<CoverLetterPanel />} />
         <Route path="/admin/payments" element={<AdminPendingPayments />}
-        
-        
-/>
 
-        
+
+        />
+
+
       </Routes>
     </>
   );
