@@ -4,6 +4,9 @@ import "./Navbar.css";
 import SignupModal from "./auth/SignupModal";
 import { useAuth } from "../context/AuthContext";
 import { FiLogOut } from "react-icons/fi";
+import { safeInitials } from "../utils/safeInitials"; // adjust path
+
+
 
 /* 🔐 SAFE INITIALS HELPER (FINAL) */
 function safeInitials(name) {
@@ -24,6 +27,11 @@ function safeInitials(name) {
 
   return initials || "?";
 }
+
+const avatarLetter = safeInitials(
+  user?.fullName || user?.email
+);
+
 
 
 export default function Navbar() {
@@ -103,11 +111,7 @@ console.log("NAVBAR USER:", user);
           <span className="bar"></span>
         </div>
 
-        <div className="avatar-circle">
-  {getInitials(user?.fullName || user?.email || "")}
-</div>
-
-
+      
         {/* RIGHT SIDE AVATAR */}
         {!menuOpen && (
           <div className="avatar-wrapper">
