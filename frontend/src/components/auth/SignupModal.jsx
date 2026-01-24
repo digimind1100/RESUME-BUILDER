@@ -40,10 +40,10 @@ export default function SignupModal({ isOpen, onClose, onSuccess }) {
           ? await signup(payload)
           : await login(payload);
 
-      if (result?.ok) {
-        onSuccess && onSuccess(result.user);
-        onClose();
-      } else {
+   if (result?.ok) {
+  onClose();
+}
+ else {
         setError(result?.message || "Authentication failed. Please try again.");
       }
     } catch {
