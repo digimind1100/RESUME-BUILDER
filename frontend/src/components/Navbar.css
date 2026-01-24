@@ -92,19 +92,19 @@ body {
 }
 
 .avatar-circle {
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
+  background: #2563eb;
+  color: #fff;
   border-radius: 50%;
-  background-color: #111 !important;
-  color: #fff !important;      /* 🔥 THIS IS THE KEY */
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  font-size: 14px;
+  font-size: 15px;
+  cursor: pointer;
   text-transform: uppercase;
 }
-
 
 .avatar-dropdown {
   position: absolute;
