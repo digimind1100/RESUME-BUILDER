@@ -4,7 +4,6 @@ import "./Navbar.css";
 import SignupModal from "./auth/SignupModal";
 import { useAuth } from "../context/AuthContext";
 import { FiLogOut } from "react-icons/fi";
-import { safeInitials } from "../utils/safeInitials";
 
 export default function Navbar() {
   const location = useLocation();
@@ -15,38 +14,33 @@ export default function Navbar() {
 
   const { user, isAuthenticated, logout, initializing } = useAuth();
 
-  function safeInitials(name) {
-  if (!name || typeof name !== "string") return "?";
-
-  const words = name
-    .trim()
-    .split(/\s+/)
-    .filter(Boolean);
-
-  if (words.length === 0) return "?";
-
-  return words
-    .slice(0, 2)
-    .map(word => word.charAt(0).toUpperCase())
-    .join("");
-}
-
-
   console.log("NAVBAR USER:", user);
-  console.log("AVATAR LETTER:", avatarLetter);
-
-
-  const handleLinkClick = () => setMenuOpen(false);
 
   /* ⏳ Avoid render while auth is initializing */
-  if (initializing) {
-    return null;
+  if (initializing) return null;
+
+  /* ✅ SAFE INITIALS (FINAL) */
+  function safeInitials(name) {
+    if (!name || typeof name !== "string") return "?";
+
+    const words = name
+      .trim()
+      .split(/\s+/)
+      .filter(Boolean);
+
+    if (words.length === 0) return "?";
+
+    return words
+      .slice(0, 2)
+      .map(word => word.charAt(0).toUpperCase())
+      .join("");
   }
 
-  // ✅ FINAL AVATAR LETTER LOGIC
   const avatarLetter = safeInitials(
     user?.fullName || user?.email || ""
   );
+
+  const handleLinkClick = () => setMenuOpen(false);
 
   return (
     <>
@@ -60,13 +54,13 @@ export default function Navbar() {
 
         {/* NAV LINKS */}
         <ul className={`navbar-links ${menuOpen ? "open" : ""}`}>
-          <li><Link to="/" className={location.pathname === "/" ? "active" : ""} onClick={handleLinkClick}>Home</Link></li>
-          <li><Link to="/templates" className={location.pathname === "/templates" ? "active" : ""} onClick={handleLinkClick}>Templates</Link></li>
-          <li><Link to="/features" className={location.pathname === "/features" ? "active" : ""} onClick={handleLinkClick}>Features</Link></li>
-          <li><Link to="/coverletter" className={location.pathname === "/coverletter" ? "active" : ""} onClick={handleLinkClick}>Cover Letter</Link></li>
-          <li><Link to="/policies" className={location.pathname === "/policies" ? "active" : ""} onClick={handleLinkClick}>Policies</Link></li>
-          <li><Link to="/contact" className={location.pathname === "/contact" ? "active" : ""} onClick={handleLinkClick}>Contact</Link></li>
-          <li><Link to="/faq" className={location.pathname === "/faq" ? "active" : ""} onClick={handleLinkClick}>FAQ</Link></li>
+          <li><Link to="/" onClick={handleLinkClick}>Home</Link></li>
+          <li><Link to="/templates" onClick={handleLinkClick}>Templates</Link></li>
+          <li><Link to="/features" onClick={handleLinkClick}>Features</Link></li>
+          <li><Link to="/coverletter" onClick={handleLinkClick}>Cover Letter</Link></li>
+          <li><Link to="/policies" onClick={handleLinkClick}>Policies</Link></li>
+          <li><Link to="/contact" onClick={handleLinkClick}>Contact</Link></li>
+          <li><Link to="/faq" onClick={handleLinkClick}>FAQ</Link></li>
 
           {/* MOBILE AUTH */}
           <li className="mobile-auth">
@@ -82,9 +76,7 @@ export default function Navbar() {
               </button>
             ) : (
               <>
-                <div className="mobile-avatar">
-                  {avatarLetter}
-                </div>
+                <div className="mobile-avatar">{avatarLetter}</div>
                 <button
                   className="mobile-logout-btn"
                   onClick={() => {
@@ -101,30 +93,23 @@ export default function Navbar() {
         </ul>
 
         {/* HAMBURGER */}
-        <div className="hamburger" onClick={() => setMenuOpen(prev => !prev)}>
+        <div className="hamburger" onClick={() => setMenuOpen(p => !p)}>
           <span className="bar"></span>
           <span className="bar"></span>
           <span className="bar"></span>
         </div>
 
-        {/* RIGHT SIDE AVATAR */}
+        {/* RIGHT AVATAR */}
         {!menuOpen && (
           <div className="avatar-wrapper">
             <div
               className={`avatar-circle ${!isAuthenticated ? "guest" : ""}`}
               onClick={() => {
-                if (!isAuthenticated) {
-                  setShowSignup(true);
-                } else {
-                  setShowMenu(prev => !prev);
-                }
+                if (!isAuthenticated) setShowSignup(true);
+                else setShowMenu(p => !p);
               }}
             >
-              {isAuthenticated ? (
-                avatarLetter
-              ) : (
-                <span className="live-ring"></span>
-              )}
+              {isAuthenticated ? avatarLetter : <span className="live-ring" />}
             </div>
 
             {isAuthenticated && showMenu && (
