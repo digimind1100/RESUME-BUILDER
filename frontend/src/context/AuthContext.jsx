@@ -9,7 +9,7 @@ import {
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const isAuthenticated = !!user;
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
   // 🔹 App load → check existing login
