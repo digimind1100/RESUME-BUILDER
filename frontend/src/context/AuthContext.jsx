@@ -9,7 +9,7 @@ import {
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
+  const isAuthenticated = !!user;
   const [loading, setLoading] = useState(true);
 
   // 🔹 App load → check existing login
@@ -77,14 +77,17 @@ export function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider
-      value={{
-        user,
-        loading,
-        signup,
-        login,
-        logout,
-      }}
-    >
+  value={{
+    user,
+    setUser,
+    isAuthenticated,
+    loading,
+    signup,
+    login,
+    logout,
+  }}
+>
+
       {children}
     </AuthContext.Provider>
   );
