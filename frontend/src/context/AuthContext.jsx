@@ -9,8 +9,12 @@ import {
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
+  // ✅ USER STATE (MISSING PIECE)
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  // ✅ DERIVED AUTH FLAG (SAFE)
+  const isAuthenticated = !!user;
 
   // 🔹 App load → check existing login
   useEffect(() => {
@@ -47,7 +51,7 @@ export function AuthProvider({ children }) {
     }
 
     setLoading(false);
-    return res; // 🔥 VERY IMPORTANT
+    return res;
   };
 
   // 🔹 LOGIN
@@ -64,7 +68,7 @@ export function AuthProvider({ children }) {
     }
 
     setLoading(false);
-    return res; // 🔥 VERY IMPORTANT
+    return res;
   };
 
   // 🔹 LOGOUT
@@ -77,17 +81,16 @@ export function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider
-  value={{
-    user,
-    setUser,
-    isAuthenticated,
-    loading,
-    signup,
-    login,
-    logout,
-  }}
->
-
+      value={{
+        user,
+        setUser,
+        isAuthenticated,
+        loading,
+        signup,
+        login,
+        logout,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
