@@ -164,6 +164,7 @@ export default function PaymentModal({ onClose, onSuccess }) {
         setPromoLoading(false);
         return;
       }
+console.log("Redeeming promo:", promoCode);
 
       const res = await fetch(
         "https://resume-builder-backend-production-116d.up.railway.app/api/promo/redeem",
@@ -189,9 +190,11 @@ export default function PaymentModal({ onClose, onSuccess }) {
       alert("🎉 Premium unlocked!");
       onClose();
     } catch (err) {
-      setPromoLoading(false);
-      alert("Failed to redeem promo");
-    }
+  setPromoLoading(false);
+  console.error("PROMO ERROR:", err);
+  alert(err?.message || "Promo redeem failed");
+}
+
   };
 
   const selectedAccount = method ? PAYMENT_ACCOUNTS[method] : null;
