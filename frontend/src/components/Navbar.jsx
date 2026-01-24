@@ -33,6 +33,8 @@ export default function Navbar() {
 
 
   console.log("NAVBAR USER:", user);
+  console.log("AVATAR LETTER:", avatarLetter);
+
 
   const handleLinkClick = () => setMenuOpen(false);
 
