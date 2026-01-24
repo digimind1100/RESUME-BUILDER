@@ -97,7 +97,8 @@ function AppContent() {
         <Route path="/teacher-elite" element={<TeacherElite />} />
         <Route path="/coverletter" element={<CoverLetterPage />} />
         <Route path="/coverletter-generator" element={<CoverLetterPanel />} />
-        
+        <Route path="*" element={<Navigate to="/" />} />
+
       </Routes>
     </>
   );
