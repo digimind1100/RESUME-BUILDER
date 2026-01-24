@@ -39,28 +39,39 @@ export default function Templates() {
     }
   }, [isStartBuildingFlow, isAuthenticated]);
 
-  // 🔥 Existing template handler (UNCHANGED)
+  // 🔥 Template click handler (FIXED)
   const handleUseTemplate = (route) => {
     if (!isAuthenticated) {
+      // ✅ store intent safely
       pendingRouteRef.current = route;
+      sessionStorage.setItem("pendingTemplateRoute", route);
+
       setShowSignup(true);
       return;
     }
+
     navigate(route);
   };
 
-  // 🔥 After signup success
+  // 🔥 After signup success (FIXED)
   const handleSignupSuccess = () => {
     // Case 1: Start Building flow
     if (isStartBuildingFlow) {
+      sessionStorage.removeItem("pendingTemplateRoute");
+      pendingRouteRef.current = null;
       navigate("/resume/professional");
       return;
     }
 
-    // Case 2: Normal template flow
-    if (pendingRouteRef.current) {
-      navigate(pendingRouteRef.current);
+    // Case 2: Normal template click flow
+    const pendingRoute =
+      pendingRouteRef.current ||
+      sessionStorage.getItem("pendingTemplateRoute");
+
+    if (pendingRoute) {
+      sessionStorage.removeItem("pendingTemplateRoute");
       pendingRouteRef.current = null;
+      navigate(pendingRoute);
     }
   };
 

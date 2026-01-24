@@ -23,14 +23,14 @@ export default function SignupModal({ isOpen, onClose, onSuccess }) {
     const payload =
       mode === "signup"
         ? {
-            fullName: fullName.trim(),
-            email: email.trim(),
-            password: password.trim(),
-          }
+          fullName: fullName.trim(),
+          email: email.trim(),
+          password: password.trim(),
+        }
         : {
-            email: email.trim(),
-            password: password.trim(),
-          };
+          email: email.trim(),
+          password: password.trim(),
+        };
 
     let result;
 
@@ -40,10 +40,20 @@ export default function SignupModal({ isOpen, onClose, onSuccess }) {
           ? await signup(payload)
           : await login(payload);
 
-   if (result?.ok) {
-  onClose();
-}
- else {
+      if (result?.ok) {
+        const pendingTemplate = localStorage.getItem("pendingTemplate");
+
+        if (pendingTemplate) {
+          localStorage.removeItem("pendingTemplate");
+          window.location.href = `/resume/${pendingTemplate}`;
+          return;
+        }
+
+        onSuccess && onSuccess(result.user);
+        onClose();
+      }
+
+      else {
         setError(result?.message || "Authentication failed. Please try again.");
       }
     } catch {
@@ -101,8 +111,8 @@ export default function SignupModal({ isOpen, onClose, onSuccess }) {
                 ? "Creating Account..."
                 : "Logging in..."
               : mode === "signup"
-              ? "Signup"
-              : "Login"}
+                ? "Signup"
+                : "Login"}
           </button>
         </form>
 
