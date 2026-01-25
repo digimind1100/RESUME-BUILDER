@@ -1,0 +1,207 @@
+/* ================================
+   ADMIN PAYMENTS PAGE
+================================ */
+
+.admin-payments-page {
+  padding: 40px;
+  max-width: 1200px;
+  margin: auto;
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+/* Title */
+.admin-payments-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #111;
+}
+
+/* Empty state */
+.admin-empty {
+  padding: 40px;
+  text-align: center;
+  background: #f9fafb;
+  border-radius: 12px;
+  color: #555;
+  font-size: 16px;
+}
+
+/* ================================
+   TABLE
+================================ */
+
+.admin-table-wrapper {
+  background: #ffffff;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+}
+
+.admin-payments-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Table head */
+.admin-payments-table thead {
+  background: linear-gradient(90deg, #111827, #1f2933);
+}
+
+.admin-payments-table thead th {
+  padding: 14px 16px;
+  text-align: left;
+  color: #f9fafb;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Table body */
+.admin-payments-table tbody tr {
+  border-bottom: 1px solid #e5e7eb;
+  transition: background 0.2s ease;
+}
+
+.admin-payments-table tbody tr:hover {
+  background: #f9fafb;
+}
+
+.admin-payments-table td {
+  padding: 14px 16px;
+  font-size: 14px;
+  color: #111827;
+}
+
+/* Email column */
+.admin-user-email {
+  font-weight: 600;
+  color: #2563eb;
+}
+
+/* Method badge */
+.admin-method {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  background: #eef2ff;
+  color: #3730a3;
+}
+
+/* Status badge */
+.admin-status {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.admin-status.pending {
+  background: #fff7ed;
+  color: #c2410c;
+}
+
+.admin-status.approved {
+  background: #ecfdf5;
+  color: #047857;
+}
+
+.admin-status.rejected {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+/* ================================
+   ACTION BUTTONS
+================================ */
+
+.admin-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.admin-btn {
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+/* Approve */
+.admin-btn.approve {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #ffffff;
+}
+
+.admin-btn.approve:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.35);
+}
+
+/* Reject */
+.admin-btn.reject {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: #ffffff;
+}
+
+.admin-btn.reject:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(239, 68, 68, 0.35);
+}
+
+/* Disabled button */
+.admin-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+/* ================================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 768px) {
+  .admin-payments-page {
+    padding: 20px;
+  }
+
+  .admin-payments-table thead {
+    display: none;
+  }
+
+  .admin-payments-table,
+  .admin-payments-table tbody,
+  .admin-payments-table tr,
+  .admin-payments-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .admin-payments-table tr {
+    margin-bottom: 16px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    background: #ffffff;
+  }
+
+  .admin-payments-table td {
+    padding: 10px 14px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+  }
+
+  .admin-payments-table td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: #6b7280;
+  }
+}
