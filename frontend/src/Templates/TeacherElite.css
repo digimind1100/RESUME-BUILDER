@@ -591,7 +591,7 @@
 
 @media (max-width: 768px) {
   .te-a4 {
-    transform: scale(0.7);          /* 👈 adjust if needed */
+    transform: scale(0.65);          /* 👈 adjust if needed */
     transform-origin: top center;
   }
 
