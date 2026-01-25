@@ -8,6 +8,7 @@ import sadapayLogo from "../../assets/payments/sadapay.png";
 
 import { useAuth } from "../../context/AuthContext";
 
+
 export default function PaymentModal({ onClose, onSuccess }) {
   const modalRoot = document.getElementById("modal-root");
   const { refreshUser } = useAuth();
@@ -22,7 +23,6 @@ export default function PaymentModal({ onClose, onSuccess }) {
   const [promoLoading, setPromoLoading] = useState(false);
 
   const [showPendingPopup, setShowPendingPopup] = useState(false);
-
 
   if (!modalRoot) return null;
 

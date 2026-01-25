@@ -71,6 +71,19 @@ export function AuthProvider({ children }) {
     return res;
   };
 
+
+  const refreshUser = async () => {
+  const token = localStorage.getItem("token");
+  if (!token) return;
+
+  const res = await getCurrentUser(token);
+  if (res.success) {
+    setUser(res.user);
+  }
+};
+
+
+
   // 🔹 LOGOUT
   const logout = async () => {
     await logoutApi();
@@ -89,6 +102,7 @@ export function AuthProvider({ children }) {
         signup,
         login,
         logout,
+        refreshUser,
       }}
     >
       {children}
