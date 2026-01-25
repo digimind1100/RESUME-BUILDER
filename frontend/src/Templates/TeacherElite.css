@@ -583,3 +583,19 @@
     display: none;                /* Chrome/Safari */
   }
 }
+
+
+/* ===============================
+   MOBILE = DESKTOP LAYOUT (SCALED)
+================================ */
+
+@media (max-width: 768px) {
+  .te-a4 {
+    transform: scale(0.7);          /* 👈 adjust if needed */
+    transform-origin: top center;
+  }
+
+  .te-wrapper {
+    overflow-x: hidden;
+  }
+}
