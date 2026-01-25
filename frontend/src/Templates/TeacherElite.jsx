@@ -141,6 +141,46 @@ Subject: ${qrForm.subject}
     setQrImage(dataUrl);
   };
 
+const downloadPDF = () => {
+  const element = document.querySelector(".te-a4");
+
+  // 🔥 FORCE A4 SIZE (IMPORTANT FOR MOBILE)
+  const originalWidth = element.style.width;
+  const originalMinHeight = element.style.minHeight;
+
+  element.style.width = "210mm";
+  element.style.minHeight = "297mm";
+
+  const opt = {
+    margin: 0,
+    filename: "TeacherElite-Resume.pdf",
+    image: { type: "jpeg", quality: 0.98 },
+    html2canvas: {
+      scale: 2,
+      useCORS: true,
+      windowWidth: 794,     // 👈 A4 width in px
+    },
+    jsPDF: {
+      unit: "mm",
+      format: "a4",
+      orientation: "portrait",
+    },
+  };
+
+  html2pdf()
+    .set(opt)
+    .from(element)
+    .save()
+    .then(() => {
+      // 🔁 RESTORE original layout
+      element.style.width = originalWidth;
+      element.style.minHeight = originalMinHeight;
+    });
+};
+
+
+
+
   /* ---------- PDF DOWNLOAD ---------- */
   const handleDownloadPDF = async () => {
     const element = resumeRef.current;
