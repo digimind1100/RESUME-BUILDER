@@ -102,51 +102,51 @@ export default function PaymentModal({ onClose, onSuccess }) {
      🐢 MANUAL PAYMENT SUBMIT
      =============================== */
   const handlePayment = async () => {
-  if (!method || !transactionId || loading) {
-    alert("Please select payment method and enter transaction ID");
-    return;
-  }
-
-  setLoading(true);
-
-  try {
-    const token = localStorage.getItem("token");
-
-    const res = await fetch(
-      "https://resume-builder-backend-production-116d.up.railway.app/api/payments/submit",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          method,
-          amount: 999,
-          transactionId,
-        }),
-      }
-    );
-
-    const data = await res.json();
-    setLoading(false);
-
-    if (!res.ok) {
-      alert(data.message || "Payment submission failed");
+    if (!method || !transactionId || loading) {
+      alert("Please select payment method and enter transaction ID");
       return;
     }
 
-    // ✅ ONLY THIS FOR MANUAL PAYMENT
-    setStatus("pending");
-    setShowPendingPopup(true);
+    setLoading(true);
 
-    // ❌ DO NOT CALL onSuccess / handlePaymentSuccess here
+    try {
+      const token = localStorage.getItem("token");
 
-  } catch (err) {
-    setLoading(false);
-    alert("Network error. Try again.");
-  }
-};
+      const res = await fetch(
+        "https://resume-builder-backend-production-116d.up.railway.app/api/payments/submit",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            method,
+            amount: 999,
+            transactionId,
+          }),
+        }
+      );
+
+      const data = await res.json();
+      setLoading(false);
+
+      if (!res.ok) {
+        alert(data.message || "Payment submission failed");
+        return;
+      }
+
+      // ✅ ONLY THIS FOR MANUAL PAYMENT
+      setStatus("pending");
+      setShowPendingPopup(true);
+
+      // ❌ DO NOT CALL onSuccess / handlePaymentSuccess here
+
+    } catch (err) {
+      setLoading(false);
+      alert("Network error. Try again.");
+    }
+  };
 
 
   /* ===============================
@@ -164,7 +164,7 @@ export default function PaymentModal({ onClose, onSuccess }) {
         setPromoLoading(false);
         return;
       }
-console.log("Redeeming promo:", promoCode);
+      console.log("Redeeming promo:", promoCode);
 
       const res = await fetch(
         "https://resume-builder-backend-production-116d.up.railway.app/api/promo/redeem",
@@ -188,12 +188,15 @@ console.log("Redeeming promo:", promoCode);
 
       await refreshUser();
       alert("🎉 Premium unlocked!");
-      onClose();
+      if (typeof onSuccess === "function") {
+        onSuccess();
+      }
+
     } catch (err) {
-  setPromoLoading(false);
-  console.error("PROMO ERROR:", err);
-  alert(err?.message || "Promo redeem failed");
-}
+      setPromoLoading(false);
+      console.error("PROMO ERROR:", err);
+      alert(err?.message || "Promo redeem failed");
+    }
 
   };
 
@@ -303,28 +306,28 @@ console.log("Redeeming promo:", promoCode);
         )}
 
         {showPendingPopup && (
-  <div className="pending-popup-overlay">
-    <div className="pending-popup">
-      <h3>⏳ Payment Submitted</h3>
-      <p>
-        Your payment has been received and is pending admin approval.
-      </p>
-      <p>
-        Approval usually takes <b>5–30 minutes</b>.
-      </p>
+          <div className="pending-popup-overlay">
+            <div className="pending-popup">
+              <h3>⏳ Payment Submitted</h3>
+              <p>
+                Your payment has been received and is pending admin approval.
+              </p>
+              <p>
+                Approval usually takes <b>5–30 minutes</b>.
+              </p>
 
-      <button
-        className="unlock-btn"
-        onClick={() => {
-          setShowPendingPopup(false);
-          onClose(); // close payment modal
-        }}
-      >
-        OK
-      </button>
-    </div>
-  </div>
-)}
+              <button
+                className="unlock-btn"
+                onClick={() => {
+                  setShowPendingPopup(false);
+                  onClose(); // close payment modal
+                }}
+              >
+                OK
+              </button>
+            </div>
+          </div>
+        )}
 
 
         {showPromo && status === "idle" && (
