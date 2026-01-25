@@ -5,7 +5,6 @@ export default function HeroSection() {
   const navigate = useNavigate();
 
   const handleStartBuilding = () => {
-    // 🔥 Just go to Templates page
     navigate("/templates", {
       state: { startBuilding: true },
     });
@@ -18,9 +17,11 @@ export default function HeroSection() {
           <h1 className="hero-title">
             Build a <span>Professional Resume</span> in Minutes
           </h1>
+
           <h3 className="hero-titleh3">
             <span>Bring Your CV on Top</span>
           </h3>
+
           <p className="hero-subtitle">
             Create a stunning, job-winning resume effortlessly with our
             AI-powered Resume Builder.
@@ -35,12 +36,14 @@ export default function HeroSection() {
           <div className="mockup-box">
             <video
               className="mockup-video"
-              src="/public/demo/mockup.mp4"
               autoPlay
               muted
               loop
               playsInline
-            />
+              preload="auto"
+            >
+              <source src="/demo/mockup.mp4" type="video/mp4" />
+            </video>
           </div>
         </div>
       </div>
