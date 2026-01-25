@@ -539,3 +539,47 @@
 .te-share-btn:hover {
   background: #e6e6e6;
 }
+
+
+/* ===============================
+   MOBILE FIX – TeacherElite Buttons
+================================ */
+
+@media (max-width: 640px) {
+  .te-wrapper {
+    padding: 12px 0 24px;
+  }
+
+  .te-buttons {
+    width: 100%;
+    padding: 8px 10px;
+
+    display: flex;
+    flex-wrap: wrap;              /* 👈 allow wrapping */
+    justify-content: center;
+    gap: 6px;
+
+    position: sticky;
+    top: 0;
+    background: #eef1f7;          /* 👈 so text behind na dikhe */
+  }
+
+  .te-buttons button,
+  .edit-toggle,
+  .te-share-btn {
+    padding: 6px 10px;            /* 👈 smaller buttons */
+    font-size: 11px;              /* 👈 smaller text */
+    border-radius: 5px;
+    white-space: nowrap;          /* 👈 text break na ho */
+  }
+
+  /* If too many buttons, allow horizontal scroll instead of cut */
+  .te-buttons {
+    overflow-x: auto;
+    scrollbar-width: none;        /* Firefox */
+  }
+
+  .te-buttons::-webkit-scrollbar {
+    display: none;                /* Chrome/Safari */
+  }
+}

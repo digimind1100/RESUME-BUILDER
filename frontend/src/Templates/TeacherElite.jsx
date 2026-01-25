@@ -185,8 +185,6 @@ Subject: ${qrForm.subject}
   <span>Share</span>
 </button>
 
-
-
         <button onClick={handleDownloadPDF}>Download PDF</button>
         <button onClick={() => navigate("/templates")}>
           Back to Templates
@@ -203,7 +201,6 @@ Subject: ${qrForm.subject}
   {isEditable ? "Editing: ON" : "Editing: OFF"}
     {!canEdit && <span className="edit-crown">👑</span>}
 </button>
-
 
       </div>
 
