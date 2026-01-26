@@ -87,6 +87,17 @@ useEffect(() => {
   }
 }, [canEdit]);
 
+useEffect(() => {
+  if (!showMobileEditMsg) return;
+
+  const t = setTimeout(() => {
+    setShowMobileEditMsg(false);
+  }, 3000);
+
+  return () => clearTimeout(t);
+}, [showMobileEditMsg]);
+
+
   /* ---------- PROFILE IMAGE ---------- */
  const [profileImage, setProfileImage] = useState(
     "/images/minimalaccentprofileimage.png"
@@ -143,33 +154,6 @@ Subject: ${qrForm.subject}
     setQrImage(dataUrl);
   };
 
-const downloadPDF = () => {
-  const wrapper = document.querySelector(".te-wrapper");
-
-  // 🔥 ENTER PDF MODE
-  wrapper.classList.add("pdf-mode");
-
-  const element = document.querySelector(".te-a4");
-
-  const opt = {
-    margin: 0,
-    filename: "TeacherElite-Resume.pdf",
-    image: { type: "jpeg", quality: 0.98 },
-    html2canvas: { scale: 2, useCORS: true },
-    jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-  };
-
-  html2pdf()
-    .set(opt)
-    .from(element)
-    .save()
-    .then(() => {
-      // 🔁 EXIT PDF MODE
-      wrapper.classList.remove("pdf-mode");
-    });
-};
-
-
 
   /* ---------- PDF DOWNLOAD ---------- */
   const handleDownloadPDF = async () => {
@@ -224,18 +208,27 @@ const downloadPDF = () => {
 <button
   className={isEditable ? "edit-btn on" : "edit-btn off"}
   onClick={() => {
+    console.log("EDIT CLICKED"); // 🔍 debug
+
     if (isMobile) {
       setShowMobileEditMsg(true);
-      return; // ❌ stop editing on mobile
+      return; // ❌ stop here on mobile
     }
 
     if (!requirePayment()) return;
+
     setIsEditable((prev) => !prev);
   }}
 >
   {isEditable ? "Editing: ON" : "Editing: OFF"}
   {!canEdit && <span className="edit-crown">👑</span>}
 </button>
+{showMobileEditMsg && (
+  <div className="mobile-edit-notice">
+    Editing is available on desktop for best experience.
+  </div>
+)}
+
 
 
       </div>
@@ -639,11 +632,6 @@ const downloadPDF = () => {
           </div>
         </div>
 
-        {showMobileEditMsg && (
-  <div className="mobile-edit-notice">
-    Editing is available on desktop for best experience.
-  </div>
-)}
 
 
 <PaymentGate

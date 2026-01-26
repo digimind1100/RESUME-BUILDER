@@ -608,7 +608,9 @@
 
 
 .mobile-edit-notice {
-  margin: 8px auto 12px;
+  position: relative;
+  z-index: 9999999;   /* 👈 above sticky buttons */
+  margin: 10px auto;
   max-width: 95%;
   padding: 10px 14px;
   font-size: 13px;
@@ -617,3 +619,4 @@
   background: #e5e7eb;
   border-radius: 8px;
 }
+
