@@ -59,6 +59,10 @@ const [showShare, setShowShare] = useState(false);
 const resumeId = "teacher-elite"; // or user-based later
 const resumePdfUrl = `${window.location.origin}/resumes/${resumeId}.pdf`;
 
+const [summary, setSummary] = useState("Your summary text...");
+const isMobile = window.innerWidth <= 768;
+
+
 const { user, setUser } = useAuth();
 
 const {
@@ -640,6 +644,24 @@ const downloadPDF = () => {
             </main>
           </div>
         </div>
+
+
+        {isMobile ? (
+  <textarea
+    value={summary}
+    onChange={(e) => setSummary(e.target.value)}
+    className="mobile-editor"
+  />
+) : (
+  <p
+    contentEditable
+    suppressContentEditableWarning
+    onInput={(e) => setSummary(e.currentTarget.textContent)}
+  >
+    {summary}
+  </p>
+)}
+
 
 <PaymentGate
   open={showPaymentModal}

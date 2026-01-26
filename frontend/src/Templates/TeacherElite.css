@@ -614,7 +614,7 @@
 
   /* PREVIEW MODE (read-only) */
   .te-wrapper:not(.mobile-editing) .te-a4 {
-    transform: scale(0.65);
+    transform: scale(0.75);
     transform-origin: top center;
   }
 
