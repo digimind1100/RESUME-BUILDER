@@ -606,6 +606,34 @@
   }
 }
 
+/* ===============================
+   MOBILE PREVIEW = DESKTOP A4 (SCALED)
+   Exact A4, auto font scaling
+================================ */
+
+@media (max-width: 768px) {
+  .te-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden;
+  }
+
+  .te-a4 {
+    /* KEEP REAL A4 SIZE */
+    width: 210mm;
+    min-height: 297mm;
+
+    /* SCALE DOWN VISUALLY */
+    transform: scale(0.6);          /* 👈 adjust 0.6–0.7 */
+    transform-origin: top center;
+
+    /* CENTER IT */
+    margin: 0 auto;
+  }
+}
+
+
 
 .mobile-edit-notice {
   position: relative;
