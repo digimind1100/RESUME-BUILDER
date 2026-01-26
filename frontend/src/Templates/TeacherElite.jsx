@@ -59,8 +59,8 @@ const [showShare, setShowShare] = useState(false);
 const resumeId = "teacher-elite"; // or user-based later
 const resumePdfUrl = `${window.location.origin}/resumes/${resumeId}.pdf`;
 
-const [summary, setSummary] = useState("Your summary text...");
 const isMobile = window.innerWidth <= 768;
+const [showMobileEditMsg, setShowMobileEditMsg] = useState(false);
 
 
 const { user, setUser } = useAuth();
@@ -86,18 +86,6 @@ useEffect(() => {
     });
   }
 }, [canEdit]);
-
-useEffect(() => {
-  const wrapper = document.querySelector(".te-wrapper");
-
-  if (!wrapper) return;
-
-  if (isEditable && canEdit) {
-    wrapper.classList.add("mobile-editing");
-  } else {
-    wrapper.classList.remove("mobile-editing");
-  }
-}, [isEditable, canEdit]);
 
   /* ---------- PROFILE IMAGE ---------- */
  const [profileImage, setProfileImage] = useState(
@@ -233,16 +221,22 @@ const downloadPDF = () => {
         </button>
         <button onClick={handleReset}>Reset</button>
 
- <button
+<button
   className={isEditable ? "edit-btn on" : "edit-btn off"}
   onClick={() => {
+    if (isMobile) {
+      setShowMobileEditMsg(true);
+      return; // ❌ stop editing on mobile
+    }
+
     if (!requirePayment()) return;
     setIsEditable((prev) => !prev);
   }}
 >
   {isEditable ? "Editing: ON" : "Editing: OFF"}
-    {!canEdit && <span className="edit-crown">👑</span>}
+  {!canEdit && <span className="edit-crown">👑</span>}
 </button>
+
 
       </div>
 
@@ -645,21 +639,10 @@ const downloadPDF = () => {
           </div>
         </div>
 
-
-        {isMobile ? (
-  <textarea
-    value={summary}
-    onChange={(e) => setSummary(e.target.value)}
-    className="mobile-editor"
-  />
-) : (
-  <p
-    contentEditable
-    suppressContentEditableWarning
-    onInput={(e) => setSummary(e.currentTarget.textContent)}
-  >
-    {summary}
-  </p>
+        {showMobileEditMsg && (
+  <div className="mobile-edit-notice">
+    Editing is available on desktop for best experience.
+  </div>
 )}
 
 

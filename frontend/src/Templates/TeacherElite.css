@@ -606,31 +606,14 @@
   }
 }
 
-/* ===============================
-   MOBILE – FINAL INTERACTION FIX
-================================ */
 
-@media (max-width: 768px) {
-
-  /* PREVIEW MODE (read-only) */
-  .te-wrapper:not(.mobile-editing) .te-a4 {
-    transform: scale(0.75);
-    transform-origin: top center;
-  }
-
-  /* 🔥 EDIT MODE — REMOVE ALL TRANSFORMS */
-  .mobile-editing .te-a4,
-  .mobile-editing .te-resume,
-  .mobile-editing .te-layout {
-    transform: none !important;
-  }
-
-  /* 🔥 ALSO remove transform context */
-  .mobile-editing * {
-    pointer-events: auto;
-  }
-
-  .mobile-editing .te-wrapper {
-    overflow-x: auto;
-  }
+.mobile-edit-notice {
+  margin: 8px auto 12px;
+  max-width: 95%;
+  padding: 10px 14px;
+  font-size: 13px;
+  text-align: center;
+  color: #1f2937;
+  background: #e5e7eb;
+  border-radius: 8px;
 }
