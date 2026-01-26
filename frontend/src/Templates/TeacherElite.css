@@ -403,14 +403,7 @@
   .te-qr-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  .te-layout {
-    flex-direction: column;
-  }
-  .te-sidebar {
-    width: 100%;
-  }
 }
-
 
 [contenteditable="true"] {
   outline: 1px dashed #60a5fa;
@@ -583,16 +576,17 @@
     display: none;                /* Chrome/Safari */
   }
 }
-
-
 /* ===============================
-   MOBILE = DESKTOP LAYOUT (SCALED)
+   MOBILE VIEW = DESKTOP A4 (SCALED)
 ================================ */
 
 @media (max-width: 768px) {
   .te-a4 {
-    transform: scale(0.65);          /* 👈 adjust if needed */
+    width: 210mm;                /* 👈 keep real A4 */
+    min-height: 297mm;
+    transform: scale(0.65);      /* 👈 adjust 0.6 – 0.75 */
     transform-origin: top center;
+    margin: 0 auto;
   }
 
   .te-wrapper {
