@@ -576,20 +576,31 @@
     display: none;                /* Chrome/Safari */
   }
 }
+
 /* ===============================
-   MOBILE VIEW = DESKTOP A4 (SCALED)
+   MOBILE – CENTER A4 PROPERLY
 ================================ */
 
 @media (max-width: 768px) {
-  .te-a4 {
-    width: 210mm;                /* 👈 keep real A4 */
-    min-height: 297mm;
-    transform: scale(0.65);      /* 👈 adjust 0.6 – 0.75 */
-    transform-origin: top center;
-    margin: 0 auto;
+  .te-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;   /* 👈 hard center */
+    overflow-x: hidden;
   }
 
-  .te-wrapper {
-    overflow-x: hidden;
+  .te-a4 {
+    width: 210mm;
+    min-height: 297mm;
+
+    transform: scale(0.65);          /* adjust if needed */
+    transform-origin: top center;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    /* 👇 THIS fixes right-side hiding */
+    position: relative;
+    left: 0;
   }
 }
