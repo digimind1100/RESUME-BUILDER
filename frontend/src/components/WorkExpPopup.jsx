@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./WorkExpPopup.css";
 
 const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || "http://localhost:3001/api";
+  import.meta.env.VITE_API_URL;
 
 export default function WorkExpPopup({ jobTitle, onClose, onSelect }) {
   const [loading, setLoading] = useState(false);
