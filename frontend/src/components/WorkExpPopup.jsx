@@ -1,31 +1,43 @@
 import React, { useEffect, useState } from "react";
 import "./WorkExpPopup.css";
+import API from "../api/authApi"; // ✅ use central axios instance
 
 export default function WorkExpPopup({ jobTitle, onClose, onSelect }) {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [workList, setWorkList] = useState([]);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    if (!jobTitle) return;
+    if (!jobTitle) {
+      setLoading(false);
+      setWorkList([]);
+      return;
+    }
+
     const fetchWork = async () => {
       try {
         setLoading(true);
-        const res = await fetch("http://localhost:3002/api/suggest", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ type: "work", jobTitle }),
-        });
-        const data = await res.json();
-        console.log("✅ AI Work Exp:", data);
+        setError("");
 
-        if (Array.isArray(data.items) && data.items.length > 0) {
-          setWorkList(data.items);
+        const res = await API.post("/suggest", {
+          type: "work",
+          jobTitle,
+        });
+
+        console.log("✅ AI Work Exp:", res.data);
+
+        const items = res?.data?.items;
+
+        if (Array.isArray(items) && items.length > 0) {
+          setWorkList(items);
         } else {
-          setWorkList(["No work experience suggestions found."]);
+          setWorkList([]);
+          setError("No work experience suggestions found.");
         }
       } catch (err) {
         console.error("❌ Error fetching AI work:", err);
-        setWorkList(["Error fetching work experience."]);
+        setError("Failed to fetch AI work experience.");
+        setWorkList([]);
       } finally {
         setLoading(false);
       }
@@ -34,10 +46,10 @@ export default function WorkExpPopup({ jobTitle, onClose, onSelect }) {
     fetchWork();
   }, [jobTitle]);
 
-
   return (
     <div className="popup-overlay">
       <div className="popup-content" style={{ position: "relative" }}>
+        {/* Close Button */}
         <button
           className="top-close-btn"
           onClick={onClose}
@@ -57,15 +69,24 @@ export default function WorkExpPopup({ jobTitle, onClose, onSelect }) {
 
         <h3>AI Work Experience for "{jobTitle}"</h3>
 
-        {loading ? (
-          <p>⏳ Fetching work experience...</p>
-        ) : (
+        {/* Loading */}
+        {loading && <p>⏳ Fetching work experience...</p>}
+
+        {/* Error */}
+        {!loading && error && (
+          <p style={{ color: "red", marginTop: "12px" }}>{error}</p>
+        )}
+
+        {/* Results */}
+        {!loading && !error && (
           <ul className="popup-list">
             {workList.map((work, idx) => {
               const cleanText =
                 typeof work === "string"
                   ? work.replace(/^[-•\s]+/, "")
                   : work.text || work.title || "";
+
+              if (!cleanText) return null;
 
               return (
                 <li
@@ -80,11 +101,13 @@ export default function WorkExpPopup({ jobTitle, onClose, onSelect }) {
                       years: "",
                       checked: false,
                     };
+
                     console.log("👉 Work selected:", newWork);
+
                     if (typeof onSelect === "function") {
                       onSelect(newWork);
                     }
-                    // DO NOT CLOSE POPUP
+                    // ❗ popup stays open intentionally
                   }}
                   style={{
                     cursor: "pointer",
@@ -105,7 +128,6 @@ export default function WorkExpPopup({ jobTitle, onClose, onSelect }) {
           Close
         </button>
       </div>
-   
-   </div>
+    </div>
   );
 }
