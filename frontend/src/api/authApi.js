@@ -1,40 +1,41 @@
 ﻿/* src/api/authApi.js */
 
-// ❗ PRODUCTION-SAFE: no localhost fallback
+/* ======================
+   API BASE URL
+====================== */
+
+// ✅ Use ONE env variable (already set in Vercel)
 const API_BASE_URL = import.meta.env.VITE_API_URL;
 
-// 🔎 Debug (must appear in browser console)
-console.log("API URL:", API_BASE_URL);
+// Debug (remove later if you want)
+console.log("API BASE URL:", API_BASE_URL);
 
 if (!API_BASE_URL) {
-  console.error("❌ VITE_API_URL is NOT defined");
+  throw new Error("❌ VITE_API_URL is not defined");
 }
 
 /* ======================
-   Helper: JSON handler
+   HELPER
 ====================== */
-async function handleJsonResponse(response) {
-  let data = null;
+async function parseResponse(res) {
+  let data = {};
 
   try {
-    data = await response.json();
-  } catch (err) {
+    data = await res.json();
+  } catch {
+    // response not JSON
+  }
+
+  if (!res.ok) {
     return {
       ok: false,
-      status: response.status,
-      user: null,
-      token: null,
-      message: "Invalid server response",
+      message: data.message || "Request failed",
     };
   }
 
   return {
-    ok: data?.success === true,
-    status: response.status,
-    user: data?.user || null,
-    token: data?.token || null,
-    message: data?.message || "",
-    raw: data,
+    ok: true,
+    ...data,
   };
 }
 
@@ -42,103 +43,66 @@ async function handleJsonResponse(response) {
    SIGNUP
 ====================== */
 export async function signup({ fullName, email, password }) {
-  if (!API_BASE_URL) {
-    throw new Error("API base URL missing");
-  }
+  const res = await fetch(`${API_BASE_URL}/api/auth/signup`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      fullName: fullName.trim(),
+      email: email.trim(),
+      password: password.trim(),
+    }),
+  });
 
-  try {
-    const res = await fetch(`${API_BASE_URL}/api/auth/signup`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify({
-        fullName: fullName.trim(),
-        email: email.trim(),
-        password: password.trim(),
-      }),
-    });
-
-    return await handleJsonResponse(res);
-  } catch (error) {
-    console.error("Signup error (frontend):", error);
-    throw error; // 🔥 IMPORTANT (no silent fail)
-  }
+  return await parseResponse(res);
 }
 
 /* ======================
    LOGIN
 ====================== */
 export async function login({ email, password }) {
-  if (!API_BASE_URL) {
-    throw new Error("API base URL missing");
-  }
+  const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      email: email.trim(),
+      password: password.trim(),
+    }),
+  });
 
-  try {
-    const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify({
-        email: email.trim(),
-        password: password.trim(),
-      }),
-    });
-
-    return await handleJsonResponse(res);
-  } catch (error) {
-    console.error("Login error (frontend):", error);
-    throw error; // 🔥 IMPORTANT
-  }
+  return await parseResponse(res);
 }
 
 /* ======================
    GET CURRENT USER
 ====================== */
 export async function getCurrentUser(token) {
-  if (!API_BASE_URL || !token) {
-    return { success: false, user: null };
+  if (!token) {
+    return { ok: false };
   }
 
-  try {
-    const res = await fetch(`${API_BASE_URL}/api/auth/me`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+  const res = await fetch(`${API_BASE_URL}/api/auth/me`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
-    const data = await res.json();
-
-    if (!res.ok) {
-      return { success: false, user: null };
-    }
-
-    return {
-      success: true,
-      user: data.user,
-    };
-  } catch (error) {
-    console.error("Get current user error:", error);
-    return { success: false, user: null };
-  }
+  return await parseResponse(res);
 }
 
 /* ======================
    LOGOUT
 ====================== */
 export async function logout() {
-  if (!API_BASE_URL) {
-    return { ok: false };
-  }
-
   try {
     await fetch(`${API_BASE_URL}/api/auth/logout`, {
       method: "POST",
-      credentials: "include",
     });
     return { ok: true };
-  } catch (error) {
-    console.error("Logout error:", error);
+  } catch {
     return { ok: false };
   }
 }
