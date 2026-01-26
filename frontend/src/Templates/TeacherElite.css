@@ -605,19 +605,32 @@
      max-width: 100%;
   }
 }
+
 /* ===============================
-   MOBILE – EDIT MODE FIX
+   MOBILE – FINAL INTERACTION FIX
 ================================ */
 
 @media (max-width: 768px) {
-  /* Normal preview (scaled) */
-  .te-a4 {
+
+  /* PREVIEW MODE (read-only) */
+  .te-wrapper:not(.mobile-editing) .te-a4 {
     transform: scale(0.65);
     transform-origin: top center;
   }
 
-  /* 🔥 When editing → remove transform */
-  .editing-mode .te-a4 {
+  /* 🔥 EDIT MODE — REMOVE ALL TRANSFORMS */
+  .mobile-editing .te-a4,
+  .mobile-editing .te-resume,
+  .mobile-editing .te-layout {
     transform: none !important;
+  }
+
+  /* 🔥 ALSO remove transform context */
+  .mobile-editing * {
+    pointer-events: auto;
+  }
+
+  .mobile-editing .te-wrapper {
+    overflow-x: auto;
   }
 }

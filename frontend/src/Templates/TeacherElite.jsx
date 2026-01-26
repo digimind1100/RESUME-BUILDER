@@ -86,13 +86,14 @@ useEffect(() => {
 useEffect(() => {
   const wrapper = document.querySelector(".te-wrapper");
 
+  if (!wrapper) return;
+
   if (isEditable && canEdit) {
-    wrapper.classList.add("editing-mode");
+    wrapper.classList.add("mobile-editing");
   } else {
-    wrapper.classList.remove("editing-mode");
+    wrapper.classList.remove("mobile-editing");
   }
 }, [isEditable, canEdit]);
-
 
   /* ---------- PROFILE IMAGE ---------- */
  const [profileImage, setProfileImage] = useState(
