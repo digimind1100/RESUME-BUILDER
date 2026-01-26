@@ -166,9 +166,10 @@ const ResumeBuilder = () => {
 
   /* ---------------- RENDER ---------------- */
   return (
-    <div className="resume-builder-container flex flex-col md:flex-row md:items-start">
+    <div className="resume-builder-container">
+
       {/* LEFT: FORM PANEL */}
-      <div className="form-panel w-full md:w-[40%] p-4">
+      <div className="form-panel-container">
        <FormPanel
   formData={formData}
   setFormData={setFormData}
@@ -187,7 +188,7 @@ const ResumeBuilder = () => {
       </div>
 
       {/* RIGHT: PREVIEW */}
-      <div className="right-side w-full lg:w-[60%] flex flex-col">
+      <div className="preview-panel-container">
         <div className="resume-theme w-full flex flex-col p-4" id="resumeContainer">
           <div className="theme-selector-container p-2">
             <ThemeSelector onThemeChange={setTheme} />

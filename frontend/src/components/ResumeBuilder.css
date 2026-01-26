@@ -188,3 +188,26 @@
     width: 60%;
   }
 }
+
+.resume-builder-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  min-height: 100vh;
+  background: #f7f7f7;
+}
+
+.form-panel-container {
+  width: 35%;
+  min-width: 340px;
+  padding: 16px;
+  box-sizing: border-box;
+  background: #ffffff;
+  border-right: 1px solid #e5e5e5;
+}
+.preview-panel-container {
+  width: 65%;
+  padding: 16px;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
