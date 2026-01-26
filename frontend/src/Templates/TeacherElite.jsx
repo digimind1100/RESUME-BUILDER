@@ -83,6 +83,15 @@ useEffect(() => {
   }
 }, [canEdit]);
 
+useEffect(() => {
+  const wrapper = document.querySelector(".te-wrapper");
+
+  if (isEditable && canEdit) {
+    wrapper.classList.add("editing-mode");
+  } else {
+    wrapper.classList.remove("editing-mode");
+  }
+}, [isEditable, canEdit]);
 
 
   /* ---------- PROFILE IMAGE ---------- */

@@ -593,7 +593,7 @@
     width: 210mm;
     min-height: 297mm;
 
-    transform: scale(0.7);          /* adjust if needed */
+    transform: scale(0.75);          /* adjust if needed */
     transform-origin: top center;
 
     margin-left: auto;
