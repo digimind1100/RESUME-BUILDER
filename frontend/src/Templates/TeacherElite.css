@@ -605,3 +605,19 @@
      max-width: 100%;
   }
 }
+/* ===============================
+   MOBILE – EDIT MODE FIX
+================================ */
+
+@media (max-width: 768px) {
+  /* Normal preview (scaled) */
+  .te-a4 {
+    transform: scale(0.65);
+    transform-origin: top center;
+  }
+
+  /* 🔥 When editing → remove transform */
+  .editing-mode .te-a4 {
+    transform: none !important;
+  }
+}
