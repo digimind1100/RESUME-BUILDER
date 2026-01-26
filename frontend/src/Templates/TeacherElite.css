@@ -561,7 +561,7 @@
   .edit-toggle,
   .te-share-btn {
     padding: 6px 10px;            /* 👈 smaller buttons */
-    font-size: 11px;              /* 👈 smaller text */
+    font-size: 9px;              /* 👈 smaller text */
     border-radius: 5px;
     white-space: nowrap;          /* 👈 text break na ho */
   }
