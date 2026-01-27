@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./SkillsPopup.css";
+import "./WorkExpPopup.css";
 
 export default function SkillsPopup({ jobTitle, onClose, onSelect }) {
   const [loading, setLoading] = useState(false);
