@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./WorkExpPopup.css";
 
-const API_BASE_URL =
-  import.meta.env.VITE_API_URL;
-
 export default function WorkExpPopup({ jobTitle, onClose, onSelect }) {
   const [loading, setLoading] = useState(false);
   const [workList, setWorkList] = useState([]);
   const [error, setError] = useState("");
+
+  const API_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     if (!jobTitle) return;
@@ -17,9 +16,13 @@ export default function WorkExpPopup({ jobTitle, onClose, onSelect }) {
         setLoading(true);
         setError("");
 
-        const res = await fetch(`${API_BASE_URL}/suggest`, {
+        console.log("API URL:", API_URL);
+
+        const res = await fetch(`${API_URL}/api/suggest`, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+          },
           body: JSON.stringify({
             type: "work",
             jobTitle,
@@ -27,7 +30,7 @@ export default function WorkExpPopup({ jobTitle, onClose, onSelect }) {
         });
 
         if (!res.ok) {
-          throw new Error("Request failed");
+          throw new Error(`Request failed with status ${res.status}`);
         }
 
         const data = await res.json();
@@ -49,7 +52,7 @@ export default function WorkExpPopup({ jobTitle, onClose, onSelect }) {
     };
 
     fetchWork();
-  }, [jobTitle]);
+  }, [jobTitle, API_URL]);
 
   return (
     <div className="popup-overlay">
@@ -85,7 +88,7 @@ export default function WorkExpPopup({ jobTitle, onClose, onSelect }) {
               const cleanText =
                 typeof work === "string"
                   ? work.replace(/^[-•\s]+/, "")
-                  : work.text || work.title || "";
+                  : work?.text || work?.title || "";
 
               if (!cleanText) return null;
 
