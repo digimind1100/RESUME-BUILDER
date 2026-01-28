@@ -21,9 +21,10 @@
 
   width: 420px;
   max-width: 520px;
+  max-height:  550px; ;
 
   /* ⭐ KEEP ONLY THIS */
-  max-height: calc(100vh - var(--header-height) - 80px);
+  /* max-height: calc(100vh - var(--header-height) - 80px); */
 
   overflow: hidden;
   box-shadow: 0px 4px 12px rgba(0,0,0,0.2);
@@ -32,7 +33,7 @@
 
 .popup-scroll {
   padding: 20px;
-  max-height: 600px;
+  max-height: 500px;
   overflow-y: auto;
 }
 
