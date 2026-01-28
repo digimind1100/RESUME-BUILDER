@@ -21,7 +21,10 @@
   box-shadow: 0px 4px 12px rgba(0,0,0,0.2);
 }
 .popup-scroll {
-  padding: 10px;
+  padding-top: 10px;
+  padding-right: 0px;
+  padding-bottom: 10px;
+  padding-left: 0px;
   max-height: 500px;
   overflow-y: auto;
 }
