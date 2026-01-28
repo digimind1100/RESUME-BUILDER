@@ -56,7 +56,7 @@ export default function WorkExpPopup({ jobTitle, onClose, onSelect }) {
 
   return (
     <div className="popup-overlay">
-      <div className="popup-content" style={{ position: "relative" }}>
+      <div className="popup-content-box" style={{ position: "relative" }}>
         <div className="popup-scroll">
         <button
           className="top-close-btn"
