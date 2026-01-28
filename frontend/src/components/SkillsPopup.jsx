@@ -76,6 +76,7 @@ export default function SkillsPopup({ jobTitle, onClose, onSelect }) {
         </button>
 
         <h3>AI Skills for "{jobTitle}"</h3>
+        <h4 className="title-heading">{jobTitle}</h4>
 
         {loading && <p>⏳ Fetching skills...</p>}
 
@@ -113,7 +114,7 @@ export default function SkillsPopup({ jobTitle, onClose, onSelect }) {
           </ul>
         )}
 
-        <button className="close-btn" onClick={onClose}>
+        <button className="close-btn-popup" onClick={onClose}>
           Close
         </button>
       </div>
