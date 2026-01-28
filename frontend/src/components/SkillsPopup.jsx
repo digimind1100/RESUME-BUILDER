@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import "./WorkExpPopup.css";
 
 export default function SkillsPopup({ jobTitle, onClose, onSelect }) {
-  const [loading, setLoading] = useState(true);
-  const [skills, setSkills] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [skillsList, setSkillsList] = useState([]);
+  const [error, setError] = useState("");
+
+  const API_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     if (!jobTitle) return;
@@ -11,36 +14,50 @@ export default function SkillsPopup({ jobTitle, onClose, onSelect }) {
     const fetchSkills = async () => {
       try {
         setLoading(true);
+        setError("");
 
-        const res = await fetch("http://localhost:3002/api/suggest", {
+        console.log("API URL:", API_URL);
+
+        const res = await fetch(`${API_URL}/api/suggest`, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ type: "skills", jobTitle }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            type: "skills",
+            jobTitle,
+          }),
         });
+
+        if (!res.ok) {
+          throw new Error(`Request failed with status ${res.status}`);
+        }
 
         const data = await res.json();
         console.log("✅ AI Skills:", data);
 
-        // FIX → backend always returns { items: [...] }
         if (Array.isArray(data.items) && data.items.length > 0) {
-          setSkills(data.items);
+          setSkillsList(data.items);
         } else {
-          setSkills(["No skills found. Try another Job Title."]);
+          setSkillsList([]);
+          setError("No skills suggestions found.");
         }
       } catch (err) {
         console.error("❌ Error fetching AI skills:", err);
-        setSkills(["Error fetching skills."]);
+        setError("Failed to fetch AI skills.");
+        setSkillsList([]);
       } finally {
         setLoading(false);
       }
     };
 
     fetchSkills();
-  }, [jobTitle]);
+  }, [jobTitle, API_URL]);
 
   return (
     <div className="popup-overlay">
-      <div className="popup-content" style={{ position: "relative" }}>
+      <div className="popup-content-box" style={{ position: "relative" }}>
+         <div className="popup-scroll">
         <button
           className="top-close-btn"
           onClick={onClose}
@@ -58,43 +75,36 @@ export default function SkillsPopup({ jobTitle, onClose, onSelect }) {
           ✖
         </button>
 
-        <h3>AI Suggested Skills for "{jobTitle}"</h3>
+        <h3>AI Skills for "{jobTitle}"</h3>
+        <h4 className="title-heading">{jobTitle}</h4>
 
-        {loading ? (
-          <p>⏳ Fetching skills...</p>
-        ) : (
+        {loading && <p>⏳ Fetching skills...</p>}
+
+        {!loading && error && (
+          <p style={{ color: "red", marginTop: "12px" }}>{error}</p>
+        )}
+
+        {!loading && !error && (
           <ul className="popup-list">
-            {skills.map((skill, idx) => {
+            {skillsList.map((skill, idx) => {
               const cleanText =
                 typeof skill === "string"
                   ? skill.replace(/^[-•\s]+/, "")
-                  : skill.text || skill.title || "";
+                  : skill?.text || "";
+
+              if (!cleanText) return null;
 
               return (
                 <li
                   key={idx}
                   className="suggestion-item"
-                  style={{
-                    cursor: "pointer",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "8px",
-                  }}
-                  onClick={() => {
-                    const newSkill = {
+                  onClick={() =>
+                    onSelect?.({
                       id: Date.now() + idx,
                       text: cleanText,
                       checked: false,
-                    };
-
-                    console.log("👉 Skill selected:", newSkill);
-
-                    if (typeof onSelect === "function") {
-                      onSelect(newSkill);
-                    }
-
-                    // Do NOT close popup
-                  }}
+                    })
+                  }
                 >
                   <span className="plus-btn">+</span>
                   <span className="suggestion-text">{cleanText}</span>
@@ -104,9 +114,10 @@ export default function SkillsPopup({ jobTitle, onClose, onSelect }) {
           </ul>
         )}
 
-        <button className="close-btn" onClick={onClose}>
+        <button className="close-btn-popup" onClick={onClose}>
           Close
         </button>
+      </div>
       </div>
     </div>
   );

@@ -1,24 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./WorkExpPopup.css";
 
-const API_URL = import.meta.env.VITE_API_URL;
-
-const res = await fetch(`${API_URL}/api/suggest`, {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify({
-    type: "work",
-    jobTitle,
-  }),
-});
-
-
 export default function WorkExpPopup({ jobTitle, onClose, onSelect }) {
   const [loading, setLoading] = useState(false);
   const [workList, setWorkList] = useState([]);
   const [error, setError] = useState("");
+
+  const API_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     if (!jobTitle) return;
@@ -28,9 +16,13 @@ export default function WorkExpPopup({ jobTitle, onClose, onSelect }) {
         setLoading(true);
         setError("");
 
-        const res = await fetch(`${API_BASE_URL}/suggest`, {
+        console.log("API URL:", API_URL);
+
+        const res = await fetch(`${API_URL}/api/suggest`, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+          },
           body: JSON.stringify({
             type: "work",
             jobTitle,
@@ -38,7 +30,7 @@ export default function WorkExpPopup({ jobTitle, onClose, onSelect }) {
         });
 
         if (!res.ok) {
-          throw new Error("Request failed");
+          throw new Error(`Request failed with status ${res.status}`);
         }
 
         const data = await res.json();
@@ -60,11 +52,12 @@ export default function WorkExpPopup({ jobTitle, onClose, onSelect }) {
     };
 
     fetchWork();
-  }, [jobTitle]);
+  }, [jobTitle, API_URL]);
 
   return (
     <div className="popup-overlay">
-      <div className="popup-content" style={{ position: "relative" }}>
+      <div className="popup-content-box" style={{ position: "relative" }}>
+        <div className="popup-scroll">
         <button
           className="top-close-btn"
           onClick={onClose}
@@ -82,12 +75,13 @@ export default function WorkExpPopup({ jobTitle, onClose, onSelect }) {
           ✖
         </button>
 
-        <h3>AI Work Experience for "{jobTitle}"</h3>
+        <h3 className="popup-heading">AI Work Experience for</h3>
+        <h4 className="title-heading">{jobTitle}</h4>
 
         {loading && <p>⏳ Fetching work experience...</p>}
 
         {!loading && error && (
-          <p style={{ color: "red", marginTop: "12px" }}>{error}</p>
+          <p style={{ color: "red", marginTop: "10px" }}>{error}</p>
         )}
 
         {!loading && !error && (
@@ -96,7 +90,7 @@ export default function WorkExpPopup({ jobTitle, onClose, onSelect }) {
               const cleanText =
                 typeof work === "string"
                   ? work.replace(/^[-•\s]+/, "")
-                  : work.text || work.title || "";
+                  : work?.text || work?.title || "";
 
               if (!cleanText) return null;
 
@@ -123,9 +117,10 @@ export default function WorkExpPopup({ jobTitle, onClose, onSelect }) {
           </ul>
         )}
 
-        <button className="close-btn" onClick={onClose}>
+        <button className="close-btn-popup" onClick={onClose}>
           Close
         </button>
+      </div>
       </div>
     </div>
   );
