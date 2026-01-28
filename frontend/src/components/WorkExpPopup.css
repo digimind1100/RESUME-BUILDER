@@ -40,11 +40,16 @@
 }
 
 .suggestion-text {
-  font: 12px; ;
+  font: 9px; ;
+}
+.title-heading{
+  color: #007bff;
+  text-align: center;
 }
 .popup-heading{
   text-align: center;
-  
+  color: #007bff;
+  font-size: 18px;
 }
 .suggestion-item {
   padding: 8px;
