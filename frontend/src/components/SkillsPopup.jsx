@@ -56,7 +56,8 @@ export default function SkillsPopup({ jobTitle, onClose, onSelect }) {
 
   return (
     <div className="popup-overlay">
-      <div className="popup-content" style={{ position: "relative" }}>
+      <div className="popup-content-box" style={{ position: "relative" }}>
+         <div className="popup-scroll">
         <button
           className="top-close-btn"
           onClick={onClose}
@@ -115,6 +116,7 @@ export default function SkillsPopup({ jobTitle, onClose, onSelect }) {
         <button className="close-btn" onClick={onClose}>
           Close
         </button>
+      </div>
       </div>
     </div>
   );
