@@ -21,4 +21,7 @@ flex-direction: column;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   
 }
+:root {
+  --header-height: 70px;
+}
 
