@@ -21,7 +21,7 @@
 
   width: 420px;
   max-width: 520px;
-  max-height:  550px; ;
+  max-height:  520px; ;
 
   /* ⭐ KEEP ONLY THIS */
   /* max-height: calc(100vh - var(--header-height) - 80px); */
