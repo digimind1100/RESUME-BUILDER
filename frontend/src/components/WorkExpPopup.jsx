@@ -1,8 +1,19 @@
 import React, { useEffect, useState } from "react";
 import "./WorkExpPopup.css";
 
-const API_BASE_URL =
-  import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_API_URL;
+
+const res = await fetch(`${API_URL}/api/suggest`, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    type: "work",
+    jobTitle,
+  }),
+});
+
 
 export default function WorkExpPopup({ jobTitle, onClose, onSelect }) {
   const [loading, setLoading] = useState(false);
