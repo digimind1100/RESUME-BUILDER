@@ -63,7 +63,7 @@
   font-size: 18px;
 }
 
-.close-btn {
+.close-btn-popup {
   margin-top: 12px;
   width: 100%;
   padding: 8px;
@@ -75,7 +75,7 @@
   transition: 0.2s;
 }
 
-.close-btn:hover {
+.close-btn-popup:hover {
   background: #0056b3;
 }
 .font-medium{

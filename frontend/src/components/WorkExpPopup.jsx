@@ -115,7 +115,7 @@ export default function WorkExpPopup({ jobTitle, onClose, onSelect }) {
           </ul>
         )}
 
-        <button className="close-btn" onClick={onClose}>
+        <button className="close-btn-popup" onClick={onClose}>
           Close
         </button>
       </div>
