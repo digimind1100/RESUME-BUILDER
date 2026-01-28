@@ -57,6 +57,7 @@ export default function WorkExpPopup({ jobTitle, onClose, onSelect }) {
   return (
     <div className="popup-overlay">
       <div className="popup-content" style={{ position: "relative" }}>
+        <div className="popup-scroll">
         <button
           className="top-close-btn"
           onClick={onClose}
@@ -80,7 +81,7 @@ export default function WorkExpPopup({ jobTitle, onClose, onSelect }) {
         {loading && <p>⏳ Fetching work experience...</p>}
 
         {!loading && error && (
-          <p style={{ color: "red", marginTop: "12px" }}>{error}</p>
+          <p style={{ color: "red", marginTop: "10px" }}>{error}</p>
         )}
 
         {!loading && !error && (
@@ -119,6 +120,7 @@ export default function WorkExpPopup({ jobTitle, onClose, onSelect }) {
         <button className="close-btn-popup" onClick={onClose}>
           Close
         </button>
+      </div>
       </div>
     </div>
   );
