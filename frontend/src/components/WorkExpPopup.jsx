@@ -74,7 +74,7 @@ export default function WorkExpPopup({ jobTitle, onClose, onSelect }) {
           ✖
         </button>
 
-        <h3>AI Work Experience for "{jobTitle}"</h3>
+        <h3 className="popup-heading">AI Work Experience for "{jobTitle}"</h3>
 
         {loading && <p>⏳ Fetching work experience...</p>}
 
