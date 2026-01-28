@@ -9,12 +9,15 @@
   justify-content: center;
   align-items: center;
   z-index: 999;
+  padding: 12px;
 }
 
 .popup-content-box {
   background: #fff;
   padding: 20px;
   border-radius: 8px;
+   max-width: 520px;          /* laptop / desktop */
+  max-height: 85vh;           /* never overflow screen */
   width: 420px;
   max-height: 700px;
   overflow-y: hidden;
@@ -25,7 +28,7 @@
   padding-right: 0px;
   padding-bottom: 12px;
   padding-left: 12px;
-  max-height: 600px;
+  max-height: 85vh;
   overflow-y: auto;
 }
 
@@ -124,4 +127,42 @@
 
 body {
   scroll-behavior: smooth;
+}
+@media (max-width: 768px) {
+  .popup-content {
+    max-width: 100%;
+    max-height: 90vh;
+    border-radius: 14px;
+  }
+
+  .popup-scroll {
+    padding: 16px;
+  }
+}
+@media (max-width: 480px) {
+  .popup-overlay {
+    align-items: flex-end;
+  }
+
+  .popup-content {
+    width: 100%;
+    max-height: 92vh;
+    border-radius: 16px 16px 0 0;
+  }
+}
+.popup-heading {
+  font-size: clamp(16px, 2.5vw, 18px);
+}
+
+.title-heading {
+  font-size: clamp(14px, 2.2vw, 16px);
+}
+.suggestion-item {
+  gap: 10px;
+  padding: 10px;
+}
+
+.suggestion-text {
+  font-size: 14px;
+  line-height: 1.4;
 }
