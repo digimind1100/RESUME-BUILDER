@@ -3,6 +3,7 @@
   top: 0;
   left: 0;
   width: 100%;
+  top: 70px;  
   height: 100%;
   background: rgba(0,0,0,0.4);
   display: flex;
@@ -20,7 +21,7 @@
   border-radius: 8px;
    max-width: 520px;          /* laptop / desktop */
   max-height: clamp(480px, 80vh, 600px);   /* ⭐ SMART HEIGHT */
-    max-height: calc(100vh - 32px);
+max-height: calc(100vh - var(--header-height) - 32px);
   width: 420px;
   max-height: 600px;
   overflow-y: hidden;
@@ -180,5 +181,10 @@ body {
 @media (max-width: 768px) {
   .popup-content {
     max-height: calc(100svh - 32px);
+  }
+}
+@media (max-width: 768px) {
+  .popup-content {
+    max-height: calc(100svh - 70px - 32px);
   }
 }
