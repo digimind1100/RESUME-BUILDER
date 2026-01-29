@@ -4,3 +4,12 @@
     display: none !important;
   }
 }
+@media print {
+  .theme-selector-container {
+    display: none !important;
+  }
+
+  .button-section {
+    display: none !important;
+  }
+}
