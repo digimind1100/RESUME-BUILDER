@@ -64,7 +64,7 @@ export default function WorkExpPopup({ jobTitle, onClose, onSelect }) {
           style={{
             position: "absolute",
             top: "8px",
-            left: "8px",
+            right: "8px",
             border: "none",
             background: "transparent",
             fontSize: "18px",

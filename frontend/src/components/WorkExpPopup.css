@@ -15,7 +15,10 @@
 
 .popup-content-box {
   background: #fff;
-  padding: 20px;
+  padding-top: 30px;
+  padding-right: 30px;
+  padding-bottom: 20px;
+  padding-left: 20px;
   border-radius: 8px;
   width: 420px;
   max-height: min(85vh, 700px);
