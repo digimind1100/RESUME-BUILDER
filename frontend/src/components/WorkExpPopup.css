@@ -151,7 +151,7 @@ body {
 }
 
 
-@media (max-height: 600px) {
+@media (max-height: 500px) {
   .popup-content-box {
     max-height: 90vh;
   }
