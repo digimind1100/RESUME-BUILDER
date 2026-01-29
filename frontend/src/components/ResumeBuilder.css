@@ -16,6 +16,10 @@
   }
 }
 
+.preview-panel-container {
+  position: relative;
+}
+
 
   /* Left side: Form Panel */
   .form-panel {

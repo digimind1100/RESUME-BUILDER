@@ -24,7 +24,7 @@ const ResumeBuilder = () => {
       ? "clean-professional"
       : templateId || "classic";
 
-      const entrySource =
+  const entrySource =
     new URLSearchParams(location.search).get("entry") || "template";
 
   const isPreviewFlow = entrySource === "start";
@@ -42,6 +42,8 @@ const ResumeBuilder = () => {
 
   const [resumeStyle, setResumeStyle] = useState(resolvedTemplate);
 
+
+
   const [theme, setTheme] = useState({
     left: "#17639F",
     job: "#F4ECE1",
@@ -49,12 +51,12 @@ const ResumeBuilder = () => {
   });
 
   const {
-  isPaid,
-  showPaymentModal,
-  setShowPaymentModal,
-  requirePayment,
-  handlePaymentSuccess,
-} = usePaymentGuard("CleanProfessional");
+    isPaid,
+    showPaymentModal,
+    setShowPaymentModal,
+    requirePayment,
+    handlePaymentSuccess,
+  } = usePaymentGuard("CleanProfessional");
 
   /* ---------------- EFFECTS ---------------- */
   useEffect(() => {
@@ -135,16 +137,16 @@ const ResumeBuilder = () => {
       prev.some((w) => w.text === text)
         ? prev
         : [
-            ...prev,
-            {
-              id: Date.now(),
-              title: text,
-              text,
-              company: "",
-              years: "",
-              checked: false,
-            },
-          ]
+          ...prev,
+          {
+            id: Date.now(),
+            title: text,
+            text,
+            company: "",
+            years: "",
+            checked: false,
+          },
+        ]
     );
   };
 
@@ -170,25 +172,44 @@ const ResumeBuilder = () => {
 
       {/* LEFT: FORM PANEL */}
       <div className="form-panel-container">
-       <FormPanel
-  formData={formData}
-  setFormData={setFormData}
-  selectedEducations={selectedEducations}
-  setSelectedEducations={setSelectedEducations}
-  jobTitle={jobTitle}
-  setJobTitle={setJobTitle}
-  openWorkPopup={() => setShowWorkPopup(true)}
-  onAddSkillsClick={() => setShowSkillsPopup(true)}
-  canEdit={isPaid}
-  requirePayment={requirePayment}
-/>
-
-
-
+        <FormPanel
+          formData={formData}
+          setFormData={setFormData}
+          selectedEducations={selectedEducations}
+          setSelectedEducations={setSelectedEducations}
+          jobTitle={jobTitle}
+          setJobTitle={setJobTitle}
+          openWorkPopup={() => setShowWorkPopup(true)}
+          onAddSkillsClick={() => setShowSkillsPopup(true)}
+          canEdit={isPaid}
+          requirePayment={requirePayment}
+        />
       </div>
 
       {/* RIGHT: PREVIEW */}
       <div className="preview-panel-container">
+        
+        {/* POPUPS */}
+        {showWorkPopup && (
+          <WorkPopup
+            jobTitle={jobTitle}
+            onClose={() => setShowWorkPopup(false)}
+            workExperiences={workExperiences}
+            setWorkExperiences={setWorkExperiences}
+            onSelect={handleWorkSelect}
+          />
+        )}
+
+        {showSkillsPopup && (
+          <SkillsPopup
+            jobTitle={jobTitle}
+            onClose={() => setShowSkillsPopup(false)}
+            skills={skills}
+            setSkills={setSkills}
+            onSelect={handleSkillSelect}
+          />
+        )}
+
         <div className="resume-theme w-full flex flex-col p-4" id="resumeContainer">
           <div className="theme-selector-container p-2">
             <ThemeSelector onThemeChange={setTheme} />
@@ -214,16 +235,16 @@ const ResumeBuilder = () => {
           </div>
 
           <PreviewPanel
-          templateId={templateId}
-        entrySource={entrySource}
+            templateId={templateId}
+            entrySource={entrySource}
             formData={formData}
             selectedEducations={selectedEducations}
             handleCheckboxChange={handleCheckboxChange}
             jobTitle={jobTitle}
             workExperiences={workExperiences}
             skills={skills}
-            deleteWorkExperience={() => {}}
-            deleteSkill={() => {}}
+            deleteWorkExperience={() => { }}
+            deleteSkill={() => { }}
             isEditing={isEditing}
             toggleWorkCheckbox={toggleWorkCheckbox}
             toggleSkillCheckbox={toggleSkillCheckbox}
@@ -235,36 +256,16 @@ const ResumeBuilder = () => {
         </div>
       </div>
 
-      {/* POPUPS */}
-      {showWorkPopup && (
-        <WorkPopup
-          jobTitle={jobTitle}
-          onClose={() => setShowWorkPopup(false)}
-          workExperiences={workExperiences}
-          setWorkExperiences={setWorkExperiences}
-          onSelect={handleWorkSelect}
-        />
-      )}
-
-      {showSkillsPopup && (
-        <SkillsPopup
-          jobTitle={jobTitle}
-          onClose={() => setShowSkillsPopup(false)}
-          skills={skills}
-          setSkills={setSkills}
-          onSelect={handleSkillSelect}
-        />
-      )}
 
       <PaymentGate
-  open={showPaymentModal}
-  onClose={() => setShowPaymentModal(false)}
-  onSuccess={handlePaymentSuccess}
-/>
+        open={showPaymentModal}
+        onClose={() => setShowPaymentModal(false)}
+        onSuccess={handlePaymentSuccess}
+      />
 
     </div>
 
-    
+
   );
 };
 

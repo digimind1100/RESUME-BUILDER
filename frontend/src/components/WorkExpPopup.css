@@ -20,6 +20,10 @@
   top: var(--navbar-height);
 }
 
+.popup-overlay {
+  position: absolute;
+  inset: 0;
+}
 
 .popup-content-box {
   background: #fff;
