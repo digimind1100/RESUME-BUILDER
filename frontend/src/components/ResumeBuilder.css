@@ -20,7 +20,9 @@
   position: relative;
 }
 
-
+#resumeContainer {
+  position: relative;
+}
   /* Left side: Form Panel */
   .form-panel {
     width: 30%; /* adjust as needed */
