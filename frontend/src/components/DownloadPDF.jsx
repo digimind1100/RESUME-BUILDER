@@ -31,17 +31,22 @@ export default function DownloadPDF() {
 
     // Clone container
     // Clone container
+// Clone container
 const clone = container.cloneNode(true);
 
-// ⭐ FIX: attach clone to DOM temporarily
-clone.style.position = "fixed";
-clone.style.left = "-9999px";
+/* ⭐ CRITICAL FIX */
+clone.style.position = "absolute";
 clone.style.top = "0";
-clone.style.width = "210mm";      // A4 width
-clone.style.minHeight = "297mm"; // A4 height
+clone.style.left = "0";
+clone.style.width = "210mm";
+clone.style.minHeight = "297mm";
 clone.style.background = "#fff";
-document.body.appendChild(clone);
 
+/* hide visually but keep layout */
+clone.style.opacity = "0";
+clone.style.pointerEvents = "none";
+
+document.body.appendChild(clone);
 
     // Restore in DOM
     if (themeSelector) themeSelector.style.display = "";
@@ -86,34 +91,24 @@ document.body.appendChild(clone);
     };
 
     html2pdf()
-      .set(opt)
-      .from(clone)
-      .toPdf()
-      .get("pdf")
-      .then((pdf) => {
-        const totalPages = pdf.internal.getNumberOfPages();
-        for (let i = 1; i <= totalPages; i++) {
-          pdf.setPage(i);
+  .set(opt)
+  .from(clone)
+  .toPdf()
+  .get("pdf")
+  .then((pdf) => {
+    const totalPages = pdf.internal.getNumberOfPages();
+    for (let i = 1; i <= totalPages; i++) {
+      pdf.setPage(i);
+      pdf.setFontSize(10);
+      pdf.text(`Page ${i} of ${totalPages}`, 182, 291);
+    }
+  })
+  .save()
+  .finally(() => {
+    checkboxes.forEach((cb) => (cb.style.display = ""));
+    if (clone.parentNode) clone.parentNode.removeChild(clone);
+  });
 
-          pdf.setDrawColor(0);
-          pdf.setLineWidth(0.5);
-          pdf.line(10, 10, 200, 10);
-          pdf.line(10, 287, 200, 287);
-
-          pdf.setFontSize(10);
-          pdf.text(`Page ${i} of ${totalPages}`, 182, 291);
-        }
-      })
-      .save()
-      .finally(() => {
-  // Restore checkboxes
-  checkboxes.forEach((cb) => (cb.style.display = ""));
-
-  // ⭐ REMOVE CLONE
-  if (clone && clone.parentNode) {
-    clone.parentNode.removeChild(clone);
-  }
-});
 
   };
 
