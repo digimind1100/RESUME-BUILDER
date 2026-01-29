@@ -81,34 +81,31 @@ document.body.appendChild(clone);
     };
 
     // Generate PDF
-    html2pdf()
-      .set(opt)
-      .from(clone)
-      .toPdf()
-      .get("pdf")
-      .then((pdf) => {
-        const totalPages = pdf.internal.getNumberOfPages();
-        for (let i = 1; i <= totalPages; i++) {
-          pdf.setPage(i);
+  html2pdf()
+  .set(opt)
+  .from(clone)
+  .toPdf()
+  .get("pdf")
+  .then((pdf) => {
+    const totalPages = pdf.internal.getNumberOfPages();
+    for (let i = 1; i <= totalPages; i++) {
+      pdf.setPage(i);
 
-          // Header line
-          pdf.setDrawColor(0);
-          pdf.setLineWidth(0.5);
-          pdf.line(10, 10, 200, 10);
+      pdf.setDrawColor(0);
+      pdf.setLineWidth(0.5);
+      pdf.line(10, 10, 200, 10);
+      pdf.line(10, 287, 200, 287);
 
-          // Footer line
-          pdf.line(10, 287, 200, 287);
+      pdf.setFontSize(10);
+      pdf.text(`Page ${i} of ${totalPages}`, 182, 291);
+    }
+  })
+  .save()
+  .finally(() => {
+    checkboxes.forEach((cb) => (cb.style.display = ""));
+    if (clone.parentNode) clone.parentNode.removeChild(clone);
+  });
 
-          // Page numbering
-          pdf.setFontSize(10);
-          pdf.text(`Page ${i} of ${totalPages}`, 182, 291);
-        }
-      })
-      .save()
-      .finally(() => {
-        // Restore checkboxes
-        checkboxes.forEach((cb) => (cb.style.display = ""));
-      });
   };
 
   return (
