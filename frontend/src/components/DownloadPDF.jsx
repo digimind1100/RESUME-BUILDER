@@ -15,24 +15,7 @@ export default function DownloadPDF() {
     if (themeSelector) themeSelector.style.display = "none";
 
     // Clone container
-    // Clone container
-const clone = container.cloneNode(true);
-
-/* ⭐ CRITICAL: attach clone SAFELY */
-clone.style.position = "absolute";
-clone.style.top = "0";
-clone.style.left = "0";
-clone.style.width = "210mm";
-clone.style.minHeight = "297mm";
-clone.style.background = "#fff";
-
-/* invisible but renderable */
-clone.style.opacity = "0";
-clone.style.pointerEvents = "none";
-clone.style.zIndex = "-1";
-
-document.body.appendChild(clone);
-
+    const clone = container.cloneNode(true);
 
     // Restore in DOM
     if (themeSelector) themeSelector.style.display = "";
@@ -81,31 +64,34 @@ document.body.appendChild(clone);
     };
 
     // Generate PDF
-  html2pdf()
-  .set(opt)
-  .from(clone)
-  .toPdf()
-  .get("pdf")
-  .then((pdf) => {
-    const totalPages = pdf.internal.getNumberOfPages();
-    for (let i = 1; i <= totalPages; i++) {
-      pdf.setPage(i);
+    html2pdf()
+      .set(opt)
+      .from(clone)
+      .toPdf()
+      .get("pdf")
+      .then((pdf) => {
+        const totalPages = pdf.internal.getNumberOfPages();
+        for (let i = 1; i <= totalPages; i++) {
+          pdf.setPage(i);
 
-      pdf.setDrawColor(0);
-      pdf.setLineWidth(0.5);
-      pdf.line(10, 10, 200, 10);
-      pdf.line(10, 287, 200, 287);
+          // Header line
+          pdf.setDrawColor(0);
+          pdf.setLineWidth(0.5);
+          pdf.line(10, 10, 200, 10);
 
-      pdf.setFontSize(10);
-      pdf.text(`Page ${i} of ${totalPages}`, 182, 291);
-    }
-  })
-  .save()
-  .finally(() => {
-    checkboxes.forEach((cb) => (cb.style.display = ""));
-    if (clone.parentNode) clone.parentNode.removeChild(clone);
-  });
+          // Footer line
+          pdf.line(10, 287, 200, 287);
 
+          // Page numbering
+          pdf.setFontSize(10);
+          pdf.text(`Page ${i} of ${totalPages}`, 182, 291);
+        }
+      })
+      .save()
+      .finally(() => {
+        // Restore checkboxes
+        checkboxes.forEach((cb) => (cb.style.display = ""));
+      });
   };
 
   return (
