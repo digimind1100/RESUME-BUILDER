@@ -175,7 +175,7 @@ const handleSkillsClickWithGuard = () => {
       </div>
 
       {/* RIGHT PREVIEW AREA */}
-      <div className="right-side w-full lg:w-[60%] flex flex-col">
+      <div className="preview-panel-container">
         <div className="resume-theme w-full flex flex-col p-4" id="resumeContainer">
 
           <div className="theme-selector-container p-2">
