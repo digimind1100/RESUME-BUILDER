@@ -156,8 +156,7 @@ const handleSkillsClickWithGuard = () => {
   };
 
   return (
-    <div className="resume-builder-container flex flex-col md:flex-row md:items-start">
-
+    <div className="resume-builder-container">
       {/* LEFT FORM PANEL */}
       <div className="form-panel w-full md:w-[40%] p-4">
         <FormPanelQR
