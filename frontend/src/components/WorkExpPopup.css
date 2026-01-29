@@ -29,7 +29,10 @@
 }
 
 .popup-scroll {
-  padding: 20px;
+  padding-top: 10px;
+  padding-right: 0px;
+  padding-bottom: 10px;
+  padding-left:10px;
   max-height: 500px;
   overflow-y: auto;
 }
@@ -56,6 +59,7 @@
   color: #007bff;
   text-align: center;
   margin-top: 5px;
+  margin-bottom: 10px;
 }
 .popup-heading{
   text-align: center;
