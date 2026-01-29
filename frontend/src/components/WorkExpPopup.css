@@ -152,8 +152,4 @@ body {
 }
 
 
-@media (max-height: 600px) {
-  .popup-content-box {
-    max-height: 80vh;
-  }
-}
+
