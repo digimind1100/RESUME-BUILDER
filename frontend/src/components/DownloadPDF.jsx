@@ -30,7 +30,18 @@ export default function DownloadPDF() {
     if (themeSelector) themeSelector.style.display = "none";
 
     // Clone container
-    const clone = container.cloneNode(true);
+    // Clone container
+const clone = container.cloneNode(true);
+
+// ⭐ FIX: attach clone to DOM temporarily
+clone.style.position = "fixed";
+clone.style.left = "-9999px";
+clone.style.top = "0";
+clone.style.width = "210mm";      // A4 width
+clone.style.minHeight = "297mm"; // A4 height
+clone.style.background = "#fff";
+document.body.appendChild(clone);
+
 
     // Restore in DOM
     if (themeSelector) themeSelector.style.display = "";
@@ -95,9 +106,15 @@ export default function DownloadPDF() {
       })
       .save()
       .finally(() => {
-        // Restore checkboxes
-        checkboxes.forEach((cb) => (cb.style.display = ""));
-      });
+  // Restore checkboxes
+  checkboxes.forEach((cb) => (cb.style.display = ""));
+
+  // ⭐ REMOVE CLONE
+  if (clone && clone.parentNode) {
+    clone.parentNode.removeChild(clone);
+  }
+});
+
   };
 
   return (

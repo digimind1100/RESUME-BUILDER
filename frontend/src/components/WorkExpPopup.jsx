@@ -78,7 +78,7 @@ export default function WorkExpPopup({ jobTitle, onClose, onSelect }) {
         <h3 className="popup-heading">AI Work Experience for</h3>
         <h4 className="title-heading">{jobTitle}</h4>
 
-        {loading && <p>⏳ Fetching work experience...</p>}
+        {loading && <p>⏳ Fetching work experience please wait...</p>}
 
         {!loading && error && (
           <p style={{ color: "red", marginTop: "10px" }}>{error}</p>

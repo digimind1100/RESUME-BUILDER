@@ -75,10 +75,10 @@ export default function SkillsPopup({ jobTitle, onClose, onSelect }) {
           ✖
         </button>
 
-        <h3 className="popup-heading">AI Skills for "{jobTitle}"</h3>
+        <h3 className="popup-heading">AI Skills for</h3>
         <h4 className="title-heading">{jobTitle}</h4>
 
-        {loading && <p>⏳ Fetching skills...</p>}
+        {loading && <p>⏳ Fetching skills please wait...</p>}
 
         {!loading && error && (
           <p style={{ color: "red", marginTop: "12px" }}>{error}</p>
