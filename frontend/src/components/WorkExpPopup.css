@@ -1,17 +1,16 @@
 .popup-overlay {
-  position: absolute;        /* ⬅ centers inside template (blue area) */
-  inset: 0;                  /* top:0 right:0 bottom:0 left:0 */
+  position: fixed;
+  inset: 0;
 
-  background: rgba(0, 0, 0, 0.4);  /* dark overlay */
+  background: rgba(0, 0, 0, 0.4);
 
   display: flex;
   justify-content: center;
   align-items: center;
 
-  padding: 16px;
+  padding: 16px;          /* viewport breathing space */
   box-sizing: border-box;
-
-  z-index: 10;               /* above resume, below header */
+  z-index: 9999;
 }
 
 .popup-content-box {
@@ -20,7 +19,7 @@
   border-radius: 8px;
   width: 420px;
   max-width: 520px;
-  max-height:  480px; ;
+  max-height: min(85vh, 700px);
 
   /* ⭐ KEEP ONLY THIS */
   /* max-height: calc(100vh - var(--header-height) - 80px); */
@@ -152,3 +151,8 @@ body {
 }
 
 
+@media (max-height: 600px) {
+  .popup-content-box {
+    max-height: 90vh;
+  }
+}
