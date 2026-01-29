@@ -16,6 +16,11 @@
  
 }
 
+.popup-overlay {
+  top: var(--navbar-height);
+}
+
+
 .popup-content-box {
   background: #fff;
   padding: 20px;
