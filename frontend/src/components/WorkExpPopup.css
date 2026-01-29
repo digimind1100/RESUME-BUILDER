@@ -18,7 +18,6 @@
   padding: 20px;
   border-radius: 8px;
   width: 420px;
-  max-width: 520px;
   max-height: min(85vh, 700px);
 
   /* ⭐ KEEP ONLY THIS */
@@ -151,7 +150,7 @@ body {
 }
 
 
-@media (max-height: 500px) {
+@media (max-height: 600px) {
   .popup-content-box {
     max-height: 90vh;
   }
