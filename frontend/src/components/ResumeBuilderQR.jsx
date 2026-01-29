@@ -156,9 +156,10 @@ const handleSkillsClickWithGuard = () => {
   };
 
   return (
-    <div className="resume-builder-container">
+    <div className="resume-builder-container qr-layout">
       {/* LEFT FORM PANEL */}
-      <div className="form-panel w-full md:w-[40%] p-4">
+      <div className="form-panel qr-form-panel">
+
         <FormPanelQR
           formData={formData}
           setFormData={setFormData}
@@ -175,7 +176,7 @@ const handleSkillsClickWithGuard = () => {
       </div>
 
       {/* RIGHT PREVIEW AREA */}
-      <div className="preview-panel-container">
+      <div className="preview-panel-container qr-preview-panel">
         <div className="resume-theme w-full flex flex-col p-4" id="resumeContainer">
 
           <div className="theme-selector-container p-2">

@@ -217,3 +217,43 @@
   overflow-y: auto;
   box-sizing: border-box;
 }
+
+/* ===== QR BUILDER LAYOUT ===== */
+
+.qr-layout {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Left form panel — 35% */
+.qr-form-panel {
+  width: 35%;
+  min-width: 320px;
+  padding: 16px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  border-right: 1px solid #e5e7eb;
+}
+
+/* Right preview panel — 65% */
+.qr-preview-panel {
+  width: 65%;
+  padding: 16px;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+/* Mobile fallback */
+@media (max-width: 1024px) {
+  .qr-layout {
+    flex-direction: column;
+  }
+
+  .qr-form-panel,
+  .qr-preview-panel {
+    width: 100%;
+  }
+}
