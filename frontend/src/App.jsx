@@ -22,6 +22,7 @@ import TeacherElite from "./Templates/TeacherElite";
 import BuilderGuard from "./components/guards/BuilderGuard";
 import { Toaster } from "react-hot-toast";
 import Policies from "./components/Policies";
+import Features from "./components/Features";
 import Contact from "./components/Contact";
 import AdminPendingPayments from "./components/admin/AdminPendingPayments";
 import AdminGuard from "./components/admin/AdminGuard";
@@ -59,6 +60,8 @@ function AppContent() {
 
         {/* Templates */}
         <Route path="/templates" element={<Templates />} />
+
+        <Route path="/features" element={<Features />} />
 
         {/* Cover letter */}
         <Route path="/cover-letter" element={<CoverLetterPanel />} />
