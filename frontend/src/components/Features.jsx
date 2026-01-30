@@ -73,6 +73,10 @@ export default function Features() {
         <a href="/builder" className="btn-primary">Get Started Free</a>
       </section>
 
+
+<div style={{ width: "100%" }}>
+        <Footer />
+      </div>
     </div>
   );
 }
