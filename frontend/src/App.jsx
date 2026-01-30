@@ -61,7 +61,7 @@ function AppContent() {
         {/* Templates */}
         <Route path="/templates" element={<Templates />} />
 
-        <Route path="/features" element={<Features />} />
+        {/* <Route path="/features" element={<Features />} /> */}
 
         {/* Cover letter */}
         <Route path="/cover-letter" element={<CoverLetterPanel />} />
