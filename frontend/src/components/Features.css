@@ -140,6 +140,23 @@
     font-size: 32px;
   }
 }
+
+.features-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Content takes available space */
+.features-content {
+    flex: 1;
+}
+
+/* IMPORTANT: make sure footer is not hidden */
+footer {
+    width: 100%;
+}
+
 /* =======================
    RESPONSIVE DESIGN
    ======================= */
