@@ -1,0 +1,72 @@
+.admin-reviews-page {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+.admin-reviews-page h1 {
+  margin-bottom: 24px;
+}
+
+.admin-review-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 18px;
+  margin-bottom: 16px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+.admin-review-card .top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.admin-review-card .top span {
+  color: #666;
+  font-size: 13px;
+}
+
+.rating {
+  color: #f5b400;
+  margin: 6px 0;
+}
+
+.text {
+  margin: 10px 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.actions button {
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.actions .approve {
+  background: #28a745;
+  color: #fff;
+}
+
+.actions .reject {
+  background: #dc3545;
+  color: #fff;
+}
+
+.empty {
+  color: #777;
+  margin-top: 40px;
+}
+
+.admin-loading {
+  padding: 40px;
+  text-align: center;
+}

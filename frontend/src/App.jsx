@@ -25,6 +25,7 @@ import Policies from "./components/Policies";
 import Features from "./components/Features";
 import Contact from "./components/Contact";
 import AdminPendingPayments from "./components/admin/AdminPendingPayments";
+import AdminReviews from "./pages/AdminReviews";
 import AdminGuard from "./components/admin/AdminGuard";
 
 
@@ -42,13 +43,23 @@ function AppContent() {
       <Routes>
 
       <Route
-          path="/admin/payments" 
-          element={
-            <AdminGuard>
-              <AdminPendingPayments />
-            </AdminGuard>
-          }
-        />
+  path="/admin/payments"
+  element={
+    <AdminGuard>
+      <AdminPendingPayments />
+    </AdminGuard>
+  }
+/>
+
+<Route
+  path="/admin/reviews"
+  element={
+    <AdminGuard>
+      <AdminReviews />
+    </AdminGuard>
+  }
+/>
+
         <Route path="/" element={<HomePage />} />
 
         {/* Unified builder */}
