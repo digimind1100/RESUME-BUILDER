@@ -1,5 +1,6 @@
 import React from "react";
 import html2pdf from "html2pdf.js";
+import ReviewForm from "./ReviewForm";
 
 export default function DownloadPDF() {
   const handleDownload = () => {
@@ -22,6 +23,8 @@ export default function DownloadPDF() {
     header.style.fontWeight = "bold";
     header.style.fontSize = "14px";
     clone.prepend(header);
+
+    const [showReviewForm, setShowReviewForm] = useState(false);
 
     // Add footer container
     const footer = document.createElement("div");
@@ -76,12 +79,19 @@ export default function DownloadPDF() {
 
   .save()
   .finally(() => checkboxes.forEach(cb => (cb.style.display = "")));
-
+ setShowReviewForm(true);
   };
 
   return (
+  <>
     <button onClick={handleDownload} className="download-btn">
       Download PDF
     </button>
-  );
+
+    {showReviewForm && (
+      <ReviewForm onClose={() => setShowReviewForm(false)} />
+    )}
+  </>
+);
+
 }
