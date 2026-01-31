@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import html2pdf from "html2pdf.js";
 import ReviewForm from "./ReviewForm";
 
 export default function DownloadPDF() {
+  // ✅ HOOK AT TOP LEVEL
+  const [showReviewForm, setShowReviewForm] = useState(false);
+
   const handleDownload = () => {
     const container = document.getElementById("resumeContainer");
     if (!container) return;
 
-    // Hide checkboxes before export
+    // Hide checkboxes
     const checkboxes = container.querySelectorAll("input[type='checkbox']");
     checkboxes.forEach(cb => (cb.style.display = "none"));
 
@@ -24,21 +27,8 @@ export default function DownloadPDF() {
     header.style.fontSize = "14px";
     clone.prepend(header);
 
-    const [showReviewForm, setShowReviewForm] = useState(false);
-
-    // Add footer container
-    const footer = document.createElement("div");
-    footer.style.width = "100%";
-    footer.style.position = "relative";
-    footer.style.marginTop = "3px";
-
-    const line = document.createElement("div");
-    line.style.width = "100%";
-    line.style.borderTop = "1px solid #000";
-    
-    // ✅ PDF options
     const opt = {
-      margin: [10, 8, 10, 8], // top, left, bottom, right in mm
+      margin: [10, 8, 10, 8],
       filename: "resume.pdf",
       image: { type: "jpeg", quality: 1 },
       html2canvas: { scale: 2, useCORS: true },
@@ -46,52 +36,44 @@ export default function DownloadPDF() {
       pagebreak: { mode: ["avoid-all", "css", "legacy"] },
     };
 
-    // ✅ Generate PDF and draw header/footer on each page
-   html2pdf()
-  .set(opt)
-  .from(clone)
-  .toPdf()
-  .get("pdf")
-  .then((pdf) => {
-  // ✅ Remove blank first page
-  if (pdf.internal.getNumberOfPages() > 1) {
-    pdf.deletePage(1);
-  }
+    html2pdf()
+      .set(opt)
+      .from(clone)
+      .toPdf()
+      .get("pdf")
+      .then((pdf) => {
+        // Remove blank first page if exists
+        if (pdf.internal.getNumberOfPages() > 1) {
+          pdf.deletePage(1);
+        }
 
-  const totalPages = pdf.internal.getNumberOfPages();
-
-  for (let i = 1; i <= totalPages; i++) {
-    pdf.setPage(i);
-
-    // Header line
-    pdf.setDrawColor(0);
-    pdf.setLineWidth(0.5);
-    pdf.line(10, 10, 200, 10);
-
-    // Footer line
-    pdf.line(10, 287, 200, 287);
-
-    // Page numbering
-    pdf.setFontSize(10);
-    pdf.text(`Page ${i} of ${totalPages}`, 182, 291);
-  }
-})
-
-  .save()
-  .finally(() => checkboxes.forEach(cb => (cb.style.display = "")));
- setShowReviewForm(true);
+        const totalPages = pdf.internal.getNumberOfPages();
+        for (let i = 1; i <= totalPages; i++) {
+          pdf.setPage(i);
+          pdf.setDrawColor(0);
+          pdf.setLineWidth(0.5);
+          pdf.line(10, 10, 200, 10);
+          pdf.line(10, 287, 200, 287);
+          pdf.setFontSize(10);
+          pdf.text(`Page ${i} of ${totalPages}`, 182, 291);
+        }
+      })
+      .save()
+      .finally(() => {
+        checkboxes.forEach(cb => (cb.style.display = ""));
+        setShowReviewForm(true); // ✅ CORRECT PLACE
+      });
   };
 
   return (
-  <>
-    <button onClick={handleDownload} className="download-btn">
-      Download PDF
-    </button>
+    <>
+      <button onClick={handleDownload} className="download-btn">
+        Download PDF
+      </button>
 
-    {showReviewForm && (
-      <ReviewForm onClose={() => setShowReviewForm(false)} />
-    )}
-  </>
-);
-
+      {showReviewForm && (
+        <ReviewForm onClose={() => setShowReviewForm(false)} />
+      )}
+    </>
+  );
 }
