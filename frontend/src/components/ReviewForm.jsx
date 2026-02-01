@@ -60,36 +60,48 @@ export default function ReviewForm({ onClose }) {
         );
     }
 
-    return (
-        <div className="review-overlay">
-            <div className="review-modal">
-                <button className="close-btn" onClick={onClose}>✕</button>
+   return (
+  <div className="review-overlay">
+    <div className="review-modal">
 
-                <h3>Leave a Review</h3>
+      {/* HEADER */}
+      <div className="review-header">
+        <h3>Leave a Review</h3>
+        <button className="close-btn" onClick={onClose}>✕</button>
+      </div>
 
-                {error && <p className="error">{error}</p>}
+      {/* BODY */}
+      <div className="review-body">
+        {error && <p className="error">{error}</p>}
 
-                <form onSubmit={handleSubmit}>
-                    <label>Rating</label>
-                    <select value={rating} onChange={(e) => setRating(+e.target.value)}>
-                        {[5, 4, 3, 2, 1].map((r) => (
-                            <option key={r} value={r}>{r} ⭐</option>
-                        ))}
-                    </select>
+        <form onSubmit={handleSubmit}>
+          <label>Rating</label>
+          <select
+            value={rating}
+            onChange={(e) => setRating(+e.target.value)}
+          >
+            {[5, 4, 3, 2, 1].map((r) => (
+              <option key={r} value={r}>
+                {r} ⭐
+              </option>
+            ))}
+          </select>
 
-                    <label>Your Review</label>
-                    <textarea
-                        value={text}
-                        onChange={(e) => setText(e.target.value)}
-                        placeholder="Tell us about your experience..."
-                        rows={4}
-                    />
+          <label>Your Review</label>
+          <textarea
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            placeholder="Tell us about your experience..."
+          />
 
-                    <button type="submit" disabled={loading}>
-                        {loading ? "Submitting..." : "Submit Review"}
-                    </button>
-                </form>
-            </div>
-        </div>
-    );
+          <button type="submit" disabled={loading}>
+            {loading ? "Submitting..." : "Submit Review"}
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+);
+
 }
