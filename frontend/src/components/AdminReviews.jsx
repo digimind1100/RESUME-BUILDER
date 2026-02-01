@@ -5,23 +5,26 @@ export default function AdminReviews() {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const token = localStorage.getItem("token"); // same auth token
+  const API_URL = import.meta.env.VITE_API_URL;
 
+  // 🔹 Fetch pending reviews
   const fetchReviews = async () => {
     try {
-      const res = await fetch(
-        "https://resumebuilder.pk/api/admin/reviews",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const res = await fetch(`${API_URL}/api/admin/reviews`, {
+        method: "GET",
+        credentials: "include", // ✅ COOKIE AUTH
+      });
 
       const data = await res.json();
-      setReviews(data || []);
+
+      if (data?.reviews) {
+        setReviews(data.reviews);
+      } else {
+        setReviews([]);
+      }
     } catch (err) {
       console.error("Fetch reviews error:", err);
+      setReviews([]);
     } finally {
       setLoading(false);
     }
@@ -31,20 +34,24 @@ export default function AdminReviews() {
     fetchReviews();
   }, []);
 
-  const handleAction = async (id, action) => {
+  // 🔹 Approve / Reject review
+  const handleAction = async (id, status) => {
     try {
-      await fetch(
-        `https://resumebuilder.pk/api/admin/reviews/${id}/${action}`,
-        {
-          method: "PUT",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const res = await fetch(`${API_URL}/api/admin/reviews/${id}`, {
+        method: "PATCH",
+        credentials: "include", // ✅ COOKIE AUTH
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ status }), // ✅ backend expects this
+      });
 
-      // remove from list instantly
-      setReviews(prev => prev.filter(r => r._id !== id));
+      const data = await res.json();
+
+      if (data?.success) {
+        // remove from UI instantly
+        setReviews(prev => prev.filter(r => r._id !== id));
+      }
     } catch (err) {
       console.error("Action error:", err);
     }
@@ -79,14 +86,14 @@ export default function AdminReviews() {
           <div className="actions">
             <button
               className="approve"
-              onClick={() => handleAction(review._id, "approve")}
+              onClick={() => handleAction(review._id, "approved")}
             >
               Approve
             </button>
 
             <button
               className="reject"
-              onClick={() => handleAction(review._id, "reject")}
+              onClick={() => handleAction(review._id, "rejected")}
             >
               Reject
             </button>
