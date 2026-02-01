@@ -12,16 +12,17 @@ export default function AdminReviews() {
     try {
       const res = await fetch(`${API_URL}/api/admin/reviews`, {
         method: "GET",
-        credentials: "include", // ✅ COOKIE AUTH
+        credentials: "include", // ✅ COOKIE-BASED AUTH
       });
+
+      if (!res.ok) {
+        throw new Error("Failed to fetch reviews");
+      }
 
       const data = await res.json();
 
-      if (data?.reviews) {
-        setReviews(data.reviews);
-      } else {
-        setReviews([]);
-      }
+      // backend returns: { success: true, reviews: [] }
+      setReviews(Array.isArray(data.reviews) ? data.reviews : []);
     } catch (err) {
       console.error("Fetch reviews error:", err);
       setReviews([]);
@@ -39,17 +40,17 @@ export default function AdminReviews() {
     try {
       const res = await fetch(`${API_URL}/api/admin/reviews/${id}`, {
         method: "PATCH",
-        credentials: "include", // ✅ COOKIE AUTH
+        credentials: "include", // ✅ COOKIE-BASED AUTH
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ status }), // ✅ backend expects this
+        body: JSON.stringify({ status }), // backend expects this
       });
 
       const data = await res.json();
 
       if (data?.success) {
-        // remove from UI instantly
+        // instantly remove from UI
         setReviews(prev => prev.filter(r => r._id !== id));
       }
     } catch (err) {
@@ -73,7 +74,7 @@ export default function AdminReviews() {
         <div className="admin-review-card" key={review._id}>
           <div className="top">
             <strong>{review.name}</strong>
-            <span>{review.jobTitle}</span>
+            {review.jobTitle && <span>{review.jobTitle}</span>}
           </div>
 
           <div className="rating">
