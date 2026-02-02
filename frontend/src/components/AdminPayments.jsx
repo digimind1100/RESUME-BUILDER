@@ -8,14 +8,20 @@ export default function AdminPayments() {
   const { refreshUser } = useAuth();
   const token = localStorage.getItem("rb_auth_token");
 
+  // 🔥 BACKEND BASE URL
+  const API = "https://resume-builder-backend-production-116d.up.railway.app";
+
   const fetchPayments = async () => {
     setLoading(true);
 
-    const res = await fetch("/api/payments/admin/pending", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const res = await fetch(
+      `${API}/api/payments/admin/pending`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     const data = await res.json();
     setPayments(data.payments || []);
@@ -27,7 +33,7 @@ export default function AdminPayments() {
   }, []);
 
   const approvePayment = async (paymentId) => {
-    await fetch("/api/payments/admin/approve", {
+    await fetch(`${API}/api/payments/admin/approve`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -36,12 +42,12 @@ export default function AdminPayments() {
       body: JSON.stringify({ paymentId }),
     });
 
-    await refreshUser();   // 🔥 INSTANT UNLOCK MAGIC
+    await refreshUser();
     fetchPayments();
   };
 
   const rejectPayment = async (paymentId) => {
-    await fetch("/api/payments/admin/reject", {
+    await fetch(`${API}/api/payments/admin/reject`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -62,28 +68,13 @@ export default function AdminPayments() {
       {payments.length === 0 && <p>No pending payments</p>}
 
       {payments.map((p) => (
-        <div
-          key={p._id}
-          style={{
-            border: "1px solid #ddd",
-            padding: 15,
-            marginTop: 12,
-            borderRadius: 8,
-          }}
-        >
+        <div key={p._id} style={{ border: "1px solid #ddd", padding: 15, marginTop: 12 }}>
           <p><b>User:</b> {p.userId?.email}</p>
           <p><b>Method:</b> {p.method}</p>
           <p><b>Amount:</b> Rs {p.amount}</p>
-          <p><b>Txn:</b> {p.transactionId}</p>
 
-          <button onClick={() => approvePayment(p._id)}>
-            ✅ Approve
-          </button>
-
-          <button
-            style={{ marginLeft: 10 }}
-            onClick={() => rejectPayment(p._id)}
-          >
+          <button onClick={() => approvePayment(p._id)}>✅ Approve</button>
+          <button onClick={() => rejectPayment(p._id)} style={{ marginLeft: 10 }}>
             ❌ Reject
           </button>
         </div>
