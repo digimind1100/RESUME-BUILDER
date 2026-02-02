@@ -5,57 +5,37 @@ export default function AdminReviews() {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const API_URL = import.meta.env.VITE_API_URL;
+  const token = localStorage.getItem("rb_auth_token");
 
-  // 🔹 Fetch pending reviews
   const fetchReviews = async () => {
-    try {
-      const res = await fetch(`${API_URL}/api/admin/reviews`, {
-        method: "GET",
-        credentials: "include", // ✅ COOKIE-BASED AUTH
-      });
+    setLoading(true);
 
-      if (!res.ok) {
-        throw new Error("Failed to fetch reviews");
-      }
+    const res = await fetch("/admin/reviews", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-      const data = await res.json();
-
-      // backend returns: { success: true, reviews: [] }
-      setReviews(Array.isArray(data.reviews) ? data.reviews : []);
-    } catch (err) {
-      console.error("Fetch reviews error:", err);
-      setReviews([]);
-    } finally {
-      setLoading(false);
-    }
+    const data = await res.json();
+    setReviews(data.reviews || []);
+    setLoading(false);
   };
 
   useEffect(() => {
     fetchReviews();
   }, []);
 
-  // 🔹 Approve / Reject review
   const handleAction = async (id, status) => {
-    try {
-      const res = await fetch(`${API_URL}/api/admin/reviews/${id}`, {
-        method: "PATCH",
-        credentials: "include", // ✅ COOKIE-BASED AUTH
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ status }), // backend expects this
-      });
+    await fetch(`/admin/reviews/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ status }),
+    });
 
-      const data = await res.json();
-
-      if (data?.success) {
-        // instantly remove from UI
-        setReviews(prev => prev.filter(r => r._id !== id));
-      }
-    } catch (err) {
-      console.error("Action error:", err);
-    }
+    fetchReviews();
   };
 
   if (loading) {
@@ -70,7 +50,7 @@ export default function AdminReviews() {
         <p className="empty">No pending reviews 🎉</p>
       )}
 
-      {reviews.map(review => (
+      {reviews.map((review) => (
         <div className="admin-review-card" key={review._id}>
           <div className="top">
             <strong>{review.name}</strong>
