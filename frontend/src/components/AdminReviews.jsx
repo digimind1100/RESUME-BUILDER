@@ -11,7 +11,7 @@ export default function AdminReviews() {
   setLoading(true);
 
   try {
-    const res = await fetch("/admin/reviews", {
+    const res = await fetch("/api/admin/reviews", {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("rb_auth_token")}`,
       },
@@ -38,7 +38,7 @@ export default function AdminReviews() {
   }, []);
 
   const handleAction = async (id, status) => {
-    await fetch(`/admin/reviews/${id}`, {
+    await fetch(`/api/admin/reviews/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
