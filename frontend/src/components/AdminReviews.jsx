@@ -8,46 +8,51 @@ export default function AdminReviews() {
   const token = localStorage.getItem("rb_auth_token");
 
   const fetchReviews = async () => {
-  setLoading(true);
+    setLoading(true);
+    try {
+      const res = await fetch("/api/admin/reviews", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-  try {
-    const res = await fetch("/api/admin/reviews", {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("rb_auth_token")}`,
-      },
-    });
+      if (!res.ok) {
+        throw new Error("Failed to load reviews");
+      }
 
-    if (!res.ok) {
-      throw new Error("Failed to load reviews");
+      const data = await res.json();
+      setReviews(Array.isArray(data.reviews) ? data.reviews : []);
+    } catch (err) {
+      console.error("Fetch reviews error:", err);
+      setReviews([]);
+    } finally {
+      setLoading(false);
     }
-
-    const data = await res.json();
-    setReviews(Array.isArray(data.reviews) ? data.reviews : []);
-  } catch (err) {
-    console.error("Fetch reviews error:", err);
-    setReviews([]);
-  } finally {
-    // 🔥 THIS guarantees UI never gets stuck
-    setLoading(false);
-  }
-};
-
+  };
 
   useEffect(() => {
     fetchReviews();
   }, []);
 
   const handleAction = async (id, status) => {
-    await fetch(`/api/admin/reviews/${id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ status }),
-    });
+    try {
+      const res = await fetch(`/api/admin/reviews/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ status }),
+      });
 
-    fetchReviews();
+      if (!res.ok) {
+        throw new Error("Failed to update review");
+      }
+
+      fetchReviews();
+    } catch (err) {
+      console.error("Action error:", err);
+    }
   };
 
   if (loading) {
