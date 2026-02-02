@@ -8,18 +8,30 @@ export default function AdminReviews() {
   const token = localStorage.getItem("rb_auth_token");
 
   const fetchReviews = async () => {
-    setLoading(true);
+  setLoading(true);
 
+  try {
     const res = await fetch("/admin/reviews", {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${localStorage.getItem("rb_auth_token")}`,
       },
     });
 
+    if (!res.ok) {
+      throw new Error("Failed to load reviews");
+    }
+
     const data = await res.json();
-    setReviews(data.reviews || []);
+    setReviews(Array.isArray(data.reviews) ? data.reviews : []);
+  } catch (err) {
+    console.error("Fetch reviews error:", err);
+    setReviews([]);
+  } finally {
+    // 🔥 THIS guarantees UI never gets stuck
     setLoading(false);
-  };
+  }
+};
+
 
   useEffect(() => {
     fetchReviews();
