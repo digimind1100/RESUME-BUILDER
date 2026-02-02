@@ -11,6 +11,7 @@ export default function AdminReviews() {
     setLoading(true);
     try {
       const res = await fetch("/api/admin/reviews", {
+         cache: "no-store",
         headers: {
           Authorization: `Bearer ${token}`,
         },
