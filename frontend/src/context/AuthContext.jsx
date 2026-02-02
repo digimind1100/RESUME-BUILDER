@@ -7,19 +7,18 @@ import {
 } from "../api/authApi";
 
 const AuthContext = createContext();
+const TOKEN_KEY = "rb_auth_token";
 
 export function AuthProvider({ children }) {
-  // ✅ USER STATE (MISSING PIECE)
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // ✅ DERIVED AUTH FLAG (SAFE)
   const isAuthenticated = !!user;
 
-  // 🔹 App load → check existing login
+  // 🔹 App load → restore session
   useEffect(() => {
     async function loadUser() {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem(TOKEN_KEY);
 
       if (!token) {
         setLoading(false);
@@ -43,10 +42,8 @@ export function AuthProvider({ children }) {
 
     const res = await signupApi(payload);
 
-    if (res.ok) {
-      if (res.token) {
-        localStorage.setItem("token", res.token);
-      }
+    if (res.ok && res.token) {
+      localStorage.setItem(TOKEN_KEY, res.token);
       setUser(res.user);
     }
 
@@ -60,10 +57,9 @@ export function AuthProvider({ children }) {
 
     const res = await loginApi(payload);
 
-    if (res.ok) {
-      if (res.token) {
-        localStorage.setItem("token", res.token);
-      }
+    if (res.ok && res.token) {
+      // 🔥 THIS LINE FIXES EVERYTHING
+      localStorage.setItem(TOKEN_KEY, res.token);
       setUser(res.user);
     }
 
@@ -71,23 +67,21 @@ export function AuthProvider({ children }) {
     return res;
   };
 
-
+  // 🔹 REFRESH USER (used by payments)
   const refreshUser = async () => {
-  const token = localStorage.getItem("token");
-  if (!token) return;
+    const token = localStorage.getItem(TOKEN_KEY);
+    if (!token) return;
 
-  const res = await getCurrentUser(token);
-  if (res.success) {
-    setUser(res.user);
-  }
-};
-
-
+    const res = await getCurrentUser(token);
+    if (res.success) {
+      setUser(res.user);
+    }
+  };
 
   // 🔹 LOGOUT
   const logout = async () => {
     await logoutApi();
-    localStorage.removeItem("token");
+    localStorage.removeItem(TOKEN_KEY);
     setUser(null);
     setLoading(false);
   };
