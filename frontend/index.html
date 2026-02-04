@@ -60,34 +60,76 @@
          REVIEW POPUP JS (GLOBAL)
     ========================== -->
     <script>
-      function openReview() {
-        const el = document.getElementById("reviewOverlay");
-        if (el) el.classList.add("show");
+  function openReview() {
+    const el = document.getElementById("reviewOverlay");
+    if (el) el.classList.add("show");
+  }
+
+  function closeReview() {
+    const el = document.getElementById("reviewOverlay");
+    if (el) el.classList.remove("show");
+  }
+
+  function maybeOpenReviewPopup() {
+    const isPremium = localStorage.getItem("isPremium") === "true";
+    if (!isPremium) return;
+    setTimeout(openReview, 1000);
+  }
+
+  async function submitReview() {
+    const name = document.getElementById("reviewName").value.trim();
+    const rating = document.getElementById("reviewRating").value;
+    const comment = document.getElementById("reviewComment").value.trim();
+    const msg = document.getElementById("reviewMsg");
+
+    // basic validation
+    if (!rating || !comment) {
+      msg.innerText = "Please provide rating and feedback.";
+      msg.style.color = "red";
+      return;
+    }
+
+    msg.innerText = "Submitting review...";
+    msg.style.color = "#333";
+
+    try {
+      const res = await fetch("https://resume-builder-backend.up.railway.app/api/reviews", {
+
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: name || "Anonymous",
+          rating: Number(rating),
+          comment,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || "Failed to submit review");
       }
 
-      function closeReview() {
-        const el = document.getElementById("reviewOverlay");
-        if (el) el.classList.remove("show");
-      }
+      msg.innerText = "✅ Thanks! Your review is submitted for approval.";
+      msg.style.color = "green";
 
-      function maybeOpenReviewPopup() {
-        const isPremium = localStorage.getItem("isPremium") === "true";
-        if (!isPremium) return;
+      // reset fields
+      document.getElementById("reviewName").value = "";
+      document.getElementById("reviewComment").value = "";
 
-        setTimeout(openReview, 1000);
-      }
+      // auto-close popup
+      setTimeout(closeReview, 1500);
 
-      function submitReview() {
-        const msg = document.getElementById("reviewMsg");
-        if (msg) {
-          msg.innerText =
-            "Thanks! Your review has been submitted for approval.";
-        }
+    } catch (err) {
+      console.error(err);
+      msg.innerText = "❌ Unable to submit review. Please try again.";
+      msg.style.color = "red";
+    }
+  }
+</script>
 
-        // close popup after 1.5s
-        setTimeout(closeReview, 1500);
-      }
-    </script>
 
     <!-- =========================
          REACT ENTRY
