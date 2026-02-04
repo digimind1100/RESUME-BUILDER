@@ -3,20 +3,95 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" href="/favicon.ico" />
+
     <link id="resumeStyleLink" rel="stylesheet" href="/templates/template1.css" />
-    <link 
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-/>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AI RESUME BUILDER</title>
   </head>
+
   <body>
     <div id="root"></div>
+    <div id="modal-root"></div>
 
-      <div id="modal-root"></div>
+    <!-- =========================
+         REVIEW POPUP
+    ========================== -->
+    <div id="reviewOverlay" class="review-overlay">
+      <div class="review-modal">
+        <button class="close-btn" onclick="closeReview()">✕</button>
+
+        <h3>How was your experience?</h3>
+
+        <input
+          type="text"
+          id="reviewName"
+          placeholder="Your name (optional)"
+        />
+
+        <select id="reviewRating">
+          <option value="">Select rating</option>
+          <option value="5">★★★★★ (5)</option>
+          <option value="4">★★★★ (4)</option>
+          <option value="3">★★★ (3)</option>
+          <option value="2">★★ (2)</option>
+          <option value="1">★ (1)</option>
+        </select>
+
+        <textarea
+          id="reviewComment"
+          placeholder="Write your feedback..."
+        ></textarea>
+
+        <button class="submit-btn" onclick="submitReview()">
+          Submit Review
+        </button>
+
+        <p id="reviewMsg"></p>
+      </div>
+    </div>
+
+    <!-- =========================
+         REVIEW POPUP JS (GLOBAL)
+    ========================== -->
+    <script>
+      function openReview() {
+        const el = document.getElementById("reviewOverlay");
+        if (el) el.classList.add("show");
+      }
+
+      function closeReview() {
+        const el = document.getElementById("reviewOverlay");
+        if (el) el.classList.remove("show");
+      }
+
+      function maybeOpenReviewPopup() {
+        const isPremium = localStorage.getItem("isPremium") === "true";
+        if (!isPremium) return;
+
+        setTimeout(openReview, 1000);
+      }
+
+      function submitReview() {
+        const msg = document.getElementById("reviewMsg");
+        if (msg) {
+          msg.innerText =
+            "Thanks! Your review has been submitted for approval.";
+        }
+
+        // close popup after 1.5s
+        setTimeout(closeReview, 1500);
+      }
+    </script>
+
+    <!-- =========================
+         REACT ENTRY
+    ========================== -->
     <script type="module" src="/src/main.jsx"></script>
-
   </body>
 </html>
