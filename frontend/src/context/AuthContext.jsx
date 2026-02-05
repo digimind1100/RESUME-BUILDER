@@ -7,7 +7,8 @@ import {
 } from "../api/authApi";
 
 const AuthContext = createContext();
-const TOKEN_KEY = "rb_auth_token";
+const TOKEN_KEY = "token";
+
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
