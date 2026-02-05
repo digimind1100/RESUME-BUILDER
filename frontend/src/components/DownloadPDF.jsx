@@ -5,20 +5,21 @@ import Toast from "./Toast";
 
 export default function DownloadPDF({ user }) {
   // ✅ FIXED: consistent state name
-  const [showReviewModal, setShowReviewModal] = useState(false);
-  const [toast, setToast] = useState(false);
+ const [showReviewModal, setShowReviewModal] = useState(false);
+const [toast, setToast] = useState(false);
+
 
   const submitReview = async (data) => {
   await fetch("/api/reviews", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    credentials: "include",
     body: JSON.stringify(data),
   });
 
   setToast(true);
   setTimeout(() => setToast(false), 3000);
 };
+
 
 
   const handleDownload = () => {
@@ -78,8 +79,9 @@ export default function DownloadPDF({ user }) {
 
         // ✅ GUARD: show only once
         if (!localStorage.getItem("reviewSubmitted")) {
-          setShowReviewModal(true);
-        }
+  setShowReviewModal(true);
+}
+
       });
   };
 
@@ -89,17 +91,18 @@ export default function DownloadPDF({ user }) {
         Download PDF
       </button>
 
-      {showReviewModal && (
-        <ReviewModal
-          userName={user?.name || ""}
-          onClose={() => setShowReviewModal(false)}
-          onSubmit={submitReview}
-        />
-      )}
+     {showReviewModal && (
+  <ReviewModal
+    userName={user?.name || ""}
+    onClose={() => setShowReviewModal(false)}
+    onSubmit={submitReview}
+  />
+)}
 
-      {toast && (
+{toast && (
   <Toast message="Your review has been submitted for approval" />
 )}
+
 
     </>
   );
