@@ -50,14 +50,6 @@ function AppContent() {
   }
 />
 
-<Route
-  path="/admin/reviews"
-  element={
-    <AdminGuard>
-      <AdminReviews />
-    </AdminGuard>
-  }
-/>
 
         <Route path="/" element={<HomePage />} />
 
