@@ -70,10 +70,6 @@ export default function DownloadPDF() {
       <button onClick={handleDownload} className="download-btn">
         Download PDF
       </button>
-
-      {showReviewForm && (
-        <ReviewForm onClose={() => setShowReviewForm(false)} />
-      )}
     </>
   );
 }
