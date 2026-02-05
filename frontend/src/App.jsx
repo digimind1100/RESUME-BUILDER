@@ -25,7 +25,6 @@ import Policies from "./components/Policies";
 import Features from "./components/Features";
 import Contact from "./components/Contact";
 import AdminPendingPayments from "./components/admin/AdminPendingPayments";
-import AdminReviews from "./components/AdminReviews";
 import AdminGuard from "./components/admin/AdminGuard";
 
 
