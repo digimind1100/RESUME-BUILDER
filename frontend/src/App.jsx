@@ -33,6 +33,8 @@ function AppContent() {
    // Global form state
   const [formData, setFormData] = useState({});
 
+   const user = JSON.parse(localStorage.getItem("user"));
+
   return (
     <>
     <ReviewProvider user={user}>
