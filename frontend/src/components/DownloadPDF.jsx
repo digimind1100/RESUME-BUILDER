@@ -1,11 +1,24 @@
 import React, { useState } from "react";
 import html2pdf from "html2pdf.js";
+import ReviewModal from "./ReviewModal";
+import Toast from "./Toast";
+
+export default function DownloadPDF({ user }) {
+  // ✅ FIXED: consistent state name
+ const [showReviewModal, setShowReviewModal] = useState(false);
+const [toast, setToast] = useState(false);
 
 
-export default function DownloadPDF() {
-  // ✅ HOOK AT TOP LEVEL
-  const [showReviewForm, setShowReviewForm] = useState(false);
+  const submitReview = async (data) => {
+  await fetch("/api/reviews", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
 
+  setToast(true);
+  setTimeout(() => setToast(false), 3000);
+};
   const handleDownload = () => {
     const container = document.getElementById("resumeContainer");
     if (!container) return;
@@ -42,7 +55,6 @@ export default function DownloadPDF() {
       .toPdf()
       .get("pdf")
       .then((pdf) => {
-        // Remove blank first page if exists
         if (pdf.internal.getNumberOfPages() > 1) {
           pdf.deletePage(1);
         }
@@ -61,7 +73,12 @@ export default function DownloadPDF() {
       .save()
       .finally(() => {
         checkboxes.forEach(cb => (cb.style.display = ""));
-        setShowReviewForm(true); // ✅ CORRECT PLACE
+
+        // ✅ GUARD: show only once
+        if (!localStorage.getItem("reviewSubmitted")) {
+  setShowReviewModal(true);
+}
+
       });
   };
 
@@ -70,6 +87,20 @@ export default function DownloadPDF() {
       <button onClick={handleDownload} className="download-btn">
         Download PDF
       </button>
+
+     {showReviewModal && (
+  <ReviewModal
+    userName={user?.name || ""}
+    onClose={() => setShowReviewModal(false)}
+    onSubmit={submitReview}
+  />
+)}
+
+{toast && (
+  <Toast message="Your review has been submitted for approval" />
+)}
+
+
     </>
   );
 }

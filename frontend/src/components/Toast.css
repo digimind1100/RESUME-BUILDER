@@ -1,0 +1,9 @@
+.toast {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: #16a34a;
+  color: #fff;
+  padding: 14px 18px;
+  border-radius: 10px;
+}
