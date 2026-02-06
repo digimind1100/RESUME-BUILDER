@@ -1,0 +1,28 @@
+.review-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.review-modal {
+  background: #fff;
+  max-width: 460px;
+  width: 100%;
+  padding: 26px;
+  border-radius: 14px;
+}
+
+.star {
+  font-size: 26px;
+  cursor: pointer;
+  color: #ddd;
+}
+
+.star.active {
+  color: #ffc107;
+}

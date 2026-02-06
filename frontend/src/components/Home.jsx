@@ -7,7 +7,7 @@ import CounterBlock from "./CounterBlock";
 import Footer from "./Footer";
 import TemplateShowcase from "./TemplateShowcase";
 import AiTutorialVideo from "./AiTutorialVideo"
-import ReviewsSection from "../components/ReviewsSection";
+
 
 
 
@@ -40,7 +40,6 @@ export default function Home() {
       <TemplateShowcase/>
       <AiTutorialVideo/>
       <FeaturesCoverLetter />
-       <ReviewsSection />
       <CounterBlock />
       <Footer />
       
