@@ -71,15 +71,14 @@ const [toast, setToast] = useState(false);
         }
       })
       .save()
-      .finally(() => {
-        checkboxes.forEach(cb => (cb.style.display = ""));
+.then(() => {
+  checkboxes.forEach(cb => (cb.style.display = ""));
 
-        // ✅ GUARD: show only once
-        if (!localStorage.getItem("reviewSubmitted")) {
-  setShowReviewModal(true);
-}
+  if (!localStorage.getItem("reviewSubmitted")) {
+    setShowReviewModal(true);
+  }
+});
 
-      });
   };
 
   return (
