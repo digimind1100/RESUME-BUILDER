@@ -19,9 +19,6 @@ const [toast, setToast] = useState(false);
   setToast(true);
   setTimeout(() => setToast(false), 3000);
 };
-
-
-
   const handleDownload = () => {
     const container = document.getElementById("resumeContainer");
     if (!container) return;
