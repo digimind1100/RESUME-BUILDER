@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import html2pdf from "html2pdf.js";
-import ReviewModal from "./ReviewModal";
 import Toast from "./Toast";
+import { useReview } from "../context/ReviewContext";
 
-export default function DownloadPDF({ user }) {
+export default function DownloadPDF({ user, onReviewTrigger })  {
   // ✅ FIXED: consistent state name
- const [showReviewModal, setShowReviewModal] = useState(false);
-const [toast, setToast] = useState(false);
 
+const [toast, setToast] = useState(false);
+const { triggerReview } = useReview();
+
+setTimeout(() => {
+  triggerReview();
+}, 600);
 
   const submitReview = async (data) => {
   await fetch("/api/reviews", {
@@ -70,17 +74,18 @@ const [toast, setToast] = useState(false);
           pdf.text(`Page ${i} of ${totalPages}`, 182, 291);
         }
       })
-      .save();
+.save();
 
-// restore UI immediately
+// restore UI
 checkboxes.forEach(cb => (cb.style.display = ""));
 
-// 🔥 GUARANTEED popup trigger
+// ensure popup after download
 setTimeout(() => {
   if (!localStorage.getItem("reviewSubmitted")) {
-    setShowReviewModal(true);
+    onReviewTrigger(); // 🔥 parent handles modal
   }
 }, 600);
+
 
 
   };
@@ -91,13 +96,6 @@ setTimeout(() => {
         Download PDF
       </button>
 
-     {showReviewModal && (
-  <ReviewModal
-    userName={user?.name || ""}
-    onClose={() => setShowReviewModal(false)}
-    onSubmit={submitReview}
-  />
-)}
 
 {toast && (
   <Toast message="Your review has been submitted for approval" />

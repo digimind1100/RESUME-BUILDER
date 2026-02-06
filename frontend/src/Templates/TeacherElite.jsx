@@ -11,7 +11,7 @@ import PaymentGate from "../components/payment/PaymentGate";
 import Watermark from "../components/Watermark";
 import ShareResume from "../components/ShareResume";
 import { FaShareAlt } from "react-icons/fa";
-
+import { useReview } from "../context/ReviewContext";
 
 
 
@@ -62,7 +62,9 @@ const resumePdfUrl = `${window.location.origin}/resumes/${resumeId}.pdf`;
 const isMobile = window.innerWidth <= 768;
 const [showMobileEditMsg, setShowMobileEditMsg] = useState(false);
 
-
+const { triggerReview } = useReview();
+// after PDF download
+triggerReview();
 const { user, setUser } = useAuth();
 
 const {

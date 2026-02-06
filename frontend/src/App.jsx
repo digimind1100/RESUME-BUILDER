@@ -26,16 +26,16 @@ import Features from "./components/Features";
 import Contact from "./components/Contact";
 import AdminPendingPayments from "./components/admin/AdminPendingPayments";
 import AdminGuard from "./components/admin/AdminGuard";
-
+import { ReviewProvider } from "./context/ReviewContext";
 
 function AppContent() {
   const location = useLocation();
    // Global form state
   const [formData, setFormData] = useState({});
 
-
   return (
     <>
+    <ReviewProvider user={user}>
       <Navbar />
       <Toaster position="top-center" />
 
@@ -49,7 +49,7 @@ function AppContent() {
     </AdminGuard>
   }
 />
-
+ 
 
         <Route path="/" element={<HomePage />} />
 
@@ -105,6 +105,7 @@ function AppContent() {
         <Route path="*" element={<Navigate to="/" />} />
 
       </Routes>
+      </ReviewProvider>
     </>
   );
 }
