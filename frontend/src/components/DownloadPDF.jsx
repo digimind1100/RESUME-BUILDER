@@ -70,14 +70,18 @@ const [toast, setToast] = useState(false);
           pdf.text(`Page ${i} of ${totalPages}`, 182, 291);
         }
       })
-      .save()
-.then(() => {
-  checkboxes.forEach(cb => (cb.style.display = ""));
+      .save();
 
+// restore UI immediately
+checkboxes.forEach(cb => (cb.style.display = ""));
+
+// 🔥 GUARANTEED popup trigger
+setTimeout(() => {
   if (!localStorage.getItem("reviewSubmitted")) {
     setShowReviewModal(true);
   }
-});
+}, 600);
+
 
   };
 
