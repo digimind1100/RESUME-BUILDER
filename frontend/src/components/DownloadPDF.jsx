@@ -84,9 +84,9 @@ checkboxes.forEach(cb => (cb.style.display = ""));
 // ensure popup after download
 setTimeout(() => {
   if (!localStorage.getItem("reviewSubmitted")) {
-    if (typeof onReviewTrigger === "function") {
+ 
   onReviewTrigger();
-}
+
  // 🔥 parent handles modal
   }
 }, 600);

@@ -11,7 +11,6 @@ export default function ReviewModal({ userName, onClose, onSubmit }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (loading) return;
-
     setLoading(true);
     await onSubmit({ name, rating, review });
     setLoading(false);
@@ -20,11 +19,11 @@ export default function ReviewModal({ userName, onClose, onSubmit }) {
   return createPortal(
     <div
       className="review-overlay"
-      onClick={onClose}   // click outside closes
+      onClick={onClose}              // click outside closes
     >
       <div
         className="review-modal"
-        onClick={(e) => e.stopPropagation()} // 🔥 THIS IS THE FIX
+        onClick={(e) => e.stopPropagation()}  // 🔥 THIS is why ❌ now works
       >
         <button
           type="button"
@@ -38,9 +37,9 @@ export default function ReviewModal({ userName, onClose, onSubmit }) {
 
         <form onSubmit={handleSubmit}>
           <input value={name} onChange={(e) => setName(e.target.value)} />
-          
+
           <div className="stars">
-            {[1,2,3,4,5].map((s) => (
+            {[1, 2, 3, 4, 5].map((s) => (
               <span
                 key={s}
                 className={s <= rating ? "star active" : "star"}

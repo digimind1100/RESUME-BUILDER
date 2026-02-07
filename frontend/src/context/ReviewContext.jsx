@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useRef } from "react";
+import { createContext, useContext, useState } from "react";
 import ReviewModal from "../components/ReviewModal";
 import Toast from "../components/Toast";
 
@@ -8,19 +8,14 @@ export function ReviewProvider({ children, user }) {
   const [showReview, setShowReview] = useState(false);
   const [toast, setToast] = useState(false);
 
-  // 🔒 HARD LOCK — prevents auto-trigger
-  const allowTriggerRef = useRef(false);
-
-  const allowReviewAfterDownload = () => {
-    allowTriggerRef.current = true;
+  // 🔒 ONLY way to open modal
+  const triggerReview = () => {
+    if (localStorage.getItem("reviewSubmitted")) return;
+    setShowReview(true);
   };
 
-  const triggerReview = () => {
-    if (!allowTriggerRef.current) return;
-
-    if (!localStorage.getItem("reviewSubmitted")) {
-      setShowReview(true);
-    }
+  const closeReview = () => {
+    setShowReview(false);
   };
 
   const submitReview = async (data) => {
@@ -33,31 +28,26 @@ export function ReviewProvider({ children, user }) {
     localStorage.setItem("reviewSubmitted", "true");
     setShowReview(false);
     setToast(true);
-    allowTriggerRef.current = false;
 
     setTimeout(() => setToast(false), 3000);
   };
 
   return (
-    <ReviewContext.Provider
-      value={{ triggerReview, allowReviewAfterDownload }}
-    >
+    <ReviewContext.Provider value={{ triggerReview }}>
       {children}
 
-      {showReview && (
+      {/* 🚫 MODAL DOES NOT EXIST UNLESS showReview === true */}
+      {showReview ? (
         <ReviewModal
           userName={user?.name || ""}
-          onClose={() => {
-            setShowReview(false);
-            allowTriggerRef.current = false;
-          }}
+          onClose={closeReview}
           onSubmit={submitReview}
         />
-      )}
+      ) : null}
 
-      {toast && (
+      {toast ? (
         <Toast message="Your review has been submitted for approval" />
-      )}
+      ) : null}
     </ReviewContext.Provider>
   );
 }
