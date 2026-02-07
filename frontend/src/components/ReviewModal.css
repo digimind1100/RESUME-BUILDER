@@ -1,29 +1,48 @@
 .review-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.55);
-  backdrop-filter: blur(6px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.65);
+  z-index: 999999 !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 
 .review-modal {
-  background: #fff;
-  max-width: 460px;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 24px;
   width: 100%;
-  padding: 26px;
-  border-radius: 14px;
+  max-width: 420px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  border: none;
+  background: transparent;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.stars {
+  display: flex;
+  gap: 6px;
+  margin: 8px 0;
 }
 
 .star {
-  font-size: 26px;
+  font-size: 24px;
   cursor: pointer;
-  color: #ddd;
+  color: #ccc;
 }
 
 .star.active {
-  color: #ffc107;
+  color: #f5b301;
 }
-
