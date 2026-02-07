@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ReactDOM from "react-dom";
+import { createPortal } from "react-dom";
 import "./ReviewModal.css";
 
 export default function ReviewModal({ userName = "", onClose, onSubmit }) {
@@ -18,7 +18,7 @@ export default function ReviewModal({ userName = "", onClose, onSubmit }) {
     onClose();
   };
 
-  return ReactDOM.createPortal(
+  return createPortal(
     <div className="review-overlay">
       <div className="review-modal">
         <button className="close-btn" onClick={onClose}>✕</button>
