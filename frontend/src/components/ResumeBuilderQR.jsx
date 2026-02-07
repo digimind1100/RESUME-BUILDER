@@ -19,6 +19,7 @@ import DownloadPDF from "./DownloadPDF";
 const ResumeBuilderQR = () => {
 
 const { triggerReview } = useReview();
+const { user } = useAuth();
 
   const [formData, setFormData] = useState({});
   const [selectedEducations, setSelectedEducations] = useState([]);
