@@ -1,4 +1,5 @@
 import { useState } from "react";
+import ReactDOM from "react-dom";
 import "./ReviewModal.css";
 
 export default function ReviewModal({ userName = "", onClose, onSubmit }) {
@@ -18,24 +19,30 @@ export default function ReviewModal({ userName = "", onClose, onSubmit }) {
     onClose();
   };
 
-  return (
+  return ReactDOM.createPortal(
     <div className="review-overlay">
       <div className="review-modal">
         <button className="close-btn" onClick={onClose}>✕</button>
+
         <h3 className="review-title">⭐ Leave a Review</h3>
 
         <form onSubmit={handleSubmit}>
           <label>Name</label>
-          <input value={name} onChange={(e) => setName(e.target.value)} />
+          <input
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
 
           <label>Rating</label>
           <div className="stars">
-            {[1,2,3,4,5].map(star => (
+            {[1, 2, 3, 4, 5].map((star) => (
               <span
                 key={star}
                 className={`star ${star <= rating ? "active" : ""}`}
                 onClick={() => setRating(star)}
-              >★</span>
+              >
+                ★
+              </span>
             ))}
           </div>
 
@@ -46,11 +53,12 @@ export default function ReviewModal({ userName = "", onClose, onSubmit }) {
             onChange={(e) => setReview(e.target.value)}
           />
 
-          <button type="submit">
-            Submit Review
+          <button type="submit" disabled={loading}>
+            {loading ? "Submitting..." : "Submit Review"}
           </button>
         </form>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
