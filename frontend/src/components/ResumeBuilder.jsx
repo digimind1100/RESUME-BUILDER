@@ -12,6 +12,7 @@ import PreviewPanel from "./PreviewPanel";
 import usePaymentGuard from "../hooks/usePaymentGuard";
 import PaymentGate from "../components/payment/PaymentGate";
 import { useReview } from "../context/ReviewContext";
+import DownloadPDF from "./DownloadPDF";
 
 
 

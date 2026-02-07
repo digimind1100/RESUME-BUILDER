@@ -11,6 +11,7 @@ import "./ResumeBuilder.css";
 import PaymentGate from "../components/payment/PaymentGate";
 import usePaymentGuard from "../hooks/usePaymentGuard";
 import { useReview } from "../context/ReviewContext";
+import DownloadPDF from "./DownloadPDF";
 
 
 
