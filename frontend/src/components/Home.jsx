@@ -9,10 +9,12 @@ import TemplateShowcase from "./TemplateShowcase";
 import AiTutorialVideo from "./AiTutorialVideo"
 
 
-
+ import {useReview} from "../context/ReviewContext";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
+
+const {triggerReview} = useReview();
 
   useEffect(() => {
     // Simulate loading or wait for API/data
@@ -26,9 +28,9 @@ export default function Home() {
       <div className="preloader-overlay">
         <div className="preloader-container">
 
-          import {useReview} from "../context/ReviewContext";
+         
 
-          const {triggerReview} = useReview();
+          
 
           <button onClick={triggerReview} style={{ position: "fixed", bottom: 20, right: 20 }}>
             TEST REVIEW POPUP
