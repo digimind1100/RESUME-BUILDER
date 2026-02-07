@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./CoverLetterPanel.css";
-import DownloadPDF from "./DownloadPDF";
+import { downloadCoverLetterPDF } from "./downloadCoverLetterPDF";
 
 export default function CoverLetterPanel() {
   const [companyName, setCompanyName] = useState("");
@@ -121,9 +121,17 @@ export default function CoverLetterPanel() {
               </div>
             )}
 
-            <DownloadPDF elementRef={previewRef} fileName="Cover-Letter.pdf">
-              <button className="download-btn">Download PDF</button>
-            </DownloadPDF>
+            <button
+  className="download-btn"
+  onClick={() =>
+    downloadCoverLetterPDF({
+      elementRef: previewRef,
+      fileName: "Cover-Letter.pdf",
+    })
+  }
+>
+  Download PDF
+</button>
 
             {!isMobile && (
               <button
