@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./Home.css";
 import HeroSection from "./HeroSection";
 import FeaturesHowTestimonials from "./FeaturesHowTestimonials";
-import FeaturesCoverLetter from "./FeaturesCoverLetter"; 
+import FeaturesCoverLetter from "./FeaturesCoverLetter";
 import CounterBlock from "./CounterBlock";
 import Footer from "./Footer";
 import TemplateShowcase from "./TemplateShowcase";
@@ -13,7 +13,7 @@ import AiTutorialVideo from "./AiTutorialVideo"
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
-  
+
   useEffect(() => {
     // Simulate loading or wait for API/data
     const timer = setTimeout(() => setLoading(false), 2000);
@@ -25,6 +25,15 @@ export default function Home() {
     return (
       <div className="preloader-overlay">
         <div className="preloader-container">
+
+          import {useReview} from "../context/ReviewContext";
+
+          const {triggerReview} = useReview();
+
+          <button onClick={triggerReview} style={{ position: "fixed", bottom: 20, right: 20 }}>
+            TEST REVIEW POPUP
+          </button>
+
           <div className="spinner"></div>
           <div className="preloader-text">Loading Resume Builder...</div>
         </div>
@@ -37,12 +46,12 @@ export default function Home() {
     <main className="home-page">
       <HeroSection />
       <FeaturesHowTestimonials />
-      <TemplateShowcase/>
-      <AiTutorialVideo/>
+      <TemplateShowcase />
+      <AiTutorialVideo />
       <FeaturesCoverLetter />
       <CounterBlock />
       <Footer />
-      
+
     </main>
   );
 }
