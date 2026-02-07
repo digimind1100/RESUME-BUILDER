@@ -15,6 +15,9 @@ setTimeout(() => {
   triggerReview();
 }, 600);
 
+console.log("DownloadPDF props:", { user, onReviewTrigger });
+
+
   const submitReview = async (data) => {
   await fetch("/api/reviews", {
     method: "POST",
@@ -83,11 +86,14 @@ checkboxes.forEach(cb => (cb.style.display = ""));
 
 // ensure popup after download
 setTimeout(() => {
-if (typeof onReviewTrigger === "function") {
-  onReviewTrigger();
-}
-
+  if (
+    typeof onReviewTrigger === "function" &&
+    !localStorage.getItem("reviewSubmitted")
+  ) {
+    onReviewTrigger();
+  }
 }, 600);
+
 
 
 
