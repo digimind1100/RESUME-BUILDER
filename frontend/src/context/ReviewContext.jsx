@@ -9,10 +9,7 @@ export function ReviewProvider({ children, user }) {
   const [toast, setToast] = useState(false);
 
   const triggerReview = () => {
-    console.log("🔥 triggerReview CALLED");
-
     if (!localStorage.getItem("reviewSubmitted")) {
-      console.log("✅ review not submitted → opening modal");
       setShowReview(true);
     }
   };

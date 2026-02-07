@@ -46,3 +46,12 @@
 .star.active {
   color: #f5b301;
 }
+.review-modal {
+  position: relative;
+  z-index: 1000000;
+}
+
+.close-btn {
+  z-index: 1000001;
+  pointer-events: auto;
+}
