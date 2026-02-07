@@ -14,7 +14,6 @@ export default function ReviewModal({ userName = "", onClose, onSubmit }) {
 
     setLoading(true);
     await onSubmit({ name, rating, review });
-    localStorage.setItem("reviewSubmitted", "true");
     setLoading(false);
     onClose();
   };
@@ -28,10 +27,7 @@ export default function ReviewModal({ userName = "", onClose, onSubmit }) {
 
         <form onSubmit={handleSubmit}>
           <label>Name</label>
-          <input
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
+          <input value={name} onChange={(e) => setName(e.target.value)} />
 
           <label>Rating</label>
           <div className="stars">
