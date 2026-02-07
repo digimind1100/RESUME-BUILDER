@@ -11,7 +11,6 @@ import "./ResumeBuilder.css";
 import PaymentGate from "../components/payment/PaymentGate";
 import usePaymentGuard from "../hooks/usePaymentGuard";
 import { useReview } from "../context/ReviewContext";
-import DownloadPDF from "./DownloadPDF";
 import { useAuth } from "../context/AuthContext";
 
 
@@ -19,8 +18,6 @@ import { useAuth } from "../context/AuthContext";
 
 const ResumeBuilderQR = () => {
 
-const { triggerReview } = useReview();
-const { user } = useAuth();
 
   const [formData, setFormData] = useState({});
   const [selectedEducations, setSelectedEducations] = useState([]);
@@ -255,10 +252,6 @@ const handleSkillsClickWithGuard = () => {
   onSuccess={handlePaymentSuccess}
 />
 
- <DownloadPDF
-      user={user}
-      onReviewTrigger={triggerReview}
-    />
     </div>
   );
 };

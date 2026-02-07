@@ -12,7 +12,6 @@ import PreviewPanel from "./PreviewPanel";
 import usePaymentGuard from "../hooks/usePaymentGuard";
 import PaymentGate from "../components/payment/PaymentGate";
 import { useReview } from "../context/ReviewContext";
-import DownloadPDF from "./DownloadPDF";
 import { useAuth } from "../context/AuthContext";
 
 
@@ -23,9 +22,6 @@ import "./ResumeBuilder.css";
 
 const ResumeBuilder = () => {
   const { templateId } = useParams(); // e.g. classic | professional | creative-bold
-const { triggerReview } = useReview();
-
-const { user } = useAuth();
 
   /* ---------------- TEMPLATE RESOLUTION ---------------- */
   const resolvedTemplate =
@@ -271,10 +267,7 @@ const { user } = useAuth();
         onClose={() => setShowPaymentModal(false)}
         onSuccess={handlePaymentSuccess}
       />
-<DownloadPDF
-        user={user}
-        onReviewTrigger={triggerReview}
-      />
+
     </div>
 
 
