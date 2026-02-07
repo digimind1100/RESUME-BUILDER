@@ -6,6 +6,8 @@ import { useReview } from "../context/ReviewContext";
 export default function DownloadPDF({ user, onReviewTrigger })  {
   // ✅ FIXED: consistent state name
 
+  console.log("onReviewTrigger =", onReviewTrigger);
+
 const [toast, setToast] = useState(false);
 const { triggerReview } = useReview();
 
