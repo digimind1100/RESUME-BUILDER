@@ -9,8 +9,8 @@ export default function DownloadPDF({ user, onReviewTrigger })  {
   console.log("onReviewTrigger =", onReviewTrigger);
 
 const [toast, setToast] = useState(false);
-const { triggerReview } = useReview();
-
+const { triggerReview, allowReviewAfterDownload } = useReview();
+allowReviewAfterDownload();
 setTimeout(() => {
   triggerReview();
 }, 600);

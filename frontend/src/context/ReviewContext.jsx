@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useRef } from "react";
 import ReviewModal from "../components/ReviewModal";
 import Toast from "../components/Toast";
 
@@ -8,7 +8,16 @@ export function ReviewProvider({ children, user }) {
   const [showReview, setShowReview] = useState(false);
   const [toast, setToast] = useState(false);
 
+  // 🔒 HARD LOCK — prevents auto-trigger
+  const allowTriggerRef = useRef(false);
+
+  const allowReviewAfterDownload = () => {
+    allowTriggerRef.current = true;
+  };
+
   const triggerReview = () => {
+    if (!allowTriggerRef.current) return;
+
     if (!localStorage.getItem("reviewSubmitted")) {
       setShowReview(true);
     }
@@ -24,18 +33,24 @@ export function ReviewProvider({ children, user }) {
     localStorage.setItem("reviewSubmitted", "true");
     setShowReview(false);
     setToast(true);
+    allowTriggerRef.current = false;
 
     setTimeout(() => setToast(false), 3000);
   };
 
   return (
-    <ReviewContext.Provider value={{ triggerReview }}>
+    <ReviewContext.Provider
+      value={{ triggerReview, allowReviewAfterDownload }}
+    >
       {children}
 
       {showReview && (
         <ReviewModal
           userName={user?.name || ""}
-          onClose={() => setShowReview(false)}
+          onClose={() => {
+            setShowReview(false);
+            allowTriggerRef.current = false;
+          }}
           onSubmit={submitReview}
         />
       )}
