@@ -1,7 +1,7 @@
 import React from "react";
 import "./ButtonSection.css";
-import DownloadPDF from "./DownloadPDF";
-
+import { downloadResumeAndTriggerReview } from "./DownloadPDF";
+import { useReview } from "../context/ReviewContext";
 
 export default function ButtonSection({
   isEditing,
@@ -13,10 +13,21 @@ export default function ButtonSection({
   skills,
   jobTitle,
 }) {
+  const { triggerReview } = useReview();
+
+  const handleDownloadClick = () => {
+    downloadResumeAndTriggerReview({
+      onReviewTrigger: triggerReview,
+    });
+  };
+
   return (
     <div className="button-section-container button-section">
       <div className="button-section-inner">
-        <DownloadPDF />
+        {/* ✅ ONE Download button only */}
+        <button className="common-btn" onClick={handleDownloadClick}>
+          Download PDF
+        </button>
 
         <button
           className="common-btn"
