@@ -17,7 +17,7 @@ import "./ResumeBuilder.css";
 
 const ResumeBuilder = () => {
   const { templateId } = useParams(); // e.g. classic | professional | creative-bold
-
+const { triggerReview } = useReview();
   /* ---------------- TEMPLATE RESOLUTION ---------------- */
   const resolvedTemplate =
     templateId === "professional"
@@ -262,7 +262,10 @@ const ResumeBuilder = () => {
         onClose={() => setShowPaymentModal(false)}
         onSuccess={handlePaymentSuccess}
       />
-
+<DownloadPDF
+        user={user}
+        onReviewTrigger={triggerReview}
+      />
     </div>
 
 

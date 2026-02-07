@@ -14,6 +14,9 @@ import usePaymentGuard from "../hooks/usePaymentGuard";
 
 
 const ResumeBuilderQR = () => {
+
+const { triggerReview } = useReview();
+
   const [formData, setFormData] = useState({});
   const [selectedEducations, setSelectedEducations] = useState([]);
   const [jobTitle, setJobTitle] = useState("");
@@ -247,6 +250,10 @@ const handleSkillsClickWithGuard = () => {
   onSuccess={handlePaymentSuccess}
 />
 
+ <DownloadPDF
+      user={user}
+      onReviewTrigger={triggerReview}
+    />
     </div>
   );
 };
