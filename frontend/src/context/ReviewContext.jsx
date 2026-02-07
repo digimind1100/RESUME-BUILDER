@@ -8,11 +8,17 @@ export function ReviewProvider({ children, user }) {
   const [showReview, setShowReview] = useState(false);
   const [toast, setToast] = useState(false);
 
-  const triggerReview = () => {
-    if (!localStorage.getItem("reviewSubmitted")) {
-      setShowReview(true);
-    }
-  };
+ const triggerReview = () => {
+  console.log("🔥 triggerReview CALLED");
+
+  if (!localStorage.getItem("reviewSubmitted")) {
+    console.log("✅ review not submitted → opening modal");
+    setShowReview(true);
+  } else {
+    console.log("⛔ review already submitted");
+  }
+};
+
 
   const submitReview = async (data) => {
     await fetch("/api/reviews", {
