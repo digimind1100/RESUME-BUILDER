@@ -11,6 +11,7 @@ import ThemeSelector from "./ThemeSelector";
 import PreviewPanel from "./PreviewPanel";
 import usePaymentGuard from "../hooks/usePaymentGuard";
 import PaymentGate from "../components/payment/PaymentGate";
+import { useReview } from "../context/ReviewContext";
 
 
 import "./ResumeBuilder.css";
@@ -28,6 +29,9 @@ const ResumeBuilder = () => {
     new URLSearchParams(location.search).get("entry") || "template";
 
   const isPreviewFlow = entrySource === "start";
+
+const { triggerReview } = useReview();
+
 
   /* ---------------- STATE ---------------- */
   const [formData, setFormData] = useState({});
@@ -189,6 +193,20 @@ const ResumeBuilder = () => {
       {/* RIGHT: PREVIEW */}
       <div className="preview-panel-container">
         
+<button
+  onClick={triggerReview}
+  style={{
+    position: "fixed",
+    bottom: 20,
+    right: 20,
+    zIndex: 999999,
+    padding: "10px 14px",
+  }}
+>
+  TEST REVIEW POPUP
+</button>
+
+
         {/* POPUPS */}
         {showWorkPopup && (
           <WorkPopup
