@@ -2,20 +2,26 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import "./ReviewModal.css";
 
-export default function ReviewModal({ onClose, onSubmit }) {
+export default function ReviewModal({
+  onClose,
+  onSubmit,
+  userName = "", // ✅ fallback support
+}) {
   const { user } = useAuth();
 
-  const [rating, setRating] = useState(5); // ⭐ default
+  const [rating, setRating] = useState(5);
   const [review, setReview] = useState("");
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState("");
 
-  // ✅ FIX 1: user aane par name set karo
+  // ✅ NAME AUTO-FILL (GUARANTEED)
   useEffect(() => {
     if (user?.name) {
       setName(user.name);
+    } else if (userName) {
+      setName(userName);
     }
-  }, [user]);
+  }, [user, userName]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,6 +48,7 @@ export default function ReviewModal({ onClose, onSubmit }) {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Your name"
+            required
           />
 
           {/* ⭐ RATING */}
@@ -50,13 +57,8 @@ export default function ReviewModal({ onClose, onSubmit }) {
             {[1, 2, 3, 4, 5].map((star) => (
               <span
                 key={star}
-                role="button"
-                aria-label={`${star} star`}
                 className={`star ${star <= rating ? "active" : ""}`}
-                onClick={() => {
-                  console.log("⭐ Star clicked:", star);
-                  setRating(star);
-                }}
+                onClick={() => setRating(star)}
               >
                 ★
               </span>
@@ -72,7 +74,12 @@ export default function ReviewModal({ onClose, onSubmit }) {
             placeholder="Write your feedback..."
           />
 
-          <button type="submit" disabled={loading}>
+          {/* 🌟 PRETTY BUTTON */}
+          <button
+            type="submit"
+            className="submit-review-btn"
+            disabled={loading}
+          >
             {loading ? "Submitting..." : "Submit Review"}
           </button>
         </form>

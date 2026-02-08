@@ -145,3 +145,34 @@
 .star:hover {
   transform: scale(1.15);
 }
+/* ===== Submit Review Button (Polished) ===== */
+.submit-review-btn {
+  margin-top: 16px;
+  padding: 10px 0;
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  background: linear-gradient(135deg, #4caf50, #2e7d32);
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s;
+  box-shadow: 0 6px 14px rgba(76, 175, 80, 0.35);
+}
+
+.submit-review-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(76, 175, 80, 0.45);
+}
+
+.submit-review-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 10px rgba(76, 175, 80, 0.35);
+}
+
+.submit-review-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: none;
+}
