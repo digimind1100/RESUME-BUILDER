@@ -28,6 +28,7 @@ export default function ReviewModal({
   return (
     <div className="review-overlay">
       <div className="review-modal">
+         onClick={(e) => e.stopPropagation()}
         {/* ✅ CLOSE BUTTON FIXED */}
         <button
           type="button"

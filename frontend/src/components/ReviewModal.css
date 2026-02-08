@@ -131,3 +131,17 @@
 .star:hover {
   transform: scale(1.1);
 }
+.review-overlay {
+  pointer-events: auto !important;
+  z-index: 99999 !important;
+}
+
+.review-modal {
+  pointer-events: auto !important;
+  position: relative;
+  z-index: 100000 !important;
+}
+
+.close-btn {
+  pointer-events: auto !important;
+}
