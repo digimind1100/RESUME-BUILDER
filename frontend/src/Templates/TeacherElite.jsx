@@ -191,6 +191,9 @@ Subject: ${qrForm.subject}
   const [activeTab, setActiveTab] = useState("High School");
   const currentTitle = TAB_TITLE_MAP[activeTab];
 
+const handleUseTemplate = (route) => {
+  navigate(route);
+};
 
 
 
