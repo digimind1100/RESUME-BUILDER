@@ -18,9 +18,6 @@ export default function ReviewModal({
     setLoading(true);
     await onSubmit({ name, rating, review });
 
-    // ✅ mark as submitted ONLY here
-    localStorage.setItem("reviewSubmitted", "true");
-
     setLoading(false);
     onClose();
   };

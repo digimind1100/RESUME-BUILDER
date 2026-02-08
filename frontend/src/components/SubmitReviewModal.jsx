@@ -5,9 +5,6 @@ export default function SubmitReviewModal({ onClose, onSubmit }) {
   const [rating, setRating] = useState(5);
   const [text, setText] = useState("");
 
-  localStorage.setItem("reviewSubmitted", "true");
-
-
   const handleSubmit = () => {
     if (text.length < 20) {
       alert("Please write at least 20 characters.");
