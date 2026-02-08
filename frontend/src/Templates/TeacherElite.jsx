@@ -14,9 +14,6 @@ import { FaShareAlt } from "react-icons/fa";
 import { useReview } from "../context/ReviewContext";
 import { downloadResumeAndTriggerReview } from "../components/DownloadPDF";
 
-
-
-
 const TABS = [
   "Kindergarten",
   "Elementary",
@@ -72,8 +69,6 @@ export default function TeacherElite() {
   };
 
   // after PDF download
-  triggerReview();
-
 
   const {
     isPaid,
@@ -169,7 +164,6 @@ Subject: ${qrForm.subject}
   const handleDownloadPDF = async () => {
     const element = resumeRef.current;
     if (!element) return;
-
     const canvas = await html2canvas(element, {
       scale: 2,
       useCORS: true,
