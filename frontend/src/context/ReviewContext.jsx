@@ -9,8 +9,6 @@ export function ReviewProvider({ children, user }) {
   const [showReview, setShowReview] = useState(false);
   const [toast, setToast] = useState(false);
 
-  const { user } = useAuth();
-
   // 🔒 ONLY way to open modal
   const triggerReview = () => {
     if (localStorage.getItem("reviewSubmitted")) return;
