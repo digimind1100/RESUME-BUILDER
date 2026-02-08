@@ -25,7 +25,6 @@ export function ReviewProvider({ children, user }) {
       body: JSON.stringify(data),
     });
 
-    localStorage.setItem("reviewSubmitted", "true");
     setShowReview(false);
     setToast(true);
 
