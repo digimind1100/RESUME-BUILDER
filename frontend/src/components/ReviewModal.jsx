@@ -1,20 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import "./ReviewModal.css";
 
-export default function ReviewModal({
-  onClose,
-  onSubmit,
-}) {
+export default function ReviewModal({ onClose, onSubmit }) {
   const { user } = useAuth();
 
-  // ⭐ Default 5-star rating
-  const [rating, setRating] = useState(5);
+  const [rating, setRating] = useState(5); // ⭐ default
   const [review, setReview] = useState("");
   const [loading, setLoading] = useState(false);
+  const [name, setName] = useState("");
 
-  // ✅ Auto-fill name if user exists
-  const [name, setName] = useState(user?.name || "");
+  // ✅ FIX 1: user aane par name set karo
+  useEffect(() => {
+    if (user?.name) {
+      setName(user.name);
+    }
+  }, [user]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,22 +24,13 @@ export default function ReviewModal({
     setLoading(true);
     await onSubmit({ name, rating, review });
     setLoading(false);
-
     onClose();
   };
 
   return (
     <div className="review-overlay">
       <div className="review-modal">
-        
-        {/* ❌ Close */}
-        <button
-          type="button"
-          className="close-btn"
-          onClick={onClose}
-        >
-          ✕
-        </button>
+        <button className="close-btn" onClick={onClose}>✕</button>
 
         <h3 className="review-title">⭐ Leave a Review</h3>
 
@@ -49,18 +41,22 @@ export default function ReviewModal({
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder={user ? "Edit your name" : "Your name"}
-            required
+            placeholder="Your name"
           />
 
-          {/* ⭐ STAR RATING */}
+          {/* ⭐ RATING */}
           <label>Rating</label>
           <div className="rating-stars">
             {[1, 2, 3, 4, 5].map((star) => (
               <span
                 key={star}
-                className={star <= rating ? "star active" : "star"}
-                onClick={() => setRating(star)}
+                role="button"
+                aria-label={`${star} star`}
+                className={`star ${star <= rating ? "active" : ""}`}
+                onClick={() => {
+                  console.log("⭐ Star clicked:", star);
+                  setRating(star);
+                }}
               >
                 ★
               </span>
