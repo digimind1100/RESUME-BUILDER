@@ -1,30 +1,34 @@
 import { useState } from "react";
-import { createPortal } from "react-dom";
 import "./ReviewModal.css";
 
-export default function ReviewModal({ userName, onClose, onSubmit }) {
-  const [name, setName] = useState(userName || "");
-  const [rating, setRating] = useState(5);
+export default function ReviewModal({
+  userName = "",
+  onClose,
+  onSubmit,
+}) {
+  const [name, setName] = useState(userName);
+  const [rating, setRating] = useState(5); // ⭐ default 5
   const [review, setReview] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (loading) return;
+
     setLoading(true);
     await onSubmit({ name, rating, review });
+
+    // ✅ mark as submitted ONLY here
+    localStorage.setItem("reviewSubmitted", "true");
+
     setLoading(false);
+    onClose();
   };
 
-  return createPortal(
-    <div
-      className="review-overlay"
-      onClick={onClose}              // click outside closes
-    >
-      <div
-        className="review-modal"
-        onClick={(e) => e.stopPropagation()}  // 🔥 THIS is why ❌ now works
-      >
+  return (
+    <div className="review-overlay">
+      <div className="review-modal">
+        {/* ✅ CLOSE BUTTON FIXED */}
         <button
           type="button"
           className="close-btn"
@@ -33,34 +37,43 @@ export default function ReviewModal({ userName, onClose, onSubmit }) {
           ✕
         </button>
 
-        <h3>⭐ Leave a Review</h3>
+        <h3 className="review-title">⭐ Leave a Review</h3>
 
         <form onSubmit={handleSubmit}>
-          <input value={name} onChange={(e) => setName(e.target.value)} />
+          <label>Name</label>
+          <input
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Your name"
+          />
 
+          {/* ⭐ STAR RATING */}
+          <label>Rating</label>
           <div className="stars">
-            {[1, 2, 3, 4, 5].map((s) => (
+            {[1, 2, 3, 4, 5].map((star) => (
               <span
-                key={s}
-                className={s <= rating ? "star active" : "star"}
-                onClick={() => setRating(s)}
+                key={star}
+                className={`star ${star <= rating ? "active" : ""}`}
+                onClick={() => setRating(star)}
               >
                 ★
               </span>
             ))}
           </div>
 
+          <label>Review (optional)</label>
           <textarea
+            rows="4"
             value={review}
             onChange={(e) => setReview(e.target.value)}
+            placeholder="Write your feedback..."
           />
 
           <button type="submit" disabled={loading}>
-            Submit Review
+            {loading ? "Submitting..." : "Submit Review"}
           </button>
         </form>
       </div>
-    </div>,
-    document.body
+    </div>
   );
 }
