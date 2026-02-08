@@ -323,7 +323,9 @@ const handleUseTemplate = (route) => {
       </div>
 
       {/* A4 RESUME */}
-      <div className="te-a4" ref={resumeRef} style={{ position: "relative" }}>
+      <div 
+      id="resumeContainer" className="te-a4"ref={resumeRef}style={{ position: "relative" }}>
+
         <Watermark show={!canEdit} />
         <div className="te-resume">
           {/* HEADER with decorative wave + profile */}
