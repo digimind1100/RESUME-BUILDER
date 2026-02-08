@@ -63,14 +63,23 @@ export function downloadResumeAndTriggerReview({
       // Restore UI
       checkboxes.forEach(cb => (cb.style.display = ""));
 
+console.log("🧪 Review trigger check:", {
+  onReviewTriggerType: typeof onReviewTrigger,
+  reviewSubmitted: localStorage.getItem("reviewSubmitted"),
+});
+
+
+
       // 🔒 SAFE review trigger
       setTimeout(() => {
-        if (
-          typeof onReviewTrigger === "function" &&
-          !localStorage.getItem("reviewSubmitted")
-        ) {
-          onReviewTrigger();
-        }
+       if (
+  typeof onReviewTrigger === "function" &&
+  !localStorage.getItem("reviewSubmitted")
+) {
+  console.log("🔥 Calling triggerReview()");
+  onReviewTrigger();
+}
+
       }, 600);
     });
 }
