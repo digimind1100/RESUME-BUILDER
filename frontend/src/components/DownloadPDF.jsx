@@ -8,8 +8,15 @@ import html2pdf from "html2pdf.js";
 export function downloadResumeAndTriggerReview({
   onReviewTrigger,
 }) {
+  console.log("🟢 DownloadPDF function CALLED");
+
   const container = document.getElementById("resumeContainer");
-  if (!container) return;
+  if (!container) {
+    console.warn("❌ resumeContainer NOT found");
+    return;
+  }
+
+  console.log("✅ resumeContainer found");
 
   // Hide checkboxes
   const checkboxes = container.querySelectorAll("input[type='checkbox']");
@@ -37,12 +44,16 @@ export function downloadResumeAndTriggerReview({
     pagebreak: { mode: ["avoid-all", "css", "legacy"] },
   };
 
+  console.log("🟡 Starting html2pdf...");
+
   html2pdf()
     .set(opt)
     .from(clone)
     .toPdf()
     .get("pdf")
     .then((pdf) => {
+      console.log("🟢 PDF generated");
+
       if (pdf.internal.getNumberOfPages() > 1) {
         pdf.deletePage(1);
       }
@@ -60,26 +71,32 @@ export function downloadResumeAndTriggerReview({
     })
     .save()
     .finally(() => {
+      console.log("🟢 PDF saved — entering finally()");
+
       // Restore UI
       checkboxes.forEach(cb => (cb.style.display = ""));
 
-console.log("🧪 Review trigger check:", {
-  onReviewTriggerType: typeof onReviewTrigger,
-  reviewSubmitted: localStorage.getItem("reviewSubmitted"),
-});
-
-
+      console.log("🧪 Review trigger check:", {
+        onReviewTriggerType: typeof onReviewTrigger,
+        reviewSubmitted: localStorage.getItem("reviewSubmitted"),
+      });
 
       // 🔒 SAFE review trigger
       setTimeout(() => {
-       if (
-  typeof onReviewTrigger === "function" &&
-  !localStorage.getItem("reviewSubmitted")
-) {
-  console.log("🔥 Calling triggerReview()");
-  onReviewTrigger();
-}
+        console.log("⏱ Review trigger timeout fired");
 
+        if (
+          typeof onReviewTrigger === "function" &&
+          !localStorage.getItem("reviewSubmitted")
+        ) {
+          console.log("🔥 Calling triggerReview()");
+          onReviewTrigger();
+        } else {
+          console.log("⛔ Review NOT triggered", {
+            isFunction: typeof onReviewTrigger === "function",
+            reviewSubmitted: localStorage.getItem("reviewSubmitted"),
+          });
+        }
       }, 600);
     });
 }
