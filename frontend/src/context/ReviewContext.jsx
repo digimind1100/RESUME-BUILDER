@@ -13,9 +13,16 @@ export function ReviewProvider({ children }) {
 
   // 🔒 ONLY way to open modal
   const triggerReview = () => {
-    if (localStorage.getItem("reviewSubmitted")) return;
-    setShowReview(true);
-  };
+  // ❌ agar review pehle submit ho chuki
+  if (localStorage.getItem("reviewSubmitted")) return;
+
+  // ❌ agar user PAID nahi hai
+  if (!user || !user.isPaid) return;
+
+  // ✅ sirf PAID user ke liye
+  setShowReview(true);
+};
+
 
   const closeReview = () => {
     setShowReview(false);
