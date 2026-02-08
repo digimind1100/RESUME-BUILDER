@@ -83,20 +83,13 @@ export function downloadResumeAndTriggerReview({
 
       // 🔒 SAFE review trigger
       setTimeout(() => {
-        console.log("⏱ Review trigger timeout fired");
+  console.log("⏱ Review trigger timeout fired");
 
-        if (
-          typeof onReviewTrigger === "function" &&
-          !localStorage.getItem("reviewSubmitted")
-        ) {
-          console.log("🔥 Calling triggerReview()");
-          onReviewTrigger();
-        } else {
-          console.log("⛔ Review NOT triggered", {
-            isFunction: typeof onReviewTrigger === "function",
-            reviewSubmitted: localStorage.getItem("reviewSubmitted"),
-          });
-        }
-      }, 600);
+  if (typeof onReviewTrigger === "function") {
+    console.log("🔥 Calling triggerReview()");
+    onReviewTrigger();
+  }
+}, 600);
+
     });
 }
