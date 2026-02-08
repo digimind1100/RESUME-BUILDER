@@ -1,6 +1,7 @@
 import { createContext, useContext, useState } from "react";
 import ReviewModal from "../components/ReviewModal";
 import Toast from "../components/Toast";
+import { useAuth } from "../context/AuthContext";
 
 const ReviewContext = createContext(null);
 
@@ -8,13 +9,14 @@ export function ReviewProvider({ children, user }) {
   const [showReview, setShowReview] = useState(false);
   const [toast, setToast] = useState(false);
 
+  const { user } = useAuth();
+
   // 🔒 ONLY way to open modal
   const triggerReview = () => {
     if (localStorage.getItem("reviewSubmitted")) return;
     setShowReview(true);
   };
 
-  
   const closeReview = () => {
     setShowReview(false);
   };
@@ -25,10 +27,8 @@ export function ReviewProvider({ children, user }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     });
-
     setShowReview(false);
     setToast(true);
-
     setTimeout(() => setToast(false), 3000);
   };
 
