@@ -1,6 +1,6 @@
 import React from "react";
 import "./ButtonSection.css";
-import { downloadResumePDF } from "./DownloadPDF";
+import { downloadResumeAndTriggerReview } from "./DownloadPDF";
 import { useReview } from "../context/ReviewContext";
 
 export default function ButtonSection({
@@ -11,21 +11,12 @@ export default function ButtonSection({
   const { triggerReview } = useReview();
 
   const handleDownloadClick = () => {
-    const hasReviewed = localStorage.getItem("hasReviewed");
-
-    // ⭐ First time → show popup
-    if (!hasReviewed) {
-      triggerReview({
-        onSuccess: () => {
-          localStorage.setItem("hasReviewed", "true");
-          downloadResumePDF(); // 👈 PDF AFTER review
-        },
-      });
-      return;
-    }
-
-    // ✅ Already reviewed
-    downloadResumePDF();
+    // ✅ AI template flow:
+    // PDF download FIRST
+    // Review popup AFTER
+    downloadResumeAndTriggerReview({
+      onReviewTrigger: triggerReview,
+    });
   };
 
   return (
