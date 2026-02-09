@@ -1,28 +1,31 @@
-import React, { useState } from "react";
+import React from "react";
 import "./ButtonSection.css";
 import { downloadResumeAndTriggerReview } from "./DownloadPDF";
 import { useReview } from "../context/ReviewContext";
-import ReviewPopup from "./ReviewPopup"; // adjust path if needed
 
 export default function ButtonSection({
   isEditing,
   setIsEditing,
   handleDeleteSelected,
-  formData,
-  selectedEducations,
-  workExperiences,
-  skills,
-  jobTitle,
 }) {
   const { triggerReview } = useReview();
-  const [showReviewPopup, setShowReviewPopup] = useState(false);
 
-  // 👉 called when user clicks Download
   const handleDownloadClick = () => {
     const hasReviewed = localStorage.getItem("hasReviewed");
 
     if (!hasReviewed) {
-      setShowReviewPopup(true); // show popup first
+      // ✅ open EXISTING review popup (context-based)
+      triggerReview({
+        onSuccess: () => {
+          localStorage.setItem("hasReviewed", "true");
+
+          // continue download after review
+          downloadResumeAndTriggerReview({
+            onReviewTrigger: triggerReview,
+          });
+        },
+      });
+
       return;
     }
 
@@ -32,46 +35,24 @@ export default function ButtonSection({
     });
   };
 
-  // 👉 called AFTER successful review submit
-  const handleReviewSuccess = () => {
-    localStorage.setItem("hasReviewed", "true");
-    setShowReviewPopup(false);
-
-    // continue original download flow
-    downloadResumeAndTriggerReview({
-      onReviewTrigger: triggerReview,
-    });
-  };
-
   return (
-    <>
-      <div className="button-section-container button-section">
-        <div className="button-section-inner">
-          {/* ✅ ONE Download button only */}
-          <button className="common-btn" onClick={handleDownloadClick}>
-            Download PDF
-          </button>
+    <div className="button-section-container button-section">
+      <div className="button-section-inner">
+        <button className="common-btn" onClick={handleDownloadClick}>
+          Download PDF
+        </button>
 
-          <button
-            className="common-btn"
-            onClick={() => setIsEditing((prev) => !prev)}
-          >
-            {isEditing ? "Lock Preview" : "Edit Preview"}
-          </button>
+        <button
+          className="common-btn"
+          onClick={() => setIsEditing((prev) => !prev)}
+        >
+          {isEditing ? "Lock Preview" : "Edit Preview"}
+        </button>
 
-          <button className="common-btn" onClick={handleDeleteSelected}>
-            Delete Selected
-          </button>
-        </div>
+        <button className="common-btn" onClick={handleDeleteSelected}>
+          Delete Selected
+        </button>
       </div>
-
-      {/* ✅ Review Popup */}
-      {showReviewPopup && (
-        <ReviewPopup
-          onClose={() => setShowReviewPopup(false)}
-          onSuccess={handleReviewSuccess}
-        />
-      )}
-    </>
+    </div>
   );
 }
