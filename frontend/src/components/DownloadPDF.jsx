@@ -2,7 +2,6 @@ import html2pdf from "html2pdf.js";
 
 /**
  * Pure utility function
- * NO React hooks here
  */
 export function downloadResumePDF() {
   console.log("🟢 Starting PDF download");
@@ -58,3 +57,6 @@ export function downloadResumePDF() {
       console.log("✅ PDF downloaded");
     });
 }
+
+/* ✅ BACKWARD COMPATIBILITY EXPORT */
+export const downloadResumeAndTriggerReview = downloadResumePDF;
