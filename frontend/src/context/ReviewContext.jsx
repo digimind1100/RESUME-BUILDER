@@ -10,20 +10,18 @@ export function ReviewProvider({ children }) {
 
   const [showReview, setShowReview] = useState(false);
   const [toast, setToast] = useState(false);
+  const [onSuccessCallback, setOnSuccessCallback] = useState(null);
 
-  // 🔒 ONLY way to open modal
-  const triggerReview = () => {
-  // ❌ agar review pehle submit ho chuki
+
+const triggerReview = ({ onSuccess } = {}) => {
   if (localStorage.getItem("reviewSubmitted")) return;
-
-  // ❌ agar user PAID nahi hai
   if (!user || !user.isPaid) return;
 
-  // ✅ sirf PAID user ke liye
+  if (typeof onSuccess === "function") {
+    setOnSuccessCallback(() => onSuccess);
+  }
   setShowReview(true);
 };
-
-
   const closeReview = () => {
     setShowReview(false);
   };
@@ -34,11 +32,6 @@ export function ReviewProvider({ children }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     });
-
-    // after successful API response
-if (typeof onSuccess === "function") {
-  onSuccess();
-}
 
 
     // ✅ mark as reviewed ONLY after success
