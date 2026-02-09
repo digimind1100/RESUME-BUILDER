@@ -61,14 +61,13 @@ export default function TeacherElite() {
   const isMobile = window.innerWidth <= 768;
   const [showMobileEditMsg, setShowMobileEditMsg] = useState(false);
 
- const { triggerReview } = useReview();
+  const { triggerReview } = useReview();
 
-const handleDownloadClick = () => {
-  downloadResumeAndTriggerReview({
-    onReviewTrigger: () => triggerReview({ force: true }),
-  });
-};
-
+  const handleDownloadClick = () => {
+    downloadResumeAndTriggerReview({
+      onReviewTrigger: triggerReview,
+    });
+  };
 
   // after PDF download
 
