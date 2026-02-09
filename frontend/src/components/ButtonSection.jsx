@@ -10,22 +10,26 @@ export default function ButtonSection({
 }) {
   const { triggerReview } = useReview();
 
-  const handleDownloadClick = () => {
-    // ✅ AI template flow:
-    // PDF download FIRST
-    // Review popup AFTER
-    downloadResumeAndTriggerReview({
-      onReviewTrigger: triggerReview,
-    });
+  const handleDownloadClick = async () => {
+    try {
+      // 🔥 PDF download + Review flow
+      await downloadResumeAndTriggerReview({
+        onReviewTrigger: triggerReview,
+      });
+    } catch (err) {
+      console.error("❌ Download / Review error:", err);
+    }
   };
 
   return (
     <div className="button-section-container button-section">
       <div className="button-section-inner">
+        {/* 📄 DOWNLOAD PDF */}
         <button className="common-btn" onClick={handleDownloadClick}>
           Download PDF
         </button>
 
+        {/* ✏️ EDIT / LOCK */}
         <button
           className="common-btn"
           onClick={() => setIsEditing(prev => !prev)}
@@ -33,6 +37,7 @@ export default function ButtonSection({
           {isEditing ? "Lock Preview" : "Edit Preview"}
         </button>
 
+        {/* 🗑️ DELETE */}
         <button className="common-btn" onClick={handleDeleteSelected}>
           Delete Selected
         </button>
