@@ -1,10 +1,12 @@
 import html2pdf from "html2pdf.js";
 
 /**
- * Pure utility function
+ * AI Templates flow:
+ * PDF downloads FIRST
+ * Review modal opens AFTER (same as old behavior)
  */
-export function downloadResumePDF() {
-  console.log("🟢 Starting PDF download");
+export function downloadResumeAndTriggerReview({ onReviewTrigger } = {}) {
+  console.log("🟢 DownloadPDF function CALLED");
 
   const container = document.getElementById("resumeContainer");
   if (!container) {
@@ -32,31 +34,20 @@ export function downloadResumePDF() {
     image: { type: "jpeg", quality: 1 },
     html2canvas: { scale: 2, useCORS: true },
     jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-    pagebreak: { mode: ["avoid-all", "css", "legacy"] },
   };
 
   html2pdf()
     .set(opt)
     .from(clone)
-    .toPdf()
-    .get("pdf")
-    .then((pdf) => {
-      if (pdf.internal.getNumberOfPages() > 1) {
-        pdf.deletePage(1);
-      }
-
-      const totalPages = pdf.internal.getNumberOfPages();
-      for (let i = 1; i <= totalPages; i++) {
-        pdf.setPage(i);
-        pdf.text(`Page ${i} of ${totalPages}`, 182, 291);
-      }
-    })
     .save()
     .finally(() => {
+      // restore UI
       checkboxes.forEach(cb => (cb.style.display = ""));
-      console.log("✅ PDF downloaded");
+
+      // ⭐ OPEN REVIEW MODAL AFTER PDF (AI templates)
+      if (typeof onReviewTrigger === "function") {
+        console.log("⭐ Opening review modal after PDF");
+        onReviewTrigger();
+      }
     });
 }
-
-/* ✅ BACKWARD COMPATIBILITY EXPORT */
-export const downloadResumeAndTriggerReview = downloadResumePDF;
