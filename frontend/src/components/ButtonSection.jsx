@@ -8,20 +8,7 @@ export default function ButtonSection({
   handleDeleteSelected,
 }) {
   const handleDownloadClick = () => {
-    const hasReviewed = localStorage.getItem("hasReviewed");
-
-    // 🔒 If already reviewed → direct download
-    if (hasReviewed) {
-      downloadResumeAndTriggerReview();
-      return;
-    }
-
-    // ⭐ Not reviewed → let existing system handle popup + download
-    downloadResumeAndTriggerReview({
-      onReviewSuccess: () => {
-        localStorage.setItem("hasReviewed", "true");
-      },
-    });
+    downloadResumeAndTriggerReview();
   };
 
   return (
