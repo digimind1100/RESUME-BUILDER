@@ -1,14 +1,31 @@
 import React from "react";
 import "./ButtonSection.css";
-import { downloadResumeAndTriggerReview } from "./DownloadPDF";
+import { downloadResumePDF } from "./DownloadPDF";
+import { useReview } from "../context/ReviewContext";
 
 export default function ButtonSection({
   isEditing,
   setIsEditing,
   handleDeleteSelected,
 }) {
+  const { triggerReview } = useReview();
+
   const handleDownloadClick = () => {
-    downloadResumeAndTriggerReview();
+    const hasReviewed = localStorage.getItem("hasReviewed");
+
+    // ⭐ First time → show popup
+    if (!hasReviewed) {
+      triggerReview({
+        onSuccess: () => {
+          localStorage.setItem("hasReviewed", "true");
+          downloadResumePDF(); // 👈 PDF AFTER review
+        },
+      });
+      return;
+    }
+
+    // ✅ Already reviewed
+    downloadResumePDF();
   };
 
   return (
@@ -20,7 +37,7 @@ export default function ButtonSection({
 
         <button
           className="common-btn"
-          onClick={() => setIsEditing((prev) => !prev)}
+          onClick={() => setIsEditing(prev => !prev)}
         >
           {isEditing ? "Lock Preview" : "Edit Preview"}
         </button>
