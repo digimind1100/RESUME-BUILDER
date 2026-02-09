@@ -192,7 +192,8 @@ const handleUseTemplate = (route) => {
 
 
   return (
-    <div className="te-wrapper">
+    <div id="resumeContainer" className="resume-wrapper">
+
       {/* TOP BUTTONS */}
       <div className="te-buttons" contentEditable={false}>
         <button

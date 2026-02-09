@@ -35,6 +35,12 @@ export function ReviewProvider({ children }) {
       body: JSON.stringify(data),
     });
 
+    // after successful API response
+if (typeof onSuccess === "function") {
+  onSuccess();
+}
+
+
     // ✅ mark as reviewed ONLY after success
     localStorage.setItem("reviewSubmitted", "true");
 
