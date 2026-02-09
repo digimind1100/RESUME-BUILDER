@@ -26,21 +26,22 @@ const triggerReview = ({ onSuccess } = {}) => {
     setShowReview(false);
   };
 
-  const submitReview = async (data) => {
-    await fetch("/api/reviews", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
+const API_BASE = "https://resume-builder-backend-production-116d.up.railway.app";
 
+const submitReview = async (data) => {
+  await fetch(`${API_BASE}/api/reviews`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
 
-    // ✅ mark as reviewed ONLY after success
-    localStorage.setItem("reviewSubmitted", "true");
+  localStorage.setItem("reviewSubmitted", "true");
 
-    setShowReview(false);
-    setToast(true);
-    setTimeout(() => setToast(false), 3000);
-  };
+  setShowReview(false);
+  setToast(true);
+  setTimeout(() => setToast(false), 3000);
+};
+
 
   // ✅ SAFELY RESOLVE USER NAME (bullet-proof)
   const resolvedUserName =
