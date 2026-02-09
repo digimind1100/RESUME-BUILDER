@@ -1,0 +1,59 @@
+.admin-card {
+  background: #0b1220;
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #fff;
+}
+
+.admin-table thead {
+  background: #020617;
+}
+
+.admin-table th {
+  text-align: left;
+  padding: 12px;
+  font-size: 13px;
+  color: #cbd5e1;
+}
+
+.admin-table td {
+  padding: 14px 12px;
+  border-top: 1px solid #1e293b;
+  font-size: 14px;
+}
+
+.badge {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+}
+
+.badge.pending {
+  background: #ffedd5;
+  color: #c2410c;
+}
+
+.btn {
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  margin-right: 8px;
+  font-size: 13px;
+}
+
+.btn.approve {
+  background: #16a34a;
+  color: #fff;
+}
+
+.btn.reject {
+  background: #dc2626;
+  color: #fff;
+}
