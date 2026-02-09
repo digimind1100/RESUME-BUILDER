@@ -13,7 +13,7 @@ import ShareResume from "../components/ShareResume";
 import { FaShareAlt } from "react-icons/fa";
 import { useReview } from "../context/ReviewContext";
 import { downloadResumeAndTriggerReview } from "../components/DownloadPDF";
-import { useReview } from "../context/ReviewContext";
+
 
 const TABS = [
   "Kindergarten",
@@ -61,13 +61,14 @@ export default function TeacherElite() {
   const isMobile = window.innerWidth <= 768;
   const [showMobileEditMsg, setShowMobileEditMsg] = useState(false);
 
-  const { triggerReview } = useReview();
+ const { triggerReview } = useReview();
 
-  const handleDownloadClick = () => {
-    downloadResumeAndTriggerReview({
-      onReviewTrigger: triggerReview,
-    });
-  };
+const handleDownloadClick = () => {
+  downloadResumeAndTriggerReview({
+    onReviewTrigger: () => triggerReview({ force: true }),
+  });
+};
+
 
   // after PDF download
 
