@@ -1,37 +1,26 @@
 import React from "react";
 import "./ButtonSection.css";
 import { downloadResumeAndTriggerReview } from "./DownloadPDF";
-import { useReview } from "../context/ReviewContext";
 
 export default function ButtonSection({
   isEditing,
   setIsEditing,
   handleDeleteSelected,
 }) {
-  const { triggerReview } = useReview();
-
   const handleDownloadClick = () => {
     const hasReviewed = localStorage.getItem("hasReviewed");
 
-    if (!hasReviewed) {
-      // ✅ open EXISTING review popup (context-based)
-      triggerReview({
-        onSuccess: () => {
-          localStorage.setItem("hasReviewed", "true");
-
-          // continue download after review
-          downloadResumeAndTriggerReview({
-            onReviewTrigger: triggerReview,
-          });
-        },
-      });
-
+    // 🔒 If already reviewed → direct download
+    if (hasReviewed) {
+      downloadResumeAndTriggerReview();
       return;
     }
 
-    // already reviewed → direct download
+    // ⭐ Not reviewed → let existing system handle popup + download
     downloadResumeAndTriggerReview({
-      onReviewTrigger: triggerReview,
+      onReviewSuccess: () => {
+        localStorage.setItem("hasReviewed", "true");
+      },
     });
   };
 
