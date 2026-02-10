@@ -37,19 +37,19 @@ export default function AdminReviews() {
       body: JSON.stringify({ status }),
     });
 
-    // 🔥 IMPORTANT: sirf status check karo
     if (!res.ok) {
       throw new Error("Request failed");
     }
 
-    // ✅ UI se remove karo
+    // ✅ remove approved review from pending list
     setReviews(prev => prev.filter(r => r._id !== id));
 
   } catch (err) {
-    console.error("❌ Approve failed:", err);
+    console.error("❌ Approve failed:", err.message);
     alert("Action failed");
   }
 };
+
 
 
   return (
