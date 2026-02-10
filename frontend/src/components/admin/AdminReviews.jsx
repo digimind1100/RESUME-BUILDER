@@ -25,31 +25,32 @@ export default function AdminReviews() {
   };
 
   const updateStatus = async (id, status) => {
-  try {
-    const token = localStorage.getItem("token");
+    try {
+      const token = localStorage.getItem("token");
 
-    const res = await fetch(
-      `${API_BASE}/api/admin/reviews/${id}/${status === "approved" ? "approve" : "reject"}`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+      const res = await fetch(
+        `${API_BASE}/api/admin/reviews/${id}/${status === "approved" ? "approve" : "reject"}`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ status }),
+        });
+
+      if (!res.ok) {
+        throw new Error("Request failed");
       }
-    );
 
-    if (!res.ok) {
-      throw new Error("Request failed");
+      // ✅ remove approved review from pending list
+      setReviews(prev => prev.filter(r => r._id !== id));
+
+    } catch (err) {
+      console.error("❌ Approve failed:", err.message);
+      alert("Action failed");
     }
+  };
 
-    // ✅ remove review from pending list
-    setReviews(prev => prev.filter(r => r._id !== id));
-
-  } catch (err) {
-    console.error("❌ Approve failed:", err.message);
-    alert("Action failed");
-  }
-};
 
 
   return (
