@@ -7,7 +7,7 @@ import CounterBlock from "./CounterBlock";
 import Footer from "./Footer";
 import TemplateShowcase from "./TemplateShowcase";
 import AiTutorialVideo from "./AiTutorialVideo"
-import HomeReviews from "./components/HomeReviews";
+import HomeReviews from "./HomeReviews";
 
 
 
