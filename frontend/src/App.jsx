@@ -28,6 +28,7 @@ import AdminPendingPayments from "./components/admin/AdminPendingPayments";
 import AdminGuard from "./components/admin/AdminGuard";
 import { ReviewProvider } from "./context/ReviewContext";
 import AdminReviews from "./components/admin/AdminReviews";
+import ReviewsPage from "./components/ReviewsPage";
 
 function AppContent() {
   const location = useLocation();
@@ -77,6 +78,9 @@ function AppContent() {
 
         {/* Contact */}
         <Route path="/contact" element={<Contact />} />
+
+        {/* ✅ PUBLIC REVIEWS PAGE */}
+        <Route path="/reviews" element={<ReviewsPage />} />
 
         {/* Preview */}
         <Route
