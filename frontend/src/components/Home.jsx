@@ -39,6 +39,7 @@ export default function Home() {
     <TemplateShowcase />
     <AiTutorialVideo />
     <FeaturesCoverLetter />
+      <HomeReviews /> 
     <CounterBlock />
     <Footer />
   </main>
