@@ -29,7 +29,7 @@ import AdminGuard from "./components/admin/AdminGuard";
 import { ReviewProvider } from "./context/ReviewContext";
 import AdminReviews from "./components/admin/AdminReviews";
 import ReviewsPage from "./components/ReviewsPage";
-import HomeReviews from "../components/HomeReviews";
+
 
 function AppContent() {
   const location = useLocation();
