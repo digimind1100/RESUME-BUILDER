@@ -25,19 +25,32 @@ export default function AdminReviews() {
   };
 
   const updateStatus = async (id, status) => {
-    try {
-      await fetch(`${API_BASE}/api/admin/reviews/${id}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status }),
-      });
+  try {
+    const token = localStorage.getItem("token");
 
-      // remove from UI instantly
-      setReviews(prev => prev.filter(r => r._id !== id));
-    } catch (err) {
-      alert("Action failed");
+    const res = await fetch(`${API_BASE}/api/admin/reviews/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ status }),
+    });
+
+    // 🔥 IMPORTANT: sirf status check karo
+    if (!res.ok) {
+      throw new Error("Request failed");
     }
-  };
+
+    // ✅ UI se remove karo
+    setReviews(prev => prev.filter(r => r._id !== id));
+
+  } catch (err) {
+    console.error("❌ Approve failed:", err);
+    alert("Action failed");
+  }
+};
+
 
   return (
     <div style={{ padding: "30px" }}>
