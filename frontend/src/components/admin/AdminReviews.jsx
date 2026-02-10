@@ -28,20 +28,21 @@ export default function AdminReviews() {
   try {
     const token = localStorage.getItem("token");
 
-    const res = await fetch(`${API_BASE}/api/admin/reviews/${id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ status }),
-    });
+    const res = await fetch(
+      `${API_BASE}/api/admin/reviews/${id}/${status === "approved" ? "approve" : "reject"}`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     if (!res.ok) {
       throw new Error("Request failed");
     }
 
-    // ✅ remove approved review from pending list
+    // ✅ remove review from pending list
     setReviews(prev => prev.filter(r => r._id !== id));
 
   } catch (err) {
@@ -49,7 +50,6 @@ export default function AdminReviews() {
     alert("Action failed");
   }
 };
-
 
 
   return (
