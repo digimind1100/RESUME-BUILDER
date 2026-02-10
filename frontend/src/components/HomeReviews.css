@@ -1,21 +1,116 @@
+/* =========================
+   HOME REVIEWS SECTION
+========================= */
+
 .home-reviews {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 70px 20px;
+  padding: 80px 20px;
+  background: #f9fafb;
+}
+
+.home-reviews-title {
   text-align: center;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 45px;
+  color: #111827;
 }
 
-.home-reviews h2 {
-  font-size: 32px;
-  margin-bottom: 40px;
-}
+/* =========================
+   GRID LAYOUT
+========================= */
 
-.reviews-grid {
+.home-reviews-grid {
+  max-width: 1150px;
+  margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 24px;
 }
 
-.reviews-cta {
-  margin-top: 40px;
+/* =========================
+   REVIEW CARD
+========================= */
+
+.review-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 22px 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  transition: all 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.review-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* =========================
+   HEADER (NAME + STARS)
+========================= */
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.review-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #111827;
+  text-transform: capitalize;
+}
+
+.review-stars {
+  font-size: 14px;
+  color: #f5a623;
+  letter-spacing: 1px;
+}
+
+/* =========================
+   COMMENT
+========================= */
+
+.review-comment {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #4b5563;
+  margin-top: 4px;
+  word-break: break-word;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+/* Tablets */
+@media (max-width: 1024px) {
+  .home-reviews-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .home-reviews {
+    padding: 60px 16px;
+  }
+
+  .home-reviews-title {
+    font-size: 22px;
+    margin-bottom: 30px;
+  }
+
+  .home-reviews-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .review-card {
+    padding: 18px 16px;
+  }
 }
