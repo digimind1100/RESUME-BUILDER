@@ -32,7 +32,11 @@ const submitReview = async (data) => {
   await fetch(`${API_BASE}/api/reviews`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
+    body: JSON.stringify({
+  name: data.name,
+  rating: data.rating,
+  comment: data.review, 
+}),
   });
 
   localStorage.setItem("reviewSubmitted", "true");
