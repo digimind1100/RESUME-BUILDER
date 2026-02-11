@@ -114,3 +114,28 @@
     padding: 18px 16px;
   }
 }
+/* =========================
+   VIEW MORE BUTTON
+========================= */
+
+.reviews-view-more {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.view-more-btn {
+  background: #111827;
+  color: #ffffff;
+  padding: 12px 26px;
+  border-radius: 8px;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.view-more-btn:hover {
+  background: #2563eb;
+  transform: translateY(-2px);
+}
