@@ -166,10 +166,12 @@ Subject: ${qrForm.subject}
     const element = resumeRef.current;
     if (!element) return;
     const canvas = await html2canvas(element, {
-      scale: 2,
-      useCORS: true,
-      backgroundColor: "#ffffff",
-    });
+  scale: 2,
+  useCORS: true,
+  backgroundColor: "#ffffff",
+  scrollY: -window.scrollY,
+});
+
 
     const imgData = canvas.toDataURL("image/png");
     const pdf = new jsPDF("p", "mm", "a4");
@@ -193,7 +195,7 @@ const handleUseTemplate = (route) => {
 
 
   return (
-    <div id="resumeContainer" className="resume-wrapper">
+    <div className="resume-page-wrapper">
 
       {/* TOP BUTTONS */}
       <div className="te-buttons" contentEditable={false}>
@@ -390,8 +392,6 @@ const handleUseTemplate = (route) => {
                     triggerFileSelect();
                   }}
                 >
-
-
                   <div className="te-header-photo-bg" />
                   <div className="te-header-photo-circle">
                     <img src={profileImage} alt="Profile" />
