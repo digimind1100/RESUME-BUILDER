@@ -166,6 +166,8 @@ Subject: ${qrForm.subject}
   const element = resumeRef.current;
   if (!element) return;
 
+  await new Promise(resolve => setTimeout(resolve, 300));
+
   const canvas = await html2canvas(element, {
     scale: 2,
     useCORS: true,
@@ -180,6 +182,7 @@ Subject: ${qrForm.subject}
   pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, imgHeight);
   pdf.save("teacher-elite-resume.pdf");
 };
+
 
 
   const handleReset = () => window.location.reload();
