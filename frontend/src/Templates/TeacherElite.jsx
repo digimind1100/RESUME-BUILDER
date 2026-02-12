@@ -163,24 +163,24 @@ Subject: ${qrForm.subject}
 
   /* ---------- PDF DOWNLOAD ---------- */
   const handleDownloadPDF = async () => {
-    const element = resumeRef.current;
-    if (!element) return;
-    const canvas = await html2canvas(element, {
-  scale: 2,
-  useCORS: true,
-  backgroundColor: "#ffffff",
-  scrollY: -window.scrollY,
-});
+  const element = resumeRef.current;
+  if (!element) return;
 
+  const canvas = await html2canvas(element, {
+    scale: 2,
+    useCORS: true,
+  });
 
-    const imgData = canvas.toDataURL("image/png");
-    const pdf = new jsPDF("p", "mm", "a4");
-    const pdfWidth = 210;
-    const imgHeight = (canvas.height * pdfWidth) / canvas.width;
+  const imgData = canvas.toDataURL("image/png");
+  const pdf = new jsPDF("p", "mm", "a4");
 
-    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, imgHeight);
-    pdf.save("teacher-elite-resume.pdf");
-  };
+  const pdfWidth = 210;
+  const imgHeight = (canvas.height * pdfWidth) / canvas.width;
+
+  pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, imgHeight);
+  pdf.save("teacher-elite-resume.pdf");
+};
+
 
   const handleReset = () => window.location.reload();
 
@@ -188,9 +188,9 @@ Subject: ${qrForm.subject}
   const [activeTab, setActiveTab] = useState("High School");
   const currentTitle = TAB_TITLE_MAP[activeTab];
 
-const handleUseTemplate = (route) => {
-  navigate(route);
-};
+  const handleUseTemplate = (route) => {
+    navigate(route);
+  };
 
 
 
@@ -327,8 +327,8 @@ const handleUseTemplate = (route) => {
       </div>
 
       {/* A4 RESUME */}
-      <div 
-      id="resumeContainer" className="te-a4"ref={resumeRef}style={{ position: "relative" }}>
+      <div
+        id="resumeContainer" className="te-a4" ref={resumeRef} style={{ position: "relative" }}>
 
         <Watermark show={!canEdit} />
         <div className="te-resume">
