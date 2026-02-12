@@ -633,8 +633,6 @@
   }
 }
 
-
-
 .mobile-edit-notice {
   position: relative;
   z-index: 9999999;   /* 👈 above sticky buttons */
@@ -648,3 +646,15 @@
   border-radius: 8px;
 }
 
+/* Center whole template on screen */
+.resume-page-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+/* Fixed width resume */
+.resume-container {
+  width: 794px; /* A4 width in px */
+  background: white;
+}
