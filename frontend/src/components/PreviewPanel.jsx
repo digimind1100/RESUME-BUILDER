@@ -298,7 +298,7 @@ export default function PreviewPanel({
           <div className="preview-left" style={{ backgroundColor: theme.left, color: theme.text }}>
             <h3 className="section-heading">Education (Page 2)</h3>
             {page2Education.map(({ edu, idx }, localIdx) => {
-              const globalIdx = getGlobalEduIndex(page1Education.length, localIdx);
+              const globalIdx = page1Education.length + localIdx;
               return (
                 <div key={globalIdx} className="education-entry border p-2 my-2 rounded">
                   <input
