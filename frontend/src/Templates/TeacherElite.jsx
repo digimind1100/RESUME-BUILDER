@@ -63,11 +63,13 @@ export default function TeacherElite() {
 
   const { triggerReview } = useReview();
 
-  const handleDownloadClick = () => {
-    downloadResumeAndTriggerReview({
-      onReviewTrigger: triggerReview,
-    });
-  };
+ const handleDownloadClick = () => {
+  downloadResumeAndTriggerReview({
+    element: resumeRef.current,
+    onReviewTrigger: triggerReview,
+  });
+};
+
 
   // after PDF download
 

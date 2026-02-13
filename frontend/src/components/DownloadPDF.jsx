@@ -6,24 +6,19 @@ import html2pdf from "html2pdf.js";
  * Called from existing Download button.
  */
 export function downloadResumeAndTriggerReview({
+  element,
   onReviewTrigger,
 }) {
-  const container = document.getElementById("resumeContainer");
+  const container = element;
   if (!container) return;
+
 
   // Hide checkboxes
   const checkboxes = container.querySelectorAll("input[type='checkbox']");
   checkboxes.forEach(cb => (cb.style.display = "none"));
 
   // Clone container
- const clone = container.cloneNode(true);
-
-// Attach clone temporarily to DOM (hidden)
-clone.style.position = "fixed";
-clone.style.left = "-9999px";
-clone.style.top = "0";
-document.body.appendChild(clone);
-
+  const clone = container.cloneNode(true);
 
   // Add header
   const header = document.createElement("div");
@@ -67,9 +62,13 @@ document.body.appendChild(clone);
     })
     .save()
     .finally(() => {
-    if (clone && clone.parentNode) {
-      clone.parentNode.removeChild(clone);
-    }
+      // Restore UI
+      checkboxes.forEach(cb => (cb.style.display = ""));
+
+      console.log("🧪 Review trigger check:", {
+        onReviewTriggerType: typeof onReviewTrigger,
+        reviewSubmitted: localStorage.getItem("reviewSubmitted"),
+      });
 
       // 🔒 SAFE review trigger (AI templates)
       setTimeout(() => {
