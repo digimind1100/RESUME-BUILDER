@@ -671,3 +671,15 @@
   width: 794px;
   background: #ffffff;
 }
+/* ===================================
+   FIX FOR PDF RENDERING
+=================================== */
+
+.pdf-mode .te-header {
+  overflow: visible !important;
+}
+
+.pdf-mode .te-header::before {
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
