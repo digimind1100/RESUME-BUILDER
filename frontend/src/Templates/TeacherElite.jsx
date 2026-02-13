@@ -160,24 +160,33 @@ Subject: ${qrForm.subject}
     setQrImage(dataUrl);
   };
 
-
-  /* ---------- PDF DOWNLOAD ---------- */
  /* ---------- DOWNLOAD PDF ---------- */
   const handleDownloadPDF = async () => {
-    const element = resumeRef.current;
-    if (!element) return;
+  const element = resumeRef.current;
+  if (!element) return;
 
-    const canvas = await html2canvas(element, { scale: 2, useCORS: true });
+  // 🔥 Add temporary class
+  element.classList.add("pdf-mode");
 
-    const imgData = canvas.toDataURL("image/png");
-    const pdf = new jsPDF("p", "mm", "a4");
+  await new Promise(resolve => setTimeout(resolve, 200));
 
-    const pdfWidth = 210;
-    const imgHeight = (canvas.height * pdfWidth) / canvas.width;
+  const canvas = await html2canvas(element, {
+    scale: 2,
+    useCORS: true,
+  });
 
-    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, imgHeight);
-      pdf.save("teacher-elite-resume.pdf");
-  };
+  element.classList.remove("pdf-mode");
+
+  const imgData = canvas.toDataURL("image/png");
+  const pdf = new jsPDF("p", "mm", "a4");
+
+  const pdfWidth = 210;
+  const imgHeight = (canvas.height * pdfWidth) / canvas.width;
+
+  pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, imgHeight);
+  pdf.save("teacher-elite-resume.pdf");
+};
+
  
   const handleReset = () => window.location.reload();
 
@@ -325,7 +334,7 @@ Subject: ${qrForm.subject}
 
       {/* A4 RESUME */}
       <div
-         className="te-a4" ref={resumeRef} style={{ position: "relative" }}>
+        id="resumeContainer" className="te-a4" ref={resumeRef} style={{ position: "relative" }}>
 
         <Watermark show={!canEdit} />
         <div className="te-resume">
