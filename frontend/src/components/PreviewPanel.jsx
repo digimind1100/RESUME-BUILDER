@@ -320,7 +320,7 @@ export default function PreviewPanel({
 {page2Education.length > 0 &&
             page1Education.length > 0 &&
             pageBreakY != null &&
-            (600 - pageBreakY) > 20 && (
+            (850 - pageBreakY) > 20 && (
               <div
                 style={{
                   marginTop: "10px",
