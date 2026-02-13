@@ -325,7 +325,7 @@ Subject: ${qrForm.subject}
 
       {/* A4 RESUME */}
       <div
-        id="resumeContainer" className="te-a4" ref={resumeRef} style={{ position: "relative" }}>
+         className="te-a4" ref={resumeRef} style={{ position: "relative" }}>
 
         <Watermark show={!canEdit} />
         <div className="te-resume">
