@@ -252,6 +252,23 @@ export default function PreviewPanel({
               </div>
             </div>
           ))}
+
+{page2Education.length > 0 &&
+            page1Education.length > 0 &&
+            pageBreakY != null &&
+            (1016 - pageBreakY) > 20 && (
+              <div
+                style={{
+                  marginTop: "10px",
+                  fontStyle: "italic",
+                  textAlign: "center",
+                  opacity: 0.7,
+                }}
+              >
+                Continue on Page 2 →
+              </div>
+            )}
+
         </div>
 
         {/* RIGHT PANEL */}
@@ -316,23 +333,7 @@ export default function PreviewPanel({
                 </div>
               );
             })}
-
-{page2Education.length > 0 &&
-            page1Education.length > 0 &&
-            pageBreakY != null &&
-            (850 - pageBreakY) > 20 && (
-              <div
-                style={{
-                  marginTop: "10px",
-                  fontStyle: "italic",
-                  textAlign: "center",
-                  opacity: 0.7,
-                }}
-              >
-                Continue on Page 2 →
-              </div>
-            )}
-
+            
           </div>
 
           <div className="flex-1 p-4">
