@@ -9,16 +9,12 @@ import usePaymentGuard from "../hooks/usePaymentGuard";
 import PaymentGate from "../components/payment/PaymentGate";
 import { useAuth } from "../context/AuthContext";
 import Watermark from "../components/Watermark";
-import { useReview } from "../context/ReviewContext";
-import { downloadResumeAndTriggerReview } from "../components/DownloadPDF";
-
 
 
 
 export default function SoftTech() {
   const navigate = useNavigate();
   const resumeRef = useRef(null);
-  const { triggerReview } = useReview();
   const { user, setUser } = useAuth();
 
   const {
@@ -85,16 +81,6 @@ export default function SoftTech() {
     }
   };
 
-
-  const handleDownloadClick = () => {
-  downloadResumeAndTriggerReview({
-    element: resumeRef.current,
-    onReviewTrigger: triggerReview,
-    mode: "normal",
-  });
-};
-
-
   /* ---------- DOWNLOAD PDF ---------- */
   const handleDownloadPDF = async () => {
     const element = resumeRef.current;
@@ -119,7 +105,7 @@ export default function SoftTech() {
 
       {/* ---------- TOP BUTTONS ---------- */}
       <div className="st-buttons">
-        <button onClick={handleDownloadClick}>Download PDF</button>
+        <button onClick={handleDownloadPDF}>Download PDF</button>
         <button onClick={() => navigate("/templates")}>Back</button>
         <button onClick={handleReset}>Reset</button>
 
@@ -264,13 +250,7 @@ export default function SoftTech() {
       </div>
 
       {/* ---------- A4 RESUME ---------- */}
-      <div
-  id="resumeContainer"
-  className="st-a4"
-  ref={resumeRef}
-  style={{ position: "relative" }}
->
-
+      <div className="st-a4" ref={resumeRef} style={{ position: "relative" }}>
         <Watermark show={!canEdit} />
         <div className="st-resume">
 
