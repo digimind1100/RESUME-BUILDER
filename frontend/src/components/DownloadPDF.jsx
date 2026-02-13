@@ -96,18 +96,23 @@ export function downloadResumeAndTriggerReview({
   // ===============================
   // MODE 2️⃣ NORMAL TEMPLATES
   // ===============================
-  if (!localStorage.getItem("reviewSubmitted")) {
-    if (typeof onReviewTrigger === "function") {
-      onReviewTrigger(() => {
+  // ===============================
+// MODE 2️⃣ NORMAL TEMPLATES
+// ===============================
+if (!localStorage.getItem("reviewSubmitted")) {
+  if (typeof onReviewTrigger === "function") {
+    onReviewTrigger({
+      onSuccess: () => {
         localStorage.setItem("reviewSubmitted", "true");
         startDownload();
-      });
-    }
-    return;
+      },
+    });
   }
-
-  startDownload();
+  return;
 }
+
+startDownload();
+
 
 /* ✅ BACKWARD COMPATIBILITY */
 export const downloadResumePDF = downloadResumeAndTriggerReview;
