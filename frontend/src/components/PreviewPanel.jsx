@@ -300,8 +300,9 @@ export default function PreviewPanel({
             {page2Education.map(({ edu, idx }, localIdx) => {
               const globalIdx = page1Education.length + localIdx;
               return (
-                <div key={globalIdx} className="education-entry border p-2 my-2 rounded">
+                <div key={globalIdx} className="education-entry border p-2 my-2 rounded"
                    style={{ backgroundColor: theme.left }}
+                   >
                   <input
                     type="checkbox"
                     checked={selectedEducations?.includes(globalIdx)}
