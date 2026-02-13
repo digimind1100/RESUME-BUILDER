@@ -90,6 +90,7 @@ export default function SoftTech() {
   downloadResumeAndTriggerReview({
     element: resumeRef.current,
     onReviewTrigger: triggerReview,
+    mode: "normal",
   });
 };
 
