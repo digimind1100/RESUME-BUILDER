@@ -16,7 +16,14 @@ export function downloadResumeAndTriggerReview({
   checkboxes.forEach(cb => (cb.style.display = "none"));
 
   // Clone container
-  const clone = container.cloneNode(true);
+ const clone = container.cloneNode(true);
+
+// Attach clone temporarily to DOM (hidden)
+clone.style.position = "fixed";
+clone.style.left = "-9999px";
+clone.style.top = "0";
+document.body.appendChild(clone);
+
 
   // Add header
   const header = document.createElement("div");
@@ -60,13 +67,9 @@ export function downloadResumeAndTriggerReview({
     })
     .save()
     .finally(() => {
-      // Restore UI
-      checkboxes.forEach(cb => (cb.style.display = ""));
-
-      console.log("🧪 Review trigger check:", {
-        onReviewTriggerType: typeof onReviewTrigger,
-        reviewSubmitted: localStorage.getItem("reviewSubmitted"),
-      });
+    if (clone && clone.parentNode) {
+      clone.parentNode.removeChild(clone);
+    }
 
       // 🔒 SAFE review trigger (AI templates)
       setTimeout(() => {
