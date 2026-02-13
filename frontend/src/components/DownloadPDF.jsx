@@ -6,12 +6,10 @@ import html2pdf from "html2pdf.js";
  * Called from existing Download button.
  */
 export function downloadResumeAndTriggerReview({
-  element,
   onReviewTrigger,
 }) {
-  const container = element;
+  const container = document.getElementById("resumeContainer");
   if (!container) return;
-
 
   // Hide checkboxes
   const checkboxes = container.querySelectorAll("input[type='checkbox']");
