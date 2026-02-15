@@ -344,7 +344,7 @@ export default function PreviewPanel({
             <div className="max-w-2xl mx-auto">
               {page2Work.length > 0 && (
                 <>
-                  <h3 className="section-heading mt-6">Work Experience (Page 2)</h3>
+                  
                   <WorkPreview
                     workList={page2Work}
                     toggleWorkCheckbox={handleWorkCheckboxToggle}
@@ -356,7 +356,7 @@ export default function PreviewPanel({
 
               {(includePage2Work || page2Skills.length > 0) && (
                 <>
-                  <h3 className="section-heading mt-6">Skills (Page 2)</h3>
+                  
                   <SkillsPreview
                     skillsList={page2Skills.length ? page2Skills : skills}
                     toggleSkillCheckbox={toggleSkillCheckbox}
