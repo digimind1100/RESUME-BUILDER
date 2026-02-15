@@ -1,69 +1,128 @@
-const startDownload = async () => {
-  const checkboxes = container.querySelectorAll(
-    "input[type='checkbox']"
-  );
-  checkboxes.forEach((cb) => (cb.style.display = "none"));
+import html2pdf from "html2pdf.js";
 
-  const clone = container.cloneNode(true);
+/**
+ * Universal Download + Review Controller
+ *
+ * Modes:
+ * 1️⃣ AI Templates → Download first, then trigger review
+ * 2️⃣ Normal Templates → Trigger review first, then download
+ */
+export function downloadResumeAndTriggerReview({
+  element,
+  onReviewTrigger,
+  mode = "ai", // "ai" or "normal"
+}) {
+  const container =
+    element || document.getElementById("resumeContainer");
 
-  const header = document.createElement("div");
-  header.style.width = "100%";
-  header.style.borderBottom = "2px solid #000";
-  header.style.marginBottom = "1px";
-  header.style.textAlign = "center";
-  header.style.fontWeight = "bold";
-  header.style.fontSize = "14px";
-  clone.prepend(header);
+  if (!container) return;
 
-  // 🔥 WAIT FOR IMAGES TO LOAD (QR FIX)
-  const images = clone.querySelectorAll("img");
-  await Promise.all(
-    Array.from(images).map((img) => {
-      return new Promise((resolve) => {
-        if (img.complete) resolve();
-        else {
-          img.onload = resolve;
-          img.onerror = resolve;
-        }
-      });
-    })
-  );
+  const startDownload = () => {
+    // Hide checkboxes
+    const checkboxes = container.querySelectorAll(
+      "input[type='checkbox']"
+    );
+    checkboxes.forEach((cb) => (cb.style.display = "none"));
 
-  const opt = {
-    margin: [10, 8, 10, 8],
-    filename: "resume.pdf",
-    image: { type: "jpeg", quality: 1 },
-    html2canvas: { scale: 2, useCORS: true },
-    jsPDF: {
-      unit: "mm",
-      format: "a4",
-      orientation: "portrait",
-    },
-    pagebreak: { mode: ["avoid-all", "css", "legacy"] },
+    const clone = container.cloneNode(true);
+
+    const header = document.createElement("div");
+    header.style.width = "100%";
+    header.style.borderBottom = "2px solid #000";
+    header.style.marginBottom = "1px";
+    header.style.textAlign = "center";
+    header.style.fontWeight = "bold";
+    header.style.fontSize = "14px";
+    clone.prepend(header);
+
+    // 🔥 Wait for images (QR fix) — without async/await
+    const images = clone.querySelectorAll("img");
+
+    Promise.all(
+      Array.from(images).map((img) => {
+        return new Promise((resolve) => {
+          if (img.complete) resolve();
+          else {
+            img.onload = resolve;
+            img.onerror = resolve;
+          }
+        });
+      })
+    ).then(() => {
+      const opt = {
+        margin: [10, 8, 10, 8],
+        filename: "resume.pdf",
+        image: { type: "jpeg", quality: 1 },
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: {
+          unit: "mm",
+          format: "a4",
+          orientation: "portrait",
+        },
+        pagebreak: { mode: ["avoid-all", "css", "legacy"] },
+      };
+
+      html2pdf()
+        .set(opt)
+        .from(clone)
+        .toPdf()
+        .get("pdf")
+        .then((pdf) => {
+          if (pdf.internal.getNumberOfPages() > 1) {
+            pdf.deletePage(1);
+          }
+
+          const totalPages = pdf.internal.getNumberOfPages();
+          for (let i = 1; i <= totalPages; i++) {
+            pdf.setPage(i);
+            pdf.setDrawColor(0);
+            pdf.setLineWidth(0.5);
+            pdf.line(10, 10, 200, 10);
+            pdf.line(10, 287, 200, 287);
+            pdf.setFontSize(10);
+            pdf.text(`Page ${i} of ${totalPages}`, 182, 291);
+          }
+        })
+        .save()
+        .finally(() => {
+          checkboxes.forEach((cb) => (cb.style.display = ""));
+        });
+    });
   };
 
-  await html2pdf()
-    .set(opt)
-    .from(clone)
-    .toPdf()
-    .get("pdf")
-    .then((pdf) => {
-      if (pdf.internal.getNumberOfPages() > 1) {
-        pdf.deletePage(1);
-      }
+  // ===============================
+  // MODE 1️⃣ AI TEMPLATES
+  // ===============================
+  if (mode === "ai") {
+    startDownload();
 
-      const totalPages = pdf.internal.getNumberOfPages();
-      for (let i = 1; i <= totalPages; i++) {
-        pdf.setPage(i);
-        pdf.setDrawColor(0);
-        pdf.setLineWidth(0.5);
-        pdf.line(10, 10, 200, 10);
-        pdf.line(10, 287, 200, 287);
-        pdf.setFontSize(10);
-        pdf.text(`Page ${i} of ${totalPages}`, 182, 291);
+    setTimeout(() => {
+      if (
+        typeof onReviewTrigger === "function" &&
+        !localStorage.getItem("reviewSubmitted")
+      ) {
+        onReviewTrigger();
       }
-    })
-    .save();
+    }, 600);
 
-  checkboxes.forEach((cb) => (cb.style.display = ""));
-};
+    return;
+  }
+
+  // ===============================
+  // MODE 2️⃣ NORMAL TEMPLATES
+  // ===============================
+  if (!localStorage.getItem("reviewSubmitted")) {
+    onReviewTrigger({
+      onSuccess: () => {
+        localStorage.setItem("reviewSubmitted", "true");
+        startDownload();
+      },
+    });
+    return;
+  }
+
+  startDownload();
+}
+
+/* ✅ BACKWARD COMPATIBILITY */
+export const downloadResumePDF = downloadResumeAndTriggerReview;
