@@ -1,3 +1,5 @@
+// utils/paginateEntries.js
+
 export function paginateEntries({
   containerEl,
   topSectionEl,
@@ -7,28 +9,21 @@ export function paginateEntries({
     return { page1: [], page2: [], breakY: null, hideSkillsOnPage2: false };
   }
 
+  const PAGE_HEIGHT = 1016; // real visual page height
   const containerRect = containerEl.getBoundingClientRect();
 
-  // 🔥 Use real height instead of hardcoded 960
-  const MAX_HEIGHT = containerRect.height;
-
-  const style = window.getComputedStyle(containerEl);
-  const paddingTop = parseFloat(style.paddingTop) || 0;
-  const paddingBottom = parseFloat(style.paddingBottom) || 0;
-
-  const usableHeight = MAX_HEIGHT - paddingTop - paddingBottom;
-
+  // Create hidden measuring container
   const tempDiv = document.createElement("div");
   tempDiv.style.position = "absolute";
   tempDiv.style.visibility = "hidden";
-  tempDiv.style.width = `${Math.round(containerRect.width)}px`;
-  tempDiv.style.boxSizing = "border-box";
-  tempDiv.style.padding = style.padding;
+  tempDiv.style.width = `${containerRect.width}px`;
   tempDiv.style.left = "-9999px";
   tempDiv.style.top = "-9999px";
+  tempDiv.style.boxSizing = "border-box";
 
   document.body.appendChild(tempDiv);
 
+  // Clone top section
   const topClone = topSectionEl.cloneNode(true);
   tempDiv.appendChild(topClone);
 
@@ -39,8 +34,10 @@ export function paginateEntries({
     const edu = entryList[i];
 
     const testEl = document.createElement("div");
-    testEl.className = "education-entry-qr border p-2 my-2 rounded";
+    testEl.className = "education-entry-qr border p-2 rounded";
     testEl.style.boxSizing = "border-box";
+    testEl.style.marginBottom = "8px";
+
     testEl.innerHTML = `
       <div class="education-details">
         <p class="edu-school">${edu.school || ""}</p>
@@ -51,9 +48,11 @@ export function paginateEntries({
 
     topClone.appendChild(testEl);
 
-    const totalHeight = topClone.getBoundingClientRect().height;
+    // 🔥 Precise boundary check (no guessing heights)
+    const cloneRect = topClone.getBoundingClientRect();
+    const bottomPosition = cloneRect.bottom - containerRect.top;
 
-    if (totalHeight <= usableHeight) {
+    if (bottomPosition <= PAGE_HEIGHT - 5) {
       fit.push({ edu, idx: i });
     } else {
       overflow = entryList.slice(i).map((e, j) => ({
@@ -69,7 +68,7 @@ export function paginateEntries({
   return {
     page1: fit,
     page2: overflow,
-    breakY: usableHeight,
+    breakY: PAGE_HEIGHT,
     hideSkillsOnPage2: overflow.length > 0,
   };
 }
