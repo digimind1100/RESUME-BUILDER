@@ -290,15 +290,19 @@ export default function PreviewPanel({
             </div>
 
             {!includePage2Work && (
-              <div ref={skillsPanelRef} className="preview-box skills-box">
-                <SkillsPreview
-                  skillsList={page1Skills.length ? page1Skills : skills}
-                  toggleSkillCheckbox={toggleSkillCheckbox}
-                  handleDeleteSelectedSkills={deleteSkill}
-                  isEditing={isEditing}
-                />
-              </div>
-            )}
+                          <div
+                            ref={skillsPanelRef}
+                            className="preview-box skills-box"
+                            style={{ display: page1Skills.length === 0 && page2Skills.length > 0 ? "none" : "block" }}
+                          >
+                            <SkillsPreview
+                              skillsList={page1Skills.length > 0 ? page1Skills : skills}
+                              toggleSkillCheckbox={toggleSkillCheckbox}
+                              handleDeleteSelectedSkills={deleteSkill}
+                              isEditing={isEditing}
+                            />
+                          </div>
+                        )}
             <PaymentGate
   open={showPaymentModal}
   onClose={() => setShowPaymentModal(false)}
