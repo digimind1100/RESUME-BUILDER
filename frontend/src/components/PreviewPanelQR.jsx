@@ -222,7 +222,7 @@ export default function PreviewPanelQR({
             </div>
 
             {/* ===== Education heading for Page 1 ===== */}
-            <h3 className="section-heading">Education (Page 1)</h3>
+            <h3 className="section-heading">Education</h3>
           </div>
 
           {/* ===== Education Entries Page 1 ===== */}
@@ -315,7 +315,7 @@ export default function PreviewPanelQR({
           <div className="preview-section mt-8">
             {/* Left side page 2 — only Education */}
             <div className="preview-left" style={{ backgroundColor: theme.left }}>
-              <h3 className="section-heading">Education (Page 2)</h3>
+              <h3 className="section-heading">Education</h3>
 
               {page2Education.map(({ edu, idx }, localIdx) => {
                 const globalIdx = page1Education.length + localIdx;
@@ -346,7 +346,7 @@ export default function PreviewPanelQR({
               <div className="max-w-2xl mx-auto">
                 {page2Work.length > 0 && (
                   <>
-                    <h3 className="section-heading mt-6">Work Experience (Page 2)</h3>
+                    
                     <WorkPreview
                       workList={page2Work}
                       toggleWorkCheckbox={toggleWorkCheckbox}
@@ -358,7 +358,7 @@ export default function PreviewPanelQR({
 
                 {(includePage2Work || page2Skills.length > 0) && (
                   <>
-                    <h3 className="section-heading mt-6">Skills (Page 2)</h3>
+                    
                     <SkillsPreview
                       skillsList={page2Skills.length ? page2Skills : skills}
                       toggleSkillCheckbox={toggleSkillCheckbox}
