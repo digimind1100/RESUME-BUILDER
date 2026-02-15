@@ -155,7 +155,24 @@ export default function PreviewPanelQR({
     setPage2Skills([]);
   }, [skills]);
 
-  useEffect(() => {
+useEffect(() => {
+  const timer = setTimeout(() => {
+    if (!workPanelRef.current || !skillsPanelRef.current) return;
+
+    const workHeight = workPanelRef.current.offsetHeight;
+    const skillsHeight = skillsPanelRef.current.offsetHeight;
+
+    const pageHeight = 1016; // same height used in other pagination
+    const remainingSpace = pageHeight - workHeight;
+
+    // 🔥 If remaining space is too small → move ALL skills to page 2
+    if (remainingSpace < 150) {
+      setPage2Skills(page1Skills);
+      setPage1Skills([]);
+      return;
+    }
+
+    // Otherwise use normal pagination logic
     paginateSkillsEntries(
       workPanelRef,
       skillsPanelRef,
@@ -164,7 +181,12 @@ export default function PreviewPanelQR({
       setPage1Skills,
       setPage2Skills
     );
-  }, [page1Skills, page1Work]);
+
+  }, 120);
+
+  return () => clearTimeout(timer);
+}, [page1Skills, page1Work]);
+
 
   const localToggleCheckbox = (globalIndex) => {
     if (typeof handleCheckboxChange === "function") {
