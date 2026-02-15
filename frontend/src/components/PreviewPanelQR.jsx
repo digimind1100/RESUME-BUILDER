@@ -289,10 +289,14 @@ export default function PreviewPanelQR({
               />
             </div>
 
-            {!includePage2Work && page1Skills.length > 0 && (
-              <div ref={skillsPanelRef} className="preview-box skills-box">
+            {!includePage2Work && (
+              <div
+                ref={skillsPanelRef}
+                className="preview-box skills-box"
+                style={{ display: page1Skills.length === 0 && page2Skills.length > 0 ? "none" : "block" }}
+              >
                 <SkillsPreview
-                  skillsList={page1Skills}
+                  skillsList={page1Skills.length > 0 ? page1Skills : skills}
                   toggleSkillCheckbox={toggleSkillCheckbox}
                   handleDeleteSelectedSkills={deleteSkill}
                   isEditing={isEditing}
