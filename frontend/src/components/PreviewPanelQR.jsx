@@ -95,8 +95,8 @@ export default function PreviewPanelQR({
   // Payment Guard End
 
   useEffect(() => {
-  console.log("showPaymentModal =", showPaymentModal);
-}, [showPaymentModal]);
+    console.log("showPaymentModal =", showPaymentModal);
+  }, [showPaymentModal]);
 
 
   // ========= EDUCATION PAGINATION =========
@@ -289,10 +289,10 @@ export default function PreviewPanelQR({
               />
             </div>
 
-            {!includePage2Work && (
+            {!includePage2Work && page1Skills.length > 0 && (
               <div ref={skillsPanelRef} className="preview-box skills-box">
                 <SkillsPreview
-                  skillsList={page1Skills.length ? page1Skills : skills}
+                  skillsList={page1Skills}
                   toggleSkillCheckbox={toggleSkillCheckbox}
                   handleDeleteSelectedSkills={deleteSkill}
                   isEditing={isEditing}
@@ -300,10 +300,10 @@ export default function PreviewPanelQR({
               </div>
             )}
             <PaymentGate
-  open={showPaymentModal}
-  onClose={() => setShowPaymentModal(false)}
-  onSuccess={handlePaymentSuccess}
-/>
+              open={showPaymentModal}
+              onClose={() => setShowPaymentModal(false)}
+              onSuccess={handlePaymentSuccess}
+            />
           </div>
         </div>
       </div>
@@ -346,7 +346,7 @@ export default function PreviewPanelQR({
               <div className="max-w-2xl mx-auto">
                 {page2Work.length > 0 && (
                   <>
-                    
+
                     <WorkPreview
                       workList={page2Work}
                       toggleWorkCheckbox={toggleWorkCheckbox}
@@ -358,7 +358,7 @@ export default function PreviewPanelQR({
 
                 {(includePage2Work || page2Skills.length > 0) && (
                   <>
-                    
+
                     <SkillsPreview
                       skillsList={page2Skills.length ? page2Skills : skills}
                       toggleSkillCheckbox={toggleSkillCheckbox}
@@ -367,7 +367,7 @@ export default function PreviewPanelQR({
                     />
                   </>
                 )}
-        
+
               </div>
             </div>
           </div>

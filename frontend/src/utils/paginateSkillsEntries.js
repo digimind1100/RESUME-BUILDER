@@ -5,69 +5,49 @@
 import React, { memo } from "react";
 
 export function paginateSkillsEntries(
-  workRef,
-  skillsRef,
-  page1Skills,
-  page2Skills,
-  setPage1Skills,
-  setPage2Skills
+  workRef,        // ref to .preview-box.work-box
+  skillsRef,      // ref to .preview-box.skills-box
+  page1Skills,    // Skills currently on Page 1
+  page2Skills,    // Skills currently on Page 2
+  setPage1Skills, // setter for Page 1 Skills
+  setPage2Skills  // setter for Page 2 Skills
 ) {
   if (!workRef?.current || !skillsRef?.current) return;
 
   const PAGE_HEIGHT_LIMIT = 950;
-  const MINIMUM_SKILLS_SECTION_HEIGHT = 160; // header + safe space
 
-  const workRect = workRef.current.getBoundingClientRect();
-  const skillsRect = skillsRef.current.getBoundingClientRect();
-
-  const workHeight = workRect.height || 0;
-  const skillsHeight = skillsRect.height || 0;
-
+  const workHeight = workRef.current.getBoundingClientRect().height || 0;
+  const skillsHeight = skillsRef.current.getBoundingClientRect().height || 0;
   const combinedHeight = workHeight + skillsHeight;
 
+  // Use requestAnimationFrame to prevent jerking
   let rafId = null;
-  const safeUpdate = (fn) => {
+  const safeUpdate = (fn) => { 
     if (rafId) cancelAnimationFrame(rafId);
     rafId = requestAnimationFrame(() => fn());
   };
 
-  // 🔥 CASE 1: Skills starts too low → move ALL skills to page 2
-  if (
-    workHeight > PAGE_HEIGHT_LIMIT - MINIMUM_SKILLS_SECTION_HEIGHT &&
-    page1Skills.length > 0
-  ) {
-    safeUpdate(() => {
-      setPage2Skills(page1Skills);
-      setPage1Skills([]);
-    });
-    return;
-  }
-
-  // 🔥 CASE 2: Normal overflow → move last skill
+  // --- OVERFLOW: Move last skill from Page1 → Page2
   if (combinedHeight > PAGE_HEIGHT_LIMIT && page1Skills.length > 0) {
     const lastSkill = page1Skills[page1Skills.length - 1];
 
     if (!page2Skills.includes(lastSkill)) {
       safeUpdate(() => {
         setPage1Skills((prev) => prev.slice(0, -1));
-        setPage2Skills((prev) => [...prev, lastSkill]);
+        setPage2Skills((prev) => [...prev, lastSkill]); // append at END → top-to-bottom flow
       });
     }
   }
 
-  // 🔥 CASE 3: Extra space → bring skill back
-  else if (
-    combinedHeight < PAGE_HEIGHT_LIMIT - 150 &&
-    page2Skills.length > 0
-  ) {
+  // --- EXTRA SPACE: Bring first skill back from Page2 → Page1
+  else if (combinedHeight < PAGE_HEIGHT_LIMIT - 150 && page2Skills.length > 0) {
     const firstFromPage2 = page2Skills[0];
 
     safeUpdate(() => {
       setPage2Skills((prev) => prev.slice(1));
-      setPage1Skills((prev) => [...prev, firstFromPage2]);
+      setPage1Skills((prev) => [...prev, firstFromPage2]); // append at END → top-to-bottom
     });
   }
 }
-
 
 export default memo(paginateSkillsEntries);
