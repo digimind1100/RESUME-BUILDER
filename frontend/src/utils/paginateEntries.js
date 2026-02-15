@@ -51,7 +51,7 @@ export function paginateEntries({
 
     topClone.appendChild(testEl);
 
-    const totalHeight = tempDiv.getBoundingClientRect().height;
+    const totalHeight = topClone.getBoundingClientRect().height;
 
     if (totalHeight <= usableHeight) {
       fit.push({ edu, idx: i });
