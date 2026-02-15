@@ -157,22 +157,29 @@ export default function PreviewPanelQR({
 
 useEffect(() => {
   const timer = setTimeout(() => {
-    if (!workPanelRef.current || !skillsPanelRef.current) return;
+    if (!rightPanelRef.current || !skillsPanelRef.current) return;
 
-    const workHeight = workPanelRef.current.offsetHeight;
-    const skillsHeight = skillsPanelRef.current.offsetHeight;
+    const pageHeight = 1016;
 
-    const pageHeight = 1016; // same height used in other pagination
-    const remainingSpace = pageHeight - workHeight;
+    const rightContentHeight = rightPanelRef.current.scrollHeight;
+    const skillsTop =
+      skillsPanelRef.current.getBoundingClientRect().top -
+      rightPanelRef.current.getBoundingClientRect().top;
 
-    // 🔥 If remaining space is too small → move ALL skills to page 2
-    if (remainingSpace < 150) {
-      setPage2Skills(page1Skills);
-      setPage1Skills([]);
+    const remainingSpace = pageHeight - skillsTop;
+
+    const minimumSkillsHeight = 140; // heading + padding safe value
+
+    // 🔥 If not enough space → move full skills to page 2
+    if (remainingSpace < minimumSkillsHeight) {
+      if (page1Skills.length > 0) {
+        setPage2Skills(page1Skills);
+        setPage1Skills([]);
+      }
       return;
     }
 
-    // Otherwise use normal pagination logic
+    // otherwise normal split
     paginateSkillsEntries(
       workPanelRef,
       skillsPanelRef,
@@ -181,11 +188,10 @@ useEffect(() => {
       setPage1Skills,
       setPage2Skills
     );
-
   }, 120);
 
   return () => clearTimeout(timer);
-}, [page1Skills, page1Work]);
+}, [page1Work, skills]);
 
 
   const localToggleCheckbox = (globalIndex) => {
