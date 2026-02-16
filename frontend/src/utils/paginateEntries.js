@@ -1,19 +1,16 @@
 // utils/paginateEntries.js
 
 export function paginateEntries({
-  containerEl,   // left column element
-  topSectionEl,  // profile + dob + heading section ref
-  entryList,     // array of educations
+  containerEl,
+  topSectionEl,
+  entryList,
 }) {
   if (!containerEl || !topSectionEl || !Array.isArray(entryList)) {
     return { page1: [], page2: [], breakY: null, hideSkillsOnPage2: false };
   }
 
-  // 🔥 Dynamically calculate usable height
   const leftRect = containerEl.getBoundingClientRect();
-  const topRect = topSectionEl.getBoundingClientRect();
-
-  const MAX_HEIGHT = leftRect.height - topRect.height;
+  const MAX_HEIGHT = leftRect.height; // 🔥 use real column height only
 
   // get computed paddings
   const style = window.getComputedStyle(containerEl);
@@ -36,7 +33,7 @@ export function paginateEntries({
 
   document.body.appendChild(tempDiv);
 
-  // clone top section (profile + QR + heading)
+  // clone top section
   const topClone = topSectionEl.cloneNode(true);
   topClone.querySelectorAll(".education-entry, .education-entry-qr").forEach((n) => n.remove());
   tempDiv.appendChild(topClone);
@@ -64,7 +61,7 @@ export function paginateEntries({
 
     const totalHeight = tempDiv.getBoundingClientRect().height;
 
-    // 🔥 small safety buffer (-5px) to prevent visual overlap
+    // small buffer to avoid visual overlap
     if (totalHeight <= MAX_HEIGHT - 5) {
       fit.push({ edu, idx: i });
     } else {
