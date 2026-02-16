@@ -1,116 +1,28 @@
-.templates-preview-section {
-  max-width: 1100px;
-  margin: 50px auto;
-  padding: 20px;
-  text-align: center;
-}
-
-.tp-heading {
-  font-size: 26px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.tp-description {
-  font-size: 16px;
-  color: #555;
-  margin-bottom: 30px;
-}
-
-
-
-
-
-
-/* Highlight active selected template */
-.tp-active {
-  border-color: #4caf50;
-  box-shadow: 0px 6px 14px rgba(0, 128, 0, 0.28);
-}
-
-
-.resume-builder-container {
-  display: flex;
-  flex-direction: column;
-  margin: 20px;
-}
-
-/* Left Form Panel */
-.form-panel {
-  width: 100%;
-  padding: 15px;
-  box-sizing: border-box;
-}
-
-/* Right-side Preview + Theme */
-.right-side {
-  width: 100%;
-  padding: 15px;
-  box-sizing: border-box;
-}
-
-/* Make two-column layout on large screens */
-@media screen and (min-width: 768px) {
-  .resume-builder-container {
-    flex-direction: row;
-    align-items: flex-start;
-    gap: 20px;
-  }
-
-  .form-panel {
-    width: 40%;
-  }
-
-  .right-side {
-    width: 60%;
-  }
-}
-
-/* Add spacing inside sections */
-.theme-selector-container,
-.format-buttons-wrapper,
-.button-section-container {
-  margin-bottom: 20px;
-}
-
-
-.tp-active {
-  border: 2px solid #17639F;
-}
-
-.templates-preview-section {
-  padding: 20px 40px; /* more horizontal padding to prevent overlap */
-  box-sizing: border-box;
-}
-
-.tp-heading {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.tp-description {
-  font-size: 14px;
-  margin-bottom: 20px;
-}
+/* ===============================
+   SECTION WRAPPER
+=============================== */
 .templates-preview-section {
   max-width: 1400px;
-  margin: 50px auto;
-  padding: 20px 40px;
+  margin: 60px auto;
+  padding: 0 40px;
   text-align: center;
   box-sizing: border-box;
 }
 
+/* ===============================
+   HEADER
+=============================== */
 .tp-heading {
-  font-size: 28px;
+  font-size: 32px;
   font-weight: 700;
   margin-bottom: 10px;
+  color: #111;
 }
 
 .tp-description {
-  font-size: 16px;
-  color: #555;
-  margin-bottom: 40px;
+  font-size: 17px;
+  color: #666;
+  margin-bottom: 50px;
 }
 
 /* ===============================
@@ -118,40 +30,42 @@
 =============================== */
 .tp-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* Desktop 4 columns */
-  gap: 30px;
-  width: 100%;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
 }
 
 /* ===============================
-   TEMPLATE CARD
+   CARD DESIGN
 =============================== */
 .tp-card {
-  background: #ffffff;
-  border-radius: 14px;
-  box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.08);
-  cursor: pointer;
+  background: #fff;
+  border-radius: 18px;
   overflow: hidden;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
   border: 3px solid transparent;
+  display: flex;
+  flex-direction: column;
 }
 
 .tp-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0px 10px 28px rgba(0, 0, 0, 0.15);
+  transform: translateY(-12px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
 }
 
+/* Active Selected Template */
 .tp-active {
   border-color: #17639F;
-  box-shadow: 0px 8px 22px rgba(23, 99, 159, 0.3);
+  box-shadow: 0 18px 40px rgba(23, 99, 159, 0.25);
 }
 
 /* ===============================
-   IMAGE
+   IMAGE (A4 RATIO STYLE)
 =============================== */
 .tp-image {
   width: 100%;
-  height: 320px;
+  aspect-ratio: 3 / 4;   /* Keeps A4-like preview */
   object-fit: cover;
   display: block;
 }
@@ -162,114 +76,43 @@
 .tp-title {
   font-size: 18px;
   font-weight: 600;
-  padding: 15px 10px;
+  padding: 18px 10px 22px;
+  color: #222;
 }
 
 /* ===============================
-   RESPONSIVE
+   RESPONSIVE BREAKPOINTS
 =============================== */
 
+/* Large Tablet */
+@media (max-width: 1200px) {
+  .tp-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 /* Tablet */
-@media (max-width: 1199px) {
+@media (max-width: 992px) {
   .tp-grid {
     grid-template-columns: repeat(2, 1fr);
-  }
-
-  .tp-image {
-    height: 260px;
   }
 }
 
 /* Mobile */
-@media (max-width: 768px) {
+@media (max-width: 600px) {
   .tp-grid {
     grid-template-columns: 1fr;
   }
 
-  .tp-image {
-    height: 240px;
+  .templates-preview-section {
+    padding: 0 20px;
   }
 
-  .tp-title {
-    font-size: 16px;
+  .tp-heading {
+    font-size: 26px;
   }
-}
 
-
-
-
-
-
-.tp-active {
-  border: 2px solid #17639F;
-}
-
-
-
-.tp-topbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-}
-
-.editing-btn {
-  padding: 8px 14px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  font-weight: 600;
-}
-
-.editing-btn.off {
-  background: #e5e7eb;
-  color: #111;
-}
-
-.editing-btn.on {
-  background: #22c55e;
-  color: #fff;
-}
-
-.tp-avatar {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  cursor: pointer;
-}
-
-
-.tp-topbar {
-  position: relative;
-  z-index: 100000;
-  pointer-events: auto;
-}
-
-.editing-btn,
-.tp-avatar {
-  pointer-events: auto !important;
-}
-.templates-preview-section {
-  pointer-events: auto;
-}
-.editor,
-.resume-canvas,
-.page-wrapper {
-  pointer-events: none;
-}
-.locked {
-  user-select: none;
-}
-
-
-.template-topbar {
-  position: fixed;
-  top: 10px;
-  right: 10px;
-  z-index: 999999;
-  pointer-events: auto;
-}
-
-.template-topbar * {
-  pointer-events: auto;
+  .tp-description {
+    font-size: 15px;
+  }
 }
