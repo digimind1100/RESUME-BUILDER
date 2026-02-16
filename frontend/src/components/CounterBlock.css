@@ -1,7 +1,9 @@
+/* ===============================
+   SECTION
+=================================*/
 .counter-block-section {
-  background-color: #f4f7fc; /* soft hero background like Home page */
+  background: #f4f7fc;
   padding: 80px 20px;
-  padding-top: 40px;
   text-align: center;
 }
 
@@ -11,197 +13,103 @@
 }
 
 .counter-title {
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: #1f2937; /* dark elegant text */
-  margin-bottom: 12px;
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 10px;
 }
 
 .counter-subtitle {
   font-size: 1.1rem;
-  color: #4b5563; /* subtle gray for subtitle */
-  margin-bottom: 40px;
+  color: #4b5563;
+  margin-bottom: 50px;
 }
 
+
+/* ===============================
+   COUNTER CARDS
+=================================*/
 .counter-grid {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 24px;
+  gap: 25px;
+  margin-bottom: 60px;
 }
 
 .counter-card {
-  background-color: #ffffff;
-  padding: 30px 20px;
+  background: #ffffff;
+  padding: 30px 25px;
   border-radius: 12px;
-  min-width: 180px;
-  flex: 1 1 200px;
-  max-width: 250px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  min-width: 200px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+  transition: 0.3s ease;
 }
 
 .counter-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
 }
 
 .counter-number {
   font-size: 2rem;
   font-weight: 700;
-  color: #3b82f6; /* bright accent color like Home hero */
-  margin-bottom: 8px;
+  color: #3b82f6;
+  margin-bottom: 6px;
 }
 
 .counter-label {
   font-size: 1rem;
-  font-weight: 500;
   color: #374151;
 }
 
 
-/* RATING CSS STRT  */
-
-/* Center Wrapper */
+/* ===============================
+   RATING BLOCK
+=================================*/
 .rating-wrapper {
   display: flex;
   justify-content: center;
-  margin: 40px 0;
 }
 
-/* Main Block */
 .rating-block {
+  position: relative;
   width: 100%;
   max-width: 600px;
-  padding: 35px 20px 25px;
-  border-radius: 12px;
+  padding: 45px 20px 30px;
   background: #ffffff;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.05);
   text-align: center;
-  position: relative;
-  box-shadow: 0px 6px 18px rgba(0,0,0,0.06);
-}
-
-/* Stars Row (now centered on the border area) */
-
-
-
-/* All Stars */
-.star {
-  font-size: 35px;
-  color: #e6e6e6;
-  position: relative;
-  display: inline-block;
-}
-
-/* Fully Filled Stars */
-.star.full {
-  color: #ffb400;
-  
-
-}
-
-/* Partial 5th star — 25% fill only */
-.star.partial {
-  position: relative;
 }
 
 
-
-/* Render ★ over it */
-.star.partial {
-  color: #e6e6e6;
-}
-
-
-
-/* Subtext */
-.rating-sub-text {
-  margin-top: 20px;
-  font-size: 18px;
-  color: #444;
-  font-weight: 500;
-}
-
-/* Stars Row */
+/* ===============================
+   STARS (Perfect Border Center)
+=================================*/
 .stars-container-1 {
   position: absolute;
-  top: -27px;
+  top: 0;
   left: 50%;
-  transform: translateX(-50%);
-  background: linear-gradient(to bottom, #f4f7fc 57%, white 43%);
-  padding: 0 10px;
+  transform: translate(-50%, -50%);
+  background: #f4f7fc; /* must match section background */
+  padding: 0 14px;
   display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-/* All Stars */
-.star {
-  font-size: 35px;
-  line-height: 1;
-  display: inline-block;
-}
-
-/* Full Stars */
-.star.full {
-  color: #ffb400;
-}
-
-/* Partial Star (25%) */
-.star.partial {
-  background: linear-gradient(
-    to right,
-    #ffb400 25%,
-    #e6e6e6 25%
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.rating-block {
-  position: relative;
-  margin-top: 40px;
-  padding: 40px 20px 25px;
-  border-radius: 12px;
-  background: #ffffff;
-  text-align: center;
-  box-shadow: 0px 6px 18px rgba(0,0,0,0.06);
-}
-.stars-container-1 {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   gap: 6px;
-  margin-bottom: 20px;
 }
 
-/* Left border line */
-.stars-container-1::before,
-.stars-container-1::after {
-  content: "";
-  flex: 1;
-  height: 2px;
-  background: #e5e7eb;
-}
-
-/* spacing between stars and lines */
-.stars-container-1::before {
-  margin-right: 15px;
-}
-
-.stars-container-1::after {
-  margin-left: 15px;
-}
+/* All stars */
 .star {
-  font-size: 35px;
+  font-size: 34px;
   line-height: 1;
 }
 
+/* Full star */
 .star.full {
   color: #ffb400;
 }
 
+/* Partial star (25%) */
 .star.partial {
   background: linear-gradient(
     to right,
@@ -212,3 +120,12 @@
   -webkit-text-fill-color: transparent;
 }
 
+
+/* ===============================
+   TEXT
+=================================*/
+.rating-sub-text {
+  font-size: 18px;
+  font-weight: 500;
+  color: #444;
+}
