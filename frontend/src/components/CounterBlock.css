@@ -130,28 +130,39 @@
   font-weight: 500;
 }
 
-/* Partial 5th star — clean 25% fill with no shadow leak */
-.star.partial {
-  position: relative;
-      top: 11px;
-  width: 30px;
-  height: 30px;
+/* Stars Row */
+.stars-container-1 {
+  position: absolute;
+  top: -27px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(to bottom, #f4f7fc 57%, white 43%);
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* All Stars */
+.star {
+  font-size: 35px;
+  line-height: 1;
   display: inline-block;
-  clip-path: polygon(
-    50% 0%,
-    61% 35%,
-    98% 35%,
-    68% 57%,
-    79% 91%,
-    50% 70%,
-    21% 91%,
-    32% 57%,
-    2% 35%,
-    39% 35%
-  ); /* perfect star shape mask */
+}
+
+/* Full Stars */
+.star.full {
+  color: #ffb400;
+}
+
+/* Partial Star (25%) */
+.star.partial {
   background: linear-gradient(
     to right,
     #ffb400 25%,
     #e6e6e6 25%
   );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
+

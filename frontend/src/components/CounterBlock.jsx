@@ -73,7 +73,7 @@ const CounterBlock = () => {
             </div>
 
             {/* Subtext Only */}
-            <p className="rating-sub-text">Trusted by 10,000+ users worldwide</p>
+            <p className="rating-sub-text">Trusted by 10,000+ users</p>
 
           </div>
         </div>
