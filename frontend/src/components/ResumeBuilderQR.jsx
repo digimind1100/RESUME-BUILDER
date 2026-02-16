@@ -138,27 +138,28 @@ const handleSkillsClickWithGuard = () => {
   };
 
   // --- Generate QR ---
-  const handleGenerateQR = () => {
-    if (!formData.fullName || !formData.email) {
-      alert("Please enter at least Name and Email before generating QR code.");
-      return;
-    }
+ const handleGenerateQR = () => {
+  if (!formData.fullName || !formData.email) {
+    alert("Please enter at least Name and Email before generating QR code.");
+    return;
+  }
 
-    const qrContent = {
-      fullName: formData.fullName,
-      email: formData.email,
-      phone: formData.phone,
-      address: formData.address,
-      city: formData.city,
-      country: formData.country,
-      linkedin: formData.linkedin,
-      dob: formData.dob,
-    };
+  const vCardData = `
+BEGIN:VCARD
+VERSION:3.0
+FN:${formData.fullName || ""}
+EMAIL:${formData.email || ""}
+TEL:${formData.phone || ""}
+ADR:;;${formData.address || ""};${formData.city || ""};;${formData.country || ""}
+URL:${formData.linkedin || ""}
+BDAY:${formData.dob || ""}
+END:VCARD
+`;
 
-    setQrData(qrContent);
+  setQrData(vCardData);
 
-    console.log("QR Generated:", qrContent);
-  };
+  console.log("QR Generated (vCard):", vCardData);
+};
 
   return (
     <div className="resume-builder-container qr-layout">
