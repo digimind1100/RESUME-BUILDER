@@ -55,12 +55,12 @@ export default function PreviewPanel({
   const { user, setUser } = useAuth();
 
   const {
-  isPaid,
-  showPaymentModal,
-  setShowPaymentModal,
-  requirePayment,
-  handlePaymentSuccess,
-} = usePaymentGuard("CleanProfessional");
+    isPaid,
+    showPaymentModal,
+    setShowPaymentModal,
+    requirePayment,
+    handlePaymentSuccess,
+  } = usePaymentGuard("CleanProfessional");
 
   const canEdit = isPaid;
 
@@ -179,9 +179,9 @@ export default function PreviewPanel({
           <div ref={topSectionRef}>
             {/* Profile Info */}
 
-            <div 
-            className="profile-pic-wrapper" 
-            onClick={triggerProfileSelect}>
+            <div
+              className="profile-pic-wrapper"
+              onClick={triggerProfileSelect}>
               <img
                 src={formData?.profilePic || "/images/engineereliteprofileimage.png"}
                 alt="Profile"
@@ -253,21 +253,19 @@ export default function PreviewPanel({
             </div>
           ))}
 
-{page2Education.length > 0 &&
-            page1Education.length > 0 &&
-            pageBreakY != null &&
-            (1016 - pageBreakY) > 20 && (
-              <div
-                style={{
-                  marginTop: "10px",
-                  fontStyle: "italic",
-                  textAlign: "center",
-                  opacity: 0.7,
-                }}
-              >
-                Continue on Page 2 →
-              </div>
-            )}
+          {page2Education.length > 0 && page1Education.length > 0 && (
+            <div
+              style={{
+                marginTop: "10px",
+                fontStyle: "italic",
+                textAlign: "center",
+                opacity: 0.7,
+              }}
+            >
+              Continue on Page 2 →
+            </div>
+          )}
+
 
         </div>
 
@@ -290,24 +288,24 @@ export default function PreviewPanel({
             </div>
 
             {!includePage2Work && (
-                          <div
-                            ref={skillsPanelRef}
-                            className="preview-box skills-box"
-                            style={{ display: page1Skills.length === 0 && page2Skills.length > 0 ? "none" : "block" }}
-                          >
-                            <SkillsPreview
-                              skillsList={page1Skills.length > 0 ? page1Skills : skills}
-                              toggleSkillCheckbox={toggleSkillCheckbox}
-                              handleDeleteSelectedSkills={deleteSkill}
-                              isEditing={isEditing}
-                            />
-                          </div>
-                        )}
+              <div
+                ref={skillsPanelRef}
+                className="preview-box skills-box"
+                style={{ display: page1Skills.length === 0 && page2Skills.length > 0 ? "none" : "block" }}
+              >
+                <SkillsPreview
+                  skillsList={page1Skills.length > 0 ? page1Skills : skills}
+                  toggleSkillCheckbox={toggleSkillCheckbox}
+                  handleDeleteSelectedSkills={deleteSkill}
+                  isEditing={isEditing}
+                />
+              </div>
+            )}
             <PaymentGate
-  open={showPaymentModal}
-  onClose={() => setShowPaymentModal(false)}
-  onSuccess={handlePaymentSuccess}
-/>
+              open={showPaymentModal}
+              onClose={() => setShowPaymentModal(false)}
+              onSuccess={handlePaymentSuccess}
+            />
 
           </div>
         </div>
@@ -322,8 +320,8 @@ export default function PreviewPanel({
               const globalIdx = page1Education.length + localIdx;
               return (
                 <div key={globalIdx} className="education-entry border p-2 my-2 rounded"
-                   style={{ backgroundColor: theme.left }}
-                   >
+                  style={{ backgroundColor: theme.left }}
+                >
                   <input
                     type="checkbox"
                     checked={selectedEducations?.includes(globalIdx)}
@@ -337,14 +335,14 @@ export default function PreviewPanel({
                 </div>
               );
             })}
-            
+
           </div>
 
           <div className="flex-1 p-4">
             <div className="max-w-2xl mx-auto">
               {page2Work.length > 0 && (
                 <>
-                  
+
                   <WorkPreview
                     workList={page2Work}
                     toggleWorkCheckbox={handleWorkCheckboxToggle}
@@ -356,7 +354,7 @@ export default function PreviewPanel({
 
               {(includePage2Work || page2Skills.length > 0) && (
                 <>
-                  
+
                   <SkillsPreview
                     skillsList={page2Skills.length ? page2Skills : skills}
                     toggleSkillCheckbox={toggleSkillCheckbox}
