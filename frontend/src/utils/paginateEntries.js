@@ -52,7 +52,7 @@ export function paginateEntries({
     const cloneRect = topClone.getBoundingClientRect();
     const bottomPosition = cloneRect.bottom - containerRect.top;
 
-    if (bottomPosition <= PAGE_HEIGHT - 5) {
+    if (bottomPosition <= PAGE_HEIGHT - 8) {
       fit.push({ edu, idx: i });
     } else {
       overflow = entryList.slice(i).map((e, j) => ({
