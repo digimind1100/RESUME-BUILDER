@@ -142,14 +142,14 @@
 }
 
 /* ===== CANCEL ===== */
-.close-btn {
+.close-btn-1 {
   margin-top: 16px;
   background: none;
   border: none;
   font-size: 14px;
   color: #1bf107;
   cursor: pointer;
-  align-items: center;
+ 
 }
 
 .close-btn:hover {

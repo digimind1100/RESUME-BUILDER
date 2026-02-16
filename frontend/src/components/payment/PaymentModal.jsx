@@ -350,7 +350,7 @@ export default function PaymentModal({ onClose, onSuccess }) {
         )}
 
         {!loading && status === "idle" && (
-          <button className="close-btn" onClick={onClose}>
+          <button className="close-btn-1" onClick={onClose}>
             Cancel
           </button>
         )}
