@@ -121,8 +121,8 @@
 .star.partial {
   background: linear-gradient(
     to right,
-    #ffb400 25%,
-    #e6e6e6 25%
+    #ffb400 60%,
+    #e6e6e6 40%
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
