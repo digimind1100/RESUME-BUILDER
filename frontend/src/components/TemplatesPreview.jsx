@@ -20,7 +20,7 @@ export default function TemplatesPreview({ resumeStyle, setResumeStyle }) {
     { id: "classic", title: "AI Classic", img: "/images/classic-template.jpg" },
     { id: "professional", title: "AI Professional", img: "/images/professional-template.jpg" },
     { id: "modern", title: "Teacher Elite", img: "/images/simple-1.png" },
-    { id: "template4", title: "Clean Professional", img: "/images/simple-2.png" },
+    { id: "template4", title: "Professional", img: "/images/simple-2.png" },
     { id: "template5", title: "Creative Bold", img: "/images/simple-3.png" },
     { id: "template6", title: "Minimal Accent", img: "/images/simple-4.png" },
     { id: "template7", title: "Elegant Classic", img: "/images/simple-5.png" },
