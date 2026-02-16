@@ -146,8 +146,8 @@
   margin-bottom: 8px;
 }
 
-.preview-left .section-heading {
-  text-align: center;
+.section-heading {
+  text-align: center !important;
 }
 
 /* CSS FOR PROFILE PICTUER  */
