@@ -73,8 +73,7 @@
 .rating-block {
   width: 100%;
   max-width: 600px;
-  padding: 40px 20px 25px;
-  
+  padding: 35px 20px 25px;
   border-radius: 12px;
   background: #ffffff;
   text-align: center;
@@ -85,13 +84,16 @@
 /* Stars Row (now centered on the border area) */
 .stars-container-1 {
   position: absolute;
-  top: -27px;
+  top: 0;
   left: 50%;
-  transform: translateX(-50%);
-  background: linear-gradient(to bottom, #f4f7fc 57%, white 43%);
-
-  padding: 0 8px;
+  transform: translate(-50%, -50%);
+  background: #f4f7fc;   /* match section background */
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
+
 
 /* All Stars */
 .star {
