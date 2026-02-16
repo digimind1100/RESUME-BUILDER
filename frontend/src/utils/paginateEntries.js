@@ -1,5 +1,9 @@
 // utils/paginateEntries.js
-const MAX_HEIGHT = 960; // usable height (1016 - 30)
+const containerRect = containerEl.getBoundingClientRect();
+const topRect = topSectionEl.getBoundingClientRect();
+
+const MAX_HEIGHT = containerRect.height - topRect.height;
+
 
 export function paginateEntries({
   containerEl,   // left column element
