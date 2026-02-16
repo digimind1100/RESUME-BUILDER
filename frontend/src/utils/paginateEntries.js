@@ -50,18 +50,17 @@ export function paginateEntries({
 
     // 🔥 Precise boundary check (no guessing heights)
     const cloneRect = topClone.getBoundingClientRect();
-    const bottomPosition = cloneRect.bottom - containerRect.top;
+    const leftBottom = containerRect.bottom;
 
-    if (bottomPosition <= PAGE_HEIGHT - 8) {
-      fit.push({ edu, idx: i });
-    } else {
-      overflow = entryList.slice(i).map((e, j) => ({
-        edu: e,
-        idx: i + j,
-      }));
-      break;
-    }
-  }
+   if (cloneRect.bottom <= leftBottom - 5) {
+  fit.push({ edu, idx: i });
+} else {
+  overflow = entryList.slice(i).map((e, j) => ({
+    edu: e,
+    idx: i + j,
+  }));
+  break;
+}
 
   document.body.removeChild(tempDiv);
 
