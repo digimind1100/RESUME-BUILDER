@@ -9,7 +9,6 @@ export function paginateEntries({
     return { page1: [], page2: [], breakY: null, hideSkillsOnPage2: false };
   }
 
-  const PAGE_HEIGHT = 1016; // real visual page height
   const containerRect = containerEl.getBoundingClientRect();
 
   // Create hidden measuring container
@@ -48,26 +47,27 @@ export function paginateEntries({
 
     topClone.appendChild(testEl);
 
-    // 🔥 Precise boundary check (no guessing heights)
+    // 🔥 Precise boundary check
     const cloneRect = topClone.getBoundingClientRect();
     const leftBottom = containerRect.bottom;
 
-   if (cloneRect.bottom <= leftBottom - 5) {
-  fit.push({ edu, idx: i });
-} else {
-  overflow = entryList.slice(i).map((e, j) => ({
-    edu: e,
-    idx: i + j,
-  }));
-  break;
-}
+    if (cloneRect.bottom <= leftBottom - 5) {
+      fit.push({ edu, idx: i });
+    } else {
+      overflow = entryList.slice(i).map((e, j) => ({
+        edu: e,
+        idx: i + j,
+      }));
+      break;
+    }
+  } // ✅ properly close loop
 
   document.body.removeChild(tempDiv);
 
   return {
     page1: fit,
     page2: overflow,
-    breakY: PAGE_HEIGHT,
+    breakY: containerRect.height,
     hideSkillsOnPage2: overflow.length > 0,
   };
 }
