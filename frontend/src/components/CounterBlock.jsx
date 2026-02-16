@@ -6,7 +6,7 @@ const CounterBlock = () => {
   // State for counters (replace with API fetch later if backend available)
   const [counters, setCounters] = useState({
     resumes: 12345,
-    templates: 25,
+    templates: 13,
     aiSuggestions: 9876,
   });
 
