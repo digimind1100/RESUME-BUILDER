@@ -17,8 +17,8 @@ export default function TemplatesPreview({ resumeStyle, setResumeStyle }) {
   const [isEditingUnlocked, setIsEditingUnlocked] = useState(false);
 
   const templates = [
-    { id: "AI classic", title: "Classic", img: "/images/classic-template.jpg" },
-    { id: "AI professional", title: "Professional", img: "/images/professional-template.jpg" },
+    { id: "classic", title: "AI Classic", img: "/images/classic-template.jpg" },
+    { id: "professional", title: "AI Professional", img: "/images/professional-template.jpg" },
     { id: "modern", title: "Teacher Elite", img: "/images/simple-1.png" },
     { id: "template4", title: "Clean Professional", img: "/images/simple-2.png" },
     { id: "template5", title: "Creative Bold", img: "/images/simple-3.png" },

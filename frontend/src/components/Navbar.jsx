@@ -56,7 +56,7 @@ export default function Navbar() {
           <li><Link to="/coverletter" onClick={handleLinkClick}>Cover Letter</Link></li>
           <li><Link to="/policies" onClick={handleLinkClick}>Policies</Link></li>
           <li><Link to="/contact" onClick={handleLinkClick}>Contact</Link></li>
-          <li><Link to="/faq" onClick={handleLinkClick}>FAQ</Link></li>
+          
 
           {/* MOBILE AUTH */}
           <li className="mobile-auth">
