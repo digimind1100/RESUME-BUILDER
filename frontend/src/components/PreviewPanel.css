@@ -146,9 +146,15 @@
   margin-bottom: 8px;
 }
 
-.section-heading {
-  text-align: center !important;
+.preview-left .section-heading {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin-left: 0;
+  margin-right: 0;
+  float: none;
 }
+
 
 /* CSS FOR PROFILE PICTUER  */
 .profile-pic-wrapper {
