@@ -145,15 +145,14 @@ const handleSkillsClickWithGuard = () => {
   }
 
   const vCardData = `
-BEGIN:VCARD
-VERSION:3.0
-FN:${formData.fullName || ""}
+
+FULL NAME:${formData.fullName || ""}
 EMAIL:${formData.email || ""}
 TEL:${formData.phone || ""}
-ADR:;;${formData.address || ""};${formData.city || ""};;${formData.country || ""}
+ADDRESS:${formData.address || ""};${formData.city || ""};;${formData.country || ""}
 URL:${formData.linkedin || ""}
-BDAY:${formData.dob || ""}
-END:VCARD
+DOB:${formData.dob || ""}
+
 `;
 
   setQrData(vCardData);
