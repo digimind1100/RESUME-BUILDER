@@ -54,31 +54,6 @@ const FeaturesHowTestimonials = () => {
         </div>
       </div>
 
-      {/* ---------- Testimonials Section ---------- */}
-      <div className="section-container">
-        <h2 className="section-title">What Our Users Say</h2>
-        <div className="card-grid">
-          <div className="testimonial-card">
-            <p className="testimonial-text">
-              "This resume builder made applying for jobs so easy. I created a professional resume
-              in minutes!"
-            </p>
-            <h4 className="testimonial-author">— Sarah M.</h4>
-          </div>
-          <div className="testimonial-card">
-            <p className="testimonial-text">
-              "The AI skill suggestions were spot on! My resume got noticed by recruiters faster."
-            </p>
-            <h4 className="testimonial-author">— John D.</h4>
-          </div>
-          <div className="testimonial-card">
-            <p className="testimonial-text">
-              "I love how easy it is to export and share my resume. Truly professional results."
-            </p>
-            <h4 className="testimonial-author">— Priya K.</h4>
-          </div>
-        </div>
-      </div>
     </section>
   );
 };
