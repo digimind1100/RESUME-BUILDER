@@ -48,6 +48,19 @@ export function AuthProvider({ children }) {
     loadUser();
   }, []);
 
+  useEffect(() => {
+  let interval;
+
+  if (user && !user.isPremium) {
+    interval = setInterval(async () => {
+      await refreshUser();
+    }, 10000); // check every 10 seconds
+  }
+
+  return () => clearInterval(interval);
+}, [user]);
+
+
   // ===============================
   // 🔹 SIGNUP
   // ===============================
