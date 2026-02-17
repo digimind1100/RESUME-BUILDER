@@ -42,6 +42,11 @@ export default function CoverLetterPanel() {
     }
   }, [isMobile]);
 
+  useEffect(() => {
+  refreshUser();
+}, []);
+
+
   // ===============================
   // 🔒 GENERATE HANDLER WITH PAYMENT CHECK
   // ===============================
