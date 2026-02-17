@@ -52,27 +52,30 @@ export function AuthProvider({ children }) {
   // 🔹 SIGNUP
   // ===============================
   const signup = async (payload) => {
-    try {
-      const res = await signupApi(payload);
+  try {
+    const res = await signupApi(payload);
 
-      if (res?.ok && res?.token) {
-        localStorage.setItem(TOKEN_KEY, res.token);
-        setUser(res.user);
-        return { ok: true, user: res.user };
-      }
+    console.log("SIGNUP RESPONSE:", res); // 👈 ADD THIS
 
-      return {
-        ok: false,
-        message: res?.message || "Signup failed",
-      };
-    } catch (error) {
-      console.error("Signup error:", error);
-      return {
-        ok: false,
-        message: "Server error. Please try again.",
-      };
+    if (res?.ok && res?.token) {
+      localStorage.setItem(TOKEN_KEY, res.token);
+      setUser(res.user);
+      return { ok: true, user: res.user };
     }
-  };
+
+    return {
+      ok: false,
+      message: res?.message || "Signup failed",
+    };
+  } catch (error) {
+    console.error("Signup error:", error);
+    return {
+      ok: false,
+      message: "Server error. Please try again.",
+    };
+  }
+};
+
 
   // ===============================
   // 🔹 LOGIN
