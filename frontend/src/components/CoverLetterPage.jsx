@@ -1,20 +1,35 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./CoverLetterPage.css";
-import TutorialVideo from './TutorialVideo';
-import TemplatesPreview from './TemplatesPreview'
+import TutorialVideo from "./TutorialVideo";
+import TemplatesPreview from "./TemplatesPreview";
 import SEOArticle from "./SEOArticle";
 import FAQBlock from "./FAQBlock";
 import Footer from "./Footer";
-
-
+import SignupModal from "./auth/SignupModal";
+import { useAuth } from "../context/AuthContext";
 
 const CoverLetterPage = () => {
   const [resumeStyle, setResumeStyle] = useState("classic");
+  const [showSignup, setShowSignup] = useState(false);
 
   const navigate = useNavigate();
+  const { user } = useAuth(); // get logged-in user
 
+  // ===== Handle Start Button =====
   const handleStart = () => {
+    if (user) {
+      // If already logged in → go directly
+      navigate("/coverletter-generator");
+    } else {
+      // If not logged in → open signup modal
+      setShowSignup(true);
+    }
+  };
+
+  // ===== After Successful Signup/Login =====
+  const handleSignupSuccess = () => {
+    setShowSignup(false);
     navigate("/coverletter-generator");
   };
 
@@ -49,24 +64,32 @@ const CoverLetterPage = () => {
           </button>
         </div>
 
-
         <TutorialVideo />
+
         <TemplatesPreview
-          resumeStyle={resumeStyle}       // make sure resumeStyle state is defined
-          setResumeStyle={setResumeStyle} // and setter is available
+          resumeStyle={resumeStyle}
+          setResumeStyle={setResumeStyle}
         />
+
         <SEOArticle />
         <FAQBlock />
 
-
+        {/* ================= SIGNUP MODAL ================= */}
+        {showSignup && (
+          <SignupModal
+            isOpen={showSignup}
+            onClose={() => setShowSignup(false)}
+            onSuccess={handleSignupSuccess}
+          />
+        )}
 
       </section>
+
       <div style={{ width: "100%" }}>
         <Footer />
       </div>
     </>
   );
+};
 
-
-}
 export default CoverLetterPage;
