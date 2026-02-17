@@ -3,9 +3,11 @@ import { useAuth } from "../../context/AuthContext";
 import "./SignupModal.css";
 
 export default function SignupModal({ isOpen, onClose, onSuccess }) {
-  const { signup, login, loading } = useAuth();
+  const { signup, login} = useAuth();
 
   const [mode, setMode] = useState("signup"); // signup | login
+  const [loading, setLoading] = useState(false);
+
 
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
@@ -15,51 +17,53 @@ export default function SignupModal({ isOpen, onClose, onSuccess }) {
   if (!isOpen) return null;
 
   async function handleSubmit(e) {
-    e.preventDefault();
-    if (loading) return;
+  e.preventDefault();
+  if (loading) return;
 
-    setError("");
+  setError("");
+  setLoading(true); // start loading
 
-    const payload =
-      mode === "signup"
-        ? {
+  const payload =
+    mode === "signup"
+      ? {
           fullName: fullName.trim(),
           email: email.trim(),
           password: password.trim(),
         }
-        : {
+      : {
           email: email.trim(),
           password: password.trim(),
         };
 
-    let result;
+  let result;
 
-    try {
-      result =
-        mode === "signup"
-          ? await signup(payload)
-          : await login(payload);
+  try {
+    result =
+      mode === "signup"
+        ? await signup(payload)
+        : await login(payload);
 
-      if (result?.ok) {
-        const pendingTemplate = localStorage.getItem("pendingTemplate");
+    if (result?.ok) {
+      const pendingTemplate = localStorage.getItem("pendingTemplate");
 
-        if (pendingTemplate) {
-          localStorage.removeItem("pendingTemplate");
-          window.location.href = `/resume/${pendingTemplate}`;
-          return;
-        }
-
-        onSuccess && onSuccess(result.user);
-        onClose();
+      if (pendingTemplate) {
+        localStorage.removeItem("pendingTemplate");
+        window.location.href = `/resume/${pendingTemplate}`;
+        return;
       }
 
-      else {
-        setError(result?.message || "Authentication failed. Please try again.");
-      }
-    } catch {
-      setError("Something went wrong. Please try again.");
+      onSuccess && onSuccess(result.user);
+      onClose();
+    } else {
+      setError(result?.message || "Authentication failed. Please try again.");
     }
+  } catch {
+    setError("Something went wrong. Please try again.");
+  } finally {
+    setLoading(false); // stop loading ALWAYS
   }
+}
+
 
   function switchMode(nextMode) {
     setMode(nextMode);
