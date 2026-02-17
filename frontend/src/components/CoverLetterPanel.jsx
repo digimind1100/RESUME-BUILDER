@@ -1,8 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./CoverLetterPanel.css";
 import { downloadCoverLetterPDF } from "./downloadCoverLetterPDF";
+import PaymentModal from "../components/payment/PaymentModal";
+import { useAuth } from "../context/AuthContext";
+import { FaLock } from "react-icons/fa";
 
 export default function CoverLetterPanel() {
+  const { user, refreshUser } = useAuth();
+
   const [companyName, setCompanyName] = useState("");
   const [jobTitle, setJobTitle] = useState("");
   const [yourName, setYourName] = useState("");
@@ -17,10 +22,12 @@ export default function CoverLetterPanel() {
   const [generatedText, setGeneratedText] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [showPayment, setShowPayment] = useState(false);
 
   const previewRef = useRef(null);
 
-  // ✅ Detect mobile ONCE
+  const isPremium = user?.isPremium; // 🔥 adjust if your field name differs
+
   const isMobile = window.innerWidth < 768;
 
   const formattedDate = new Date().toLocaleDateString("en-US", {
@@ -29,14 +36,21 @@ export default function CoverLetterPanel() {
     day: "numeric",
   });
 
-  // 🔥 FORCE EXIT EDIT MODE ON MOBILE
   useEffect(() => {
     if (isMobile && previewRef.current) {
       previewRef.current.blur();
     }
   }, [isMobile]);
 
+  // ===============================
+  // 🔒 GENERATE HANDLER WITH PAYMENT CHECK
+  // ===============================
   const handleGenerate = async () => {
+    if (!isPremium) {
+      setShowPayment(true);
+      return;
+    }
+
     if (!companyName || !jobTitle || !yourName) {
       alert("Please fill in Company Name, Job Title, and Your Name");
       return;
@@ -71,6 +85,13 @@ export default function CoverLetterPanel() {
     }
   };
 
+  // ===============================
+  // 💳 AFTER PAYMENT SUCCESS
+  // ===============================
+  const handlePaymentSuccess = async () => {
+    setShowPayment(false);
+    await refreshUser(); // 🔥 refresh premium status
+  };
 
   return (
     <div className="cover-letter-page">
@@ -104,8 +125,12 @@ export default function CoverLetterPanel() {
           <label>Experience:</label>
           <input value={experienceInput} onChange={e => setExperienceInput(e.target.value)} />
 
-          <button className="generate-btn" onClick={handleGenerate}>
-            Generate Cover Letter
+          <button
+            className={`generate-btn ${!isPremium ? "locked-feature" : ""}`}
+            onClick={handleGenerate}
+          >
+            {!isPremium && <FaLock style={{ marginRight: "8px" }} />}
+            {isPremium ? "Generate Cover Letter" : "Unlock to Generate"}
           </button>
         </div>
 
@@ -122,16 +147,16 @@ export default function CoverLetterPanel() {
             )}
 
             <button
-  className="download-btn"
-  onClick={() =>
-    downloadCoverLetterPDF({
-      elementRef: previewRef,
-      fileName: "Cover-Letter.pdf",
-    })
-  }
->
-  Download PDF
-</button>
+              className="download-btn"
+              onClick={() =>
+                downloadCoverLetterPDF({
+                  elementRef: previewRef,
+                  fileName: "Cover-Letter.pdf",
+                })
+              }
+            >
+              Download PDF
+            </button>
 
             {!isMobile && (
               <button
@@ -143,30 +168,27 @@ export default function CoverLetterPanel() {
             )}
           </div>
 
-          {/* PREVIEW */}
-         <div
-  ref={previewRef}
-  className="cover-letter-preview"
-  contentEditable={false}     // 🔒 HARD LOCK
-  tabIndex={-1}               // 🔒 no focus = no editing toolbar
-  style={{
-    width: "100%",
-    maxWidth: "210mm",
-    minHeight: "276mm",
-    padding: "40px",
-    background: "white",
-    fontFamily: "Arial, sans-serif",
-    fontSize: "14px",
-    lineHeight: "1.6",
-    boxSizing: "border-box",
-    margin: "0 auto",
-    border: "1px solid #ccc",
-    whiteSpace: "pre-line",
-    userSelect: "text",
-  }}
->
-
-
+          <div
+            ref={previewRef}
+            className="cover-letter-preview"
+            contentEditable={false}
+            tabIndex={-1}
+            style={{
+              width: "100%",
+              maxWidth: "210mm",
+              minHeight: "276mm",
+              padding: "40px",
+              background: "white",
+              fontFamily: "Arial, sans-serif",
+              fontSize: "14px",
+              lineHeight: "1.6",
+              boxSizing: "border-box",
+              margin: "0 auto",
+              border: "1px solid #ccc",
+              whiteSpace: "pre-line",
+              userSelect: "text",
+            }}
+          >
             <div style={{ textAlign: "right", marginBottom: "25px" }}>
               {formattedDate}
             </div>
@@ -177,6 +199,15 @@ export default function CoverLetterPanel() {
           </div>
         </div>
       </div>
+
+      {/* 💳 PAYMENT MODAL */}
+      {showPayment && (
+        <PaymentModal
+          isOpen={showPayment}
+          onClose={() => setShowPayment(false)}
+          onSuccess={handlePaymentSuccess}
+        />
+      )}
     </div>
   );
 }
