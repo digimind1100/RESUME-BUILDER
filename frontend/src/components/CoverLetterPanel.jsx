@@ -46,6 +46,8 @@ export default function CoverLetterPanel() {
   refreshUser();
 }, []);
 
+console.log("USER AFTER LOGIN:", user);
+
 
   // ===============================
   // 🔒 GENERATE HANDLER WITH PAYMENT CHECK
