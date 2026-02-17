@@ -23,10 +23,13 @@ export default function CoverLetterPanel() {
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [showPayment, setShowPayment] = useState(false);
-
   const previewRef = useRef(null);
 
-  const isPremium = user?.isPremium; // 🔥 adjust if your field name differs
+  const isPremium =
+  user?.isPaid &&
+  user?.accessUntil &&
+  new Date(user.accessUntil) > new Date();
+ // 🔥 adjust if your field name differs
 
   const isMobile = window.innerWidth < 768;
 
