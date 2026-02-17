@@ -9,82 +9,126 @@ import {
 const AuthContext = createContext();
 const TOKEN_KEY = "token";
 
-
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
+
+  // 🔥 Global loading ONLY for app initialization
   const [loading, setLoading] = useState(true);
 
   const isAuthenticated = !!user;
 
-  // 🔹 App load → restore session
+  // ===============================
+  // 🔹 RESTORE SESSION ON APP LOAD
+  // ===============================
   useEffect(() => {
     async function loadUser() {
-      const token = localStorage.getItem(TOKEN_KEY);
+      try {
+        const token = localStorage.getItem(TOKEN_KEY);
 
-      if (!token) {
+        if (!token) {
+          setLoading(false);
+          return;
+        }
+
+        const res = await getCurrentUser(token);
+
+        if (res?.success) {
+          setUser(res.user);
+        } else {
+          localStorage.removeItem(TOKEN_KEY);
+        }
+      } catch (error) {
+        console.error("Session restore failed:", error);
+        localStorage.removeItem(TOKEN_KEY);
+      } finally {
         setLoading(false);
-        return;
       }
-
-      const res = await getCurrentUser(token);
-      if (res.success) {
-        setUser(res.user);
-      }
-
-      setLoading(false);
     }
 
     loadUser();
   }, []);
 
+  // ===============================
   // 🔹 SIGNUP
+  // ===============================
   const signup = async (payload) => {
-    setLoading(true);
+    try {
+      const res = await signupApi(payload);
 
-    const res = await signupApi(payload);
+      if (res?.ok && res?.token) {
+        localStorage.setItem(TOKEN_KEY, res.token);
+        setUser(res.user);
+        return { ok: true, user: res.user };
+      }
 
-    if (res.ok && res.token) {
-      localStorage.setItem(TOKEN_KEY, res.token);
-      setUser(res.user);
+      return {
+        ok: false,
+        message: res?.message || "Signup failed",
+      };
+    } catch (error) {
+      console.error("Signup error:", error);
+      return {
+        ok: false,
+        message: "Server error. Please try again.",
+      };
     }
-
-    setLoading(false);
-    return res;
   };
 
+  // ===============================
   // 🔹 LOGIN
+  // ===============================
   const login = async (payload) => {
-    setLoading(true);
+    try {
+      const res = await loginApi(payload);
 
-    const res = await loginApi(payload);
+      if (res?.ok && res?.token) {
+        localStorage.setItem(TOKEN_KEY, res.token);
+        setUser(res.user);
+        return { ok: true, user: res.user };
+      }
 
-    if (res.ok && res.token) {
-      // 🔥 THIS LINE FIXES EVERYTHING
-      localStorage.setItem(TOKEN_KEY, res.token);
-      setUser(res.user);
+      return {
+        ok: false,
+        message: res?.message || "Login failed",
+      };
+    } catch (error) {
+      console.error("Login error:", error);
+      return {
+        ok: false,
+        message: "Server error. Please try again.",
+      };
     }
-
-    setLoading(false);
-    return res;
   };
 
-  // 🔹 REFRESH USER (used by payments)
+  // ===============================
+  // 🔹 REFRESH USER (for payments etc.)
+  // ===============================
   const refreshUser = async () => {
-    const token = localStorage.getItem(TOKEN_KEY);
-    if (!token) return;
+    try {
+      const token = localStorage.getItem(TOKEN_KEY);
+      if (!token) return;
 
-    const res = await getCurrentUser(token);
-    if (res.success) {
-      setUser(res.user);
+      const res = await getCurrentUser(token);
+      if (res?.success) {
+        setUser(res.user);
+      }
+    } catch (error) {
+      console.error("Refresh user error:", error);
     }
   };
 
+  // ===============================
   // 🔹 LOGOUT
+  // ===============================
   const logout = async () => {
-    await logoutApi();
+    try {
+      await logoutApi();
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
+
     localStorage.removeItem(TOKEN_KEY);
     setUser(null);
-    setLoading(false);
   };
 
   return (
@@ -93,7 +137,7 @@ export function AuthProvider({ children }) {
         user,
         setUser,
         isAuthenticated,
-        loading,
+        loading, // only used for app initialization
         signup,
         login,
         logout,
