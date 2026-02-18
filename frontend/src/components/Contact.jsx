@@ -9,6 +9,8 @@ export default function Contact() {
     message: "",
   });
 
+  const [loading, setLoading] = useState(false);
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -16,18 +18,40 @@ export default function Contact() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
-    // For now just simulate submission
-    alert("Your message has been sent. We will contact you shortly.");
+    try {
+      const response = await fetch(
+        "https://YOUR-RAILWAY-URL.up.railway.app/api/contact",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
 
-    setFormData({
-      name: "",
-      email: "",
-      subject: "",
-      message: "",
-    });
+      const data = await response.json();
+
+      if (response.ok) {
+        alert("✅ Message sent successfully!");
+        setFormData({
+          name: "",
+          email: "",
+          subject: "",
+          message: "",
+        });
+      } else {
+        alert(data.error || "❌ Failed to send message.");
+      }
+    } catch (error) {
+      alert("❌ Server error. Please try again later.");
+    }
+
+    setLoading(false);
   };
 
   return (
@@ -85,15 +109,10 @@ export default function Contact() {
             ></textarea>
           </div>
 
-          <button type="submit" className="contact-btn">
-            Send Message
+          <button type="submit" className="contact-btn" disabled={loading}>
+            {loading ? "Sending..." : "Send Message"}
           </button>
         </form>
-
-        <p className="contact-note">
-          📧 You can also email us directly at{" "}
-          <strong>support@yourdomain.com</strong>
-        </p>
       </div>
     </div>
   );
