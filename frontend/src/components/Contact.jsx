@@ -24,7 +24,7 @@ export default function Contact() {
 
     try {
       const response = await fetch(
-        "https://YOUR-RAILWAY-URL.up.railway.app/api/contact",
+        "https://resume-builder-backend-production-116d.up.railway.app/api/contact",
         {
           method: "POST",
           headers: {
