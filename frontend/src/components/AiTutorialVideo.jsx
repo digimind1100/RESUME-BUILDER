@@ -28,7 +28,7 @@ export default function TutorialVideo() {
               {/* TODO: apna real video path lagao */}
               <video
                 className="tutorial-video"
-                src="/videos/tutorial.mp4"
+                src="/demo/mockup.mp4" type="video/mp4"
                 controls
                 poster="/images/tutorial-poster.png" // optional preview image
               />

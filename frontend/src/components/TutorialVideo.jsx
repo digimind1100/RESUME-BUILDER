@@ -7,7 +7,7 @@ export default function TutorialVideo() {
       <p>Watch this video to learn how to create a professional resume step by step.</p>
       <div className="video-container">
         <iframe
-          src="https://www.youtube.com/embed/dQw4w9WgXcQ" // dummy video
+          src="/demo/mockup.mp4" type="video/mp4" // dummy video
           title="Resume Builder Tutorial"
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
