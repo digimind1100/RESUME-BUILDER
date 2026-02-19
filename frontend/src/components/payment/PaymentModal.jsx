@@ -122,7 +122,7 @@ export default function PaymentModal({ onClose, onSuccess }) {
           },
           body: JSON.stringify({
             method,
-            amount: 999,
+            amount: 599,
             transactionId,
           }),
         }
@@ -213,7 +213,7 @@ export default function PaymentModal({ onClose, onSuccess }) {
           One-time payment to unlock full editing
         </p>
 
-        <div className="payment-price">Rs 999</div>
+        <div className="payment-price">Rs 599</div>
         <div className="payment-note">
           Valid for 30 days · Instant access via PayFast
         </div>
@@ -262,7 +262,7 @@ export default function PaymentModal({ onClose, onSuccess }) {
         {status === "idle" && selectedAccount && (
           <div className="payment-instructions">
             <strong>{selectedAccount.name} Payment</strong>
-            <p>Send <b>Rs 999</b> to:</p>
+            <p>Send <b>Rs 599</b> to:</p>
             <p>
               <b>Account:</b> {selectedAccount.number}<br />
               <b>Name:</b> {selectedAccount.holder}
