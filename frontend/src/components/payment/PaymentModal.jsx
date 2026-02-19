@@ -262,7 +262,7 @@ export default function PaymentModal({ onClose, onSuccess }) {
             <p>Send <b>Rs 599</b> to:</p>
             <p>
               <b>Account:</b> {selectedAccount.number}<br />
-              <b>Name:</b> {selectedAccount.holder}
+              <b></b> {selectedAccount.holder}
             </p>
           </div>
         )}
