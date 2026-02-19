@@ -286,3 +286,8 @@
   max-width: 360px;
   text-align: center;
 }
+.payment-modal {
+  max-height: 90vh;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
