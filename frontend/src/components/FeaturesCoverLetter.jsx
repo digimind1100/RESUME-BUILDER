@@ -1,23 +1,29 @@
 // FeaturesCoverLetter.jsx
-import React from "react";
+import React, { useState } from "react";
 import "./FeaturesCoverLetter.css";
 import { useAuth } from "../context/AuthContext";
-import { FaLock } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import SignupModal from "./auth/SignupModal";
 
 const FeaturesCoverLetter = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  // ✅ Premium Logic (Same as CoverLetterPanel)
-  const isPremium =
-    user?.isPaid &&
-    user?.accessUntil &&
-    new Date(user.accessUntil) > new Date();
+  const [showSignup, setShowSignup] = useState(false);
 
-  const handleClick = (e) => {
-    e.preventDefault();
+  const handleClick = () => {
+    if (!user) {
+      setShowSignup(true); // open signup modal
+      return;
+    }
+
+    // If already logged in → go directly
     navigate("/cover-letter");
+  };
+
+  const handleSignupSuccess = () => {
+    setShowSignup(false);
+    navigate("/cover-letter"); // instantly open cover letter
   };
 
   return (
@@ -76,16 +82,22 @@ const FeaturesCoverLetter = () => {
         {/* ---------- CTA Button ---------- */}
         <div className="cover-letter-cta">
           <button
-            className={`cover-letter-button ${
-              !isPremium ? "locked-feature" : ""
-            }`}
+            className="cover-letter-button"
             onClick={handleClick}
           >
-            {!isPremium && <FaLock style={{ marginRight: "8px" }} />}
             Try Cover Letter Generator
           </button>
         </div>
       </div>
+
+      {/* Signup Modal */}
+      {showSignup && (
+        <SignupModal
+          isOpen={showSignup}
+          onClose={() => setShowSignup(false)}
+          onSuccess={handleSignupSuccess}
+        />
+      )}
     </section>
   );
 };
