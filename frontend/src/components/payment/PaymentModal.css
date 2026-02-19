@@ -286,8 +286,23 @@
   max-width: 360px;
   text-align: center;
 }
+
 .payment-modal {
   max-height: 90vh;
   overflow-y: auto;
-  scroll-behavior: smooth;
+scroll-behavior: smooth;
+  border-radius: 16px; /* keep your existing radius */
+  padding-right: 6px;  /* space for scrollbar */
+}
+.payment-modal::-webkit-scrollbar {
+  width: 6px;
+}
+
+.payment-modal::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+.payment-modal::-webkit-scrollbar-track {
+  background: transparent;
 }
