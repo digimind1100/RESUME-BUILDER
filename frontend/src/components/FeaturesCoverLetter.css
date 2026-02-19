@@ -89,3 +89,6 @@
 .cover-letter-button:hover {
   background-color: #2563eb; /* darker blue on hover */
 }
+.locked-feature {
+  opacity: 0.9;
+}
