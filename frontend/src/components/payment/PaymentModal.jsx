@@ -33,19 +33,16 @@ export default function PaymentModal({ onClose, onSuccess }) {
     easypaisa: {
       name: "EasyPaisa",
       number: "0300-2463822",
-      holder: "DigiMind",
       logo: easypaisaLogo,
     },
     jazzcash: {
       name: "JazzCash",
       number: "0300-2463822",
-      holder: "DigiMind",
       logo: jazzcashLogo,
     },
     sadapay: {
       name: "SadaPay",
       number: "0300-2463822",
-      holder: "DigiMind",
       logo: sadapayLogo,
     },
   };
