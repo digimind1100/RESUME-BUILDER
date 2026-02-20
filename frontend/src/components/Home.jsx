@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Helmet } from "react-helmet-async";
 import "./Home.css";
 import HeroSection from "./HeroSection";
 import FeaturesHowTestimonials from "./FeaturesHowTestimonials";
