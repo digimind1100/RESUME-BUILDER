@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "nodemailer": "^8.0.1"
+    "nodemailer": "^8.0.1",
+    "react-helmet-async": "^2.0.5"
   }
 }
