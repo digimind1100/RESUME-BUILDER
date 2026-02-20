@@ -4,6 +4,8 @@ export function authGate() {
   const saved = localStorage.getItem("staging_auth");
   if (saved === "ok") return;
 
+console.log("AUTH GATE RUNNING");
+
   document.documentElement.innerHTML = `
     <head>
       <title>Staging Access</title>
