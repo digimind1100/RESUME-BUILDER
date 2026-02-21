@@ -29,8 +29,8 @@ import AdminGuard from "./components/admin/AdminGuard";
 import { ReviewProvider } from "./context/ReviewContext";
 import AdminReviews from "./components/admin/AdminReviews";
 import ReviewsPage from "./components/ReviewsPage";
-import Blog from "./pages/Blog";
-import BlogPost from "./pages/BlogPost";
+import Blog from "./components/Blog";
+import BlogPost from "./components/BlogPost";
 
 
 function AppContent() {
