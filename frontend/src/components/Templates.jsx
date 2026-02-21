@@ -79,6 +79,18 @@ export default function Templates() {
     <>
       <section className="templates-page">
 
+        {/* ===== SEO HEADER ===== */}
+<div className="templates-seo-header">
+  <h1>Resume Templates in Pakistan – Professional & ATS-Friendly Formats</h1>
+
+  <p className="templates-seo-intro">
+    Explore professionally designed resume templates tailored for students,
+    fresh graduates, and experienced professionals in Pakistan. Our AI-powered
+    resume builder offers ATS-friendly CV templates that help you stand out
+    in corporate, government, and international job applications.
+  </p>
+</div>
+
        {/* =================== PREMIUM TEMPLATES =================== */}
 <section className="templates-section templates-section--premium">
   <div className="section-heading">
@@ -158,6 +170,43 @@ export default function Templates() {
         </button>
       </div>
     </article>
+  </div>
+</section>
+
+{/* ===== SEO CONTENT BLOCK ===== */}
+<section className="templates-seo-content">
+  <div className="templates-seo-container">
+    <h2>Choose the Best Resume Template for Your Career</h2>
+
+    <p>
+      Selecting the right resume template is essential when applying for jobs
+      in Pakistan. Recruiters often spend only a few seconds reviewing each CV,
+      so a clean and structured layout can significantly improve your chances
+      of getting shortlisted. Our resume templates are designed with clarity,
+      readability, and ATS compatibility in mind.
+    </p>
+
+    <p>
+      Whether you are applying for a banking position, software engineering
+      role, healthcare job, aviation industry opportunity, or government
+      department vacancy, ResumeBuilder.pk provides modern resume formats
+      tailored to different industries.
+    </p>
+
+    <h2>ATS-Friendly Resume Templates</h2>
+
+    <p>
+      Many companies in Pakistan use Applicant Tracking Systems (ATS) to filter
+      resumes automatically. Our professional CV templates are structured to
+      meet ATS standards, ensuring your skills, education, and work experience
+      are properly recognized by automated systems.
+    </p>
+
+    <p>
+      With our AI resume builder, you can customize any template, adjust
+      sections, and download your professional resume within minutes. No
+      design experience required.
+    </p>
   </div>
 </section>
 

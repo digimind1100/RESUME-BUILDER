@@ -479,3 +479,51 @@
   visibility: hidden;
   pointer-events: none;
 }
+
+
+/* ===== SEO HEADER ===== */
+.templates-seo-header {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 80px 0 40px 0;
+}
+
+.templates-seo-header h1 {
+  font-size: 2.4rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.templates-seo-intro {
+  font-size: 1.1rem;
+  color: #555;
+  line-height: 1.7;
+}
+
+/* ===== SEO CONTENT BLOCK ===== */
+.templates-seo-content {
+  display: flex;
+  justify-content: center;
+  padding: 60px 0;
+  background-color: #f9fafc;
+}
+
+.templates-seo-container {
+  width: 90%;
+  max-width: 1200px;
+}
+
+.templates-seo-content h2 {
+  font-size: 1.9rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+  margin-top: 40px;
+}
+
+.templates-seo-content p {
+  font-size: 1.05rem;
+  color: #555;
+  line-height: 1.8;
+  margin-bottom: 16px;
+}
