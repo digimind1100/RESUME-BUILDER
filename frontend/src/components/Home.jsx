@@ -8,6 +8,7 @@ import Footer from "./Footer";
 import TemplateShowcase from "./TemplateShowcase";
 import AiTutorialVideo from "./AiTutorialVideo"
 import HomeReviews from "./HomeReviews";
+import HomeSEOContent from "./HomeSEOContent";
 
 
 
@@ -36,6 +37,7 @@ export default function Home() {
   return (
   <main className="home-page">
     <HeroSection />
+    <HomeSEOContent />
     <FeaturesHowTestimonials />
     <TemplateShowcase />
     <AiTutorialVideo />
