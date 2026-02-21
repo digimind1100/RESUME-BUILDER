@@ -9,6 +9,7 @@ import TemplateShowcase from "./TemplateShowcase";
 import AiTutorialVideo from "./AiTutorialVideo"
 import HomeReviews from "./HomeReviews";
 import HomeSEOContent from "./HomeSEOContent";
+import HomeFAQ from "./HomeFAQ";
 
 
 
@@ -43,6 +44,7 @@ export default function Home() {
     <AiTutorialVideo />
     <FeaturesCoverLetter />
       <HomeReviews /> 
+      <HomeFAQ />
     <CounterBlock />
     <Footer />
   </main>
