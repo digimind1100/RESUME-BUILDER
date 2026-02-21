@@ -1,16 +1,19 @@
 /* ==== SEO CONTENT SECTION ==== */
+
 .seo-section {
-  padding: 80px 0;
-  background-color: #f9fafc; /* same as hero */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 80px 0;          /* ONLY top & bottom padding */
+  background-color: #f9fafc; /* Same as hero */
 }
 
 .seo-container {
   width: 90%;
   max-width: 1200px;
-  margin: 0 auto;
 }
 
-/* Headings similar scale to hero */
+/* Headings styled similar to hero */
 .seo-section h2 {
   font-size: 2rem;
   font-weight: 700;
@@ -23,26 +26,21 @@
   color: #0077ff;
 }
 
-/* Paragraph styling aligned with hero subtitle */
+/* Paragraph style aligned with hero subtitle */
 .seo-section p {
   font-size: 1.05rem;
   color: #555;
   line-height: 1.8;
   margin-bottom: 18px;
-  max-width: 900px;
 }
 
-/* Optional subtle divider for better structure */
+/* Remove top margin from first heading */
 .seo-section h2:first-child {
   margin-top: 0;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-  .seo-section {
-    padding: 60px 0;
-  }
-
   .seo-section h2 {
     font-size: 1.6rem;
   }
