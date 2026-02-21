@@ -29,91 +29,96 @@ import AdminGuard from "./components/admin/AdminGuard";
 import { ReviewProvider } from "./context/ReviewContext";
 import AdminReviews from "./components/admin/AdminReviews";
 import ReviewsPage from "./components/ReviewsPage";
+import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
 
 
 function AppContent() {
   const location = useLocation();
-   // Global form state
+  // Global form state
   const [formData, setFormData] = useState({});
 
-   const user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem("user"));
 
   return (
     <>
-    <ReviewProvider user={user}>
-      <Navbar />
-      <Toaster position="top-center" />
+      <ReviewProvider user={user}>
+        <Navbar />
+        <Toaster position="top-center" />
 
-      <Routes>
+        <Routes>
 
-      <Route
-  path="/admin/payments"
-  element={
-    <AdminGuard>
-      <AdminPendingPayments />
-    </AdminGuard>
-  }
-/>
- 
-<Route path="/admin/reviews" element={<AdminReviews />} />
+          <Route
+            path="/admin/payments"
+            element={
+              <AdminGuard>
+                <AdminPendingPayments />
+              </AdminGuard>
+            }
+          />
 
-        <Route path="/" element={<HomePage />} />
+          <Route path="/admin/reviews" element={<AdminReviews />} />
 
-        {/* Unified builder */}
-        <Route
-          path="/resume/:templateId?"
-          element={<ResumeBuilder formData={formData} setFormData={setFormData} />}
-        />
-        <Route path="/resume-classic" element={<ResumeBuilderQR />} />
+          <Route path="/" element={<HomePage />} />
 
-        {/* Templates */}
-        <Route path="/templates" element={<Templates />} />
+          {/* Unified builder */}
+          <Route
+            path="/resume/:templateId?"
+            element={<ResumeBuilder formData={formData} setFormData={setFormData} />}
+          />
+          <Route path="/resume-classic" element={<ResumeBuilderQR />} />
 
-        <Route path="/features" element={<Features />} />
+          {/* Templates */}
+          <Route path="/templates" element={<Templates />} />
 
-        {/* Cover letter */}
-        <Route path="/cover-letter" element={<CoverLetterPanel />} />
+          <Route path="/features" element={<Features />} />
 
-        {/* Terms & policies */}
-        <Route path="/policies" element={<Policies />} />
+          {/* Cover letter */}
+          <Route path="/cover-letter" element={<CoverLetterPanel />} />
 
-        {/* Contact */}
-        <Route path="/contact" element={<Contact />} />
+          {/* Terms & policies */}
+          <Route path="/policies" element={<Policies />} />
 
-        {/* ✅ PUBLIC REVIEWS PAGE */}
-        <Route path="/reviews" element={<ReviewsPage />} />
+          {/* Contact */}
+          <Route path="/contact" element={<Contact />} />
 
-        {/* Preview */}
-        <Route
-          path="/preview-classic"
-          element={<PreviewPanelQRPage formData={formData} />}
-        />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
 
-        <Route path="/clean-professional" element={<CleanProfessional />} />
-        <Route path="/creative-bold" element={<CreativeBold />} />
-        <Route path="/minimal-accent" element={<MinimalAccent />} />
-        <Route path="/elegant-classic" element={<ElegantClassic />} />
-        <Route path="/medical-elites" element={<MedicalElites />} />
-        <Route path="/engineer-elites" element={<EngineerElites />} />
-        <Route path="/soft-tech" element={<SoftTech />} />
+          {/* ✅ PUBLIC REVIEWS PAGE */}
+          <Route path="/reviews" element={<ReviewsPage />} />
 
-        <Route
-          path="/data-elite"
-          element={
-            <BuilderGuard>
-              <DataElite />
-            </BuilderGuard>
-          }
-        />
+          {/* Preview */}
+          <Route
+            path="/preview-classic"
+            element={<PreviewPanelQRPage formData={formData} />}
+          />
 
-        <Route path="/engineer-prime" element={<EngineerPrime />} />
-        <Route path="/aviation-pro" element={<AviationPro />} />
-        <Route path="/teacher-elite" element={<TeacherElite />} />
-        <Route path="/coverletter" element={<CoverLetterPage />} />
-        <Route path="/coverletter-generator" element={<CoverLetterPanel />} />
-        <Route path="*" element={<Navigate to="/" />} />
+          <Route path="/clean-professional" element={<CleanProfessional />} />
+          <Route path="/creative-bold" element={<CreativeBold />} />
+          <Route path="/minimal-accent" element={<MinimalAccent />} />
+          <Route path="/elegant-classic" element={<ElegantClassic />} />
+          <Route path="/medical-elites" element={<MedicalElites />} />
+          <Route path="/engineer-elites" element={<EngineerElites />} />
+          <Route path="/soft-tech" element={<SoftTech />} />
 
-      </Routes>
+          <Route
+            path="/data-elite"
+            element={
+              <BuilderGuard>
+                <DataElite />
+              </BuilderGuard>
+            }
+          />
+
+          <Route path="/engineer-prime" element={<EngineerPrime />} />
+          <Route path="/aviation-pro" element={<AviationPro />} />
+          <Route path="/teacher-elite" element={<TeacherElite />} />
+          <Route path="/coverletter" element={<CoverLetterPage />} />
+          <Route path="/coverletter-generator" element={<CoverLetterPanel />} />
+          <Route path="*" element={<Navigate to="/" />} />
+
+        </Routes>
       </ReviewProvider>
     </>
   );
