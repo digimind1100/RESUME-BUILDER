@@ -6,9 +6,7 @@ export default function BlogPost() {
   const { slug } = useParams();
 
   if (slug !== "best-cv-format-for-freshers-in-pakistan-2026") {
-    return <div style={{ padding: "80px 20px" }}>Blog not found.</div>;
-  }
-
+  
   return (
     <>
       <article className="blog-article">
@@ -306,7 +304,8 @@ if (slug !== "best-cv-format-for-freshers-in-pakistan-2026") {
       <Footer />
 
     </>
-  );}
+  );
+}
 
   /* ================= NOT FOUND ================= */
   return (
@@ -314,3 +313,5 @@ if (slug !== "best-cv-format-for-freshers-in-pakistan-2026") {
       <h1>Blog Not Found</h1>
     </div>
   );
+
+}
