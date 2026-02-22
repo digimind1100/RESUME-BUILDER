@@ -153,152 +153,164 @@ export default function BlogPost() {
     </>
   );
 }
- /* ================= BLOG 2 ================= */
+/* ================= BLOG 2 ================= */
 if (slug !== "best-cv-format-for-freshers-in-pakistan-2026") {
-    return <div style={{ padding: "80px 20px" }}>Blog not found.</div>;
-  }
+  return (
+    <>
+      <article className="blog-article">
+        <div className="blog-container">
+          <h1>How to Make an ATS Friendly Resume in Pakistan (2026 Guide)</h1>
 
-return (
-  <>
-  <h1>How to Make an ATS Friendly Resume in Pakistan (2026 Guide)</h1>
 
-<p>
-In 2026, many companies in Pakistan use Applicant Tracking Systems (ATS) to screen resumes before a recruiter ever sees them. If your CV is not ATS-friendly, it may get rejected automatically — even if you are qualified for the job.
-</p>
+          <p>
+            In 2026, many companies in Pakistan use Applicant Tracking Systems (ATS) to screen resumes before a recruiter ever sees them. If your CV is not ATS-friendly, it may get rejected automatically — even if you are qualified for the job.
+          </p>
 
-<p>
-Understanding how ATS works and optimizing your resume accordingly can significantly increase your chances of getting shortlisted. In this guide, we explain exactly how to create an ATS-friendly resume in Pakistan.
-</p>
+          <p>
+            Understanding how ATS works and optimizing your resume accordingly can significantly increase your chances of getting shortlisted. In this guide, we explain exactly how to create an ATS-friendly resume in Pakistan.
+          </p>
 
-<h2>What Is an ATS and How Does It Work?</h2>
+          <h2>What Is an ATS and How Does It Work?</h2>
 
-<p>
-An Applicant Tracking System (ATS) is software used by companies to filter and rank job applications. It scans resumes for keywords, formatting structure, and relevant experience.
-</p>
+          <p>
+            An Applicant Tracking System (ATS) is software used by companies to filter and rank job applications. It scans resumes for keywords, formatting structure, and relevant experience.
+          </p>
 
-<p>
-If your CV does not contain the right keywords or uses complex formatting, the ATS may fail to read it correctly.
-</p>
+          <p>
+            If your CV does not contain the right keywords or uses complex formatting, the ATS may fail to read it correctly.
+          </p>
 
-<h2>Step 1: Use a Clean Resume Format</h2>
+          <h2>Step 1: Use a Clean Resume Format</h2>
 
-<p>
-ATS systems prefer simple, structured resumes. Avoid:
-</p>
+          <p>
+            ATS systems prefer simple, structured resumes. Avoid:
+          </p>
 
-<ul>
-  <li>Graphics and images</li>
-  <li>Text inside tables</li>
-  <li>Unusual fonts</li>
-  <li>Complex multi-column layouts</li>
-</ul>
+          <ul>
+            <li>Graphics and images</li>
+            <li>Text inside tables</li>
+            <li>Unusual fonts</li>
+            <li>Complex multi-column layouts</li>
+          </ul>
 
-<p>
-A clean and professional template like those available on our{" "}
-<a href="/templates">ATS-friendly resume templates page</a> ensures your CV remains readable by software and recruiters.
-</p>
+          <p>
+            A clean and professional template like those available on our{" "}
+            <a href="/templates">ATS-friendly resume templates page</a> ensures your CV remains readable by software and recruiters.
+          </p>
 
-<h2>Step 2: Include Relevant Keywords</h2>
+          <h2>Step 2: Include Relevant Keywords</h2>
 
-<p>
-Carefully read the job description and identify important skills and qualifications. For example:
-</p>
+          <p>
+            Carefully read the job description and identify important skills and qualifications. For example:
+          </p>
 
-<ul>
-  <li>If the job requires “Excel,” make sure Excel appears in your skills section.</li>
-  <li>If the role mentions “Project Management,” include it where relevant.</li>
-</ul>
+          <ul>
+            <li>If the job requires “Excel,” make sure Excel appears in your skills section.</li>
+            <li>If the role mentions “Project Management,” include it where relevant.</li>
+          </ul>
 
-<p>
-Using the correct keywords increases your ATS ranking score.
-</p>
+          <p>
+            Using the correct keywords increases your ATS ranking score.
+          </p>
 
-<h2>Step 3: Structure Your Sections Properly</h2>
+          <h2>Step 3: Structure Your Sections Properly</h2>
 
-<p>
-Always use standard headings such as:
-</p>
+          <p>
+            Always use standard headings such as:
+          </p>
 
-<ul>
-  <li>Contact Information</li>
-  <li>Professional Summary</li>
-  <li>Education</li>
-  <li>Skills</li>
-  <li>Work Experience</li>
-</ul>
+          <ul>
+            <li>Contact Information</li>
+            <li>Professional Summary</li>
+            <li>Education</li>
+            <li>Skills</li>
+            <li>Work Experience</li>
+          </ul>
 
-<p>
-Avoid creative section names like “My Journey” or “What I Know.” ATS systems may not recognize them.
-</p>
+          <p>
+            Avoid creative section names like “My Journey” or “What I Know.” ATS systems may not recognize them.
+          </p>
 
-<h2>Step 4: Focus on Achievements, Not Just Duties</h2>
+          <h2>Step 4: Focus on Achievements, Not Just Duties</h2>
 
-<p>
-Instead of writing:
-</p>
+          <p>
+            Instead of writing:
+          </p>
 
-<p>
-“Responsible for managing social media accounts.”
-</p>
+          <p>
+            “Responsible for managing social media accounts.”
+          </p>
 
-<p>
-Write:
-</p>
+          <p>
+            Write:
+          </p>
 
-<p>
-“Managed company social media accounts and increased engagement by 35% within 6 months.”
-</p>
+          <p>
+            “Managed company social media accounts and increased engagement by 35% within 6 months.”
+          </p>
 
-<p>
-Quantifiable results improve both ATS scoring and recruiter perception.
-</p>
+          <p>
+            Quantifiable results improve both ATS scoring and recruiter perception.
+          </p>
 
-<h2>Step 5: Keep Formatting Simple</h2>
+          <h2>Step 5: Keep Formatting Simple</h2>
 
-<p>
-Use:
-</p>
+          <p>
+            Use:
+          </p>
 
-<ul>
-  <li>Standard fonts (Arial, Calibri, Times New Roman)</li>
-  <li>Clear bullet points</li>
-  <li>Consistent spacing</li>
-</ul>
+          <ul>
+            <li>Standard fonts (Arial, Calibri, Times New Roman)</li>
+            <li>Clear bullet points</li>
+            <li>Consistent spacing</li>
+          </ul>
 
-<p>
-Save your resume as a PDF unless the employer specifies otherwise.
-</p>
+          <p>
+            Save your resume as a PDF unless the employer specifies otherwise.
+          </p>
 
-<h2>Common ATS Mistakes in Pakistan</h2>
+          <h2>Common ATS Mistakes in Pakistan</h2>
 
-<ul>
-  <li>Adding CNIC number unnecessarily</li>
-  <li>Using too many colors</li>
-  <li>Including personal details not required</li>
-  <li>Using outdated CV formats</li>
-</ul>
+          <ul>
+            <li>Adding CNIC number unnecessarily</li>
+            <li>Using too many colors</li>
+            <li>Including personal details not required</li>
+            <li>Using outdated CV formats</li>
+          </ul>
 
-<p>
-If you are unsure about your format, read our guide on{" "}
-<a href="/blog/best-cv-format-for-freshers-in-pakistan-2026">
-Best CV Format for Freshers in Pakistan
-</a>{" "}
-to ensure your structure is correct.
-</p>
+          <p>
+            If you are unsure about your format, read our guide on{" "}
+            <a href="/blog/best-cv-format-for-freshers-in-pakistan-2026">
+              Best CV Format for Freshers in Pakistan
+            </a>{" "}
+            to ensure your structure is correct.
+          </p>
 
-<h2>Use an AI Resume Builder for Better Results</h2>
+          <h2>Use an AI Resume Builder for Better Results</h2>
 
-<p>
-Instead of manually adjusting formatting, you can use a{" "}
-<a href="/">Free AI Resume Builder in Pakistan</a> to automatically generate
-an ATS-optimized resume. AI tools suggest relevant skills, structure sections
-properly, and reduce formatting errors.
-</p>
+          <p>
+            Instead of manually adjusting formatting, you can use a{" "}
+            <a href="/">Free AI Resume Builder in Pakistan</a> to automatically generate
+            an ATS-optimized resume. AI tools suggest relevant skills, structure sections
+            properly, and reduce formatting errors.
+          </p>
 
-<h2>Final Thoughts</h2>
+          <h2>Final Thoughts</h2>
 
-<p>
-Creating an ATS-friendly resume in Pakistan in 2026 requires proper formatting, relevant keywords, and structured sections. By following the steps above and using professional templates, you can significantly improve your chances of passing automated screening systems and getting shortlisted.
-</p>
-</>
-)
+          <p>
+            Creating an ATS-friendly resume in Pakistan in 2026 requires proper formatting, relevant keywords, and structured sections. By following the steps above and using professional templates, you can significantly improve your chances of passing automated screening systems and getting shortlisted.
+          </p>
+
+        </div>
+      </article>
+      <Footer />
+
+    </>
+  );}
+
+  /* ================= NOT FOUND ================= */
+  return (
+    <div style={{ padding: "100px 20px", textAlign: "center" }}>
+      <h1>Blog Not Found</h1>
+    </div>
+  );
