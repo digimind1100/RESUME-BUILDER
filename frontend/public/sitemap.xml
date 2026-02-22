@@ -33,6 +33,15 @@
     <priority>0.8</priority>
   </url>
 
+  
+  <!-- Policies -->
+  <url>
+    <loc>https://resumebuilder.pk/policies</loc>
+    <lastmod>2026-02-20</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
   <!-- Blog Listing -->
   <url>
     <loc>https://resumebuilder.pk/blog</loc>
@@ -49,13 +58,6 @@
     <priority>0.7</priority>
   </url>
 
-  <!-- Policies -->
-  <url>
-    <loc>https://resumebuilder.pk/policies</loc>
-    <lastmod>2026-02-20</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.6</priority>
-  </url>
 
   <!-- Contact -->
   <url>
