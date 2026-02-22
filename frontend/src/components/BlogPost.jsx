@@ -152,7 +152,7 @@ export default function BlogPost() {
   );
 }
 /* ================= BLOG 2 ================= */
-if (slug !== "best-cv-format-for-freshers-in-pakistan-2026") {
+  if (slug === "how-to-make-ats-friendly-resume-in-pakistan-2026") {
   return (
     <>
       <article className="blog-article">
