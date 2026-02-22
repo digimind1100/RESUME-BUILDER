@@ -25,6 +25,21 @@ export default function Blog() {
             </Link>
           </article>
         </div>
+
+        <article className="blog-card">
+          <h2>How to Make an ATS Friendly Resume in Pakistan (2026)</h2>
+          <p>
+            Learn how ATS systems work and how to optimize your resume
+            to pass automated screening in Pakistan.
+          </p>
+
+          <Link
+            to="/blog/how-to-make-ats-friendly-resume-in-pakistan-2026"
+            className="blog-read-btn"
+          >
+            Read Full Guide
+          </Link>
+        </article>
       </section>
 
       <Footer />
