@@ -4,6 +4,7 @@ import "./Blog.css";
 
 export default function BlogPost() {
   const { slug } = useParams();
+  console.log("Current slug:", slug);
 
   if (slug !== "best-cv-format-for-freshers-in-pakistan-2026") {
   
