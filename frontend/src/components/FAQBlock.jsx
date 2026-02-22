@@ -44,20 +44,20 @@ const FAQBlock = () => {
   };
 
   return (
-    <section className="faq-section">
-      <h2 className="faq-heading">Frequently Asked Questions</h2>
-      <div className="faq-container">
+    <section className="faqc-section">
+      <h2 className="faqc-heading">Frequently Asked Questions</h2>
+      <div className="faqc-container">
         {faqs.map((faq, index) => (
-          <div key={index} className="faq-item">
+          <div key={index} className="faqc-item">
             <div
-              className="faq-question"
+              className="faqc-question"
               onClick={() => toggleFAQ(index)}
             >
               {faq.question}
-              <span className="faq-toggle">{openIndex === index ? "-" : "+"}</span>
+              <span className="faqc-toggle">{openIndex === index ? "-" : "+"}</span>
             </div>
             {openIndex === index && (
-              <div className="faq-answer">{faq.answer}</div>
+              <div className="faqc-answer">{faq.answer}</div>
             )}
           </div>
         ))}

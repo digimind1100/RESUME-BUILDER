@@ -1,4 +1,4 @@
-.faq-section {
+.faqc-section {
   padding: 30px 40px;
   background-color: #ffffff;
   border-radius: 10px;
@@ -6,18 +6,18 @@
   box-shadow: 0 0 10px rgba(0,0,0,0.05);
 }
 
-.faq-heading {
+.faqc-heading {
   font-size: 26px;
   font-weight: bold;
   margin-bottom: 20px;
 }
 
-.faq-item {
+.faqc-item {
   border-bottom: 1px solid #ddd;
   padding: 12px 0;
 }
 
-.faq-question {
+.faqc-question {
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
@@ -26,12 +26,12 @@
   align-items: center;
 }
 
-.faq-toggle {
+.faqc-toggle {
   font-size: 20px;
   font-weight: bold;
 }
 
-.faq-answer {
+.faqc-answer {
   margin-top: 8px;
   font-size: 15px;
   line-height: 1.6;
