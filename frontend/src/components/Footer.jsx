@@ -44,7 +44,15 @@ const Footer = () => {
           <div className="footer-social">
             <a href="#"><i className="fab fa-facebook-f"></i></a>
             <a href="#"><i className="fab fa-twitter"></i></a>
-            <a href="#"><i className="fab fa-linkedin-in"></i></a>
+            <a
+  href="https://www.linkedin.com/in/haider-zaidi-4118293b2/"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="footer-social-link"
+  aria-label="Founder LinkedIn Profile"
+>
+  <i className="fab fa-linkedin"></i>
+</a>
             <a href="#"><i className="fab fa-instagram"></i></a>
           </div>
           <p className="footer-contact">
