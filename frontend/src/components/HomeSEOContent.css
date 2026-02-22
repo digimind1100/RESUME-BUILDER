@@ -49,3 +49,13 @@
     font-size: 1rem;
   }
 }
+
+.seo-section a {
+  color: #0077ff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.seo-section a:hover {
+  text-decoration: underline;
+}

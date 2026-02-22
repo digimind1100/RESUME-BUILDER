@@ -8,10 +8,12 @@ export default function HomeSEOContent() {
 
         <p>
           ResumeBuilder.pk is a modern and easy-to-use AI resume builder designed
-          specifically for students and professionals in Pakistan. Whether you are
-          applying for your first internship, a government job, or a corporate role,
-          having a professional and ATS-friendly resume is essential. Our platform
-          helps you create a job-winning CV in just a few minutes.
+          specifically for students and professionals in Pakistan. If you are unsure
+          about the right CV structure, you can read our detailed guide on{" "}
+          <a href="/blog/best-cv-format-for-freshers-in-pakistan-2026">
+            the best CV format for freshers in Pakistan
+          </a>{" "}
+          to understand how to structure your resume properly.
         </p>
 
         <p>
@@ -65,6 +67,15 @@ export default function HomeSEOContent() {
         <p>
           Start building your free AI resume today and take the next step in your
           career with confidence.
+        </p>
+
+        <p>
+          Not sure where to start? Learn the ideal CV structure in our complete
+          guide on{" "}
+          <a href="/blog/best-cv-format-for-freshers-in-pakistan-2026">
+            CV format for fresh graduates in Pakistan (2026)
+          </a>{" "}
+          and then build your resume with confidence.
         </p>
       </div>
     </section>
