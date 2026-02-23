@@ -36,6 +36,27 @@ export default function Home() {
 
   // ✅ Render actual home page after loading
   return (
+    <>
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "ResumeBuilder.pk",
+          "url": "https://resumebuilder.pk",
+          "logo": "https://resumebuilder.pk/logo.png",
+          "founder": {
+            "@type": "Person",
+            "name": "Haider Zaidi"
+          },
+          "sameAs": [
+            "https://www.linkedin.com/in/haider-zaidi-4118293b2/",
+            "https://facebook.com/ResumeBuilderPK"
+          ]
+        })
+      }}
+    />
   <main className="home-page">
     <HeroSection />
     <HomeSEOContent />
@@ -47,7 +68,9 @@ export default function Home() {
       <HomeFAQ />
     <CounterBlock />
     <Footer />
+
   </main>
+  </>
 );
 
 }

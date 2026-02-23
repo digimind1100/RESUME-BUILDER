@@ -43,10 +43,14 @@ export default function Navbar() {
       <nav className="navbar fixed-nav">
         {/* LOGO */}
         <div className="navbar-logo">
-          <Link to="/" className="logo-text">
-            DigiMind
-          </Link>
-        </div>
+  <Link to="/" className="logo-link">
+    <img
+      src="/logo.png"
+      alt="ResumeBuilder.pk Logo"
+      className="navbar-logo-img"
+    />
+  </Link>
+</div>
 
         {/* NAV LINKS */}
         <ul className={`navbar-links ${menuOpen ? "open" : ""}`}>
