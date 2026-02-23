@@ -92,6 +92,22 @@ export default function Blog() {
   </Link>
 </article>
 
+{/* Blog 6 */}
+<article className="blog-card">
+  <h2>Resume vs CV – What’s the Difference in Pakistan? (2026)</h2>
+  <p>
+    Understand the key differences between a resume and CV in Pakistan.
+    Learn which format to use for local and international job applications.
+  </p>
+
+  <Link
+    to="/blog/resume-vs-cv-difference-in-pakistan-2026"
+    className="blog-read-btn"
+  >
+    Read Full Guide
+  </Link>
+</article>
+
     </div>
   </div>
 </section>

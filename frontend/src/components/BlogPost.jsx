@@ -894,6 +894,154 @@ export default function BlogPost() {
     </>
   );
 }
+/* ================= BLOG 6 ================= */
+
+if (slug === "resume-vs-cv-difference-in-pakistan-2026") {
+  return (
+    <>
+
+  {/* Article Schema */}
+  <script
+    type="application/ld+json"
+    dangerouslySetInnerHTML={{
+      __html: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Resume vs CV – What’s the Difference in Pakistan? (2026 Guide)",
+        "description": "Learn the key differences between a resume and CV in Pakistan in 2026. Understand which format to use for local and international job applications.",
+        "author": {
+          "@type": "Person",
+          "name": "Haider Zaidi"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "ResumeBuilder.pk",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://resumebuilder.pk/logo.png"
+          }
+        },
+        "datePublished": "2026-02-23",
+        "dateModified": "2026-02-23",
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://resumebuilder.pk/blog/resume-vs-cv-difference-in-pakistan-2026"
+        }
+      })
+    }}
+  />
+
+  {/* Breadcrumb Schema */}
+  <script
+    type="application/ld+json"
+    dangerouslySetInnerHTML={{
+      __html: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://resumebuilder.pk/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Blog",
+            "item": "https://resumebuilder.pk/blog"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Resume vs CV – What’s the Difference in Pakistan? (2026)",
+            "item": "https://resumebuilder.pk/blog/resume-vs-cv-difference-in-pakistan-2026"
+          }
+        ]
+      })
+    }}
+  />
+
+      <article className="blog-article">
+        <div className="blog-container">
+          <h1>Resume vs CV – What’s the Difference in Pakistan? (2026 Guide)</h1>
+
+          <p>
+            Many job seekers in Pakistan use the terms “resume” and “CV” interchangeably. However, there are important differences between the two — especially when applying for local and international jobs.
+          </p>
+
+          <p>
+            In this 2026 guide, we explain the difference between a resume and a CV in Pakistan, and which one you should use for your job application.
+          </p>
+
+          <h2>What Is a CV?</h2>
+          <p>
+            A CV (Curriculum Vitae) is a detailed document that includes your complete academic background, work experience, skills, certifications, and achievements.
+          </p>
+
+          <p>
+            In Pakistan, most employers ask for a CV instead of a resume. That’s why the term “CV” is more commonly used locally.
+          </p>
+
+          <h2>What Is a Resume?</h2>
+          <p>
+            A resume is a shorter and more concise document, typically 1–2 pages long. It focuses only on relevant experience and skills tailored to a specific job.
+          </p>
+
+          <p>
+            International companies and multinational organizations operating in Pakistan often prefer resumes.
+          </p>
+
+          <h2>Key Differences Between Resume and CV</h2>
+
+          <ul>
+            <li><strong>Length:</strong> CV can be longer; resume is usually 1–2 pages.</li>
+            <li><strong>Detail:</strong> CV includes full academic history; resume is tailored.</li>
+            <li><strong>Usage in Pakistan:</strong> “CV” is more commonly requested.</li>
+            <li><strong>Customization:</strong> Resume is customized per job.</li>
+          </ul>
+
+          <h2>Which One Should You Use in Pakistan?</h2>
+          <p>
+            For most local jobs in Pakistan, using the term “CV” is acceptable and widely understood. However, if you are applying to international companies or remote jobs, “resume” is the preferred term.
+          </p>
+
+          <p>
+            Regardless of terminology, your document should be professionally formatted and ATS-friendly. Learn more in our guide on{" "}
+            <a href="/blog/how-to-make-ats-friendly-resume-in-pakistan-2026">
+              creating an ATS-friendly resume
+            </a>.
+          </p>
+
+          <h2>CV or Resume for Freshers?</h2>
+          <p>
+            Fresh graduates in Pakistan can use either format, but keeping it concise (1–2 pages) is recommended. For formatting tips, check our guide on{" "}
+            <a href="/blog/best-cv-format-for-freshers-in-pakistan-2026">
+              the best CV format for freshers
+            </a>.
+          </p>
+
+          <h2>Use a Professional Resume Builder</h2>
+          <p>
+            Whether you call it a CV or resume, the most important factor is clarity and structure. You can use our{" "}
+            <a href="/">Free AI Resume Builder in Pakistan</a> to create a professional document in minutes.
+          </p>
+
+          <p>
+            Explore modern layouts on our{" "}
+            <a href="/templates">resume templates page</a>.
+          </p>
+
+          <h2>Final Thoughts</h2>
+          <p>
+            In Pakistan, the terms CV and resume are often used interchangeably. The key difference lies in length and level of detail. Focus on creating a clear, professional, and job-relevant document to increase your chances of getting shortlisted.
+          </p>
+        </div>
+      </article>
+      <Footer />
+    </>
+  );
+}
   /* ================= NOT FOUND ================= */
   return (
     <div style={{ padding: "100px 20px", textAlign: "center" }}>
