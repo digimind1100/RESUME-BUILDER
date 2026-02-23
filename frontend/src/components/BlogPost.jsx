@@ -445,7 +445,103 @@ if (slug === "how-to-write-professional-cover-letter-in-pakistan-2026") {
     </>
   );
 }
+/* ================= BLOG 4 ================= */
+if (slug === "top-resume-mistakes-to-avoid-in-pakistan-2026") {
+  return (
+    <>
+      <article className="blog-article">
+        <div className="blog-container">
+          <h1>Top Resume Mistakes to Avoid in Pakistan (2026 Guide)</h1>
 
+          <p>
+            In Pakistan’s competitive job market, even small resume mistakes can cost you an interview. Recruiters often spend less than 10 seconds reviewing a CV, and common errors can immediately reduce your chances of getting shortlisted.
+          </p>
+
+          <p>
+            In this 2026 guide, we highlight the most common resume mistakes job seekers in Pakistan make — and how you can avoid them.
+          </p>
+
+          <h2>1. Using a Generic Resume for Every Job</h2>
+          <p>
+            One of the biggest mistakes is sending the same CV to every employer. Each job description contains specific keywords and skill requirements. If your resume does not match them, Applicant Tracking Systems (ATS) may reject it.
+          </p>
+
+          <p>
+            Always tailor your resume based on the job requirements. If you're unsure about formatting, read our guide on{" "}
+            <a href="/blog/best-cv-format-for-freshers-in-pakistan-2026">
+              the best CV format for freshers in Pakistan
+            </a>.
+          </p>
+
+          <h2>2. Ignoring ATS Optimization</h2>
+          <p>
+            Many companies in Pakistan now use ATS software to filter resumes. Using tables, graphics, or unusual fonts can make your CV unreadable by the system.
+          </p>
+
+          <p>
+            Learn how to create an optimized resume in our guide on{" "}
+            <a href="/blog/how-to-make-ats-friendly-resume-in-pakistan-2026">
+              making an ATS-friendly resume
+            </a>.
+          </p>
+
+          <h2>3. Adding Irrelevant Personal Information</h2>
+          <p>
+            Including unnecessary details like CNIC number, marital status, or unrelated hobbies can make your CV look unprofessional. Keep your resume focused on skills, experience, and qualifications.
+          </p>
+
+          <h2>4. Writing Long Paragraphs</h2>
+          <p>
+            Recruiters prefer bullet points. Long paragraphs are harder to scan and may cause important achievements to be overlooked.
+          </p>
+
+          <h2>5. Spelling and Grammar Errors</h2>
+          <p>
+            Grammar mistakes reduce credibility instantly. Always proofread your resume or use a digital tool to check spelling.
+          </p>
+
+          <h2>6. Listing Duties Instead of Achievements</h2>
+          <p>
+            Instead of writing “Responsible for managing sales,” write:
+          </p>
+          <p>
+            “Managed sales operations and increased revenue by 20% within six months.”
+          </p>
+
+          <h2>7. Using Outdated Resume Formats</h2>
+          <p>
+            Old-fashioned resume designs may not align with modern hiring expectations. Use clean and professional templates from our{" "}
+            <a href="/templates">Resume Templates page</a> to ensure proper formatting.
+          </p>
+
+          <h2>8. Submitting Without a Cover Letter</h2>
+          <p>
+            Many applicants ignore the importance of a cover letter. A well-written cover letter adds personality and strengthens your application.
+          </p>
+
+          <p>
+            Learn how to write one in our{" "}
+            <a href="/blog/how-to-write-professional-cover-letter-in-pakistan-2026">
+              professional cover letter guide
+            </a>.
+          </p>
+
+          <h2>Final Thoughts</h2>
+          <p>
+            Avoiding these resume mistakes can significantly improve your chances of getting shortlisted in Pakistan’s job market in 2026. Focus on clarity, relevance, and professional formatting.
+          </p>
+
+          <p>
+            You can build a clean, ATS-friendly resume quickly using our{" "}
+            <a href="/">Free AI Resume Builder in Pakistan</a>.
+          </p>
+        </div>
+      </article>
+
+      <Footer />
+    </>
+  );
+}
   /* ================= NOT FOUND ================= */
   return (
     <div style={{ padding: "100px 20px", textAlign: "center" }}>

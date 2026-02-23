@@ -59,6 +59,23 @@ export default function Blog() {
   </Link>
 </article>
 
+
+{/* Blog 4 */}
+<article className="blog-card">
+  <h2>Top Resume Mistakes to Avoid in Pakistan (2026)</h2>
+  <p>
+    Discover the most common resume mistakes job seekers make in Pakistan
+    and learn how to avoid them to improve your chances of getting shortlisted.
+  </p>
+
+  <Link
+    to="/blog/top-resume-mistakes-to-avoid-in-pakistan-2026"
+    className="blog-read-btn"
+  >
+    Read Full Guide
+  </Link>
+</article>
+
     </div>
   </div>
 </section>
