@@ -73,6 +73,22 @@
     <priority>0.7</priority>
   </url>
 
+  <!-- Blog 5 -->
+  <url>
+    <loc>https://resumebuilder.pk/blog/best-resume-skills-for-jobs-in-pakistan-2026</loc>
+    <lastmod>2026-02-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Blog 6 -->
+  <url>
+    <loc>https://resumebuilder.pk/blog/resume-vs-cv-difference-in-pakistan-2026</loc>
+    <lastmod>2026-02-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
   <!-- Policies -->
   <url>
     <loc>https://resumebuilder.pk/policies</loc>
