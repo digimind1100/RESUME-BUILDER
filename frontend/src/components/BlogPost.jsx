@@ -716,6 +716,184 @@ export default function BlogPost() {
       </>
     );
   }
+  /* ================= BLOG 5 ================= */
+  if (slug === "best-resume-skills-for-jobs-in-pakistan-2026") {
+  return (
+    <>
+    {/* Article Schema */}
+  <script
+    type="application/ld+json"
+    dangerouslySetInnerHTML={{
+      __html: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Best Resume Skills for Jobs in Pakistan (2026 Guide)",
+        "description": "Discover the most in-demand hard and soft skills for resumes in Pakistan in 2026. Learn how to add skills correctly and improve your chances of getting shortlisted.",
+        "author": {
+          "@type": "Person",
+          "name": "Haider Zaidi"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "ResumeBuilder.pk",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://resumebuilder.pk/logo.png"
+          }
+        },
+        "datePublished": "2026-02-23",
+        "dateModified": "2026-02-23",
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://resumebuilder.pk/blog/best-resume-skills-for-jobs-in-pakistan-2026"
+        }
+      })
+    }}
+  />
+
+  {/* Breadcrumb Schema */}
+  <script
+    type="application/ld+json"
+    dangerouslySetInnerHTML={{
+      __html: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://resumebuilder.pk/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Blog",
+            "item": "https://resumebuilder.pk/blog"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Best Resume Skills for Jobs in Pakistan (2026)",
+            "item": "https://resumebuilder.pk/blog/best-resume-skills-for-jobs-in-pakistan-2026"
+          }
+        ]
+      })
+    }}
+  />
+
+      <article className="blog-article">
+        <div className="blog-container">
+          <h1>Best Resume Skills for Jobs in Pakistan (2026 Guide)</h1>
+
+          <p>
+            Choosing the right skills for your resume can significantly improve your chances of getting shortlisted in Pakistan’s competitive job market. Employers look for candidates who clearly demonstrate relevant abilities that match job requirements.
+          </p>
+
+          <p>
+            In this 2026 guide, we’ll cover the best resume skills for jobs in Pakistan, including both hard and soft skills, and how to present them effectively.
+          </p>
+
+          <h2>Why Resume Skills Matter</h2>
+          <p>
+            Many companies in Pakistan now use Applicant Tracking Systems (ATS) to filter resumes. If your CV does not include relevant keywords and skills, it may never reach a hiring manager.
+          </p>
+
+          <p>
+            Learn more about optimizing your CV in our guide on{" "}
+            <a href="/blog/how-to-make-ats-friendly-resume-in-pakistan-2026">
+              making an ATS-friendly resume
+            </a>.
+          </p>
+
+          <h2>Top Hard Skills in Demand in Pakistan (2026)</h2>
+          <ul>
+            <li>Digital Marketing (SEO, Social Media, Ads)</li>
+            <li>Data Analysis (Excel, Power BI, SQL)</li>
+            <li>Programming (JavaScript, Python, React)</li>
+            <li>Graphic Design (Photoshop, Canva)</li>
+            <li>Content Writing</li>
+            <li>Accounting & Financial Reporting</li>
+            <li>Project Management</li>
+          </ul>
+
+          <h2>Top Soft Skills Employers Value</h2>
+          <ul>
+            <li>Communication Skills</li>
+            <li>Teamwork</li>
+            <li>Problem-Solving</li>
+            <li>Time Management</li>
+            <li>Adaptability</li>
+            <li>Leadership</li>
+          </ul>
+
+          <h2>Resume Skills for Freshers</h2>
+          <p>
+            If you are a fresh graduate in Pakistan, focus on:
+          </p>
+
+          <ul>
+            <li>Academic projects</li>
+            <li>Internship experience</li>
+            <li>Certifications</li>
+            <li>Technical tools learned</li>
+            <li>Volunteer work</li>
+          </ul>
+
+          <p>
+            You can also review our guide on{" "}
+            <a href="/blog/best-cv-format-for-freshers-in-pakistan-2026">
+              the best CV format for freshers
+            </a>.
+          </p>
+
+          <h2>How to Add Skills Correctly in Your Resume</h2>
+          <p>
+            Avoid simply listing random skills. Instead:
+          </p>
+
+          <ul>
+            <li>Match skills with job description</li>
+            <li>Group them under categories (Technical / Soft Skills)</li>
+            <li>Support them with achievements in experience section</li>
+          </ul>
+
+          <h2>Common Skills Mistakes to Avoid</h2>
+          <ul>
+            <li>Adding too many unrelated skills</li>
+            <li>Using generic terms without proof</li>
+            <li>Copying skills from online templates blindly</li>
+          </ul>
+
+          <p>
+            For more mistakes, read our article on{" "}
+            <a href="/blog/top-resume-mistakes-to-avoid-in-pakistan-2026">
+              resume mistakes to avoid
+            </a>.
+          </p>
+
+          <h2>Use an AI Resume Builder for Better Results</h2>
+          <p>
+            Instead of guessing which skills to include, you can use our{" "}
+            <a href="/">Free AI Resume Builder in Pakistan</a> to generate skill suggestions based on your job title.
+          </p>
+
+          <p>
+            Pair it with one of our professional{" "}
+            <a href="/templates">resume templates</a> to create a strong, ATS-friendly CV in minutes.
+          </p>
+
+          <h2>Final Thoughts</h2>
+          <p>
+            Adding the right skills to your resume is one of the most important steps in landing interviews in Pakistan in 2026. Focus on relevance, clarity, and supporting evidence.
+          </p>
+        </div>
+      </article>
+
+      <Footer />
+    </>
+  );
+}
   /* ================= NOT FOUND ================= */
   return (
     <div style={{ padding: "100px 20px", textAlign: "center" }}>

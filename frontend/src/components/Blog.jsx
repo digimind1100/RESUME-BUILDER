@@ -76,6 +76,22 @@ export default function Blog() {
   </Link>
 </article>
 
+{/* Blog 5 */}
+<article className="blog-card">
+  <h2>Best Resume Skills for Jobs in Pakistan (2026)</h2>
+  <p>
+    Discover the most in-demand hard and soft skills for resumes in Pakistan.
+    Learn how to add skills correctly and improve your chances of getting shortlisted.
+  </p>
+
+  <Link
+    to="/blog/best-resume-skills-for-jobs-in-pakistan-2026"
+    className="blog-read-btn"
+  >
+    Read Full Guide
+  </Link>
+</article>
+
     </div>
   </div>
 </section>
