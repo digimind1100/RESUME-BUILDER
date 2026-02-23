@@ -371,6 +371,35 @@ export default function BlogPost() {
 if (slug === "how-to-write-professional-cover-letter-in-pakistan-2026") {
   return (
     <>
+    <script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "How to Write a Professional Cover Letter in Pakistan (2026 Guide)",
+      "description": "Step-by-step guide on writing a professional cover letter in Pakistan in 2026. Includes structure, examples, and formatting tips.",
+      "author": {
+        "@type": "Person",
+        "name": "Haider Zaidi"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ResumeBuilder.pk",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://resumebuilder.pk/logo.png"
+        }
+      },
+      "datePublished": "2026-02-23",
+      "dateModified": "2026-02-23",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://resumebuilder.pk/blog/how-to-write-professional-cover-letter-in-pakistan-2026"
+      }
+    })
+  }}
+/>
       <article className="blog-article">
         <div className="blog-container">
           <h1>How to Write a Professional Cover Letter in Pakistan (2026 Guide)</h1>
@@ -449,6 +478,35 @@ if (slug === "how-to-write-professional-cover-letter-in-pakistan-2026") {
 if (slug === "top-resume-mistakes-to-avoid-in-pakistan-2026") {
   return (
     <>
+    <script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Top Resume Mistakes to Avoid in Pakistan (2026 Guide)",
+      "description": "Discover the most common resume mistakes job seekers make in Pakistan and learn how to avoid them to increase your chances of getting shortlisted.",
+      "author": {
+        "@type": "Person",
+        "name": "Haider Zaidi"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ResumeBuilder.pk",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://resumebuilder.pk/logo.png"
+        }
+      },
+      "datePublished": "2026-02-23",
+      "dateModified": "2026-02-23",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://resumebuilder.pk/blog/top-resume-mistakes-to-avoid-in-pakistan-2026"
+      }
+    })
+  }}
+/>
       <article className="blog-article">
         <div className="blog-container">
           <h1>Top Resume Mistakes to Avoid in Pakistan (2026 Guide)</h1>
