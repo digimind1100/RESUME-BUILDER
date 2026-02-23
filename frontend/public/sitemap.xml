@@ -4,7 +4,7 @@
   <!-- Homepage -->
   <url>
     <loc>https://resumebuilder.pk/</loc>
-    <lastmod>2026-02-21</lastmod>
+    <lastmod>2026-02-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -12,7 +12,7 @@
   <!-- Templates -->
   <url>
     <loc>https://resumebuilder.pk/templates</loc>
-    <lastmod>2026-02-21</lastmod>
+    <lastmod>2026-02-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -25,7 +25,7 @@
     <priority>0.8</priority>
   </url>
 
-  <!-- Cover Letter -->
+  <!-- Cover Letter Tool -->
   <url>
     <loc>https://resumebuilder.pk/cover-letter</loc>
     <lastmod>2026-02-20</lastmod>
@@ -33,24 +33,15 @@
     <priority>0.8</priority>
   </url>
 
-  
-  <!-- Policies -->
-  <url>
-    <loc>https://resumebuilder.pk/policies</loc>
-    <lastmod>2026-02-20</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
   <!-- Blog Listing -->
   <url>
     <loc>https://resumebuilder.pk/blog</loc>
-    <lastmod>2026-02-21</lastmod>
+    <lastmod>2026-02-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
-  <!-- Blog Post -->
+  <!-- Blog 1 -->
   <url>
     <loc>https://resumebuilder.pk/blog/best-cv-format-for-freshers-in-pakistan-2026</loc>
     <lastmod>2026-02-21</lastmod>
@@ -58,6 +49,37 @@
     <priority>0.7</priority>
   </url>
 
+  <!-- Blog 2 -->
+  <url>
+    <loc>https://resumebuilder.pk/blog/how-to-make-ats-friendly-resume-in-pakistan-2026</loc>
+    <lastmod>2026-02-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Blog 3 -->
+  <url>
+    <loc>https://resumebuilder.pk/blog/how-to-write-professional-cover-letter-in-pakistan-2026</loc>
+    <lastmod>2026-02-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Blog 4 -->
+  <url>
+    <loc>https://resumebuilder.pk/blog/top-resume-mistakes-to-avoid-in-pakistan-2026</loc>
+    <lastmod>2026-02-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Policies -->
+  <url>
+    <loc>https://resumebuilder.pk/policies</loc>
+    <lastmod>2026-02-20</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
 
   <!-- Contact -->
   <url>
