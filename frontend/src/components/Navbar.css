@@ -38,7 +38,7 @@ body {
    LOGO
 ================================ */
 .navbar-logo-img {
-  height: 42px;   /* Adjust between 38–45px if needed */
+  height: 58px;
   width: auto;
   display: block;
 }
