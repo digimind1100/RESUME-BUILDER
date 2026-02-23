@@ -10,6 +10,36 @@ export default function BlogPost() {
   
   return (
     <>
+
+    <script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Best CV Format for Freshers in Pakistan (2026)",
+      "description": "Learn the best ATS-friendly CV format for fresh graduates and students in Pakistan. Complete 2026 guide.",
+      "author": {
+        "@type": "Person",
+        "name": "Haider Zaidi"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ResumeBuilder.pk",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://resumebuilder.pk/logo.png"
+        }
+      },
+      "datePublished": "2026-02-21",
+      "dateModified": "2026-02-21",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://resumebuilder.pk/blog/best-cv-format-for-freshers-in-pakistan-2026"
+      }
+    })
+  }}
+/>
       <article className="blog-article">
         <div className="blog-container">
           <h1>Best CV Format for Freshers in Pakistan (2026)</h1>
@@ -156,6 +186,36 @@ export default function BlogPost() {
   if (slug === "how-to-make-ats-friendly-resume-in-pakistan-2026") {
   return (
     <>
+
+    <script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "How to Make an ATS Friendly Resume in Pakistan (2026 Guide)",
+      "description": "Step-by-step guide to creating an ATS-friendly resume in Pakistan in 2026. Learn formatting, keywords and optimization tips.",
+      "author": {
+        "@type": "Person",
+        "name": "Haider Zaidi"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ResumeBuilder.pk",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://resumebuilder.pk/logo.png"
+        }
+      },
+      "datePublished": "2026-02-22",
+      "dateModified": "2026-02-22",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://resumebuilder.pk/blog/how-to-make-ats-friendly-resume-in-pakistan-2026"
+      }
+    })
+  }}
+/>
       <article className="blog-article">
         <div className="blog-container">
           <h1>How to Make an ATS Friendly Resume in Pakistan (2026 Guide)</h1>
