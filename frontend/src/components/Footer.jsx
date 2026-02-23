@@ -42,7 +42,17 @@ const Footer = () => {
         <div className="footer-section">
           <h3 className="footer-title">Connect</h3>
           <div className="footer-social">
-            <a href="#"><i className="fab fa-facebook-f"></i></a>
+            
+            <a
+  href="https://facebook.com/ResumeBuilderPK"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="footer-social-link"
+  aria-label="ResumeBuilder Facebook Page"
+>
+  <i className="fab fa-facebook-f"></i>
+</a>
+            
             <a href="#"><i className="fab fa-twitter"></i></a>
             <a
   href="https://www.linkedin.com/in/haider-zaidi-4118293b2/"
