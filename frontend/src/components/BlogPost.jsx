@@ -367,6 +367,84 @@ export default function BlogPost() {
     </>
   );
 }
+/* ================= BLOG 3 ================= */
+if (slug === "how-to-write-professional-cover-letter-in-pakistan-2026") {
+  return (
+    <>
+      <article className="blog-article">
+        <div className="blog-container">
+          <h1>How to Write a Professional Cover Letter in Pakistan (2026 Guide)</h1>
+
+          <p>
+            A professional cover letter can significantly improve your chances of getting shortlisted for a job in Pakistan. While many applicants focus only on their CV, recruiters often read the cover letter first to understand your personality, communication skills, and motivation.
+          </p>
+
+          <p>
+            In this 2026 guide, we explain how to write a strong and professional cover letter tailored for the Pakistani job market.
+          </p>
+
+          <h2>What Is a Cover Letter?</h2>
+          <p>
+            A cover letter is a one-page document submitted alongside your CV. It introduces you to the employer, explains why you are applying, and highlights your most relevant qualifications.
+          </p>
+
+          <h2>Ideal Cover Letter Structure in Pakistan</h2>
+
+          <h3>1. Header Section</h3>
+          <p>
+            Include your name, contact details, and the employer’s information. Keep it professional and aligned with your CV format.
+          </p>
+
+          <h3>2. Opening Paragraph</h3>
+          <p>
+            Clearly state the position you are applying for and where you found the job listing.
+          </p>
+
+          <h3>3. Middle Paragraph (Your Value)</h3>
+          <p>
+            Highlight your key achievements, relevant skills, and experience that match the job description. Focus on measurable results when possible.
+          </p>
+
+          <h3>4. Closing Paragraph</h3>
+          <p>
+            Express enthusiasm for the role and mention that you are available for an interview.
+          </p>
+
+          <h2>Cover Letter Example for Freshers</h2>
+          <p>
+            If you are a fresh graduate, focus on academic projects, internships, certifications, and soft skills. Avoid copying generic templates — personalize your content for each job.
+          </p>
+
+          <h2>Common Cover Letter Mistakes</h2>
+          <ul>
+            <li>Using the same letter for every application</li>
+            <li>Repeating your CV word-for-word</li>
+            <li>Writing long paragraphs</li>
+            <li>Including unnecessary personal details</li>
+          </ul>
+
+          <h2>Use a Professional Cover Letter Builder</h2>
+          <p>
+            Instead of formatting manually, you can use our{" "}
+            <a href="/cover-letter">Cover Letter Builder</a> to generate a professional application letter quickly.
+          </p>
+
+          <p>
+            Pair your cover letter with an ATS-friendly resume from our{" "}
+            <a href="/templates">Resume Templates</a> page to maximize your chances of success.
+          </p>
+
+          <h2>Final Thoughts</h2>
+          <p>
+            A well-written cover letter shows professionalism and genuine interest in the job. In Pakistan’s competitive job market in 2026, a strong cover letter can help you stand out from other applicants.
+          </p>
+        </div>
+      </article>
+
+      <Footer />
+    </>
+  );
+}
 
   /* ================= NOT FOUND ================= */
   return (
