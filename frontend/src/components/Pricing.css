@@ -1,0 +1,127 @@
+.pricing-page {
+  background: #f9fafc;
+  padding-bottom: 60px;
+}
+
+.pricing-hero {
+  text-align: center;
+  padding: 60px 20px 30px;
+}
+
+.pricing-hero h1 {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.pricing-hero p {
+  color: #666;
+}
+
+.pricing-section {
+  padding: 20px;
+  text-align: center;
+}
+
+.pricing-cards {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin-top: 40px;
+}
+
+.pricing-card {
+  background: white;
+  padding: 35px;
+  border-radius: 18px;
+  width: 340px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+  position: relative;
+  transition: 0.3s ease;
+}
+
+.pricing-card:hover {
+  transform: translateY(-6px);
+}
+
+.price {
+  font-size: 34px;
+  margin: 15px 0;
+  color: #111;
+}
+
+.duration {
+  color: #777;
+  margin-bottom: 20px;
+}
+
+.pricing-card ul {
+  text-align: left;
+  margin-bottom: 25px;
+}
+
+.pricing-card ul li {
+  margin-bottom: 10px;
+}
+
+.pricing-btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 10px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.free-btn {
+  background: #e5e7eb;
+}
+
+.premium-btn {
+  background: linear-gradient(135deg, #4f46e5, #6366f1);
+  color: white;
+}
+
+.popular-badge {
+  position: absolute;
+  top: -12px;
+  right: 20px;
+  background: #4f46e5;
+  color: white;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+}
+
+.payment-methods {
+  margin-top: 25px;
+}
+
+.payment-title {
+  font-size: 14px;
+  margin-bottom: 10px;
+  color: #555;
+}
+
+.payment-icons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pay-box {
+  background: #f3f4f6;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.pricing-note {
+  margin-top: 40px;
+  font-size: 13px;
+  color: #555;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}

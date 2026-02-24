@@ -31,6 +31,7 @@ import AdminReviews from "./components/admin/AdminReviews";
 import ReviewsPage from "./components/ReviewsPage";
 import Blog from "./components/Blog";
 import BlogPost from "./components/BlogPost";
+import Pricing from "./components/Pricing";
 
 
 function AppContent() {
@@ -84,6 +85,7 @@ function AppContent() {
 
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
+          <Route path="/pricing" element={<Pricing />} />
 
           {/* ✅ PUBLIC REVIEWS PAGE */}
           <Route path="/reviews" element={<ReviewsPage />} />

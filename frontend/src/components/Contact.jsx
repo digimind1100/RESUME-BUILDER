@@ -124,12 +124,12 @@ export default function Contact() {
           <p><strong>Email:</strong> suhz1100@gmail.com</p>
           <p><strong>Phone:</strong> 0318-2899723</p>
           <p>
-            <strong>Address:</strong> R-32, Block 10-A,
+            <strong>Address:</strong>Block 10-A,
             Gulshan-e-Iqbal, Karachi, Pakistan
           </p>
           <p><strong>Support Hours:</strong> Monday – Saturday, 10:00 AM – 6:00 PM (PKT)</p>
         </div>
-        
+
         </form>
       </div>
     </div>
