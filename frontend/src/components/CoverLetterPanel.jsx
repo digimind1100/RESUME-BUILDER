@@ -186,6 +186,11 @@ export default function CoverLetterPanel() {
             className="cover-letter-preview"
             contentEditable={isEditing}
             suppressContentEditableWarning={true}
+            onInput={() => {
+              if (isEditing && previewRef.current) {
+                setGeneratedText(previewRef.current.innerText);
+              }
+            }}
             tabIndex={-1}
             style={{
               width: "100%",
@@ -198,30 +203,36 @@ export default function CoverLetterPanel() {
               lineHeight: "1.6",
               boxSizing: "border-box",
               margin: "0 auto",
-              border: "1px solid #ccc",
+              border: isEditing ? "2px solid #007bff" : "1px solid #ccc",
               whiteSpace: "pre-line",
               userSelect: "text",
             }}
           >
-            <div style={{ textAlign: "right", marginBottom: "25px" }}>
-              {formattedDate}
-            </div>
-
             {isLoading
               ? "Generating..."
               : generatedText || "Your generated cover letter will appear here..."}
           </div>
+          <div style={{ textAlign: "right", marginBottom: "25px" }}>
+            {formattedDate}
+          </div>
+
+          {isLoading
+            ? "Generating..."
+            : generatedText || "Your generated cover letter will appear here..."}
         </div>
       </div>
-
-      {/* 💳 PAYMENT MODAL */}
-      {showPayment && (
-        <PaymentModal
-          isOpen={showPayment}
-          onClose={() => setShowPayment(false)}
-          onSuccess={handlePaymentSuccess}
-        />
-      )}
     </div>
+
+      {/* 💳 PAYMENT MODAL */ }
+  {
+    showPayment && (
+      <PaymentModal
+        isOpen={showPayment}
+        onClose={() => setShowPayment(false)}
+        onSuccess={handlePaymentSuccess}
+      />
+    )
+  }
+    </div >
   );
 }
