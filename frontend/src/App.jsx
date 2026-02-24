@@ -103,6 +103,7 @@ function AppContent() {
           <Route path="/medical-elites" element={<MedicalElites />} />
           <Route path="/engineer-elites" element={<EngineerElites />} />
           <Route path="/soft-tech" element={<SoftTech />} />
+          <Route path="/free-basic" element={<FreeBasic />} />
 
           <Route
             path="/data-elite"

@@ -1,0 +1,78 @@
+.fb-wrapper {
+  background: #f4f4f4;
+  padding: 30px;
+  min-height: 100vh;
+}
+
+.fb-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.fb-buttons button {
+  padding: 8px 14px;
+  border: 1px solid #ccc;
+  background: white;
+  cursor: pointer;
+}
+
+.fb-a4 {
+  width: 210mm;
+  min-height: 297mm;
+  background: white;
+  margin: auto;
+  padding: 30px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
+}
+
+.fb-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.fb-header h1 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.fb-header p {
+  margin: 5px 0 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.fb-body {
+  display: flex;
+  gap: 25px;
+}
+
+.fb-sidebar {
+  width: 35%;
+  font-size: 13px;
+}
+
+.fb-sidebar h3 {
+  font-size: 14px;
+  margin-bottom: 6px;
+  border-bottom: 1px solid #ddd;
+}
+
+.fb-sidebar ul {
+  padding-left: 18px;
+}
+
+.fb-main {
+  width: 65%;
+  font-size: 14px;
+}
+
+.fb-main h2 {
+  font-size: 16px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+.fb-job {
+  margin-bottom: 15px;
+}
