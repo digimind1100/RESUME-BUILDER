@@ -60,10 +60,25 @@ export default function Contact() {
         <h1 className="contact-title">Contact Us</h1>
 
         <p className="contact-description">
-          If you have any questions, payment issues, or need support, feel free
-          to contact us using the form below.
+          If you have any questions, payment issues, refund requests, or need
+          technical support, please contact us using the details below or the form.
         </p>
 
+        {/* Business Contact Information */}
+        <div className="contact-info-box">
+          <h3>Business Information</h3>
+          <p><strong>Business Name:</strong> Resume Builder</p>
+          <p><strong>Business Type:</strong> Sole Proprietor</p>
+          <p><strong>Email:</strong> suhz1100@gmail.com</p>
+          <p><strong>Phone:</strong> 0318-2899723</p>
+          <p>
+            <strong>Address:</strong> R-32, Block 10-A,
+            Gulshan-e-Iqbal, Karachi, Pakistan
+          </p>
+          <p><strong>Support Hours:</strong> Monday – Saturday, 10:00 AM – 6:00 PM (PKT)</p>
+        </div>
+
+        {/* Contact Form */}
         <form className="contact-form" onSubmit={handleSubmit}>
           <div className="form-group">
             <label>Full Name</label>
