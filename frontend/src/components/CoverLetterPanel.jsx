@@ -212,27 +212,17 @@ export default function CoverLetterPanel() {
               ? "Generating..."
               : generatedText || "Your generated cover letter will appear here..."}
           </div>
-          <div style={{ textAlign: "right", marginBottom: "25px" }}>
-            {formattedDate}
-          </div>
-
-          {isLoading
-            ? "Generating..."
-            : generatedText || "Your generated cover letter will appear here..."}
         </div>
       </div>
-    </div>
 
-      {/* 💳 PAYMENT MODAL */ }
-  {
-    showPayment && (
-      <PaymentModal
-        isOpen={showPayment}
-        onClose={() => setShowPayment(false)}
-        onSuccess={handlePaymentSuccess}
-      />
-    )
-  }
-    </div >
+      {/* 💳 PAYMENT MODAL */}
+      {showPayment && (
+        <PaymentModal
+          isOpen={showPayment}
+          onClose={() => setShowPayment(false)}
+          onSuccess={handlePaymentSuccess}
+        />
+      )}
+    </div>
   );
 }
