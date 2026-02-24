@@ -79,12 +79,16 @@
 
 
 /* Top buttons */
+/* Top buttons */
 .fb-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
   margin-bottom: 20px;
 }
 
 .fb-buttons button {
-  margin: 0 10px;
   padding: 10px 18px;
   font-size: 14px;
   background: #1f2933;
@@ -93,13 +97,10 @@
   border-radius: 6px;
   cursor: pointer;
   font-weight: 600;
-}
-.fb-buttons {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
+  transition: 0.2s ease;
 }
 
 .fb-buttons button:hover {
   background: #111827;
+  transform: translateY(-1px); /* small premium feel */
 }
