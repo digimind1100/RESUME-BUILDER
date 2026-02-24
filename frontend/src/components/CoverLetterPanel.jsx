@@ -184,7 +184,8 @@ export default function CoverLetterPanel() {
           <div
             ref={previewRef}
             className="cover-letter-preview"
-            contentEditable={false}
+            contentEditable={isEditing}
+            suppressContentEditableWarning={true}
             tabIndex={-1}
             style={{
               width: "100%",
