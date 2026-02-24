@@ -26,10 +26,10 @@ export default function CoverLetterPanel() {
   const previewRef = useRef(null);
 
   const isPremium =
-  user?.isPaid &&
-  user?.accessUntil &&
-  new Date(user.accessUntil) > new Date();
- // 🔥 adjust if your field name differs
+    user?.isPaid &&
+    user?.accessUntil &&
+    new Date(user.accessUntil) > new Date();
+  // 🔥 adjust if your field name differs
 
   const isMobile = window.innerWidth < 768;
 
@@ -46,10 +46,10 @@ export default function CoverLetterPanel() {
   }, [isMobile]);
 
   useEffect(() => {
-  refreshUser();
-}, []);
+    refreshUser();
+  }, []);
 
-console.log("USER AFTER LOGIN:", user);
+  console.log("USER AFTER LOGIN:", user);
 
 
   // ===============================
@@ -69,8 +69,11 @@ console.log("USER AFTER LOGIN:", user);
     setIsLoading(true);
     setGeneratedText("");
 
+    const API_BASE =
+      import.meta.env.VITE_API_URL || "http://localhost:3001";
+
     try {
-      const res = await fetch("http://localhost:3001/api/cover-letter", {
+      const res = await fetch(`${API_BASE}/api/cover-letter`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
