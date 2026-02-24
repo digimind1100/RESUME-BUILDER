@@ -32,6 +32,7 @@ import ReviewsPage from "./components/ReviewsPage";
 import Blog from "./components/Blog";
 import BlogPost from "./components/BlogPost";
 import Pricing from "./components/Pricing";
+import FreeBasic from "./Templates/FreeBasic";
 
 
 function AppContent() {
