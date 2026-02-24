@@ -76,140 +76,140 @@ export default function Templates() {
     }
   };
 
- return (
+  return (
     <>
       <section className="templates-page">
 
         {/* ===== SEO HEADER ===== */}
-<div className="templates-seo-header">
-  <h1>Resume Templates in Pakistan – Professional & ATS-Friendly Formats</h1>
+        <div className="templates-seo-header">
+          <h1>Resume Templates in Pakistan – Professional & ATS-Friendly Formats</h1>
 
-  <p className="templates-seo-intro">
-    Explore professionally designed resume templates tailored for students,
-    fresh graduates, and experienced professionals in Pakistan. Our AI-powered
-    resume builder offers ATS-friendly CV templates that help you stand out
-    in corporate, government, and international job applications.
-  </p>
-</div>
-
-       {/* =================== PREMIUM TEMPLATES =================== */}
-<section className="templates-section templates-section--premium">
-  <div className="section-heading">
-    <div>
-      <h2 className="section-title">Premium interactive templates</h2>
-      <p className="section-subtitle">
-        High-impact resume layouts with strong visual hierarchy. Ideal when
-        you want a polished, modern look that still stays professional.
-      </p>
-    </div>
-    <p className="section-note">
-      💡 Perfect for experienced candidates, portfolio resumes, and standout profiles.
-    </p>
-  </div>
-
-  <div className="premium-grid">
-    {/* Classic Template */}
-    <article className="template-block classic-template">
-      <div className="template-chip-row">
-        <span className="template-chip">Most Popular</span>
-        <span className="template-label">Classic</span>
-      </div>
-
-      <video
-        className="template-video"
-        src="/demo/mockup.mp4"
-        autoPlay
-        loop
-        muted
-        playsInline
-      />
-
-      <div className="template-footer">
-        <div className="template-footer-text">
-          <h3 className="template-name">Classic Resume</h3>
-          <p className="template-tagline">
-            Timeless layout with clean sections and easy scanability.
+          <p className="templates-seo-intro">
+            Explore professionally designed resume templates tailored for students,
+            fresh graduates, and experienced professionals in Pakistan. Our AI-powered
+            resume builder offers ATS-friendly CV templates that help you stand out
+            in corporate, government, and international job applications.
           </p>
         </div>
-        <button
-          onClick={() => handleUseTemplate("/resume-classic")}
-          className="template-btn template-btn--primary"
-        >
-          Use Classic
-        </button>
-      </div>
-    </article>
 
-    {/* Professional Template */}
-    <article className="template-block professional-template">
-      <div className="template-chip-row">
-        <span className="template-chip">New</span>
-        <span className="template-label">Clean Professional</span>
-      </div>
+        {/* =================== PREMIUM TEMPLATES =================== */}
+        <section className="templates-section templates-section--premium">
+          <div className="section-heading">
+            <div>
+              <h2 className="section-title">Premium interactive templates</h2>
+              <p className="section-subtitle">
+                High-impact resume layouts with strong visual hierarchy. Ideal when
+                you want a polished, modern look that still stays professional.
+              </p>
+            </div>
+            <p className="section-note">
+              💡 Perfect for experienced candidates, portfolio resumes, and standout profiles.
+            </p>
+          </div>
 
-      <video
-        className="template-video"
-        src="/demo/mockup.mp4"
-        autoPlay
-        loop
-        muted
-        playsInline
-      />
+          <div className="premium-grid">
+            {/* Classic Template */}
+            <article className="template-block classic-template">
+              <div className="template-chip-row">
+                <span className="template-chip">Most Popular</span>
+                <span className="template-label">Classic</span>
+              </div>
 
-      <div className="template-footer">
-        <div className="template-footer-text">
-          <h3 className="template-name">Clean Professional</h3>
-          <p className="template-tagline">
-            Subtle accents with a structured, corporate-friendly layout.
-          </p>
-        </div>
-        <button
-          onClick={() => handleUseTemplate("/resume/professional")}
-          className="template-btn template-btn--primary"
-        >
-          Use Clean Professional
-        </button>
-      </div>
-    </article>
-  </div>
-</section>
+              <video
+                className="template-video"
+                src="/demo/mockup.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+              />
 
-{/* ===== SEO CONTENT BLOCK ===== */}
-<section className="templates-seo-content">
-  <div className="templates-seo-container">
-    <h2>Choose the Best Resume Template for Your Career</h2>
+              <div className="template-footer">
+                <div className="template-footer-text">
+                  <h3 className="template-name">Classic Resume</h3>
+                  <p className="template-tagline">
+                    Timeless layout with clean sections and easy scanability.
+                  </p>
+                </div>
+                <button
+                  onClick={() => handleUseTemplate("/resume-classic")}
+                  className="template-btn template-btn--primary"
+                >
+                  Use Classic
+                </button>
+              </div>
+            </article>
 
-    <p>
-      Selecting the right resume template is essential when applying for jobs
-      in Pakistan. Recruiters often spend only a few seconds reviewing each CV,
-      so a clean and structured layout can significantly improve your chances
-      of getting shortlisted. Our resume templates are designed with clarity,
-      readability, and ATS compatibility in mind.
-    </p>
+            {/* Professional Template */}
+            <article className="template-block professional-template">
+              <div className="template-chip-row">
+                <span className="template-chip">New</span>
+                <span className="template-label">Clean Professional</span>
+              </div>
 
-    <p>
-      Whether you are applying for a banking position, software engineering
-      role, healthcare job, aviation industry opportunity, or government
-      department vacancy, ResumeBuilder.pk provides modern resume formats
-      tailored to different industries.
-    </p>
+              <video
+                className="template-video"
+                src="/demo/mockup.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+              />
 
-    <h2>ATS-Friendly Resume Templates</h2>
+              <div className="template-footer">
+                <div className="template-footer-text">
+                  <h3 className="template-name">Clean Professional</h3>
+                  <p className="template-tagline">
+                    Subtle accents with a structured, corporate-friendly layout.
+                  </p>
+                </div>
+                <button
+                  onClick={() => handleUseTemplate("/resume/professional")}
+                  className="template-btn template-btn--primary"
+                >
+                  Use Clean Professional
+                </button>
+              </div>
+            </article>
+          </div>
+        </section>
 
-    <p>
-      Many companies in Pakistan use Applicant Tracking Systems (ATS) to filter
-      resumes automatically. Our professional CV templates are structured to
-      meet ATS standards, ensuring your skills, education, and work experience
-      are properly recognized by automated systems.
-    </p>
+        {/* ===== SEO CONTENT BLOCK ===== */}
+        <section className="templates-seo-content">
+          <div className="templates-seo-container">
+            <h2>Choose the Best Resume Template for Your Career</h2>
 
-    <p>
-      With our AI resume builder, you can customize any template, adjust
-      sections, and download your professional resume within minutes. No
-      design experience required.
-    </p>
-  </div>
-</section>
+            <p>
+              Selecting the right resume template is essential when applying for jobs
+              in Pakistan. Recruiters often spend only a few seconds reviewing each CV,
+              so a clean and structured layout can significantly improve your chances
+              of getting shortlisted. Our resume templates are designed with clarity,
+              readability, and ATS compatibility in mind.
+            </p>
+
+            <p>
+              Whether you are applying for a banking position, software engineering
+              role, healthcare job, aviation industry opportunity, or government
+              department vacancy, ResumeBuilder.pk provides modern resume formats
+              tailored to different industries.
+            </p>
+
+            <h2>ATS-Friendly Resume Templates</h2>
+
+            <p>
+              Many companies in Pakistan use Applicant Tracking Systems (ATS) to filter
+              resumes automatically. Our professional CV templates are structured to
+              meet ATS standards, ensuring your skills, education, and work experience
+              are properly recognized by automated systems.
+            </p>
+
+            <p>
+              With our AI resume builder, you can customize any template, adjust
+              sections, and download your professional resume within minutes. No
+              design experience required.
+            </p>
+          </div>
+        </section>
 
 
         {/* ================= SIMPLE ================= */}
@@ -218,7 +218,13 @@ export default function Templates() {
 
           <div className="template-list">
             {SIMPLE_TEMPLATES.map((num) => (
-              <article key={num} className="template-card">
+              <article
+                key={num}
+                className={`template-card ${num === 12 ? "free-template-card" : ""}`}
+              >
+                {num === 12 && (
+                  <div className="free-badge">FREE</div>
+                )}
                 <img
                   src={`/images/simple-${num}.png`}
                   alt={TEMPLATE_META[num]?.name}
