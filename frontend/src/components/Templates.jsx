@@ -249,7 +249,7 @@ export default function Templates() {
         9: "/data-elite",
         10: "/engineer-prime",
         11: "/aviation-pro",
-        12: "/resume/free-basic",
+        12: "/free-basic",
       };
       handleUseTemplate(routes[num]);
     }}
