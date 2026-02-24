@@ -94,3 +94,12 @@
   cursor: pointer;
   font-weight: 600;
 }
+.fb-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.fb-buttons button:hover {
+  background: #111827;
+}
