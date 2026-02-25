@@ -32,7 +32,7 @@ export default function CoverLetterPanel() {
   // 🔥 adjust if your field name differs
 
   const isMobile = window.innerWidth < 768;
-
+const fullPreviewRef = useRef(null);
   const formattedDate = new Date().toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
@@ -167,7 +167,7 @@ export default function CoverLetterPanel() {
               className="download-btn"
               onClick={() =>
                 downloadCoverLetterPDF({
-                  elementRef: previewRef,
+                  elementRef: fullPreviewRef,
                   fileName: "Cover-Letter.pdf",
                 })
               }
@@ -186,6 +186,7 @@ export default function CoverLetterPanel() {
           </div>
 
           <div
+          ref={fullPreviewRef}
             className="cover-letter-preview"
             style={{
               width: "100%",
