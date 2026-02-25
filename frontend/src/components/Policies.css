@@ -3,9 +3,6 @@
   background-color: #f8f9fb;
   min-height: 100vh;
 }
-.heading{
-  color:  #2563eb; 
-}
 
 .policies-container {
   max-width: 900px;
@@ -29,7 +26,7 @@
 .policy-section h2 {
   font-size: 22px;
   margin-bottom: 15px;
-  color: #333;
+  color: #2563eb;
 }
 
 .policy-section p {

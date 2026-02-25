@@ -9,7 +9,7 @@ export default function Policies() {
 
         {/* Privacy Policy */}
         <section className="policy-section">
-          <h2 className="heading">Privacy Policy</h2>
+          <h2>Privacy Policy</h2>
 
           <p>
             Resume Builder respects your privacy and is committed to protecting your
@@ -74,7 +74,7 @@ export default function Policies() {
         </section>
         {/* Terms & Conditions */}
         <section className="policy-section">
-          <h2 className="heading">Terms & Conditions</h2>
+          <h2>Terms & Conditions</h2>
 
           <p>
             Welcome to Resume Builder. By accessing or using our website and services,
@@ -159,7 +159,7 @@ export default function Policies() {
 
         {/* Refund & Return Policy */}
         <section className="policy-section">
-          <h2 className="heading">Refund & Return Policy</h2>
+          <h2>Refund & Return Policy</h2>
 
           <p>
             Resume Builder provides digital services and downloadable content.
@@ -214,7 +214,7 @@ export default function Policies() {
         </section>
         {/* Services Policy */}
         <section className="policy-section">
-          <h2 className="heading">Services Policy</h2>
+          <h2>Services Policy</h2>
 
           <p>
             Resume Builder is a digital online platform that provides resume and
