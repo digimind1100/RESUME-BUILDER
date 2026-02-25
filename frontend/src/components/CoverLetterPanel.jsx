@@ -39,6 +39,10 @@ export default function CoverLetterPanel() {
     day: "numeric",
   });
 
+  const execCommand = (command) => {
+  document.execCommand(command, false, null);
+};
+
   useEffect(() => {
     if (isMobile && previewRef.current) {
       previewRef.current.blur();
@@ -182,16 +186,7 @@ export default function CoverLetterPanel() {
           </div>
 
           <div
-            ref={previewRef}
             className="cover-letter-preview"
-            contentEditable={isEditing}
-            suppressContentEditableWarning={true}
-            onInput={() => {
-              if (isEditing && previewRef.current) {
-                setGeneratedText(previewRef.current.innerText);
-              }
-            }}
-            tabIndex={-1}
             style={{
               width: "100%",
               maxWidth: "210mm",
@@ -204,13 +199,41 @@ export default function CoverLetterPanel() {
               boxSizing: "border-box",
               margin: "0 auto",
               border: isEditing ? "2px solid #007bff" : "1px solid #ccc",
-              whiteSpace: "pre-line",
-              userSelect: "text",
             }}
           >
-            {isLoading
-              ? "Generating..."
-              : generatedText || "Your generated cover letter will appear here..."}
+
+            {/* Date (NOT editable) */}
+            <div
+              style={{
+                textAlign: "right",
+                marginBottom: "25px",
+                marginTop: "10px",
+              }}
+            >
+              {formattedDate}
+            </div>
+
+            {/* Editable Letter Content */}
+            <div
+              ref={previewRef}
+              contentEditable={isEditing}
+              suppressContentEditableWarning={true}
+              onInput={() => {
+                if (isEditing && previewRef.current) {
+                  setGeneratedText(previewRef.current.innerHTML);
+                }
+              }}
+              dangerouslySetInnerHTML={{
+                __html: isLoading
+                  ? "Generating..."
+                  : generatedText || "Your generated cover letter will appear here..."
+              }}
+              style={{
+                minHeight: "220mm",
+                outline: "none",
+                whiteSpace: "pre-wrap",
+              }}
+            />
           </div>
         </div>
       </div>
