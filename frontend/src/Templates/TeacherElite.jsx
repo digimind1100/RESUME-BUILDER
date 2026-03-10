@@ -250,9 +250,6 @@ Subject: ${qrForm.subject}
             Editing is available on desktop for best experience.
           </div>
         )}
-
-
-
       </div>
 
       {/* QR FORM */}

@@ -1,14 +1,31 @@
 import React, { useRef } from "react";
 import "./RoyalBlueDesigner.css";
+import TemplateControls from "./TemplateControls";
+import Watermark from "../components/Watermark";
 
 export default function RoyalBlueDesigner() {
 
   const resumeRef = useRef(null);
+  const [isEditable, setIsEditable] = useState(false);
+  const [canEdit, setCanEdit] = useState(false);
+
+  const handleEditChange = (editable, paid) => {
+    setIsEditable(editable);
+    setCanEdit(paid);
+  };
 
   return (
     <div className="rb-wrapper">
 
+      <TemplateControls
+        resumeRef={resumeRef}
+        templateId="RoyalBlueDesigner"
+        onEditChange={handleEditChange}
+      />
+
       <div className="rb-resume" ref={resumeRef}>
+
+        <Watermark show={!canEdit} />
 
         {/* HEADER */}
         <header className="rb-header">
@@ -21,7 +38,10 @@ export default function RoyalBlueDesigner() {
           </div>
 
           <div className="rb-header-text">
-            <h1 contentEditable suppressContentEditableWarning>
+            <h1
+              contentEditable={canEdit && isEditable}
+              suppressContentEditableWarning
+            >
               JAMIE CHASTAIN
             </h1>
 
