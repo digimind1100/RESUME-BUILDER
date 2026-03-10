@@ -1,11 +1,13 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import "./RoyalBlueDesigner.css";
+
 import TemplateControls from "./TemplateControls";
 import Watermark from "../components/Watermark";
 
 export default function RoyalBlueDesigner() {
 
   const resumeRef = useRef(null);
+
   const [isEditable, setIsEditable] = useState(false);
   const [canEdit, setCanEdit] = useState(false);
 
@@ -17,17 +19,19 @@ export default function RoyalBlueDesigner() {
   return (
     <div className="rb-wrapper">
 
+      {/* ===== TEMPLATE CONTROLS ===== */}
       <TemplateControls
         resumeRef={resumeRef}
         templateId="RoyalBlueDesigner"
         onEditChange={handleEditChange}
       />
 
+      {/* ===== RESUME ===== */}
       <div className="rb-resume" ref={resumeRef}>
 
         <Watermark show={!canEdit} />
 
-        {/* HEADER */}
+        {/* ===== HEADER ===== */}
         <header className="rb-header">
 
           <div className="rb-profile">
@@ -38,6 +42,7 @@ export default function RoyalBlueDesigner() {
           </div>
 
           <div className="rb-header-text">
+
             <h1
               contentEditable={canEdit && isEditable}
               suppressContentEditableWarning
@@ -45,112 +50,130 @@ export default function RoyalBlueDesigner() {
               JAMIE CHASTAIN
             </h1>
 
-            <h3 contentEditable suppressContentEditableWarning>
+            <h3
+              contentEditable={canEdit && isEditable}
+              suppressContentEditableWarning
+            >
               Graphic Designer
             </h3>
 
-            <p contentEditable suppressContentEditableWarning>
+            <p
+              contentEditable={canEdit && isEditable}
+              suppressContentEditableWarning
+            >
               Hello, I'm Jamie Chastain, a passionate graphic designer
               with a flair for creating visually stunning and impactful
               designs. I’ve had the privilege of working on diverse
               projects from branding and marketing collateral to
               digital assets and web design.
             </p>
+
           </div>
 
         </header>
 
-
-        {/* CONTACT BAR */}
+        {/* ===== CONTACT BAR ===== */}
         <div className="rb-contact">
 
-          <span contentEditable suppressContentEditableWarning>
+          <span
+            contentEditable={canEdit && isEditable}
+            suppressContentEditableWarning
+          >
             📞 123-456-7890
           </span>
 
-          <span contentEditable suppressContentEditableWarning>
+          <span
+            contentEditable={canEdit && isEditable}
+            suppressContentEditableWarning
+          >
             ✉ hello@reallygreatsite.com
           </span>
 
-          <span contentEditable suppressContentEditableWarning>
+          <span
+            contentEditable={canEdit && isEditable}
+            suppressContentEditableWarning
+          >
             📍 123 Anywhere St, Any City
           </span>
 
         </div>
 
-
-        {/* MAIN LAYOUT */}
+        {/* ===== MAIN LAYOUT ===== */}
         <div className="rb-body">
 
-          {/* LEFT COLUMN */}
+          {/* ===== LEFT COLUMN ===== */}
           <aside className="rb-left">
 
             <section className="rb-section">
               <h2>Skills</h2>
 
               <ul>
-                <li contentEditable suppressContentEditableWarning>Organized</li>
-                <li contentEditable suppressContentEditableWarning>Communication</li>
-                <li contentEditable suppressContentEditableWarning>Teamwork</li>
-                <li contentEditable suppressContentEditableWarning>Meeting deadlines</li>
-                <li contentEditable suppressContentEditableWarning>Creativity</li>
-                <li contentEditable suppressContentEditableWarning>Leadership</li>
+                <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>Organized</li>
+                <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>Communication</li>
+                <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>Teamwork</li>
+                <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>Meeting deadlines</li>
+                <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>Creativity</li>
+                <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>Leadership</li>
               </ul>
+
             </section>
 
-
             <section className="rb-section">
+
               <h2>Education</h2>
 
               <div className="rb-edu">
-                <h4 contentEditable suppressContentEditableWarning>
+
+                <h4 contentEditable={canEdit && isEditable} suppressContentEditableWarning>
                   Secondary School
                 </h4>
 
-                <p contentEditable suppressContentEditableWarning>
+                <p contentEditable={canEdit && isEditable} suppressContentEditableWarning>
                   Anywhere High School
                 </p>
 
-                <span contentEditable suppressContentEditableWarning>
+                <span contentEditable={canEdit && isEditable} suppressContentEditableWarning>
                   2015 – 2018
                 </span>
+
               </div>
 
               <div className="rb-edu">
-                <h4 contentEditable suppressContentEditableWarning>
+
+                <h4 contentEditable={canEdit && isEditable} suppressContentEditableWarning>
                   Bachelor of Technology
                 </h4>
 
-                <p contentEditable suppressContentEditableWarning>
+                <p contentEditable={canEdit && isEditable} suppressContentEditableWarning>
                   AnyTech University
                 </p>
 
-                <span contentEditable suppressContentEditableWarning>
+                <span contentEditable={canEdit && isEditable} suppressContentEditableWarning>
                   2018 – 2022
                 </span>
+
               </div>
 
             </section>
 
           </aside>
 
-
-          {/* RIGHT COLUMN */}
+          {/* ===== RIGHT COLUMN ===== */}
           <main className="rb-right">
 
             <h2 className="rb-exp-title">Experience</h2>
 
             <div className="rb-job">
 
-              <h3 contentEditable suppressContentEditableWarning>
+              <h3 contentEditable={canEdit && isEditable} suppressContentEditableWarning>
                 Graphic Designer
               </h3>
 
-              <span contentEditable suppressContentEditableWarning>
+              <span contentEditable={canEdit && isEditable} suppressContentEditableWarning>
                 Rimberio Company | 2020 – 2021
               </span>
 
-              <p contentEditable suppressContentEditableWarning>
+              <p contentEditable={canEdit && isEditable} suppressContentEditableWarning>
                 As a seasoned graphic designer at Rimberio Company,
                 I bring a wealth of expertise cultivated during my
                 tenure here. I have had the privilege of working on
@@ -160,23 +183,19 @@ export default function RoyalBlueDesigner() {
 
             </div>
 
-
             <div className="rb-job">
 
-              <h3 contentEditable suppressContentEditableWarning>
+              <h3 contentEditable={canEdit && isEditable} suppressContentEditableWarning>
                 Graphic Designer
               </h3>
 
-              <span contentEditable suppressContentEditableWarning>
+              <span contentEditable={canEdit && isEditable} suppressContentEditableWarning>
                 Liceria & Co. | 2021 – 2022
               </span>
 
-              <p contentEditable suppressContentEditableWarning>
+              <p contentEditable={canEdit && isEditable} suppressContentEditableWarning>
                 I am proud to have contributed significantly to the
-                visual identity and success of Liceria & Co. Through
-                my tenure, I have been entrusted with a diverse range
-                of projects delivering compelling designs that
-                resonate with our target audience.
+                visual identity and success of Liceria & Co.
               </p>
 
             </div>

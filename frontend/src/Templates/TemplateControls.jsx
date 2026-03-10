@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaShareAlt } from "react-icons/fa";
 
@@ -11,116 +11,130 @@ import ShareResume from "../components/ShareResume";
 
 export default function TemplateControls({ resumeRef, templateId, onEditChange }) {
 
-const navigate = useNavigate();
-const { triggerReview } = useReview();
+  const navigate = useNavigate();
+  const { triggerReview } = useReview();
 
-const [isEditable, setIsEditable] = useState(false);
-const [showShare, setShowShare] = useState(false);
-const [showMobileEditMsg, setShowMobileEditMsg] = useState(false);
+  const [isEditable, setIsEditable] = useState(false);
+  const [showShare, setShowShare] = useState(false);
+  const [showMobileEditMsg, setShowMobileEditMsg] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
-const isMobile = window.innerWidth <= 768;
+  const {
+    isPaid,
+    showPaymentModal,
+    setShowPaymentModal,
+    requirePayment,
+    handlePaymentSuccess,
+  } = usePaymentGuard(templateId);
 
-const {
-isPaid,
-showPaymentModal,
-setShowPaymentModal,
-requirePayment,
-handlePaymentSuccess,
-} = usePaymentGuard(templateId);
+  const canEdit = isPaid;
 
-const canEdit = isPaid;
+  /* ===== Detect Mobile Screen ===== */
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
 
-const handleDownloadClick = () => {
-downloadResumeAndTriggerReview({
-element: resumeRef.current,
-onReviewTrigger: triggerReview,
-});
-};
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
 
-const handleReset = () => {
-window.location.reload();
-};
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
-const toggleEdit = () => {
+  /* ===== Download PDF ===== */
+  const handleDownloadClick = () => {
+    if (!resumeRef?.current) return;
 
-```
-if (isMobile) {
-  setShowMobileEditMsg(true);
-  return;
-}
+    downloadResumeAndTriggerReview({
+      element: resumeRef.current,
+      onReviewTrigger: triggerReview,
+    });
+  };
 
-if (!requirePayment()) return;
+  /* ===== Reset Template ===== */
+  const handleReset = () => {
+    window.location.reload();
+  };
 
-const newState = !isEditable;
-setIsEditable(newState);
+  /* ===== Toggle Edit Mode ===== */
+  const toggleEdit = () => {
 
-if (onEditChange) {
-  onEditChange(newState, canEdit);
-}
-```
+    if (isMobile) {
+      setShowMobileEditMsg(true);
+      return;
+    }
 
-};
+    if (!requirePayment()) return;
 
-return (
-<>
-{/* ===== TOP CONTROL BUTTONS ===== */} <div className="te-buttons" contentEditable={false}>
+    const newState = !isEditable;
+    setIsEditable(newState);
 
-```
-    <button
-      className="te-share-btn"
-      onClick={(e) => {
-        e.stopPropagation();
-        setShowShare(true);
-      }}
-    >
-      <FaShareAlt />
-      <span>Share</span>
-    </button>
+    if (onEditChange) {
+      onEditChange(newState, canEdit);
+    }
+  };
 
-    <button className="download-btn" onClick={handleDownloadClick}>
-      Download PDF
-    </button>
+  return (
+    <>
+      {/* ===== TOP CONTROL BUTTONS ===== */}
+      <div className="te-buttons" contentEditable={false}>
 
-    <button onClick={() => navigate("/templates")}>
-      Back to Templates
-    </button>
+        <button
+          className="te-share-btn"
+          onClick={(e) => {
+            e.stopPropagation();
+            setShowShare(true);
+          }}
+        >
+          <FaShareAlt />
+          <span>Share</span>
+        </button>
 
-    <button onClick={handleReset}>
-      Reset
-    </button>
+        <button
+          className="download-btn"
+          onClick={handleDownloadClick}
+        >
+          Download PDF
+        </button>
 
-    <button
-      className={isEditable ? "edit-btn on" : "edit-btn off"}
-      onClick={toggleEdit}
-    >
-      {isEditable ? "Editing: ON" : "Editing: OFF"}
-      {!canEdit && <span className="edit-crown">👑</span>}
-    </button>
+        <button onClick={() => navigate("/templates")}>
+          Back to Templates
+        </button>
 
-    {showMobileEditMsg && (
-      <div className="mobile-edit-notice">
-        Editing is available on desktop for best experience.
+        <button onClick={handleReset}>
+          Reset
+        </button>
+
+        <button
+          className={isEditable ? "edit-btn on" : "edit-btn off"}
+          onClick={toggleEdit}
+        >
+          {isEditable ? "Editing: ON" : "Editing: OFF"}
+          {!canEdit && <span className="edit-crown">👑</span>}
+        </button>
+
+        {showMobileEditMsg && (
+          <div className="mobile-edit-notice">
+            Editing is available on desktop for best experience.
+          </div>
+        )}
+
       </div>
-    )}
 
-  </div>
+      {/* ===== PAYMENT MODAL ===== */}
+      <PaymentGate
+        open={showPaymentModal}
+        onClose={() => setShowPaymentModal(false)}
+        onSuccess={handlePaymentSuccess}
+      />
 
-  {/* ===== PAYMENT MODAL ===== */}
-  <PaymentGate
-    open={showPaymentModal}
-    onClose={() => setShowPaymentModal(false)}
-    onSuccess={handlePaymentSuccess}
-  />
-
-  {/* ===== SHARE MODAL ===== */}
-  {showShare && (
-    <ShareResume
-      resumeRef={resumeRef}
-      onClose={() => setShowShare(false)}
-    />
-  )}
-</>
-```
-
-);
+      {/* ===== SHARE MODAL ===== */}
+      {showShare && (
+        <ShareResume
+          resumeRef={resumeRef}
+          onClose={() => setShowShare(false)}
+        />
+      )}
+    </>
+  );
 }
