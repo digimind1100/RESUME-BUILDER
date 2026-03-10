@@ -78,7 +78,7 @@ export default function SignupModal({ isOpen, onClose, onSuccess }) {
       <div className="signup-modal animate-fadeIn">
         <h2 className="signup-title">
           {mode === "signup"
-            ? "Create Your Account"
+            ? "Create Your Account for Free Access"
             : "Login to Your Account"}
         </h2>
 

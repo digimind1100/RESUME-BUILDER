@@ -29,7 +29,7 @@ export default function RoyalBlueDesigner() {
       {/* ===== RESUME ===== */}
       <div className="rb-resume" ref={resumeRef}>
 
-        <Watermark show={!canEdit} />
+        
 
         {/* ===== HEADER ===== */}
         <header className="rb-header">
@@ -74,6 +74,7 @@ export default function RoyalBlueDesigner() {
 
         {/* ===== CONTACT BAR ===== */}
         <div className="rb-contact">
+          <Watermark show={!canEdit} />
 
           <span
             contentEditable={canEdit && isEditable}
