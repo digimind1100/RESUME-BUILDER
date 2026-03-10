@@ -33,6 +33,8 @@ import Blog from "./components/Blog";
 import BlogPost from "./components/BlogPost";
 import Pricing from "./components/Pricing";
 import FreeBasic from "./Templates/FreeBasic";
+import RoyalBlueDesigner from "./Templates/RoyalBlueDesigner";
+
 
 
 function AppContent() {
@@ -105,6 +107,7 @@ function AppContent() {
           <Route path="/engineer-elites" element={<EngineerElites />} />
           <Route path="/soft-tech" element={<SoftTech />} />
           <Route path="/free-basic" element={<FreeBasic />} />
+          <Route path="/royal-designer" element={<RoyalBlueDesigner />} />
 
           <Route
             path="/data-elite"
