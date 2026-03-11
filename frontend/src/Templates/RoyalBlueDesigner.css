@@ -208,14 +208,14 @@ background:#f4f6fb;
 padding:8px 14px;
 border-radius:6px;
 border:1px solid #ddd;
-background:#fff;
+background:#2e3239;;
 font-size:14px;
 cursor:pointer;
 transition:all 0.2s ease;
 }
 
 .te-buttons button:hover{
-background:#f2f4f8;
+background:#0f4bd8;
 }
 
 .rb-wrapper{
