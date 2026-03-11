@@ -159,13 +159,14 @@ margin-top:10px;
 font-size:14px;
 line-height:1.6;
 }
+
 /* ===== TEMPLATE TOOLBAR ===== */
 
 .te-buttons{
 position:fixed;
 top:0;
 left:0;
-right:0;
+width:100%;
 
 display:flex;
 justify-content:center;
@@ -175,10 +176,17 @@ gap:12px;
 padding:12px 20px;
 
 background:#ffffff;
-box-shadow:0 2px 8px rgba(0,0,0,0.1);
+border-bottom:1px solid #e5e5e5;
 
-z-index:999;
+z-index:9999;
 }
+
+
+.te-buttons{
+background:red;
+}
+
+
 
 /* prevent resume hiding under toolbar */
 
@@ -186,7 +194,12 @@ z-index:999;
 display:flex;
 flex-direction:column;
 align-items:center;
-padding:80px 40px 40px 40px;
+
+padding-top:90px;
+padding-left:40px;
+padding-right:40px;
+padding-bottom:40px;
+
 background:#f4f6fb;
 }
 
