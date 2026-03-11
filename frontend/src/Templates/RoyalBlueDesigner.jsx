@@ -31,6 +31,17 @@ export default function RoyalBlueDesigner() {
       setProfileImage(imageUrl);
     };
 
+
+      const triggerFileSelect = () => {
+    if (!canEdit) {
+      requirePayment(); // 🔥 open payment modal
+      return;
+    }
+
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
   return (
     <div className="rb-wrapper">
 
