@@ -14,9 +14,7 @@ box-shadow:0 10px 40px rgba(0,0,0,0.15);
 font-family:Arial, Helvetica, sans-serif;
 }
 
-
 /* HEADER */
-
 .rb-header{
 display:flex;
 gap:30px;
@@ -252,4 +250,14 @@ text-align:center;
 margin-top:10px;
 font-size:13px;
 color:#777;
+}
+
+.rb-photo-wrapper {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+
+  margin-bottom: 24px;
+  cursor: pointer;
 }
