@@ -159,20 +159,6 @@ margin-top:10px;
 font-size:14px;
 line-height:1.6;
 }
-/* ===== TEMPLATE CONTROL BAR ===== */
-
-.te-buttons{
-display:flex;
-justify-content:center;
-align-items:center;
-gap:12px;
-
-width:100%;
-padding:16px 0;
-margin-bottom:20px;
-
-flex-wrap:wrap;
-}
 /* ===== TEMPLATE TOOLBAR ===== */
 
 .te-buttons{
@@ -204,22 +190,27 @@ padding:80px 40px 40px 40px;
 background:#f4f6fb;
 }
 
-
-
 /* button styling */
-
 .te-buttons button{
 padding:8px 14px;
+border-radius:6px;
+border:1px solid #ddd;
+background:#fff;
 font-size:14px;
 cursor:pointer;
-border-radius:6px;
-border:1px solid #ccc;
-background: #111827;
 transition:all 0.2s ease;
 }
 
 .te-buttons button:hover{
-background:#0f4bd8;
+background:#f2f4f8;
+}
+
+.rb-wrapper{
+display:flex;
+flex-direction:column;
+align-items:center;
+padding:80px 40px 40px 40px;
+background:#f4f6fb;
 }
 
 /* edit toggle */
