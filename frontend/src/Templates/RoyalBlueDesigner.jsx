@@ -16,6 +16,21 @@ export default function RoyalBlueDesigner() {
     setCanEdit(paid);
   };
 
+ 
+    // ----- Profile Image Upload -----
+    const [profileImage, setProfileImage] = useState("/images/creativeboldimage.png");
+    const fileInputRef = useRef(null);
+  
+    const handleImageUpload = (event) => {
+      if (!canEdit) return; // 🔒 premium guard
+  
+      const file = event.target.files[0];
+      if (!file) return;
+  
+      const imageUrl = URL.createObjectURL(file);
+      setProfileImage(imageUrl);
+    };
+
   return (
     <div className="rb-wrapper">
 
@@ -34,12 +49,21 @@ export default function RoyalBlueDesigner() {
         {/* ===== HEADER ===== */}
         <header className="rb-header">
 
-          <div className="rb-profile">
-            <img
-              src="/images/profile.jpg"
-              alt="profile"
-            />
-          </div>
+      {/* Profile Image */}
+            <div
+              className={`cb-photo-wrapper ${!canEdit ? "locked" : ""}`}
+              onClick={triggerFileSelect}
+              title={!canEdit ? "Unlock to change profile image" : "Click to change photo"}
+            >
+              <img src={profileImage} alt="Profile" className="cb-photo" />
+              <input
+                type="file"
+                accept="image/*"
+                ref={fileInputRef}
+                style={{ display: "none" }}
+                onChange={handleImageUpload}
+              />
+            </div>
 
           <div className="rb-header-text">
 
