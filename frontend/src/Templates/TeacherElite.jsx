@@ -163,18 +163,21 @@ Subject: ${qrForm.subject}
   };
 
  /* ---------- DOWNLOAD PDF ---------- */
-  const handleDownloadPDF = async () => {
+
+ const handleDownloadPDF = async () => {
   const element = resumeRef.current;
   if (!element) return;
 
-  // 🔥 Add temporary class
   element.classList.add("pdf-mode");
 
-  await new Promise(resolve => setTimeout(resolve, 200));
+  await new Promise((resolve) => setTimeout(resolve, 300));
 
   const canvas = await html2canvas(element, {
     scale: 2,
     useCORS: true,
+    scrollY: -window.scrollY,
+    windowWidth: element.scrollWidth,
+    windowHeight: element.scrollHeight,
   });
 
   element.classList.remove("pdf-mode");
@@ -409,7 +412,7 @@ Subject: ${qrForm.subject}
                   ref={fileInputRef}
                   style={{ display: "none" }}
                   onChange={handleImageUpload}
-                  onClick={() => {
+                  onClick={(e) => {
                     if (!isPaid) {
                       e.preventDefault();
                       setShowPaymentModal(true);
