@@ -165,16 +165,24 @@ Subject: ${qrForm.subject}
   };
 
  /* ---------- DOWNLOAD PDF ---------- */
-
 const handleDownloadPDF = async () => {
-  const element = captureRef.current;
+  const element = resumeRef.current;
   if (!element) return;
+
+  // enable PDF safe mode
+  element.classList.add("pdf-mode");
+
+  // wait for layout update
+  await new Promise((resolve) => setTimeout(resolve, 300));
 
   const canvas = await html2canvas(element, {
     scale: 2,
     useCORS: true,
-    backgroundColor: "#ffffff",
+    backgroundColor: "#ffffff"
   });
+
+  // remove PDF mode
+  element.classList.remove("pdf-mode");
 
   const imgData = canvas.toDataURL("image/png");
 
@@ -184,6 +192,7 @@ const handleDownloadPDF = async () => {
   const imgHeight = (canvas.height * pdfWidth) / canvas.width;
 
   pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, imgHeight);
+
   pdf.save("teacher-elite-resume.pdf");
 };
  
