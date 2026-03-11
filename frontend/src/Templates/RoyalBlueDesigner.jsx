@@ -62,11 +62,11 @@ export default function RoyalBlueDesigner() {
 
       {/* Profile Image */}
             <div
-              className={`rb-photo-wrapper ${!canEdit ? "locked" : ""}`}
+              className={`cb-photo-wrapper ${!canEdit ? "locked" : ""}`}
               onClick={triggerFileSelect}
               title={!canEdit ? "Unlock to change profile image" : "Click to change photo"}
             >
-              <img src={profileImage} alt="Profile" className="rb-photo" />
+              <img src={profileImage} alt="Profile" className="cb-photo" />
               <input
                 type="file"
                 accept="image/*"

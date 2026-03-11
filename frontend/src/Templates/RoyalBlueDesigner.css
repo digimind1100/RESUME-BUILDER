@@ -251,13 +251,3 @@ margin-top:10px;
 font-size:13px;
 color:#777;
 }
-
-.rb-photo-wrapper {
-  width: 140px;
-  height: 140px;
-  border-radius: 50%;
-  overflow: hidden;
-
-  margin-bottom: 24px;
-  cursor: pointer;
-}
