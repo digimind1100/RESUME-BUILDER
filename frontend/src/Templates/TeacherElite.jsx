@@ -51,6 +51,8 @@ export default function TeacherElite() {
 
   const navigate = useNavigate();
   const resumeRef = useRef(null);
+  const captureRef = useRef(null);
+
 
   const [isEditable, setIsEditable] = useState(false);
   const [showShare, setShowShare] = useState(false);
@@ -164,25 +166,18 @@ Subject: ${qrForm.subject}
 
  /* ---------- DOWNLOAD PDF ---------- */
 
- const handleDownloadPDF = async () => {
-  const element = resumeRef.current;
+const handleDownloadPDF = async () => {
+  const element = captureRef.current;
   if (!element) return;
-
-  element.classList.add("pdf-mode");
-
-  await new Promise((resolve) => setTimeout(resolve, 300));
 
   const canvas = await html2canvas(element, {
     scale: 2,
     useCORS: true,
-    scrollY: -window.scrollY,
-    windowWidth: element.scrollWidth,
-    windowHeight: element.scrollHeight,
+    backgroundColor: "#ffffff",
   });
 
-  element.classList.remove("pdf-mode");
-
   const imgData = canvas.toDataURL("image/png");
+
   const pdf = new jsPDF("p", "mm", "a4");
 
   const pdfWidth = 210;
@@ -191,7 +186,6 @@ Subject: ${qrForm.subject}
   pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, imgHeight);
   pdf.save("teacher-elite-resume.pdf");
 };
-
  
   const handleReset = () => window.location.reload();
 
@@ -339,7 +333,7 @@ Subject: ${qrForm.subject}
         id="resumeContainer" className="te-a4" ref={resumeRef} style={{ position: "relative" }}>
 
         <Watermark show={!canEdit} />
-        <div className="te-resume">
+        <div className="te-resume" ref={captureRef}>
           {/* HEADER with decorative wave + profile */}
           <header className="te-header">
             <div className="te-header-inner">
