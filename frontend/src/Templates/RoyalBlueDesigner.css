@@ -181,13 +181,6 @@ border-bottom:1px solid #e5e5e5;
 z-index:9999;
 }
 
-
-.te-buttons{
-background:red;
-}
-
-
-
 /* prevent resume hiding under toolbar */
 
 .rb-wrapper{
