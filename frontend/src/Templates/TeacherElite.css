@@ -594,8 +594,7 @@
     width: 210mm;
     min-height: 297mm;
 
-    transform: scale(0.75);          /* adjust if needed */
-    transform-origin: top center;
+  zoom: 0.75;
 
     margin-left: auto;
     margin-right: auto;
@@ -675,20 +674,26 @@
 /* ===================================
    FIX FOR PDF RENDERING
 =================================== */
+/* PDF rendering fixes */
 
-.pdf-mode .te-header {
-  overflow: visible !important;
-}
-
-.pdf-mode .te-header::before {
-  border-bottom-left-radius: 0 !important;
-  border-bottom-right-radius: 0 !important;
-}
-/* Fix PDF rendering */
 .pdf-mode .te-a4 {
   transform: none !important;
+  width: 210mm !important;
+  max-width: 210mm !important;
+  margin: 0 auto !important;
 }
 
+.pdf-mode .te-header-inner {
+  padding: 28px 40px 20px !important;
+}
+
+.pdf-mode .te-header-right {
+  width: 210px !important;
+}
+
+.pdf-mode .te-header-wave {
+  right: -40px !important;
+}
 .pdf-mode .te-header {
   overflow: visible !important;
 }
