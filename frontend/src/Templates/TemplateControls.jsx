@@ -42,14 +42,18 @@ export default function TemplateControls({ resumeRef, templateId, onEditChange }
   }, []);
 
   /* ===== Download PDF ===== */
-  const handleDownloadClick = () => {
-    if (!resumeRef?.current) return;
+  const handleDownloadClick = async () => {
 
-    downloadResumeAndTriggerReview({
-      element: resumeRef.current,
-      onReviewTrigger: triggerReview,
-    });
-  };
+  if (!resumeRef?.current) return;
+
+  // wait for layout render
+  await new Promise(resolve => setTimeout(resolve, 300));
+
+  downloadResumeAndTriggerReview({
+    element: resumeRef.current,
+    onReviewTrigger: triggerReview,
+  });
+};
 
   /* ===== Reset Template ===== */
   const handleReset = () => {
