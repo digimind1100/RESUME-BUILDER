@@ -10,9 +10,10 @@ import PaymentGate from "../components/payment/PaymentGate";
 import ShareResume from "../components/ShareResume";
 
 export default function TemplateControls({
-  resumeRef: resumeContainerRef,
+  resumeRef,
   templateId,
-  onEditChange
+  onEditChange,
+  onDownload
 }) {
 
   const navigate = useNavigate();
@@ -81,7 +82,7 @@ export default function TemplateControls({
           <span>Share</span>
         </button>
 
-        <button className="download-btn" onClick={handleDownloadClick}>
+        <button className="download-btn" onClick={onDownload}>
           Download PDF
         </button>
 
