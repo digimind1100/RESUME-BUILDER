@@ -9,56 +9,61 @@ import usePaymentGuard from "../hooks/usePaymentGuard";
 import PaymentGate from "../components/payment/PaymentGate";
 import ShareResume from "../components/ShareResume";
 
-export default function TemplateControls({ resumeRef, templateId, onEditChange }) {
+export default function TemplateControls({
+  resumeRef: resumeContainerRef,
+  templateId,
+  onEditChange
+}) {
 
   const navigate = useNavigate();
   const { triggerReview } = useReview();
 
   const [isEditable, setIsEditable] = useState(false);
   const [showShare, setShowShare] = useState(false);
-  const [showMobileEditMsg, setShowMobileEditMsg] = useState(false);
 
   const {
     isPaid,
     showPaymentModal,
     setShowPaymentModal,
     requirePayment,
-    handlePaymentSuccess,
+    handlePaymentSuccess
   } = usePaymentGuard(templateId);
 
   const canEdit = isPaid;
 
-  /* sync state with parent template */
+  /* Sync state with parent */
   useEffect(() => {
     if (onEditChange) {
       onEditChange(isEditable, canEdit);
     }
-  }, [isEditable, canEdit]);
+  }, [isEditable, canEdit, onEditChange]);
 
-  /* ===== Download PDF ===== */
+  /* Download PDF */
   const handleDownloadClick = async () => {
 
-    if (!resumeRef || !resumeRef.current) return;
+    if (!resumeContainerRef || !resumeContainerRef.current) return;
 
     await new Promise(resolve => setTimeout(resolve, 200));
 
     downloadResumeAndTriggerReview({
-      element: resumeRef.current,
-      onReviewTrigger: triggerReview,
+      element: resumeContainerRef.current,
+      onReviewTrigger: triggerReview
     });
+
   };
 
-  /* ===== Reset ===== */
+  /* Reset template */
   const handleReset = () => {
     window.location.reload();
   };
 
-  /* ===== Edit Toggle ===== */
+  /* Toggle edit */
   const toggleEdit = () => {
 
     if (!requirePayment()) return;
 
     setIsEditable(prev => !prev);
+
   };
 
   return (
@@ -96,25 +101,17 @@ export default function TemplateControls({ resumeRef, templateId, onEditChange }
           {!canEdit && <span className="edit-crown">👑</span>}
         </button>
 
-        {showMobileEditMsg && (
-          <div className="mobile-edit-notice">
-            Editing is available on desktop for best experience.
-          </div>
-        )}
-
       </div>
 
-      {/* Payment Modal */}
       <PaymentGate
         open={showPaymentModal}
         onClose={() => setShowPaymentModal(false)}
         onSuccess={handlePaymentSuccess}
       />
 
-      {/* Share Modal */}
       {showShare && (
         <ShareResume
-          resumeRef={resumeRef}
+          resumeRef={resumeContainerRef}
           onClose={() => setShowShare(false)}
         />
       )}

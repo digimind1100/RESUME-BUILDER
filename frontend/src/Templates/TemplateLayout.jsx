@@ -9,7 +9,7 @@ export default function TemplateLayout({
   resumeClass = "template-resume"
 }) {
 
-  const resumeRef = useRef(null);
+  const resumeContainerRef = useRef(null);
 
   const [isEditable, setIsEditable] = useState(false);
   const [canEdit, setCanEdit] = useState(false);
@@ -23,12 +23,12 @@ export default function TemplateLayout({
     <div className={wrapperClass}>
 
       <TemplateControls
-        resumeRef={resumeRef}
+        resumeRef={resumeContainerRef}
         templateId={templateId}
         onEditChange={handleEditChange}
       />
 
-      <div className={resumeClass} ref={resumeRef}>
+      <div className={resumeClass} ref={resumeContainerRef}>
 
         <Watermark show={!canEdit} />
 
