@@ -22,20 +22,18 @@ export default function TemplateLayout({
   return (
     <div className={wrapperClass}>
 
-      {/* ===== TEMPLATE TOOLBAR ===== */}
+      {/* Toolbar */}
       <TemplateControls
         resumeRef={resumeRef}
         templateId={templateId}
         onEditChange={handleEditChange}
       />
 
-      {/* ===== RESUME CONTAINER ===== */}
+      {/* Resume Container */}
       <div className={resumeClass} ref={resumeRef}>
 
-        {/* Watermark for free users */}
         <Watermark show={!canEdit} />
 
-        {/* Template content */}
         {typeof children === "function"
           ? children({ canEdit, isEditable })
           : children}
