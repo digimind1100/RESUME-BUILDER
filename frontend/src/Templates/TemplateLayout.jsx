@@ -53,7 +53,9 @@ pdf.save(`${templateId}-resume.pdf`);
 if (triggerReview) {
   triggerReview();
 }
-
+setTimeout(() => {
+  triggerReview();
+}, 800);
 
 };
 
