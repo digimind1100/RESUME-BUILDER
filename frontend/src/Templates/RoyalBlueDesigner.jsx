@@ -37,7 +37,7 @@ export default function RoyalBlueDesigner() {
 
         return (
           <>
-            <div class="rb-resume" ref={resumeRef}>
+            <div class="rb-resume" >
               {/* ===== HEADER ===== */}
               <header className="rb-header">
 
