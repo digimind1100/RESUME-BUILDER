@@ -48,6 +48,12 @@ pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, imgHeight);
 
 pdf.save(`${templateId}-resume.pdf`);
 
+if (triggerReview) {
+  triggerReview();
+}
+setTimeout(() => {
+  triggerReview();
+}, 800);
 
 };
 
