@@ -52,7 +52,7 @@ pdf.save(`${templateId}-resume.pdf`);
 
 setTimeout(() => {
   triggerReview();
-}, 800);
+}, 1500);
 
 
 };
