@@ -1,13 +1,13 @@
 import React, { useState, useRef } from "react";
 import "./RoyalBlueDesigner.css";
 import TemplateLayout from "./TemplateLayout";
-import { useReview } from "../context/ReviewContext";
+
 
 export default function RoyalBlueDesigner() {
 
   const [profileImage, setProfileImage] = useState("/images/creativeboldimage.png");
   const fileInputRef = useRef(null);
-  const { triggerReview } = useReview();
+
 
   return (
 

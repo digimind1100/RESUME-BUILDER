@@ -4,7 +4,7 @@ import jsPDF from "jspdf";
 
 import TemplateControls from "./TemplateControls";
 import Watermark from "../components/Watermark";
-
+import { useReview } from "../context/ReviewContext";
 export default function TemplateLayout({
 children,
 templateId,
@@ -13,6 +13,7 @@ resumeClass = "template-resume"
 }) {
 
 const resumeContainerRef = useRef(null);
+const { triggerReview } = useReview();
 
 const [isEditable, setIsEditable] = useState(false);
 const [canEdit, setCanEdit] = useState(false);
