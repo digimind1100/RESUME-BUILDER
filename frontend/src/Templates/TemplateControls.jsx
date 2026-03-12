@@ -17,7 +17,6 @@ export default function TemplateControls({ resumeRef, templateId, onEditChange }
   const [isEditable, setIsEditable] = useState(false);
   const [showShare, setShowShare] = useState(false);
   const [showMobileEditMsg, setShowMobileEditMsg] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
 
   const {
     isPaid,
@@ -29,58 +28,41 @@ export default function TemplateControls({ resumeRef, templateId, onEditChange }
 
   const canEdit = isPaid;
 
-  /* ===== Detect Mobile Screen ===== */
+  /* sync state with parent template */
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
+    if (onEditChange) {
+      onEditChange(isEditable, canEdit);
+    }
+  }, [isEditable, canEdit]);
 
   /* ===== Download PDF ===== */
-const handleDownloadClick = async () => {
+  const handleDownloadClick = async () => {
 
-  if (!resumeRef?.current) return;
+    if (!resumeRef || !resumeRef.current) return;
 
-  await new Promise(resolve => setTimeout(resolve, 200));
+    await new Promise(resolve => setTimeout(resolve, 200));
 
-  downloadResumeAndTriggerReview({
-    element: resumeRef.current,
-    onReviewTrigger: triggerReview,
-  });
+    downloadResumeAndTriggerReview({
+      element: resumeRef.current,
+      onReviewTrigger: triggerReview,
+    });
+  };
 
-};
-
-  /* ===== Reset Template ===== */
+  /* ===== Reset ===== */
   const handleReset = () => {
     window.location.reload();
   };
 
-  /* ===== Toggle Edit Mode ===== */
+  /* ===== Edit Toggle ===== */
   const toggleEdit = () => {
-
-    if (isMobile) {
-      setShowMobileEditMsg(true);
-      return;
-    }
 
     if (!requirePayment()) return;
 
-    const newState = !isEditable;
-    setIsEditable(newState);
-
-    if (onEditChange) {
-      onEditChange(newState, canEdit);
-    }
+    setIsEditable(prev => !prev);
   };
 
   return (
     <>
-      {/* ===== TOP CONTROL BUTTONS ===== */}
       <div className="te-buttons" contentEditable={false}>
 
         <button
@@ -94,10 +76,7 @@ const handleDownloadClick = async () => {
           <span>Share</span>
         </button>
 
-        <button
-          className="download-btn"
-          onClick={handleDownloadClick}
-        >
+        <button className="download-btn" onClick={handleDownloadClick}>
           Download PDF
         </button>
 
@@ -125,14 +104,14 @@ const handleDownloadClick = async () => {
 
       </div>
 
-      {/* ===== PAYMENT MODAL ===== */}
+      {/* Payment Modal */}
       <PaymentGate
         open={showPaymentModal}
         onClose={() => setShowPaymentModal(false)}
         onSuccess={handlePaymentSuccess}
       />
 
-      {/* ===== SHARE MODAL ===== */}
+      {/* Share Modal */}
       {showShare && (
         <ShareResume
           resumeRef={resumeRef}

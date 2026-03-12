@@ -22,14 +22,12 @@ export default function TemplateLayout({
   return (
     <div className={wrapperClass}>
 
-      {/* Toolbar */}
       <TemplateControls
         resumeRef={resumeRef}
         templateId={templateId}
         onEditChange={handleEditChange}
       />
 
-      {/* Resume Container */}
       <div className={resumeClass} ref={resumeRef}>
 
         <Watermark show={!canEdit} />
