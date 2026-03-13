@@ -60,10 +60,6 @@ const handleDownloadPDF = async () => {
 
 };
 
-
-
-};
-
 return ( <div className={wrapperClass}>
 
 
