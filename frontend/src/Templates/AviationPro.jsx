@@ -459,7 +459,7 @@ Profile: ${profileLink}
       </div>
 
       {/* TABS */}
-      <div className="av-tabs">
+      <div className="av-tabs no-pdf">
         {roles.map((role) => (
           <button
             key={role}
