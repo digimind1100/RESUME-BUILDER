@@ -19,7 +19,7 @@ export default function AviationPro() {
   );
   const fileInputRef = useRef(null);
   const handleImageUpload = (e) => {
-    if (!canEdit) return; // 🔒 premium guard
+    if (!(canEdit && isEditable)) return; // 🔒 premium guard
 
     const file = e.target.files[0];
     if (!file) return;
@@ -76,7 +76,7 @@ Profile: ${profileLink}
   const [activeRole, setActiveRole] = useState("pilot");
 
     const triggerFileSelect = () => {
-    if (!canEdit) {
+    if (!(canEdit && isEditable)) {
       requirePayment(); // 🔥 open payment modal
       return;
     }
@@ -382,6 +382,7 @@ Profile: ${profileLink}
   >
 
     {({ canEdit, isEditable }) => (
+      
     <div className="av-wrapper">
     
 
@@ -392,20 +393,20 @@ Profile: ${profileLink}
             placeholder="Full Name"
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
-            disabled={!canEdit}
+            disabled={!(canEdit && isEditable)}
           />
 
           <input
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            disabled={!canEdit}
+            disabled={!(canEdit && isEditable)}
           />
           <input
             placeholder="Phone"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
-            disabled={!canEdit}
+            disabled={!(canEdit && isEditable)}
           />
         </div>
 
@@ -413,7 +414,7 @@ Profile: ${profileLink}
           placeholder="Address"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
-          disabled={!canEdit}
+          disabled={!(canEdit && isEditable)}
         />
 
         <div className="av-qr-row">
@@ -421,19 +422,19 @@ Profile: ${profileLink}
             placeholder="City"
             value={city}
             onChange={(e) => setCity(e.target.value)}
-            disabled={!canEdit}
+            disabled={!(canEdit && isEditable)}
           />
           <input
             placeholder="State"
             value={stateVal}
             onChange={(e) => setStateVal(e.target.value)}
-            disabled={!canEdit}
+            disabled={!(canEdit && isEditable)}
           />
           <input
             placeholder="ZIP"
             value={zip}
             onChange={(e) => setZip(e.target.value)}
-            disabled={!canEdit}
+            disabled={!(canEdit && isEditable)}
           />
         </div>
 
@@ -442,13 +443,13 @@ Profile: ${profileLink}
             placeholder="LinkedIn Profile URL"
             value={linkedin}
             onChange={(e) => setLinkedin(e.target.value)}
-            disabled={!canEdit}
+            disabled={!(canEdit && isEditable)}
           />
           <input
             placeholder="Portfolio / Profile Link"
             value={profileLink}
             onChange={(e) => setProfileLink(e.target.value)}
-            disabled={!canEdit}
+            disabled={!(canEdit && isEditable)}
           />
         </div>
 
@@ -482,9 +483,9 @@ Profile: ${profileLink}
             <div className="av-header-left">
               {/* PHOTO */}
               <div
-                className={`av-profile-wrapper ${!canEdit ? "locked" : ""}`}
+                className={`av-profile-wrapper ${!(canEdit && isEditable) ? "locked" : ""}`}
                 onClick={triggerFileSelect}
-                title={!canEdit ? "Unlock to change profile image" : "Click to change photo"}
+                title={!(canEdit && isEditable) ? "Unlock to change profile image" : "Click to change photo"}
               >
                 <img src={profileImage} alt="Profile" className="av-profile" />
                 <input
