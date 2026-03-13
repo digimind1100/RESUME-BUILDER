@@ -364,12 +364,15 @@ Profile: ${profileLink}
 
   return (
 
+  <TemplateLayout
+    templateId="TeacherElite"
+    wrapperClass="te-wrapper"
+    resumeClass="te-resume"
+  >
+
+    {({ canEdit, isEditable }) => (
     <div className="av-wrapper">
-      <TemplateLayout
-        templateId="TeacherElite"
-        wrapperClass="te-wrapper"
-        resumeClass="te-resume"
-      >
+    
 
       {/* QR FORM */}
       <div className="av-qr-form">
@@ -720,8 +723,11 @@ Profile: ${profileLink}
           </div>
         </div>
       </div>
-      </TemplateLayout>
+    
     </div>
     
+  )
+}
+</TemplateLayout>
   );
 }
