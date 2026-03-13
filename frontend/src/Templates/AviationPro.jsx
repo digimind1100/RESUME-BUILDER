@@ -12,7 +12,6 @@ export default function AviationPro() {
 
   const { user, setUser } = useAuth();
 
-  const canEdit = isPaid;
   
   // ---------- PROFILE IMAGE ----------
   const [profileImage, setProfileImage] = useState(
