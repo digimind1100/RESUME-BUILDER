@@ -537,3 +537,6 @@
 
   pointer-events: none;
 }
+.pdf-mode .no-pdf {
+  display: none !important;
+}

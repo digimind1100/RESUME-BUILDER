@@ -387,7 +387,7 @@ Profile: ${profileLink}
     
 
       {/* QR FORM */}
-      <div className="av-qr-form">
+      <div className="av-qr-form no-pdf">
         <div className="av-qr-row">
           <input
             placeholder="Full Name"

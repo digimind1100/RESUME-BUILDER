@@ -26,33 +26,39 @@ setCanEdit(paid);
 
 const handleDownloadPDF = async () => {
 
+  const element = resumeContainerRef.current;
+  if (!element) return;
 
-const element = resumeContainerRef.current;
-if (!element) return;
+  // enable pdf mode
+  element.classList.add("pdf-mode");
 
-// small delay to ensure layout is rendered
-await new Promise(resolve => setTimeout(resolve, 300));
+  await new Promise(resolve => setTimeout(resolve, 200));
 
-const canvas = await html2canvas(element, {
-  scale: 2,
-  useCORS: true,
-  backgroundColor: "#ffffff"
-});
+  const canvas = await html2canvas(element, {
+    scale: 2,
+    useCORS: true,
+    backgroundColor: "#ffffff"
+  });
 
-const imgData = canvas.toDataURL("image/png");
+  // remove pdf mode
+  element.classList.remove("pdf-mode");
 
-const pdf = new jsPDF("p", "mm", "a4");
+  const imgData = canvas.toDataURL("image/png");
 
-const pdfWidth = 210;
-const imgHeight = (canvas.height * pdfWidth) / canvas.width;
+  const pdf = new jsPDF("p", "mm", "a4");
 
-pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, imgHeight);
+  const pdfWidth = 210;
+  const imgHeight = (canvas.height * pdfWidth) / canvas.width;
 
-pdf.save(`${templateId}-resume.pdf`);
+  pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, imgHeight);
 
-setTimeout(() => {
-  triggerReview();
-}, 1500);
+  pdf.save(`${templateId}-resume.pdf`);
+
+  setTimeout(() => {
+    triggerReview();
+  }, 1500);
+
+};
 
 
 
