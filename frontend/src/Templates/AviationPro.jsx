@@ -19,7 +19,7 @@ export default function AviationPro() {
   );
   const fileInputRef = useRef(null);
   const handleImageUpload = (e) => {
-    if (!(canEdit && isEditable)) return; // 🔒 premium guard
+    if (!(canEdit && isEditable && isEditable)) return; // 🔒 premium guard
 
     const file = e.target.files[0];
     if (!file) return;
@@ -76,7 +76,7 @@ Profile: ${profileLink}
   const [activeRole, setActiveRole] = useState("pilot");
 
     const triggerFileSelect = () => {
-    if (!(canEdit && isEditable)) {
+    if (!(canEdit && isEditable && isEditable)) {
       requirePayment(); // 🔥 open payment modal
       return;
     }
@@ -381,7 +381,7 @@ Profile: ${profileLink}
     resumeClass="te-resume"
   >
 
-    {({ canEdit, isEditable }) => (
+    {({ canEdit && isEditable, isEditable }) => (
       
     <div className="av-wrapper">
     
@@ -393,20 +393,20 @@ Profile: ${profileLink}
             placeholder="Full Name"
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
-            disabled={!(canEdit && isEditable)}
+            disabled={!(canEdit && isEditable && isEditable)}
           />
 
           <input
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            disabled={!(canEdit && isEditable)}
+            disabled={!(canEdit && isEditable && isEditable)}
           />
           <input
             placeholder="Phone"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
-            disabled={!(canEdit && isEditable)}
+            disabled={!(canEdit && isEditable && isEditable)}
           />
         </div>
 
@@ -414,7 +414,7 @@ Profile: ${profileLink}
           placeholder="Address"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
-          disabled={!(canEdit && isEditable)}
+          disabled={!(canEdit && isEditable && isEditable)}
         />
 
         <div className="av-qr-row">
@@ -422,19 +422,19 @@ Profile: ${profileLink}
             placeholder="City"
             value={city}
             onChange={(e) => setCity(e.target.value)}
-            disabled={!(canEdit && isEditable)}
+            disabled={!(canEdit && isEditable && isEditable)}
           />
           <input
             placeholder="State"
             value={stateVal}
             onChange={(e) => setStateVal(e.target.value)}
-            disabled={!(canEdit && isEditable)}
+            disabled={!(canEdit && isEditable && isEditable)}
           />
           <input
             placeholder="ZIP"
             value={zip}
             onChange={(e) => setZip(e.target.value)}
-            disabled={!(canEdit && isEditable)}
+            disabled={!(canEdit && isEditable && isEditable)}
           />
         </div>
 
@@ -443,13 +443,13 @@ Profile: ${profileLink}
             placeholder="LinkedIn Profile URL"
             value={linkedin}
             onChange={(e) => setLinkedin(e.target.value)}
-            disabled={!(canEdit && isEditable)}
+            disabled={!(canEdit && isEditable && isEditable)}
           />
           <input
             placeholder="Portfolio / Profile Link"
             value={profileLink}
             onChange={(e) => setProfileLink(e.target.value)}
-            disabled={!(canEdit && isEditable)}
+            disabled={!(canEdit && isEditable && isEditable)}
           />
         </div>
 
@@ -483,9 +483,9 @@ Profile: ${profileLink}
             <div className="av-header-left">
               {/* PHOTO */}
               <div
-                className={`av-profile-wrapper ${!(canEdit && isEditable) ? "locked" : ""}`}
+                className={`av-profile-wrapper ${!(canEdit && isEditable && isEditable) ? "locked" : ""}`}
                 onClick={triggerFileSelect}
-                title={!(canEdit && isEditable) ? "Unlock to change profile image" : "Click to change photo"}
+                title={!(canEdit && isEditable && isEditable) ? "Unlock to change profile image" : "Click to change photo"}
               >
                 <img src={profileImage} alt="Profile" className="av-profile" />
                 <input
@@ -502,7 +502,7 @@ Profile: ${profileLink}
               <div className="av-header-text">
                 <h1
                   className="av-name"
-                  contentEditable={canEdit}
+                  contentEditable={canEdit && isEditable}
                   suppressContentEditableWarning
                 >
                   ALEXANDER MORGAN
@@ -510,7 +510,7 @@ Profile: ${profileLink}
 
                 <p
                   className="av-role"
-                  contentEditable={canEdit}
+                  contentEditable={canEdit && isEditable}
                   suppressContentEditableWarning
                 >
                   {activeData.title.toUpperCase()}
@@ -524,7 +524,7 @@ Profile: ${profileLink}
                 <img src={qrImage} alt="QR Code" className="av-qr-img" />
                 <p
                   className="av-qr-text"
-                  contentEditable={canEdit}
+                  contentEditable={canEdit && isEditable}
                   suppressContentEditableWarning
                 >
                   Scan for licenses, flight log &amp; full profile
@@ -543,7 +543,7 @@ Profile: ${profileLink}
               <section className="av-section">
                 <h2
                   className="av-section-title"
-                  contentEditable={canEdit}
+                  contentEditable={canEdit && isEditable}
                   suppressContentEditableWarning
                 >
                   PROFESSIONAL SUMMARY
@@ -551,7 +551,7 @@ Profile: ${profileLink}
 
                 <p
                   className="av-section-text"
-                  contentEditable={canEdit}
+                  contentEditable={canEdit && isEditable}
                   suppressContentEditableWarning
                 >
                   {activeData.summary}
@@ -562,7 +562,7 @@ Profile: ${profileLink}
               <section className="av-section">
                 <h2
                   className="av-section-title"
-                  contentEditable={canEdit}
+                  contentEditable={canEdit && isEditable}
                   suppressContentEditableWarning
                 >
                   EXPERIENCE
@@ -574,14 +574,14 @@ Profile: ${profileLink}
                       <div>
                         <p
                           className="av-job-title"
-                          contentEditable={canEdit}
+                          contentEditable={canEdit && isEditable}
                           suppressContentEditableWarning
                         >
                           {exp.title}
                         </p>
                         <p
                           className="av-job-company"
-                          contentEditable={canEdit}
+                          contentEditable={canEdit && isEditable}
                           suppressContentEditableWarning
                         >
                           {exp.company}
@@ -590,7 +590,7 @@ Profile: ${profileLink}
 
                       <p
                         className="av-job-dates"
-                        contentEditable={canEdit}
+                        contentEditable={canEdit && isEditable}
                         suppressContentEditableWarning
                       >
                         {exp.dates}
@@ -601,7 +601,7 @@ Profile: ${profileLink}
                       {exp.bullets.map((item, bIndex) => (
                         <li
                           key={bIndex}
-                          contentEditable={canEdit}
+                          contentEditable={canEdit && isEditable}
                           suppressContentEditableWarning
                         >
                           {item}
@@ -619,7 +619,7 @@ Profile: ${profileLink}
               <section className="av-section av-section-last">
                 <h2
                   className="av-section-title"
-                  contentEditable={canEdit}
+                  contentEditable={canEdit && isEditable}
                   suppressContentEditableWarning
                 >
                   KEY HIGHLIGHTS
@@ -629,7 +629,7 @@ Profile: ${profileLink}
                   {activeData.highlights.map((item, idx) => (
                     <li
                       key={idx}
-                      contentEditable={canEdit}
+                      contentEditable={canEdit && isEditable}
                       suppressContentEditableWarning
                     >
                       {item}
@@ -646,16 +646,16 @@ Profile: ${profileLink}
               <section className="av-side-section">
                 <h3 className="av-side-heading">CONTACT</h3>
                 <ul className="av-side-list">
-                  <li contentEditable={canEdit} suppressContentEditableWarning>
+                  <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
                     ✉️ alex.morgan@mail.com
                   </li>
-                  <li contentEditable={canEdit} suppressContentEditableWarning>
+                  <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
                     📞 +1 (555) 214-8790
                   </li>
-                  <li contentEditable={canEdit} suppressContentEditableWarning>
+                  <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
                     📍 New York, USA
                   </li>
-                  <li contentEditable={canEdit} suppressContentEditableWarning>
+                  <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
                     🌐 linkedin.com/in/alexmorgan
                   </li>
                 </ul>
@@ -668,7 +668,7 @@ Profile: ${profileLink}
                   <img src={qrImage} alt="QR" className="av-side-qr-img" />
                   <p
                     className="av-side-qr-text"
-                    contentEditable={canEdit}
+                    contentEditable={canEdit && isEditable}
                     suppressContentEditableWarning
                   >
                     QR code links to updated digital profile, licenses, and
@@ -681,19 +681,19 @@ Profile: ${profileLink}
               <section className="av-side-section">
                 <h3 className="av-side-heading">CORE SKILLS</h3>
                 <ul className="av-side-list">
-                  <li contentEditable={canEdit} suppressContentEditableWarning>
+                  <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
                     Safety &amp; Compliance
                   </li>
-                  <li contentEditable={canEdit} suppressContentEditableWarning>
+                  <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
                     Crew Resource Management
                   </li>
-                  <li contentEditable={canEdit} suppressContentEditableWarning>
+                  <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
                     Emergency Procedures
                   </li>
-                  <li contentEditable={canEdit} suppressContentEditableWarning>
+                  <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
                     Communication &amp; Briefing
                   </li>
-                  <li contentEditable={canEdit} suppressContentEditableWarning>
+                  <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
                     Passenger &amp; Client Service
                   </li>
                 </ul>
@@ -703,13 +703,13 @@ Profile: ${profileLink}
               <section className="av-side-section">
                 <h3 className="av-side-heading">LICENSES &amp; CERTS</h3>
                 <ul className="av-side-list">
-                  <li contentEditable={canEdit} suppressContentEditableWarning>
+                  <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
                     Valid Passport &amp; Travel Documents
                   </li>
-                  <li contentEditable={canEdit} suppressContentEditableWarning>
+                  <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
                     Medical Certificate – Class 1 / 2
                   </li>
-                  <li contentEditable={canEdit} suppressContentEditableWarning>
+                  <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
                     Recurrent Safety &amp; Emergency Training
                   </li>
                 </ul>
@@ -719,13 +719,13 @@ Profile: ${profileLink}
               <section className="av-side-section">
                 <h3 className="av-side-heading">LANGUAGES</h3>
                 <ul className="av-side-list">
-                  <li contentEditable={canEdit} suppressContentEditableWarning>
+                  <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
                     English — Native / Fluent
                   </li>
-                  <li contentEditable={canEdit} suppressContentEditableWarning>
+                  <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
                     Spanish — Conversational
                   </li>
-                  <li contentEditable={canEdit} suppressContentEditableWarning>
+                  <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
                     French — Basic
                   </li>
                 </ul>
