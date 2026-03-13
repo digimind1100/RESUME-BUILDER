@@ -1,16 +1,10 @@
 // src/Templates/AviationPro.jsx
 import React, { useRef, useState } from "react";
+import TemplateLayout from "./TemplateLayout";
 import "./AviationPro.css";
 import { useNavigate } from "react-router-dom";
-import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
 import QRCode from "qrcode";
-
-import usePaymentGuard from "../hooks/usePaymentGuard";
-import PaymentGate from "../components/payment/PaymentGate";
 import { useAuth } from "../context/AuthContext";
-import Watermark from "../components/Watermark";
-
 
 export default function AviationPro() {
   const resumeRef = useRef(null);
@@ -18,18 +12,8 @@ export default function AviationPro() {
 
   const { user, setUser } = useAuth();
 
-  const {
-    isPaid,
-    showPaymentModal,
-    setShowPaymentModal,
-    requirePayment,
-    handlePaymentSuccess,
-  } = usePaymentGuard("AviationPro"); // 🔴 TEMPLATE NAME
-
   const canEdit = isPaid;
-  // ---------- EDIT MODE ----------
-
-
+  
   // ---------- PROFILE IMAGE ----------
   const [profileImage, setProfileImage] = useState(
     "/images/cleanprofileimage.png"
@@ -43,15 +27,6 @@ export default function AviationPro() {
 
     setProfileImage(URL.createObjectURL(file));
   };
-  const triggerFileSelect = () => {
-    if (!canEdit) {
-      requirePayment(); // 🔥 open payment modal
-      return;
-    }
-
-    if (fileInputRef.current) fileInputRef.current.click();
-  };
-
 
   // ---------- QR FORM STATE ----------
   const [fullName, setFullName] = useState("");
@@ -387,43 +362,15 @@ Profile: ${profileLink}
     });
   };
 
-  // ---------- PDF DOWNLOAD ----------
-  const handleDownloadPDF = async () => {
-    const element = resumeRef.current;
-    if (!element) return;
-
-    const canvas = await html2canvas(element, { scale: 2, useCORS: true });
-    const imgData = canvas.toDataURL("image/png");
-
-    const pdf = new jsPDF("p", "mm", "a4");
-    const pdfWidth = 210;
-    const imgHeight = (canvas.height * pdfWidth) / canvas.width;
-
-    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, imgHeight);
-    pdf.save("aviation-pro-resume.pdf");
-  };
-
-  const handleReset = () => window.location.reload();
 
   return (
-    <div className="av-wrapper">
-      {/* TOP BUTTONS */}
-      <div className="av-buttons">
-        <button onClick={handleDownloadPDF}>Download PDF</button>
-        <button onClick={() => navigate("/templates")}>Back to Templates</button>
-        <button onClick={handleReset}>Reset</button>
 
-        {/* EDIT TOGGLE */}
-        <button
-          className={canEdit ? "edit-btn on" : "edit-btn off"}
-          onClick={() => {
-            if (!requirePayment()) return;
-          }}
-        >
-          {canEdit ? "Editing: ON" : "Editing: OFF"}
-           {!canEdit && <span className="edit-crown">👑</span>}
-        </button>
-      </div>
+    <div className="av-wrapper">
+      <TemplateLayout
+        templateId="TeacherElite"
+        wrapperClass="te-wrapper"
+        resumeClass="te-resume"
+      >
 
       {/* QR FORM */}
       <div className="av-qr-form">
@@ -513,7 +460,7 @@ Profile: ${profileLink}
 
       {/* A4 PAGE */}
       <div className="av-a4" ref={resumeRef} style={{ position: "relative" }}>
-        <Watermark show={!canEdit} />
+      
         <div className="av-resume">
 
           {/* HEADER */}
@@ -651,7 +598,7 @@ Profile: ${profileLink}
                   </div>
                 ))}
 
-            
+
               </section>
 
               {/* HIGHLIGHTS */}
@@ -770,14 +717,12 @@ Profile: ${profileLink}
                 </ul>
               </section>
             </aside>
-            <PaymentGate
-              open={showPaymentModal}
-              onClose={() => setShowPaymentModal(false)}
-              onSuccess={handlePaymentSuccess}
-            />
+         
           </div>
         </div>
       </div>
+      </TemplateLayout>
     </div>
+    
   );
 }
