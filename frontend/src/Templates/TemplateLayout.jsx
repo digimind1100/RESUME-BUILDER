@@ -47,10 +47,13 @@ const handleDownloadPDF = async () => {
 
   const pdf = new jsPDF("p", "mm", "a4");
 
-  const pdfWidth = 210;
-  const imgHeight = (canvas.height * pdfWidth) / canvas.width;
+  const pdfWidth = 210; // A4 width in mm
+const pdfHeight = 297; // A4 height in mm
 
-  pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, imgHeight);
+const imgWidth = pdfWidth;
+const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
 
   pdf.save(`${templateId}-resume.pdf`);
 
