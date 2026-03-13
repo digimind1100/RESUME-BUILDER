@@ -75,6 +75,17 @@ Profile: ${profileLink}
 
   const [activeRole, setActiveRole] = useState("pilot");
 
+    const triggerFileSelect = () => {
+    if (!canEdit) {
+      requirePayment(); // 🔥 open payment modal
+      return;
+    }
+
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
   // ---------- STATIC ROLE DATA (BASE) ----------
   const roleData = {
     pilot: {
