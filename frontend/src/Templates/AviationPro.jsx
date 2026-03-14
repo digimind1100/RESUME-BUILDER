@@ -377,8 +377,8 @@ Profile: ${profileLink}
 
   <TemplateLayout
     templateId="TeacherElite"
-    wrapperClass="te-wrapper"
-    resumeClass="te-resume"
+    wrapperClass="av-wrapper"
+    resumeClass="av-resume"
   >
 
     {({ canEdit, isEditable }) => (
