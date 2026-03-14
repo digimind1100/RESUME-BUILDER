@@ -376,7 +376,7 @@ Profile: ${profileLink}
   return (
 
   <TemplateLayout
-    templateId="TeacherElite"
+    templateId="AviationPro"
     wrapperClass="av-wrapper"
     resumeClass="av-resume"
   >
