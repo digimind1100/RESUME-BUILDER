@@ -537,7 +537,9 @@
 
   pointer-events: none;
 }
-
+.pdf-mode .no-pdf {
+  display: none !important;
+}
 .rb-resume,
 .te-resume,
 .av-resume {
