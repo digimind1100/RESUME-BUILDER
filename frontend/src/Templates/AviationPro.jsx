@@ -67,6 +67,11 @@ Profile: ${profileLink}
   };
 
 const triggerFileSelect = () => {
+  if (!canEdit) {
+    requirePayment();
+    return;
+  }
+
   if (fileInputRef.current) {
     fileInputRef.current.click();
   }
