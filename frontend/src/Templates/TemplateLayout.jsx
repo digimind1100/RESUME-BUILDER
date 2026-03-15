@@ -18,6 +18,7 @@ const { triggerReview } = useReview();
 
 const [isEditable, setIsEditable] = useState(false);
 const [canEdit, setCanEdit] = useState(false);
+const [requirePaymentFn, setRequirePaymentFn] = useState(null);
 
 const handleEditChange = (editable, paid) => {
 setIsEditable(editable);
@@ -70,6 +71,7 @@ return ( <div className={wrapperClass}>
     resumeRef={resumeContainerRef}
     templateId={templateId}
     onEditChange={handleEditChange}
+    onRequirePayment={setRequirePaymentFn}
     onDownload={handleDownloadPDF}
   />
 
@@ -78,8 +80,12 @@ return ( <div className={wrapperClass}>
     <Watermark show={!canEdit} />
 
     {typeof children === "function"
-      ? children({ canEdit, isEditable })
-      : children}
+  ? children({
+      canEdit,
+      isEditable,
+      requirePayment: requirePaymentFn
+    })
+  : children}
 
   </div>
 

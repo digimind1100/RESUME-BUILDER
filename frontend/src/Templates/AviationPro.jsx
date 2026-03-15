@@ -66,16 +66,11 @@ Profile: ${profileLink}
     operations: "Airport Operations",
   };
 
-const triggerFileSelect = () => {
-  if (!canEdit) {
-    requirePayment();
-    return;
-  }
-
-  if (fileInputRef.current) {
-    fileInputRef.current.click();
-  }
-};
+  const triggerFileSelect = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
 
   // ---------- STATIC ROLE DATA (BASE) ----------
   const roleData = {
@@ -372,7 +367,7 @@ const triggerFileSelect = () => {
       resumeClass="av-resume"
     >
 
-      {({ canEdit, isEditable }) => (
+      {({ canEdit, isEditable, requirePayment }) => (
 
         <div className="av-wrapper">
 
@@ -476,8 +471,16 @@ const triggerFileSelect = () => {
                   <div
                     className={`av-profile-wrapper ${!canEdit ? "locked" : ""}`}
                     onClick={() => {
-                      if (!canEdit || !isEditable) return;
+
+                      if (!canEdit) {
+                        requirePayment();   // 🔓 open payment modal
+                        return;
+                      }
+
+                      if (!isEditable) return;
+
                       triggerFileSelect();
+
                     }}
 
                     title={!canEdit ? "Unlock to change profile image" : "Click to change photo"}
