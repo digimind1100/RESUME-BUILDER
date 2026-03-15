@@ -65,8 +65,12 @@ Profile: ${profileLink}
     engineer: "Aeronautical Engineer",
     operations: "Airport Operations",
   };
+ const triggerFileSelect = () => {
+    if (!canEdit) {
+      requirePayment(); // 🔥 open payment modal
+      return;
+    }
 
-  const triggerFileSelect = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
     }
