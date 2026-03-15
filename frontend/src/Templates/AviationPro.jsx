@@ -83,7 +83,7 @@ Profile: ${profileLink}
     if (fileInputRef.current) {
       fileInputRef.current.click();
     }
-  };
+  
 };
 
 // ---------- STATIC ROLE DATA (BASE) ----------
