@@ -116,7 +116,6 @@ const MinimalAccent = () => {
 
           {/* LEFT BLUE SIDEBAR */}
           <aside className="ma-sidebar">
-            {/* Profile Photo */}
               {/* Profile Photo */}
             <div
               className={`ma-photo-wrapper ${!canEdit ? "locked" : ""}`}

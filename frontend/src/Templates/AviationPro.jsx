@@ -484,7 +484,10 @@ Profile: ${profileLink}
               {/* PHOTO */}
               <div
                 className={`av-profile-wrapper ${!(canEdit && isEditable) ? "locked" : ""}`}
-                onClick={triggerFileSelect}
+                 onClick={() => {
+                if (!requirePayment()) return;
+                triggerFileSelect();
+              }}
                 title={!(canEdit && isEditable) ? "Unlock to change profile image" : "Click to change photo"}
               >
                 <img src={profileImage} alt="Profile" className="av-profile" />
