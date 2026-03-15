@@ -483,7 +483,7 @@ Profile: ${profileLink}
             <div className="av-header-left">
               {/* PHOTO */}
               <div
-                className={`av-profile-wrapper ${!canEdit ? "locked" : ""}`}
+                className={`av-profile-wrapper ${!(canEdit && isEditable) ? "locked" : ""}`}
                 onClick={triggerFileSelect}
                 title={!(canEdit && isEditable) ? "Unlock to change profile image" : "Click to change photo"}
               >
