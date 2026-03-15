@@ -13,6 +13,7 @@ export default function TemplateControls({
   resumeRef,
   templateId,
   onEditChange,
+  onRequirePayment,
   onDownload
 }) {
 
@@ -66,6 +67,12 @@ export default function TemplateControls({
     setIsEditable(prev => !prev);
 
   };
+
+  useEffect(() => {
+  if (onRequirePayment) {
+    onRequirePayment(() => requirePayment);
+  }
+}, [requirePayment]);
 
   return (
     <>
