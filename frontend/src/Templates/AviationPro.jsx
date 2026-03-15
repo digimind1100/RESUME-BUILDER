@@ -76,10 +76,10 @@ Profile: ${profileLink}
   const [activeRole, setActiveRole] = useState("pilot");
 
     const triggerFileSelect = () => {
-    if (!(canEdit && isEditable)) {
-      requirePayment(); // 🔥 open payment modal
-      return;
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
     }
+  };
 
     if (fileInputRef.current) {
       fileInputRef.current.click();
