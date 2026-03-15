@@ -488,7 +488,11 @@ Profile: ${profileLink}
                 if (!requirePayment()) return;
                 triggerFileSelect();
               }}
-                title={!(canEdit && isEditable) ? "Unlock to change profile image" : "Click to change photo"}
+                title={
+                canEdit
+                  ? "Click to change photo"
+                  : "Unlock to change photo"
+              }
               >
                 <img src={profileImage} alt="Profile" className="av-profile" />
                 <input
