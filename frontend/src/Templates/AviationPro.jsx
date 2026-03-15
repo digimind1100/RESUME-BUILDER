@@ -459,7 +459,7 @@ const triggerFileSelect = () => {
           </div>
 
           {/* A4 PAGE */}
-          <div className="av-a4" ref={resumeRef} style={{ position: "relative" }}>
+          <div className="av-a4" style={{ position: "relative" }}>
 
             <div className="av-resume">
 
