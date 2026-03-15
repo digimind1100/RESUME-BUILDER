@@ -74,17 +74,16 @@ Profile: ${profileLink}
     operations: "Airport Operations",
   };
 
-  const [activeRole, setActiveRole] = useState("pilot");
+    const triggerFileSelect = () => {
+    if (!canEdit) {
+      requirePayment(); // 🔥 open payment modal
+      return;
+    }
 
-  const triggerFileSelect = () => {
-    if
-      (requirePayment()); // 🔥 open payment modal
-    return;
-  }
-
-  if (fileInputRef.current) {
-    fileInputRef.current.click();
-  }
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
 };
 
 // ---------- STATIC ROLE DATA (BASE) ----------
