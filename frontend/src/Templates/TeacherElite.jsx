@@ -66,22 +66,6 @@ export default function TeacherElite() {
   });
 };
 
-
-  // after PDF download
-
-  const {
-    isPaid,
-    showPaymentModal,
-    setShowPaymentModal,
-    requirePayment,
-    handlePaymentSuccess,
-  } = usePaymentGuard("TeacherElite");
-
-  const canEdit = isPaid;
-
-
-  console.log("isPaid:", isPaid);
-
   useEffect(() => {
     if (!canEdit) {
       const editableEls = document.querySelectorAll("[contenteditable]");
@@ -299,41 +283,40 @@ Subject: ${qrForm.subject}
 
               <div className="te-header-right">
                 <div className="te-header-wave" />
+             <div className={`te-header-photo-wrap ${!canEdit ? "locked" : ""}`}
+                    onClick={() => {
 
-                <div
-                  className={`te-header-photo-wrap ${!canEdit ? "locked" : ""}`}
-                  contentEditable={false}
-                  onMouseDown={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
+                      // free user → open payment modal
+                      if (!canEdit) {
+                        if (requirePayment) requirePayment();
+                        return;
+                      }
 
-                    if (!isPaid) {
-                      setShowPaymentModal(true);
-                      return;
-                    }
-                    triggerFileSelect();
-                  }}
-                >
-                  <div className="te-header-photo-bg" />
-                  <div className="te-header-photo-circle">
-                    <img src={profileImage} alt="Profile" />
+                      // paid but editing OFF
+                      if (!isEditable) return;
+
+                      // paid + editing ON
+                      if (fileInputRef.current) {
+                        fileInputRef.current.click();
+                      }
+
+                    }}
+
+                    title={!canEdit ? "Unlock to change profile image" : "Click to change photo"}
+                  >
+
+                    <img src={profileImage} alt="Profile" className="av-profile" />
+
+                    <input
+                      type="file"
+                      accept="image/*"
+                      ref={fileInputRef}
+                      style={{ display: "none" }}
+                      onChange={handleImageUpload}
+                    />
+
                   </div>
-                </div>
 
-                <input
-                  type="file"
-                  accept="image/*"
-                  ref={fileInputRef}
-                  style={{ display: "none" }}
-                  onChange={handleImageUpload}
-                  onClick={(e) => {
-                    if (!isPaid) {
-                      e.preventDefault();
-                      setShowPaymentModal(true);
-                    }
-                  }}
-
-                />
               </div>
             </div>
           </header>
