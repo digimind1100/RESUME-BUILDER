@@ -66,7 +66,20 @@ export default function TeacherElite() {
   });
 };
 
+
+  // after PDF download
+
+  const {
+    isPaid,
+    showPaymentModal,
+    setShowPaymentModal,
+    requirePayment,
+    handlePaymentSuccess,
+  } = usePaymentGuard("TeacherElite");
+
   const canEdit = isPaid;
+
+
   console.log("isPaid:", isPaid);
 
   useEffect(() => {
