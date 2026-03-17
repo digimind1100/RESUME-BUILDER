@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaShareAlt } from "react-icons/fa";
-
 import { useReview } from "../context/ReviewContext";
 import { downloadResumeAndTriggerReview } from "../components/DownloadPDF";
-
 import usePaymentGuard from "../hooks/usePaymentGuard";
 import PaymentGate from "../components/payment/PaymentGate";
-import ShareResume from "../components/ShareResume";
+import "./TemplateControls.css";
+
 
 export default function TemplateControls({
   resumeRef,
