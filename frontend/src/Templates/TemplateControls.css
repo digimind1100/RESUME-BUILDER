@@ -1,12 +1,18 @@
 .te-buttons{
-  position: sticky;
-  top: 70px;       /* height of navbar */
-  z-index: 2000;
-  background:#fff;
-  display:flex;
-  justify-content:center;
-  gap:10px;
-  padding:10px;
-  box-shadow:0 2px 8px rgba(0,0,0,0.08);
-border-bottom:1px solid #e5e7eb;
+position:fixed;
+top:70px; /* navbar height */
+left:0;
+width:100%;
+
+display:flex;
+justify-content:center;
+align-items:center;
+gap:12px;
+
+padding:12px 20px;
+
+background:#ffffff;
+border-bottom:1px solid #e5e5e5;
+
+z-index:2000; /* lower than navbar (3000) */
 }
