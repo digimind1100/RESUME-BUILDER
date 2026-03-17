@@ -372,7 +372,7 @@ Profile: ${profileLink}
       resumeClass="av-resume"
     >
 
-      {({ canEdit, isEditable, requirePayment }) => (
+      {({ canEdit, isEditable, pdfRef, requirePayment }) => (
 
         <div className="av-wrapper">
 
@@ -464,7 +464,7 @@ Profile: ${profileLink}
           </div>
 
           {/* A4 PAGE */}
-          <div className="av-a4" style={{ position: "relative" }}>
+          <div className="av-a4" ref={pdfRef} style={{ position: "relative" }}>
 
             <div className="av-resume" contentEditable={false}>
 

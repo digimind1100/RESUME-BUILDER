@@ -13,6 +13,7 @@ export default function TemplateLayout({
 }) {
 
   const resumeRef = useRef(null);
+  const pdfRef = useRef(null);
 
   const [isEditable, setIsEditable] = useState(false);
   const [canEdit, setCanEdit] = useState(false);
@@ -24,7 +25,7 @@ export default function TemplateLayout({
 
   const handleDownloadPDF = async () => {
 
-    const element = resumeRef.current;
+    const element = pdfRef.current;
     if (!element) return;
 
     await new Promise(r => setTimeout(r, 300));
@@ -75,7 +76,7 @@ export default function TemplateLayout({
         <Watermark show={!canEdit} />
 
         {typeof children === "function"
-          ? children({ canEdit, isEditable })
+          ? children({ canEdit, isEditable, pdfRef })
           : children}
 
       </div>
