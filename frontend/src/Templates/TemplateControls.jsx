@@ -78,17 +78,7 @@ export default function TemplateControls({
     <>
       <div className="te-buttons" contentEditable={false}>
 
-        <button
-          className="te-share-btn"
-          onClick={(e) => {
-            e.stopPropagation();
-            setShowShare(true);
-          }}
-        >
-          <FaShareAlt />
-          <span>Share</span>
-        </button>
-
+       
         <button className="download-btn" onClick={onDownload}>
           Download PDF
         </button>

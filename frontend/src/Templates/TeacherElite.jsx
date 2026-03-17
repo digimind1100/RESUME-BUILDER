@@ -10,10 +10,9 @@ import { useAuth } from "../context/AuthContext";
 import usePaymentGuard from "../hooks/usePaymentGuard";
 import PaymentGate from "../components/payment/PaymentGate";
 import Watermark from "../components/Watermark";
-import ShareResume from "../components/ShareResume";
 import { useReview } from "../context/ReviewContext";
 import { downloadResumeAndTriggerReview } from "../components/DownloadPDF";
-import { FaShareAlt } from "react-icons/fa";
+
 
 const TABS = [
   "Kindergarten",
@@ -55,7 +54,7 @@ export default function TeacherElite() {
 
 
   const [isEditable, setIsEditable] = useState(false);
-  const [showShare, setShowShare] = useState(false);
+
 
   const resumeId = "teacher-elite"; // or user-based later
   const resumePdfUrl = `${window.location.origin}/resumes/${resumeId}.pdf`;
@@ -624,13 +623,6 @@ const handleDownloadPDF = async () => {
           onClose={() => setShowPaymentModal(false)}
           onSuccess={handlePaymentSuccess}
         />
-
-        {showShare && (
-          <ShareResume
-            resumeRef={resumeRef}
-            onClose={() => setShowShare(false)}
-          />
-        )}
 
       </div>
     </div>
