@@ -39,7 +39,7 @@ export default function RoyalBlueDesigner() {
 
         return (
           <>
-            <div class="rb-resume" >
+            <div className="rb-resume" contentEditable={false}>
               {/* ===== HEADER ===== */}
               <header className="rb-header">
 

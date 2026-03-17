@@ -465,7 +465,7 @@ Profile: ${profileLink}
           {/* A4 PAGE */}
           <div className="av-a4" style={{ position: "relative" }}>
 
-            <div className="av-resume">
+            <div className="av-resume" contentEditable={false}>
 
               {/* HEADER */}
               <header className="av-header">
