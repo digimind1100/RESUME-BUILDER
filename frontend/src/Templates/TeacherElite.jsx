@@ -15,8 +15,6 @@ import { FaShareAlt } from "react-icons/fa";
 import { useReview } from "../context/ReviewContext";
 import { downloadResumeAndTriggerReview } from "../components/DownloadPDF";
 import { FaShareAlt } from "react-icons/fa";
-import ShareResume from "../components/ShareResume";
-
 
 const TABS = [
   "Kindergarten",
