@@ -153,7 +153,7 @@ Subject: ${qrForm.subject}
       resumeClass="te-resume"
     >
 
-      {({ canEdit, isEditable, pdfRef, requirePayment }) => (
+      {({ canEdit, isEditable, pdfRef }) => (
         <div className="resume-page-wrapper">
 
           {/* QR FORM */}
