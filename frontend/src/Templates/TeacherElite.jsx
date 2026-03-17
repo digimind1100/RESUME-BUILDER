@@ -49,7 +49,8 @@ export default function TeacherElite() {
 
 
   const [isEditable, setIsEditable] = useState(false);
-
+const [activeTab, setActiveTab] = useState("High School");
+const currentTitle = TAB_TITLE_MAP[activeTab];
 
   const resumeId = "teacher-elite"; // or user-based later
   const resumePdfUrl = `${window.location.origin}/resumes/${resumeId}.pdf`;
@@ -68,15 +69,6 @@ export default function TeacherElite() {
   // after PDF download
 
   useEffect(() => {
-    if (!canEdit) {
-      const editableEls = document.querySelectorAll("[contenteditable]");
-      editableEls.forEach(el => {
-        el.setAttribute("contenteditable", "false");
-      });
-    }
-  }, [canEdit]);
-
-  useEffect(() => {
     if (!showMobileEditMsg) return;
 
     const t = setTimeout(() => {
@@ -93,15 +85,13 @@ export default function TeacherElite() {
   );
   const fileInputRef = useRef(null);
 
-  const handleImageUpload = (event) => {
-    if (!canEdit) return;
+const handleImageUpload = (event) => {
+  const file = event.target.files[0];
+  if (!file) return;
 
-    const file = event.target.files[0];
-    if (!file) return;
-
-    const imageUrl = URL.createObjectURL(file);
-    setProfileImage(imageUrl);
-  };
+  const imageUrl = URL.createObjectURL(file);
+  setProfileImage(imageUrl);
+};
 
   const triggerFileSelect = () => {
     if (fileInputRef.current) {
@@ -142,9 +132,6 @@ Subject: ${qrForm.subject}
     const dataUrl = await QRCode.toDataURL(text);
     setQrImage(dataUrl);
   };
-
-
-
 
   return (
     <TemplateLayout
