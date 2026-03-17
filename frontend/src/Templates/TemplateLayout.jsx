@@ -4,92 +4,83 @@ import jsPDF from "jspdf";
 
 import TemplateControls from "./TemplateControls";
 import Watermark from "../components/Watermark";
-import { useReview } from "../context/ReviewContext";
 
 export default function TemplateLayout({
-children,
-templateId,
-wrapperClass = "template-wrapper",
-resumeClass = "template-resume"
+  children,
+  templateId,
+  wrapperClass = "template-wrapper",
+  resumeClass = "template-resume"
 }) {
 
-const resumeContainerRef = useRef(null);
-const { triggerReview } = useReview();
+  const resumeRef = useRef(null);
 
-const [isEditable, setIsEditable] = useState(false);
-const [canEdit, setCanEdit] = useState(false);
-const [requirePaymentFn, setRequirePaymentFn] = useState(null);
+  const [isEditable, setIsEditable] = useState(false);
+  const [canEdit, setCanEdit] = useState(false);
 
-const handleEditChange = (editable, paid) => {
-setIsEditable(editable);
-setCanEdit(paid);
-};
+  const handleEditChange = (editable, paid) => {
+    setIsEditable(editable);
+    setCanEdit(paid);
+  };
 
-const handleDownloadPDF = async () => {
+  const handleDownloadPDF = async () => {
 
-  const element = resumeContainerRef.current;
-  if (!element) return;
+    const element = resumeRef.current;
+    if (!element) return;
 
-  // enable pdf mode
-  element.classList.add("pdf-mode");
+    await new Promise(r => setTimeout(r, 300));
 
-  await new Promise(resolve => setTimeout(resolve, 200));
+    const canvas = await html2canvas(element, {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: "#ffffff"
+    });
 
-  const canvas = await html2canvas(element, {
-    scale: 2,
-    useCORS: true,
-    backgroundColor: "#ffffff"
-  });
+    const imgData = canvas.toDataURL("image/png");
 
-  // remove pdf mode
-  element.classList.remove("pdf-mode");
+    const pdf = new jsPDF("p", "mm", "a4");
 
-  const imgData = canvas.toDataURL("image/png");
+    const pdfWidth = 210;
+    const imgHeight = (canvas.height * pdfWidth) / canvas.width;
 
-  const pdf = new jsPDF("p", "mm", "a4");
+    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, imgHeight);
 
-  const pdfWidth = 210; // A4 width in mm
-const pdfHeight = 297; // A4 height in mm
+    pdf.save(`${templateId}-resume.pdf`);
+  };
 
-const imgWidth = pdfWidth;
-const imgHeight = (canvas.height * imgWidth) / canvas.width;
+  return (
 
-pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+    <div className={wrapperClass}>
 
-  pdf.save(`${templateId}-resume.pdf`);
+      {/* TOOLBAR */}
+      <div style={{ position: "relative", zIndex: 2000 }}>
+        <TemplateControls
+          resumeRef={resumeRef}
+          templateId={templateId}
+          onEditChange={handleEditChange}
+          onDownload={handleDownloadPDF}
+        />
+      </div>
 
-  setTimeout(() => {
-    triggerReview();
-  }, 1500);
+      {/* RESUME CONTAINER */}
+      <div
+        className={resumeClass}
+        ref={resumeRef}
+        contentEditable={false}
+        style={{
+          position: "relative",
+          zIndex: 1
+        }}
+      >
 
-};
+        <Watermark show={!canEdit} />
 
-return ( <div className={wrapperClass}>
+        {typeof children === "function"
+          ? children({ canEdit, isEditable })
+          : children}
 
+      </div>
 
-  <TemplateControls
-    resumeRef={resumeContainerRef}
-    templateId={templateId}
-    onEditChange={handleEditChange}
-    onRequirePayment={setRequirePaymentFn}
-    onDownload={handleDownloadPDF}
-  />
+    </div>
 
-  <div className={resumeClass} ref={resumeContainerRef}>
-
-    <Watermark show={!canEdit} />
-
-    {typeof children === "function"
-  ? children({
-      canEdit,
-      isEditable,
-      requirePayment: requirePaymentFn
-    })
-  : children}
-
-  </div>
-
-</div>
-
-);
+  );
 }
