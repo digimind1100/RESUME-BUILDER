@@ -66,6 +66,9 @@ export default function TeacherElite() {
   });
 };
 
+  const canEdit = isPaid;
+  console.log("isPaid:", isPaid);
+
   useEffect(() => {
     if (!canEdit) {
       const editableEls = document.querySelectorAll("[contenteditable]");
