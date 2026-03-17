@@ -1,6 +1,7 @@
 // src/Templates/AviationPro.jsx
 import React, { useRef, useState } from "react";
 import TemplateLayout from "./TemplateLayout";
+import { useNavigate } from "react-router-dom";
 import "./AviationPro.css";
 import QRCode from "qrcode";
 
@@ -18,7 +19,7 @@ export default function AviationPro() {
     const imageUrl = URL.createObjectURL(file);
     setProfileImage(imageUrl);
   };
-
+const navigate = useNavigate();
   // ---------- QR FORM STATE ----------
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
@@ -65,7 +66,7 @@ Profile: ${profileLink}
     engineer: "Aeronautical Engineer",
     operations: "Airport Operations",
   };
- const triggerFileSelect = () => {
+  const triggerFileSelect = () => {
     if (!canEdit) {
       return;
     }
@@ -369,7 +370,7 @@ Profile: ${profileLink}
       resumeClass="av-resume"
     >
 
-      {({ canEdit, isEditable, requirePayment }) => (
+      {({ canEdit, isEditable, pdfRef, requirePayment }) => (
 
         <div className="av-wrapper">
 
@@ -461,9 +462,9 @@ Profile: ${profileLink}
           </div>
 
           {/* A4 PAGE */}
-          <div className="av-a4" style={{ position: "relative" }}>
+          <div className="av-a4" ref={pdfRef} style={{ position: "relative" }}>
 
-            <div className="av-resume">
+            <div className="av-resume" contentEditable={false}>
 
               {/* HEADER */}
               <header className="av-header">
@@ -474,14 +475,19 @@ Profile: ${profileLink}
                     className={`av-profile-wrapper ${!canEdit ? "locked" : ""}`}
                     onClick={() => {
 
+                      // free user → open payment modal
                       if (!canEdit) {
-                        requirePayment();   // 🔓 open payment modal
+                        if (requirePayment) requirePayment();
                         return;
                       }
 
+                      // paid but editing OFF
                       if (!isEditable) return;
 
-                      triggerFileSelect();
+                      // paid + editing ON
+                      if (fileInputRef.current) {
+                        fileInputRef.current.click();
+                      }
 
                     }}
 

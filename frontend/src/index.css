@@ -68,3 +68,14 @@
   color: #f5b301; /* standard yellow */
   font-weight: bold;
 }
+
+.te-buttons{
+position:sticky;
+top:70px;
+z-index:2000;
+background:#fff;
+display:flex;
+justify-content:center;
+gap:10px;
+padding:10px;
+}
