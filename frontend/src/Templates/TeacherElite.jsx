@@ -209,6 +209,13 @@ const handleDownloadPDF = async () => {
 
 
   return (
+    <TemplateLayout
+          templateId="AviationPro"
+          wrapperClass="av-wrapper"
+          resumeClass="av-resume"
+        >
+    
+          {({ canEdit, isEditable, pdfRef, requirePayment }) => (
     <div className="resume-page-wrapper">
 
       {/* TOP BUTTONS */}
@@ -339,7 +346,7 @@ const handleDownloadPDF = async () => {
 
       {/* A4 RESUME */}
       <div
-        id="resumeContainer" className="te-a4" ref={resumeRef} style={{ position: "relative" }}>
+        id="resumeContainer" className="te-a4" ref={pdfRef} style={{ position: "relative" }}>
 
         <Watermark show={!canEdit} />
         <div className="te-resume" ref={captureRef}>
@@ -674,5 +681,8 @@ const handleDownloadPDF = async () => {
 
       </div>
     </div>
+    )
+          }
+        </TemplateLayout>
   );
 }
