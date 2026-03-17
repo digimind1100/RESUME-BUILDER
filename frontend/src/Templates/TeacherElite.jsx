@@ -11,7 +11,6 @@ import usePaymentGuard from "../hooks/usePaymentGuard";
 import PaymentGate from "../components/payment/PaymentGate";
 import Watermark from "../components/Watermark";
 import ShareResume from "../components/ShareResume";
-import { FaShareAlt } from "react-icons/fa";
 import { useReview } from "../context/ReviewContext";
 import { downloadResumeAndTriggerReview } from "../components/DownloadPDF";
 import { FaShareAlt } from "react-icons/fa";
