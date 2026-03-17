@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from "react";
 
 import "./TeacherElite.css";
 import { useNavigate } from "react-router-dom";
-import TemplateLayout from "./TemplateLayout";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import QRCode from "qrcode";
@@ -211,60 +210,13 @@ const handleDownloadPDF = async () => {
 
   return (
     <TemplateLayout
-          templateId="AviationPro"
-          wrapperClass="av-wrapper"
-          resumeClass="av-resume"
+          templateId="TeacherElite"
+          wrapperClass="te-wrapper"
+          resumeClass="te-resume"
         >
     
           {({ canEdit, isEditable, pdfRef, requirePayment }) => (
     <div className="resume-page-wrapper">
-
-      {/* TOP BUTTONS */}
-      <div className="te-buttons" contentEditable={false}>
-        <button
-          className="te-share-btn"
-          onClick={(e) => {
-            e.stopPropagation();
-            setShowShare(true);
-          }}
-        >
-          <FaShareAlt />
-          <span>Share</span>
-        </button>
-
-        <button className="download-btn" onClick={handleDownloadClick}>
-          Download PDF
-        </button>
-
-        <button onClick={() => navigate("/templates")}>
-          Back to Templates
-        </button>
-        <button onClick={handleReset}>Reset</button>
-
-        <button
-          className={isEditable ? "edit-btn on" : "edit-btn off"}
-          onClick={() => {
-            console.log("EDIT CLICKED"); // 🔍 debug
-
-            if (isMobile) {
-              setShowMobileEditMsg(true);
-              return; // ❌ stop here on mobile
-            }
-
-            if (!requirePayment()) return;
-
-            setIsEditable((prev) => !prev);
-          }}
-        >
-          {isEditable ? "Editing: ON" : "Editing: OFF"}
-          {!canEdit && <span className="edit-crown">👑</span>}
-        </button>
-        {showMobileEditMsg && (
-          <div className="mobile-edit-notice">
-            Editing is available on desktop for best experience.
-          </div>
-        )}
-      </div>
 
       {/* QR FORM */}
       <div className="te-qr-form">
