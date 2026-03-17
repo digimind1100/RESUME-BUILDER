@@ -3,13 +3,8 @@ import React, { useState, useRef, useEffect } from "react";
 import "./TeacherElite.css";
 import { useNavigate } from "react-router-dom";
 import TemplateLayout from "./TemplateLayout";
-import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
 import QRCode from "qrcode";
 import { useAuth } from "../context/AuthContext";
-import usePaymentGuard from "../hooks/usePaymentGuard";
-import PaymentGate from "../components/payment/PaymentGate";
-import Watermark from "../components/Watermark";
 import { useReview } from "../context/ReviewContext";
 import { downloadResumeAndTriggerReview } from "../components/DownloadPDF";
 
@@ -70,22 +65,6 @@ export default function TeacherElite() {
     onReviewTrigger: triggerReview,
   });
 };
-
-
-  // after PDF download
-
-  const {
-    isPaid,
-    showPaymentModal,
-    setShowPaymentModal,
-    requirePayment,
-    handlePaymentSuccess,
-  } = usePaymentGuard("TeacherElite");
-
-  const canEdit = isPaid;
-
-
-  console.log("isPaid:", isPaid);
 
   useEffect(() => {
     if (!canEdit) {
@@ -163,47 +142,6 @@ Subject: ${qrForm.subject}
     setQrImage(dataUrl);
   };
 
- /* ---------- DOWNLOAD PDF ---------- */
-const handleDownloadPDF = async () => {
-  const element = resumeRef.current;
-  if (!element) return;
-
-  // enable PDF safe mode
-  element.classList.add("pdf-mode");
-
-  // wait for layout update
-  await new Promise((resolve) => setTimeout(resolve, 300));
-
-  const canvas = await html2canvas(element, {
-    scale: 2,
-    useCORS: true,
-    backgroundColor: "#ffffff"
-  });
-
-  // remove PDF mode
-  element.classList.remove("pdf-mode");
-
-  const imgData = canvas.toDataURL("image/png");
-
-  const pdf = new jsPDF("p", "mm", "a4");
-
-  const pdfWidth = 210;
-  const imgHeight = (canvas.height * pdfWidth) / canvas.width;
-
-  pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, imgHeight);
-
-  pdf.save("teacher-elite-resume.pdf");
-};
- 
-  const handleReset = () => window.location.reload();
-
-  /* ---------- TABS ---------- */
-  const [activeTab, setActiveTab] = useState("High School");
-  const currentTitle = TAB_TITLE_MAP[activeTab];
-
-  const handleUseTemplate = (route) => {
-    navigate(route);
-  };
 
 
 
@@ -299,8 +237,6 @@ const handleDownloadPDF = async () => {
       {/* A4 RESUME */}
       <div
         id="resumeContainer" className="te-a4" ref={pdfRef} style={{ position: "relative" }}>
-
-        <Watermark show={!canEdit} />
         <div className="te-resume" ref={captureRef}>
           {/* HEADER with decorative wave + profile */}
           <header className="te-header">
@@ -615,15 +551,6 @@ const handleDownloadPDF = async () => {
             </main>
           </div>
         </div>
-
-
-
-        <PaymentGate
-          open={showPaymentModal}
-          onClose={() => setShowPaymentModal(false)}
-          onSuccess={handlePaymentSuccess}
-        />
-
       </div>
     </div>
     )
