@@ -1,34 +1,20 @@
 .te-buttons{
 position:fixed;
-top:90px; /* navbar height */
+top:70px; /* navbar height */
 left:0;
+right:0;
 width:100%;
 display:flex;
 justify-content:center;
 align-items:center;
 gap:12px;
-margin-bottom: 20px;
 padding:12px 20px;
+box-shadow:0 2px 8px rgba(0,0,0,0.1);
 background:#ffffff;
 border-bottom:1px solid #e5e5e5;
 z-index:2000; /* lower than navbar (3000) */
 }
-/* ===== TEMPLATE TOOLBAR ===== */
 
-.te-buttons{
-position:fixed;
-top:0;
-left:0;
-right:0;
-display:flex;
-justify-content:center;
-align-items:center;
-gap:12px;
-padding:12px 20px;
-background:#ffffff;
-box-shadow:0 2px 8px rgba(0,0,0,0.1);
-border-bottom:1px solid #e5e7eb;
-z-index:999;
-}
 
-/* prevent resume hiding under toolbar */
+
+
