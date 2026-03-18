@@ -1,13 +1,9 @@
 import React, { useState, useRef } from "react";
 import "./CleanProfessional.css";
+import TemplateLayout from "./TemplateLayout";
 import { useNavigate } from "react-router-dom";
-import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
-
-import usePaymentGuard from "../hooks/usePaymentGuard";
-import PaymentGate from "../components/payment/PaymentGate";
 import { useAuth } from "../context/AuthContext";
-import Watermark from "../components/Watermark";
+
 
 const CleanProfessional = () => {
   const resumeRef = useRef(null);
@@ -15,24 +11,13 @@ const CleanProfessional = () => {
 
   const { user, setUser } = useAuth();
 
-  const {
-    isPaid,
-    showPaymentModal,
-    setShowPaymentModal,
-    requirePayment,
-    handlePaymentSuccess,
-  } = usePaymentGuard("CleanProfessional"); // 🔴 TEMPLATE NAME
-
-  const canEdit = isPaid;
-  /* ---------------- EDIT MODE TOGGLE ---------------- */
-
-
+  
   /* ---------------- PROFILE IMAGE UPLOAD ---------------- */
   const [profileImage, setProfileImage] = useState("/images/cleanprofileimage.png");
   const fileInputRef = useRef(null);
 
   const handleImageUpload = (event) => {
-    if (!canEdit) return; // 🔒 premium guard
+    if (!!(canEdit && isEditable)) return; // 🔒 premium guard
 
     const file = event.target.files[0];
     if (!file) return;
@@ -41,7 +26,7 @@ const CleanProfessional = () => {
     setProfileImage(imageUrl);
   };
   const triggerFileSelect = () => {
-    if (!canEdit) {
+    if (!!(canEdit && isEditable)) {
       requirePayment(); // 🔥 open payment modal
       return;
     }
@@ -51,276 +36,256 @@ const CleanProfessional = () => {
     }
   };
 
-
-  /* ---------------- DOWNLOAD PDF ---------------- */
-  const handleDownloadPDF = async () => {
-    const element = resumeRef.current;
-
-    const canvas = await html2canvas(element, {
-      scale: 2,
-      useCORS: true,
-    });
-
-    const imgData = canvas.toDataURL("image/png");
-    const pdf = new jsPDF("p", "mm", "a4");
-
-    const pdfWidth = 210;
-    const imgHeight = (canvas.height * pdfWidth) / canvas.width;
-
-    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, imgHeight);
-    pdf.save("clean-professional-resume.pdf");
-  };
-
   /* ---------------- RESET PAGE ---------------- */
   const handleReset = () => {
     window.location.reload();
   };
 
   return (
-    <div className="cp-wrapper">
+    <TemplateLayout
+      templateId="CleanProfessional"
+      wrapperClass="cp-wrapper"
+      resumeClass="cp-resume"
+    >
 
-      {/* ========= TOP BUTTONS ========= */}
-      <div className="cp-buttons">
-        <button onClick={handleDownloadPDF}>Download PDF</button>
-        <button onClick={() => navigate("/templates")}>Back to Templates</button>
-        <button onClick={handleReset}>Reset</button>
+      {({ canEdit, isEditable, pdfRef, requirePayment }) => (
+        <div className="cp-wrapper">
 
-        {/* --- EDIT TOGGLE BUTTON --- */}
-        <button
-          className={canEdit ? "edit-btn on" : "edit-btn off"}
-          onClick={() => {
-            if (!requirePayment()) return;
-          }}
-        >
-          {canEdit ? "Editing: ON" : "Editing: OFF"}
-           {!canEdit && <span className="edit-crown">👑</span>}
-        </button>
-      </div>
-
-      {/* ========= A4 RESUME AREA ========= */}
-      <div className="cp-a4" ref={resumeRef} style={{ position: "relative" }}>
-        <Watermark show={!canEdit} />
-        <div className="cp-resume">
+          {/* ========= A4 RESUME AREA ========= */}
+          <div className="cp-a4" ref={pdfRef} style={{ position: "relative" }}>
+            <div className="cp-resume" contentEditable={false}>
 
 
-          {/* ============= HEADER ============= */}
-          <header className="cp-header">
+              {/* ============= HEADER ============= */}
+              <header className="cp-header">
 
-            {/* Profile Photo Left */}
-            <div
-              className={`cp-photo-wrapper cp-photo-overlap ${!canEdit ? "locked" : ""}`}
-              onClick={triggerFileSelect}
-              title={!canEdit ? "Unlock to change profile image" : "Click to change photo"}
-            >
-              <img src={profileImage} alt="Profile" className="cp-photo" />
+                {/* Profile Photo Left */}
+                <div
+                  className={`cp-photo-wrapper cp-photo-overlap ${!canEdit ? "locked" : ""}`}
+                  onClick={() => {
 
-              <input
-                type="file"
-                accept="image/*"
-                ref={fileInputRef}
-                style={{ display: "none" }}
-                onChange={handleImageUpload}
-              />
+                    // free user → open payment modal
+                    if (!canEdit) {
+                      if (requirePayment) requirePayment();
+                      return;
+                    }
+
+                    // paid but editing OFF
+                    if (!isEditable) return;
+
+                    // paid + editing ON
+                    if (fileInputRef.current) {
+                      fileInputRef.current.click();
+                    }
+
+                  }}
+                  title={!canEdit ? "Unlock to change profile image" : "Click to change photo"}
+                >
+                  <img src={profileImage} alt="Profile" className="cp-photo" />
+
+                  <input
+                    type="file"
+                    accept="image/*"
+                    ref={fileInputRef}
+                    style={{ display: "none" }}
+                    onChange={handleImageUpload}
+                  />
+                </div>
+
+
+                {/* Name + Title Right */}
+                <div className="cp-header-text">
+                  <h1 className="cp-name" contentEditable={!(canEdit && isEditable)} suppressContentEditableWarning>
+                    ANTHONY ROBERTS
+                  </h1>
+
+                  <p className="cp-title" contentEditable={!(canEdit && isEditable)} suppressContentEditableWarning>
+                    Senior Project Manager
+                  </p>
+                </div>
+
+              </header>
+
+              {/* Blue Divider */}
+              <div className="cp-header-divider"></div>
+
+              {/* ============= BODY ============= */}
+              <div className="cp-body">
+
+                {/* LEFT SIDEBAR */}
+                <aside className="cp-sidebar">
+                  <section className="cp-sidebar-section">
+                    <h3 className="cp-sidebar-heading" contentEditable={!(canEdit && isEditable)}>PROFILE SUMMARY</h3>
+                    <div className="cp-heading-underline" />
+                    <p className="cp-sidebar-text" contentEditable={!(canEdit && isEditable)}>
+                      Dynamic senior project manager with expertise in planning,
+                      leading, and delivering complex initiatives on time and within
+                      budget.
+                    </p>
+                  </section>
+
+                  <section className="cp-sidebar-section">
+                    <h3 className="cp-sidebar-heading" contentEditable={!(canEdit && isEditable)}>EDUCATION</h3>
+                    <div className="cp-heading-underline" />
+
+                    <div className="cp-edu-entry">
+                      <p className="cp-edu-degree" contentEditable={!(canEdit && isEditable)}>
+                        Master of Business Admin.
+                      </p>
+                      <p className="cp-edu-year" contentEditable={!(canEdit && isEditable)}>2011</p>
+                    </div>
+
+                    <div className="cp-edu-entry">
+                      <p className="cp-edu-degree" contentEditable={!(canEdit && isEditable)}>
+                        Bachelor of Science in Business Management
+                      </p>
+                      <p className="cp-edu-year" contentEditable={!(canEdit && isEditable)}>2013</p>
+                    </div>
+                  </section>
+
+                  <section className="cp-sidebar-section">
+                    <h3 className="cp-sidebar-heading" contentEditable={!(canEdit && isEditable)}>SKILLS</h3>
+                    <div className="cp-heading-underline" />
+
+                    <ul className="cp-skill-list">
+                      <li contentEditable={!(canEdit && isEditable)}>Project Planning & Execution</li>
+                      <li contentEditable={!(canEdit && isEditable)}>Risk Management</li>
+                      <li contentEditable={!(canEdit && isEditable)}>Budget Management</li>
+                      <li contentEditable={!(canEdit && isEditable)}>Team Leadership</li>
+                      <li contentEditable={!(canEdit && isEditable)}>Agile & Scrum</li>
+                    </ul>
+                  </section>
+                </aside>
+
+                {/* RIGHT MAIN CONTENT */}
+                <main className="cp-main">
+                  <section className="cp-contact">
+                    <div className="cp-contact-row">
+                      <span className="cp-contact-icon">📞</span>
+                      <span className="cp-contact-text" contentEditable={!(canEdit && isEditable)}>
+                        +1 254-878-9700
+                      </span>
+                    </div>
+
+                    <div className="cp-contact-row">
+                      <span className="cp-contact-icon">✉️</span>
+                      <span className="cp-contact-text" contentEditable={!(canEdit && isEditable)}>
+                        anthony.roberta@email.com
+                      </span>
+                    </div>
+
+                    <div className="cp-contact-row">
+                      <span className="cp-contact-icon">📍</span>
+                      <span className="cp-contact-text" contentEditable={!(canEdit && isEditable)}>
+                        New York, NY
+                      </span>
+                    </div>
+
+                    <div className="cp-contact-row">
+                      <span className="cp-contact-icon">in</span>
+                      <span className="cp-contact-text" contentEditable={!(canEdit && isEditable)}>
+                        linkedin.com/in/anthonyroberts
+                      </span>
+                    </div>
+                  </section>
+
+                  {/* EXPERIENCE */}
+                  <section className="cp-section">
+                    <h2 className="cp-section-title" contentEditable={!(canEdit && isEditable)}>EXPERIENCE</h2>
+                    <div className="cp-section-underline" />
+
+                    <div className="cp-job">
+                      <div className="cp-job-header">
+                        <div className="cp-job-title-wrapper">
+                          <h3 className="cp-job-title" contentEditable={!(canEdit && isEditable)}>
+                            Senior Project Manager
+                          </h3>
+                          <p className="cp-job-company" contentEditable={!(canEdit && isEditable)}>Company Name</p>
+                        </div>
+                        <p className="cp-job-dates" contentEditable={!(canEdit && isEditable)}>2018 – Present</p>
+                      </div>
+
+                      <ul className="cp-job-list">
+                        <li contentEditable={!(canEdit && isEditable)}>
+                          Lead cross-functional teams to plan, execute, and deliver strategic projects.
+                        </li>
+                        <li contentEditable={!(canEdit && isEditable)}>
+                          Ensure project scope, timelines, and budgets are met.
+                        </li>
+                        <li contentEditable={!(canEdit && isEditable)}>
+                          Drive improvements to optimize performance.
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div className="cp-job">
+                      <div className="cp-job-header">
+                        <div className="cp-job-title-wrapper">
+                          <h3 className="cp-job-title" contentEditable={!(canEdit && isEditable)}>Project Manager</h3>
+                          <p className="cp-job-company" contentEditable={!(canEdit && isEditable)}>Company Name</p>
+                        </div>
+                        <p className="cp-job-dates" contentEditable={!(canEdit && isEditable)}>2014 – 2018</p>
+                      </div>
+
+                      <ul className="cp-job-list">
+                        <li contentEditable={!(canEdit && isEditable)}>
+                          Managed multiple projects from concept through completion.
+                        </li>
+                        <li contentEditable={!(canEdit && isEditable)}>
+                          Coordinated with vendors and stakeholders.
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div className="cp-job">
+                      <div className="cp-job-header">
+                        <div className="cp-job-title-wrapper">
+                          <h3 className="cp-job-title" contentEditable={!(canEdit && isEditable)}>
+                            Assistant Project Manager
+                          </h3>
+                          <p className="cp-job-company" contentEditable={!(canEdit && isEditable)}>Company Name</p>
+                        </div>
+                        <p className="cp-job-dates" contentEditable={!(canEdit && isEditable)}>2011 – 2014</p>
+                      </div>
+
+                      <ul className="cp-job-list">
+                        <li contentEditable={!(canEdit && isEditable)}>
+                          Assisted senior project managers with scheduling and documentation.
+                        </li>
+                        <li contentEditable={!(canEdit && isEditable)}>
+                          Maintained timelines and deliverables.
+                        </li>
+                      </ul>
+                    </div>
+                  </section>
+
+                  {/* EDUCATION */}
+                  <section className="cp-section">
+                    <h2 className="cp-section-title" contentEditable={!(canEdit && isEditable)}>EDUCATION</h2>
+                    <div className="cp-section-underline" />
+
+                    <div className="cp-edu-main-entry">
+                      <p className="cp-edu-main-degree" contentEditable={!(canEdit && isEditable)}>
+                        Master of Business Administration
+                      </p>
+                      <p className="cp-edu-main-year" contentEditable={!(canEdit && isEditable)}>2011</p>
+                    </div>
+
+                    <div className="cp-edu-main-entry">
+                      <p className="cp-edu-main-degree" contentEditable={!(canEdit && isEditable)}>
+                        Bachelor of Science in Business Management
+                      </p>
+                      <p className="cp-edu-main-year" contentEditable={!(canEdit && isEditable)}>2008</p>
+                    </div>
+                  </section>
+                </main>
+              </div>
             </div>
-
-
-            {/* Name + Title Right */}
-            <div className="cp-header-text">
-              <h1 className="cp-name" contentEditable={canEdit} suppressContentEditableWarning>
-                ANTHONY ROBERTS
-              </h1>
-
-              <p className="cp-title" contentEditable={canEdit} suppressContentEditableWarning>
-                Senior Project Manager
-              </p>
-            </div>
-
-          </header>
-
-          {/* Blue Divider */}
-          <div className="cp-header-divider"></div>
-
-          {/* ============= BODY ============= */}
-          <div className="cp-body">
-
-            {/* LEFT SIDEBAR */}
-            <aside className="cp-sidebar">
-              <section className="cp-sidebar-section">
-                <h3 className="cp-sidebar-heading" contentEditable={canEdit}>PROFILE SUMMARY</h3>
-                <div className="cp-heading-underline" />
-                <p className="cp-sidebar-text" contentEditable={canEdit}>
-                  Dynamic senior project manager with expertise in planning,
-                  leading, and delivering complex initiatives on time and within
-                  budget.
-                </p>
-              </section>
-
-              <section className="cp-sidebar-section">
-                <h3 className="cp-sidebar-heading" contentEditable={canEdit}>EDUCATION</h3>
-                <div className="cp-heading-underline" />
-
-                <div className="cp-edu-entry">
-                  <p className="cp-edu-degree" contentEditable={canEdit}>
-                    Master of Business Admin.
-                  </p>
-                  <p className="cp-edu-year" contentEditable={canEdit}>2011</p>
-                </div>
-
-                <div className="cp-edu-entry">
-                  <p className="cp-edu-degree" contentEditable={canEdit}>
-                    Bachelor of Science in Business Management
-                  </p>
-                  <p className="cp-edu-year" contentEditable={canEdit}>2013</p>
-                </div>
-              </section>
-
-              <section className="cp-sidebar-section">
-                <h3 className="cp-sidebar-heading" contentEditable={canEdit}>SKILLS</h3>
-                <div className="cp-heading-underline" />
-
-                <ul className="cp-skill-list">
-                  <li contentEditable={canEdit}>Project Planning & Execution</li>
-                  <li contentEditable={canEdit}>Risk Management</li>
-                  <li contentEditable={canEdit}>Budget Management</li>
-                  <li contentEditable={canEdit}>Team Leadership</li>
-                  <li contentEditable={canEdit}>Agile & Scrum</li>
-                </ul>
-              </section>
-            </aside>
-
-            {/* RIGHT MAIN CONTENT */}
-            <main className="cp-main">
-              <section className="cp-contact">
-                <div className="cp-contact-row">
-                  <span className="cp-contact-icon">📞</span>
-                  <span className="cp-contact-text" contentEditable={canEdit}>
-                    +1 254-878-9700
-                  </span>
-                </div>
-
-                <div className="cp-contact-row">
-                  <span className="cp-contact-icon">✉️</span>
-                  <span className="cp-contact-text" contentEditable={canEdit}>
-                    anthony.roberta@email.com
-                  </span>
-                </div>
-
-                <div className="cp-contact-row">
-                  <span className="cp-contact-icon">📍</span>
-                  <span className="cp-contact-text" contentEditable={canEdit}>
-                    New York, NY
-                  </span>
-                </div>
-
-                <div className="cp-contact-row">
-                  <span className="cp-contact-icon">in</span>
-                  <span className="cp-contact-text" contentEditable={canEdit}>
-                    linkedin.com/in/anthonyroberts
-                  </span>
-                </div>
-              </section>
-
-              {/* EXPERIENCE */}
-              <section className="cp-section">
-                <h2 className="cp-section-title" contentEditable={canEdit}>EXPERIENCE</h2>
-                <div className="cp-section-underline" />
-
-                <div className="cp-job">
-                  <div className="cp-job-header">
-                    <div className="cp-job-title-wrapper">
-                      <h3 className="cp-job-title" contentEditable={canEdit}>
-                        Senior Project Manager
-                      </h3>
-                      <p className="cp-job-company" contentEditable={canEdit}>Company Name</p>
-                    </div>
-                    <p className="cp-job-dates" contentEditable={canEdit}>2018 – Present</p>
-                  </div>
-
-                  <ul className="cp-job-list">
-                    <li contentEditable={canEdit}>
-                      Lead cross-functional teams to plan, execute, and deliver strategic projects.
-                    </li>
-                    <li contentEditable={canEdit}>
-                      Ensure project scope, timelines, and budgets are met.
-                    </li>
-                    <li contentEditable={canEdit}>
-                      Drive improvements to optimize performance.
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="cp-job">
-                  <div className="cp-job-header">
-                    <div className="cp-job-title-wrapper">
-                      <h3 className="cp-job-title" contentEditable={canEdit}>Project Manager</h3>
-                      <p className="cp-job-company" contentEditable={canEdit}>Company Name</p>
-                    </div>
-                    <p className="cp-job-dates" contentEditable={canEdit}>2014 – 2018</p>
-                  </div>
-
-                  <ul className="cp-job-list">
-                    <li contentEditable={canEdit}>
-                      Managed multiple projects from concept through completion.
-                    </li>
-                    <li contentEditable={canEdit}>
-                      Coordinated with vendors and stakeholders.
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="cp-job">
-                  <div className="cp-job-header">
-                    <div className="cp-job-title-wrapper">
-                      <h3 className="cp-job-title" contentEditable={canEdit}>
-                        Assistant Project Manager
-                      </h3>
-                      <p className="cp-job-company" contentEditable={canEdit}>Company Name</p>
-                    </div>
-                    <p className="cp-job-dates" contentEditable={canEdit}>2011 – 2014</p>
-                  </div>
-
-                  <ul className="cp-job-list">
-                    <li contentEditable={canEdit}>
-                      Assisted senior project managers with scheduling and documentation.
-                    </li>
-                    <li contentEditable={canEdit}>
-                      Maintained timelines and deliverables.
-                    </li>
-                  </ul>
-                </div>
-              </section>
-
-              {/* EDUCATION */}
-              <section className="cp-section">
-                <h2 className="cp-section-title" contentEditable={canEdit}>EDUCATION</h2>
-                <div className="cp-section-underline" />
-
-                <div className="cp-edu-main-entry">
-                  <p className="cp-edu-main-degree" contentEditable={canEdit}>
-                    Master of Business Administration
-                  </p>
-                  <p className="cp-edu-main-year" contentEditable={canEdit}>2011</p>
-                </div>
-
-                <div className="cp-edu-main-entry">
-                  <p className="cp-edu-main-degree" contentEditable={canEdit}>
-                    Bachelor of Science in Business Management
-                  </p>
-                  <p className="cp-edu-main-year" contentEditable={canEdit}>2008</p>
-                </div>
-              </section>
-            </main>
-            <PaymentGate
-              open={showPaymentModal}
-              onClose={() => setShowPaymentModal(false)}
-              onSuccess={handlePaymentSuccess}
-            />
-
           </div>
-
         </div>
-      </div>
-    </div>
+      )
+      }
+    </TemplateLayout>
   );
 };
 
