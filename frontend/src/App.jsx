@@ -49,11 +49,9 @@ function AppContent() {
     <>
       <ReviewProvider user={user}>
         <Navbar />
+        <ScrollToTop />
         <Toaster position="top-center" />
-
         <Routes>
-          <ScrollToTop />
-
           <Route
             path="/admin/payments"
             element={
@@ -62,11 +60,8 @@ function AppContent() {
               </AdminGuard>
             }
           />
-
           <Route path="/admin/reviews" element={<AdminReviews />} />
-
           <Route path="/" element={<HomePage />} />
-
           {/* Unified builder */}
           <Route
             path="/resume/:templateId?"
