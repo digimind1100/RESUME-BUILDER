@@ -678,6 +678,11 @@
   width: 794px;
   background: #ffffff;
 }
+@media print {
+.no-pdf{
+display:none !important;
+}
+}
 /* ===================================
    FIX FOR PDF RENDERING
 =================================== */

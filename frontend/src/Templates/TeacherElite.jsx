@@ -144,7 +144,7 @@ Subject: ${qrForm.subject}
         <div className="resume-page-wrapper">
 
           {/* QR FORM */}
-          <div className="te-qr-form">
+          <div className="te-qr-form no-pdf">
             <h3>Personal Info (for QR Code)</h3>
             <div className="te-qr-grid">
               <input
@@ -210,7 +210,7 @@ Subject: ${qrForm.subject}
           </div>
 
           {/* TABS */}
-          <div className="te-tabs">
+          <div className="te-tabs no-pdf">
             {TABS.map((tab) => (
               <button
                 key={tab}

@@ -549,3 +549,8 @@ padding:0;
   margin: auto;
   position: relative;
 }
+@media print {
+.no-pdf{
+display:none !important;
+}
+}
