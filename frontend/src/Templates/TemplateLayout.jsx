@@ -3,6 +3,7 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import TemplateControls from "./TemplateControls";
 import Watermark from "../components/Watermark";
+import "./TemplateLayout.css";
 
 export default function TemplateLayout({
   children,
