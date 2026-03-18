@@ -23,31 +23,29 @@ const resumeContainerRef = useRef(null);
     setIsEditable(editable);
     setCanEdit(paid);
   };
+const handleDownloadPDF = async () => {
+  const element = resumeContainerRef.current;
+  if (!element) return;
 
-  const handleDownloadPDF = async () => {
+  await new Promise(r => setTimeout(r, 300));
 
-    const element = pdfRef.current;
-    if (!element) return;
+  const canvas = await html2canvas(element, {
+    scale: 2,
+    useCORS: true,
+    backgroundColor: "#ffffff"
+  });
 
-    await new Promise(r => setTimeout(r, 300));
+  const imgData = canvas.toDataURL("image/png");
 
-    const canvas = await html2canvas(element, {
-      scale: 2,
-      useCORS: true,
-      backgroundColor: "#ffffff"
-    });
+  const pdf = new jsPDF("p", "mm", "a4");
 
-    const imgData = canvas.toDataURL("image/png");
+  const pdfWidth = 210;
+  const imgHeight = (canvas.height * pdfWidth) / canvas.width;
 
-    const pdf = new jsPDF("p", "mm", "a4");
+  pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, imgHeight);
 
-    const pdfWidth = 210;
-    const imgHeight = (canvas.height * pdfWidth) / canvas.width;
-
-    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, imgHeight);
-
-    pdf.save(`${templateId}-resume.pdf`);
-  };
+  pdf.save(`${templateId}-resume.pdf`);
+};
 
   return (
 
