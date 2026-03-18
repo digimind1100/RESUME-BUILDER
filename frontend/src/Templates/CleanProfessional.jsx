@@ -53,7 +53,7 @@ const CleanProfessional = () => {
 
           {/* ========= A4 RESUME AREA ========= */}
           <div className="cp-a4" ref={pdfRef} style={{ position: "relative" }}>
-            <div className="cp-resume" contentEditable={false}>
+            <div className="cp-resume" contentEditable={true}>
 
 
               {/* ============= HEADER ============= */}
