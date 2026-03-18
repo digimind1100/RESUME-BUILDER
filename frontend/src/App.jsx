@@ -34,6 +34,7 @@ import BlogPost from "./components/BlogPost";
 import Pricing from "./components/Pricing";
 import FreeBasic from "./Templates/FreeBasic";
 import RoyalBlueDesigner from "./Templates/RoyalBlueDesigner";
+import ScrollToTop from "./components/ScrollToTop";
 
 
 
@@ -51,6 +52,7 @@ function AppContent() {
         <Toaster position="top-center" />
 
         <Routes>
+          <ScrollToTop />
 
           <Route
             path="/admin/payments"
