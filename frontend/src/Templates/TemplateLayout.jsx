@@ -24,10 +24,20 @@ const resumeContainerRef = useRef(null);
     setCanEdit(paid);
   };
 const handleDownloadPDF = async () => {
-  const element = resumeContainerRef.current;
-  if (!element) return;
 
-  await new Promise(r => setTimeout(r, 300));
+  const root = resumeContainerRef.current;
+  if (!root) return;
+
+  // Find the A4 element automatically
+  const element =
+    root.querySelector(".te-a4") ||
+    root.querySelector(".cp-a4") ||
+    root.querySelector(".av-a4") ||
+    root.querySelector(".rb-resume") ||
+    root.querySelector(".cb-resume") ||
+    root;
+
+  await new Promise((r) => setTimeout(r, 200));
 
   const canvas = await html2canvas(element, {
     scale: 2,
