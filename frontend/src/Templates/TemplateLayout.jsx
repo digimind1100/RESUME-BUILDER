@@ -14,6 +14,7 @@ export default function TemplateLayout({
 
   const resumeRef = useRef(null);
   const pdfRef = useRef(null);
+const resumeContainerRef = useRef(null);
 
   const [isEditable, setIsEditable] = useState(false);
   const [canEdit, setCanEdit] = useState(false);
