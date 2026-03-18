@@ -1,13 +1,9 @@
 import React, { useRef, useState } from "react";
 import "./CreativeBold.css";
+import TemplateLayout from "./TemplateLayout";
 import { useNavigate } from "react-router-dom";
-import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
-
-import usePaymentGuard from "../hooks/usePaymentGuard";
-import PaymentGate from "../components/payment/PaymentGate";
 import { useAuth } from "../context/AuthContext";
-import Watermark from "../components/Watermark";
+
 
 
 const CreativeBold = () => {
@@ -16,17 +12,6 @@ const CreativeBold = () => {
 
   const { user, setUser } = useAuth();
 
-  const {
-    isPaid,
-    showPaymentModal,
-    setShowPaymentModal,
-    requirePayment,
-    handlePaymentSuccess,
-  } = usePaymentGuard("CreativeBold"); // 🔴 TEMPLATE NAME
-
-  const canEdit = isPaid;
-
-
   /* ===== EDIT MODE TOGGLE ===== */
 
   // ----- Profile Image Upload -----
@@ -34,7 +19,7 @@ const CreativeBold = () => {
   const fileInputRef = useRef(null);
 
   const handleImageUpload = (event) => {
-    if (!canEdit) return; // 🔒 premium guard
+    if (!canEdit && isEditable) return; // 🔒 premium guard
 
     const file = event.target.files[0];
     if (!file) return;
@@ -56,65 +41,43 @@ const CreativeBold = () => {
   };
 
 
-
-  // ----- Download PDF -----
-  const handleDownloadPDF = async () => {
-    const element = resumeRef.current;
-    if (!element) return;
-
-    const canvas = await html2canvas(element, {
-      scale: 2,
-      useCORS: true,
-    });
-
-    const imgData = canvas.toDataURL("image/png");
-    const pdf = new jsPDF("p", "mm", "a4");
-    const pdfWidth = 210;
-    const imgHeight = (canvas.height * pdfWidth) / canvas.width;
-
-    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, imgHeight);
-    pdf.save("creative-bold-resume.pdf");
-  };
-
-  // ----- Reset Page -----
-  const handleReset = () => {
-    window.location.reload();
-  };
-
   return (
+    <TemplateLayout
+          templateId="CreativeBold"
+          wrapperClass="cb-wrapper"
+          resumeClass="cb-resume"
+        >
+          {({ canEdit, isEditable, pdfRef, requirePayment }) => (
     <div className="cb-wrapper">
 
-      {/* Top Buttons */}
-      <div className="cb-buttons">
-        <button onClick={handleDownloadPDF}>Download PDF</button>
-        <button onClick={() => navigate("/templates")}>Back to Templates</button>
-        <button onClick={handleReset}>Reset</button>
-
-        {/* EDIT MODE BUTTON */}
-        <button
-          className={canEdit ? "edit-btn on" : "edit-btn off"}
-          onClick={() => {
-            if (!requirePayment()) return;
-          }}
-        >
-          {canEdit ? "Editing: ON" : "Editing: OFF"}
-           {!canEdit && <span className="edit-crown">👑</span>}
-        </button>
-      </div>
 
       {/* A4 Resume Area */}
-      <div className="cb-a4" ref={resumeRef} style={{ position: "relative" }}>
-        <Watermark show={!canEdit} />
+      <div className="cb-a4" ref={pdfRef} style={{ position: "relative" }}>
+      
         <div className="cb-resume">
-
-
           {/* LEFT RED COLUMN */}
           <aside className="cb-left">
 
             {/* Profile Image */}
             <div
               className={`cb-photo-wrapper ${!canEdit ? "locked" : ""}`}
-              onClick={triggerFileSelect}
+             onClick={() => {
+
+                    // free user → open payment modal
+                    if (!canEdit) {
+                      if (requirePayment) requirePayment();
+                      return;
+                    }
+
+                    // paid but editing OFF
+                    if (!isEditable) return;
+
+                    // paid + editing ON
+                    if (fileInputRef.current) {
+                      fileInputRef.current.click();
+                    }
+
+                  }}
               title={!canEdit ? "Unlock to change profile image" : "Click to change photo"}
             >
               <img src={profileImage} alt="Profile" className="cb-photo" />
@@ -132,7 +95,7 @@ const CreativeBold = () => {
             <div className="cb-left-role">
               <h2
                 className="cb-left-role-text"
-                contentEditable={canEdit}
+                contentEditable={canEdit && isEditable}
                 suppressContentEditableWarning
               >
                 MARKETING SPECIALIST
@@ -141,26 +104,26 @@ const CreativeBold = () => {
 
             {/* Skills */}
             <section className="cb-left-section">
-              <h3 className="cb-left-heading" contentEditable={canEdit} suppressContentEditableWarning>
+              <h3 className="cb-left-heading" contentEditable={canEdit && isEditable} suppressContentEditableWarning>
                 SKILLS
               </h3>
               <ul className="cb-left-list">
-                <li contentEditable={canEdit} suppressContentEditableWarning>SEO and SEM</li>
-                <li contentEditable={canEdit} suppressContentEditableWarning>Content Marketing</li>
-                <li contentEditable={canEdit} suppressContentEditableWarning>Social Media Management</li>
-                <li contentEditable={canEdit} suppressContentEditableWarning>Analytics & Reporting</li>
+                <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>SEO and SEM</li>
+                <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>Content Marketing</li>
+                <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>Social Media Management</li>
+                <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>Analytics & Reporting</li>
               </ul>
             </section>
 
             {/* Contact */}
             <section className="cb-left-section">
-              <h3 className="cb-left-heading" contentEditable={canEdit} suppressContentEditableWarning>
+              <h3 className="cb-left-heading" contentEditable={canEdit && isEditable} suppressContentEditableWarning>
                 CONTACT
               </h3>
               <div className="cb-left-contact">
-                <p contentEditable={canEdit} suppressContentEditableWarning>123-456-7860</p>
-                <p contentEditable={canEdit} suppressContentEditableWarning>amanda.smith@mail.com</p>
-                <p contentEditable={canEdit} suppressContentEditableWarning>Los Angeles, CA</p>
+                <p contentEditable={canEdit && isEditable} suppressContentEditableWarning>123-456-7860</p>
+                <p contentEditable={canEdit && isEditable} suppressContentEditableWarning>amanda.smith@mail.com</p>
+                <p contentEditable={canEdit && isEditable} suppressContentEditableWarning>Los Angeles, CA</p>
               </div>
             </section>
           </aside>
@@ -172,7 +135,7 @@ const CreativeBold = () => {
             <header className="cb-header-text">
               <h1
                 className="cb-name"
-                contentEditable={canEdit}
+                contentEditable={canEdit && isEditable}
                 suppressContentEditableWarning
               >
                 AMANDA SMITH
@@ -180,7 +143,7 @@ const CreativeBold = () => {
 
               <p
                 className="cb-title"
-                contentEditable={canEdit}
+                contentEditable={canEdit && isEditable}
                 suppressContentEditableWarning
               >
                 Marketing Specialist
@@ -189,8 +152,8 @@ const CreativeBold = () => {
 
             {/* Profile Section */}
             <section className="cb-section">
-              <h2 className="cb-section-heading" contentEditable={canEdit}>PROFILE</h2>
-              <p className="cb-section-paragraph" contentEditable={canEdit}>
+              <h2 className="cb-section-heading" contentEditable={canEdit && isEditable}>PROFILE</h2>
+              <p className="cb-section-paragraph" contentEditable={canEdit && isEditable}>
                 Dynamic marketing specialist with 6+ years of experience in planning and executing
                 multi-channel marketing campaigns...
               </p>
@@ -198,85 +161,81 @@ const CreativeBold = () => {
 
             {/* Experience Section */}
             <section className="cb-section">
-              <h2 className="cb-section-heading" contentEditable={canEdit}>EXPERIENCE</h2>
+              <h2 className="cb-section-heading" contentEditable={canEdit && isEditable}>EXPERIENCE</h2>
 
               {/* Job 1 */}
               <div className="cb-entry">
-                <p className="cb-entry-title" contentEditable={canEdit}>
+                <p className="cb-entry-title" contentEditable={canEdit && isEditable}>
                   Marketing Specialist
                 </p>
-                <p className="cb-entry-subtitle" contentEditable={canEdit}>
+                <p className="cb-entry-subtitle" contentEditable={canEdit && isEditable}>
                   XYZ Corporation | 2020 – Present
                 </p>
                 <ul className="cb-entry-list">
-                  <li contentEditable={canEdit}>Led digital campaigns increasing leads by 38%.</li>
-                  <li contentEditable={canEdit}>Managed $180K yearly ad spend.</li>
-                  <li contentEditable={canEdit}>Conducted market research & analysis.</li>
-                  <li contentEditable={canEdit}>Collaborated with creative teams.</li>
-                  <li contentEditable={canEdit}>Improved CTR by 27% via A/B testing.</li>
+                  <li contentEditable={canEdit && isEditable}>Led digital campaigns increasing leads by 38%.</li>
+                  <li contentEditable={canEdit && isEditable}>Managed $180K yearly ad spend.</li>
+                  <li contentEditable={canEdit && isEditable}>Conducted market research & analysis.</li>
+                  <li contentEditable={canEdit && isEditable}>Collaborated with creative teams.</li>
+                  <li contentEditable={canEdit && isEditable}>Improved CTR by 27% via A/B testing.</li>
                 </ul>
               </div>
 
               {/* Job 2 */}
               <div className="cb-entry">
-                <p className="cb-entry-title" contentEditable={canEdit}>
+                <p className="cb-entry-title" contentEditable={canEdit && isEditable}>
                   Marketing Coordinator
                 </p>
-                <p className="cb-entry-subtitle" contentEditable={canEdit}>
+                <p className="cb-entry-subtitle" contentEditable={canEdit && isEditable}>
                   ABC Company | 2016 – 2020
                 </p>
                 <ul className="cb-entry-list">
-                  <li contentEditable={canEdit}>Boosted engagement by 45%.</li>
-                  <li contentEditable={canEdit}>Assisted with digital & print campaigns.</li>
-                  <li contentEditable={canEdit}>Analyzed performance & suggested improvements.</li>
-                  <li contentEditable={canEdit}>Supported brand initiatives.</li>
+                  <li contentEditable={canEdit && isEditable}>Boosted engagement by 45%.</li>
+                  <li contentEditable={canEdit && isEditable}>Assisted with digital & print campaigns.</li>
+                  <li contentEditable={canEdit && isEditable}>Analyzed performance & suggested improvements.</li>
+                  <li contentEditable={canEdit && isEditable}>Supported brand initiatives.</li>
                 </ul>
               </div>
             </section>
 
             {/* Certifications */}
             <section className="cb-section">
-              <h2 className="cb-section-heading" contentEditable={canEdit}>CERTIFICATIONS</h2>
+              <h2 className="cb-section-heading" contentEditable={canEdit && isEditable}>CERTIFICATIONS</h2>
               <ul className="cb-entry-list">
-                <li contentEditable={canEdit}>Google Analytics Certification</li>
-                <li contentEditable={canEdit}>Facebook Blueprint Certified</li>
-                <li contentEditable={canEdit}>HubSpot Content Marketing Certification</li>
-                <li contentEditable={canEdit}>SEO Specialization – Coursera</li>
+                <li contentEditable={canEdit && isEditable}>Google Analytics Certification</li>
+                <li contentEditable={canEdit && isEditable}>Facebook Blueprint Certified</li>
+                <li contentEditable={canEdit && isEditable}>HubSpot Content Marketing Certification</li>
+                <li contentEditable={canEdit && isEditable}>SEO Specialization – Coursera</li>
               </ul>
             </section>
 
             {/* Tools */}
             <section className="cb-section">
-              <h2 className="cb-section-heading" contentEditable={canEdit}>TOOLS & TECHNOLOGIES</h2>
+              <h2 className="cb-section-heading" contentEditable={canEdit && isEditable}>TOOLS & TECHNOLOGIES</h2>
               <ul className="cb-entry-list">
-                <li contentEditable={canEdit}>Google Analytics, Ads Manager</li>
-                <li contentEditable={canEdit}>Meta Business Suite, LinkedIn Ads</li>
-                <li contentEditable={canEdit}>SEMrush, Ahrefs, Moz</li>
-                <li contentEditable={canEdit}>HubSpot, Mailchimp</li>
-                <li contentEditable={canEdit}>Figma, Canva</li>
+                <li contentEditable={canEdit && isEditable}>Google Analytics, Ads Manager</li>
+                <li contentEditable={canEdit && isEditable}>Meta Business Suite, LinkedIn Ads</li>
+                <li contentEditable={canEdit && isEditable}>SEMrush, Ahrefs, Moz</li>
+                <li contentEditable={canEdit && isEditable}>HubSpot, Mailchimp</li>
+                <li contentEditable={canEdit && isEditable}>Figma, Canva</li>
               </ul>
             </section>
 
             {/* Achievements */}
             <section className="cb-section">
-              <h2 className="cb-section-heading" contentEditable={canEdit}>ACHIEVEMENTS</h2>
+              <h2 className="cb-section-heading" contentEditable={canEdit && isEditable}>ACHIEVEMENTS</h2>
               <ul className="cb-entry-list">
-                <li contentEditable={canEdit}>Increased lead quality by 40%.</li>
-                <li contentEditable={canEdit}>Reduced cost-per-lead by 22%.</li>
-                <li contentEditable={canEdit}>Managed a digital transformation project.</li>
+                <li contentEditable={canEdit && isEditable}>Increased lead quality by 40%.</li>
+                <li contentEditable={canEdit && isEditable}>Reduced cost-per-lead by 22%.</li>
+                <li contentEditable={canEdit && isEditable}>Managed a digital transformation project.</li>
               </ul>
             </section>
-
           </main>
-
-          <PaymentGate
-            open={showPaymentModal}
-            onClose={() => setShowPaymentModal(false)}
-            onSuccess={handlePaymentSuccess}
-          />
         </div>
       </div>
     </div>
+    )
+          }
+        </TemplateLayout>
   );
 };
 
