@@ -50,38 +50,29 @@ export default function TemplateLayout({
 
   return (
 
-    <div className={wrapperClass}>
+  <div className={wrapperClass}>
 
-      {/* TOOLBAR */}
-      <div style={{ position: "relative", zIndex: 2000 }}>
-        <TemplateControls
-          resumeRef={resumeRef}
-          templateId={templateId}
-          onEditChange={handleEditChange}
-          onDownload={handleDownloadPDF}
-        />
-      </div>
+    <div className="editor-area">
 
-      {/* RESUME CONTAINER */}
-      <div
-        className={resumeClass}
-        ref={resumeRef}
-        contentEditable={false}
-        style={{
-          position: "relative",
-          zIndex: 1
-        }}
-      >
+      <TemplateControls
+        resumeRef={resumeContainerRef}
+        templateId={templateId}
+        onEditChange={handleEditChange}
+        onDownload={handleDownloadPDF}
+      />
 
+      <div className={resumeClass} ref={resumeContainerRef}>
         <Watermark show={!canEdit} />
 
         {typeof children === "function"
-          ? children({ canEdit, isEditable, pdfRef })
+          ? children({ canEdit, isEditable, pdfRef: resumeContainerRef })
           : children}
 
       </div>
 
     </div>
+
+  </div>
 
   );
 }

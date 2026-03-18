@@ -69,3 +69,11 @@
   font-weight: bold;
 }
 
+.template-resume,
+.cp-a4,
+.te-a4,
+.rb-resume,
+.av-a4{
+  max-width:850px;
+  width:100%;
+}
