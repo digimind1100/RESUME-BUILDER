@@ -348,10 +348,17 @@
 }
 .cp-wrapper {
   text-align: center;
-  padding: 20px;
-  
-}
+  margin:0;
+padding:0;
 
+}
+.cp-resume {
+  width: 210mm;
+  min-height: 297mm;
+  background: white;
+  margin: auto;
+  position: relative;
+}
 .cp-buttons {
   margin-bottom: 20px;
 }
