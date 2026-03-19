@@ -33,9 +33,6 @@ export default function MedicalElites() {
       fileInputRef.current.click();
     }
   };
-
-
-
   return (
     <TemplateLayout
       templateId="MedicalElite"
@@ -47,38 +44,27 @@ export default function MedicalElites() {
 
           {/* A4 PAGE */}
           <div className="me-a4" ref={pdfRef} style={{ position: "relative" }}>
-            <Watermark show={!canEdit} />
-
             <div className="me-resume">
-
-
               {/* LEFT SIDEBAR */}
               <aside className="me-sidebar">
-
                 {/* PROFILE IMAGE (PREMIUM LOCKED) */}
                 <div
                   className={`me-photo-wrapper ${!canEdit && isEditable ? "locked" : ""}`}
-
                   onClick={() => {
-
                     // free user → open payment modal
                     if (!canEdit) {
                       if (requirePayment) requirePayment();
                       return;
                     }
-
                     // paid but editing OFF
                     if (!isEditable) return;
-
                     // paid + editing ON
                     if (fileInputRef.current) {
                       fileInputRef.current.click();
                     }
-
                   }}
                   title={canEdit ? "Click to change photo" : "Unlock to change photo"}
                 >
-
                   <img src={profileImage} alt="Profile" className="me-photo" />
                   <input
                     type="file"
