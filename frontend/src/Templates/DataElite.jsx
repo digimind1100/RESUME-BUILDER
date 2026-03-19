@@ -119,7 +119,7 @@ export default function DataElite() {
                     accept="image/*"
                     ref={fileInputRef}
                     style={{ display: "none" }}
-                    onChange={handleProfileUpload}
+                    onChange={handleImageUpload}
                   />
                   {!canEdit && <div className="de-photo-lock">🔒 Premium</div>}
                 </div>
