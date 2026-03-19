@@ -1,13 +1,10 @@
 // src/Templates/EngineerElite.jsx
 import React, { useRef, useState } from "react";
 import "./EngineerElite.css";
-import TemplateLayout from "./TemplateLayout";
 import { useNavigate } from "react-router-dom";
 import QRCode from "qrcode";
-
-
+import TemplateLayout from "./TemplateLayout";
 import { useAuth } from "../context/AuthContext";
-
 
 
 export default function EngineerElite() {
@@ -16,27 +13,30 @@ export default function EngineerElite() {
 
   const { user, setUser } = useAuth();
 
-// ---- Profile image (square - PREMIUM) ----
-const [profileImage, setProfileImage] = useState(
-  "/images/engineereliteprofileimage.png"
-);
-const fileInputRef = useRef(null);
 
-const handleProfileUpload = (e) => {
-  if (!(canEdit && isEditable)) return; // 🔒 safety
-  const file = e.target.files[0];
-  if (file) {
-    setProfileImage(URL.createObjectURL(file));
-  }
-};
+  /* ================= EDIT MODE ================= */
 
-const handleProfileClick = () => {
-  if (!(canEdit && isEditable)) {
-    requirePayment(); // 🔥 open payment modal
-    return;
-  }
-  profileInputRef.current?.click();
-};
+  // ---- Profile image (square - PREMIUM) ----
+  const [profileImage, setProfileImage] = useState(
+    "/images/engineereliteprofileimage.png"
+  );
+  const profileInputRef = useRef(null);
+
+  const handleProfileUpload = (e) => {
+    if (!canEdit) return; // 🔒 safety
+    const file = e.target.files[0];
+    if (file) {
+      setProfileImage(URL.createObjectURL(file));
+    }
+  };
+
+  const handleProfileClick = () => {
+    if (!canEdit) {
+      requirePayment(); // 🔥 open payment modal
+      return;
+    }
+    profileInputRef.current?.click();
+  };
 
 
   // ---- Personal info form state ----
@@ -86,14 +86,32 @@ const handleProfileClick = () => {
     }
   };
 
-  
+  // ---- Download PDF ----
+  const handleDownloadPDF = async () => {
+    const element = resumeRef.current;
+    if (!element) return;
+
+    const canvas = await html2canvas(element, { scale: 2, useCORS: true });
+
+    const pdf = new jsPDF("p", "mm", "a4");
+    const imgData = canvas.toDataURL("image/png");
+    const pdfWidth = 210;
+    const imgHeight = (canvas.height * pdfWidth) / canvas.width;
+
+    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, imgHeight);
+    pdf.save("engineer-elite-resume.pdf");
+  };
+
+  const handleReset = () => window.location.reload();
+
   return (
-    <TemplateLayout
-          templateId="DataElite"
-          wrapperClass="de-wrapper"
-          resumeClass="de-resume"
-        >
-          {({ canEdit, isEditable, pdfRef, requirePayment }) => (
+ <TemplateLayout
+      templateId="DataElite"
+      wrapperClass="de-wrapper"
+      resumeClass="de-resume"
+    >
+      {({ canEdit, isEditable, pdfRef, requirePayment }) => (
+
     <div className="ee-wrapper">
 
       {/* ---------- PERSONAL INFO FORM ---------- */}
@@ -104,8 +122,12 @@ const handleProfileClick = () => {
 
           <div className="ee-form-field">
             <label>Full Name</label>
-            <input name="fullName" value={info.fullName} onChange={handleInfoChange} disabled={!(canEdit && isEditable)}
-             
+            <input name="fullName" value={info.fullName} onChange={handleInfoChange} disabled={!canEdit}
+              onFocus={() => {
+                if (!canEdit) {
+                  requirePayment();
+                }
+              }}
               placeholder="Enter your full name"
             />
 
@@ -113,64 +135,96 @@ const handleProfileClick = () => {
 
           <div className="ee-form-field">
             <label>Email</label>
-            <input name="email" value={info.email} onChange={handleInfoChange} disabled={!(canEdit && isEditable)}
-             
+            <input name="email" value={info.email} onChange={handleInfoChange} disabled={!canEdit}
+              onFocus={() => {
+                if (!canEdit) {
+                  requirePayment();
+                }
+              }}
               placeholder="Enter your Email"
             />
           </div>
 
           <div className="ee-form-field">
             <label>Telephone</label>
-            <input name="phone" value={info.phone} onChange={handleInfoChange} disabled={!(canEdit && isEditable)}
-             
+            <input name="phone" value={info.phone} onChange={handleInfoChange} disabled={!canEdit}
+              onFocus={() => {
+                if (!canEdit) {
+                  requirePayment();
+                }
+              }}
               placeholder="Enter your Telephone"
             />
           </div>
 
           <div className="ee-form-field">
             <label>Address</label>
-            <input name="address" value={info.address} onChange={handleInfoChange} disabled={!(canEdit && isEditable)}
-              
+            <input name="address" value={info.address} onChange={handleInfoChange} disabled={!canEdit}
+              onFocus={() => {
+                if (!canEdit) {
+                  requirePayment();
+                }
+              }}
               placeholder="Address"
             />
           </div>
 
           <div className="ee-form-field">
             <label>State</label>
-            <input name="state" value={info.state} onChange={handleInfoChange} disabled={!(canEdit && isEditable)}
-              
+            <input name="state" value={info.state} onChange={handleInfoChange} disabled={!canEdit}
+              onFocus={() => {
+                if (!canEdit) {
+                  requirePayment();
+                }
+              }}
               placeholder="Enter your State"
             />
           </div>
 
           <div className="ee-form-field">
             <label>City</label>
-            <input name="city" value={info.city} onChange={handleInfoChange} disabled={!(canEdit && isEditable)}
-              
+            <input name="city" value={info.city} onChange={handleInfoChange} disabled={!canEdit}
+              onFocus={() => {
+                if (!canEdit) {
+                  requirePayment();
+                }
+              }}
               placeholder="Enter your City"
             />
           </div>
 
           <div className="ee-form-field">
             <label>Zip Code</label>
-            <input name="zip" value={info.zip} onChange={handleInfoChange} disabled={!(canEdit && isEditable)}
-              
+            <input name="zip" value={info.zip} onChange={handleInfoChange} disabled={!canEdit}
+              onFocus={() => {
+                if (!canEdit) {
+                  requirePayment();
+                }
+              }}
               placeholder="Enter Zip Code"
             />
           </div>
 
           <div className="ee-form-field">
             <label>LinkedIn</label>
-            <input name="linkedin" value={info.linkedin} onChange={handleInfoChange} disabled={!(canEdit && isEditable)}
-              
+            <input name="linkedin" value={info.linkedin} onChange={handleInfoChange} disabled={!canEdit}
+              onFocus={() => {
+                if (!canEdit) {
+                  requirePayment();
+                }
+              }}
               placeholder="Enter your LinkedIn Profile link"
             />
           </div>
 
           <div className="ee-form-field ee-form-full">
             <label>Engineer ID</label>
-            <input name="engineerId" value={info.engineerId} onChange={handleInfoChange} disabled={!(canEdit && isEditable)}
-              
+            <input name="engineerId" value={info.engineerId} onChange={handleInfoChange} disabled={!canEdit}
+              onFocus={() => {
+                if (!canEdit) {
+                  requirePayment();
+                }
+              }}
               placeholder="Enter your eignineer ID"
             />
           </div>
@@ -183,53 +237,37 @@ const handleProfileClick = () => {
       </div>
 
       {/* ---------- A4 RESUME ---------- */}
-      <div className="ee-a4" ref={pdfRef} style={{ position: "relative" }}>
-  
+      <div className="ee-a4" ref={resumeRef} style={{ position: "relative" }}>
 
-  <div className="ee-resume">
+
+        <div className="ee-resume">
 
 
           {/* LEFT SIDEBAR */}
           <aside className="ee-sidebar">
 
-           
-           <div
-  className={`ee-photo-wrapper ${!(canEdit && isEditable) ? "locked" : ""}`}
-   onClick={() => {
 
-                    // free user → open payment modal
-                    if (!canEdit) {
-                      if (requirePayment) requirePayment();
-                      return;
-                    }
+            <div
+              className={`ee-photo-wrapper ${!canEdit ? "locked" : ""}`}
+              onClick={handleProfileClick}
+              title={canEdit ? "Click to change photo" : "Unlock to change photo"}
+            >
+              <img src={profileImage} alt="Profile" className="ee-photo" />
 
-                    // paid but editing OFF
-                    if (!isEditable) return;
+              <input
+                type="file"
+                accept="image/*"
+                ref={profileInputRef}
+                style={{ display: "none" }}
+                onChange={handleProfileUpload}
+              />
 
-                    // paid + editing ON
-                    if (fileInputRef.current) {
-                      fileInputRef.current.click();
-                    }
-
-                  }}
-  title={canEdit ? "Click to change photo" : "Unlock to change photo"}
->
-  <img src={profileImage} alt="Profile" className="ee-photo" />
-
-  <input
-    type="file"
-    accept="image/*"
-    ref={fileInputRef}
-    style={{ display: "none" }}
-    onChange={handleProfileUpload}
-  />
-
-  {!(canEdit && isEditable) && (
-    <div className="ee-photo-lock">
-      🔒 Premium
-    </div>
-  )}
-</div>
+              {!canEdit && (
+                <div className="ee-photo-lock">
+                  🔒 Premium
+                </div>
+              )}
+            </div>
 
 
             <div className="ee-qr-wrapper">
@@ -364,7 +402,7 @@ const handleProfileClick = () => {
         </div>
       </div>
     </div>
-    )
+     )
           }
         </TemplateLayout>
   );
