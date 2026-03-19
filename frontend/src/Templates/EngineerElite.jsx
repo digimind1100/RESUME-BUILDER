@@ -20,22 +20,28 @@ export default function EngineerElite() {
   const [profileImage, setProfileImage] = useState(
     "/images/engineereliteprofileimage.png"
   );
-  const profileInputRef = useRef(null);
+  const fileInputRef = useRef(null);
 
-  const handleProfileUpload = (e) => {
-    if (!canEdit) return; // 🔒 safety
-    const file = e.target.files[0];
-    if (file) {
-      setProfileImage(URL.createObjectURL(file));
-    }
+  const handleImageUpload = (event) => {
+    if (!canEdit && isEditable) return; // 🔒 premium guard
+
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const imageUrl = URL.createObjectURL(file);
+    setProfileImage(imageUrl);
   };
 
-  const handleProfileClick = () => {
+
+  const triggerFileSelect = () => {
     if (!canEdit) {
       requirePayment(); // 🔥 open payment modal
       return;
     }
-    profileInputRef.current?.click();
+
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
   };
 
 
@@ -193,18 +199,34 @@ export default function EngineerElite() {
 
 
             <div
-              className={`ee-photo-wrapper ${!canEdit ? "locked" : ""}`}
-              onClick={handleProfileClick}
-              title={canEdit ? "Click to change photo" : "Unlock to change photo"}
-            >
+              className={`ee-photo-wrapper ${!canEdit && isEditable ? "locked" : ""}`}
+              onClick={() => {
+
+                    // free user → open payment modal
+                    if (!canEdit) {
+                      if (requirePayment) requirePayment();
+                      return;
+                    }
+
+                    // paid but editing OFF
+                    if (!isEditable) return;
+
+                    // paid + editing ON
+                    if (fileInputRef.current) {
+                      fileInputRef.current.click();
+                    }
+
+                  }}
+              title={canEdit && isEditable ? "Click to change photo" : "Unlock to change photo"}
+             >
               <img src={profileImage} alt="Profile" className="ee-photo" />
 
               <input
                 type="file"
                 accept="image/*"
-                ref={profileInputRef}
+                ref={fileInputRef}
                 style={{ display: "none" }}
-                onChange={handleProfileUpload}
+                onChange={handleImageUpload}
               />
 
               {!canEdit && (
@@ -235,9 +257,9 @@ export default function EngineerElite() {
             <section className="ee-side-section">
               <h3 className="ee-side-heading">SKILLS</h3>
               <ul className="ee-side-list">
-                <li contentEditable={canEdit}>CAD Modeling</li>
-                <li contentEditable={canEdit}>Thermodynamics</li>
-                <li contentEditable={canEdit}>Finite Element Analysis</li>
+                <li contentEditable={canEdit && isEditable}>CAD Modeling</li>
+                <li contentEditable={canEdit && isEditable}>Thermodynamics</li>
+                <li contentEditable={canEdit && isEditable}>Finite Element Analysis</li>
                 <li contentEditable={canEdit}>Problem Solving</li>
                 <li contentEditable={canEdit}>Technical Writing</li>
               </ul>
