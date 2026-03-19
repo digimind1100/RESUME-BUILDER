@@ -35,6 +35,7 @@ const handleDownloadPDF = async () => {
     root.querySelector(".av-a4") ||
     root.querySelector(".rb-resume") ||
     root.querySelector(".cb-resume") ||
+    root.querySelector(".de-resume") ||
     root;
 
   await new Promise((r) => setTimeout(r, 200));
