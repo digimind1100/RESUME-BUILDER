@@ -86,24 +86,6 @@ export default function EngineerElite() {
     }
   };
 
-  // ---- Download PDF ----
-  const handleDownloadPDF = async () => {
-    const element = resumeRef.current;
-    if (!element) return;
-
-    const canvas = await html2canvas(element, { scale: 2, useCORS: true });
-
-    const pdf = new jsPDF("p", "mm", "a4");
-    const imgData = canvas.toDataURL("image/png");
-    const pdfWidth = 210;
-    const imgHeight = (canvas.height * pdfWidth) / canvas.width;
-
-    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, imgHeight);
-    pdf.save("engineer-elite-resume.pdf");
-  };
-
-  const handleReset = () => window.location.reload();
-
   return (
  <TemplateLayout
       templateId="DataElite"
@@ -122,12 +104,8 @@ export default function EngineerElite() {
 
           <div className="ee-form-field">
             <label>Full Name</label>
-            <input name="fullName" value={info.fullName} onChange={handleInfoChange} disabled={!canEdit}
-              onFocus={() => {
-                if (!canEdit) {
-                  requirePayment();
-                }
-              }}
+            <input name="fullName" value={info.fullName} onChange={handleInfoChange} disabled={!(canEdit && isEditable)}
+              
               placeholder="Enter your full name"
             />
 
@@ -237,7 +215,7 @@ export default function EngineerElite() {
       </div>
 
       {/* ---------- A4 RESUME ---------- */}
-      <div className="ee-a4" ref={resumeRef} style={{ position: "relative" }}>
+      <div className="ee-a4" ref={pdfRef} style={{ position: "relative" }}>
 
 
         <div className="ee-resume">
