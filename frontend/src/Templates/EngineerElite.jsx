@@ -94,9 +94,9 @@ export default function EngineerElite() {
 
   return (
  <TemplateLayout
-      templateId="DataElite"
-      wrapperClass="de-wrapper"
-      resumeClass="de-resume"
+      templateId="EngineerElite"
+      wrapperClass="ee-wrapper"
+      resumeClass="ee-resume"
     >
       {({ canEdit, isEditable, pdfRef, requirePayment }) => (
 
