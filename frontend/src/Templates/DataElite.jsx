@@ -59,9 +59,9 @@ export default function DataElite() {
 
   return (
     <TemplateLayout
-      templateId="CreativeBold"
-      wrapperClass="cb-wrapper"
-      resumeClass="cb-resume"
+      templateId="DataElite"
+      wrapperClass="de-wrapper"
+      resumeClass="de-resume"
     >
       {({ canEdit, isEditable, pdfRef, requirePayment }) => (
         <div className="de-wrapper">

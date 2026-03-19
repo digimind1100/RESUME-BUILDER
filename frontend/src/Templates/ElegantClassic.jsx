@@ -17,9 +17,9 @@ const ElegantClassic = () => {
 
     return (
         <TemplateLayout
-            templateId="CreativeBold"
-            wrapperClass="cb-wrapper"
-            resumeClass="cb-resume"
+            templateId="ElegantClassic"
+            wrapperClass="ec-wrapper"
+            resumeClass="ec-resume"
         >
             {({ canEdit, isEditable, pdfRef }) => (
                 <div className="ec-wrapper">
