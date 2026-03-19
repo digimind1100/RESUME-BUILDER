@@ -152,7 +152,6 @@ background: #e5e7eb;
   align-items: center;     /* centers horizontally */
   justify-content: flex-start;
   width: 100%;
-  padding: 20px;
   box-sizing: border-box;
 }
 
