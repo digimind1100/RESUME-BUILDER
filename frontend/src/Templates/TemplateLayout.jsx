@@ -37,6 +37,7 @@ const handleDownloadPDF = async () => {
     root.querySelector(".cb-resume") ||
     root.querySelector(".de-resume") ||
     root.querySelector(".ec-resume") ||
+    root.querySelector(".ee.resume") ||
     root;
 
   await new Promise((r) => setTimeout(r, 200));
