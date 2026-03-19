@@ -1,6 +1,7 @@
 // src/Templates/MinimalAccent.jsx
 import React, { useRef, useState } from "react";
 import "./MinimalAccent.css";
+import TemplateLayout from "./TemplateLayout";
 import { useNavigate } from "react-router-dom";
 
 import { useAuth } from "../context/AuthContext";
