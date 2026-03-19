@@ -22,7 +22,7 @@ const MinimalAccent = () => {
   const fileInputRef = useRef(null);
 
   const handleImageUpload = (event) => {
-    if (!canEdit) return;
+    if (!canEdit && isEditable) return; // 🔒 premium guard
 
     const file = event.target.files[0];
     if (!file) return;
@@ -31,7 +31,13 @@ const MinimalAccent = () => {
     setProfileImage(imageUrl);
   };
 
+
   const triggerFileSelect = () => {
+    if (!canEdit) {
+      requirePayment(); // 🔥 open payment modal
+      return;
+    }
+
     if (fileInputRef.current) {
       fileInputRef.current.click();
     }
@@ -54,15 +60,19 @@ const MinimalAccent = () => {
               {/* Profile Photo */}
             <div
               className={`ma-photo-wrapper ${!canEdit ? "locked" : ""}`}
-              onClick={() => {
-                if (!requirePayment()) return;
-                triggerFileSelect();
-              }}
-              title={
-                canEdit
-                  ? "Click to change photo"
-                  : "Unlock to change photo"
-              }
+             onClick={() => {
+                    // free user → open payment modal
+                    if (!canEdit) {
+                      if (requirePayment) requirePayment();
+                      return;
+                    }
+                    // paid but editing OFF
+                    if (!isEditable) return;
+                    // paid + editing ON
+                    if (fileInputRef.current) {
+                      fileInputRef.current.click();
+                    }
+                  }}
             >
               <img src={profileImage} alt="Profile" className="ma-photo" />
               <input
