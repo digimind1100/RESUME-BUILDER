@@ -260,24 +260,24 @@ export default function EngineerElite() {
                 <li contentEditable={canEdit && isEditable}>CAD Modeling</li>
                 <li contentEditable={canEdit && isEditable}>Thermodynamics</li>
                 <li contentEditable={canEdit && isEditable}>Finite Element Analysis</li>
-                <li contentEditable={canEdit}>Problem Solving</li>
-                <li contentEditable={canEdit}>Technical Writing</li>
+                <li contentEditable={canEdit && isEditable}>Problem Solving</li>
+                <li contentEditable={canEdit && isEditable}>Technical Writing</li>
               </ul>
             </section>
 
             <section className="ee-side-section">
               <h3 className="ee-side-heading">TOOLS</h3>
               <ul className="ee-side-list">
-                <li contentEditable={canEdit}>SolidWorks</li>
-                <li contentEditable={canEdit}>AutoCAD</li>
-                <li contentEditable={canEdit}>MATLAB</li>
-                <li contentEditable={canEdit}>MS Office</li>
+                <li contentEditable={canEdit && isEditable}>SolidWorks</li>
+                <li contentEditable={canEdit && isEditable}>AutoCAD</li>
+                <li contentEditable={canEdit && isEditable}>MATLAB</li>
+                <li contentEditable={canEdit && isEditable}>MS Office</li>
               </ul>
             </section>
 
             <section className="ee-side-section">
               <h3 className="ee-side-heading">CERTIFICATIONS</h3>
-              <p className="ee-side-text" contentEditable={canEdit}>
+              <p className="ee-side-text" contentEditable={canEdit && isEditable}>
                 Certified SolidWorks Professional (CSWP)
                 <br />
                 Professional Engineer (PE)
@@ -289,80 +289,80 @@ export default function EngineerElite() {
           <main className="ee-main">
 
             <header className="ee-header">
-              <h1 className="ee-name" contentEditable={canEdit}>EMMA ROBERTS</h1>
-              <p className="ee-title" contentEditable={canEdit}>MECHANICAL ENGINEER</p>
+              <h1 className="ee-name" contentEditable={canEdit && isEditable}>EMMA ROBERTS</h1>
+              <p className="ee-title" contentEditable={canEdit && isEditable}>MECHANICAL ENGINEER</p>
               <div className="ee-header-line" />
             </header>
 
             <section className="ee-section">
-              <h2 className="ee-section-title" contentEditable={canEdit}>SUMMARY</h2>
-              <p className="ee-section-text" contentEditable={canEdit}>
+              <h2 className="ee-section-title" contentEditable={canEdit && isEditable}>SUMMARY</h2>
+              <p className="ee-section-text" contentEditable={canEdit && isEditable}>
                 Detail-oriented mechanical engineer with 6+ years of experience...
               </p>
             </section>
 
             <section className="ee-section">
-              <h2 className="ee-section-title" contentEditable={canEdit}>EXPERIENCE</h2>
+              <h2 className="ee-section-title" contentEditable={canEdit && isEditable}>EXPERIENCE</h2>
 
               <div className="ee-job">
                 <div className="ee-job-header">
                   <div>
-                    <p className="ee-job-title" contentEditable={canEdit}>Mechanical Engineer</p>
-                    <p className="ee-job-company" contentEditable={canEdit}>ABC Manufacturing — Los Angeles</p>
+                    <p className="ee-job-title" contentEditable={canEdit && isEditable}>Mechanical Engineer</p>
+                    <p className="ee-job-company" contentEditable={canEdit && isEditable}>ABC Manufacturing — Los Angeles</p>
                   </div>
-                  <p className="ee-job-dates" contentEditable={canEdit}>2018–Present</p>
+                  <p className="ee-job-dates" contentEditable={canEdit && isEditable}>2018–Present</p>
                 </div>
 
                 <ul className="ee-job-list">
-                  <li contentEditable={canEdit}>Lead design and validation...</li>
-                  <li contentEditable={canEdit}>Collaborate with cross-functional teams...</li>
-                  <li contentEditable={canEdit}>Develop detailed CAD models...</li>
-                  <li contentEditable={canEdit}>Implement design improvements...</li>
+                  <li contentEditable={canEdit && isEditable}>Lead design and validation...</li>
+                  <li contentEditable={canEdit && isEditable}>Collaborate with cross-functional teams...</li>
+                  <li contentEditable={canEdit && isEditable}>Develop detailed CAD models...</li>
+                  <li contentEditable={canEdit && isEditable}>Implement design improvements...</li>
                 </ul>
               </div>
 
               <div className="ee-job">
                 <div className="ee-job-header">
                   <div>
-                    <p className="ee-job-title" contentEditable={canEdit}>Jr. Mechanical Engineer</p>
-                    <p className="ee-job-company" contentEditable={canEdit}>XYZ Technologies — Pasadena</p>
+                    <p className="ee-job-title" contentEditable={canEdit && isEditable}>Jr. Mechanical Engineer</p>
+                    <p className="ee-job-company" contentEditable={canEdit && isEditable}>XYZ Technologies — Pasadena</p>
                   </div>
-                  <p className="ee-job-dates" contentEditable={canEdit}>2015–2018</p>
+                  <p className="ee-job-dates" contentEditable={canEdit && isEditable}>2015–2018</p>
                 </div>
 
                 <ul className="ee-job-list">
-                  <li contentEditable={canEdit}>Assisted in mechanical design...</li>
-                  <li contentEditable={canEdit}>Supported field installations...</li>
-                  <li contentEditable={canEdit}>Prepared technical reports...</li>
+                  <li contentEditable={canEdit && isEditable}>Assisted in mechanical design...</li>
+                  <li contentEditable={canEdit && isEditable}>Supported field installations...</li>
+                  <li contentEditable={canEdit && isEditable}>Prepared technical reports...</li>
                 </ul>
               </div>
             </section>
 
             <section className="ee-section">
-              <h2 className="ee-section-title" contentEditable={canEdit}>PROJECTS</h2>
+              <h2 className="ee-section-title" contentEditable={canEdit && isEditable}>PROJECTS</h2>
 
               <div className="ee-project">
                 <div className="ee-project-header">
-                  <p className="ee-project-title" contentEditable={canEdit}>Heat Exchanger Optimization</p>
-                  <p className="ee-project-year" contentEditable={canEdit}>2020</p>
+                  <p className="ee-project-title" contentEditable={canEdit && isEditable}>Heat Exchanger Optimization</p>
+                  <p className="ee-project-year" contentEditable={canEdit && isEditable}>2020</p>
                 </div>
-                <p className="ee-section-text" contentEditable={canEdit}>
+                <p className="ee-section-text" contentEditable={canEdit && isEditable}>
                   Led a cross-functional engineering team to redesign...
                 </p>
               </div>
             </section>
 
             <section className="ee-section ee-last">
-              <h2 className="ee-section-title" contentEditable={canEdit}>EDUCATION</h2>
+              <h2 className="ee-section-title" contentEditable={canEdit && isEditable}>EDUCATION</h2>
 
               <div className="ee-edu-item">
-                <p className="ee-edu-degree" contentEditable={canEdit}>M.S. in Mechanical Engineering</p>
-                <p className="ee-edu-meta" contentEditable={canEdit}>UC Berkeley — 2015–2018</p>
+                <p className="ee-edu-degree" contentEditable={canEdit && isEditable}>M.S. in Mechanical Engineering</p>
+                <p className="ee-edu-meta" contentEditable={canEdit && isEditable}>UC Berkeley — 2015–2018</p>
               </div>
 
               <div className="ee-edu-item">
-                <p className="ee-edu-degree" contentEditable={canEdit}>B.S. in Mechanical Engineering</p>
-                <p className="ee-edu-meta" contentEditable={canEdit}>UT Austin — 2009–2013</p>
+                <p className="ee-edu-degree" contentEditable={canEdit && isEditable}>B.S. in Mechanical Engineering</p>
+                <p className="ee-edu-meta" contentEditable={canEdit && isEditable}>UT Austin — 2009–2013</p>
               </div>
             </section>
           </main>
