@@ -17,24 +17,30 @@ export default function DataElite() {
   const [profileImage, setProfileImage] = useState(
     "/images/creativeboldimage.png"
   );
-  const profileInputRef = useRef(null);
+  const fileInputRef = useRef(null);
 
-  const handleProfileUpload = (e) => {
-    if (!canEdit && isEditable && isEditable) return; // 🔒 premium guard
-    const file = e.target.files[0];
+   const handleImageUpload = (event) => {
+    if (!canEdit && isEditable) return; // 🔒 premium guard
+
+    const file = event.target.files[0];
     if (!file) return;
-    setProfileImage(URL.createObjectURL(file));
+
+    const imageUrl = URL.createObjectURL(file);
+    setProfileImage(imageUrl);
   };
 
-  const triggerProfileSelect = () => {
-    if (!canEdit && isEditable) {
+
+  const triggerFileSelect = () => {
+    if (!canEdit) {
       requirePayment(); // 🔥 open payment modal
       return;
     }
-    profileInputRef.current?.click();
+
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
   };
-
-
+  
   /* -------- QR CODE GENERATION -------- */
   const [qrContent, setQrContent] = useState(
     "https://your-portfolio-or-dashboard-link.com"
@@ -111,7 +117,7 @@ export default function DataElite() {
                   <input
                     type="file"
                     accept="image/*"
-                    ref={profileInputRef}
+                    ref={fileInputRef}
                     style={{ display: "none" }}
                     onChange={handleProfileUpload}
                   />
