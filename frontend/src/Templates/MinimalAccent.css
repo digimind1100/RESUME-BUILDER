@@ -1,12 +1,13 @@
 /* PAGE WRAPPER */
 .ma-wrapper {
   text-align: center;
-  padding: 20px;
   background: #e5e7eb;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 0;
+  padding: 0;
 }
 
 /* Top buttons */

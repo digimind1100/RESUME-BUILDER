@@ -2,14 +2,9 @@
 import React, { useRef, useState } from "react";
 import "./MinimalAccent.css";
 import { useNavigate } from "react-router-dom";
-import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
-// for payments start
-import usePaymentGuard from "../hooks/usePaymentGuard";
-import PaymentGate from "../components/payment/PaymentGate";
+
 import { useAuth } from "../context/AuthContext";
 // end
-import Watermark from "../components/Watermark";
 
 const MinimalAccent = () => {
   const resumeRef = useRef(null);
@@ -18,21 +13,7 @@ const MinimalAccent = () => {
   // for payment start
   const { user, setUser } = useAuth();
 
-  const {
-    isPaid,
-    showPaymentModal,
-    setShowPaymentModal,
-    requirePayment,
-    handlePaymentSuccess,
-  } = usePaymentGuard("MinimalAccent"); // 🔴 TEMPLATE NAME
 
-  const canEdit = isPaid;
-
-  // end
-
-  // ⭐ EDIT FEATURE
-
-  // Profile Image Upload
    // Profile Image
   const [profileImage, setProfileImage] = useState(
     "/images/minimalaccentprofileimage.png"
@@ -55,65 +36,18 @@ const MinimalAccent = () => {
     }
   };
 
-  
-  // Download PDF
-  const handleDownloadPDF = async () => {
-    const element = resumeRef.current;
-    if (!element) return;
-
-    const canvas = await html2canvas(element, {
-      scale: 2,
-      useCORS: true,
-    });
-
-    const imgData = canvas.toDataURL("image/png");
-    const pdf = new jsPDF("p", "mm", "a4");
-    const pdfWidth = 210;
-    const imgHeight = (canvas.height * pdfWidth) / canvas.width;
-
-    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, imgHeight);
-    pdf.save("minimal-accent-resume.pdf");
-  };
-
-  // Reset
-  const handleReset = () => {
-    window.location.reload();
-  };
 
   return (
-    <div className="ma-wrapper">
-      {/* Top Buttons */}
-      <div className="ma-buttons">
-        <button onClick={handleDownloadPDF}>Download PDF</button>
-        <button onClick={() => navigate("/templates")}>
-          Back to Templates
-        </button>
-        <button onClick={handleReset}>Reset</button>
-
-        {/* ⭐ EDIT BUTTON */}
-        {/* for payment start     */}
-
-        <button
-          className={canEdit ? "edit-btn on" : "edit-btn off"}
-          onClick={() => {
-            if (!requirePayment()) return;
-          }}
+    <TemplateLayout
+          templateId="MinimalAccent"
+          wrapperClass="ma-wrapper"
+          resumeClass="ma-resume"
         >
-          {canEdit ? "Editing: ON" : "Editing: OFF"}
-           {!canEdit && <span className="edit-crown">👑</span>}
-        </button>
-
-
-        {/* end  */}
-      </div>
-
+          {({ canEdit, isEditable, pdfRef, requirePayment }) => (
+    <div className="ma-wrapper">
       {/* A4 Resume Area */}
-      <div className="ma-a4" ref={resumeRef} style={{ position: "relative" }}>
-  <Watermark show={!canEdit} />
-
+      <div className="ma-a4" ref={pdfRef} style={{ position: "relative" }}>
   <div className="ma-resume">
-
-
           {/* LEFT BLUE SIDEBAR */}
           <aside className="ma-sidebar">
               {/* Profile Photo */}
@@ -141,28 +75,28 @@ const MinimalAccent = () => {
 
             {/* Contact Card */}
             <section className="ma-card">
-              <p className="ma-card-line" contentEditable={canEdit}>
+              <p className="ma-card-line" contentEditable={canEdit && isEditable}>
                 Street Address
               </p>
-              <p className="ma-card-line" contentEditable={canEdit}>
+              <p className="ma-card-line" contentEditable={canEdit && isEditable}>
                 City, State ZIP Code
               </p>
-              <p className="ma-card-line" contentEditable={canEdit}>
+              <p className="ma-card-line" contentEditable={canEdit && isEditable}>
                 (123) 456-7890
               </p>
-              <p className="ma-card-line" contentEditable={canEdit}>
+              <p className="ma-card-line" contentEditable={canEdit && isEditable}>
                 email@address.com
               </p>
             </section>
 
             {/* Skills */}
             <section className="ma-sidebar-section">
-              <h3 className="ma-sidebar-heading" contentEditable={canEdit}>
+              <h3 className="ma-sidebar-heading" contentEditable={canEdit && isEditable}>
                 SKILLS
               </h3>
 
               <div className="ma-skill">
-                <div className="ma-skill-label" contentEditable={canEdit}>
+                <div className="ma-skill-label" contentEditable={canEdit && isEditable}>
                   Skill 1
                 </div>
                 <div className="ma-skill-bar">
@@ -171,7 +105,7 @@ const MinimalAccent = () => {
               </div>
 
               <div className="ma-skill">
-                <div className="ma-skill-label" contentEditable={canEdit}>
+                <div className="ma-skill-label" contentEditable={canEdit && isEditable}>
                   Skill 2
                 </div>
                 <div className="ma-skill-bar">
@@ -180,7 +114,7 @@ const MinimalAccent = () => {
               </div>
 
               <div className="ma-skill">
-                <div className="ma-skill-label" contentEditable={canEdit}>
+                <div className="ma-skill-label" contentEditable={canEdit && isEditable}>
                   Skill 3
                 </div>
                 <div className="ma-skill-bar">
@@ -189,7 +123,7 @@ const MinimalAccent = () => {
               </div>
 
               <div className="ma-skill">
-                <div className="ma-skill-label" contentEditable={canEdit}>
+                <div className="ma-skill-label" contentEditable={canEdit && isEditable}>
                   Skill 4
                 </div>
                 <div className="ma-skill-bar">
@@ -200,30 +134,30 @@ const MinimalAccent = () => {
 
             {/* References */}
             <section className="ma-sidebar-section">
-              <h3 className="ma-sidebar-heading" contentEditable={canEdit}>
+              <h3 className="ma-sidebar-heading" contentEditable={canEdit && isEditable}>
                 REFERENCES
               </h3>
 
               <div className="ma-ref-block">
-                <p className="ma-ref-name" contentEditable={canEdit}>
+                <p className="ma-ref-name" contentEditable={canEdit && isEditable}>
                   James Smith
                 </p>
-                <p className="ma-ref-line" contentEditable={canEdit}>
+                <p className="ma-ref-line" contentEditable={canEdit && isEditable}>
                   Job Title – Company Name
                 </p>
-                <p className="ma-ref-line" contentEditable={canEdit}>
+                <p className="ma-ref-line" contentEditable={canEdit && isEditable}>
                   Phone / Email
                 </p>
               </div>
 
               <div className="ma-ref-block">
-                <p className="ma-ref-name" contentEditable={canEdit}>
+                <p className="ma-ref-name" contentEditable={canEdit && isEditable}>
                   Sarah Johnson
                 </p>
-                <p className="ma-ref-line" contentEditable={canEdit}>
+                <p className="ma-ref-line" contentEditable={canEdit && isEditable}>
                   Job Title – Company Name
                 </p>
-                <p className="ma-ref-line" contentEditable={canEdit}>
+                <p className="ma-ref-line" contentEditable={canEdit && isEditable}>
                   Phone / Email
                 </p>
               </div>
@@ -234,10 +168,10 @@ const MinimalAccent = () => {
           <div className="ma-main">
             {/* HEADER */}
             <header className="ma-header">
-              <h1 className="ma-name" contentEditable={canEdit}>
+              <h1 className="ma-name" contentEditable={canEdit && isEditable}>
                 ANNA MARIA
               </h1>
-              <p className="ma-title" contentEditable={canEdit}>
+              <p className="ma-title" contentEditable={canEdit && isEditable}>
                 GRAPHIC DESIGNER
               </p>
               <div className="ma-header-line" />
@@ -245,10 +179,10 @@ const MinimalAccent = () => {
 
             {/* PROFILE */}
             <section className="ma-section">
-              <h2 className="ma-section-title" contentEditable={canEdit}>
+              <h2 className="ma-section-title" contentEditable={canEdit && isEditable}>
                 PROFILE
               </h2>
-              <p className="ma-section-text" contentEditable={canEdit}>
+              <p className="ma-section-text" contentEditable={canEdit && isEditable}>
                 Ut enim ad minim veniam, quis nostrud exerc. Iure dolor in
                 reprehenderit in voluptate velit esse cillum dolore magna
                 aliqua...
@@ -257,7 +191,7 @@ const MinimalAccent = () => {
 
             {/* EXPERIENCE */}
             <section className="ma-section">
-              <h2 className="ma-section-title" contentEditable={canEdit}>
+              <h2 className="ma-section-title" contentEditable={canEdit && isEditable}>
                 EXPERIENCE
               </h2>
 
@@ -269,13 +203,13 @@ const MinimalAccent = () => {
                 </div>
 
                 <div className="ma-exp-content">
-                  <p className="ma-exp-title" contentEditable={canEdit}>
+                  <p className="ma-exp-title" contentEditable={canEdit && isEditable}>
                     JOB TITLE – (DEC 2010 – PRESENT)
                   </p>
-                  <p className="ma-exp-company" contentEditable={canEdit}>
+                  <p className="ma-exp-company" contentEditable={canEdit && isEditable}>
                     COMPANY NAME – City, Country
                   </p>
-                  <p className="ma-section-text" contentEditable={canEdit}>
+                  <p className="ma-section-text" contentEditable={canEdit && isEditable}>
                     Ut enim ad minim veniam, quis nostrud exerc...
                   </p>
                 </div>
@@ -289,13 +223,13 @@ const MinimalAccent = () => {
                 </div>
 
                 <div className="ma-exp-content">
-                  <p className="ma-exp-title" contentEditable={canEdit}>
+                  <p className="ma-exp-title" contentEditable={canEdit && isEditable}>
                     JOB TITLE – (DEC 2006 – 2010)
                   </p>
-                  <p className="ma-exp-company" contentEditable={canEdit}>
+                  <p className="ma-exp-company" contentEditable={canEdit && isEditable}>
                     COMPANY NAME – City, Country
                   </p>
-                  <p className="ma-section-text" contentEditable={canEdit}>
+                  <p className="ma-section-text" contentEditable={canEdit && isEditable}>
                     Ut enim ad minim veniam, quis nostrud exerc...
                   </p>
                 </div>
@@ -304,7 +238,7 @@ const MinimalAccent = () => {
 
             {/* EDUCATION */}
             <section className="ma-section ma-section-last">
-              <h2 className="ma-section-title" contentEditable={canEdit}>
+              <h2 className="ma-section-title" contentEditable={canEdit && isEditable}>
                 EDUCATION
               </h2>
 
@@ -316,13 +250,13 @@ const MinimalAccent = () => {
                 </div>
 
                 <div className="ma-exp-content">
-                  <p className="ma-exp-title" contentEditable={canEdit}>
+                  <p className="ma-exp-title" contentEditable={canEdit && isEditable}>
                     DIPLOMA – (2003–2005)
                   </p>
-                  <p className="ma-exp-company" contentEditable={canEdit}>
+                  <p className="ma-exp-company" contentEditable={canEdit && isEditable}>
                     SCHOOL NAME – City, Country
                   </p>
-                  <p className="ma-section-text" contentEditable={canEdit}>
+                  <p className="ma-section-text" contentEditable={canEdit && isEditable}>
                     Ut enim ad minim veniam...
                   </p>
                 </div>
@@ -336,29 +270,25 @@ const MinimalAccent = () => {
                 </div>
 
                 <div className="ma-exp-content">
-                  <p className="ma-exp-title" contentEditable={canEdit}>
+                  <p className="ma-exp-title" contentEditable={canEdit && isEditable}>
                     DIPLOMA – (2000–2003)
                   </p>
-                  <p className="ma-exp-company" contentEditable={canEdit}>
+                  <p className="ma-exp-company" contentEditable={canEdit && isEditable}>
                     SCHOOL NAME – City, Country
                   </p>
-                  <p className="ma-section-text" contentEditable={canEdit}>
+                  <p className="ma-section-text" contentEditable={canEdit && isEditable}>
                     Ut enim ad minim veniam...
                   </p>
                 </div>
               </div>
             </section>
-
-            <PaymentGate
-              open={showPaymentModal}
-              onClose={() => setShowPaymentModal(false)}
-              onSuccess={handlePaymentSuccess}
-            />
-
           </div>
         </div>
       </div>
     </div>
+     )
+          }
+        </TemplateLayout>
   );
 };
 
