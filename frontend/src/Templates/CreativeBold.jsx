@@ -12,8 +12,6 @@ const CreativeBold = () => {
 
   const { user, setUser } = useAuth();
 
-  /* ===== EDIT MODE TOGGLE ===== */
-
   // ----- Profile Image Upload -----
   const [profileImage, setProfileImage] = useState("/images/creativeboldimage.png");
   const fileInputRef = useRef(null);
@@ -39,7 +37,6 @@ const CreativeBold = () => {
       fileInputRef.current.click();
     }
   };
-
 
   return (
     <TemplateLayout
