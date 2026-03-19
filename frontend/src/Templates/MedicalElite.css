@@ -1,9 +1,14 @@
 /* Wrapper */
 .me-wrapper {
-  padding: 20px;
-  background: #eef2f5;
+background: #e5e7eb;
   min-height: 100vh;
-  text-align: center;
+  padding: 20px;
+  padding-top: 0;
+  margin-top: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Buttons */
