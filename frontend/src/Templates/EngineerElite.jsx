@@ -105,7 +105,6 @@ export default function EngineerElite() {
           <div className="ee-form-field">
             <label>Full Name</label>
             <input name="fullName" value={info.fullName} onChange={handleInfoChange} disabled={!(canEdit && isEditable)}
-              
               placeholder="Enter your full name"
             />
 
@@ -113,96 +112,64 @@ export default function EngineerElite() {
 
           <div className="ee-form-field">
             <label>Email</label>
-            <input name="email" value={info.email} onChange={handleInfoChange} disabled={!canEdit}
-              onFocus={() => {
-                if (!canEdit) {
-                  requirePayment();
-                }
-              }}
+            <input name="email" value={info.email} onChange={handleInfoChange} disabled={!(canEdit && isEditable)}
+             
               placeholder="Enter your Email"
             />
           </div>
 
           <div className="ee-form-field">
             <label>Telephone</label>
-            <input name="phone" value={info.phone} onChange={handleInfoChange} disabled={!canEdit}
-              onFocus={() => {
-                if (!canEdit) {
-                  requirePayment();
-                }
-              }}
+            <input name="phone" value={info.phone} onChange={handleInfoChange} disabled={!(canEdit && isEditable)}
+              
               placeholder="Enter your Telephone"
             />
           </div>
 
           <div className="ee-form-field">
             <label>Address</label>
-            <input name="address" value={info.address} onChange={handleInfoChange} disabled={!canEdit}
-              onFocus={() => {
-                if (!canEdit) {
-                  requirePayment();
-                }
-              }}
+            <input name="address" value={info.address} onChange={handleInfoChange} disabled={!(canEdit && isEditable)}
+              
               placeholder="Address"
             />
           </div>
 
           <div className="ee-form-field">
             <label>State</label>
-            <input name="state" value={info.state} onChange={handleInfoChange} disabled={!canEdit}
-              onFocus={() => {
-                if (!canEdit) {
-                  requirePayment();
-                }
-              }}
+            <input name="state" value={info.state} onChange={handleInfoChange} disabled={!(canEdit && isEditable)}
+              
               placeholder="Enter your State"
             />
           </div>
 
           <div className="ee-form-field">
             <label>City</label>
-            <input name="city" value={info.city} onChange={handleInfoChange} disabled={!canEdit}
-              onFocus={() => {
-                if (!canEdit) {
-                  requirePayment();
-                }
-              }}
+            <input name="city" value={info.city} onChange={handleInfoChange} disabled={!(canEdit && isEditable)}
+            
               placeholder="Enter your City"
             />
           </div>
 
           <div className="ee-form-field">
             <label>Zip Code</label>
-            <input name="zip" value={info.zip} onChange={handleInfoChange} disabled={!canEdit}
-              onFocus={() => {
-                if (!canEdit) {
-                  requirePayment();
-                }
-              }}
+            <input name="zip" value={info.zip} onChange={handleInfoChange} disabled={!(canEdit && isEditable)}
+            
               placeholder="Enter Zip Code"
             />
           </div>
 
           <div className="ee-form-field">
             <label>LinkedIn</label>
-            <input name="linkedin" value={info.linkedin} onChange={handleInfoChange} disabled={!canEdit}
-              onFocus={() => {
-                if (!canEdit) {
-                  requirePayment();
-                }
-              }}
+            <input name="linkedin" value={info.linkedin} onChange={handleInfoChange} disabled={!(canEdit && isEditable)}
+            
               placeholder="Enter your LinkedIn Profile link"
             />
           </div>
 
           <div className="ee-form-field ee-form-full">
             <label>Engineer ID</label>
-            <input name="engineerId" value={info.engineerId} onChange={handleInfoChange} disabled={!canEdit}
-              onFocus={() => {
-                if (!canEdit) {
-                  requirePayment();
-                }
-              }}
+            <input name="engineerId" value={info.engineerId} onChange={handleInfoChange} disabled={!(canEdit && isEditable)}
+       
               placeholder="Enter your eignineer ID"
             />
           </div>
