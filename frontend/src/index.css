@@ -77,3 +77,20 @@
   max-width:850px;
   width:100%;
 }
+.watermark{
+  position:absolute;
+
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%);
+
+  font-size:60px;
+  color:rgba(0,0,0,0.08);
+
+  pointer-events:none;
+  user-select:none;
+
+  z-index:1;
+  text-align:center;
+  width:100%;
+}
