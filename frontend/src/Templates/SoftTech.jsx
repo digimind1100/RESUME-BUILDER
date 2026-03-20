@@ -2,50 +2,42 @@
 import React, { useRef, useState } from "react";
 import "./SoftTech.css";
 import { useNavigate } from "react-router-dom";
-import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
+import TemplateLayout from "./TemplateLayout";
 import QRCode from "qrcode";
-import usePaymentGuard from "../hooks/usePaymentGuard";
-import PaymentGate from "../components/payment/PaymentGate";
 import { useAuth } from "../context/AuthContext";
-import Watermark from "../components/Watermark";
-
-
 
 export default function SoftTech() {
   const navigate = useNavigate();
   const resumeRef = useRef(null);
   const { user, setUser } = useAuth();
 
-  const {
-    isPaid,
-    showPaymentModal,
-    setShowPaymentModal,
-    requirePayment,
-    handlePaymentSuccess,
-  } = usePaymentGuard("SoftTech");
-
-  const canEdit = isPaid;
-
-
-  /* ---------- GLOBAL EDIT MODE ---------- */
-
   /* ---------- PROFILE IMAGE ---------- */
   const [profileImage, setProfileImage] = useState(
     "/images/minimalaccentprofileimage.png"
   );
-  const profileInputRef = useRef(null);
-
-  const handleProfileUpload = (e) => {
-  if (!canEdit) return;   // extra safety
-  const file = e.target.files[0];
-  if (file) setProfileImage(URL.createObjectURL(file));
-};
-
-
-  const triggerProfileSelect = () => {
-    if (profileInputRef.current) profileInputRef.current.click();
-  };
+  const fileInputRef = useRef(null);
+  
+    const handleImageUpload = (event) => {
+      if (!canEdit && isEditable) return; // 🔒 premium guard
+  
+      const file = event.target.files[0];
+      if (!file) return;
+  
+      const imageUrl = URL.createObjectURL(file);
+      setProfileImage(imageUrl);
+    };
+  
+  
+    const triggerFileSelect = () => {
+      if (!canEdit) {
+        requirePayment(); // 🔥 open payment modal
+        return;
+      }
+  
+      if (fileInputRef.current) {
+        fileInputRef.current.click();
+      }
+    };
 
   /* ---------- PERSONAL INFO FORM (QR DATA) ---------- */
   const [info, setInfo] = useState({
@@ -81,46 +73,17 @@ export default function SoftTech() {
     }
   };
 
-  /* ---------- DOWNLOAD PDF ---------- */
-  const handleDownloadPDF = async () => {
-    const element = resumeRef.current;
-    if (!element) return;
-
-    const canvas = await html2canvas(element, { scale: 2, useCORS: true });
-
-    const imgData = canvas.toDataURL("image/png");
-    const pdf = new jsPDF("p", "mm", "a4");
-
-    const pdfWidth = 210;
-    const imgHeight = (canvas.height * pdfWidth) / canvas.width;
-
-    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, imgHeight);
-    pdf.save("softtech-developer-resume.pdf");
-  };
-
-  const handleReset = () => window.location.reload();
-
+  
   return (
+        <TemplateLayout
+          templateId="SoftTech"
+          wrapperClass="st-wrapper"
+          resumeClass="st-resume"
+        >
+    
+          {({ canEdit, isEditable, pdfRef }) => (
     <div className="st-wrapper">
 
-      {/* ---------- TOP BUTTONS ---------- */}
-      <div className="st-buttons">
-        <button onClick={handleDownloadPDF}>Download PDF</button>
-        <button onClick={() => navigate("/templates")}>Back</button>
-        <button onClick={handleReset}>Reset</button>
-
-        {/* EDIT TOGGLE BUTTON */}
-        <button
-          className={canEdit ? "edit-btn on" : "edit-btn off"}
-          onClick={() => {
-            if (!requirePayment()) return;
-          }}
-        >
-          {canEdit ? "Editing: ON" : "Editing: OFF"}
-           {!canEdit && <span className="edit-crown">👑</span>}
-        </button>
-
-      </div>
 
       {/* ---------- PERSONAL INFO FORM (QR) ---------- */}
       <div className="st-form">
@@ -136,7 +99,7 @@ export default function SoftTech() {
               name="fullName"
               value={info.fullName}
               onChange={handleInfoChange}
-              disabled={!canEdit}
+              disabled={!(canEdit && isEditable)}
               placeholder="Emma Roberts"
             />
           </div>
@@ -148,7 +111,7 @@ export default function SoftTech() {
               type="email"
               value={info.email}
               onChange={handleInfoChange}
-              disabled={!canEdit}
+              disabled={!(canEdit && isEditable)}
               placeholder="emma@mail.com"
             />
           </div>
@@ -159,7 +122,7 @@ export default function SoftTech() {
               name="phone"
               value={info.phone}
               onChange={handleInfoChange}
-              disabled={!canEdit}
+              disabled={!(canEdit && isEditable)}
               placeholder="+1 555-123-4567"
             />
           </div>
@@ -170,7 +133,7 @@ export default function SoftTech() {
               name="address"
               value={info.address}
               onChange={handleInfoChange}
-              disabled={!canEdit}
+              disabled={!(canEdit && isEditable)}
               placeholder="123 Main Street"
             />
           </div>
@@ -181,7 +144,7 @@ export default function SoftTech() {
               name="state"
               value={info.state}
               onChange={handleInfoChange}
-              disabled={!canEdit}
+              disabled={!(canEdit && isEditable)}
               placeholder="CA"
             />
           </div>
@@ -192,7 +155,7 @@ export default function SoftTech() {
               name="city"
               value={info.city}
               onChange={handleInfoChange}
-              disabled={!canEdit}
+              disabled={!(canEdit && isEditable)}
               placeholder="San Francisco"
             />
           </div>
@@ -203,7 +166,7 @@ export default function SoftTech() {
               name="zip"
               value={info.zip}
               onChange={handleInfoChange}
-              disabled={!canEdit}
+              disabled={!(canEdit && isEditable)}
               placeholder="94105"
             />
           </div>
@@ -214,7 +177,7 @@ export default function SoftTech() {
               name="linkedin"
               value={info.linkedin}
               onChange={handleInfoChange}
-              disabled={!canEdit}
+              disabled={!(canEdit && isEditable)}
               placeholder="linkedin.com/in/username"
             />
           </div>
@@ -225,7 +188,7 @@ export default function SoftTech() {
               name="github"
               value={info.github}
               onChange={handleInfoChange}
-              disabled={!canEdit}
+              disabled={!(canEdit && isEditable)}
               placeholder="github.com/username"
             />
           </div>
@@ -236,22 +199,22 @@ export default function SoftTech() {
               name="portfolio"
               value={info.portfolio}
               onChange={handleInfoChange}
-              disabled={!canEdit}
+              disabled={!(canEdit && isEditable)}
               placeholder="https://your-portfolio.com"
             />
           </div>
         </div>
 
         <div className="st-form-actions">
-          <button onClick={handleCreateQr} disabled={!canEdit}>
+          <button onClick={handleCreateQr} disabled={!(canEdit && isEditable)}>
             Create QR Code
           </button>
         </div>
       </div>
 
       {/* ---------- A4 RESUME ---------- */}
-      <div className="resume-a4 st-a4" ref={resumeRef} style={{ position: "relative" }}>
-        <Watermark show={!canEdit} />
+      <div className="resume-a4 st-a4" ref={pdfRef} style={{ position: "relative" }}>
+      
         <div className="st-resume">
 
 
@@ -263,7 +226,7 @@ export default function SoftTech() {
               {qrDataUrl ? (
                 <img src={qrDataUrl} alt="QR Code" className="st-qr-image" />
               ) : (
-                <div className="st-qr-placeholder" contentEditable={canEdit}>
+                <div className="st-qr-placeholder" contentEditable={canEdit && isEditable}>
                   QR CODE
                 </div>
               )}
@@ -271,28 +234,28 @@ export default function SoftTech() {
 
             {/* CONTACT */}
             <section className="st-side-section">
-              <h3 className="st-side-heading" contentEditable={canEdit}>
+              <h3 className="st-side-heading" contentEditable={canEdit && isEditable}>
                 CONTACT
               </h3>
 
               <ul className="st-contact-list">
                 <li>
-                  <span className="st-contact-text" contentEditable={canEdit}>
+                  <span className="st-contact-text" contentEditable={canEdit && isEditable}>
                     +1 555-789-3320
                   </span>
                 </li>
                 <li>
-                  <span className="st-contact-text" contentEditable={canEdit}>
+                  <span className="st-contact-text" contentEditable={canEdit && isEditable}>
                     emma.roberts@mail.com
                   </span>
                 </li>
                 <li>
-                  <span className="st-contact-text" contentEditable={canEdit}>
+                  <span className="st-contact-text" contentEditable={canEdit && isEditable}>
                     San Francisco, CA
                   </span>
                 </li>
                 <li>
-                  <span className="st-contact-text" contentEditable={canEdit}>
+                  <span className="st-contact-text" contentEditable={canEdit && isEditable}>
                     www.emmadev.com
                   </span>
                 </li>
@@ -301,30 +264,30 @@ export default function SoftTech() {
 
             {/* SKILLS */}
             <section className="st-side-section">
-              <h3 className="st-side-heading" contentEditable={canEdit}>SKILLS</h3>
+              <h3 className="st-side-heading" contentEditable={canEdit && isEditable}>SKILLS</h3>
               <ul className="st-side-list">
-                <li contentEditable={canEdit}>JavaScript (ES6+)</li>
-                <li contentEditable={canEdit}>React & Next.js</li>
-                <li contentEditable={canEdit}>Node.js & Express</li>
-                <li contentEditable={canEdit}>REST & GraphQL APIs</li>
+                <li contentEditable={canEdit && isEditable}>JavaScript (ES6+)</li>
+                <li contentEditable={canEdit && isEditable}>React & Next.js</li>
+                <li contentEditable={canEdit && isEditable}>Node.js & Express</li>
+                <li contentEditable={canEdit && isEditable}>REST & GraphQL APIs</li>
               </ul>
             </section>
 
             {/* TECH STACK */}
             <section className="st-side-section">
-              <h3 className="st-side-heading" contentEditable={canEdit}>TECH STACK</h3>
+              <h3 className="st-side-heading" contentEditable={canEdit && isEditable}>TECH STACK</h3>
               <ul className="st-side-list">
-                <li contentEditable={canEdit}>TypeScript</li>
-                <li contentEditable={canEdit}>Python / Django</li>
-                <li contentEditable={canEdit}>PostgreSQL, MongoDB</li>
-                <li contentEditable={canEdit}>AWS / Docker / CI-CD</li>
+                <li contentEditable={canEdit && isEditable}>TypeScript</li>
+                <li contentEditable={canEdit && isEditable}>Python / Django</li>
+                <li contentEditable={canEdit && isEditable}>PostgreSQL, MongoDB</li>
+                <li contentEditable={canEdit && isEditable}>AWS / Docker / CI-CD</li>
               </ul>
             </section>
 
             {/* CERTIFICATIONS */}
             <section className="st-side-section">
-              <h3 className="st-side-heading" contentEditable={canEdit}>CERTIFICATIONS</h3>
-              <p className="st-side-text" contentEditable={canEdit}>
+              <h3 className="st-side-heading" contentEditable={canEdit && isEditable}>CERTIFICATIONS</h3>
+              <p className="st-side-text" contentEditable={canEdit && isEditable}>
                 AWS Certified Solutions Architect
                 Google Cloud Developer
                 Scrum Master (PSM I)
@@ -336,7 +299,7 @@ export default function SoftTech() {
               {qrDataUrl ? (
                 <img src={qrDataUrl} alt="QR Code" className="st-qr-image" />
               ) : (
-                <div className="st-qr-placeholder" contentEditable={canEdit}>
+                <div className="st-qr-placeholder" contentEditable={canEdit && isEditable}>
                   QR CODE
                 </div>
               )}
@@ -349,10 +312,10 @@ export default function SoftTech() {
             {/* HEADER */}
             <header className="st-header">
               <div className="st-header-left">
-                <h1 className="st-name" contentEditable={canEdit}>
+                <h1 className="st-name" contentEditable={canEdit && isEditable}>
                   EMMA ROBERTS
                 </h1>
-                <p className="st-title" contentEditable={canEdit}>
+                <p className="st-title" contentEditable={canEdit && isEditable}>
                   FULL STACK DEVELOPER
                 </p>
                 <div className="st-header-line" />
@@ -360,24 +323,38 @@ export default function SoftTech() {
 
               <div
         className={`st-header-photo ${!canEdit ? "locked" : ""}`}
-      onClick={() => {if (!requirePayment()) return; triggerProfileSelect();}}>
+
+      onClick={() => {
+                    // free user → open payment modal
+                    if (!canEdit) {
+                      if (requirePayment) requirePayment();
+                      return;
+                    }
+                    // paid but editing OFF
+                    if (!isEditable) return;
+                    // paid + editing ON
+                    if (fileInputRef.current) {
+                      fileInputRef.current.click();
+                    }
+                  }}>
+        
         <img src={profileImage} alt="Profile" />
           <input
             type="file"
             accept="image/*"
-            ref={profileInputRef}
+            ref={fileInputRef}
             style={{ display: "none" }}
-            onChange={handleProfileUpload}
+            onChange={handleImageUpload}
        />
              </div>
             </header>
 
             {/* ABOUT ME */}
             <section className="st-section">
-              <h2 className="st-section-title" contentEditable={canEdit}>
+              <h2 className="st-section-title" contentEditable={canEdit && isEditable}>
                 ABOUT ME
               </h2>
-              <p className="st-section-text" contentEditable={canEdit}>
+              <p className="st-section-text" contentEditable={canEdit && isEditable}>
                 Passionate full stack developer with 7+ years of experience
                 designing and implementing scalable applications.
               </p>
@@ -385,56 +362,56 @@ export default function SoftTech() {
 
             {/* EXPERIENCE */}
             <section className="st-section">
-              <h2 className="st-section-title" contentEditable={canEdit}>
+              <h2 className="st-section-title" contentEditable={canEdit && isEditable}>
                 EXPERIENCE
               </h2>
 
               <div className="st-job">
                 <div className="st-job-header">
                   <div>
-                    <p className="st-job-title" contentEditable={canEdit}>
+                    <p className="st-job-title" contentEditable={canEdit && isEditable}>
                       Senior Full Stack Developer
                     </p>
-                    <p className="st-job-company" contentEditable={canEdit}>
+                    <p className="st-job-company" contentEditable={canEdit && isEditable}>
                       Meta — Menlo Park, CA
                     </p>
                   </div>
-                  <p className="st-job-dates" contentEditable={canEdit}>
+                  <p className="st-job-dates" contentEditable={canEdit && isEditable}>
                     2019 – Present
                   </p>
                 </div>
 
                 <ul className="st-job-list">
-                  <li contentEditable={canEdit}>Lead development of scalable web apps.</li>
-                  <li contentEditable={canEdit}>Collaborated with cross-functional teams.</li>
-                  <li contentEditable={canEdit}>Improved app performance by 30%.</li>
-                  <li contentEditable={canEdit}>Mentored junior developers.</li>
+                  <li contentEditable={canEdit && isEditable}>Lead development of scalable web apps.</li>
+                  <li contentEditable={canEdit && isEditable}>Collaborated with cross-functional teams.</li>
+                  <li contentEditable={canEdit && isEditable}>Improved app performance by 30%.</li>
+                  <li contentEditable={canEdit && isEditable}>Mentored junior developers.</li>
                 </ul>
               </div>
 
               <div className="st-job">
                 <div className="st-job-header">
                   <div>
-                    <p className="st-job-title" contentEditable={canEdit}>
+                    <p className="st-job-title" contentEditable={canEdit && isEditable}>
                       Full Stack Developer
                     </p>
-                    <p className="st-job-company" contentEditable={canEdit}>
+                    <p className="st-job-company" contentEditable={canEdit && isEditable}>
                       Web Solutions Inc. — San Francisco, CA
                     </p>
                   </div>
-                  <p className="st-job-dates" contentEditable={canEdit}>
+                  <p className="st-job-dates" contentEditable={canEdit && isEditable}>
                     2015 – 2019
                   </p>
                 </div>
 
                 <ul className="st-job-list">
-                  <li contentEditable={canEdit}>
+                  <li contentEditable={canEdit && isEditable}>
                     Built responsive applications using Django & React.
                   </li>
-                  <li contentEditable={canEdit}>
+                  <li contentEditable={canEdit && isEditable}>
                     Integrated APIs and payment systems.
                   </li>
-                  <li contentEditable={canEdit}>
+                  <li contentEditable={canEdit && isEditable}>
                     Created CI/CD pipelines for deployments.
                   </li>
                 </ul>
@@ -443,24 +420,24 @@ export default function SoftTech() {
 
             {/* PROJECTS */}
             <section className="st-section">
-              <h2 className="st-section-title" contentEditable={canEdit}>
+              <h2 className="st-section-title" contentEditable={canEdit && isEditable}>
                 FEATURED PROJECTS
               </h2>
 
               <div className="st-project">
-                <p className="st-project-title" contentEditable={canEdit}>
+                <p className="st-project-title" contentEditable={canEdit && isEditable}>
                   Real-Time Analytics Dashboard
                 </p>
-                <p className="st-project-text" contentEditable={canEdit}>
+                <p className="st-project-text" contentEditable={canEdit && isEditable}>
                   Designed analytics dashboard using React, WebSockets & Node.js.
                 </p>
               </div>
 
               <div className="st-project">
-                <p className="st-project-title" contentEditable={canEdit}>
+                <p className="st-project-title" contentEditable={canEdit && isEditable}>
                   Multi-Tenant SaaS Platform
                 </p>
-                <p className="st-project-text" contentEditable={canEdit}>
+                <p className="st-project-text" contentEditable={canEdit && isEditable}>
                   Developed SaaS platform with RBAC and automated billing.
                 </p>
               </div>
@@ -468,27 +445,27 @@ export default function SoftTech() {
 
             {/* TOOLS */}
             <section className="st-section">
-              <h2 className="st-section-title" contentEditable={canEdit}>
+              <h2 className="st-section-title" contentEditable={canEdit && isEditable}>
                 TOOLS & TECHNOLOGIES
               </h2>
-              <p className="st-section-text" contentEditable={canEdit}>
+              <p className="st-section-text" contentEditable={canEdit && isEditable}>
                 React, Node.js, TypeScript, PostgreSQL, Docker, AWS, CI/CD, etc.
               </p>
             </section>
 
             {/* ACHIEVEMENTS */}
             <section className="st-section">
-              <h2 className="st-section-title" contentEditable={canEdit}>
+              <h2 className="st-section-title" contentEditable={canEdit && isEditable}>
                 ACHIEVEMENTS
               </h2>
               <ul className="st-job-list">
-                <li contentEditable={canEdit}>
+                <li contentEditable={canEdit && isEditable}>
                   Improved conversion rates by 15%.
                 </li>
-                <li contentEditable={canEdit}>
+                <li contentEditable={canEdit && isEditable}>
                   Reduced infrastructure cost by 20%.
                 </li>
-                <li contentEditable={canEdit}>
+                <li contentEditable={canEdit && isEditable}>
                   Delivered internal React performance seminar.
                 </li>
               </ul>
@@ -496,36 +473,34 @@ export default function SoftTech() {
 
             {/* EDUCATION */}
             <section className="st-section st-last">
-              <h2 className="st-section-title" contentEditable={canEdit}>
+              <h2 className="st-section-title" contentEditable={canEdit && isEditable}>
                 EDUCATION
               </h2>
 
               <div className="st-edu-item">
-                <p className="st-edu-degree" contentEditable={canEdit}>
+                <p className="st-edu-degree" contentEditable={canEdit && isEditable}>
                   B.S. in Computer Science
                 </p>
-                <p className="st-edu-meta" contentEditable={canEdit}>
+                <p className="st-edu-meta" contentEditable={canEdit && isEditable}>
                   UC Berkeley — 2011 – 2015
                 </p>
               </div>
 
               <div className="st-edu-item">
-                <p className="st-edu-degree" contentEditable={canEdit}>
+                <p className="st-edu-degree" contentEditable={canEdit && isEditable}>
                   Full Stack Nanodegree
                 </p>
-                <p className="st-edu-meta" contentEditable={canEdit}>
+                <p className="st-edu-meta" contentEditable={canEdit && isEditable}>
                   Udacity — 2016
                 </p>
               </div>
             </section>
-            <PaymentGate
-              open={showPaymentModal}
-              onClose={() => setShowPaymentModal(false)}
-              onSuccess={handlePaymentSuccess}
-            />
           </main>
         </div>
       </div>
     </div>
+    )
+          }
+        </TemplateLayout>
   );
 }
