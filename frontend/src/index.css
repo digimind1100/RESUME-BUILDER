@@ -77,36 +77,25 @@
   max-width:850px;
   width:100%;
 }
-.watermark{
-  position:absolute;
 
-  top:50%;
-  left:50%;
-  transform:translate(-50%, -50%);
-
-  font-size:60px;
-  color:rgba(0,0,0,0.08);
-
-  pointer-events:none;
-  user-select:none;
-
-  z-index:1;
-  text-align:center;
-  width:100%;
-}
-.resume-a4{
-  position:relative;
-}
 
 .watermark{
   position:absolute;
   top:50%;
   left:50%;
-  transform:translate(-50%, -50%);
+  transform:translate(-50%, -50%) rotate(-20deg);
 
   font-size:60px;
   color:rgba(0,0,0,0.08);
 
   pointer-events:none;
-  z-index:1;
+
+  z-index:0; /* behind content */
+} 
+.te-resume,
+.cp-resume,
+.av-resume,
+.rb-resume{
+  position: relative;
+  z-index: 1;
 }
