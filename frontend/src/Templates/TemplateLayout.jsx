@@ -30,7 +30,7 @@ const handleDownloadPDF = async () => {
 
   const element = root.querySelector(".resume-a4") || root;
 
-  // ✅ Hide no-pdf elements temporarily
+  // ✅ Hide non-PDF elements
   const noPdfElements = root.querySelectorAll(".no-pdf");
   noPdfElements.forEach(el => el.style.display = "none");
 
@@ -42,7 +42,7 @@ const handleDownloadPDF = async () => {
     backgroundColor: "#ffffff"
   });
 
-  // ✅ Restore elements
+  // ✅ Restore UI
   noPdfElements.forEach(el => el.style.display = "");
 
   const imgData = canvas.toDataURL("image/png");
@@ -52,33 +52,24 @@ const handleDownloadPDF = async () => {
   const pdfWidth = 210;
   const pdfHeight = 297;
 
-  const marginTop = 10;
-  const marginBottom = 10;
-
-  const usableHeight = pdfHeight - marginTop - marginBottom;
-
   const imgWidth = pdfWidth;
   const imgHeight = (canvas.height * pdfWidth) / canvas.width;
 
   let heightLeft = imgHeight;
-  let position = marginTop;
+  let position = 0;
 
+  // First page
   pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-  heightLeft -= usableHeight;
+  heightLeft -= pdfHeight;
 
+  // Extra pages
   while (heightLeft > 0) {
+    position = heightLeft - imgHeight;
+
     pdf.addPage();
+    pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
 
-    pdf.addImage(
-      imgData,
-      "PNG",
-      0,
-      marginTop - (imgHeight - heightLeft),
-      imgWidth,
-      imgHeight
-    );
-
-    heightLeft -= usableHeight;
+    heightLeft -= pdfHeight;
   }
 
   pdf.save(`${templateId}-resume.pdf`);
