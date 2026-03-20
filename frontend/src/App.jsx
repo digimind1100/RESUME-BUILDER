@@ -17,7 +17,7 @@ import EngineerElites from "./Templates/EngineerElite";
 import SoftTech from "./Templates/SoftTech";
 import EngineerPrime from "./Templates/EngineerPrime";
 import DataElite from "./Templates/DataElite";
-import AviationPro from "./Templates/AviationPro";
+import AviationPro from "./Templates/AviationPro/AviationPro";
 import TeacherElite from "./Templates/TeacherElite";
 import BuilderGuard from "./components/guards/BuilderGuard";
 import { Toaster } from "react-hot-toast";
