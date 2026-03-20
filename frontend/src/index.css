@@ -102,11 +102,17 @@
   position:absolute;
   top:50%;
   left:50%;
-  transform:translate(-50%, -50%);
+  transform:translate(-50%, -50%) rotate(-20deg);
 
   font-size:60px;
   color:rgba(0,0,0,0.08);
 
   pointer-events:none;
+
+  z-index:0; /* 👈 IMPORTANT */
+}
+
+.resume-a4 *{
+  position:relative;
   z-index:1;
 }
