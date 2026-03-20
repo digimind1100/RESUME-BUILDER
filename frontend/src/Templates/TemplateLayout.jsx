@@ -47,20 +47,27 @@ const handleDownloadPDF = async () => {
 
   const imgData = canvas.toDataURL("image/png");
 
-  const pdf = new jsPDF("p", "mm", "a4");
+const pdf = new jsPDF("p", "mm", "a4");
 
-  const pdfWidth = 210;
-  const pdfHeight = 297;
+const pdfWidth = 210;
+const pdfHeight = 297;
 
-  const imgWidth = pdfWidth;
-  const imgHeight = (canvas.height * pdfWidth) / canvas.width;
+const imgWidth = pdfWidth;
+const imgHeight = pdfHeight;
 
-  let heightLeft = imgHeight;
-  let position = 0;
+let heightLeft = canvas.height;
+let position = 0;
 
-  // First page
-  pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-  heightLeft -= pdfHeight;
+pdf.addImage(
+  imgData,
+  "PNG",
+  0,
+  0,
+  imgWidth,
+  imgHeight,
+  undefined,
+  "FAST"
+);
 
   // Extra pages
   while (heightLeft > 0) {
