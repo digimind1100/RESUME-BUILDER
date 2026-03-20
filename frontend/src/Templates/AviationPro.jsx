@@ -557,7 +557,7 @@ Profile: ${profileLink}
                     >
                       PROFESSIONAL SUMMARY
                     </h2>
-
+ <Watermark show={!canEdit} />
                     <p
                       className="av-section-text"
                       contentEditable={canEdit && isEditable}
