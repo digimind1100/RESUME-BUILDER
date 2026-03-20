@@ -28,10 +28,13 @@ const handleDownloadPDF = async () => {
   const root = resumeContainerRef.current;
   if (!root) return;
 
-  // ✅ universal A4 detection
   const element = root.querySelector(".resume-a4") || root;
 
-  await new Promise((r) => setTimeout(r, 200));
+  // ✅ Hide no-pdf elements temporarily
+  const noPdfElements = root.querySelectorAll(".no-pdf");
+  noPdfElements.forEach(el => el.style.display = "none");
+
+  await new Promise((r) => setTimeout(r, 100));
 
   const canvas = await html2canvas(element, {
     scale: 2,
@@ -39,14 +42,44 @@ const handleDownloadPDF = async () => {
     backgroundColor: "#ffffff"
   });
 
+  // ✅ Restore elements
+  noPdfElements.forEach(el => el.style.display = "");
+
   const imgData = canvas.toDataURL("image/png");
 
   const pdf = new jsPDF("p", "mm", "a4");
 
   const pdfWidth = 210;
+  const pdfHeight = 297;
+
+  const marginTop = 10;
+  const marginBottom = 10;
+
+  const usableHeight = pdfHeight - marginTop - marginBottom;
+
+  const imgWidth = pdfWidth;
   const imgHeight = (canvas.height * pdfWidth) / canvas.width;
 
-  pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, imgHeight);
+  let heightLeft = imgHeight;
+  let position = marginTop;
+
+  pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+  heightLeft -= usableHeight;
+
+  while (heightLeft > 0) {
+    pdf.addPage();
+
+    pdf.addImage(
+      imgData,
+      "PNG",
+      0,
+      marginTop - (imgHeight - heightLeft),
+      imgWidth,
+      imgHeight
+    );
+
+    heightLeft -= usableHeight;
+  }
 
   pdf.save(`${templateId}-resume.pdf`);
 };
