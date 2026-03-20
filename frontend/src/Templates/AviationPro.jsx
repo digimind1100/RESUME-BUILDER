@@ -462,7 +462,7 @@ Profile: ${profileLink}
           </div>
 
           {/* A4 PAGE */}
-          <div className="av-a4" ref={pdfRef} style={{ position: "relative" }}>
+          <div className="resume-a4 av-a4" ref={pdfRef} style={{ position: "relative" }}>
 
             <div className="av-resume" contentEditable={false}>
 
