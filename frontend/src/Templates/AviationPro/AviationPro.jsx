@@ -1,6 +1,6 @@
 // src/Templates/AviationPro.jsx
 import React, { useRef, useState } from "react";
-import TemplateLayout from "./TemplateLayout";
+import TemplateLayout from "../TemplateLayout";
 import { useNavigate } from "react-router-dom";
 import "./AviationPro.css";
 import QRCode from "qrcode";
