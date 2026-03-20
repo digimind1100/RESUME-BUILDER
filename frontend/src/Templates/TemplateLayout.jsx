@@ -28,7 +28,6 @@ const handleDownloadPDF = async () => {
   const root = resumeContainerRef.current;
   if (!root) return;
 
-  // ✅ Always capture only resume area
   const element = root.querySelector(".resume-a4") || root;
 
   await new Promise((r) => setTimeout(r, 200));
@@ -46,24 +45,30 @@ const handleDownloadPDF = async () => {
   const pdfWidth = 210;
   const pdfHeight = 297;
 
-  const imgWidth = pdfWidth;
-  const imgHeight = (canvas.height * pdfWidth) / canvas.width;
+  // ✅ margins (adjust if needed)
+  const margin = 10;
+
+  const usableWidth = pdfWidth - margin * 2;
+  const usableHeight = pdfHeight - margin * 2;
+
+  const imgHeight = (canvas.height * usableWidth) / canvas.width;
 
   let heightLeft = imgHeight;
-  let position = 0;
+  let position = margin;
 
   // First page
-  pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-  heightLeft -= pdfHeight;
+  pdf.addImage(imgData, "PNG", margin, position, usableWidth, imgHeight);
+  heightLeft -= usableHeight;
 
-  // Add extra pages
+  // Next pages
   while (heightLeft > 0) {
-    position = heightLeft - imgHeight;
-
     pdf.addPage();
-    pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
 
-    heightLeft -= pdfHeight;
+    position = margin - (imgHeight - heightLeft);
+
+    pdf.addImage(imgData, "PNG", margin, position, usableWidth, imgHeight);
+
+    heightLeft -= usableHeight;
   }
 
   pdf.save(`${templateId}-resume.pdf`);
