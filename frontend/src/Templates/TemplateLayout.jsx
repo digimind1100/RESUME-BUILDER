@@ -28,6 +28,7 @@ const handleDownloadPDF = async () => {
   const root = resumeContainerRef.current;
   if (!root) return;
 
+  // ✅ universal A4 detection
   const element = root.querySelector(".resume-a4") || root;
 
   await new Promise((r) => setTimeout(r, 200));
@@ -43,41 +44,9 @@ const handleDownloadPDF = async () => {
   const pdf = new jsPDF("p", "mm", "a4");
 
   const pdfWidth = 210;
-  const pdfHeight = 297;
-
-  const marginTop = 10;
-  const marginBottom = 10;
-
-  const usableHeight = pdfHeight - marginTop - marginBottom;
-
-  const imgWidth = pdfWidth;
   const imgHeight = (canvas.height * pdfWidth) / canvas.width;
 
-  let heightLeft = imgHeight;
-  let position = marginTop;
-
-  // First page
-  pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-  heightLeft -= usableHeight;
-
-  // Next pages
-  while (heightLeft > 0) {
-    pdf.addPage();
-
-    // ✅ Always keep same top margin
-    position = marginTop;
-
-    pdf.addImage(
-      imgData,
-      "PNG",
-      0,
-      position - (imgHeight - heightLeft),
-      imgWidth,
-      imgHeight
-    );
-
-    heightLeft -= usableHeight;
-  }
+  pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, imgHeight);
 
   pdf.save(`${templateId}-resume.pdf`);
 };
