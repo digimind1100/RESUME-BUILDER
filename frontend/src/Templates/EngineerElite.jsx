@@ -188,7 +188,7 @@ export default function EngineerElite() {
       </div>
 
       {/* ---------- A4 RESUME ---------- */}
-      <div className="ee-a4" ref={pdfRef} style={{ position: "relative" }}>
+      <div className="resume-a4 ee-a4" ref={pdfRef} style={{ position: "relative" }}>
 
 
         <div className="ee-resume">

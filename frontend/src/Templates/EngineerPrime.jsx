@@ -101,7 +101,7 @@ LinkedIn: ${linkedin}
           </div>
 
           {/* ==== A4 PAGE ==== */}
-          <div className="ep-a4" ref={pdfRef} style={{ position: "relative" }}>
+          <div className="resume-a4 ep-a4" ref={pdfRef} style={{ position: "relative" }}>
 
 
             <div className="ep-resume">

@@ -84,7 +84,7 @@ export default function DataElite() {
           </div>
 
           {/* ========== A4 RESUME AREA ========== */}
-          <div className="de-a4" ref={pdfRef} style={{ position: "relative" }}>
+          <div className="resume-a4 de-a4" ref={pdfRef} style={{ position: "relative" }}>
             
             <div className="de-resume">
 

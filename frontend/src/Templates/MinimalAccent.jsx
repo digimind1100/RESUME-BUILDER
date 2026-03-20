@@ -53,7 +53,7 @@ const MinimalAccent = () => {
           {({ canEdit, isEditable, pdfRef, requirePayment }) => (
     <div className="ma-wrapper">
       {/* A4 Resume Area */}
-      <div className="ma-a4" ref={pdfRef} style={{ position: "relative" }}>
+      <div className="resume-a4 ma-a4" ref={pdfRef} style={{ position: "relative" }}>
   <div className="ma-resume">
           {/* LEFT BLUE SIDEBAR */}
           <aside className="ma-sidebar">

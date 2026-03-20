@@ -49,7 +49,7 @@ const CreativeBold = () => {
 
 
       {/* A4 Resume Area */}
-      <div className="cb-a4" ref={pdfRef} style={{ position: "relative" }}>
+      <div className="resume-a4 cb-a4" ref={pdfRef} style={{ position: "relative" }}>
       
         <div className="cb-resume">
           {/* LEFT RED COLUMN */}

@@ -47,7 +47,7 @@ const FreeBasic = () => {
       </div>
 
       {/* A4 Resume */}
-      <div className="fb-a4" ref={resumeRef} style={{ position: "relative" }}>
+      <div className="resume-a4 fb-a4" ref={resumeRef} style={{ position: "relative" }}>
         {/* ✅ Always show watermark */}
         <Watermark show={true} />
 

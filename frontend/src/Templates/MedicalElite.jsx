@@ -43,7 +43,7 @@ export default function MedicalElites() {
         <div className="me-wrapper">
 
           {/* A4 PAGE */}
-          <div className="me-a4" ref={pdfRef} style={{ position: "relative" }}>
+          <div className="resume-a4 me-a4" ref={pdfRef} style={{ position: "relative" }}>
             <div className="me-resume">
               {/* LEFT SIDEBAR */}
               <aside className="me-sidebar">

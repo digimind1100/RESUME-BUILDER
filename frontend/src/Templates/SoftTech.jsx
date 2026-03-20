@@ -250,7 +250,7 @@ export default function SoftTech() {
       </div>
 
       {/* ---------- A4 RESUME ---------- */}
-      <div className="st-a4" ref={resumeRef} style={{ position: "relative" }}>
+      <div className="resume-a4 st-a4" ref={resumeRef} style={{ position: "relative" }}>
         <Watermark show={!canEdit} />
         <div className="st-resume">
 

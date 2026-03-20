@@ -42,7 +42,7 @@ if (!isEditable) return;
         <div className="cp-wrapper">
 
           {/* ========= A4 RESUME AREA ========= */}
-          <div className="cp-a4" ref={pdfRef} style={{ position: "relative" }}>
+          <div className="resume-a4 cp-a4" ref={pdfRef} style={{ position: "relative" }}>
             <div className="cp-resume">
               {/* ============= HEADER ============= */}
               <header className="cp-header">
