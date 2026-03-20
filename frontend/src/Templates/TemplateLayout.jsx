@@ -1,3 +1,28 @@
+import React, { useRef, useState } from "react";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
+import TemplateControls from "./TemplateControls";
+import Watermark from "../components/Watermark";
+import "./TemplateLayout.css";
+
+export default function TemplateLayout({
+  children,
+  templateId,
+  wrapperClass = "template-wrapper",
+  resumeClass = "template-resume"
+}) {
+
+  const resumeRef = useRef(null);
+  const pdfRef = useRef(null);
+const resumeContainerRef = useRef(null);
+
+  const [isEditable, setIsEditable] = useState(false);
+  const [canEdit, setCanEdit] = useState(false);
+
+  const handleEditChange = (editable, paid) => {
+    setIsEditable(editable);
+    setCanEdit(paid);
+  };
 const handleDownloadPDF = async () => {
 
   const root = resumeContainerRef.current;
@@ -25,3 +50,32 @@ const handleDownloadPDF = async () => {
 
   pdf.save(`${templateId}-resume.pdf`);
 };
+
+  return (
+
+  <div className={wrapperClass}>
+
+    <div className="editor-area">
+
+      <TemplateControls
+        resumeRef={resumeContainerRef}
+        templateId={templateId}
+        onEditChange={handleEditChange}
+        onDownload={handleDownloadPDF}
+      />
+
+      <div className={resumeClass} ref={resumeContainerRef}>
+        <Watermark show={!canEdit} />
+
+        {typeof children === "function"
+          ? children({ canEdit, isEditable, pdfRef: resumeContainerRef })
+          : children}
+
+      </div>
+
+    </div>
+
+  </div>
+
+  );
+}
