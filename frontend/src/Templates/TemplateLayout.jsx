@@ -45,28 +45,36 @@ const handleDownloadPDF = async () => {
   const pdfWidth = 210;
   const pdfHeight = 297;
 
-  // ✅ margins (adjust if needed)
-  const margin = 10;
+  const marginTop = 10;
+  const marginBottom = 10;
 
-  const usableWidth = pdfWidth - margin * 2;
-  const usableHeight = pdfHeight - margin * 2;
+  const usableHeight = pdfHeight - marginTop - marginBottom;
 
-  const imgHeight = (canvas.height * usableWidth) / canvas.width;
+  const imgWidth = pdfWidth;
+  const imgHeight = (canvas.height * pdfWidth) / canvas.width;
 
   let heightLeft = imgHeight;
-  let position = margin;
+  let position = marginTop;
 
   // First page
-  pdf.addImage(imgData, "PNG", margin, position, usableWidth, imgHeight);
+  pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
   heightLeft -= usableHeight;
 
   // Next pages
   while (heightLeft > 0) {
     pdf.addPage();
 
-    position = margin - (imgHeight - heightLeft);
+    // ✅ Always keep same top margin
+    position = marginTop;
 
-    pdf.addImage(imgData, "PNG", margin, position, usableWidth, imgHeight);
+    pdf.addImage(
+      imgData,
+      "PNG",
+      0,
+      position - (imgHeight - heightLeft),
+      imgWidth,
+      imgHeight
+    );
 
     heightLeft -= usableHeight;
   }
