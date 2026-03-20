@@ -28,7 +28,7 @@ const handleDownloadPDF = async () => {
   const root = resumeContainerRef.current;
   if (!root) return;
 
-  // ✅ universal A4 detection
+  // ✅ Always capture only resume area
   const element = root.querySelector(".resume-a4") || root;
 
   await new Promise((r) => setTimeout(r, 200));
@@ -44,9 +44,27 @@ const handleDownloadPDF = async () => {
   const pdf = new jsPDF("p", "mm", "a4");
 
   const pdfWidth = 210;
+  const pdfHeight = 297;
+
+  const imgWidth = pdfWidth;
   const imgHeight = (canvas.height * pdfWidth) / canvas.width;
 
-  pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, imgHeight);
+  let heightLeft = imgHeight;
+  let position = 0;
+
+  // First page
+  pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+  heightLeft -= pdfHeight;
+
+  // Add extra pages
+  while (heightLeft > 0) {
+    position = heightLeft - imgHeight;
+
+    pdf.addPage();
+    pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+
+    heightLeft -= pdfHeight;
+  }
 
   pdf.save(`${templateId}-resume.pdf`);
 };
