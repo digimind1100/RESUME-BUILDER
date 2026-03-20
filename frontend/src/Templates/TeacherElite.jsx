@@ -224,7 +224,7 @@ Subject: ${qrForm.subject}
 
           {/* A4 RESUME */}
           <div
-            id="resumeContainer" className="resume-a4 te-a4" ref={pdfRef} style={{ position: "relative" }}>
+            id="resumeContainer" className="te-a4" ref={pdfRef} style={{ position: "relative" }}>
             <div className="te-resume" ref={captureRef}>
               {/* HEADER with decorative wave + profile */}
               <header className="te-header">
