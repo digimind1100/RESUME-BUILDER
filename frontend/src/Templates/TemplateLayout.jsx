@@ -1,47 +1,10 @@
-import React, { useRef, useState } from "react";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
-import TemplateControls from "./TemplateControls";
-import Watermark from "../components/Watermark";
-import "./TemplateLayout.css";
-
-export default function TemplateLayout({
-  children,
-  templateId,
-  wrapperClass = "template-wrapper",
-  resumeClass = "template-resume"
-}) {
-
-  const resumeRef = useRef(null);
-  const pdfRef = useRef(null);
-const resumeContainerRef = useRef(null);
-
-  const [isEditable, setIsEditable] = useState(false);
-  const [canEdit, setCanEdit] = useState(false);
-
-  const handleEditChange = (editable, paid) => {
-    setIsEditable(editable);
-    setCanEdit(paid);
-  };
 const handleDownloadPDF = async () => {
 
   const root = resumeContainerRef.current;
   if (!root) return;
 
-  // Find the A4 element automatically
-  const element =
-    root.querySelector(".te-a4") ||
-    root.querySelector(".cp-a4") ||
-    root.querySelector(".av-a4") ||
-    root.querySelector(".rb-resume") ||
-    root.querySelector(".cb-resume") ||
-    root.querySelector(".de-resume") ||
-    root.querySelector(".ec-resume") ||
-    root.querySelector(".ee-a4") ||
-    root.querySelector(".ep-a4") ||
-    root.querySelector(".me-a4") ||
-    root.querySelector(".ma-a4") ||
-    root;
+  // ✅ universal A4 detection
+  const element = root.querySelector(".resume-a4") || root;
 
   await new Promise((r) => setTimeout(r, 200));
 
@@ -62,32 +25,3 @@ const handleDownloadPDF = async () => {
 
   pdf.save(`${templateId}-resume.pdf`);
 };
-
-  return (
-
-  <div className={wrapperClass}>
-
-    <div className="editor-area">
-
-      <TemplateControls
-        resumeRef={resumeContainerRef}
-        templateId={templateId}
-        onEditChange={handleEditChange}
-        onDownload={handleDownloadPDF}
-      />
-
-      <div className={resumeClass} ref={resumeContainerRef}>
-        <Watermark show={!canEdit} />
-
-        {typeof children === "function"
-          ? children({ canEdit, isEditable, pdfRef: resumeContainerRef })
-          : children}
-
-      </div>
-
-    </div>
-
-  </div>
-
-  );
-}

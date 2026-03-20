@@ -25,7 +25,7 @@ const ElegantClassic = () => {
                 <div className="ec-wrapper">
 
                     {/* A4 Resume */}
-                    <div className="ec-a4" ref={pdfRef} style={{ position: "relative" }}>
+                    <div className="resume-a4 ec-a4" ref={pdfRef} style={{ position: "relative" }}>
                      
                         <div className="ec-resume">
 
