@@ -71,7 +71,7 @@ function AppContent() {
           <Route path="/resume-classic" element={<ResumeBuilderQR />} />
 
           {/* Templates */}
-          <Route path="/templates" element={<Templates />} />
+          
 
           <Route path="/features" element={<Features />} />
 
