@@ -6,11 +6,21 @@ export default function TemplatePage() {
   const { id } = useParams();
 
   // 🔥 map URL → template names
-  const templateMap = {
-    "aviation-pro": "AviationPro",
-    "teacher-elite": "TeacherElite",
-    "clean-professional": "CleanProfessional",
-  };
+const templateMap = {
+  "aviation-pro": "AviationPro",
+  "teacher-elite": "TeacherElite",
+  "clean-professional": "CleanProfessional",
+  "creative-bold": "CreativeBold",
+  "minimal-accent": "MinimalAccent",
+  "elegant-classic": "ElegantClassic",
+  "medical-elites": "MedicalElites",
+  "engineer-elites": "EngineerElites",
+  "soft-tech": "SoftTech",
+  "data-elite": "DataElite",
+  "engineer-prime": "EngineerPrime",
+  "free-basic": "FreeBasic",
+  "royal-designer": "RoyalBlueDesigner",
+};
 
   const templateId = templateMap[id];
 
