@@ -72,7 +72,10 @@ function AppContent() {
           <Route path="/templates" element={<Templates />} />
 
           {/* 🔥 NEW TEMPLATE ROUTE (IMPORTANT) */}
-          <Route path="/:id" element={<TemplatePage />} />
+          <Route
+  path="/:id"
+  element={<TemplatePage formData={formData} />}
+/>
 
           {/* OTHER PAGES */}
           <Route path="/features" element={<Features />} />

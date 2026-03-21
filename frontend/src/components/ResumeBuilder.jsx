@@ -47,8 +47,6 @@ const ResumeBuilder = () => {
 
   const [resumeStyle, setResumeStyle] = useState(resolvedTemplate);
 
-
-
   const [theme, setTheme] = useState({
     left: "#17639F",
     job: "#F4ECE1",
@@ -83,6 +81,11 @@ const ResumeBuilder = () => {
       };
     }
   }, [templateId]);
+
+  useEffect(() => {
+  localStorage.setItem("resumeData", JSON.stringify(formData));
+}, [formData]);
+
 
   /* ---------------- HANDLERS ---------------- */
   const addEducation = (education) => {
