@@ -155,11 +155,7 @@ export default function AviationPro({ data, isEditable }) {
               <section className="av-side-section">
                 <h3 className="av-side-heading">DIGITAL IDENTITY</h3>
                 <div className="av-side-qr-box">
-                  <img
-                    src={data?.qrImage || "/images/aviation-qr.png"}
-                    alt="QR"
-                    className="av-side-qr-img"
-                  />
+               
                 </div>
               </section>
 
