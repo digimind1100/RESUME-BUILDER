@@ -248,7 +248,7 @@ export default function Templates() {
   8: "/resume/soft-tech",
   9: "/resume/data-elite",
   10: "/resume/engineer-prime",
-  11: "/resume/aviation-pro",
+  11: "/builder/aviation-pro",
   12: "/resume/free-basic",
   13: "/resume/royal-designer",
 };

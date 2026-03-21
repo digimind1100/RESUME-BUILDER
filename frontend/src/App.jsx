@@ -22,6 +22,7 @@ import Blog from "./components/Blog";
 import BlogPost from "./components/BlogPost";
 import Pricing from "./components/Pricing";
 import ScrollToTop from "./components/ScrollToTop";
+import NewResumeBuilder from "./components/NewResumeBuilder";
 
 // ✅ NEW
 import TemplatePage from "./Pages/TemplatePage";
@@ -67,6 +68,7 @@ function AppContent() {
           />
 
           <Route path="/resume-classic" element={<ResumeBuilderQR />} />
+          <Route path="/builder/:templateId" element={<NewResumeBuilder />} />
 
           {/* TEMPLATE LIST */}
           <Route path="/templates" element={<Templates />} />
