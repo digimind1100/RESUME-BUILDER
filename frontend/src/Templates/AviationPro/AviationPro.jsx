@@ -1,7 +1,5 @@
 // src/Templates/AviationPro.jsx
 import React, { useRef, useState } from "react";
-import TemplateLayout from "../TemplateLayout";
-import { useNavigate } from "react-router-dom";
 import "./AviationPro.css";
 import QRCode from "qrcode";
 
@@ -19,7 +17,6 @@ console.log("AviationPro data:", data)
     const imageUrl = URL.createObjectURL(file);
     setProfileImage(imageUrl);
   };
-const navigate = useNavigate();
   // ---------- QR FORM STATE ----------
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
@@ -363,15 +360,6 @@ Profile: ${profileLink}
 
 
   return (
-
-    <TemplateLayout
-      templateId="AviationPro"
-      wrapperClass="av-wrapper"
-      resumeClass="av-resume"
-    >
-
-      {({ canEdit, isEditable, pdfRef, requirePayment }) => (
-
         <div className="av-wrapper">
 
 
@@ -743,11 +731,6 @@ Profile: ${profileLink}
               </div>
             </div>
           </div>
-
         </div>
-
-      )
-      }
-    </TemplateLayout>
   );
 }
