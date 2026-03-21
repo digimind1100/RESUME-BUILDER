@@ -370,20 +370,20 @@ Profile: ${profileLink}
                 placeholder="Full Name"
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
-                disabled={!(canEdit && isEditable)}
+                disabled={true}
               />
 
               <input
                 placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                disabled={!(canEdit && isEditable)}
+                disabled={true}
               />
               <input
                 placeholder="Phone"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                disabled={!(canEdit && isEditable)}
+                disabled={true}
               />
             </div>
 
@@ -391,7 +391,7 @@ Profile: ${profileLink}
               placeholder="Address"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
-              disabled={!(canEdit && isEditable)}
+              disabled={true}
             />
 
             <div className="av-qr-row">
@@ -399,19 +399,19 @@ Profile: ${profileLink}
                 placeholder="City"
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
-                disabled={!(canEdit && isEditable)}
+                disabled={true}
               />
               <input
                 placeholder="State"
                 value={stateVal}
                 onChange={(e) => setStateVal(e.target.value)}
-                disabled={!(canEdit && isEditable)}
+                disabled={true}
               />
               <input
                 placeholder="ZIP"
                 value={zip}
                 onChange={(e) => setZip(e.target.value)}
-                disabled={!(canEdit && isEditable)}
+                disabled={true}
               />
             </div>
 
@@ -420,13 +420,13 @@ Profile: ${profileLink}
                 placeholder="LinkedIn Profile URL"
                 value={linkedin}
                 onChange={(e) => setLinkedin(e.target.value)}
-                disabled={!(canEdit && isEditable)}
+                disabled={true}
               />
               <input
                 placeholder="Portfolio / Profile Link"
                 value={profileLink}
                 onChange={(e) => setProfileLink(e.target.value)}
-                disabled={!(canEdit && isEditable)}
+                disabled={true}
               />
             </div>
 
@@ -491,15 +491,12 @@ Profile: ${profileLink}
                       style={{ display: "none" }}
                       onChange={handleImageUpload}
                     />
-
                   </div>
-
-
                   {/* NAME + TITLE */}
                   <div className="av-header-text">
                     <h1
                       className="av-name"
-                      contentEditable={canEdit && isEditable}
+                      contentEditable={false}
                       suppressContentEditableWarning
                     >
                       ALEXANDER MORGAN
@@ -507,7 +504,7 @@ Profile: ${profileLink}
 
                     <p
                       className="av-role"
-                      contentEditable={canEdit && isEditable}
+                      contentEditable={false}
                       suppressContentEditableWarning
                     >
                       {activeData.title.toUpperCase()}
@@ -521,7 +518,7 @@ Profile: ${profileLink}
                     <img src={qrImage} alt="QR Code" className="av-qr-img" />
                     <p
                       className="av-qr-text"
-                      contentEditable={canEdit && isEditable}
+                      contentEditable={false}
                       suppressContentEditableWarning
                     >
                       Scan for licenses, flight log &amp; full profile
@@ -540,14 +537,14 @@ Profile: ${profileLink}
                   <section className="av-section">
                     <h2
                       className="av-section-title"
-                      contentEditable={canEdit && isEditable}
+                      contentEditable={false}
                       suppressContentEditableWarning
                     >
                       PROFESSIONAL SUMMARY
                     </h2>
                     <p
                       className="av-section-text"
-                      contentEditable={canEdit && isEditable}
+                      contentEditable={false}
                       suppressContentEditableWarning
                     >
                       {activeData.summary}
@@ -558,7 +555,7 @@ Profile: ${profileLink}
                   <section className="av-section">
                     <h2
                       className="av-section-title"
-                      contentEditable={canEdit && isEditable}
+                      contentEditable={false}
                       suppressContentEditableWarning
                     >
                       EXPERIENCE
@@ -570,14 +567,14 @@ Profile: ${profileLink}
                           <div>
                             <p
                               className="av-job-title"
-                              contentEditable={canEdit && isEditable}
+                              contentEditable={false}
                               suppressContentEditableWarning
                             >
                               {exp.title}
                             </p>
                             <p
                               className="av-job-company"
-                              contentEditable={canEdit && isEditable}
+                              contentEditable={false}
                               suppressContentEditableWarning
                             >
                               {exp.company}
@@ -586,7 +583,7 @@ Profile: ${profileLink}
 
                           <p
                             className="av-job-dates"
-                            contentEditable={canEdit && isEditable}
+                            contentEditable={false}
                             suppressContentEditableWarning
                           >
                             {exp.dates}
@@ -597,7 +594,7 @@ Profile: ${profileLink}
                           {exp.bullets.map((item, bIndex) => (
                             <li
                               key={bIndex}
-                              contentEditable={canEdit && isEditable}
+                              contentEditable={false}
                               suppressContentEditableWarning
                             >
                               {item}
@@ -615,7 +612,7 @@ Profile: ${profileLink}
                   <section className="av-section av-section-last">
                     <h2
                       className="av-section-title"
-                      contentEditable={canEdit && isEditable}
+                      contentEditable={false}
                       suppressContentEditableWarning
                     >
                       KEY HIGHLIGHTS
@@ -625,7 +622,7 @@ Profile: ${profileLink}
                       {activeData.highlights.map((item, idx) => (
                         <li
                           key={idx}
-                          contentEditable={canEdit && isEditable}
+                          contentEditable={false}
                           suppressContentEditableWarning
                         >
                           {item}
@@ -642,16 +639,16 @@ Profile: ${profileLink}
                   <section className="av-side-section">
                     <h3 className="av-side-heading">CONTACT</h3>
                     <ul className="av-side-list">
-                      <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
+                      <li contentEditable={false} suppressContentEditableWarning>
                         ✉️ alex.morgan@mail.com
                       </li>
-                      <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
+                      <li contentEditable={false} suppressContentEditableWarning>
                         📞 +1 (555) 214-8790
                       </li>
-                      <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
+                      <li contentEditable={false} suppressContentEditableWarning>
                         📍 New York, USA
                       </li>
-                      <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
+                      <li contentEditable={false} suppressContentEditableWarning>
                         🌐 linkedin.com/in/alexmorgan
                       </li>
                     </ul>
@@ -664,7 +661,7 @@ Profile: ${profileLink}
                       <img src={qrImage} alt="QR" className="av-side-qr-img" />
                       <p
                         className="av-side-qr-text"
-                        contentEditable={canEdit && isEditable}
+                        contentEditable={false}
                         suppressContentEditableWarning
                       >
                         QR code links to updated digital profile, licenses, and
@@ -677,19 +674,19 @@ Profile: ${profileLink}
                   <section className="av-side-section">
                     <h3 className="av-side-heading">CORE SKILLS</h3>
                     <ul className="av-side-list">
-                      <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
+                      <li contentEditable={false} suppressContentEditableWarning>
                         Safety &amp; Compliance
                       </li>
-                      <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
+                      <li contentEditable={false} suppressContentEditableWarning>
                         Crew Resource Management
                       </li>
-                      <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
+                      <li contentEditable={false} suppressContentEditableWarning>
                         Emergency Procedures
                       </li>
-                      <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
+                      <li contentEditable={false} suppressContentEditableWarning>
                         Communication &amp; Briefing
                       </li>
-                      <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
+                      <li contentEditable={false} suppressContentEditableWarning>
                         Passenger &amp; Client Service
                       </li>
                     </ul>
@@ -699,13 +696,13 @@ Profile: ${profileLink}
                   <section className="av-side-section">
                     <h3 className="av-side-heading">LICENSES &amp; CERTS</h3>
                     <ul className="av-side-list">
-                      <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
+                      <li contentEditable={false} suppressContentEditableWarning>
                         Valid Passport &amp; Travel Documents
                       </li>
-                      <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
+                      <li contentEditable={false} suppressContentEditableWarning>
                         Medical Certificate – Class 1 / 2
                       </li>
-                      <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
+                      <li contentEditable={false} suppressContentEditableWarning>
                         Recurrent Safety &amp; Emergency Training
                       </li>
                     </ul>
@@ -715,13 +712,13 @@ Profile: ${profileLink}
                   <section className="av-side-section">
                     <h3 className="av-side-heading">LANGUAGES</h3>
                     <ul className="av-side-list">
-                      <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
+                      <li contentEditable={false} suppressContentEditableWarning>
                         English — Native / Fluent
                       </li>
-                      <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
+                      <li contentEditable={false} suppressContentEditableWarning>
                         Spanish — Conversational
                       </li>
-                      <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
+                      <li contentEditable={false} suppressContentEditableWarning>
                         French — Basic
                       </li>
                     </ul>
