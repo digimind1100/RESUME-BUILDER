@@ -1,7 +1,8 @@
+// ✅ CORRECT
 import AviationPro from "./AviationPro/AviationPro"
 
 const templates = {
-  aviation: AviationPro
+  AviationPro: AviationPro
 }
 
 export default templates
