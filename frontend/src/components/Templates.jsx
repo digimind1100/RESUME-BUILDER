@@ -238,20 +238,20 @@ export default function Templates() {
                   className="template-btn template-btn--outline"
                   onClick={() => {
                     const routes = {
-                      1: "/teacher-elite",
-                      2: "/clean-professional",
-                      3: "/creative-bold",
-                      4: "/minimal-accent",
-                      5: "/elegant-classic",
-                      6: "/medical-elites",
-                      7: "/engineer-elites",
-                      8: "/soft-tech",
-                      9: "/data-elite",
-                      10: "/engineer-prime",
-                      11: "/aviation-pro",
-                      12: "/free-basic",
-                      13: "/royal-designer",
-                    };
+  1: "/resume/teacher-elite",
+  2: "/resume/clean-professional",
+  3: "/resume/creative-bold",
+  4: "/resume/minimal-accent",
+  5: "/resume/elegant-classic",
+  6: "/resume/medical-elites",
+  7: "/resume/engineer-elites",
+  8: "/resume/soft-tech",
+  9: "/resume/data-elite",
+  10: "/resume/engineer-prime",
+  11: "/resume/aviation-pro",
+  12: "/resume/free-basic",
+  13: "/resume/royal-designer",
+};
                     handleUseTemplate(routes[num]);
                   }}
                 >
