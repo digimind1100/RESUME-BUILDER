@@ -4,7 +4,6 @@ import { useNavigate, useLocation } from "react-router-dom";
 import Footer from "./Footer";
 import { useAuth } from "../context/AuthContext";
 import SignupModal from "./auth/SignupModal";
-
 const SIMPLE_TEMPLATES = Array.from({ length: 13 }, (_, i) => i + 1);
 
 const TEMPLATE_META = {
@@ -78,6 +77,7 @@ export default function Templates() {
   };
 
   return (
+   
     <>
       <section className="templates-page">
 
@@ -274,5 +274,7 @@ export default function Templates() {
 
       <Footer />
     </>
+
+    
   );
 }
