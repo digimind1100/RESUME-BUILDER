@@ -58,11 +58,7 @@ export default function AviationPro({ data, isEditable }) {
             {/* HEADER QR */}
             <div className="av-header-right">
               <div className="av-qr-block">
-                <img
-  src={data?.profileImage || "/images/cleanprofileimage.png"}
-  alt="Profile"
-  className="av-profile"
-/>
+               
                 <p
                   className="av-qr-text"
                   contentEditable={isEditable}
