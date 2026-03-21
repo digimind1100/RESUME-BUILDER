@@ -26,25 +26,13 @@ export default function AviationPro({ data, isEditable }) {
             <div className="av-header-left">
 
               {/* PHOTO */}
-              <div
-                className="av-profile-wrapper"
-                onClick={() => {
-                  if (!isEditable) return;
-                  if (fileInputRef.current) {
-                    fileInputRef.current.click();
-                  }
-                }}
-              >
-                src={data?.profileImage || "/images/cleanprofileimage.png"}
-
-                <input
-                  type="file"
-                  accept="image/*"
-                  ref={fileInputRef}
-                  style={{ display: "none" }}
-                  onChange={handleImageUpload}
-                />
-              </div>
+              <div className="av-profile-wrapper">
+  <img
+    src={data?.profileImage || "/images/cleanprofileimage.png"}
+    alt="Profile"
+    className="av-profile"
+  />
+</div>
 
               {/* NAME + TITLE */}
               <div className="av-header-text">
