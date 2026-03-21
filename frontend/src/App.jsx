@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import HomePage from "./components/Home";
@@ -8,17 +8,6 @@ import Templates from "./components/Templates";
 import CoverLetterPanel from "./components/CoverLetterPanel";
 import PreviewPanelQRPage from "./components/PreviewPanelQRPage";
 import CoverLetterPage from "./components/CoverLetterPage";
-import CleanProfessional from "./Template/CleanProfessional/CleanProfessional";
-import CreativeBold from "./Template/CreativeBold/CreativeBold";
-import MinimalAccent from "./Template/MinimalAccent/MinimalAccent";
-import ElegantClassic from "./Template/ElegantClassic/ElegantClassic";
-import MedicalElites from "./Template/MedicalElite/MedicalElite";
-import EngineerElites from "./Template/EngineerElite/EngineerElite";
-import SoftTech from "./Template/SoftTech/SoftTech";
-import EngineerPrime from "./Template/EngineerPrime/EngineerPrime";
-import DataElite from "./Template/DataElite/DataElite";
-import AviationPro from "./Template/AviationPro/AviationPro";
-import TeacherElite from "./Template/TeacherElite/TeacherElite";
 import BuilderGuard from "./components/guards/BuilderGuard";
 import { Toaster } from "react-hot-toast";
 import Policies from "./components/Policies";
@@ -32,17 +21,15 @@ import ReviewsPage from "./components/ReviewsPage";
 import Blog from "./components/Blog";
 import BlogPost from "./components/BlogPost";
 import Pricing from "./components/Pricing";
-import FreeBasic from "./Template/FreeBasic/FreeBasic";
-import RoyalBlueDesigner from "./Template/RoyalBlueDesigner/RoyalBlueDesigner";
 import ScrollToTop from "./components/ScrollToTop";
 
-
+// ✅ NEW
+import TemplatePage from "./Pages/TemplatePage";
 
 function AppContent() {
   const location = useLocation();
-  // Global form state
-  const [formData, setFormData] = useState({});
 
+  const [formData, setFormData] = useState({});
   const user = JSON.parse(localStorage.getItem("user"));
 
   return (
@@ -51,7 +38,10 @@ function AppContent() {
         <Navbar />
         <ScrollToTop />
         <Toaster position="top-center" />
+
         <Routes>
+
+          {/* ADMIN */}
           <Route
             path="/admin/payments"
             element={
@@ -61,65 +51,50 @@ function AppContent() {
             }
           />
           <Route path="/admin/reviews" element={<AdminReviews />} />
+
+          {/* HOME */}
           <Route path="/" element={<HomePage />} />
-          {/* Unified builder */}
+
+          {/* BUILDER */}
           <Route
             path="/resume/:templateId?"
-            element={<ResumeBuilder formData={formData} setFormData={setFormData} />}
+            element={
+              <ResumeBuilder
+                formData={formData}
+                setFormData={setFormData}
+              />
+            }
           />
+
           <Route path="/resume-classic" element={<ResumeBuilderQR />} />
 
-          {/* Templates */}
+          {/* TEMPLATE LIST */}
           <Route path="/templates" element={<Templates />} />
 
+          {/* 🔥 NEW TEMPLATE ROUTE (IMPORTANT) */}
+          <Route path="/:id" element={<TemplatePage />} />
+
+          {/* OTHER PAGES */}
           <Route path="/features" element={<Features />} />
-
-          {/* Cover letter */}
           <Route path="/cover-letter" element={<CoverLetterPanel />} />
-
-          {/* Terms & policies */}
           <Route path="/policies" element={<Policies />} />
-
-          {/* Contact */}
           <Route path="/contact" element={<Contact />} />
-
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/pricing" element={<Pricing />} />
-
-          {/* ✅ PUBLIC REVIEWS PAGE */}
           <Route path="/reviews" element={<ReviewsPage />} />
 
-          {/* Preview */}
+          {/* PREVIEW */}
           <Route
             path="/preview-classic"
             element={<PreviewPanelQRPage formData={formData} />}
           />
 
-          <Route path="/clean-professional" element={<CleanProfessional />} />
-          <Route path="/creative-bold" element={<CreativeBold />} />
-          <Route path="/minimal-accent" element={<MinimalAccent />} />
-          <Route path="/elegant-classic" element={<ElegantClassic />} />
-          <Route path="/medical-elites" element={<MedicalElites />} />
-          <Route path="/engineer-elites" element={<EngineerElites />} />
-          <Route path="/soft-tech" element={<SoftTech />} />
-          <Route path="/free-basic" element={<FreeBasic />} />
-          <Route path="/royal-designer" element={<RoyalBlueDesigner />} />
-
-          <Route
-            path="/data-elite"
-            element={
-              <BuilderGuard>
-                <DataElite />
-              </BuilderGuard>
-            }
-          />
-
-          <Route path="/engineer-prime" element={<EngineerPrime />} />
-          <Route path="/aviation-pro" element={<AviationPro />} />
-          <Route path="/teacher-elite" element={<TeacherElite />} />
+          {/* COVER LETTER */}
           <Route path="/coverletter" element={<CoverLetterPage />} />
           <Route path="/coverletter-generator" element={<CoverLetterPanel />} />
+
+          {/* FALLBACK */}
           <Route path="*" element={<Navigate to="/" />} />
 
         </Routes>
