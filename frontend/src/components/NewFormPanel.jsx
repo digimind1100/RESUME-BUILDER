@@ -92,6 +92,80 @@ export default function NewFormPanel({ formData, setFormData }) {
   Generate QR Code
 </button>
 
+<h3>Skills</h3>
+
+<input
+  type="text"
+  placeholder="Add skill and press Enter"
+  onKeyDown={(e) => {
+    if (e.key === "Enter" && e.target.value.trim()) {
+      const newSkill = e.target.value.trim();
+
+      setFormData({
+        ...formData,
+        skills: [...(formData.skills || []), newSkill]
+      });
+
+      e.target.value = "";
+    }
+  }}
+/>
+
+<ul>
+  {(formData.skills || []).map((skill, i) => (
+    <li key={i}>
+      {skill}
+      <button
+        onClick={() => {
+          const updated = formData.skills.filter((_, idx) => idx !== i);
+          setFormData({ ...formData, skills: updated });
+        }}
+      >
+        ❌
+      </button>
+    </li>
+  ))}
+</ul>
+
+<h3>Experience</h3>
+
+<input
+  type="text"
+  placeholder="Job Title"
+  id="exp-title"
+/>
+
+<input
+  type="text"
+  placeholder="Company"
+  id="exp-company"
+/>
+
+<button
+  onClick={() => {
+    const title = document.getElementById("exp-title").value;
+    const company = document.getElementById("exp-company").value;
+
+    if (!title || !company) return;
+
+    const newExp = {
+      title,
+      company,
+      dates: "Present"
+    };
+
+    setFormData({
+      ...formData,
+      experience: [...(formData.experience || []), newExp]
+    });
+
+    document.getElementById("exp-title").value = "";
+    document.getElementById("exp-company").value = "";
+  }}
+>
+  Add Experience
+</button>
+
     </div>
   );
 }
