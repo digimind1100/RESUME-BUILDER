@@ -13,11 +13,6 @@ export default function TemplateLayout({
   resumeClass = "template-resume"
 }) {
 
-  const SelectedTemplate = templates[templateId]
-
-    console.log("templateId:", templateId)
-console.log("SelectedTemplate:", SelectedTemplate)
-
   const resumeRef = useRef(null);
   const pdfRef = useRef(null);
 const resumeContainerRef = useRef(null);
