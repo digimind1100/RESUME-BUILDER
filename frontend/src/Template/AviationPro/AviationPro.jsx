@@ -7,19 +7,10 @@ export default function AviationPro({ data, isEditable }) {
   console.log("AviationPro data:", data);
 
   // ---------- PROFILE IMAGE ----------
-  const [profileImage, setProfileImage] = useState(
-    "/images/cleanprofileimage.png"
-  );
 
-  const fileInputRef = useRef(null);
 
-  const handleImageUpload = (event) => {
-    const file = event.target.files[0];
-    if (!file) return;
 
-    const imageUrl = URL.createObjectURL(file);
-    setProfileImage(imageUrl);
-  };
+
 
   return (
     <div className="av-wrapper">
@@ -80,10 +71,10 @@ export default function AviationPro({ data, isEditable }) {
             <div className="av-header-right">
               <div className="av-qr-block">
                 <img
-                  src={data?.qrImage || "/images/aviation-qr.png"}
-                  alt="QR Code"
-                  className="av-qr-img"
-                />
+  src={data?.profileImage || "/images/cleanprofileimage.png"}
+  alt="Profile"
+  className="av-profile"
+/>
                 <p
                   className="av-qr-text"
                   contentEditable={isEditable}

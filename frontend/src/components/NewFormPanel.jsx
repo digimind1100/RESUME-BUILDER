@@ -43,6 +43,24 @@ export default function NewFormPanel({ formData, setFormData }) {
         }
       />
 
+      <h3>Profile Image</h3>
+
+<input
+  type="file"
+  accept="image/*"
+  onChange={(e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const imageUrl = URL.createObjectURL(file);
+
+    setFormData({
+      ...formData,
+      profileImage: imageUrl
+    });
+  }}
+/>
+
     </div>
   );
 }
