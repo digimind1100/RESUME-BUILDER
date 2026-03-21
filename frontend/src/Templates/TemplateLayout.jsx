@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import templates from "./index"
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import TemplateControls from "./TemplateControls";
@@ -8,9 +9,12 @@ import "./TemplateLayout.css";
 export default function TemplateLayout({
   children,
   templateId,
+  resumeData,
   wrapperClass = "template-wrapper",
   resumeClass = "template-resume"
 }) {
+
+  const SelectedTemplate = templates[templateId]
 
   const resumeRef = useRef(null);
   const pdfRef = useRef(null);
@@ -51,12 +55,12 @@ const handleDownloadPDF = async () => {
   pdf.save(`${templateId}-resume.pdf`);
 };
 
-  return (
-
+return (
   <div className={wrapperClass}>
 
     <div className="editor-area">
 
+      {/* Controls OUTSIDE */}
       <TemplateControls
         resumeRef={resumeContainerRef}
         templateId={templateId}
@@ -64,18 +68,23 @@ const handleDownloadPDF = async () => {
         onDownload={handleDownloadPDF}
       />
 
-      <div className={resumeClass} ref={resumeContainerRef}>
-        <Watermark show={!canEdit} />
+      {/* ✅ PDF AREA */}
+      <div id="resume-template">
+        <div className={resumeClass} ref={resumeContainerRef}>
 
-        {typeof children === "function"
-          ? children({ canEdit, isEditable, pdfRef: resumeContainerRef })
-          : children}
+          <Watermark show={!canEdit} />
 
+          {SelectedTemplate ? (
+            <SelectedTemplate data={resumeData} />
+          ) : (
+            children
+          )}
+
+        </div>
       </div>
 
     </div>
 
   </div>
-
-  );
+);
 }
