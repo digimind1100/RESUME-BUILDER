@@ -6,81 +6,77 @@ import Watermark from "../components/Watermark";
 import "./TemplateLayout.css";
 
 export default function TemplateLayout({
-  children,
+  children,   // 👈 IMPORTANT (we use this now)
   templateId,
-  resumeData,
   wrapperClass = "template-wrapper",
   resumeClass = "template-resume"
 }) {
 
-  const resumeRef = useRef(null);
-  const pdfRef = useRef(null);
-const resumeContainerRef = useRef(null);
+  const resumeContainerRef = useRef(null);
 
- 
+  const [isEditable, setIsEditable] = useState(false);
   const [canEdit, setCanEdit] = useState(false);
-  const [isEditable, setIsEditable] = useState(true);
 
   const handleEditChange = (editable, paid) => {
     setIsEditable(editable);
     setCanEdit(paid);
   };
-const handleDownloadPDF = async () => {
 
-  const root = resumeContainerRef.current;
-  if (!root) return;
+  const handleDownloadPDF = async () => {
+    const root = resumeContainerRef.current;
+    if (!root) return;
 
-  // ✅ universal A4 detection
-  const element = root.querySelector(".resume-a4") || root;
+    const element = root.querySelector(".resume-a4") || root;
 
-  await new Promise((r) => setTimeout(r, 200));
+    await new Promise((r) => setTimeout(r, 200));
 
-  const canvas = await html2canvas(element, {
-    scale: 2,
-    useCORS: true,
-    backgroundColor: "#ffffff"
-  });
+    const canvas = await html2canvas(element, {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: "#ffffff"
+    });
 
-  const imgData = canvas.toDataURL("image/png");
+    const imgData = canvas.toDataURL("image/png");
 
-  const pdf = new jsPDF("p", "mm", "a4");
+    const pdf = new jsPDF("p", "mm", "a4");
 
-  const pdfWidth = 210;
-  const imgHeight = (canvas.height * pdfWidth) / canvas.width;
+    const pdfWidth = 210;
+    const imgHeight = (canvas.height * pdfWidth) / canvas.width;
 
-  pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, imgHeight);
+    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, imgHeight);
 
-  pdf.save(`${templateId}-resume.pdf`);
-};
+    pdf.save(`${templateId}-resume.pdf`);
+  };
 
-return (
-  <div className={wrapperClass}>
+  return (
+    <div className={wrapperClass}>
 
-    <div className="editor-area">
+      <div className="editor-area">
 
-      {/* Controls OUTSIDE */}
-      <TemplateControls
-        resumeRef={resumeContainerRef}
-        templateId={templateId}
-        onEditChange={handleEditChange}
-        onDownload={handleDownloadPDF}
-      />
+        {/* ✅ TOOLBAR */}
+        <TemplateControls
+          resumeRef={resumeContainerRef}
+          templateId={templateId}
+          onEditChange={handleEditChange}
+          onDownload={handleDownloadPDF}
+        />
 
-      {/* ✅ PDF AREA */}
-      <div id="resume-template">
-        <div className={resumeClass} ref={resumeContainerRef}>
+        {/* ✅ TEMPLATE AREA */}
+        <div id="resume-template">
+          <div className={resumeClass} ref={resumeContainerRef}>
 
-          <Watermark show={!canEdit} />
-<SelectedTemplate 
-  data={resumeData} 
-  isEditable={isEditable}
-/>
+            <Watermark show={!canEdit} />
 
+            {/* ✅ OLD SYSTEM: render children */}
+            {typeof children === "function"
+              ? children({ isEditable, canEdit })
+              : children}
+
+          </div>
         </div>
+
       </div>
 
     </div>
-
-  </div>
-);
+  );
 }
