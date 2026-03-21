@@ -63,10 +63,7 @@ Profile: ${profileLink}
     engineer: "Aeronautical Engineer",
     operations: "Airport Operations",
   };
-  const triggerFileSelect = () => {
-    if (!canEdit) {
-      return;
-    }
+
     if (fileInputRef.current) {
       fileInputRef.current.click();
     }
@@ -460,15 +457,11 @@ Profile: ${profileLink}
                 <div className="av-header-left">
                   {/* PHOTO */}
                   <div
-                    className={`av-profile-wrapper ${!canEdit ? "locked" : ""}`}
+                    className="av-profile-wrapper"
                     onClick={() => {
 
                       // free user → open payment modal
-                      if (!canEdit) {
-                        if (requirePayment) requirePayment();
-                        return;
-                      }
-
+                
                       // paid but editing OFF
                       if (!isEditable) return;
 
@@ -479,7 +472,7 @@ Profile: ${profileLink}
 
                     }}
 
-                    title={!canEdit ? "Unlock to change profile image" : "Click to change photo"}
+                    
                   >
 
                     <img src={profileImage} alt="Profile" className="av-profile" />
