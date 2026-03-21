@@ -96,20 +96,29 @@ export default function NewFormPanel({ formData, setFormData }) {
 
 <input
   type="text"
-  placeholder="Add skill and press Enter"
-  onKeyDown={(e) => {
-    if (e.key === "Enter" && e.target.value.trim()) {
-      const newSkill = e.target.value.trim();
-
-      setFormData({
-        ...formData,
-        skills: [...(formData.skills || []), newSkill]
-      });
-
-      e.target.value = "";
-    }
-  }}
+  placeholder="Enter skill"
+  value={formData.newSkill || ""}
+  onChange={(e) =>
+    setFormData({
+      ...formData,
+      newSkill: e.target.value
+    })
+  }
 />
+
+<button
+  onClick={() => {
+    if (!formData.newSkill?.trim()) return;
+
+    setFormData({
+      ...formData,
+      skills: [...(formData.skills || []), formData.newSkill.trim()],
+      newSkill: ""
+    });
+  }}
+>
+  Add Skill
+</button>
 
 <ul>
   {(formData.skills || []).map((skill, i) => (
