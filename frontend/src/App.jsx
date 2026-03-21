@@ -8,7 +8,7 @@ import Templates from "./components/Templates";
 import CoverLetterPanel from "./components/CoverLetterPanel";
 import PreviewPanelQRPage from "./components/PreviewPanelQRPage";
 import CoverLetterPage from "./components/CoverLetterPage";
-import CleanProfessional from "./Templates/CleanProfessional";
+import CleanProfessional from "./Templates/CleanProfessional/CleanProfessional";
 import CreativeBold from "./Templates/CreativeBold";
 import MinimalAccent from "./Templates/MinimalAccent";
 import ElegantClassic from "./Templates/ElegantClassic";

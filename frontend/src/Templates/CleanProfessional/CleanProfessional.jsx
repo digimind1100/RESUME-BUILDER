@@ -1,8 +1,8 @@
 import React, { useState, useRef } from "react";
 import "./CleanProfessional.css";
-import TemplateLayout from "./TemplateLayout";
+import TemplateLayout from "../TemplateLayout";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 
 
 const CleanProfessional = () => {
