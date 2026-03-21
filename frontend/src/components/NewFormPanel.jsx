@@ -61,6 +61,37 @@ export default function NewFormPanel({ formData, setFormData }) {
   }}
 />
 
+<h3>QR Code</h3>
+
+<input
+  type="text"
+  placeholder="Enter profile link (LinkedIn / Portfolio)"
+  value={formData.profileLink || ""}
+  onChange={(e) =>
+    setFormData({
+      ...formData,
+      profileLink: e.target.value
+    })
+  }
+/>
+
+<button
+  onClick={async () => {
+    if (!formData.profileLink) return;
+
+    const QRCode = await import("qrcode");
+
+    const qr = await QRCode.toDataURL(formData.profileLink);
+
+    setFormData({
+      ...formData,
+      qrImage: qr
+    });
+  }}
+>
+  Generate QR Code
+</button>
+
     </div>
   );
 }
