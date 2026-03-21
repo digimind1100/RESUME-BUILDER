@@ -77,7 +77,11 @@ return (
 
           <Watermark show={!canEdit} />
 
-          <div>STATIC TEST</div>
+          {SelectedTemplate ? (
+  <SelectedTemplate data={resumeData || {}} />
+) : (
+  <div>No template found</div>
+)}
 
         </div>
       </div>
