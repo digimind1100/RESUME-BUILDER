@@ -15,6 +15,7 @@ export default function AviationPro() {
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     if (!file) return;
+console.log("AviationPro data:", data)
 
     const imageUrl = URL.createObjectURL(file);
     setProfileImage(imageUrl);
