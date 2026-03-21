@@ -445,4 +445,3 @@ export default function AviationPro({ data, isEditable }) {
 
   );
 }
-}
