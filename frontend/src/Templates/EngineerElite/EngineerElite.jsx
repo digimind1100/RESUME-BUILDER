@@ -3,8 +3,8 @@ import React, { useRef, useState } from "react";
 import "./EngineerElite.css";
 import { useNavigate } from "react-router-dom";
 import QRCode from "qrcode";
-import TemplateLayout from "./TemplateLayout";
-import { useAuth } from "../context/AuthContext";
+import TemplateLayout from "../TemplateLayout";
+import { useAuth } from "../../context/AuthContext";
 
 
 export default function EngineerElite() {

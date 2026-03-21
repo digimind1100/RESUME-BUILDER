@@ -1,8 +1,8 @@
 import React, { useState, useRef } from "react";
 import "./MedicalElite.css";
 import { useNavigate } from "react-router-dom";
-import TemplateLayout from "./TemplateLayout";
-import { useAuth } from "../context/AuthContext";
+import TemplateLayout from "../TemplateLayout";
+import { useAuth } from "../../context/AuthContext";
 
 export default function MedicalElites() {
   const resumeRef = useRef(null);

@@ -2,11 +2,11 @@ import React, { useState, useRef, useEffect } from "react";
 
 import "./TeacherElite.css";
 import { useNavigate } from "react-router-dom";
-import TemplateLayout from "./TemplateLayout";
+import TemplateLayout from "../TemplateLayout";
 import QRCode from "qrcode";
-import { useAuth } from "../context/AuthContext";
-import { useReview } from "../context/ReviewContext";
-import { downloadResumeAndTriggerReview } from "../components/DownloadPDF";
+import { useAuth } from "../../context/AuthContext";
+import { useReview } from "../../context/ReviewContext";
+import { downloadResumeAndTriggerReview } from "../../components/DownloadPDF";
 
 
 const TABS = [

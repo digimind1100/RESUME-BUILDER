@@ -2,9 +2,9 @@
 import React, { useRef, useState } from "react";
 import "./SoftTech.css";
 import { useNavigate } from "react-router-dom";
-import TemplateLayout from "./TemplateLayout";
+import TemplateLayout from "../TemplateLayout";
 import QRCode from "qrcode";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 
 export default function SoftTech() {
   const navigate = useNavigate();

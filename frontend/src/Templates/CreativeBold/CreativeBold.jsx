@@ -1,8 +1,8 @@
 import React, { useRef, useState } from "react";
 import "./CreativeBold.css";
-import TemplateLayout from "./TemplateLayout";
+import TemplateLayout from "../TemplateLayout";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 
 
 

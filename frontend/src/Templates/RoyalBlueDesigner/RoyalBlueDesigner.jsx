@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import "./RoyalBlueDesigner.css";
-import TemplateLayout from "./TemplateLayout";
+import TemplateLayout from "../TemplateLayout";
 
 
 export default function RoyalBlueDesigner() {

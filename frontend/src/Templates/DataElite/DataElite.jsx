@@ -1,10 +1,10 @@
 // src/Templates/DataElite.jsx
 import React, { useRef, useState } from "react";
 import "./DataElite.css";
-import TemplateLayout from "./TemplateLayout";
+import TemplateLayout from "../TemplateLayout";
 import { useNavigate } from "react-router-dom";
 import QRCode from "qrcode";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 
 export default function DataElite() {
   const navigate = useNavigate();

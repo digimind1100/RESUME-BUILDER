@@ -2,8 +2,8 @@
 import React, { useRef, useState } from "react";
 import "./ElegantClassic.css";
 import { useNavigate } from "react-router-dom";
-import TemplateLayout from "./TemplateLayout";
-import { useAuth } from "../context/AuthContext";
+import TemplateLayout from "../TemplateLayout";
+import { useAuth } from "../../context/AuthContext";
 
 
 
