@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import TemplateLayout from "./template/TemplateLayout";
+import TemplateLayout from "../Template/TemplateLayout";
 
 export default function TemplatePage() {
 
