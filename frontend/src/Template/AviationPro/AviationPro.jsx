@@ -35,7 +35,7 @@ export default function AviationPro({ data, isEditable }) {
                   }
                 }}
               >
-                <img src={profileImage} alt="Profile" className="av-profile" />
+                src={data?.profileImage || "/images/cleanprofileimage.png"}
 
                 <input
                   type="file"
