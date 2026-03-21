@@ -3,7 +3,7 @@ import React, { useRef, useState } from "react";
 import "./AviationPro.css";
 import QRCode from "qrcode";
 
-export default function AviationPro({ data }) {
+export default function AviationPro({ data, isEditable }) {
 
   console.log("AviationPro data:", data);
 
@@ -66,121 +66,383 @@ export default function AviationPro({ data }) {
 
   const activeData = roleData[activeRole] || roleData.pilot;
 
+ 
   return (
-    <div className="av-wrapper">
 
-      {/* TABS */}
-      <div className="av-tabs no-pdf">
-        {roles.map((role) => (
-          <button
-            key={role}
-            className={`av-tab ${activeRole === role ? "av-tab-active" : ""}`}
-            onClick={() => setActiveRole(role)}
-          >
-            {roleLabels[role]}
-          </button>
-        ))}
-      </div>
+        <div className="av-wrapper">
 
-      {/* A4 PAGE */}
-      <div className="resume-a4 av-a4">
 
-        <div className="av-resume">
+          {/* QR FORM */}
+          <div className="av-qr-form no-pdf">
+            <div className="av-qr-row">
+              <input
+                placeholder="Full Name"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                disabled={!isEditable}
+              />
 
-          {/* HEADER */}
-          <header className="av-header">
-
-            <div className="av-header-left">
-
-              <div className="av-profile-wrapper">
-                <img src={profileImage} alt="Profile" className="av-profile" />
-              </div>
-
-              <div className="av-header-text">
-                <h1 className="av-name">
-                  {data?.name || "ALEXANDER MORGAN"}
-                </h1>
-
-                <p className="av-role">
-                  {data?.jobTitle || activeData.title}
-                </p>
-              </div>
-
+              <input
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                disabled={!isEditable}
+              />
+              <input
+                placeholder="Phone"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                disabled={!isEditable}
+              />
             </div>
 
-            <div className="av-header-right">
-              <div className="av-qr-block">
-                <img src={qrImage} alt="QR Code" className="av-qr-img" />
-                <p className="av-qr-text">
-                  Scan for profile
-                </p>
-              </div>
+            <input
+              placeholder="Address"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              disabled={!isEditable}
+            />
+
+            <div className="av-qr-row">
+              <input
+                placeholder="City"
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+                disabled={!isEditable}
+              />
+              <input
+                placeholder="State"
+                value={stateVal}
+                onChange={(e) => setStateVal(e.target.value)}
+                disabled={!isEditable}
+              />
+              <input
+                placeholder="ZIP"
+                value={zip}
+                onChange={(e) => setZip(e.target.value)}
+                disabled={!isEditable}
+              />
             </div>
 
-          </header>
+            <div className="av-qr-row">
+              <input
+                placeholder="LinkedIn Profile URL"
+                value={linkedin}
+                onChange={(e) => setLinkedin(e.target.value)}
+                disabled={!isEditable}
+              />
+              <input
+                placeholder="Portfolio / Profile Link"
+                value={profileLink}
+                onChange={(e) => setProfileLink(e.target.value)}
+                disabled={!isEditable}
+              />
+            </div>
 
-          <div className="av-runway-stripe" />
+            <button className="av-qr-btn" onClick={handleGenerateQR}>
+              Create QR Code
+            </button>
+          </div>
 
-          {/* BODY */}
-          <div className="av-body">
+          {/* TABS */}
+          <div className="av-tabs no-pdf">
+            {roles.map((role) => (
+              <button
+                key={role}
+                className={`av-tab ${activeRole === role ? "av-tab-active" : ""
+                  }`}
+                onClick={() => setActiveRole(role)}
+              >
+                {roleLabels[role]}
+              </button>
+            ))}
+          </div>
 
-            {/* MAIN */}
-            <main className="av-main">
+          {/* A4 PAGE */}
+          <div className="resume-a4 av-a4" ref={pdfRef} style={{ position: "relative" }}>
 
-              <section className="av-section">
-                <h2 className="av-section-title">SUMMARY</h2>
-                <p className="av-section-text">
-                  {activeData.summary}
-                </p>
-              </section>
+            <div className="av-resume" contentEditable={false}>
 
-              <section className="av-section">
-                <h2 className="av-section-title">EXPERIENCE</h2>
+              {/* HEADER */}
+              <header className="av-header">
 
-                {activeData.experiences.map((exp, i) => (
-                  <div key={i} className="av-job">
-                    <p className="av-job-title">{exp.title}</p>
-                    <p className="av-job-company">{exp.company}</p>
-                    <p className="av-job-dates">{exp.dates}</p>
+                <div className="av-header-left">
+                  {/* PHOTO */}
+                  <div
+                    className={`av-profile-wrapper ${!canEdit ? "locked" : ""}`}
+                    onClick={() => {
 
-                    <ul>
-                      {exp.bullets.map((b, idx) => (
-                        <li key={idx}>{b}</li>
+                      // free user → open payment modal
+                      if (!canEdit) {
+                        if (requirePayment) requirePayment();
+                        return;
+                      }
+
+                      // paid but editing OFF
+                      if (!isEditable) return;
+
+                      // paid + editing ON
+                      if (fileInputRef.current) {
+                        fileInputRef.current.click();
+                      }
+
+                    }}
+
+                    title={!canEdit ? "Unlock to change profile image" : "Click to change photo"}
+                  >
+
+                    <img src={profileImage} alt="Profile" className="av-profile" />
+
+                    <input
+                      type="file"
+                      accept="image/*"
+                      ref={fileInputRef}
+                      style={{ display: "none" }}
+                      onChange={handleImageUpload}
+                    />
+
+                  </div>
+
+
+                  {/* NAME + TITLE */}
+                  <div className="av-header-text">
+                    <h1
+                      className="av-name"
+                      contentEditable={isEditable}
+                      suppressContentEditableWarning
+                    >
+                      ALEXANDER MORGAN
+                    </h1>
+
+                    <p
+                      className="av-role"
+                      contentEditable={isEditable}
+                      suppressContentEditableWarning
+                    >
+                      {activeData.title.toUpperCase()}
+                    </p>
+                  </div>
+                </div>
+
+                {/* HEADER QR */}
+                <div className="av-header-right">
+                  <div className="av-qr-block">
+                    <img src={qrImage} alt="QR Code" className="av-qr-img" />
+                    <p
+                      className="av-qr-text"
+                      contentEditable={isEditable}
+                      suppressContentEditableWarning
+                    >
+                      Scan for licenses, flight log &amp; full profile
+                    </p>
+                  </div>
+                </div>
+              </header>
+
+              <div className="av-runway-stripe" />
+
+              {/* BODY */}
+              <div className="av-body">
+                {/* MAIN COLUMN */}
+                <main className="av-main">
+                  {/* SUMMARY */}
+                  <section className="av-section">
+                    <h2
+                      className="av-section-title"
+                      contentEditable={isEditable}
+                      suppressContentEditableWarning
+                    >
+                      PROFESSIONAL SUMMARY
+                    </h2>
+                    <p
+                      className="av-section-text"
+                      contentEditable={isEditable}
+                      suppressContentEditableWarning
+                    >
+                      {activeData.summary}
+                    </p>
+                  </section>
+
+                  {/* EXPERIENCE */}
+                  <section className="av-section">
+                    <h2
+                      className="av-section-title"
+                      contentEditable={isEditable}
+                      suppressContentEditableWarning
+                    >
+                      EXPERIENCE
+                    </h2>
+
+                    {activeData.experiences.map((exp, idx) => (
+                      <div className="av-job" key={idx}>
+                        <div className="av-job-header">
+                          <div>
+                            <p
+                              className="av-job-title"
+                              contentEditable={isEditable}
+                              suppressContentEditableWarning
+                            >
+                              {exp.title}
+                            </p>
+                            <p
+                              className="av-job-company"
+                              contentEditable={isEditable}
+                              suppressContentEditableWarning
+                            >
+                              {exp.company}
+                            </p>
+                          </div>
+
+                          <p
+                            className="av-job-dates"
+                            contentEditable={isEditable}
+                            suppressContentEditableWarning
+                          >
+                            {exp.dates}
+                          </p>
+                        </div>
+
+                        <ul className="av-job-list">
+                          {exp.bullets.map((item, bIndex) => (
+                            <li
+                              key={bIndex}
+                              contentEditable={isEditable}
+                              suppressContentEditableWarning
+                            >
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+
+                      </div>
+                    ))}
+
+
+                  </section>
+
+                  {/* HIGHLIGHTS */}
+                  <section className="av-section av-section-last">
+                    <h2
+                      className="av-section-title"
+                      contentEditable={isEditable}
+                      suppressContentEditableWarning
+                    >
+                      KEY HIGHLIGHTS
+                    </h2>
+
+                    <ul className="av-highlight-list">
+                      {activeData.highlights.map((item, idx) => (
+                        <li
+                          key={idx}
+                          contentEditable={isEditable}
+                          suppressContentEditableWarning
+                        >
+                          {item}
+                        </li>
                       ))}
                     </ul>
-                  </div>
-                ))}
 
-              </section>
+                  </section>
+                </main>
 
-              <section className="av-section">
-                <h2 className="av-section-title">HIGHLIGHTS</h2>
+                {/* SIDEBAR */}
+                <aside className="av-sidebar">
+                  {/* CONTACT */}
+                  <section className="av-side-section">
+                    <h3 className="av-side-heading">CONTACT</h3>
+                    <ul className="av-side-list">
+                      <li contentEditable={isEditable} suppressContentEditableWarning>
+                        ✉️ alex.morgan@mail.com
+                      </li>
+                      <li contentEditable={isEditable} suppressContentEditableWarning>
+                        📞 +1 (555) 214-8790
+                      </li>
+                      <li contentEditable={isEditable} suppressContentEditableWarning>
+                        📍 New York, USA
+                      </li>
+                      <li contentEditable={isEditable} suppressContentEditableWarning>
+                        🌐 linkedin.com/in/alexmorgan
+                      </li>
+                    </ul>
+                  </section>
 
-                <ul>
-                  {activeData.highlights.map((h, i) => (
-                    <li key={i}>{h}</li>
-                  ))}
-                </ul>
+                  {/* QR IN SIDEBAR */}
+                  <section className="av-side-section">
+                    <h3 className="av-side-heading">DIGITAL IDENTITY</h3>
+                    <div className="av-side-qr-box">
+                      <img src={qrImage} alt="QR" className="av-side-qr-img" />
+                      <p
+                        className="av-side-qr-text"
+                        contentEditable={isEditable}
+                        suppressContentEditableWarning
+                      >
+                        QR code links to updated digital profile, licenses, and
+                        aviation records.
+                      </p>
+                    </div>
+                  </section>
 
-              </section>
+                  {/* SKILLS */}
+                  <section className="av-side-section">
+                    <h3 className="av-side-heading">CORE SKILLS</h3>
+                    <ul className="av-side-list">
+                      <li contentEditable={isEditable} suppressContentEditableWarning>
+                        Safety &amp; Compliance
+                      </li>
+                      <li contentEditable={isEditable} suppressContentEditableWarning>
+                        Crew Resource Management
+                      </li>
+                      <li contentEditable={isEditable} suppressContentEditableWarning>
+                        Emergency Procedures
+                      </li>
+                      <li contentEditable={isEditable} suppressContentEditableWarning>
+                        Communication &amp; Briefing
+                      </li>
+                      <li contentEditable={isEditable} suppressContentEditableWarning>
+                        Passenger &amp; Client Service
+                      </li>
+                    </ul>
+                  </section>
 
-            </main>
+                  {/* LICENSES */}
+                  <section className="av-side-section">
+                    <h3 className="av-side-heading">LICENSES &amp; CERTS</h3>
+                    <ul className="av-side-list">
+                      <li contentEditable={isEditable} suppressContentEditableWarning>
+                        Valid Passport &amp; Travel Documents
+                      </li>
+                      <li contentEditable={isEditable} suppressContentEditableWarning>
+                        Medical Certificate – Class 1 / 2
+                      </li>
+                      <li contentEditable={isEditable} suppressContentEditableWarning>
+                        Recurrent Safety &amp; Emergency Training
+                      </li>
+                    </ul>
+                  </section>
 
-            {/* SIDEBAR */}
-            <aside className="av-sidebar">
+                  {/* LANGUAGES */}
+                  <section className="av-side-section">
+                    <h3 className="av-side-heading">LANGUAGES</h3>
+                    <ul className="av-side-list">
+                      <li contentEditable={isEditable} suppressContentEditableWarning>
+                        English — Native / Fluent
+                      </li>
+                      <li contentEditable={isEditable} suppressContentEditableWarning>
+                        Spanish — Conversational
+                      </li>
+                      <li contentEditable={isEditable} suppressContentEditableWarning>
+                        French — Basic
+                      </li>
+                    </ul>
+                  </section>
+                </aside>
 
-              <section>
-                <h3>CONTACT</h3>
-                <p>{data?.email || "email@example.com"}</p>
-                <p>{data?.phone || "+123456789"}</p>
-              </section>
-
-            </aside>
-
+              </div>
+            </div>
           </div>
 
         </div>
-      </div>
-    </div>
+
   );
+}
 }

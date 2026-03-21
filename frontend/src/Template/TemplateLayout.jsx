@@ -23,8 +23,9 @@ console.log("SelectedTemplate:", SelectedTemplate)
   const pdfRef = useRef(null);
 const resumeContainerRef = useRef(null);
 
-  const [isEditable, setIsEditable] = useState(false);
+ 
   const [canEdit, setCanEdit] = useState(false);
+  const [isEditable, setIsEditable] = useState(true);
 
   const handleEditChange = (editable, paid) => {
     setIsEditable(editable);
@@ -76,12 +77,10 @@ return (
         <div className={resumeClass} ref={resumeContainerRef}>
 
           <Watermark show={!canEdit} />
-
-          {SelectedTemplate ? (
-  <SelectedTemplate data={resumeData || {}} />
-) : (
-  <div>No template found</div>
-)}
+<SelectedTemplate 
+  data={resumeData} 
+  isEditable={isEditable}
+/>
 
         </div>
       </div>
