@@ -7,6 +7,10 @@ export default function AviationPro({ data, isEditable }) {
 
   console.log("AviationPro data:", data);
 
+  const [fullName, setFullName] = useState("");
+const [email, setEmail] = useState("");
+
+
   // ---------- PROFILE IMAGE ----------
   const [profileImage, setProfileImage] = useState(
     "/images/cleanprofileimage.png"
@@ -66,83 +70,9 @@ export default function AviationPro({ data, isEditable }) {
 
   const activeData = roleData[activeRole] || roleData.pilot;
 
- 
   return (
 
         <div className="av-wrapper">
-
-
-          {/* QR FORM */}
-          <div className="av-qr-form no-pdf">
-            <div className="av-qr-row">
-              <input
-                placeholder="Full Name"
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
-                disabled={!isEditable}
-              />
-
-              <input
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                disabled={!isEditable}
-              />
-              <input
-                placeholder="Phone"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                disabled={!isEditable}
-              />
-            </div>
-
-            <input
-              placeholder="Address"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              disabled={!isEditable}
-            />
-
-            <div className="av-qr-row">
-              <input
-                placeholder="City"
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
-                disabled={!isEditable}
-              />
-              <input
-                placeholder="State"
-                value={stateVal}
-                onChange={(e) => setStateVal(e.target.value)}
-                disabled={!isEditable}
-              />
-              <input
-                placeholder="ZIP"
-                value={zip}
-                onChange={(e) => setZip(e.target.value)}
-                disabled={!isEditable}
-              />
-            </div>
-
-            <div className="av-qr-row">
-              <input
-                placeholder="LinkedIn Profile URL"
-                value={linkedin}
-                onChange={(e) => setLinkedin(e.target.value)}
-                disabled={!isEditable}
-              />
-              <input
-                placeholder="Portfolio / Profile Link"
-                value={profileLink}
-                onChange={(e) => setProfileLink(e.target.value)}
-                disabled={!isEditable}
-              />
-            </div>
-
-            <button className="av-qr-btn" onClick={handleGenerateQR}>
-              Create QR Code
-            </button>
-          </div>
 
           {/* TABS */}
           <div className="av-tabs no-pdf">
@@ -227,7 +157,11 @@ export default function AviationPro({ data, isEditable }) {
                 {/* HEADER QR */}
                 <div className="av-header-right">
                   <div className="av-qr-block">
-                    <img src={qrImage} alt="QR Code" className="av-qr-img" />
+                    <img 
+  src={data?.qrImage || qrImage} 
+  alt="QR Code" 
+  className="av-qr-img" 
+/>
                     <p
                       className="av-qr-text"
                       contentEditable={isEditable}
