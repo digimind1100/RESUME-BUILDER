@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 import "./AviationPro.css";
 import QRCode from "qrcode";
 
-export default function AviationPro() {
-
+export default function AviationPro({data}) {
+console.log("AviationPro data:", data)
   // ---------- PROFILE IMAGE ----------
   const [profileImage, setProfileImage] = useState(
     "/images/cleanprofileimage.png"
@@ -15,7 +15,6 @@ export default function AviationPro() {
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     if (!file) return;
-console.log("AviationPro data:", data)
 
     const imageUrl = URL.createObjectURL(file);
     setProfileImage(imageUrl);
