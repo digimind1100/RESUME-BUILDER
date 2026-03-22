@@ -2,8 +2,24 @@
   font-family: 'Inter', sans-serif;
 }
 
+.neo-wrapper {
+  background: #e5e7eb;
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
 .neo-a4 {
-  background: #ffffff;
+  width: 210mm;
+  min-height: 297mm;
+  background: white;
+
+  margin: 20px auto;   /* ⬅️ CENTER FIX */
+  box-shadow: 0 0 20px rgba(0,0,0,0.15);
 }
 
 .neo-header {
@@ -11,7 +27,9 @@
   color: white;
   display: flex;
   justify-content: space-between;
-  padding: 40px;
+  align-items: center;
+  padding: 60px 50px;   /* ⬅️ increased */
+  min-height: 180px;   /* ⬅️ important */
 }
 
 .neo-header-left {
@@ -42,6 +60,17 @@
 .neo-header-text p {
   margin: 5px 0 0;
   color: #4a90e2;
+}
+
+.neo-header-text h1 {
+  font-size: 38px;   /* bigger */
+  font-weight: 700;
+}
+
+.neo-header-text p {
+  font-size: 16px;
+  color: #4a90e2;
+  margin-top: 8px;
 }
 
 .neo-qr {
@@ -76,12 +105,60 @@
 }
 
 .neo-qr-img {
-  width: 80px;
-  height: 80px;
+  width: 110px;
+  height: 110px;
 }
 
 .neo-qr-btn {
   margin-top: 5px;
   font-size: 10px;
   padding: 3px 6px;
+}
+
+.neo-profile-container {
+  position: relative;
+  width: 160px;
+  height: 160px;
+}
+
+.neo-profile-shape {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  background: #4a90e2;
+  border-radius: 50% 40% 60% 50%;
+  top: -10px;
+  left: -10px;
+  z-index: 1;
+}
+
+.neo-profile-wrapper {
+  position: relative;
+  z-index: 2;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 5px solid white;
+}
+.neo-resume {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.neo-body {
+  display: flex;
+  flex: 1;
+}
+
+.neo-sidebar {
+  width: 32%;
+  background: #f5f7fa;
+  padding: 30px;
+}
+
+.neo-main {
+  width: 68%;
+  padding: 40px;
 }

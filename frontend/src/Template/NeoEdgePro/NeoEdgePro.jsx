@@ -24,13 +24,19 @@ export default function NeoEdgePro() {
 
                 <div className="neo-header-left">
 
-                  <ProfileImageUpload
-                    canEdit={canEdit}
-                    isEditable={isEditable}
-                    requirePayment={requirePayment}
-                    className="neo-profile-wrapper"
-                    imgClass="neo-profile"
-                  />
+                  <div className="neo-profile-container">
+
+  <div className="neo-profile-shape"></div>
+
+  <ProfileImageUpload
+    canEdit={canEdit}
+    isEditable={isEditable}
+    requirePayment={requirePayment}
+    className="neo-profile-wrapper"
+    imgClass="neo-profile"
+  />
+
+</div>
 
                   <div className="neo-header-text">
                     <h1 contentEditable={canEdit && isEditable}>

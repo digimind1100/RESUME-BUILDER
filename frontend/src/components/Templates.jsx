@@ -252,7 +252,7 @@ export default function Templates() {
                       11: "/aviation-pro",
                       12: "/free-basic",
                       13: "/royal-designer",
-                      14: "/neoedge-pro",
+                      14: "/neoEdge-pro",
                     };
                     handleUseTemplate(routes[num]);
                   }}
