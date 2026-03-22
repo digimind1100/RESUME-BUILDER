@@ -17,6 +17,7 @@ import EngineerElites from "./Template/EngineerElite/EngineerElite";
 import SoftTech from "./Template/SoftTech/SoftTech";
 import EngineerPrime from "./Template/EngineerPrime/EngineerPrime";
 import DataElite from "./Template/DataElite/DataElite";
+import NewEdgePro from "./Template/NewEdgePro/NewEdgePro";
 import AviationPro from "./Template/AviationPro/AviationPro";
 import TeacherElite from "./Template/TeacherElite/TeacherElite";
 import BuilderGuard from "./components/guards/BuilderGuard";
