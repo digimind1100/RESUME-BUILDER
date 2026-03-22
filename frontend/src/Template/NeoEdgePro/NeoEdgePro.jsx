@@ -2,7 +2,6 @@ import React from "react";
 import TemplateLayout from "../TemplateLayout";
 import "./NeoEdgePro.css";
 import ProfileImageUpload from "../components/ProfileImageUpload"
-import ProfileImageUpload from "../ProfileImageUpload"
 
 export default function NeoEdgePro() {
   return (
