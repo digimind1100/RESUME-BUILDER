@@ -20,7 +20,7 @@ const TEMPLATE_META = {
   11: { name: "Aviation Pro", category: "Aviation" },
   12: { name: "Free Basic", category: "Free Template" },
   13: { name: "Royal Designer", category: "Royal Designer" },
-  14: { name: "NeoEdge Pro", category: "NeoEge Pro" },
+  14: { name: "NeoEdge Pro", category: "NeoEdge Pro" },
 };
 
 export default function Templates() {

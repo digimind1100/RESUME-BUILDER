@@ -29,6 +29,7 @@ export default function TemplatesPreview({ resumeStyle, setResumeStyle }) {
     { id: "template10", title: "Soft-Tech", img: "/images/simple-8.png" },
     { id: "template11", title: "Data Analyst", img: "/images/simple-9.png" },
     { id: "template12", title: "Engineer Prime", img: "/images/simple-10.png" },
+    
   ];
 
   const handleTemplateClick = (id) => {
