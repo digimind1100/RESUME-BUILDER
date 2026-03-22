@@ -106,6 +106,7 @@ function AppContent() {
           <Route path="/soft-tech" element={<SoftTech />} />
           <Route path="/free-basic" element={<FreeBasic />} />
           <Route path="/royal-designer" element={<RoyalBlueDesigner />} />
+          <Route path="/neoedge-pro" element={<NewEdgePro />} />
 
           <Route
             path="/data-elite"

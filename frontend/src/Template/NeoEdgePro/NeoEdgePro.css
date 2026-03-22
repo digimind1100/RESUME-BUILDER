@@ -1,0 +1,87 @@
+.neo-wrapper {
+  font-family: 'Inter', sans-serif;
+}
+
+.neo-a4 {
+  background: #ffffff;
+}
+
+.neo-header {
+  background: #1e2a38;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  padding: 40px;
+}
+
+.neo-header-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.neo-profile-wrapper {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid white;
+}
+
+.neo-profile {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.neo-header-text h1 {
+  margin: 0;
+  font-size: 28px;
+}
+
+.neo-header-text p {
+  margin: 5px 0 0;
+  color: #4a90e2;
+}
+
+.neo-qr {
+  width: 80px;
+}
+
+.neo-body {
+  display: flex;
+}
+
+.neo-sidebar {
+  width: 30%;
+  background: #f5f7fa;
+  padding: 30px;
+}
+
+.neo-main {
+  width: 70%;
+  padding: 30px;
+}
+
+.neo-main h2 {
+  border-bottom: 2px solid #eee;
+  padding-bottom: 5px;
+}
+
+.neo-job {
+  margin-bottom: 20px;
+}
+.neo-qr-block {
+  text-align: center;
+}
+
+.neo-qr-img {
+  width: 80px;
+  height: 80px;
+}
+
+.neo-qr-btn {
+  margin-top: 5px;
+  font-size: 10px;
+  padding: 3px 6px;
+}
