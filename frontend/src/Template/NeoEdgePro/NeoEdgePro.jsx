@@ -1,7 +1,8 @@
 import React from "react";
 import TemplateLayout from "../TemplateLayout";
 import "./NeoEdgePro.css";
-import ProfileImageUpload from "../components/ProfileImageUpload"
+import ProfileImageUpload from "../../components/ProfileImageUpload"
+import QRCodeBlock from "../../components/QRCodeBlock";
 
 export default function NeoEdgePro() {
   return (
