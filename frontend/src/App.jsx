@@ -17,7 +17,7 @@ import EngineerElites from "./Template/EngineerElite/EngineerElite";
 import SoftTech from "./Template/SoftTech/SoftTech";
 import EngineerPrime from "./Template/EngineerPrime/EngineerPrime";
 import DataElite from "./Template/DataElite/DataElite";
-import NewEdgePro from "./Template/NewEdgePro/NewEdgePro";
+import NeoEdgePro from "./Template/NeoEdgePro/NeoEdgePro";
 import AviationPro from "./Template/AviationPro/AviationPro";
 import TeacherElite from "./Template/TeacherElite/TeacherElite";
 import BuilderGuard from "./components/guards/BuilderGuard";
@@ -107,7 +107,7 @@ function AppContent() {
           <Route path="/soft-tech" element={<SoftTech />} />
           <Route path="/free-basic" element={<FreeBasic />} />
           <Route path="/royal-designer" element={<RoyalBlueDesigner />} />
-          <Route path="/neoedge-pro" element={<NewEdgePro />} />
+          <Route path="/neoedge-pro" element={<NeoEdgePro />} />
 
           <Route
             path="/data-elite"
