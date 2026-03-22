@@ -12,25 +12,13 @@ const CleanProfessional = () => {
   const [profileImage, setProfileImage] = useState("/images/cleanprofileimage.png");
   const fileInputRef = useRef(null);
 
-  const handleImageUpload = (event) => {
-    if (!(canEdit && isEditable)) return; // 🔒 premium guard
-
-    const file = event.target.files[0];
-    if (!file) return;
-
-    const imageUrl = URL.createObjectURL(file);
-    setProfileImage(imageUrl);
-  };
-  const triggerFileSelect = () => {
-   if (!canEdit) {
-  requirePayment();
-  return;
-}
-if (!isEditable) return;
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
-  };
+    const handleImageUpload = (event) => {
+      const file = event.target.files[0];
+      if (!file) return;
+  
+      const imageUrl = URL.createObjectURL(file);
+      setProfileImage(imageUrl);
+    };
 
   return (
     <TemplateLayout
