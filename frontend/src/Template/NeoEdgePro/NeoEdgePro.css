@@ -110,6 +110,7 @@
 .neo-main h2 {
   border-bottom: 2px solid #eee;
   padding-bottom: 5px;
+  font-size:1.25em;
 }
 
 .neo-job {
@@ -176,7 +177,7 @@
 .neo-sidebar {
   width: 32%;
   background: #f5f7fa;
-  padding: 30px;
+  padding: 40px 30px 30px ;
 }
 
 .neo-main {
@@ -193,7 +194,7 @@
   position: absolute;
 
   left: 20px;         /* adjust horizontally */
-  bottom: -100px;      /* pushes 40% below header */
+  bottom: -150px;      /* pushes 40% below header */
 
   width: 180px;
   height: 180px;
@@ -229,7 +230,7 @@
   width: 32%;
   height: 1122px;   /* 👈 FULL A4 HEIGHT */
   background: #f5f7fa;
-  padding: 30px;
+  padding: 40px ;
   box-sizing: border-box;
 }
 
