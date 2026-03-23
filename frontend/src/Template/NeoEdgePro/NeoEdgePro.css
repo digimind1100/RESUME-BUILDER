@@ -101,17 +101,9 @@
   color: #444;
 }
 
-.neo-sidebar,
-.neo-sidebar li,
-.neo-sidebar p {
-  font-size: 12px !important;
-}
-
 .neo-main h2 {
   border-bottom: 2px solid #eee;
- 
 }
-
 
 /* MAIN HEADINGS */
 .neo-main h2 {
@@ -120,18 +112,6 @@
   border-bottom: 2px solid #eee;
   padding-bottom: 5px;
 }
-
-/* SIDEBAR HEADINGS */
-.neo-sidebar h3 {
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  margin-top: 14.9px;
-  margin-bottom: 14.9px;
-}
-
-
-
 
 .neo-job {
   margin-bottom: 20px;
@@ -263,6 +243,7 @@
 /* SIDEBAR SECTIONS */
 .neo-section {
   margin-bottom: 25px;
+  margin-top: 100px;
 }
 
 .neo-section-title {
