@@ -23,12 +23,13 @@
 }
 
 .neo-header {
+  position: relative;
   background: #1e2a38;
   color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 60px 20px;   /* ⬅️ increased */
+  padding: 60px 50px 120px;   
   min-height: 180px;   /* ⬅️ important */
 }
 
@@ -80,6 +81,7 @@
 
 .neo-body {
   display: flex;
+  margin-top: 0 !important;
 }
 
 .neo-sidebar {
@@ -91,6 +93,18 @@
 .neo-main {
   width: 70%;
   padding: 30px;
+}
+.neo-main p,
+.neo-main li {
+  font-size: 12px !important;
+  line-height: 1.5;
+  color: #444;
+}
+
+.neo-sidebar,
+.neo-sidebar li,
+.neo-sidebar p {
+  font-size: 12px !important;
 }
 
 .neo-main h2 {
@@ -206,6 +220,21 @@
 
   border: 5px solid white;   /* clean premium look */
 }
+
 .neo-body {
-  margin-top: 100px;   /* prevents content collision */
+  display: flex;
+}
+
+.neo-sidebar {
+  width: 32%;
+  height: 1122px;   /* 👈 FULL A4 HEIGHT */
+  background: #f5f7fa;
+  padding: 30px;
+  box-sizing: border-box;
+}
+
+.neo-main {
+  width: 68%;
+  padding: 40px;
+  box-sizing: border-box;
 }
