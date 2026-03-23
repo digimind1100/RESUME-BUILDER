@@ -283,20 +283,39 @@
   border-radius: 6px;
 }
 /* Page Break CSS */
-
-.neo-page-1 {
-  page-break-after: always;
+.neo-a4 {
+  width: 210mm;
+  background: white;
+  margin: 20px auto;
 }
-.neo-page-1 {
+
+/* Allow content to break naturally */
+.neo-main {
+  page-break-inside: auto;
+}
+
+/* Prevent section splitting */
+.neo-section {
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+/* Job block safety */
+.neo-job {
+  page-break-inside: avoid;
+}
+.neo-main {
   padding-bottom: 30px;
-  box-sizing: border-box;
 }
-.neo-page-2 {
-  padding-top: 30px;
-  box-sizing: border-box;
+@media print {
+  .neo-main {
+    padding-top: 30px;
+  }
+}
 
-  border: 2px dashed red;   /* 👈 visible test border */
-}
+
+
+
 .neo-a4 {
   width: 210mm;
   height: 297mm;   /* FIXED HEIGHT FOR TEST */

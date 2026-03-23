@@ -15,23 +15,13 @@ export default function NeoEdgePro() {
 
         <div className="neo-wrapper">
 
-          <div ref={pdfRef}>
-
-  {/* PAGE 1 */}
-  <div className="neo-a4 neo-page-1">
-    <div className="neo-resume">
-      {/* EXISTING FULL TEMPLATE CONTENT HERE */}
+<div className="neo-a4" ref={pdfRef}>
+  <div className="neo-resume">
+    <div className="neo-body">
+      <aside className="neo-sidebar">...</aside>
+      <main className="neo-main">...</main>
     </div>
   </div>
-
-  {/* PAGE 2 (TEST PAGE) */}
-  <div className="neo-a4 neo-page-2">
-    <div className="neo-page2-content">
-      <h2>PAGE 2 TEST</h2>
-      <p>This is second page for PDF testing</p>
-    </div>
-  </div>
-
 </div>
 
             <div className="neo-resume">
