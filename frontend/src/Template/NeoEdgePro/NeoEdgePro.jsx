@@ -210,9 +210,9 @@ export default function NeoEdgePro() {
               </div>
 
             </div>
-<div className="resume-a4 neo-a4 neo-page-2">
-  {/* PAGE 2 */}
-</div>
+            <div className="resume-a4 neo-a4 neo-page-2">
+              {/* PAGE 2 */}
+            </div>
 
           </div>  {/*  pdf dive close */}
         </div>

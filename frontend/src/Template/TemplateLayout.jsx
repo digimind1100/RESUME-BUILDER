@@ -23,30 +23,40 @@ export default function TemplateLayout({
   };
 
   const handleDownloadPDF = async () => {
-    const root = resumeContainerRef.current;
-    if (!root) return;
+  const root = resumeContainerRef.current;
+  if (!root) return;
 
-    const element = root.querySelector(".resume-a4") || root;
+  const pages = root.querySelectorAll(".resume-a4");
 
-    await new Promise((r) => setTimeout(r, 200));
+  if (!pages.length) return;
 
-    const canvas = await html2canvas(element, {
+  const pdf = new jsPDF("p", "mm", "a4");
+
+  for (let i = 0; i < pages.length; i++) {
+    const page = pages[i];
+
+    await new Promise((r) => setTimeout(r, 100));
+
+    const canvas = await html2canvas(page, {
       scale: 2,
       useCORS: true,
-      backgroundColor: "#ffffff"
+      backgroundColor: "#ffffff",
     });
 
     const imgData = canvas.toDataURL("image/png");
 
-    const pdf = new jsPDF("p", "mm", "a4");
-
     const pdfWidth = 210;
     const imgHeight = (canvas.height * pdfWidth) / canvas.width;
 
-    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, imgHeight);
+    if (i !== 0) {
+      pdf.addPage();   // ✅ ADD NEW PAGE
+    }
 
-    pdf.save(`${templateId}-resume.pdf`);
-  };
+    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, imgHeight);
+  }
+
+  pdf.save(`${templateId}-resume.pdf`);
+};
 
   return (
     <div className={wrapperClass}>
