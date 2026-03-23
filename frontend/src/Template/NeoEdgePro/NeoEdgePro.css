@@ -17,9 +17,9 @@
   width: 210mm;
   min-height: 297mm;
   background: white;
-
   margin: 20px auto;   /* ⬅️ CENTER FIX */
   box-shadow: 0 0 20px rgba(0,0,0,0.15);
+   overflow: visible;
 }
 
 .neo-header {
@@ -83,7 +83,7 @@
 }
 
 .neo-sidebar {
-  width: 30%;
+  width: 32%;
   background: #f5f7fa;
   padding: 30px;
 }
@@ -156,7 +156,7 @@
 
 .neo-body {
   display: flex;
-  flex: 1;
+  align-items: flex-start;
 }
 
 .neo-sidebar {
@@ -168,6 +168,8 @@
 .neo-main {
   width: 68%;
   padding: 40px;
+   box-sizing: border-box;
+  page-break-inside: auto;
 }
 .neo-header {
   position: relative;   /* VERY IMPORTANT */
