@@ -283,37 +283,6 @@
   border-radius: 6px;
 }
 /* Page Break CSS */
-.neo-a4 {
-  width: 210mm;
-  background: white;
-  margin: 20px auto;
-}
-
-/* Allow content to break naturally */
-.neo-main {
-  page-break-inside: auto;
-}
-
-/* Prevent section splitting */
-.neo-section {
-  page-break-inside: avoid;
-  break-inside: avoid;
-}
-
-/* Job block safety */
-.neo-job {
-  page-break-inside: avoid;
-}
-.neo-main {
-  padding-bottom: 30px;
-}
-@media print {
-  .neo-main {
-    padding-top: 30px;
-  }
-}
-
-
 
 
 .neo-a4 {
@@ -325,9 +294,4 @@
   box-shadow: 0 0 20px rgba(0,0,0,0.15);
 
   position: relative;
-}
-
-.neo-page-2 {
-  page-break-before: always;
-  border: 2px dashed red; /* test */
 }
