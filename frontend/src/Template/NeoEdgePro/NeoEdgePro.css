@@ -30,7 +30,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 60px 20px;   
-  min-height: 180px;   /* ⬅️ important */
+  min-height: 220px;   /* ⬅️ important */
 }
 
 .neo-header-left {
