@@ -17,7 +17,7 @@
   width: 210mm;
   min-height: 297mm;
   background: white;
-  margin: 20px auto;   /* ⬅️ CENTER FIX */
+  margin: 0px auto;   /* ⬅️ CENTER FIX */
   box-shadow: 0 0 20px rgba(0,0,0,0.15);
    overflow: visible;
 }
