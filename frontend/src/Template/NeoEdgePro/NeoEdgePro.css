@@ -110,8 +110,27 @@
 .neo-main h2 {
   border-bottom: 2px solid #eee;
   padding-bottom: 5px;
-  font-size:1.25em;
 }
+
+
+/* MAIN HEADINGS */
+.neo-main h2 {
+  font-size: 18px;
+  font-weight: 700;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 5px;
+}
+
+/* SIDEBAR HEADINGS */
+.neo-sidebar h3 {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin-bottom: 10px;
+}
+
+
+
 
 .neo-job {
   margin-bottom: 20px;
@@ -194,7 +213,7 @@
   position: absolute;
 
   left: 20px;         /* adjust horizontally */
-  bottom: -150px;      /* pushes 40% below header */
+  bottom: -100px;      /* pushes 40% below header */
 
   width: 180px;
   height: 180px;
