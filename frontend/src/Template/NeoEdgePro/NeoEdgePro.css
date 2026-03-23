@@ -124,7 +124,7 @@
 .neo-profile-shape {
   position: absolute;
  width: 180px;
-  height: 200px;
+  height: 180px;
   background-color: #4472c4; /* Matches the blue in your image */
   
   /* Top-left, Top-right, Bottom-right, Bottom-left */
