@@ -162,3 +162,53 @@
   width: 68%;
   padding: 40px;
 }
+.neo-header {
+  position: relative;   /* VERY IMPORTANT */
+}
+
+.neo-profile-global {
+  position: absolute;
+
+  left: 60px;         /* adjust horizontally */
+  bottom: -80px;      /* pushes 40% below header */
+
+  width: 180px;
+  height: 180px;
+
+  z-index: 10;
+}
+.neo-profile-shape {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+
+  background: #4a90e2;
+
+  border-radius: 50%;
+  top: 0;
+  left: 0;
+
+  z-index: 1;
+}
+.neo-profile-inner {
+  position: absolute;
+
+  top: 15px;   /* creates margin inside */
+  left: 15px;
+
+  width: 150px;
+  height: 150px;
+
+  z-index: 2;
+}
+.neo-profile-wrapper {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+
+  border: 5px solid white;   /* clean premium look */
+}
+.neo-body {
+  margin-top: 100px;   /* prevents content collision */
+}

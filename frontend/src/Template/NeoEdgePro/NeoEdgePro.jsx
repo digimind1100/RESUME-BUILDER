@@ -25,18 +25,20 @@ export default function NeoEdgePro() {
                 <div className="neo-header-left">
 
                   <div className="neo-profile-container">
+                    <div className="neo-profile-global">
+                      <div className="neo-profile-shape"></div>
 
-  <div className="neo-profile-shape"></div>
-
-  <ProfileImageUpload
-    canEdit={canEdit}
-    isEditable={isEditable}
-    requirePayment={requirePayment}
-    className="neo-profile-wrapper"
-    imgClass="neo-profile"
-  />
-
-</div>
+                      <div className="neo-profile-inner">
+                        <ProfileImageUpload
+                          canEdit={canEdit}
+                          isEditable={isEditable}
+                          requirePayment={requirePayment}
+                          className="neo-profile-wrapper"
+                          imgClass="neo-profile"
+                        />
+                      </div>
+                    </div>
+                  </div>
 
                   <div className="neo-header-text">
                     <h1 contentEditable={canEdit && isEditable}>
@@ -50,10 +52,10 @@ export default function NeoEdgePro() {
                 </div>
 
                 <div className="neo-header-right">
-                <QRCodeBlock 
-                canEdit={canEdit} 
-                isEditable={isEditable} 
-                />
+                  <QRCodeBlock
+                    canEdit={canEdit}
+                    isEditable={isEditable}
+                  />
                 </div>
 
               </header>
