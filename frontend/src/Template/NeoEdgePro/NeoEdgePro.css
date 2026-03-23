@@ -147,8 +147,8 @@
   border-radius: 50% 50% 50% 0%;
   
   /* Optional: adds the black border seen in the image */
-  border: 1px solid #000;
 
+  border: none;
   z-index: 1;
     display: flex;
   align-items: center;
