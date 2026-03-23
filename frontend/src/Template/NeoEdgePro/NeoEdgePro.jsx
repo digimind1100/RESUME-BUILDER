@@ -66,12 +66,59 @@ export default function NeoEdgePro() {
                 {/* SIDEBAR */}
                 <aside className="neo-sidebar">
 
-                  <section>
-                    <h3>CONTACT</h3>
-                    <p contentEditable={canEdit && isEditable}>+1 236 569 8745</p>
-                    <p contentEditable={canEdit && isEditable}>alex@email.com</p>
-                    <p contentEditable={canEdit && isEditable}>New York, USA</p>
-                  </section>
+                  {/* CONTACT */}
+<section className="neo-section">
+  <h3 className="neo-section-title">CONTACT</h3>
+
+  <ul className="neo-list">
+
+    <li>
+      <span className="neo-icon">
+        <svg width="16" height="16" fill="#4472c4" viewBox="0 0 24 24">
+          <path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1V21a1 1 0 01-1 1C10.52 22 2 13.48 2 3a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.46.57 3.58a1 1 0 01-.24 1.01l-2.2 2.2z"/>
+        </svg>
+      </span>
+      <span contentEditable={canEdit && isEditable}>
+        +1 (555) 245-8890
+      </span>
+    </li>
+
+    <li>
+      <span className="neo-icon">
+        <svg width="16" height="16" fill="#4472c4" viewBox="0 0 24 24">
+          <path d="M4 4h16a2 2 0 012 2v1l-10 6L2 7V6a2 2 0 012-2z"/>
+          <path d="M2 8l10 6 10-6v10a2 2 0 01-2 2H4a2 2 0 01-2-2V8z"/>
+        </svg>
+      </span>
+      <span contentEditable={canEdit && isEditable}>
+        alex.morgan@email.com
+      </span>
+    </li>
+
+    <li>
+      <span className="neo-icon">
+        <svg width="16" height="16" fill="#4472c4" viewBox="0 0 24 24">
+          <path d="M12 2a7 7 0 017 7c0 5.25-7 13-7 13S5 14.25 5 9a7 7 0 017-7zm0 9.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z"/>
+        </svg>
+      </span>
+      <span contentEditable={canEdit && isEditable}>
+        New York, USA
+      </span>
+    </li>
+
+    <li>
+      <span className="neo-icon">
+        <svg width="16" height="16" fill="#4472c4" viewBox="0 0 24 24">
+          <path d="M12 2a10 10 0 100 20A10 10 0 0012 2z"/>
+        </svg>
+      </span>
+      <span contentEditable={canEdit && isEditable}>
+        www.alexmorgan.dev
+      </span>
+    </li>
+
+  </ul>
+</section>
 
                   <section>
                     <h3>SKILLS</h3>

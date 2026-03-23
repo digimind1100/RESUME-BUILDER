@@ -109,7 +109,7 @@
 
 .neo-main h2 {
   border-bottom: 2px solid #eee;
-  padding-bottom: 5px;
+ 
 }
 
 
@@ -126,8 +126,8 @@
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.08em;
-  margin-bottom: 10px;
   margin-top: 14.9px;
+  margin-bottom: 14.9px;
 }
 
 
@@ -258,4 +258,46 @@
   width: 68%;
   padding: 40px;
   box-sizing: border-box;
+}
+
+/* SIDEBAR SECTIONS */
+.neo-section {
+  margin-bottom: 25px;
+}
+
+.neo-section-title {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  margin-bottom: 12px;
+  color: #1e2a38;
+}
+
+/* LIST STYLE */
+.neo-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.neo-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  font-size: 12px;
+  color: #333;
+}
+
+/* ICON STYLE */
+.neo-icon {
+  width: 20px;
+  height: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(68,114,196,0.1);
+  border-radius: 6px;
 }
