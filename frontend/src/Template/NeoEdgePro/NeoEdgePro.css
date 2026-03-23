@@ -24,7 +24,7 @@
 
 .neo-header {
   position: relative;
-  background: #1e2a38;
+  background: #0073e6;
   color: white;
   display: flex;
   justify-content: space-between;
@@ -60,7 +60,7 @@
 
 .neo-header-text p {
   margin: 5px 0 0;
-  color: #4a90e2;
+  color: white;
   text-align: center;
 }
 
