@@ -326,3 +326,8 @@
 
   position: relative;
 }
+
+.neo-page-2 {
+  page-break-before: always;
+  border: 2px dashed red; /* test */
+}
