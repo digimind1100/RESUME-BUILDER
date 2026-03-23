@@ -169,8 +169,8 @@
 .neo-profile-global {
   position: absolute;
 
-  left: 60px;         /* adjust horizontally */
-  bottom: -80px;      /* pushes 40% below header */
+  left: 20px;         /* adjust horizontally */
+  bottom: -100px;      /* pushes 40% below header */
 
   width: 180px;
   height: 180px;
