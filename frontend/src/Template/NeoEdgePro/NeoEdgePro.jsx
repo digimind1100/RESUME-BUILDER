@@ -183,7 +183,7 @@ export default function NeoEdgePro() {
                       <h2>EXPERIENCE</h2>
 
                       <div className="neo-job">
-                        <h4 className="main-headiing" contentEditable={canEdit && isEditable}>Senior Software Engineer</h4>
+                        <h4 className="main-heading" contentEditable={canEdit && isEditable}>Senior Software Engineer</h4>
                         <span contentEditable={canEdit && isEditable}>TechCorp Inc. — 2021 – Present</span>
 
                         <ul>
@@ -196,7 +196,7 @@ export default function NeoEdgePro() {
                       </div>
 
                       <div className="neo-job">
-                        <h4 className="main-headiing" contentEditable={canEdit && isEditable}>Frontend Developer</h4>
+                        <h4 className="main-heading" contentEditable={canEdit && isEditable}>Frontend Developer</h4>
                         <span>Creative Labs — 2018 – 2021</span>
 
                         <ul>
@@ -207,7 +207,7 @@ export default function NeoEdgePro() {
                       </div>
 
                       <div className="neo-job">
-                        <h4 className="main-headiing" contentEditable={canEdit && isEditable}>Junior Web Developer</h4>
+                        <h4 className="main-heading" contentEditable={canEdit && isEditable}>Junior Web Developer</h4>
                         <span contentEditable={canEdit && isEditable}>StartUp Hub — 2016 – 2018</span>
 
                         <ul>
