@@ -26,7 +26,12 @@ export default function TemplateLayout({
   const root = resumeContainerRef.current;
   if (!root) return;
 
-  const pages = root.querySelectorAll(".resume-a4");
+  const allPages = root.querySelectorAll(".resume-a4");
+
+  // ✅ FILTER ONLY VISIBLE / NON-EMPTY PAGES
+  const pages = Array.from(allPages).filter((page) => {
+    return page.scrollHeight > 50; // ignore empty pages
+  });
 
   if (!pages.length) return;
 
@@ -49,7 +54,7 @@ export default function TemplateLayout({
     const imgHeight = (canvas.height * pdfWidth) / canvas.width;
 
     if (i !== 0) {
-      pdf.addPage();   // ✅ ADD NEW PAGE
+      pdf.addPage();
     }
 
     pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, imgHeight);
