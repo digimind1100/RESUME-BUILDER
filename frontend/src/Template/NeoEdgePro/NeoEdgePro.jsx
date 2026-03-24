@@ -120,34 +120,52 @@ export default function NeoEdgePro() {
                       </ul>
                     </section>
 
-                    <section>
-                      <h3>SKILLS</h3>
-                      <ul>
-                        <li>JavaScript (ES6+)</li>
-                        <li>React / Next.js</li>
-                        <li>Node.js / Express</li>
-                        <li>REST APIs</li>
-                        <li>MongoDB / SQL</li>
-                      </ul>
-                    </section>
+                    <section className="neo-section">
+  <h3 className="neo-section-title">CORE SKILLS</h3>
 
-                    <section>
-                      <h3>TOOLS</h3>
-                      <ul>
-                        <li>Git & GitHub</li>
-                        <li>Figma</li>
-                        <li>Postman</li>
-                        <li>Docker</li>
-                      </ul>
-                    </section>
+  <div className="neo-skill-tags">
+    <span>JavaScript</span>
+    <span>React</span>
+    <span>Next.js</span>
+    <span>Node.js</span>
+    <span>REST APIs</span>
+    <span>MongoDB</span>
+    <span>UI/UX</span>
+    <span>Performance</span>
+  </div>
+</section>
 
-                    <section>
-                      <h3>LANGUAGES</h3>
-                      <ul>
-                        <li>English (Fluent)</li>
-                        <li>Spanish (Intermediate)</li>
-                      </ul>
-                    </section>
+                    <section className="neo-section">
+  <h3 className="neo-section-title">TOOLS</h3>
+
+  <ul className="neo-list">
+    <li>Git & GitHub</li>
+    <li>Figma</li>
+    <li>Postman</li>
+    <li>Docker</li>
+    <li>VS Code</li>
+  </ul>
+</section>
+
+                    <section className="neo-section">
+  <h3 className="neo-section-title">LANGUAGES</h3>
+
+  <ul className="neo-list">
+    <li>English — Fluent</li>
+    <li>Spanish — Intermediate</li>
+    <li>French — Basic</li>
+  </ul>
+</section>
+
+<section className="neo-section">
+  <h3 className="neo-section-title">CERTIFICATIONS</h3>
+
+  <ul className="neo-list">
+    <li>AWS Certified Developer</li>
+    <li>Google UX Certification</li>
+    <li>Meta Frontend Certificate</li>
+  </ul>
+</section>
 
                   </aside>
 
@@ -157,51 +175,65 @@ export default function NeoEdgePro() {
                     <section>
                       <h2>SUMMARY</h2>
                       <p contentEditable={canEdit && isEditable}>
-                        Results-driven software engineer with 6+ years of experience building scalable web applications and modern user interfaces. Strong expertise in JavaScript ecosystems, API design, and performance optimization. Proven ability to lead projects, collaborate across teams, and deliver high-quality solutions in fast-paced environments.
-                      </p>
+  Results-driven Senior Software Engineer with 6+ years of experience designing, developing, and optimizing high-performance web applications. Expertise in modern JavaScript frameworks, scalable architecture, and user-centric design. Proven ability to lead cross-functional teams, improve system performance, and deliver impactful digital solutions in fast-paced environments.
+</p>
                     </section>
 
                     <section>
                       <h2>EXPERIENCE</h2>
 
                       <div className="neo-job">
-                        <h4>Senior Software Engineer</h4>
-                        <span>TechCorp Inc. — 2021 – Present</span>
-                        <ul>
-                          <li>Led development of scalable SaaS platform used by 50K+ users.</li>
-                          <li>Improved application performance by 40% through optimization.</li>
-                          <li>Designed RESTful APIs and microservices architecture.</li>
-                          <li>Mentored junior developers and conducted code reviews.</li>
-                        </ul>
-                      </div>
+  <h4>Senior Software Engineer</h4>
+  <span>TechCorp Inc. — 2021 – Present</span>
 
-                      <div className="neo-job">
-                        <h4>Frontend Developer</h4>
-                        <span>Creative Labs — 2018 – 2021</span>
-                        <ul>
-                          <li>Built responsive UI using React and modern CSS frameworks.</li>
-                          <li>Collaborated with designers to implement pixel-perfect layouts.</li>
-                          <li>Integrated third-party APIs and improved UX flow.</li>
-                        </ul>
-                      </div>
+  <ul>
+    <li>Led development of scalable SaaS platform serving 50,000+ users globally.</li>
+    <li>Improved application performance by 40% through optimization techniques.</li>
+    <li>Designed and implemented RESTful APIs and microservices architecture.</li>
+    <li>Collaborated with UI/UX teams to deliver high-quality user experiences.</li>
+    <li>Mentored junior developers and conducted code reviews.</li>
+  </ul>
+</div>
+
+<div className="neo-job">
+  <h4>Frontend Developer</h4>
+  <span>Creative Labs — 2018 – 2021</span>
+
+  <ul>
+    <li>Built responsive web applications using React and modern CSS frameworks.</li>
+    <li>Integrated APIs and improved user interaction flows.</li>
+    <li>Worked closely with designers to implement pixel-perfect interfaces.</li>
+  </ul>
+</div>
+
+<div className="neo-job">
+  <h4>Junior Web Developer</h4>
+  <span>StartUp Hub — 2016 – 2018</span>
+
+  <ul>
+    <li>Developed small-scale web applications and landing pages.</li>
+    <li>Maintained legacy systems and improved performance.</li>
+    <li>Assisted in debugging and testing across multiple browsers.</li>
+  </ul>
+</div>
 
                     </section>
 
                     <section>
-                      <h2>PROJECTS</h2>
-                      <ul>
-                        <li>Resume Builder App with AI integration</li>
-                        <li>E-commerce platform with payment gateway</li>
-                        <li>Task management system using Supabase</li>
-                      </ul>
-                    </section>
+  <h2>PROJECTS</h2>
 
-                    <section>
-                      <h2>EDUCATION</h2>
-                      <p>
-                        Bachelor of Computer Science — XYZ University (2014 – 2018)
-                      </p>
-                    </section>
+  <ul>
+    <li>
+      Resume Builder Web App — Developed a dynamic resume builder with live preview and AI-powered suggestions.
+    </li>
+    <li>
+      E-commerce Platform — Built full-stack application with payment integration and user authentication.
+    </li>
+    <li>
+      Task Management System — Created a real-time task manager using Supabase backend.
+    </li>
+  </ul>
+</section>
 
                   </main>
 
