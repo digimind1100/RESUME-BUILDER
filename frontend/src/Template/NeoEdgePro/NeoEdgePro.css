@@ -228,7 +228,9 @@
 .neo-body {
   display: flex;
 }
-
+.h4{
+  margin-bottom: 10px;
+}
 .neo-main {
   width: 68%;
   padding: 40px;
@@ -238,7 +240,7 @@
 /* SIDEBAR SECTIONS */
 .neo-section {
   margin-bottom: 25px;
-  margin-top: 100px;
+  margin-top: 70px;
   margin-bottom: 24px;
 }
 
