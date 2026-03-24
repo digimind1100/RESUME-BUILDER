@@ -356,6 +356,7 @@
   box-shadow: 0 0 20px rgba(0,0,0,0.15);
 
   position: relative;
+   overflow: hidden;
 }
 .neo-resume {
   display: block;
@@ -370,4 +371,13 @@
 }
 .neo-a4 {
   margin-bottom: 30px;   /* ✅ creates page gap */
+}
+.neo-page:nth-child(2) {
+  padding-top: 30px;
+  box-sizing: border-box;
+
+  border-top: 3px dashed blue; /* 🔥 TEST */
+}
+.neo-main {
+  overflow: hidden;
 }
