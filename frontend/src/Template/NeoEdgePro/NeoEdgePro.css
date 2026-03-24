@@ -99,6 +99,7 @@
 
 .neo-body {
   display: flex;
+   align-items: flex-start;
   margin-top: 0 !important;
 }
 
@@ -115,11 +116,15 @@
   padding: 30px ;
   box-sizing: border-box;
   overflow: hidden;
+  word-break: normal;        /* ✅ FIX */
+  overflow-wrap: break-word; /* ✅ FIX */
 }
 
 .neo-main {
-  width: 70%;
   padding: 30px;
+  width: 68%;
+  box-sizing: border-box;
+  page-break-inside: auto;
 }
 .neo-main p,
 .neo-main li {
@@ -201,12 +206,7 @@
   align-items: flex-start;
 }
 
-.neo-main {
-  width: 68%;
-  padding: 40px;
-   box-sizing: border-box;
-  page-break-inside: auto;
-}
+
 .neo-header {
   position: relative;   /* VERY IMPORTANT */
 }
@@ -243,17 +243,10 @@
   border: 5px solid white;   /* clean premium look */
 }
 
-.neo-body {
-  display: flex;
-}
 .main-heading{
   margin-bottom: 10px;
 }
-.neo-main {
-  width: 68%;
-  padding: 40px;
-  box-sizing: border-box;
-}
+
 
 /* SIDEBAR SECTIONS */
 .neo-section {
@@ -279,17 +272,16 @@
 
 .neo-list li {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 8px;
-
   font-size: 12px;
   color: #333;
-
   margin-bottom: 8px;
   line-height: 1.4;
-
-  word-break: break-word;   /* ✅ keeps inside column */
+  white-space: normal;
+  word-break: normal;   /* ✅ keeps inside column */
 }
+
 .neo-list li::before {
   content: "";
   width: 6px;
@@ -360,6 +352,17 @@
 }
 
 /* spacing for page feel */
-.neo-main {
-  padding-bottom: 30px;
+
+.neo-section ul {
+  padding-left: 16px;
+}
+
+.neo-section li {
+  display: block;        /* ❌ remove flex here */
+  margin-bottom: 6px;
+}
+.neo-sidebar *,
+.neo-main * {
+  word-break: normal;
+  overflow-wrap: break-word;
 }
