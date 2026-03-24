@@ -121,51 +121,51 @@ export default function NeoEdgePro() {
                     </section>
 
                     <section className="neo-section">
-  <h3 className="neo-section-title">CORE SKILLS</h3>
+                      <h3 className="neo-section-title">CORE SKILLS</h3>
 
-  <div className="neo-skill-tags">
-    <span>JavaScript</span>
-    <span>React</span>
-    <span>Next.js</span>
-    <span>Node.js</span>
-    <span>REST APIs</span>
-    <span>MongoDB</span>
-    <span>UI/UX</span>
-    <span>Performance</span>
-  </div>
-</section>
-
-                    <section className="neo-section">
-  <h3 className="neo-section-title">TOOLS</h3>
-
-  <ul className="neo-list">
-    <li>Git & GitHub</li>
-    <li>Figma</li>
-    <li>Postman</li>
-    <li>Docker</li>
-    <li>VS Code</li>
-  </ul>
-</section>
+                      <div className="neo-skill-tags">
+                        <span contentEditable={canEdit && isEditable}>JavaScript</span>
+                        <span contentEditable={canEdit && isEditable}>React</span>
+                        <span contentEditable={canEdit && isEditable}>Next.js</span>
+                        <span contentEditable={canEdit && isEditable}>Node.js</span>
+                        <span contentEditable={canEdit && isEditable}>REST APIs</span>
+                        <span contentEditable={canEdit && isEditable}>MongoDB</span>
+                        <span contentEditable={canEdit && isEditable}>UI/UX</span>
+                        <span contentEditable={canEdit && isEditable}>Performance</span>
+                      </div>
+                    </section>
 
                     <section className="neo-section">
-  <h3 className="neo-section-title">LANGUAGES</h3>
+                      <h3 className="neo-section-title">TOOLS</h3>
 
-  <ul className="neo-list">
-    <li>English — Fluent</li>
-    <li>Spanish — Intermediate</li>
-    <li>French — Basic</li>
-  </ul>
-</section>
+                      <ul className="neo-list">
+                        <li contentEditable={canEdit && isEditable}>Git & GitHub</li>
+                        <li contentEditable={canEdit && isEditable}>Figma</li>
+                        <li contentEditable={canEdit && isEditable}>Postman</li>
+                        <li contentEditable={canEdit && isEditable}>Docker</li>
+                        <li contentEditable={canEdit && isEditable}>VS Code</li>
+                      </ul>
+                    </section>
 
-<section className="neo-section">
-  <h3 className="neo-section-title">CERTIFICATIONS</h3>
+                    <section className="neo-section">
+                      <h3 className="neo-section-title">LANGUAGES</h3>
 
-  <ul className="neo-list">
-    <li>AWS Certified Developer</li>
-    <li>Google UX Certification</li>
-    <li>Meta Frontend Certificate</li>
-  </ul>
-</section>
+                      <ul className="neo-list">
+                        <li contentEditable={canEdit && isEditable}>English — Fluent</li>
+                        <li contentEditable={canEdit && isEditable}>Spanish — Intermediate</li>
+                        <li contentEditable={canEdit && isEditable}>French — Basic</li>
+                      </ul>
+                    </section>
+
+                    <section className="neo-section">
+                      <h3 className="neo-section-title">CERTIFICATIONS</h3>
+
+                      <ul className="neo-list">
+                        <li contentEditable={canEdit && isEditable}>AWS Certified Developer</li>
+                        <li contentEditable={canEdit && isEditable}>Google UX Certification</li>
+                        <li contentEditable={canEdit && isEditable}>Meta Frontend Certificate</li>
+                      </ul>
+                    </section>
 
                   </aside>
 
@@ -175,65 +175,65 @@ export default function NeoEdgePro() {
                     <section>
                       <h2>SUMMARY</h2>
                       <p contentEditable={canEdit && isEditable}>
-  Results-driven Senior Software Engineer with 6+ years of experience designing, developing, and optimizing high-performance web applications. Expertise in modern JavaScript frameworks, scalable architecture, and user-centric design. Proven ability to lead cross-functional teams, improve system performance, and deliver impactful digital solutions in fast-paced environments.
-</p>
+                        Results-driven Senior Software Engineer with 6+ years of experience designing, developing, and optimizing high-performance web applications. Expertise in modern JavaScript frameworks, scalable architecture, and user-centric design. Proven ability to lead cross-functional teams, improve system performance, and deliver impactful digital solutions in fast-paced environments.
+                      </p>
                     </section>
 
                     <section>
                       <h2>EXPERIENCE</h2>
 
                       <div className="neo-job">
-  <h4>Senior Software Engineer</h4>
-  <span>TechCorp Inc. — 2021 – Present</span>
+                        <h4 contentEditable={canEdit && isEditable}>Senior Software Engineer</h4>
+                        <span contentEditable={canEdit && isEditable}>TechCorp Inc. — 2021 – Present</span>
 
-  <ul>
-    <li>Led development of scalable SaaS platform serving 50,000+ users globally.</li>
-    <li>Improved application performance by 40% through optimization techniques.</li>
-    <li>Designed and implemented RESTful APIs and microservices architecture.</li>
-    <li>Collaborated with UI/UX teams to deliver high-quality user experiences.</li>
-    <li>Mentored junior developers and conducted code reviews.</li>
-  </ul>
-</div>
+                        <ul>
+                          <li contentEditable={canEdit && isEditable}>Led development of scalable SaaS platform serving 50,000+ users globally.</li>
+                          <li contentEditable={canEdit && isEditable}>Improved application performance by 40% through optimization techniques.</li>
+                          <li contentEditable={canEdit && isEditable}>Designed and implemented RESTful APIs and microservices architecture.</li>
+                          <li contentEditable={canEdit && isEditable}>Collaborated with UI/UX teams to deliver high-quality user experiences.</li>
+                          <li contentEditable={canEdit && isEditable}>Mentored junior developers and conducted code reviews.</li>
+                        </ul>
+                      </div>
 
-<div className="neo-job">
-  <h4>Frontend Developer</h4>
-  <span>Creative Labs — 2018 – 2021</span>
+                      <div className="neo-job">
+                        <h4 contentEditable={canEdit && isEditable}>Frontend Developer</h4>
+                        <span>Creative Labs — 2018 – 2021</span>
 
-  <ul>
-    <li>Built responsive web applications using React and modern CSS frameworks.</li>
-    <li>Integrated APIs and improved user interaction flows.</li>
-    <li>Worked closely with designers to implement pixel-perfect interfaces.</li>
-  </ul>
-</div>
+                        <ul>
+                          <li contentEditable={canEdit && isEditable}>Built responsive web applications using React and modern CSS frameworks.</li>
+                          <li contentEditable={canEdit && isEditable}>Integrated APIs and improved user interaction flows.</li>
+                          <li contentEditable={canEdit && isEditable}>Worked closely with designers to implement pixel-perfect interfaces.</li>
+                        </ul>
+                      </div>
 
-<div className="neo-job">
-  <h4>Junior Web Developer</h4>
-  <span>StartUp Hub — 2016 – 2018</span>
+                      <div className="neo-job">
+                        <h4 contentEditable={canEdit && isEditable}>Junior Web Developer</h4>
+                        <span contentEditable={canEdit && isEditable}>StartUp Hub — 2016 – 2018</span>
 
-  <ul>
-    <li>Developed small-scale web applications and landing pages.</li>
-    <li>Maintained legacy systems and improved performance.</li>
-    <li>Assisted in debugging and testing across multiple browsers.</li>
-  </ul>
-</div>
+                        <ul>
+                          <li contentEditable={canEdit && isEditable}>Developed small-scale web applications and landing pages.</li>
+                          <li contentEditable={canEdit && isEditable}>Maintained legacy systems and improved performance.</li>
+                          <li contentEditable={canEdit && isEditable}>Assisted in debugging and testing across multiple browsers.</li>
+                        </ul>
+                      </div>
 
                     </section>
 
                     <section>
-  <h2>PROJECTS</h2>
+                      <h2>PROJECTS</h2>
 
-  <ul>
-    <li>
-      Resume Builder Web App — Developed a dynamic resume builder with live preview and AI-powered suggestions.
-    </li>
-    <li>
-      E-commerce Platform — Built full-stack application with payment integration and user authentication.
-    </li>
-    <li>
-      Task Management System — Created a real-time task manager using Supabase backend.
-    </li>
-  </ul>
-</section>
+                      <ul>
+                        <li contentEditable={canEdit && isEditable}>
+                          Resume Builder Web App — Developed a dynamic resume builder with live preview and AI-powered suggestions.
+                        </li>
+                        <li contentEditable={canEdit && isEditable}>
+                          E-commerce Platform — Built full-stack application with payment integration and user authentication.
+                        </li>
+                        <li contentEditable={canEdit && isEditable}>
+                          Task Management System — Created a real-time task manager using Supabase backend.
+                        </li>
+                      </ul>
+                    </section>
 
                   </main>
 
