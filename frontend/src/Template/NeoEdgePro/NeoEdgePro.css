@@ -338,31 +338,3 @@
   box-shadow: 0 0 20px rgba(0,0,0,0.15);
 }
 
-/* visual break block (ONLY if you want UI gap) */
-.neo-page-break {
-  height: 30px;
-  border-top: 3px dashed red;
-  border-bottom: 3px dashed blue;
-  margin: 30px 0;
-}
-
-/* prevent ugly splits in PDF */
-.neo-section {
-  break-inside: avoid;
-}
-
-/* spacing for page feel */
-
-.neo-section ul {
-  padding-left: 16px;
-}
-
-.neo-section li {
-  display: block;        /* ❌ remove flex here */
-  margin-bottom: 6px;
-}
-.neo-sidebar *,
-.neo-main * {
-  word-break: normal;
-  overflow-wrap: break-word;
-}

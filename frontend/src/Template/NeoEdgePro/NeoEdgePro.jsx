@@ -16,7 +16,6 @@ export default function NeoEdgePro() {
         <div className="neo-wrapper">
           <div className="resume-a4 neo-a4" ref={pdfRef}>
         
-
             <div className="neo-resume">
 
               {/* HEADER */}
@@ -234,7 +233,7 @@ export default function NeoEdgePro() {
                       </li>
                     </ul>
                   </section>
-<div className="neo-page-break"></div>
+
                 </main>
 
                 {/* PAGE 2 */}
