@@ -22,6 +22,10 @@
    overflow: visible;
 }
 
+.resume-a4 neo-a4{
+  margin-top: 0;
+}
+
 .neo-header {
   position: relative;
   background: #0073e6;
@@ -301,7 +305,6 @@
   width: 210mm;
   height: 297mm;   /* FIXED HEIGHT FOR TEST */
   background: white;
-  margin-top: 0;
   margin: 20px auto;
   box-shadow: 0 0 20px rgba(0,0,0,0.15);
 
