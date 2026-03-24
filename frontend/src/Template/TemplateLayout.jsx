@@ -26,38 +26,40 @@ export default function TemplateLayout({
   const root = resumeContainerRef.current;
   if (!root) return;
 
-  const allPages = root.querySelectorAll(".resume-a4");
+  const element = root.querySelector(".resume-a4");
+  if (!element) return;
 
-  // ✅ FILTER ONLY VISIBLE / NON-EMPTY PAGES
-  const pages = Array.from(allPages).filter((page) => {
-    return page.scrollHeight > 50; // ignore empty pages
+  await new Promise((r) => setTimeout(r, 200));
+
+  const canvas = await html2canvas(element, {
+    scale: 2,
+    useCORS: true,
+    backgroundColor: "#ffffff",
   });
 
-  if (!pages.length) return;
+  const imgData = canvas.toDataURL("image/png");
 
   const pdf = new jsPDF("p", "mm", "a4");
 
-  for (let i = 0; i < pages.length; i++) {
-    const page = pages[i];
+  const pdfWidth = 210;
+  const pdfHeight = 297;
 
-    await new Promise((r) => setTimeout(r, 100));
+  const imgWidth = pdfWidth;
+  const imgHeight = (canvas.height * pdfWidth) / canvas.width;
 
-    const canvas = await html2canvas(page, {
-      scale: 2,
-      useCORS: true,
-      backgroundColor: "#ffffff",
-    });
+  let position = 0;
+  let heightLeft = imgHeight;
 
-    const imgData = canvas.toDataURL("image/png");
+  // ✅ FIRST PAGE
+  pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+  heightLeft -= pdfHeight;
 
-    const pdfWidth = 210;
-    const imgHeight = (canvas.height * pdfWidth) / canvas.width;
-
-    if (i !== 0) {
-      pdf.addPage();
-    }
-
-    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, imgHeight);
+  // ✅ ADD NEW PAGES CORRECTLY
+  while (heightLeft > 0) {
+    position = - (imgHeight - heightLeft);   // 🔥 KEY FIX
+    pdf.addPage();
+    pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+    heightLeft -= pdfHeight;
   }
 
   pdf.save(`${templateId}-resume.pdf`);
