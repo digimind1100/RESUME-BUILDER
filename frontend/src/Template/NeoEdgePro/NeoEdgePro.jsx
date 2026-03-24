@@ -14,8 +14,8 @@ export default function NeoEdgePro() {
       {({ canEdit, isEditable, pdfRef, requirePayment }) => (
 
         <div className="neo-wrapper">
-          <div className="neo-pages-wrapper" ref={pdfRef}>
-           <div className="resume-a4 neo-a4 neo-page">
+          <div className="resume-a4 neo-a4" ref={pdfRef}>
+        
 
             <div className="neo-resume">
 
@@ -234,22 +234,18 @@ export default function NeoEdgePro() {
                       </li>
                     </ul>
                   </section>
-
+<div className="neo-page-break"></div>
                 </main>
 
                 {/* PAGE 2 */}
-  <div className="resume-a4 neo-a4 neo-page">
-    <div className="neo-page2-content">
-      {/* PAGE 2 CONTENT */}
-    </div>
-  </div>
+
 
               </div>
 
             </div>
 
 
-            </div>
+            
 
           </div>  {/*  pdf dive close */}
         </div>
