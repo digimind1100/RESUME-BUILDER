@@ -14,7 +14,7 @@ export default function NeoEdgePro() {
       {({ canEdit, isEditable, pdfRef, requirePayment }) => (
 
         <div className="neo-wrapper">
-          <div className="resume-a4 neo-a4" ref={pdfRef}>
+          resume-a4 neo-a4
             <div className="resume-a4 neo-a4">
 
               <div className="neo-resume">
