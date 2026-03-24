@@ -341,3 +341,33 @@
   height: auto !important;   /* ✅ VERY IMPORTANT */
   min-height: 297mm;
 }
+/* visual page system */
+.neo-pages-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;   /* ✅ THIS IS YOUR GAP */
+}
+.resume-a4.neo-a4 {
+  width: 210mm;
+  min-height: 297mm;
+
+  background: white;
+  box-shadow: 0 0 20px rgba(0,0,0,0.15);
+
+  position: relative;
+}
+.neo-resume {
+  display: block;
+}
+
+.neo-main {
+  break-inside: auto;
+}
+
+.neo-section {
+  break-inside: avoid;
+}
+.neo-a4 {
+  margin-bottom: 30px;   /* ✅ creates page gap */
+}
