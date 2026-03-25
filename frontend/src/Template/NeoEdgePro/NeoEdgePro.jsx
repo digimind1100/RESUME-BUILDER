@@ -3,7 +3,6 @@ import TemplateLayout from "../TemplateLayout";
 import "./NeoEdgePro.css";
 import ProfileImageUpload from "../../components/ProfileImageUpload"
 import QRCodeBlock from "../../components/QRCodeBlock";
-import PaginationEngine from "../../components/PaginationEngine";
 import { paginateResume } from "../../utils/paginateResume";
 
 export default function NeoEdgePro() {
@@ -43,20 +42,13 @@ if (!page1) return null;
 
         <div className="neo-wrapper">
           <div ref={pdfRef}>
-
             {/* PAGE 1 */}
             <div className="resume-a4 neo-a4">
               <div className="neo-resume">
 
-                <PaginationEngine
-                  header={<header className="neo-header">
-
-                    <div className="neo-header-left">
-
-                      <div className="neo-profile-container">
-                        <div className="neo-profile-global">
+                
+                  <header className="neo-header">
                           <div className="neo-profile-shape"></div>
-
                           <div className="neo-profile-inner">
                             <ProfileImageUpload
                               canEdit={canEdit}
@@ -66,9 +58,6 @@ if (!page1) return null;
                               imgClass="neo-profile"
                             />
                           </div>
-                        </div>
-                      </div>
-
                       <div className="neo-header-text">
                         <h1 contentEditable={canEdit && isEditable}>
                           ALEXANDER MORGAN
@@ -78,7 +67,7 @@ if (!page1) return null;
                         </p>
                       </div>
 
-                    </div>
+                    
 
                     <div className="neo-header-right">
                       <QRCodeBlock
@@ -88,8 +77,8 @@ if (!page1) return null;
                     </div>
 
                   </header>
-                  }
-                  sidebar={<aside className="neo-sidebar">
+                  
+                  <aside className="neo-sidebar">
 
                     <section className="neo-section">
                       <h3 className="neo-section-title">CONTACT</h3>
@@ -191,10 +180,10 @@ if (!page1) return null;
                       </ul>
                     </section>
 
-                  </aside>}
+                  </aside>
 
 
-                  content={<>
+                 
 
                     <section ref={summaryRef}>
                       <h2>SUMMARY</h2>
@@ -258,11 +247,7 @@ if (!page1) return null;
                         </li>
                       </ul>
                     </section>
-                  </>
-                  }
-                />
-
-
+             
               </div>
             </div>
 
