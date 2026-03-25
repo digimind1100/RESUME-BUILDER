@@ -210,7 +210,7 @@
 }
 
 .neo-profile-global {
-  position: absolute;
+  position: relative;
 
   left: 20px;         /* adjust horizontally */
   bottom: -100px;      /* pushes 40% below header */
@@ -342,4 +342,28 @@
   gap: 30px;   /* ✅ gap between pages */
   align-items: center;
   width: 100%;
+}
+.neo-pages-wrapper {
+  width: 100%;
+}
+
+.resume-a4.neo-a4 {
+  width: 210mm;
+  min-height: 297mm;
+  margin: 0 auto;
+  display: block;
+}
+
+.neo-body {
+  display: flex;
+  align-items: flex-start;
+}
+
+.neo-sidebar {
+  width: 32%;
+  flex-shrink: 0;   /* ✅ IMPORTANT */
+}
+
+.neo-main {
+  width: 68%;
 }

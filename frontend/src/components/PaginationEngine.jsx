@@ -67,10 +67,11 @@ export default function PaginationEngine({ header, sidebar, content }) {
               {/* SIDEBAR only on first page */}
               {index === 0 && sidebar}
 
-              <main
-                className="neo-main"
-                dangerouslySetInnerHTML={{ __html: page.join("") }}
-              />
+              <main className="neo-main">
+  {page.map((item, i) => (
+    <div key={i} dangerouslySetInnerHTML={{ __html: item }} />
+  ))}
+</main>
 
             </div>
 
