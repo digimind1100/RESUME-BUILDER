@@ -12,21 +12,26 @@ export default function NeoEdgePro() {
   const experienceRef = useRef();
   const projectRef = useRef();
 
-  const [pages, setPages] = useState({ page1: {}, page2: {} });
+ const [pages, setPages] = useState({
+  page1: null,
+  page2: null,
+});
 
-  useEffect(() => {
-    const result = paginateResume({
-      containerEl: document.querySelector(".neo-main"),
-      sections: {
-        summary: summaryRef.current,
-        experience: experienceRef.current,
-        projects: projectRef.current,
-      },
-    });
+useEffect(() => {
+  const result = paginateResume({
+    containerEl: document.querySelector(".neo-main"),
+    sections: {
+      summary: summaryRef.current,
+      experience: experienceRef.current,
+      projects: projectRef.current,
+    },
+  });
 
-    setPages(result);
-  }, []);
+  setPages(result);
+}, []);
+const { page1, page2 } = pages;
 
+if (!page1) return null;
 
   return (
     <TemplateLayout
