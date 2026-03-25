@@ -6,8 +6,9 @@ export function paginateResume({
     return { page1: {}, page2: {} };
   }
 
+  const MAX_HEIGHT = 1000; // ✅ FIXED
+
   const rect = containerEl.getBoundingClientRect();
-  const MAX_HEIGHT = rect.height;
 
   const tempDiv = document.createElement("div");
   tempDiv.style.position = "absolute";
@@ -20,21 +21,21 @@ export function paginateResume({
 
   let page1 = {};
   let page2 = {};
-
   let currentHeight = 0;
 
   for (const key in sections) {
     const sectionData = sections[key];
 
-    tempDiv.innerHTML = "";
-    tempDiv.appendChild(sectionData.cloneNode(true));
+    const clone = sectionData.cloneNode(true);
+    tempDiv.appendChild(clone);
 
     const height = tempDiv.getBoundingClientRect().height;
 
-    if (currentHeight + height <= MAX_HEIGHT - 20) {
+    if (height <= MAX_HEIGHT) {
       page1[key] = sectionData;
-      currentHeight += height;
+      currentHeight = height;
     } else {
+      tempDiv.removeChild(clone);
       page2[key] = sectionData;
     }
   }
