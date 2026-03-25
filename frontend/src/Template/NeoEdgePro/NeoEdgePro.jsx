@@ -3,6 +3,7 @@ import TemplateLayout from "../TemplateLayout";
 import "./NeoEdgePro.css";
 import ProfileImageUpload from "../../components/ProfileImageUpload"
 import QRCodeBlock from "../../components/QRCodeBlock";
+import PaginationEngine from "../../components/PaginationEngine";
 
 export default function NeoEdgePro() {
   return (
@@ -15,57 +16,51 @@ export default function NeoEdgePro() {
 
         <div className="neo-wrapper">
           <div className="resume-a4 neo-a4" ref={pdfRef}>
-        
+
             <div className="neo-resume">
+              <PaginationEngine
+                header={<header className="neo-header">
 
-              {/* HEADER */}
-              <header className="neo-header">
+                  <div className="neo-header-left">
 
-                <div className="neo-header-left">
+                    <div className="neo-profile-container">
+                      <div className="neo-profile-global">
+                        <div className="neo-profile-shape"></div>
 
-                  <div className="neo-profile-container">
-                    <div className="neo-profile-global">
-                      <div className="neo-profile-shape"></div>
-
-                      <div className="neo-profile-inner">
-                        <ProfileImageUpload
-                          canEdit={canEdit}
-                          isEditable={isEditable}
-                          requirePayment={requirePayment}
-                          className="neo-profile-wrapper"
-                          imgClass="neo-profile"
-                        />
+                        <div className="neo-profile-inner">
+                          <ProfileImageUpload
+                            canEdit={canEdit}
+                            isEditable={isEditable}
+                            requirePayment={requirePayment}
+                            className="neo-profile-wrapper"
+                            imgClass="neo-profile"
+                          />
+                        </div>
                       </div>
                     </div>
+
+                    <div className="neo-header-text">
+                      <h1 contentEditable={canEdit && isEditable}>
+                        ALEXANDER MORGAN
+                      </h1>
+                      <p contentEditable={canEdit && isEditable}>
+                        SENIOR SOFTWARE ENGINEER
+                      </p>
+                    </div>
+
                   </div>
 
-                  <div className="neo-header-text">
-                    <h1 contentEditable={canEdit && isEditable}>
-                      ALEXANDER MORGAN
-                    </h1>
-                    <p contentEditable={canEdit && isEditable}>
-                      SENIOR SOFTWARE ENGINEER
-                    </p>
+                  <div className="neo-header-right">
+                    <QRCodeBlock
+                      canEdit={canEdit}
+                      isEditable={isEditable}
+                    />
                   </div>
 
-                </div>
+                </header>
+                }
+                sidebar={<aside className="neo-sidebar">
 
-                <div className="neo-header-right">
-                  <QRCodeBlock
-                    canEdit={canEdit}
-                    isEditable={isEditable}
-                  />
-                </div>
-
-              </header>
-
-              {/* BODY */}
-              <div className="neo-body">
-
-                {/* SIDEBAR */}
-                <aside className="neo-sidebar">
-
-                  {/* CONTACT */}
                   <section className="neo-section">
                     <h3 className="neo-section-title">CONTACT</h3>
 
@@ -166,10 +161,10 @@ export default function NeoEdgePro() {
                     </ul>
                   </section>
 
-                </aside>
+                </aside>}
 
-                {/* MAIN */}
-                <main className="neo-main">
+                
+                content={<main className="neo-main">
 
                   <section>
                     <h2>SUMMARY</h2>
@@ -235,16 +230,16 @@ export default function NeoEdgePro() {
                   </section>
 
                 </main>
+                  
+                }
 
-                {/* PAGE 2 */}
-
-
-              </div>
+                     />
+            
 
             </div>
 
 
-            
+
 
           </div>  {/*  pdf dive close */}
         </div>

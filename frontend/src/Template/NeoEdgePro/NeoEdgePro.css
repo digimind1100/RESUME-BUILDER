@@ -253,6 +253,7 @@
   margin-bottom: 25px;
   margin-top: 40px;
   margin-bottom: 24px;
+  break-inside: avoid;
 }
 
 .neo-section-title {
@@ -338,3 +339,9 @@
   box-shadow: 0 0 20px rgba(0,0,0,0.15);
 }
 
+.neo-pages-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;   /* ✅ gap between pages */
+  align-items: center;
+}
