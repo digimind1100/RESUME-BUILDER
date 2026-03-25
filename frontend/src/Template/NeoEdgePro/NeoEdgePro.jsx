@@ -17,7 +17,7 @@ export default function NeoEdgePro() {
         <div className="neo-wrapper">
           <div className="resume-a4 neo-a4" ref={pdfRef}>
 
-            <div className="neo-resume">
+         
               <PaginationEngine
                 header={<header className="neo-header">
 
@@ -164,7 +164,7 @@ export default function NeoEdgePro() {
                 </aside>}
 
                 
-                content={<main className="neo-main">
+                content={<>
 
                   <section>
                     <h2>SUMMARY</h2>
@@ -229,14 +229,13 @@ export default function NeoEdgePro() {
                     </ul>
                   </section>
 
-                </main>
-                  
+                </>
                 }
 
                      />
             
 
-            </div>
+            
 
 
 
