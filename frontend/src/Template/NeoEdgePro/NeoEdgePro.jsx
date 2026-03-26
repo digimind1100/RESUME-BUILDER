@@ -18,6 +18,7 @@ export default function NeoEdgePro() {
   });
 
   useEffect(() => {
+    console.log("RESULT:", result);
     const result = paginateResume({
       containerEl: document.querySelector(".neo-main"),
       sections: {
@@ -26,7 +27,7 @@ export default function NeoEdgePro() {
         projects: projectRef.current,
       },
     });
-
+console.log("RESULT:", result);
     setPages(result);
   }, []);
   const { page1, page2 } = pages;
