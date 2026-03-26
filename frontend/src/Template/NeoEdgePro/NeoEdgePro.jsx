@@ -263,39 +263,14 @@ export default function NeoEdgePro() {
 <div className="neo-page-number">Page 1 of 2</div>
               </div>
             </div>
-            {/* ================= PAGE 2 ================= */}
-            {page2.summary}
-            {page2.experience}
-            {page2.projects}
-            {page2 && Object.keys(page2).length > 0 && (
-              <div className="resume-a4 neo-a4">
-                <div className="neo-resume">
-
-                  <div className="neo-body">
-
-                    {/* SAME SIDEBAR */}
-                    <aside className="neo-sidebar">
-                      {/* COPY SAME SIDEBAR CONTENT HERE */}
-                    </aside>
-
-                    {/* MAIN */}
-                    <main className="neo-main">
-
-                      {page2.summary}
-                      {page2.experience}
-                      {page2.projects}
-
-                    </main>
+            
 
                   </div>
 
                 </div>
-              </div>
+         
             )}
-<div className="neo-page-number">Page 2 of 2</div>
-          </div>  {/*  pdf dive close */}
-        </div>
-      )}
+
     </TemplateLayout>
   );
 }
