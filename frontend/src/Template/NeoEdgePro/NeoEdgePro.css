@@ -9,6 +9,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 30px;
   margin: 0;
   padding: 0;
 }
@@ -123,7 +124,6 @@
   padding: 30px;
   width: 68%;
   box-sizing: border-box;
-  page-break-inside: auto;
 }
 .neo-main p,
 .neo-main li {
@@ -372,5 +372,31 @@
 }
 
 .neo-body.full-width .neo-main {
+  width: 100% !important;
+  padding: 30px;
+}
+.neo-body.full-width {
+  display: block !important;
+}
+.neo-main-full {
   width: 100%;
+  padding: 30px;
+  box-sizing: border-box;
+}
+.neo-page-number {
+  position: absolute;
+  bottom: 10px;
+  right: 20px;
+  font-size: 12px;
+  color: #666;
+}
+.resume-a4.neo-a4 {
+  position: relative;
+}
+.neo-sidebar {
+  border: 2px dashed red;   /* DEBUG */
+}
+
+.neo-main {
+  border: 2px dashed blue;  /* DEBUG */
 }
