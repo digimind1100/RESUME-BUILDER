@@ -4,61 +4,40 @@ import "./NeoEdgePro.css";
 import ProfileImageUpload from "../../components/ProfileImageUpload"
 import QRCodeBlock from "../../components/QRCodeBlock";
 import { paginateResume } from "../../utils/paginateResume";
-import Summary from "./Summary";
-import Experience from "./Experience";
-import Projects from "./Projects";
 
 export default function NeoEdgePro() {
+
   const summaryRef = useRef();
   const experienceRef = useRef();
   const projectRef = useRef();
   const mainRef = useRef();
 
   const [pages, setPages] = useState({
-    page1: {},
-    page2: {},
+    page1: null,
+    page2: null,
   });
 
   useEffect(() => {
-    if (!mainRef.current) return;
+  if (!mainRef.current) return;
 
-    const sections = [
-      {
-        key: "summary",
-        ref: summaryRef,
-        component: <Summary />
+  setTimeout(() => {
+    const res = paginateResume({
+      containerEl: mainRef.current,
+      sections: {
+        summary: summaryRef.current,
+        experience: experienceRef.current,
+        projects: projectRef.current,
       },
-      {
-        key: "experience",
-        ref: experienceRef,
-        component: <Experience />
-      },
-      {
-        key: "projects",
-        ref: projectRef,
-        component: <Projects />
-      }
-    ];
+    });
 
-    const timer = setTimeout(() => {
-      const res = paginateResume({
-        containerEl: mainRef.current,
-        sections,
-      });
+    console.log("Pagination Result:", res);
 
-      console.log("Pagination Result:", res);
-
-      setPages({
-        page1: res.page1 || {},
-        page2: res.page2 || {},
-      });
-    }, 100); // wait for DOM render
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  const page1 = pages.page1 || {};
-  const page2 = pages.page2 || {};
+    setPages({
+      page1: res.page1 || {},
+      page2: res.page2 || {},
+    });
+  }, 100);
+}, []);
 
   return (
     <TemplateLayout
