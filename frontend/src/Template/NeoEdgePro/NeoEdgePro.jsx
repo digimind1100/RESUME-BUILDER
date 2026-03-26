@@ -4,6 +4,9 @@ import "./NeoEdgePro.css";
 import ProfileImageUpload from "../../components/ProfileImageUpload"
 import QRCodeBlock from "../../components/QRCodeBlock";
 import { paginateResume } from "../../utils/paginateResume";
+import Summary from "./Summary";
+import Experience from "./Experience";
+import Projects from "./Projects";
 
 export default function NeoEdgePro() {
   const summaryRef = useRef();
