@@ -183,9 +183,10 @@ export default function NeoEdgePro() {
 
                 </aside>
 
-<main className="neo-main" ref={mainRef}>
 
-                <div ref={mainRef}>
+
+               
+                  <main className="neo-main" ref={mainRef}>
                   <section ref={summaryRef}>
                     <h2>SUMMARY</h2>
                     <p contentEditable={canEdit && isEditable}>
@@ -249,7 +250,7 @@ export default function NeoEdgePro() {
                     </ul>
                   </section>
                   </main>
-                </div>
+                
 
               </div>
             </div>
