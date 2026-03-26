@@ -262,7 +262,7 @@ export default function NeoEdgePro() {
                 <div className="neo-resume">
 
                   <div className="neo-body full-width">
-                    <main className="neo-main neo-main-full">
+                    <main className="neo-main-full">
 
                       {page2.summary}
                       {page2.experience}
