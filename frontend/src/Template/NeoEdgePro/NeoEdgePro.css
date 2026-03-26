@@ -363,4 +363,7 @@
   width: 32%;
   flex-shrink: 0;   /* ✅ IMPORTANT */
 }
- 
+ .neo-main section {
+  width: 100%;
+  box-sizing: border-box;
+}
