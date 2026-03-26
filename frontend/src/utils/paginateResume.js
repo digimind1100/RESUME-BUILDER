@@ -1,48 +1,28 @@
-export function paginateResume({
-  containerEl,
-  sections,
-}) {
+export function paginateResume({ containerEl, sections }) {
   if (!containerEl || !sections) {
     return { page1: {}, page2: {} };
   }
 
-  const rect = containerEl.getBoundingClientRect();
-
-  const MAX_HEIGHT = 812; // ✅ YOUR REQUIRED BREAK POINT
-
-  const tempDiv = document.createElement("div");
-  tempDiv.style.position = "absolute";
-  tempDiv.style.visibility = "hidden";
-  tempDiv.style.width = `${rect.width}px`;
-  tempDiv.style.left = "-9999px";
-  tempDiv.style.top = "-9999px";
-
-  document.body.appendChild(tempDiv);
+  const PAGE_HEIGHT = 812;
 
   let page1 = {};
   let page2 = {};
 
-  tempDiv.innerHTML = "";
+  let currentHeight = 0;
 
-  for (const key in sections) {
-    const sectionData = sections[key];
+  sections.forEach((section) => {
+    const el = section.ref?.current;
+    if (!el) return;
 
-    const clone = sectionData.cloneNode(true);
-    tempDiv.appendChild(clone);
+    const height = el.offsetHeight;
 
-    const totalHeight = tempDiv.getBoundingClientRect().height;
-
-    console.log(key, "height:", totalHeight); // debug
-
-    if (totalHeight <= MAX_HEIGHT) {
-      page1[key] = sectionData;
+    if (currentHeight + height <= PAGE_HEIGHT) {
+      page1[section.key] = section.component;
+      currentHeight += height;
     } else {
-      tempDiv.removeChild(clone);
-      page2[key] = sectionData;
+      page2[section.key] = section.component;
     }
-  }
-
-  document.body.removeChild(tempDiv);
+  });
 
   return { page1, page2 };
 }
