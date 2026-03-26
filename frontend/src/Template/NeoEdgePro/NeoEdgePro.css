@@ -378,3 +378,8 @@
 .neo-body.full-width {
   display: block !important;
 }
+.neo-main-full {
+  width: 100%;
+  padding: 30px;
+  box-sizing: border-box;
+}
