@@ -18,21 +18,29 @@ export default function NeoEdgePro() {
   });
 
   useEffect(() => {
-    console.log("RESULT:", result);
-    const result = paginateResume({
-      containerEl: document.querySelector(".neo-main"),
+  if (!mainRef.current) return;
+
+  setTimeout(() => {
+    const res = paginateResume({
+      containerEl: mainRef.current,
       sections: {
         summary: summaryRef.current,
         experience: experienceRef.current,
         projects: projectRef.current,
       },
     });
-console.log("RESULT:", result);
-    setPages(result);
-  }, []);
-  const { page1, page2 } = pages;
 
-  if (!page1) return null;
+    console.log("Pagination Result:", res);
+
+    setPages({
+      page1: res.page1 || {},
+      page2: res.page2 || {},
+    });
+  }, 100);
+}, []);
+
+const page1 = pages.page1 || {};
+const page2 = pages.page2 || {};
 
   return (
     <TemplateLayout
