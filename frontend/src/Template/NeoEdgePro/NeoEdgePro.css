@@ -363,7 +363,4 @@
   width: 32%;
   flex-shrink: 0;   /* ✅ IMPORTANT */
 }
-
-.neo-main {
-  width: 68%;
-} 
+ 

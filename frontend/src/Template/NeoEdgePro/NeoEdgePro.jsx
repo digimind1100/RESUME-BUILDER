@@ -183,7 +183,7 @@ export default function NeoEdgePro() {
 
                 </aside>
 
-
+<main className="neo-main" ref={mainRef}>
 
                 <div ref={mainRef}>
                   <section ref={summaryRef}>
@@ -248,6 +248,7 @@ export default function NeoEdgePro() {
                       </li>
                     </ul>
                   </section>
+                  </main>
                 </div>
 
               </div>
