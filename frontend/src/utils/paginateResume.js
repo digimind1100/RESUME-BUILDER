@@ -6,9 +6,8 @@ export function paginateResume({
     return { page1: {}, page2: {} };
   }
 
-  const MAX_HEIGHT = 1000; // ✅ FIXED
-
   const rect = containerEl.getBoundingClientRect();
+  const MAX_HEIGHT = 812;
 
   const tempDiv = document.createElement("div");
   tempDiv.style.position = "absolute";
@@ -21,7 +20,8 @@ export function paginateResume({
 
   let page1 = {};
   let page2 = {};
-  let currentHeight = 0;
+
+  tempDiv.innerHTML = ""; // important
 
   for (const key in sections) {
     const sectionData = sections[key];
@@ -29,13 +29,12 @@ export function paginateResume({
     const clone = sectionData.cloneNode(true);
     tempDiv.appendChild(clone);
 
-    const height = tempDiv.getBoundingClientRect().height;
+    const totalHeight = tempDiv.getBoundingClientRect().height;
 
-    if (height <= MAX_HEIGHT) {
+    if (totalHeight <= MAX_HEIGHT) {
       page1[key] = sectionData;
-      currentHeight = height;
     } else {
-      tempDiv.removeChild(clone);
+      tempDiv.removeChild(clone); // remove overflow
       page2[key] = sectionData;
     }
   }
