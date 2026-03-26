@@ -372,5 +372,9 @@
 }
 
 .neo-body.full-width .neo-main {
-  width: 100%;
+  width: 100% !important;
+  padding: 30px;
+}
+.neo-body.full-width {
+  display: block !important;
 }
