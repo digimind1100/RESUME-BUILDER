@@ -367,3 +367,10 @@
   width: 100%;
   box-sizing: border-box;
 }
+.neo-body.full-width {
+  display: block;
+}
+
+.neo-body.full-width .neo-main {
+  width: 100%;
+}
