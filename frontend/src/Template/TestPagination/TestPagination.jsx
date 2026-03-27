@@ -190,7 +190,7 @@ export default function TestPagination() {
         style={{
           position: "absolute",
           visibility: "hidden",
-          width: "972px",
+          width: "210mm",
         }}
       >
         {entries.map((entry) => (
