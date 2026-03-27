@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import TemplateLayout from "../TemplateLayout";
 
 export default function TestPagination() {
   const containerRef = useRef(null);
@@ -107,6 +108,12 @@ export default function TestPagination() {
   };
 
   return (
+        <TemplateLayout
+          templateId="NeoEdgePro"
+          wrapperClass="neo-wrapper"
+          resumeClass="neo-resume"
+        >
+          {({ canEdit, isEditable, pdfRef, requirePayment }) => (
     <div>
 
       {/* HEADER */}
@@ -147,5 +154,9 @@ export default function TestPagination() {
       </div>
 
     </div>
+
+    )}
+    
+        </TemplateLayout>
   );
 }
