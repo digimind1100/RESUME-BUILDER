@@ -164,12 +164,12 @@ export default function TestPagination() {
           {({ canEdit, isEditable, pdfRef }) => (
     <div>
       {/* HEADER */}
-      <div style={{ height: "250px", background: "#ddd" }}>
+      <div style={{ height: "250px", width: "370px" , background: "#ddd" }}>
         Header (250px)
       </div>
 
       {/* PAGE 1 */}
-      <div style={{ height: "812px", border: "2px solid black", marginBottom: "20px" }}>
+      <div style={{ height: "812px", width: "370px" , border: "2px solid black", marginBottom: "20px" }}>
         {pages.page1.map((entry) => (
           <div key={entry.id}>{renderEntry(entry)}</div>
         ))}
@@ -177,7 +177,7 @@ export default function TestPagination() {
 
       {/* PAGE 2 */}
       {pages.page2.length > 0 && (
-        <div style={{ height: "812px", border: "2px solid red" }}>
+        <div style={{ height: "812px", width: "370px" , border: "2px solid red" }}>
           {pages.page2.map((entry) => (
             <div key={entry.id}>{renderEntry(entry)}</div>
           ))}
