@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import TemplateLayout from "../TemplateLayout";
-
 export default function TestPagination() {
   const containerRef = useRef(null);
 
@@ -9,18 +8,28 @@ export default function TestPagination() {
     page2: [],
   });
 
-  // 🧠 Sample Data (force overflow)
-  const summary = "This is a summary section with some text.";
+  // ✅ Editable flags
+  const canEdit = true;
+  const isEditable = true;
 
-  const experiences = Array.from({ length: 6 }, (_, i) => ({
-    id: i + 1,
-    text: `Experience item ${i + 1} - Lorem ipsum dolor sit amet.`,
-  }));
+  // 🧠 Editable state
+  const [summary, setSummary] = useState(
+    "This is a summary section with some text."
+  );
 
-  const projects = Array.from({ length: 5 }, (_, i) => ({
-    id: i + 1,
-    text: `Project item ${i + 1} - Some project description.`,
-  }));
+  const [experiences, setExperiences] = useState(
+    Array.from({ length: 6 }, (_, i) => ({
+      id: i + 1,
+      text: `Experience item ${i + 1} - Lorem ipsum dolor sit amet.`,
+    }))
+  );
+
+  const [projects, setProjects] = useState(
+    Array.from({ length: 5 }, (_, i) => ({
+      id: i + 1,
+      text: `Project item ${i + 1} - Some project description.`,
+    }))
+  );
 
   // 🧠 STEP 1: Create Entries
   const entries = [
@@ -39,7 +48,7 @@ export default function TestPagination() {
     })),
   ];
 
-  // 🧠 STEP 2: Pagination Logic
+  // 🧠 STEP 2: Pagination Logic (runs on content change)
   useEffect(() => {
     const PAGE_HEIGHT = 812;
 
@@ -56,7 +65,6 @@ export default function TestPagination() {
 
         const height = el.getBoundingClientRect().height;
 
-        // force first item if empty
         if (page1.length === 0) {
           page1.push(entry);
           usedHeight += height;
@@ -76,28 +84,68 @@ export default function TestPagination() {
     }, 100);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [summary, experiences, projects]);
+
+  // 🧠 Handlers
+  const handleSummaryChange = (e) => {
+    setSummary(e.currentTarget.innerText);
+  };
+
+  const handleExpChange = (id, text) => {
+    setExperiences((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, text } : item
+      )
+    );
+  };
+
+  const handleProjChange = (id, text) => {
+    setProjects((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, text } : item
+      )
+    );
+  };
 
   // 🧠 Render helper
   const renderEntry = (entry) => {
     switch (entry.type) {
       case "summary":
         return (
-          <div style={{ padding: "10px", background: "#f5f5f5" }}>
+          <div
+            contentEditable={canEdit && isEditable}
+            suppressContentEditableWarning
+            onInput={handleSummaryChange}
+            style={{ padding: "10px", background: "#f5f5f5" }}
+          >
             <strong>Summary:</strong> {entry.data}
           </div>
         );
 
       case "experience":
         return (
-          <div style={{ padding: "10px", border: "1px solid #ccc" }}>
+          <div
+            contentEditable={canEdit && isEditable}
+            suppressContentEditableWarning
+            onInput={(e) =>
+              handleExpChange(entry.data.id, e.currentTarget.innerText)
+            }
+            style={{ padding: "10px", border: "1px solid #ccc" }}
+          >
             {entry.data.text}
           </div>
         );
 
       case "project":
         return (
-          <div style={{ padding: "10px", border: "1px dashed #999" }}>
+          <div
+            contentEditable={canEdit && isEditable}
+            suppressContentEditableWarning
+            onInput={(e) =>
+              handleProjChange(entry.data.id, e.currentTarget.innerText)
+            }
+            style={{ padding: "10px", border: "1px dashed #999" }}
+          >
             {entry.data.text}
           </div>
         );
@@ -108,14 +156,13 @@ export default function TestPagination() {
   };
 
   return (
-        <TemplateLayout
-          templateId="NeoEdgePro"
-          wrapperClass="neo-wrapper"
-          resumeClass="neo-resume"
+    <TemplateLayout
+          templateId="TestPagination"
+          wrapperClass="test-wrapper"
+          resumeClass="test-resume"
         >
-          {({ canEdit, isEditable, pdfRef, requirePayment }) => (
+          {({ canEdit, isEditable }) => (
     <div>
-
       {/* HEADER */}
       <div style={{ height: "250px", background: "#ddd" }}>
         Header (250px)
@@ -152,11 +199,9 @@ export default function TestPagination() {
           </div>
         ))}
       </div>
-
     </div>
-
-    )}
-    
-        </TemplateLayout>
+     )}
+     
+         </TemplateLayout>
   );
 }
