@@ -36,6 +36,7 @@ import Pricing from "./components/Pricing";
 import FreeBasic from "./Template/FreeBasic/FreeBasic";
 import RoyalBlueDesigner from "./Template/RoyalBlueDesigner/RoyalBlueDesigner";
 import ScrollToTop from "./components/ScrollToTop";
+import TestPagination from "./Template/TestPagination/TestPagination";
 
 
 
@@ -108,6 +109,7 @@ function AppContent() {
           <Route path="/free-basic" element={<FreeBasic />} />
           <Route path="/royal-designer" element={<RoyalBlueDesigner />} />
           <Route path="/neoedge-pro" element={<NeoEdgePro />} />
+          <Route path="/test-pagination" element={<TestPagination />} />
 
           <Route
             path="/data-elite"
