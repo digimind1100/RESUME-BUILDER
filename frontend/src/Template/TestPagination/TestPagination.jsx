@@ -161,7 +161,7 @@ export default function TestPagination() {
           wrapperClass="test-wrapper"
           resumeClass="test-resume"
         >
-          {({ canEdit, isEditable }) => (
+          {({ canEdit, isEditable, pdfRef }) => (
     <div>
       {/* HEADER */}
       <div style={{ height: "250px", background: "#ddd" }}>
