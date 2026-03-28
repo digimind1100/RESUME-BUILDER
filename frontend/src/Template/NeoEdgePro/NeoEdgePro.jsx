@@ -259,14 +259,14 @@ export default function NeoEdgePro() {
                         {renderEntry(entry, canEdit, isEditable)}
                       </div>
                     ))}
-                    <section ref={summaryRef}>
+                    <section>
                       <h2>SUMMARY</h2>
                       <p contentEditable={canEdit && isEditable}>
                         Results-driven Senior Software Engineer with 6+ years of experience designing, developing, and optimizing high-performance web applications. Expertise in modern JavaScript frameworks, scalable architecture, and user-centric design. Proven ability to lead cross-functional teams, improve system performance, and deliver impactful digital solutions in fast-paced environments.
                       </p>
                     </section>
 
-                    <section ref={experienceRef}>
+                    <section>
                       <h2>EXPERIENCE</h2>
 
                       <div className="neo-job">
@@ -306,7 +306,7 @@ export default function NeoEdgePro() {
 
                     </section>
 
-                    <section ref={projectRef}>
+                    <section>
                       <h2>PROJECTS</h2>
 
                       <ul>
