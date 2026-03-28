@@ -93,7 +93,11 @@ export default function TestPagination() {
             contentEditable={canEdit && isEditable}
             suppressContentEditableWarning
             onInput={handleSummaryChange}
-            style={{ padding: "10px", background: "#f5f5f5" }}
+            style={{ padding: "10px", background: "#f5f5f5", width: "972px",
+    minWidth: "972px",
+    maxWidth: "972px",
+    margin: "0 auto",
+    background: "white" }}
           >
             <strong>Summary:</strong> {entry.data}
           </div>
@@ -107,7 +111,11 @@ export default function TestPagination() {
             onInput={(e) =>
               handleExpChange(entry.data.id, e.currentTarget.innerText)
             }
-            style={{ padding: "10px", border: "1px solid #ccc" }}
+            style={{ padding: "10px", border: "1px solid #ccc", width: "972px",
+    minWidth: "972px",
+    maxWidth: "972px",
+    margin: "0 auto",
+    background: "white" }}
           >
             {entry.data.text}
           </div>
@@ -121,7 +129,11 @@ export default function TestPagination() {
             onInput={(e) =>
               handleProjChange(entry.data.id, e.currentTarget.innerText)
             }
-            style={{ padding: "10px", border: "1px dashed #999" }}
+            style={{ padding: "10px", border: "1px dashed #999", width: "972px",
+    minWidth: "972px",
+    maxWidth: "972px",
+    margin: "0 auto",
+    background: "white" }}
           >
             {entry.data.text}
           </div>
