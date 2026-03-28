@@ -12,8 +12,15 @@ export default function NeoEdgePro() {
   // ✅ DATA (move above entries)
   const summaryData = "Your summary text here";
 
- 
+  const workExperiences = [
+    { id: 1, title: "Senior Engineer", company: "Company A" },
+    { id: 2, title: "Frontend Dev", company: "Company B" },
+  ];
 
+  const projects = [
+    { id: 1, text: "Resume Builder App" },
+    { id: 2, text: "E-commerce Platform" },
+  ];
 
   // ✅ ENTRIES
   const entries = [
@@ -52,6 +59,43 @@ export default function NeoEdgePro() {
     return () => clearTimeout(timer);
   }, [summaryData, workExperiences, projects]);
 
+  // ✅ RENDER ENTRY
+  const renderEntry = (entry, canEdit, isEditable) => {
+    switch (entry.type) {
+      case "summary":
+        return (
+          <section>
+            <h2>SUMMARY</h2>
+            <p contentEditable={canEdit && isEditable}>
+              {entry.data}
+            </p>
+          </section>
+        );
+
+      case "experience":
+        return (
+          <div className="neo-job">
+            <h4 className="main-heading" contentEditable={canEdit && isEditable}>
+              {entry.data.title}
+            </h4>
+            <span contentEditable={canEdit && isEditable}>
+              {entry.data.company}
+            </span>
+          </div>
+        );
+
+      case "project":
+        return (
+          <ul>
+            <li contentEditable={canEdit && isEditable}>
+              {entry.data.text}
+            </li>
+          </ul>
+        );
+
+      default:
+        return null;
+    }
   };
   return (
     <TemplateLayout
