@@ -52,7 +52,7 @@ export default function NeoEdgePro() {
     return () => clearTimeout(timer);
   }, [summaryData, workExperiences, projects]);
 
-  };
+  
   return (
     <TemplateLayout
       templateId="NeoEdgePro"
