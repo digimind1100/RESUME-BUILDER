@@ -93,9 +93,9 @@ export default function NeoEdgePro() {
             contentEditable={canEdit && isEditable}
             suppressContentEditableWarning
             onInput={handleSummaryChange}
-            style={{ padding: "10px", background: "#f5f5f5", width: "972px",
-    minWidth: "972px",
-    maxWidth: "972px",
+            style={{ padding: "10px", background: "#f5f5f5", width: "793.67px",
+    minWidth: "793.67px",
+    maxWidth: "793.67px",
     margin: "0 auto",
     background: "white" }}
           >
@@ -111,9 +111,9 @@ export default function NeoEdgePro() {
             onInput={(e) =>
               handleExpChange(entry.data.id, e.currentTarget.innerText)
             }
-            style={{ padding: "10px", border: "1px solid #ccc", width: "972px",
-    minWidth: "972px",
-    maxWidth: "972px",
+            style={{ padding: "10px", border: "1px solid #ccc", width: "793.67px",
+    minWidth: "793.67px",
+    maxWidth: "793.67px",
     margin: "0 auto",
     background: "white" }}
           >
@@ -129,9 +129,9 @@ export default function NeoEdgePro() {
             onInput={(e) =>
               handleProjChange(entry.data.id, e.currentTarget.innerText)
             }
-            style={{ padding: "10px", border: "1px dashed #999", width: "972px",
-    minWidth: "972px",
-    maxWidth: "972px",
+            style={{ padding: "10px", border: "1px dashed #999", width: "793.67px",
+    minWidth: "793.67px",
+    maxWidth: "793.67px",
     margin: "0 auto",
     background: "white" }}
           >
