@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import TemplateLayout from "../TemplateLayout";
 import { paginateResumeEntries } from "../../utils/paginateResumeEntries"; // ✅ NEW
 
-export default function TestPagination() {
+export default function NeoEdgePro() {
   const containerRef = useRef(null);
 
   const [pages, setPages] = useState({
@@ -146,9 +146,9 @@ export default function TestPagination() {
 
   return (
     <TemplateLayout
-      templateId="TestPagination"
-      wrapperClass="test-wrapper"
-      resumeClass="test-resume"
+      templateId="NeoEdgePro"
+      wrapperClass="neo-wrapper"
+      resumeClass="neo-resume"
     >
       {() => (
         <div>

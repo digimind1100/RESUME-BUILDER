@@ -36,7 +36,7 @@ import Pricing from "./components/Pricing";
 import FreeBasic from "./Template/FreeBasic/FreeBasic";
 import RoyalBlueDesigner from "./Template/RoyalBlueDesigner/RoyalBlueDesigner";
 import ScrollToTop from "./components/ScrollToTop";
-import TestPagination from "./Template/NeoEdgePro/TestPagination";
+import TestPagination from "./Template/NeoEdgePro/NeoEdgePro";
 
 
 
