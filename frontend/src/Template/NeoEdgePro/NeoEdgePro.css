@@ -1,143 +1,91 @@
+/* ================= BASE ================= */
 .neo-wrapper {
   font-family: 'Inter', sans-serif;
-}
-
-.neo-wrapper {
   background: #e5e7eb;
   min-height: 100vh;
-  height: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 30px;
-  margin: 0;
-  padding: 0;
 }
 
-.neo-a4 {
+/* ================= A4 PAGE ================= */
+.resume-a4.neo-a4 {
   width: 210mm;
   min-height: 297mm;
   background: white;
-  margin: 0px auto;   /* ⬅️ CENTER FIX */
+  margin: 0 auto;
   box-shadow: 0 0 20px rgba(0,0,0,0.15);
-   overflow: visible;
-}
-
-.resume-a4 neo-a4{
-  padding-top: 0;
-}
-
-.neo-header {
   position: relative;
+  overflow: hidden;
+}
+
+/* ================= HEADER ================= */
+.neo-header {
   background: #0073e6;
   color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 0;
-  padding: 60px 20px;   
-  min-height: 250px;   /* ⬅️ important */
-}
-
-.resume-a4.neo-a4 {
-  margin: 0 auto;
-  padding: 0;
-}
-
-.neo-header {
-  margin-top: 0;
-  padding-top: 60px;  /* control spacing manually */
-}
-
-.neo-header h1 {
-  margin-top: 0;
-}
-
-.neo-header-left {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.neo-profile-wrapper {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  border: 4px solid white;
-}
-
-.neo-profile {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  padding: 60px 20px;
+  min-height: 250px;
+  position: relative;
 }
 
 .neo-header-text h1 {
-  margin: 0;
-  font-size: 28px;
-}
-
-.neo-header-text p {
-  margin: 5px 0 0;
-  color: white;
-  text-align: center;
-}
-
-.neo-header-text h1 {
-  font-size: 38px;   /* bigger */
+  font-size: 38px;
   font-weight: 700;
+  margin: 0;
 }
 
 .neo-header-text p {
   font-size: 16px;
-  color: white;
   margin-top: 8px;
 }
 
-.neo-qr {
-  width: 80px;
+/* ================= PROFILE ================= */
+.neo-profile-inner {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  width: 150px;
+  height: 150px;
+  z-index: 2;
 }
 
+.neo-profile-wrapper {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 5px solid white;
+}
+
+/* ================= BODY ================= */
 .neo-body {
   display: flex;
-   align-items: flex-start;
-  margin-top: 0 !important;
+  align-items: flex-start;
+  height: 812px; /* 🔥 KEY FIX */
 }
 
+/* ================= SIDEBAR ================= */
 .neo-sidebar {
   width: 32%;
-  background:#8babf1;
+  height: 812px; /* 🔥 MATCH MAIN */
+  background: #8babf1;
   padding: 30px;
-  width: 32%;
-  background: #8babf1;
-  padding: 40px 30px 30px ;
-  width: 32%;
-  height: 872px;   
-  background: #8babf1;
-  padding: 30px ;
   box-sizing: border-box;
-  word-break: normal;        /* ✅ FIX */
-  overflow-wrap: break-word; /* ✅ FIX */
+  flex-shrink: 0;
 }
 
+/* ================= MAIN ================= */
 .neo-main {
-  padding: 30px;
   width: 68%;
+  height: 812px; /* 🔥 MATCH SIDEBAR */
+  padding: 30px;
   box-sizing: border-box;
-  height: 872;
-}
-.neo-main p,
-.neo-main li {
-  font-size: 12px !important;
-  line-height: 1.5;
-  color: #444;
+  overflow: hidden;
 }
 
-.neo-main h2 {
-  border-bottom: 2px solid #eee;
-}
-
-/* MAIN HEADINGS */
 .neo-main h2 {
   font-size: 18px;
   font-weight: 700;
@@ -145,111 +93,24 @@
   padding-bottom: 5px;
 }
 
+.neo-main p,
+.neo-main li {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #444;
+}
+
+/* ================= JOB ================= */
 .neo-job {
   margin-bottom: 20px;
 }
-.neo-qr-block {
-  text-align: center;
-}
 
-.neo-qr-img {
-  width: 110px;
-  height: 110px;
-}
-
-.neo-qr-btn {
-  margin-top: 5px;
-  font-size: 10px;
-  padding: 3px 6px;
-}
-
-.neo-profile-container {
-  position: relative;
-  width: 160px;
-  height: 160px;
-}
-
-.neo-profile-shape {
-  position: absolute;
- width: 180px;
-  height: 180px;
-  background-color: #4472c4; /* Matches the blue in your image */
-  
-  /* Top-left, Top-right, Bottom-right, Bottom-left */
-  border-radius: 50% 50% 50% 0%;
-  
-  /* Optional: adds the black border seen in the image */
-
-  border: none;
-  z-index: 1;
-    display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.neo-profile-wrapper {
-
-  width: 160px;
-  height: 160px;
-  border-radius: 50%;
-  border: 5px solid white;
-}
-.neo-resume {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-.neo-body {
-  display: flex;
-  align-items: flex-start;
-}
-
-
-.neo-header {
-  position: relative;   /* VERY IMPORTANT */
-}
-
-.neo-profile-global {
-  position: relative;
-
-  left: 20px;         /* adjust horizontally */
-  bottom: -100px;      /* pushes 40% below header */
-
-  width: 180px;
-  height: 180px;
-
-  z-index: 10;
-}
-
-.neo-profile-inner {
-  position: absolute;
-
-  top: 15px;   /* creates margin inside */
-  left: 15px;
-
-  width: 150px;
-  height: 150px;
-
-  z-index: 2;
-}
-.neo-profile-wrapper {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-
-  border: 5px solid white;   /* clean premium look */
-}
-
-.main-heading{
+.main-heading {
   margin-bottom: 10px;
 }
 
-
-/* SIDEBAR SECTIONS */
+/* ================= SIDEBAR CONTENT ================= */
 .neo-section {
-  margin-bottom: 25px;
-  margin-top: 40px;
   margin-bottom: 24px;
   break-inside: avoid;
 }
@@ -262,7 +123,6 @@
   color: #1e2a38;
 }
 
-/* LIST STYLE */
 .neo-list {
   list-style: none;
   padding: 0;
@@ -270,51 +130,11 @@
 }
 
 .neo-list li {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
   font-size: 12px;
-  color: #333;
   margin-bottom: 8px;
-  line-height: 1.4;
-  white-space: normal;
-  word-break: normal;   /* ✅ keeps inside column */
 }
 
-.neo-list li::before {
-  content: "";
-  width: 6px;
-  height: 6px;
-
-  background: #4472c4;
-  border-radius: 50%;
-
-  display: inline-block;
-}
-/* ICON STYLE */
-.neo-icon {
-  width: 20px;
-  height: 20px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  background: rgba(68,114,196,0.1);
-  border-radius: 6px;
-}
-/* Page Break CSS */
-
-
-.neo-a4 {
-  width: 210mm;
-  background: white;
-  margin: 20px auto;
-  box-shadow: 0 0 20px rgba(0,0,0,0.15);
-
-  position: relative;
-}
-
+/* ================= SKILLS ================= */
 .neo-skill-tags {
   display: flex;
   flex-wrap: wrap;
@@ -327,77 +147,18 @@
   font-size: 11px;
   border-radius: 4px;
 }
-/* A4 base */
-.resume-a4.neo-a4 {
-  width: 210mm;
-  min-height: 297mm;
-  background: white;
-  margin: 0 auto;
-  box-shadow: 0 0 20px rgba(0,0,0,0.15);
-  display: block; 
+
+/* ================= QR ================= */
+.neo-qr-img {
+  width: 110px;
+  height: 110px;
 }
 
-.neo-pages-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;   /* ✅ gap between pages */
-  align-items: center;
-  width: 100%;
-}
-.neo-pages-wrapper {
-  width: 100%;
-}
-
-.resume-a4.neo-a4 {
-  width: 210mm;
-  min-height: 297mm;
-  margin: 0 auto;
-  display: block;
-}
-
-.neo-body {
-  display: flex;
-  align-items: flex-start;
-}
-
-.neo-sidebar {
-  width: 32%;
-  flex-shrink: 0;   /* ✅ IMPORTANT */
-}
- .neo-main section {
-  width: 100%;
-  box-sizing: border-box;
-}
-.neo-body.full-width {
-  display: block;
-}
-
-.neo-body.full-width .neo-main {
-  width: 100% !important;
-  padding: 30px;
-}
-.neo-body.full-width {
-  display: block !important;
-}
-.neo-main-full {
-  width: 100%;
-  padding: 30px;
-  box-sizing: border-box;
-}
+/* ================= PAGE NUMBER ================= */
 .neo-page-number {
   position: absolute;
   bottom: 10px;
   right: 20px;
   font-size: 12px;
   color: #666;
-}
-.resume-a4.neo-a4 {
-  position: relative;
-}
-.neo-sidebar {
-  border: 2px dashed red;   /* DEBUG */
-}
-
-.neo-main {
-  border: 2px dashed blue;  /* DEBUG */
 }
