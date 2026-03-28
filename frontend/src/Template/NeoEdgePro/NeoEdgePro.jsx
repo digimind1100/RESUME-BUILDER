@@ -12,6 +12,8 @@ export default function NeoEdgePro() {
   // ✅ DATA (move above entries)
   const summaryData = "Your summary text here";
 
+ 
+
 
   // ✅ ENTRIES
   const entries = [
@@ -50,7 +52,7 @@ export default function NeoEdgePro() {
     return () => clearTimeout(timer);
   }, [summaryData, workExperiences, projects]);
 
-  
+  };
   return (
     <TemplateLayout
       templateId="NeoEdgePro"
