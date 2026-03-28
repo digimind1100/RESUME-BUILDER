@@ -206,7 +206,7 @@ export default function NeoEdgePro() {
           </div>
 
           {/* ================= PAGE 2 ================= */}
-          <div className="resume-a4 neo-a4">
+          <div className="resume-a4 neo-a4 neo-page-2">
             <div className="neo-resume">
 
               <div className="neo-body">

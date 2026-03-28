@@ -205,3 +205,15 @@
   font-size: 12px;
   color: #666;
 }
+/* PAGE 2 FULL HEIGHT FIX */
+.neo-page-2 .neo-body {
+  height: 1122px;        /* A4 height */
+}
+
+.neo-page-2 .neo-sidebar {
+  height: 100%;
+}
+
+.neo-page-2 .neo-main {
+  height: 100%;
+}
