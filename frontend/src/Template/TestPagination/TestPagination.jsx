@@ -1,37 +1,37 @@
 import React, { useEffect, useRef, useState } from "react";
-import { paginateResumeEntries } from "../../utils/paginateResumeEntries";
 
 export default function TestPagination() {
   const containerRef = useRef(null);
-
-  const canEdit = true;
-  const isEditable = true;
 
   const [pages, setPages] = useState({
     page1: [],
     page2: [],
   });
 
-  // ✅ Editable State
+  // ✅ Editable flags
+  const canEdit = true;
+  const isEditable = true;
+
+  // 🧠 Editable state
   const [summary, setSummary] = useState(
-    "This is a summary section. Edit this text to test pagination behavior. Add more lines to push content to next page."
+    "This is a summary section with some text."
   );
 
   const [experiences, setExperiences] = useState(
-    Array.from({ length: 5 }, (_, i) => ({
+    Array.from({ length: 6 }, (_, i) => ({
       id: i + 1,
-      text: `Experience ${i + 1} - Lorem ipsum dolor sit amet, consectetur adipiscing elit.`,
+      text: `Experience item ${i + 1} - Lorem ipsum dolor sit amet.`,
     }))
   );
 
   const [projects, setProjects] = useState(
-    Array.from({ length: 4 }, (_, i) => ({
+    Array.from({ length: 5 }, (_, i) => ({
       id: i + 1,
-      text: `Project ${i + 1} - Sample project description.`,
+      text: `Project item ${i + 1} - Some project description.`,
     }))
   );
 
-  // ✅ Entries
+  // 🧠 STEP 1: Create Entries
   const entries = [
     { id: "summary-1", type: "summary", data: summary },
 
@@ -48,27 +48,50 @@ export default function TestPagination() {
     })),
   ];
 
-  // ✅ Pagination
+  // 🧠 STEP 2: Pagination Logic (runs on content change)
   useEffect(() => {
-    const timer = setTimeout(() => {
-      const result = paginateResumeEntries({
-        containerEl: containerRef.current,
-        entries,
-        pageHeight: 812,
-      });
+    const PAGE_HEIGHT = 812;
 
-      setPages(result);
+    const timer = setTimeout(() => {
+      let usedHeight = 0;
+      const page1 = [];
+      const page2 = [];
+
+      for (let i = 0; i < entries.length; i++) {
+        const entry = entries[i];
+        const el = document.getElementById(`entry-${entry.id}`);
+
+        if (!el) continue;
+
+        const height = el.getBoundingClientRect().height;
+
+        if (page1.length === 0) {
+          page1.push(entry);
+          usedHeight += height;
+          continue;
+        }
+
+        if (usedHeight + height <= PAGE_HEIGHT) {
+          page1.push(entry);
+          usedHeight += height;
+        } else {
+          page2.push(...entries.slice(i));
+          break;
+        }
+      }
+
+      setPages({ page1, page2 });
     }, 100);
 
     return () => clearTimeout(timer);
   }, [summary, experiences, projects]);
 
-  // ✅ Handlers
-  const handleSummary = (e) => {
+  // 🧠 Handlers
+  const handleSummaryChange = (e) => {
     setSummary(e.currentTarget.innerText);
   };
 
-  const handleExp = (id, text) => {
+  const handleExpChange = (id, text) => {
     setExperiences((prev) =>
       prev.map((item) =>
         item.id === id ? { ...item, text } : item
@@ -76,7 +99,7 @@ export default function TestPagination() {
     );
   };
 
-  const handleProj = (id, text) => {
+  const handleProjChange = (id, text) => {
     setProjects((prev) =>
       prev.map((item) =>
         item.id === id ? { ...item, text } : item
@@ -84,7 +107,7 @@ export default function TestPagination() {
     );
   };
 
-  // ✅ Render Entry
+  // 🧠 Render helper
   const renderEntry = (entry) => {
     switch (entry.type) {
       case "summary":
@@ -92,8 +115,14 @@ export default function TestPagination() {
           <div
             contentEditable={canEdit && isEditable}
             suppressContentEditableWarning
-            onInput={handleSummary}
-            style={{ padding: "10px", background: "#f5f5f5" }}
+            onInput={handleSummaryChange}
+            style={{
+              padding: "10px", background: "#f5f5f5", width: "972px",
+              minWidth: "972px",
+              maxWidth: "972px",
+              margin: "0 auto",
+              background: "white"
+            }}
           >
             <strong>Summary:</strong> {entry.data}
           </div>
@@ -105,12 +134,14 @@ export default function TestPagination() {
             contentEditable={canEdit && isEditable}
             suppressContentEditableWarning
             onInput={(e) =>
-              handleExp(entry.data.id, e.currentTarget.innerText)
+              handleExpChange(entry.data.id, e.currentTarget.innerText)
             }
             style={{
-              padding: "10px",
-              border: "1px solid #ccc",
-              marginBottom: "8px",
+              padding: "10px", border: "1px solid #ccc", width: "972px",
+              minWidth: "972px",
+              maxWidth: "972px",
+              margin: "0 auto",
+              background: "white"
             }}
           >
             {entry.data.text}
@@ -123,12 +154,14 @@ export default function TestPagination() {
             contentEditable={canEdit && isEditable}
             suppressContentEditableWarning
             onInput={(e) =>
-              handleProj(entry.data.id, e.currentTarget.innerText)
+              handleProjChange(entry.data.id, e.currentTarget.innerText)
             }
             style={{
-              padding: "10px",
-              border: "1px dashed #999",
-              marginBottom: "8px",
+              padding: "10px", border: "1px dashed #999", width: "972px",
+              minWidth: "972px",
+              maxWidth: "972px",
+              margin: "0 auto",
+              background: "white"
             }}
           >
             {entry.data.text}
@@ -141,61 +174,51 @@ export default function TestPagination() {
   };
 
   return (
-    <div style={{ background: "#e5e7eb", padding: "20px" }}>
-
-      {/* ================= PAGE 1 ================= */}
-      <div
-        style={{
-          width: "794px",
-          margin: "0 auto",
-          background: "white",
-          boxShadow: "0 0 10px rgba(0,0,0,0.1)",
-          marginBottom: "30px",
-        }}
-      >
-        {/* HEADER */}
-        <div style={{ height: "250px", background: "#ddd" }}>
-          Header (250px)
-        </div>
-
-        {/* CONTENT */}
-        <div style={{ height: "812px", padding: "20px" }}>
-          {pages.page1.map((entry) => (
-            <div key={entry.id}>
-              {renderEntry(entry)}
-            </div>
-          ))}
-        </div>
+    <div>
+      {/* HEADER */}
+      <div style={{
+        height: "250px", background: "#ddd", width: "972px",
+        minWidth: "972px",
+        maxWidth: "972px",
+        margin: "0 auto",
+        background: "white"
+      }}>
+        Header (250px)
       </div>
 
-      {/* ================= PAGE 2 ================= */}
+      {/* PAGE 1 */}
+      <div style={{ height: "812px", border: "2px solid black", marginBottom: "20px" }}>
+        {pages.page1.map((entry) => (
+          <div key={entry.id}>{renderEntry(entry)}</div>
+        ))}
+      </div>
+
+      {/* PAGE 2 */}
       {pages.page2.length > 0 && (
-        <div
-          style={{
-            width: "794px",
-            margin: "0 auto",
-            background: "white",
-            boxShadow: "0 0 10px rgba(0,0,0,0.1)",
-          }}
-        >
-          <div style={{ height: "812px", padding: "20px" }}>
-            {pages.page2.map((entry) => (
-              <div key={entry.id}>
-                {renderEntry(entry)}
-              </div>
-            ))}
-          </div>
+        <div style={{
+          height: "812px", border: "2px solid red", width: "972px",
+          minWidth: "972px",
+          maxWidth: "972px",
+          margin: "0 auto",
+          background: "white"
+        }}>
+          {pages.page2.map((entry) => (
+            <div key={entry.id}>{renderEntry(entry)}</div>
+          ))}
         </div>
       )}
 
-      {/* 🔥 HIDDEN MEASUREMENT */}
+      {/* 🔥 HIDDEN MEASUREMENT CONTAINER */}
       <div
         ref={containerRef}
         style={{
           position: "absolute",
           visibility: "hidden",
-          width: "794px",
-          boxSizing: "border-box",
+          width: "972px",
+    minWidth: "972px",
+    maxWidth: "972px",
+    margin: "0 auto",
+    background: "white",
         }}
       >
         {entries.map((entry) => (
@@ -204,7 +227,6 @@ export default function TestPagination() {
           </div>
         ))}
       </div>
-
     </div>
   );
 }
