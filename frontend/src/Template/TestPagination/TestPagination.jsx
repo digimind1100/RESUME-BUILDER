@@ -130,7 +130,7 @@ export default function TestPagination() {
             onInput={(e) =>
               handleExpChange(entry.data.id, e.currentTarget.innerText)
             }
-            style={{ padding: "10px", border: "1px solid #ccc" }}
+            style={{ padding: "10px", border: "1px solid #ccc"  }}
           >
             {entry.data.text}
           </div>
@@ -144,7 +144,7 @@ export default function TestPagination() {
             onInput={(e) =>
               handleProjChange(entry.data.id, e.currentTarget.innerText)
             }
-            style={{ padding: "10px", border: "1px dashed #999" }}
+            style={{ padding: "10px", border: "1px dashed #999"  }}
           >
             {entry.data.text}
           </div>
@@ -158,7 +158,11 @@ export default function TestPagination() {
   return (
     <div>
       {/* HEADER */}
-      <div style={{ height: "250px", background: "#ddd" }}>
+      <div style={{ height: "250px", background: "#ddd", width: "972px",
+    minWidth: "972px",
+    maxWidth: "972px",
+    margin: "0 auto",
+    background: "white" }}>
         Header (250px)
       </div>
 
@@ -171,7 +175,11 @@ export default function TestPagination() {
 
       {/* PAGE 2 */}
       {pages.page2.length > 0 && (
-        <div style={{ height: "812px", border: "2px solid red" }}>
+        <div style={{ height: "812px", border: "2px solid red", width: "972px",
+    minWidth: "972px",
+    maxWidth: "972px",
+    margin: "0 auto",
+    background: "white" }}>
           {pages.page2.map((entry) => (
             <div key={entry.id}>{renderEntry(entry)}</div>
           ))}
@@ -184,7 +192,7 @@ export default function TestPagination() {
         style={{
           position: "absolute",
           visibility: "hidden",
-          width: "600px",
+          width: "600px", 
         }}
       >
         {entries.map((entry) => (
