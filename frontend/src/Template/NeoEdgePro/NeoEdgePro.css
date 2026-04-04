@@ -1,0 +1,36 @@
+/* PAGE */
+.ne-page {
+  width: 794px;
+  background: #fff;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* HEADER */
+.ne-header {
+  height: 250px;
+  border: 1px solid #000;
+}
+
+/* BODY WRAPPER */
+.ne-body {
+  display: flex;
+}
+
+/* SIDEBAR */
+.ne-sidebar {
+  width: 32%;
+  height: 812px;
+  padding: 30px;
+  box-sizing: border-box;
+  border-right: 1px solid #000;
+}
+
+/* MAIN */
+.ne-main {
+  width: 68%;
+  height: 812px;
+  padding: 30px;
+  box-sizing: border-box;
+}
