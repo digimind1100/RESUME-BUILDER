@@ -181,7 +181,8 @@ export default function TestPagination() {
         minWidth: "972px",
         maxWidth: "972px",
         margin: "0 auto",
-        background: "white"
+        background: "white",
+        border: "1px solid",
       }}>
         Header (250px)
       </div>
