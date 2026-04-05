@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
+import TemplateLayout from "../TemplateLayout";
+import { paginateResumeEntries } from "../../utils/paginateResumeEntries"; // ✅ NEW
 
 export default function TestPagination() {
   const containerRef = useRef(null);
@@ -8,11 +10,9 @@ export default function TestPagination() {
     page2: [],
   });
 
-  // ✅ Editable flags
   const canEdit = true;
   const isEditable = true;
 
-  // 🧠 Editable state
   const [summary, setSummary] = useState(
     "This is a summary section with some text."
   );
@@ -31,7 +31,7 @@ export default function TestPagination() {
     }))
   );
 
-  // 🧠 STEP 1: Create Entries
+  // ✅ Entries
   const entries = [
     { id: "summary-1", type: "summary", data: summary },
 
@@ -48,45 +48,22 @@ export default function TestPagination() {
     })),
   ];
 
-  // 🧠 STEP 2: Pagination Logic (runs on content change)
+  // ✅ NEW PAGINATION USING REUSABLE FILE
   useEffect(() => {
-    const PAGE_HEIGHT = 812;
-
     const timer = setTimeout(() => {
-      let usedHeight = 0;
-      const page1 = [];
-      const page2 = [];
+      const result = paginateResumeEntries({
+        containerEl: containerRef.current,
+        entries,
+        pageHeight: 812,
+      });
 
-      for (let i = 0; i < entries.length; i++) {
-        const entry = entries[i];
-        const el = document.getElementById(`entry-${entry.id}`);
-
-        if (!el) continue;
-
-        const height = el.getBoundingClientRect().height;
-
-        if (page1.length === 0) {
-          page1.push(entry);
-          usedHeight += height;
-          continue;
-        }
-
-        if (usedHeight + height <= PAGE_HEIGHT) {
-          page1.push(entry);
-          usedHeight += height;
-        } else {
-          page2.push(...entries.slice(i));
-          break;
-        }
-      }
-
-      setPages({ page1, page2 });
+      setPages(result);
     }, 100);
 
     return () => clearTimeout(timer);
   }, [summary, experiences, projects]);
 
-  // 🧠 Handlers
+  // Handlers
   const handleSummaryChange = (e) => {
     setSummary(e.currentTarget.innerText);
   };
@@ -107,7 +84,7 @@ export default function TestPagination() {
     );
   };
 
-  // 🧠 Render helper
+  // Render helper
   const renderEntry = (entry) => {
     switch (entry.type) {
       case "summary":
@@ -116,13 +93,7 @@ export default function TestPagination() {
             contentEditable={canEdit && isEditable}
             suppressContentEditableWarning
             onInput={handleSummaryChange}
-            style={{
-              padding: "10px", background: "#f5f5f5", width: "972px",
-              minWidth: "972px",
-              maxWidth: "972px",
-              margin: "0 auto",
-              background: "white"
-            }}
+            style={{ padding: "10px", background: "#f5f5f5" }}
           >
             <strong>Summary:</strong> {entry.data}
           </div>
@@ -136,13 +107,7 @@ export default function TestPagination() {
             onInput={(e) =>
               handleExpChange(entry.data.id, e.currentTarget.innerText)
             }
-            style={{
-              padding: "10px", border: "1px solid #ccc", width: "972px",
-              minWidth: "972px",
-              maxWidth: "972px",
-              margin: "0 auto",
-              background: "white"
-            }}
+            style={{ padding: "10px", border: "1px solid #ccc" }}
           >
             {entry.data.text}
           </div>
@@ -156,13 +121,7 @@ export default function TestPagination() {
             onInput={(e) =>
               handleProjChange(entry.data.id, e.currentTarget.innerText)
             }
-            style={{
-              padding: "10px", border: "1px dashed #999", width: "972px",
-              minWidth: "972px",
-              maxWidth: "972px",
-              margin: "0 auto",
-              background: "white"
-            }}
+            style={{ padding: "10px", border: "1px dashed #999" }}
           >
             {entry.data.text}
           </div>
@@ -174,60 +133,52 @@ export default function TestPagination() {
   };
 
   return (
-    <div>
-      {/* HEADER */}
-      <div style={{
-        height: "250px", background: "#ddd", width: "972px",
-        minWidth: "972px",
-        maxWidth: "972px",
-        margin: "0 auto",
-        background: "white",
-        border: "1px solid",
-      }}>
-        Header (250px)
-      </div>
+    <TemplateLayout
+      templateId="TestPagination"
+      wrapperClass="test-wrapper"
+      resumeClass="test-resume"
+    >
+      {() => (
+        <div>
+          {/* HEADER */}
+          <div style={{ height: "250px", background: "#ddd" }}>
+            Header (250px)
+          </div>
 
-      {/* PAGE 1 */}
-      <div style={{ height: "812px", border: "2px solid black", marginBottom: "20px" }}>
-        {pages.page1.map((entry) => (
-          <div key={entry.id}>{renderEntry(entry)}</div>
-        ))}
-      </div>
+          {/* PAGE 1 */}
+          <div style={{ height: "812px", border: "2px solid black", marginBottom: "20px" }}>
+            {pages.page1.map((entry) => (
+              <div key={entry.id}>{renderEntry(entry)}</div>
+            ))}
+          </div>
 
-      {/* PAGE 2 */}
-      {pages.page2.length > 0 && (
-        <div style={{
-          height: "812px", border: "2px solid red", width: "972px",
-          minWidth: "972px",
-          maxWidth: "972px",
-          margin: "0 auto",
-          background: "white"
-        }}>
-          {pages.page2.map((entry) => (
-            <div key={entry.id}>{renderEntry(entry)}</div>
-          ))}
+          {/* PAGE 2 */}
+          {pages.page2.length > 0 && (
+            <div style={{ height: "812px", border: "2px solid red" }}>
+              {pages.page2.map((entry) => (
+                <div key={entry.id}>{renderEntry(entry)}</div>
+              ))}
+            </div>
+          )}
+
+          {/* 🔥 HIDDEN MEASUREMENT */}
+          <div
+            ref={containerRef}
+            style={{
+              position: "absolute",
+              visibility: "hidden",
+              width: "794px", // ✅ match real A4 width
+              boxSizing: "border-box",
+            }}
+          >
+            {entries.map((entry) => (
+              <div id={`entry-${entry.id}`} key={entry.id}>
+                {renderEntry(entry)}
+              </div>
+            ))}
+          </div>
         </div>
       )}
-
-      {/* 🔥 HIDDEN MEASUREMENT CONTAINER */}
-      <div
-        ref={containerRef}
-        style={{
-          position: "absolute",
-          visibility: "hidden",
-          width: "972px",
-    minWidth: "972px",
-    maxWidth: "972px",
-    margin: "0 auto",
-    background: "white",
-        }}
-      >
-        {entries.map((entry) => (
-          <div id={`entry-${entry.id}`} key={entry.id}>
-            {renderEntry(entry)}
-          </div>
-        ))}
-      </div>
-    </div>
+    </TemplateLayout>
   );
 }
