@@ -13,26 +13,26 @@ export default function NeoEdgePro() {
   const canEdit = true;
   const isEditable = true;
 
-  // 🔹 DATA STATES
+  // 🔹 DATA
   const [summary, setSummary] = useState(
-    "Write your professional summary here..."
+    "Write your professional summary..."
   );
 
   const [experiences, setExperiences] = useState(
     Array.from({ length: 6 }, (_, i) => ({
       id: i + 1,
-      text: `Experience ${i + 1} - Describe your role and achievements.`,
+      text: `Experience ${i + 1}`,
     }))
   );
 
   const [projects, setProjects] = useState(
     Array.from({ length: 4 }, (_, i) => ({
       id: i + 1,
-      text: `Project ${i + 1} - Project description.`,
+      text: `Project ${i + 1}`,
     }))
   );
 
-  // 🔹 ENTRIES COMBINED
+  // 🔹 ENTRIES (RIGHT SIDE ONLY)
   const entries = [
     { id: "summary", type: "summary", data: summary },
 
@@ -49,7 +49,7 @@ export default function NeoEdgePro() {
     })),
   ];
 
-  // 🔥 PAGINATION LOGIC (SAME AS TEST)
+  // 🔥 PAGINATION (UNCHANGED)
   useEffect(() => {
     const timer = setTimeout(() => {
       const result = paginateResumeEntries({
@@ -85,14 +85,13 @@ export default function NeoEdgePro() {
     );
   };
 
-  // 🔹 ENTRY RENDER
+  // 🔹 RENDER ENTRY (RIGHT SIDE)
   const renderEntry = (entry) => {
     switch (entry.type) {
       case "summary":
         return (
           <div
             contentEditable={canEdit && isEditable}
-            suppressContentEditableWarning
             onInput={handleSummaryChange}
             className="section summary"
           >
@@ -105,7 +104,6 @@ export default function NeoEdgePro() {
         return (
           <div
             contentEditable={canEdit && isEditable}
-            suppressContentEditableWarning
             onInput={(e) =>
               handleExpChange(entry.data.id, e.currentTarget.innerText)
             }
@@ -119,7 +117,6 @@ export default function NeoEdgePro() {
         return (
           <div
             contentEditable={canEdit && isEditable}
-            suppressContentEditableWarning
             onInput={(e) =>
               handleProjChange(entry.data.id, e.currentTarget.innerText)
             }
@@ -142,28 +139,59 @@ export default function NeoEdgePro() {
     >
       {() => (
         <div>
-          {/* 🔥 HEADER */}
-          <div className="neo-header">
-            Header (250px)
-          </div>
 
           {/* 🔥 PAGE 1 */}
           <div className="neo-page">
-            {pages.page1.map((entry) => (
-              <div key={entry.id}>{renderEntry(entry)}</div>
-            ))}
+            <div className="neo-container">
+
+              {/* LEFT SIDEBAR */}
+              <aside className="neo-sidebar">
+                <h2 contentEditable={canEdit && isEditable}>Your Name</h2>
+                <p contentEditable={canEdit && isEditable}>Your Role</p>
+
+                <div className="sidebar-section">
+                  <h4>Contact</h4>
+                  <p contentEditable>Email</p>
+                  <p contentEditable>Phone</p>
+                </div>
+
+                <div className="sidebar-section">
+                  <h4>Skills</h4>
+                  <p contentEditable>Skill 1</p>
+                  <p contentEditable>Skill 2</p>
+                </div>
+              </aside>
+
+              {/* RIGHT CONTENT */}
+              <main className="neo-main">
+                {pages.page1.map((entry) => (
+                  <div key={entry.id}>{renderEntry(entry)}</div>
+                ))}
+              </main>
+
+            </div>
           </div>
 
           {/* 🔥 PAGE 2 */}
           {pages.page2.length > 0 && (
-            <div className="neo-page page-2">
-              {pages.page2.map((entry) => (
-                <div key={entry.id}>{renderEntry(entry)}</div>
-              ))}
+            <div className="neo-page">
+              <div className="neo-container">
+
+                {/* SAME SIDEBAR */}
+                <aside className="neo-sidebar"></aside>
+
+                {/* PAGINATED CONTENT */}
+                <main className="neo-main">
+                  {pages.page2.map((entry) => (
+                    <div key={entry.id}>{renderEntry(entry)}</div>
+                  ))}
+                </main>
+
+              </div>
             </div>
           )}
 
-          {/* 🔥 HIDDEN MEASURE CONTAINER */}
+          {/* 🔥 HIDDEN MEASURE */}
           <div ref={containerRef} className="hidden-measure">
             {entries.map((entry) => (
               <div id={`entry-${entry.id}`} key={entry.id}>
@@ -171,6 +199,7 @@ export default function NeoEdgePro() {
               </div>
             ))}
           </div>
+
         </div>
       )}
     </TemplateLayout>

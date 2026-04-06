@@ -1,31 +1,36 @@
-.neo-header {
-  height: 250px;
-  border: 1px solid black;
-  width: 794px;
-  margin: 0 auto;
-}
-
 .neo-page {
-  height: 812px;
-  border: 2px solid black;
-  margin: 20px auto;
   width: 794px;
-  box-sizing: border-box;
-  padding: 10px;
+  height: 812px;
+  margin: 20px auto;
+  border: 2px solid black;
 }
 
-.page-2 {
-  border-color: red;
+.neo-container {
+  display: flex;
+  height: 100%;
+}
+
+.neo-sidebar {
+  width: 30%;
+  background: #f4f4f4;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+.neo-main {
+  width: 70%;
+  padding: 15px;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .section {
-  padding: 10px;
   margin-bottom: 10px;
-  background: white;
+  padding: 10px;
 }
 
 .summary {
-  background: #f5f5f5;
+  background: #eee;
 }
 
 .experience {
@@ -36,7 +41,7 @@
   border: 1px dashed #999;
 }
 
-/* 🔥 hidden measurement */
+/* hidden measurement */
 .hidden-measure {
   position: absolute;
   visibility: hidden;
