@@ -1,0 +1,49 @@
+.neo-page {
+  width: 794px;
+  height: 812px;
+  margin: 20px auto;
+  border: 2px solid black;
+}
+
+.neo-container {
+  display: flex;
+  height: 100%;
+}
+
+.neo-sidebar {
+  width: 30%;
+  background: #f4f4f4;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+.neo-main {
+  width: 70%;
+  padding: 15px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.section {
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+.summary {
+  background: #eee;
+}
+
+.experience {
+  border: 1px solid #ccc;
+}
+
+.project {
+  border: 1px dashed #999;
+}
+
+/* hidden measurement */
+.hidden-measure {
+  position: absolute;
+  visibility: hidden;
+  width: 794px;
+}

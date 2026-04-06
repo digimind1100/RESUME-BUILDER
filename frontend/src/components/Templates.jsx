@@ -21,6 +21,7 @@ const TEMPLATE_META = {
   12: { name: "Free Basic", category: "Free Template" },
   13: { name: "Royal Designer", category: "Royal Designer" },
   14: { name: "NeoEdge Pro", category: "NeoEdge Pro" },
+  15: { name: "Test Pagination", category: "TestPagination" },
 };
 
 export default function Templates() {
