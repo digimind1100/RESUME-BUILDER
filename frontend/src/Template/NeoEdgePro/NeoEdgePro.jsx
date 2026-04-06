@@ -52,6 +52,25 @@ export default function NeoEdgePro() {
     return () => clearTimeout(timer);
   }, [summary, experiences]);
 
+const handleSummaryChange = (e) => {
+  if (!e?.currentTarget) return;
+  setSummary(e.currentTarget.innerText || "");
+};
+
+const handleExpChange = (id, e) => {
+  if (!e?.currentTarget) return;
+
+  const text = e.currentTarget.innerText || "";
+
+  setExperiences((prev) =>
+    prev.map((item) =>
+      item.id === id ? { ...item, text } : item
+    )
+  );
+};
+
+
+
   // 🔹 RENDER ENTRY (RIGHT SIDE BLOCKS)
   const renderEntry = (entry) => {
     switch (entry.type) {
