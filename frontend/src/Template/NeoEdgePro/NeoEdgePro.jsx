@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import TemplateLayout from "../TemplateLayout";
-import { paginateResumeEntries } from "../../utils/paginateResumeEntries"; // ✅ NEW
+import { paginateResumeEntries } from "../../utils/paginateResumeEntries";
+import "./MedicalElite.css"; // ✅ SAME CSS
 
 export default function NeoEdgePro() {
   const containerRef = useRef(null);
@@ -13,130 +14,83 @@ export default function NeoEdgePro() {
   const canEdit = true;
   const isEditable = true;
 
+  // 🔹 DATA
   const [summary, setSummary] = useState(
-    "This is a summary section with some text."
+    "Professional summary goes here..."
   );
 
   const [experiences, setExperiences] = useState(
-    Array.from({ length: 6 }, (_, i) => ({
+    Array.from({ length: 8 }, (_, i) => ({
       id: i + 1,
-      text: `Experience item ${i + 1} - Lorem ipsum dolor sit amet.`,
+      text: `Experience ${i + 1}`,
     }))
   );
 
-  const [projects, setProjects] = useState(
-    Array.from({ length: 5 }, (_, i) => ({
-      id: i + 1,
-      text: `Project item ${i + 1} - Some project description.`,
-    }))
-  );
-
-  // ✅ Entries
+  // 🔹 ENTRIES (RIGHT SIDE ONLY)
   const entries = [
-    { id: "summary-1", type: "summary", data: summary },
+    { id: "summary", type: "summary", data: summary },
 
     ...experiences.map((exp) => ({
       id: `exp-${exp.id}`,
       type: "experience",
       data: exp,
     })),
-
-    ...projects.map((proj) => ({
-      id: `proj-${proj.id}`,
-      type: "project",
-      data: proj,
-    })),
   ];
 
-  // ✅ NEW PAGINATION USING REUSABLE FILE
+  // 🔥 PAGINATION (SAME LOGIC)
   useEffect(() => {
     const timer = setTimeout(() => {
       const result = paginateResumeEntries({
         containerEl: containerRef.current,
         entries,
-        pageHeight: 812,
+        pageHeight: 1122, // ✅ match sidebar height
       });
 
       setPages(result);
     }, 100);
 
     return () => clearTimeout(timer);
-  }, [summary, experiences, projects]);
+  }, [summary, experiences]);
 
-  // Handlers
-  const handleSummaryChange = (e) => {
-    setSummary(e.currentTarget.innerText);
-  };
-
-  const handleExpChange = (id, text) => {
-    setExperiences((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, text } : item
-      )
-    );
-  };
-
-  const handleProjChange = (id, text) => {
-    setProjects((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, text } : item
-      )
-    );
-  };
-
-  // Render helper
+  // 🔹 RENDER ENTRY (RIGHT SIDE BLOCKS)
   const renderEntry = (entry) => {
     switch (entry.type) {
       case "summary":
         return (
-          <div
-            contentEditable={canEdit && isEditable}
-            suppressContentEditableWarning
-            onInput={handleSummaryChange}
-            style={{ padding: "10px", background: "#f5f5f5", width: "793.67px",
-    minWidth: "793.67px",
-    maxWidth: "793.67px",
-    margin: "0 auto",
-    background: "white" }}
-          >
-            <strong>Summary:</strong> {entry.data}
-          </div>
+          <section className="me-block">
+            <h2 className="me-block-title">SUMMARY</h2>
+            <p
+              className="me-block-text"
+              contentEditable={canEdit && isEditable}
+              onInput={(e) =>
+                setSummary(e.currentTarget.innerText)
+              }
+            >
+              {entry.data}
+            </p>
+          </section>
         );
 
       case "experience":
         return (
-          <div
-            contentEditable={canEdit && isEditable}
-            suppressContentEditableWarning
-            onInput={(e) =>
-              handleExpChange(entry.data.id, e.currentTarget.innerText)
-            }
-            style={{ padding: "10px", border: "1px solid #ccc", width: "793.67px",
-    minWidth: "793.67px",
-    maxWidth: "793.67px",
-    margin: "0 auto",
-    background: "white" }}
-          >
-            {entry.data.text}
-          </div>
-        );
-
-      case "project":
-        return (
-          <div
-            contentEditable={canEdit && isEditable}
-            suppressContentEditableWarning
-            onInput={(e) =>
-              handleProjChange(entry.data.id, e.currentTarget.innerText)
-            }
-            style={{ padding: "10px", border: "1px dashed #999", width: "793.67px",
-    minWidth: "793.67px",
-    maxWidth: "793.67px",
-    margin: "0 auto",
-    background: "white" }}
-          >
-            {entry.data.text}
-          </div>
+          <section className="me-block">
+            <h2 className="me-block-title">EXPERIENCE</h2>
+            <div
+              className="me-job"
+              contentEditable={canEdit && isEditable}
+              onInput={(e) =>
+                setExperiences((prev) =>
+                  prev.map((item) =>
+                    item.id === entry.data.id
+                      ? { ...item, text: e.currentTarget.innerText }
+                      : item
+                  )
+                )
+              }
+            >
+              {entry.data.text}
+            </div>
+          </section>
         );
 
       default:
@@ -144,43 +98,82 @@ export default function NeoEdgePro() {
     }
   };
 
+  // 🔥 SIDEBAR (REUSED EXACT STRUCTURE)
+  const Sidebar = () => (
+    <aside className="me-sidebar">
+      <h1 className="me-name" contentEditable>
+        Your Name
+      </h1>
+      <p className="me-role" contentEditable>
+        Your Role
+      </p>
+
+      <section className="me-section">
+        <h3 className="me-section-title">CONTACT</h3>
+        <ul className="me-list">
+          <li contentEditable>Email</li>
+          <li contentEditable>Phone</li>
+        </ul>
+      </section>
+
+      <section className="me-section">
+        <h3 className="me-section-title">SKILLS</h3>
+        <ul className="me-list">
+          <li contentEditable>Skill 1</li>
+          <li contentEditable>Skill 2</li>
+        </ul>
+      </section>
+    </aside>
+  );
+
   return (
     <TemplateLayout
       templateId="NeoEdgePro"
-      wrapperClass="neo-wrapper"
-      resumeClass="neo-resume"
+      wrapperClass="me-wrapper"
+      resumeClass="me-resume"
     >
       {() => (
-        <div>
-          {/* HEADER */}
-          <div style={{ height: "250px", background: "#ddd" }}>
-            Header (250px)
+        <div className="me-wrapper">
+
+          {/* 🔥 PAGE 1 */}
+          <div className="resume-a4 me-a4">
+            <div className="me-resume">
+
+              <Sidebar />
+
+              <main className="me-main">
+                {pages.page1.map((entry) => (
+                  <div key={entry.id}>{renderEntry(entry)}</div>
+                ))}
+              </main>
+
+            </div>
           </div>
 
-          {/* PAGE 1 */}
-          <div style={{ height: "812px", border: "2px solid black", marginBottom: "20px" }}>
-            {pages.page1.map((entry) => (
-              <div key={entry.id}>{renderEntry(entry)}</div>
-            ))}
-          </div>
-
-          {/* PAGE 2 */}
+          {/* 🔥 PAGE 2 */}
           {pages.page2.length > 0 && (
-            <div style={{ height: "812px", border: "2px solid red" }}>
-              {pages.page2.map((entry) => (
-                <div key={entry.id}>{renderEntry(entry)}</div>
-              ))}
+            <div className="resume-a4 me-a4">
+              <div className="me-resume">
+
+                <Sidebar /> {/* SAME SIDEBAR */}
+
+                <main className="me-main">
+                  {pages.page2.map((entry) => (
+                    <div key={entry.id}>{renderEntry(entry)}</div>
+                  ))}
+                </main>
+
+              </div>
             </div>
           )}
 
-          {/* 🔥 HIDDEN MEASUREMENT */}
+          {/* 🔥 HIDDEN MEASURE (RIGHT SIDE ONLY) */}
           <div
             ref={containerRef}
             style={{
               position: "absolute",
               visibility: "hidden",
-              width: "794px", // ✅ match real A4 width
-              boxSizing: "border-box",
+              width: "68%", // 👈 IMPORTANT
             }}
           >
             {entries.map((entry) => (
@@ -189,6 +182,7 @@ export default function NeoEdgePro() {
               </div>
             ))}
           </div>
+
         </div>
       )}
     </TemplateLayout>
