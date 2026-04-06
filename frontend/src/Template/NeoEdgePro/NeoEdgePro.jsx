@@ -1,140 +1,178 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import TemplateLayout from "../TemplateLayout";
-import "./NeoEdgePro.css";
-import ProfileImageUpload from "../../components/ProfileImageUpload";
-import QRCodeBlock from "../../components/QRCodeBlock";
+import { paginateResumeEntries } from "../../utils/paginateResumeEntries";
 
 export default function NeoEdgePro() {
-    return (
-        <TemplateLayout
-            templateId="NeoEdgePro"
-            wrapperClass="neo-wrapper"
-            resumeClass="neo-resume"
-        >
-            {({ canEdit, isEditable, pdfRef, requirePayment }) => (
-                <div className="neo-wrapper">
+  const containerRef = useRef(null);
 
-                    {/* ✅ EVERYTHING INSIDE pdfRef */}
-                    <div ref={pdfRef}>
-                        {/* ================= PAGE 1 ================= */}
-                        <div className="neo-a4">
+  const [pages, setPages] = useState({
+    page1: [],
+    page2: [],
+  });
 
-                            <div className="neo-resume">
+  const canEdit = true;
+  const isEditable = true;
 
-                                {/* HEADER */}
-                                <header className="neo-header">
+  // 🔹 DATA STATES
+  const [summary, setSummary] = useState(
+    "Write your professional summary here..."
+  );
 
-                                    <div className="neo-header-left">
+  const [experiences, setExperiences] = useState(
+    Array.from({ length: 6 }, (_, i) => ({
+      id: i + 1,
+      text: `Experience ${i + 1} - Describe your role and achievements.`,
+    }))
+  );
 
-                                        <div className="neo-profile-global">
-                                            <div className="neo-profile-shape">
+  const [projects, setProjects] = useState(
+    Array.from({ length: 4 }, (_, i) => ({
+      id: i + 1,
+      text: `Project ${i + 1} - Project description.`,
+    }))
+  );
 
-                                                <ProfileImageUpload
-                                                    canEdit={canEdit}
-                                                    isEditable={isEditable}
-                                                    requirePayment={requirePayment}
-                                                    className="neo-profile-wrapper"
-                                                    imgClass="neo-profile"
-                                                />
+  // 🔹 ENTRIES COMBINED
+  const entries = [
+    { id: "summary", type: "summary", data: summary },
 
-                                            </div>
-                                        </div>
+    ...experiences.map((exp) => ({
+      id: `exp-${exp.id}`,
+      type: "experience",
+      data: exp,
+    })),
 
-                                        <div className="neo-header-text">
-                                            <h1 contentEditable={canEdit && isEditable}>
-                                                ALEXANDER MORGAN
-                                            </h1>
-                                            <p contentEditable={canEdit && isEditable}>
-                                                SENIOR SOFTWARE ENGINEER
-                                            </p>
-                                        </div>
+    ...projects.map((proj) => ({
+      id: `proj-${proj.id}`,
+      type: "project",
+      data: proj,
+    })),
+  ];
 
-                                    </div>
+  // 🔥 PAGINATION LOGIC (SAME AS TEST)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const result = paginateResumeEntries({
+        containerEl: containerRef.current,
+        entries,
+        pageHeight: 812,
+      });
 
-                                    <div className="neo-header-right">
-                                        <QRCodeBlock
-                                            canEdit={canEdit}
-                                            isEditable={isEditable}
-                                        />
-                                    </div>
+      setPages(result);
+    }, 100);
 
-                                </header>
+    return () => clearTimeout(timer);
+  }, [summary, experiences, projects]);
 
-                                {/* BODY */}
-                                <div className="neo-body">
+  // 🔹 HANDLERS
+  const handleSummaryChange = (e) => {
+    setSummary(e.currentTarget.innerText);
+  };
 
-                                    {/* SIDEBAR */}
-                                    <aside className="neo-sidebar">
-
-                                        <section className="neo-section">
-                                            <h3 className="neo-section-title">CONTACT</h3>
-
-                                            <ul className="neo-list">
-
-                                                <li>
-                                                    <span className="neo-icon">📞</span>
-                                                    <span contentEditable={canEdit && isEditable}>
-                                                        +1 (555) 245-8890
-                                                    </span>
-                                                </li>
-
-                                                <li>
-                                                    <span className="neo-icon">✉️</span>
-                                                    <span contentEditable={canEdit && isEditable}>
-                                                        alex.morgan@email.com
-                                                    </span>
-                                                </li>
-
-                                                <li>
-                                                    <span className="neo-icon">📍</span>
-                                                    <span contentEditable={canEdit && isEditable}>
-                                                        New York, USA
-                                                    </span>
-                                                </li>
-
-                                                <li>
-                                                    <span className="neo-icon">🌐</span>
-                                                    <span contentEditable={canEdit && isEditable}>
-                                                        www.alexmorgan.dev
-                                                    </span>
-                                                </li>
-
-                                            </ul>
-                                        </section>
-
-                                    </aside>
-
-                                    {/* MAIN */}
-                                    <main className="neo-main">
-
-                                        <section>
-                                            <h2>SUMMARY</h2>
-                                            <p>
-                                                Results-driven software engineer with 6+ years of experience building scalable web applications and modern user interfaces.
-                                            </p>
-                                        </section>
-
-                                    </main>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                        {/* ================= PAGE 2 ================= */}
-                        <div className="neo-a4 neo-page-2">
-                            <div style={{ paddingTop: "30px" }}>
-                                <h2>PAGE 2 TEST</h2>
-                                <p>This is second page</p>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-
-            )}
-        </TemplateLayout>
+  const handleExpChange = (id, text) => {
+    setExperiences((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, text } : item
+      )
     );
+  };
+
+  const handleProjChange = (id, text) => {
+    setProjects((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, text } : item
+      )
+    );
+  };
+
+  // 🔹 ENTRY RENDER
+  const renderEntry = (entry) => {
+    switch (entry.type) {
+      case "summary":
+        return (
+          <div
+            contentEditable={canEdit && isEditable}
+            suppressContentEditableWarning
+            onInput={handleSummaryChange}
+            className="section summary"
+          >
+            <h3>Summary</h3>
+            <p>{entry.data}</p>
+          </div>
+        );
+
+      case "experience":
+        return (
+          <div
+            contentEditable={canEdit && isEditable}
+            suppressContentEditableWarning
+            onInput={(e) =>
+              handleExpChange(entry.data.id, e.currentTarget.innerText)
+            }
+            className="section experience"
+          >
+            {entry.data.text}
+          </div>
+        );
+
+      case "project":
+        return (
+          <div
+            contentEditable={canEdit && isEditable}
+            suppressContentEditableWarning
+            onInput={(e) =>
+              handleProjChange(entry.data.id, e.currentTarget.innerText)
+            }
+            className="section project"
+          >
+            {entry.data.text}
+          </div>
+        );
+
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <TemplateLayout
+      templateId="NeoEdgePro"
+      wrapperClass="neo-wrapper"
+      resumeClass="neo-resume"
+    >
+      {() => (
+        <div>
+          {/* 🔥 HEADER */}
+          <div className="neo-header">
+            Header (250px)
+          </div>
+
+          {/* 🔥 PAGE 1 */}
+          <div className="neo-page">
+            {pages.page1.map((entry) => (
+              <div key={entry.id}>{renderEntry(entry)}</div>
+            ))}
+          </div>
+
+          {/* 🔥 PAGE 2 */}
+          {pages.page2.length > 0 && (
+            <div className="neo-page page-2">
+              {pages.page2.map((entry) => (
+                <div key={entry.id}>{renderEntry(entry)}</div>
+              ))}
+            </div>
+          )}
+
+          {/* 🔥 HIDDEN MEASURE CONTAINER */}
+          <div ref={containerRef} className="hidden-measure">
+            {entries.map((entry) => (
+              <div id={`entry-${entry.id}`} key={entry.id}>
+                {renderEntry(entry)}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </TemplateLayout>
+  );
 }
