@@ -249,3 +249,11 @@ background: #e5e7eb;
 
   pointer-events: none;
 }
+
+.hidden-measure {
+  position: absolute;
+  visibility: hidden;
+  width: 540px;
+  padding: 40px;
+  box-sizing: border-box;
+}
