@@ -27,15 +27,18 @@ export default function NeoEdgePro() {
   );
 
   // 🔹 ENTRIES (RIGHT SIDE ONLY)
-  const entries = [
-    { id: "summary", type: "summary", data: summary },
-
-    ...experiences.map((exp) => ({
-      id: `exp-${exp.id}`,
-      type: "experience",
-      data: exp,
-    })),
-  ];
+ const entries = [
+  {
+    id: "summary",
+    type: "summary",
+    data: summary,
+  },
+  {
+    id: "experience",
+    type: "experience",
+    data: experiences, // 👈 ARRAY now
+  },
+];
 
   // 🔥 PAGINATION (SAME LOGIC)
   useEffect(() => {
@@ -57,19 +60,17 @@ export default function NeoEdgePro() {
     setSummary(e.currentTarget.innerText || "");
   };
 
-  const handleExpChange = (id, e) => {
-    if (!e?.currentTarget) return;
+const handleExpChange = (id, e) => {
+  if (!e?.currentTarget) return;
 
-    const text = e.currentTarget.innerText || "";
+  const text = e.currentTarget.innerText || "";
 
-    setExperiences((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, text } : item
-      )
-    );
-  };
-
-
+  setExperiences((prev) =>
+    prev.map((item) =>
+      item.id === id ? { ...item, text } : item
+    )
+  );
+};
 
   // 🔹 RENDER ENTRY (RIGHT SIDE BLOCKS)
   const renderEntry = (entry) => {
@@ -91,18 +92,23 @@ export default function NeoEdgePro() {
         );
 
       case "experience":
-        return (
-          <section className="me-block">
-            <h2 className="me-block-title">EXPERIENCE</h2>
-            <div
-              className="me-job"
-              contentEditable={canEdit && isEditable}
-              onInput={(e) => handleExpChange(entry.data.id, e)}
-            >
-              {entry.data.text}
-            </div>
-          </section>
-        );
+  return (
+    <section className="me-block">
+      <h2 className="me-block-title">EXPERIENCE</h2>
+
+      {entry.data.map((exp) => (
+        <div
+          key={exp.id}
+          className="me-job"
+          contentEditable={canEdit && isEditable}
+          suppressContentEditableWarning
+          onInput={(e) => handleExpChange(exp.id, e)}
+        >
+          {exp.text}
+        </div>
+      ))}
+    </section>
+  );
 
       default:
         return null;
