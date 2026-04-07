@@ -1,7 +1,7 @@
 export function paginateResumeEntries({
   containerEl,
   entries,
-  pageHeight = 812,
+  pageHeight = 1122,
 }) {
   if (!containerEl || !Array.isArray(entries)) {
     return { page1: [], page2: [] };

@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import Footer from "./Footer";
 import { useAuth } from "../context/AuthContext";
 import SignupModal from "./auth/SignupModal";
-const SIMPLE_TEMPLATES = Array.from({ length: 15 }, (_, i) => i + 1);
+const SIMPLE_TEMPLATES = Array.from({ length: 14 }, (_, i) => i + 1);
 
 const TEMPLATE_META = {
   1: { name: "Teacher Elite", category: "All Roles" },
@@ -254,7 +254,6 @@ export default function Templates() {
                       12: "/free-basic",
                       13: "/royal-designer",
                       14: "/neoEdge-pro",
-                      15: "/test-pagination"
                     };
                     handleUseTemplate(routes[num]);
                   }}

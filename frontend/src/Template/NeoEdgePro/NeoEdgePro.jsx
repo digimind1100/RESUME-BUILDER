@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import TemplateLayout from "../TemplateLayout";
 import { paginateResumeEntries } from "../../utils/paginateResumeEntries";
-import "NeoEdgePro.css";
+import "../MedicalElite/MedicalElite.css";
 
 export default function NeoEdgePro() {
   const containerRef = useRef(null);
@@ -16,20 +16,13 @@ export default function NeoEdgePro() {
 
   // 🔹 DATA
   const [summary, setSummary] = useState(
-    "Write your professional summary..."
+    "Professional summary goes here..."
   );
 
   const [experiences, setExperiences] = useState(
-    Array.from({ length: 6 }, (_, i) => ({
+    Array.from({ length: 8 }, (_, i) => ({
       id: i + 1,
       text: `Experience ${i + 1}`,
-    }))
-  );
-
-  const [projects, setProjects] = useState(
-    Array.from({ length: 4 }, (_, i) => ({
-      id: i + 1,
-      text: `Project ${i + 1}`,
     }))
   );
 
@@ -42,89 +35,81 @@ export default function NeoEdgePro() {
       type: "experience",
       data: exp,
     })),
-
-    ...projects.map((proj) => ({
-      id: `proj-${proj.id}`,
-      type: "project",
-      data: proj,
-    })),
   ];
 
-  // 🔥 PAGINATION (UNCHANGED)
+  // 🔥 PAGINATION (SAME LOGIC)
   useEffect(() => {
     const timer = setTimeout(() => {
       const result = paginateResumeEntries({
         containerEl: containerRef.current,
         entries,
-        pageHeight: 812,
+        pageHeight: 1122, // ✅ match sidebar height
       });
 
       setPages(result);
     }, 100);
 
     return () => clearTimeout(timer);
-  }, [summary, experiences, projects]);
+  }, [summary, experiences]);
 
-  // 🔹 HANDLERS
-  const handleSummaryChange = (e) => {
-    setSummary(e.currentTarget.innerText);
-  };
+const handleSummaryChange = (e) => {
+  if (!e?.currentTarget) return;
+  setSummary(e.currentTarget.innerText || "");
+};
 
-  const handleExpChange = (id, text) => {
-    setExperiences((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, text } : item
-      )
-    );
-  };
+const handleExpChange = (id, e) => {
+  if (!e?.currentTarget) return;
 
-  const handleProjChange = (id, text) => {
-    setProjects((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, text } : item
-      )
-    );
-  };
+  const text = e.currentTarget.innerText || "";
 
-  // 🔹 RENDER ENTRY (RIGHT SIDE)
+  setExperiences((prev) =>
+    prev.map((item) =>
+      item.id === id ? { ...item, text } : item
+    )
+  );
+};
+
+
+
+  // 🔹 RENDER ENTRY (RIGHT SIDE BLOCKS)
   const renderEntry = (entry) => {
     switch (entry.type) {
       case "summary":
         return (
-          <div
-            contentEditable={canEdit && isEditable}
-            onInput={handleSummaryChange}
-            className="section summary"
-          >
-            <h3>Summary</h3>
-            <p>{entry.data}</p>
-          </div>
+          <section className="me-block">
+            <h2 className="me-block-title">SUMMARY</h2>
+            <p
+              className="me-block-text"
+              contentEditable={canEdit && isEditable}
+              onInput={(e) =>
+                setSummary(e.currentTarget.innerText)
+              }
+            >
+              {entry.data}
+            </p>
+          </section>
         );
 
       case "experience":
         return (
-          <div
-            contentEditable={canEdit && isEditable}
-            onInput={(e) =>
-              handleExpChange(entry.data.id, e.currentTarget.innerText)
-            }
-            className="section experience"
-          >
-            {entry.data.text}
-          </div>
-        );
-
-      case "project":
-        return (
-          <div
-            contentEditable={canEdit && isEditable}
-            onInput={(e) =>
-              handleProjChange(entry.data.id, e.currentTarget.innerText)
-            }
-            className="section project"
-          >
-            {entry.data.text}
-          </div>
+          <section className="me-block">
+            <h2 className="me-block-title">EXPERIENCE</h2>
+            <div
+              className="me-job"
+              contentEditable={canEdit && isEditable}
+              onInput={(e) =>
+                setExperiences((prev) =>
+                  prev.map((item) =>
+                    item.id === entry.data.id
+                      ? { ...item, text: e.currentTarget.innerText }
+                      : item
+                  )
+                )
+              }
+            >
+              {entry.data.text}
+            </div>
+          </section>
         );
 
       default:
@@ -132,39 +117,50 @@ export default function NeoEdgePro() {
     }
   };
 
+  // 🔥 SIDEBAR (REUSED EXACT STRUCTURE)
+  const Sidebar = () => (
+    <aside className="me-sidebar">
+      <h1 className="me-name" contentEditable>
+        Your Name
+      </h1>
+      <p className="me-role" contentEditable>
+        Your Role
+      </p>
+
+      <section className="me-section">
+        <h3 className="me-section-title">CONTACT</h3>
+        <ul className="me-list">
+          <li contentEditable>Email</li>
+          <li contentEditable>Phone</li>
+        </ul>
+      </section>
+
+      <section className="me-section">
+        <h3 className="me-section-title">SKILLS</h3>
+        <ul className="me-list">
+          <li contentEditable>Skill 1</li>
+          <li contentEditable>Skill 2</li>
+        </ul>
+      </section>
+    </aside>
+  );
+
   return (
     <TemplateLayout
       templateId="NeoEdgePro"
-      wrapperClass="neo-wrapper"
-      resumeClass="neo-resume"
+      wrapperClass="me-wrapper"
+      resumeClass="me-resume"
     >
       {() => (
-        <div>
+        <div className="me-wrapper">
 
           {/* 🔥 PAGE 1 */}
-          <div className="neo-page">
-            <div className="neo-container">
+          <div className="resume-a4 me-a4">
+            <div className="me-resume">
 
-              {/* LEFT SIDEBAR */}
-              <aside className="neo-sidebar">
-                <h2 contentEditable={canEdit && isEditable}>Your Name</h2>
-                <p contentEditable={canEdit && isEditable}>Your Role</p>
+              <Sidebar />
 
-                <div className="sidebar-section">
-                  <h4>Contact</h4>
-                  <p contentEditable>Email</p>
-                  <p contentEditable>Phone</p>
-                </div>
-
-                <div className="sidebar-section">
-                  <h4>Skills</h4>
-                  <p contentEditable>Skill 1</p>
-                  <p contentEditable>Skill 2</p>
-                </div>
-              </aside>
-
-              {/* RIGHT CONTENT */}
-              <main className="neo-main">
+              <main className="me-main">
                 {pages.page1.map((entry) => (
                   <div key={entry.id}>{renderEntry(entry)}</div>
                 ))}
@@ -175,14 +171,12 @@ export default function NeoEdgePro() {
 
           {/* 🔥 PAGE 2 */}
           {pages.page2.length > 0 && (
-            <div className="neo-page">
-              <div className="neo-container">
+            <div className="resume-a4 me-a4">
+              <div className="me-resume">
 
-                {/* SAME SIDEBAR */}
-                <aside className="neo-sidebar"></aside>
+                <Sidebar /> {/* SAME SIDEBAR */}
 
-                {/* PAGINATED CONTENT */}
-                <main className="neo-main">
+                <main className="me-main">
                   {pages.page2.map((entry) => (
                     <div key={entry.id}>{renderEntry(entry)}</div>
                   ))}
@@ -192,8 +186,15 @@ export default function NeoEdgePro() {
             </div>
           )}
 
-          {/* 🔥 HIDDEN MEASURE */}
-          <div ref={containerRef} className="hidden-measure">
+          {/* 🔥 HIDDEN MEASURE (RIGHT SIDE ONLY) */}
+          <div
+            ref={containerRef}
+            style={{
+              position: "absolute",
+              visibility: "hidden",
+              width: "68%", // 👈 IMPORTANT
+            }}
+          >
             {entries.map((entry) => (
               <div id={`entry-${entry.id}`} key={entry.id}>
                 {renderEntry(entry)}
