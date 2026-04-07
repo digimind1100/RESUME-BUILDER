@@ -52,22 +52,22 @@ export default function NeoEdgePro() {
     return () => clearTimeout(timer);
   }, [summary, experiences]);
 
-const handleSummaryChange = (e) => {
-  if (!e?.currentTarget) return;
-  setSummary(e.currentTarget.innerText || "");
-};
+  const handleSummaryChange = (e) => {
+    if (!e?.currentTarget) return;
+    setSummary(e.currentTarget.innerText || "");
+  };
 
-const handleExpChange = (id, e) => {
-  if (!e?.currentTarget) return;
+  const handleExpChange = (id, e) => {
+    if (!e?.currentTarget) return;
 
-  const text = e.currentTarget.innerText || "";
+    const text = e.currentTarget.innerText || "";
 
-  setExperiences((prev) =>
-    prev.map((item) =>
-      item.id === id ? { ...item, text } : item
-    )
-  );
-};
+    setExperiences((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, text } : item
+      )
+    );
+  };
 
 
 
@@ -184,11 +184,20 @@ const handleExpChange = (id, e) => {
             style={{
               position: "absolute",
               visibility: "hidden",
-              width: "68%", // 👈 IMPORTANT
+
+              width: "540px",
+              padding: "40px",              // ✅ MUST MATCH
+              boxSizing: "border-box",      // ✅ MUST MATCH
+              fontSize: "13px",             // ✅ MATCH TEXT SIZE
+              lineHeight: "1.6",            // ✅ MATCH TEXT
             }}
           >
             {entries.map((entry) => (
-              <div id={`entry-${entry.id}`} key={entry.id}>
+              <div
+                id={`entry-${entry.id}`}
+                key={entry.id}
+                style={{ marginBottom: "28px" }} // match .me-block
+              >
                 {renderEntry(entry)}
               </div>
             ))}
