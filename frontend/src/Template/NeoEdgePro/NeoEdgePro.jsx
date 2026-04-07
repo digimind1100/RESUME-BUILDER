@@ -27,53 +27,54 @@ export default function NeoEdgePro() {
   );
 
   // 🔹 ENTRIES (RIGHT SIDE ONLY)
-const paginationEntries = [
-  { id: "summary", type: "summary", data: summary },
+  const paginationEntries = [
+    { id: "summary", type: "summary", data: summary },
 
-  ...experiences.map((exp) => ({
-    id: `exp-${exp.id}`,
-    type: "experience-item", // ✅ correct
-    data: exp,
-  })),
-];
+    ...experiences.map((exp) => ({
+      id: `exp-${exp.id}`,
+      type: "experience-item", // ✅ correct
+      data: exp,
+    })),
+  ];
 
 
 
   // 🔥 PAGINATION (SAME LOGIC)
   useEffect(() => {
-  const frame = requestAnimationFrame(() => {
-    const result = paginateResumeEntries({
-      containerEl: containerRef.current,
-      paginationEntries,
-      pageHeight: 1122,
+    const frame = requestAnimationFrame(() => {
+      const result = paginateResumeEntries({
+        containerEl: containerRef.current,
+        paginationEntries,
+        pageHeight: 1122,
+      });
+
+      setPages(result);
     });
 
-    setPages(result);
-  });
-
-  return () => cancelAnimationFrame(frame);
-}, [summary, experiences]);
+    return () => cancelAnimationFrame(frame);
+  }, [summary, experiences]);
 
   const handleSummaryChange = (e) => {
     if (!e?.currentTarget) return;
     setSummary(e.currentTarget.innerText || "");
   };
 
-const handleExpChange = (id, e) => {
-  if (!e?.currentTarget) return;
+  const handleExpChange = (id, e) => {
+    if (!e?.currentTarget) return;
 
-  const text = e.currentTarget.innerText || "";
+    const text = e.currentTarget.innerText || "";
 
-  setExperiences((prev) =>
-    prev.map((item) =>
-      item.id === id ? { ...item, text } : item
-    )
-  );
-};
+    setExperiences((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, text } : item
+      )
+    );
+  };
 
   // 🔹 RENDER ENTRY (RIGHT SIDE BLOCKS)
   const renderEntry = (entry) => {
     switch (entry.type) {
+
       case "summary":
         return (
           <section className="me-block">
@@ -81,9 +82,8 @@ const handleExpChange = (id, e) => {
             <p
               className="me-block-text"
               contentEditable={canEdit && isEditable}
-              onInput={(e) =>
-                setSummary(e.currentTarget.innerText)
-              }
+              suppressContentEditableWarning
+              onInput={(e) => handleSummaryChange(e)}
             >
               {entry.data}
             </p>
@@ -91,16 +91,16 @@ const handleExpChange = (id, e) => {
         );
 
       case "experience-item":
-  return (
-    <div
-      className="me-job"
-      contentEditable={canEdit && isEditable}
-      suppressContentEditableWarning
-      onInput={(e) => handleExpChange(entry.data.id, e)}
-    >
-      {entry.data.text}
-    </div>
-  );
+        return (
+          <div
+            className="me-job"
+            contentEditable={canEdit && isEditable}
+            suppressContentEditableWarning
+            onInput={(e) => handleExpChange(entry.data.id, e)}
+          >
+            {entry.data.text}
+          </div>
+        );
 
       default:
         return null;
@@ -152,19 +152,29 @@ const handleExpChange = (id, e) => {
 
               <main className="me-main">
 
-  {/* EXPERIENCE HEADING */}
-  <section className="me-block">
-    <h2 className="me-block-title">EXPERIENCE</h2>
+                {/* SUMMARY */}
+                {pages.page1
+                  .filter(e => e.type === "summary")
+                  .map(entry => (
+                    <div key={entry.id}>{renderEntry(entry)}</div>
+                  ))
+                }
 
-    {pages.page1
-      .filter(e => e.type === "experience-item")
-      .map((entry) => (
-        <div key={entry.id}>{renderEntry(entry)}</div>
-      ))
-    }
-  </section>
+                {/* EXPERIENCE */}
+                {pages.page1.some(e => e.type === "experience-item") && (
+                  <section className="me-block">
+                    <h2 className="me-block-title">EXPERIENCE</h2>
 
-</main>
+                    {pages.page1
+                      .filter(e => e.type === "experience-item")
+                      .map(entry => (
+                        <div key={entry.id}>{renderEntry(entry)}</div>
+                      ))
+                    }
+                  </section>
+                )}
+
+              </main>
 
             </div>
           </div>
@@ -178,20 +188,20 @@ const handleExpChange = (id, e) => {
 
                 <main className="me-main">
 
-  {pages.page2.length > 0 && (
-    <section className="me-block">
-      <h2 className="me-block-title">EXPERIENCE</h2>
+                  {pages.page2.some(e => e.type === "experience-item") && (
+                    <section className="me-block">
+                      <h2 className="me-block-title">EXPERIENCE</h2>
 
-      {pages.page2
-        .filter(e => e.type === "experience-item")
-        .map((entry) => (
-          <div key={entry.id}>{renderEntry(entry)}</div>
-        ))
-      }
-    </section>
-  )}
+                      {pages.page2
+                        .filter(e => e.type === "experience-item")
+                        .map(entry => (
+                          <div key={entry.id}>{renderEntry(entry)}</div>
+                        ))
+                      }
+                    </section>
+                  )}
 
-</main>
+                </main>
 
               </div>
             </div>
