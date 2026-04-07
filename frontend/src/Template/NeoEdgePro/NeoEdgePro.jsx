@@ -39,18 +39,18 @@ export default function NeoEdgePro() {
 
   // 🔥 PAGINATION (SAME LOGIC)
   useEffect(() => {
-    const timer = setTimeout(() => {
-      const result = paginateResumeEntries({
-        containerEl: containerRef.current,
-        entries,
-        pageHeight: 1122, // ✅ match sidebar height
-      });
+  const frame = requestAnimationFrame(() => {
+    const result = paginateResumeEntries({
+      containerEl: containerRef.current,
+      entries,
+      pageHeight: 1122,
+    });
 
-      setPages(result);
-    }, 100);
+    setPages(result);
+  });
 
-    return () => clearTimeout(timer);
-  }, [summary, experiences]);
+  return () => cancelAnimationFrame(frame);
+}, [summary, experiences]);
 
   const handleSummaryChange = (e) => {
     if (!e?.currentTarget) return;

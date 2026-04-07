@@ -14,27 +14,26 @@ export function paginateResumeEntries({
   for (let i = 0; i < entries.length; i++) {
     const entry = entries[i];
 
-    // 🔑 Each entry must exist in DOM with this ID
     const el = containerEl.querySelector(`#entry-${entry.id}`);
-
     if (!el) continue;
 
-    // 🔥 Accurate height
-    const height = el.getBoundingClientRect().height;
+    const style = window.getComputedStyle(el);
 
-    // 🧠 Force first item (avoid empty page)
+    const height =
+      el.getBoundingClientRect().height +
+      parseFloat(style.marginTop) +
+      parseFloat(style.marginBottom);
+
     if (page1.length === 0) {
       page1.push(entry);
       usedHeight += height;
       continue;
     }
 
-    // ✅ If fits → stay on page 1
     if (usedHeight + height <= pageHeight) {
       page1.push(entry);
       usedHeight += height;
     } else {
-      // ❌ Overflow → rest goes to page 2
       page2.push(...entries.slice(i));
       break;
     }
