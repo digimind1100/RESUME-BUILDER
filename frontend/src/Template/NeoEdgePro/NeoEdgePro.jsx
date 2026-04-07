@@ -92,107 +92,92 @@ export default function NeoEdgePro() {
 
       case "experience-item":
         return (
-          <div
-            className="me-job"
-            contentEditable={canEdit && isEditable}
-            suppressContentEditableWarning
-            onInput={(e) => handleExpChange(entry.data.id, e)}
-          >
-            {entry.data.text}
+          <div className="me-job">
+            <div className="me-job-header">
+              <h3
+                contentEditable={canEdit && isEditable}
+                suppressContentEditableWarning
+                onInput={(e) => handleExpChange(entry.data.id, e)}
+              >
+                {entry.data.text}
+              </h3>
+
+              <p contentEditable suppressContentEditableWarning>
+                2020 – Present
+              </p>
+            </div>
+
+            <p className="me-job-location" contentEditable>
+              Company Name
+            </p>
+
+            <ul className="me-job-list">
+              <li contentEditable>Did something important</li>
+              <li contentEditable>Worked on project</li>
+            </ul>
           </div>
         );
+    };
 
-      default:
-        return null;
-    }
-  };
+    // 🔥 SIDEBAR (REUSED EXACT STRUCTURE)
+    const Sidebar = () => (
+      <aside className="me-sidebar">
+        <h1 className="me-name" contentEditable>
+          Your Name
+        </h1>
+        <p className="me-role" contentEditable>
+          Your Role
+        </p>
 
-  // 🔥 SIDEBAR (REUSED EXACT STRUCTURE)
-  const Sidebar = () => (
-    <aside className="me-sidebar">
-      <h1 className="me-name" contentEditable>
-        Your Name
-      </h1>
-      <p className="me-role" contentEditable>
-        Your Role
-      </p>
+        <section className="me-section">
+          <h3 className="me-section-title">CONTACT</h3>
+          <ul className="me-list">
+            <li contentEditable>Email</li>
+            <li contentEditable>Phone</li>
+          </ul>
+        </section>
 
-      <section className="me-section">
-        <h3 className="me-section-title">CONTACT</h3>
-        <ul className="me-list">
-          <li contentEditable>Email</li>
-          <li contentEditable>Phone</li>
-        </ul>
-      </section>
+        <section className="me-section">
+          <h3 className="me-section-title">SKILLS</h3>
+          <ul className="me-list">
+            <li contentEditable>Skill 1</li>
+            <li contentEditable>Skill 2</li>
+          </ul>
+        </section>
+      </aside>
+    );
 
-      <section className="me-section">
-        <h3 className="me-section-title">SKILLS</h3>
-        <ul className="me-list">
-          <li contentEditable>Skill 1</li>
-          <li contentEditable>Skill 2</li>
-        </ul>
-      </section>
-    </aside>
-  );
+    return (
+      <TemplateLayout
+        templateId="NeoEdgePro"
+        wrapperClass="me-wrapper"
+        resumeClass="me-resume"
+      >
+        {() => (
+          <div className="me-wrapper">
 
-  return (
-    <TemplateLayout
-      templateId="NeoEdgePro"
-      wrapperClass="me-wrapper"
-      resumeClass="me-resume"
-    >
-      {() => (
-        <div className="me-wrapper">
-
-          {/* 🔥 PAGE 1 */}
-          <div className="resume-a4 me-a4">
-            <div className="me-resume">
-
-              <Sidebar />
-
-              <main className="me-main">
-
-                {/* SUMMARY */}
-                {pages.page1
-                  .filter(e => e.type === "summary")
-                  .map(entry => (
-                    <div key={entry.id}>{renderEntry(entry)}</div>
-                  ))
-                }
-
-                {/* EXPERIENCE */}
-                {pages.page1.some(e => e.type === "experience-item") && (
-                  <section className="me-block">
-                    <h2 className="me-block-title">EXPERIENCE</h2>
-
-                    {pages.page1
-                      .filter(e => e.type === "experience-item")
-                      .map(entry => (
-                        <div key={entry.id}>{renderEntry(entry)}</div>
-                      ))
-                    }
-                  </section>
-                )}
-
-              </main>
-
-            </div>
-          </div>
-
-          {/* 🔥 PAGE 2 */}
-          {pages.page2.length > 0 && (
+            {/* 🔥 PAGE 1 */}
             <div className="resume-a4 me-a4">
               <div className="me-resume">
 
-                <Sidebar /> {/* SAME SIDEBAR */}
+                <Sidebar />
 
                 <main className="me-main">
 
-                  {pages.page2.some(e => e.type === "experience-item") && (
+                  {/* SUMMARY */}
+                  {pages.page1
+                    .filter(e => e.type === "summary")
+                    .map(entry => (
+                      <div key={entry.id}>{renderEntry(entry)}</div>
+                    ))
+                  }
+
+                  {/* EXPERIENCE */}
+                  {pages.page1.some(e => e.type === "experience-item") && (
                     <section className="me-block">
                       <h2 className="me-block-title">EXPERIENCE</h2>
 
-                      {pages.page2
+                      {pages.page1
                         .filter(e => e.type === "experience-item")
                         .map(entry => (
                           <div key={entry.id}>{renderEntry(entry)}</div>
@@ -205,35 +190,62 @@ export default function NeoEdgePro() {
 
               </div>
             </div>
-          )}
 
-          {/* 🔥 HIDDEN MEASURE (RIGHT SIDE ONLY) */}
-          <div
-            ref={containerRef}
-            style={{
-              position: "absolute",
-              visibility: "hidden",
+            {/* 🔥 PAGE 2 */}
+            {pages.page2.length > 0 && (
+              <div className="resume-a4 me-a4">
+                <div className="me-resume">
 
-              width: "540px",
-              padding: "40px",              // ✅ MUST MATCH
-              boxSizing: "border-box",      // ✅ MUST MATCH
-              fontSize: "13px",             // ✅ MATCH TEXT SIZE
-              lineHeight: "1.6",            // ✅ MATCH TEXT
-            }}
-          >
-            {paginationEntries.map((entry) => (
-              <div
-                id={`entry-${entry.id}`}
-                key={entry.id}
-                style={{ marginBottom: "28px" }} // match .me-block
-              >
-                {renderEntry(entry)}
+                  <Sidebar /> {/* SAME SIDEBAR */}
+
+                  <main className="me-main">
+
+                    {pages.page2.some(e => e.type === "experience-item") && (
+                      <section className="me-block">
+                        <h2 className="me-block-title">EXPERIENCE</h2>
+
+                        {pages.page2
+                          .filter(e => e.type === "experience-item")
+                          .map(entry => (
+                            <div key={entry.id}>{renderEntry(entry)}</div>
+                          ))
+                        }
+                      </section>
+                    )}
+
+                  </main>
+
+                </div>
               </div>
-            ))}
-          </div>
+            )}
 
-        </div>
-      )}
-    </TemplateLayout>
-  );
-}
+            {/* 🔥 HIDDEN MEASURE (RIGHT SIDE ONLY) */}
+            <div
+              ref={containerRef}
+              style={{
+                position: "absolute",
+                visibility: "hidden",
+
+                width: "540px",
+                padding: "40px",              // ✅ MUST MATCH
+                boxSizing: "border-box",      // ✅ MUST MATCH
+                fontSize: "13px",             // ✅ MATCH TEXT SIZE
+                lineHeight: "1.6",            // ✅ MATCH TEXT
+              }}
+            >
+              {paginationEntries.map((entry) => (
+                <div
+                  id={`entry-${entry.id}`}
+                  key={entry.id}
+                  style={{ marginBottom: "28px" }} // match .me-block
+                >
+                  {renderEntry(entry)}
+                </div>
+              ))}
+            </div>
+
+          </div>
+        )}
+      </TemplateLayout>
+    );
+  }
