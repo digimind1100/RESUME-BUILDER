@@ -97,15 +97,7 @@ const handleExpChange = (id, e) => {
             <div
               className="me-job"
               contentEditable={canEdit && isEditable}
-              onInput={(e) =>
-                setExperiences((prev) =>
-                  prev.map((item) =>
-                    item.id === entry.data.id
-                      ? { ...item, text: e.currentTarget.innerText }
-                      : item
-                  )
-                )
-              }
+              onInput={(e) => handleExpChange(entry.data.id, e)}
             >
               {entry.data.text}
             </div>
