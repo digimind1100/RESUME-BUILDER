@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import TemplateLayout from "../TemplateLayout";
 import { paginateResumeEntries } from "../../utils/paginateResumeEntries";
+import "NeoEdgePro.css";
 
 export default function NeoEdgePro() {
   const containerRef = useRef(null);
