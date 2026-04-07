@@ -44,7 +44,7 @@ export default function NeoEdgePro() {
     const frame = requestAnimationFrame(() => {
       const result = paginateResumeEntries({
         containerEl: containerRef.current,
-        paginationEntries,
+        entries: paginationEntries, // ✅ FIXED
         pageHeight: 1122,
       });
 
