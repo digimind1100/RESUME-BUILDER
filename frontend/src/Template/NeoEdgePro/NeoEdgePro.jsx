@@ -133,6 +133,7 @@ export default function NeoEdgePro() {
     </div>
   );
 }
+return null;
         };
 
         // ✅ EVERYTHING returned INSIDE SAME BLOCK
