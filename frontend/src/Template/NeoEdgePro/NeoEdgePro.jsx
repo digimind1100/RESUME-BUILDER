@@ -99,16 +99,40 @@ export default function NeoEdgePro() {
           }
 
           if (entry.type === "experience-item") {
-            return (
-              <div className="me-job">
-                <h3 contentEditable={canEdit && isEditable}>
-                  {entry.data.text}
-                </h3>
-              </div>
-            );
-          }
+  return (
+    <div className="me-job">
 
-          return null;
+      {/* ✅ ADD HEADING TO FIRST ITEM */}
+      {entry.data.id === 1 && (
+        <h2 className="me-block-title">EXPERIENCE</h2>
+      )}
+
+      <div className="me-job-header">
+        <h3
+          contentEditable={canEdit && isEditable}
+          suppressContentEditableWarning
+          onInput={(e) => handleExpChange(entry.data.id, e)}
+        >
+          {entry.data.text}
+        </h3>
+
+        <p contentEditable={canEdit && isEditable}>
+          2020 – Present
+        </p>
+      </div>
+
+      <p className="me-job-location" contentEditable={canEdit && isEditable}>
+        Company Name
+      </p>
+
+      <ul className="me-job-list">
+        <li contentEditable={canEdit && isEditable}>Did something important</li>
+        <li contentEditable={canEdit && isEditable}>Worked on project</li>
+      </ul>
+
+    </div>
+  );
+}
         };
 
         // ✅ EVERYTHING returned INSIDE SAME BLOCK
