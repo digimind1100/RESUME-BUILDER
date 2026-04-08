@@ -77,6 +77,43 @@ export default function NeoEdgePro() {
   >
     {({ canEdit, isEditable }) => {
 
+
+const Sidebar = () => (
+  <aside className="me-sidebar">
+    <h1
+      className="me-name"
+      contentEditable={canEdit && isEditable}
+      suppressContentEditableWarning
+    >
+      Your Name
+    </h1>
+
+    <p
+      className="me-role"
+      contentEditable={canEdit && isEditable}
+      suppressContentEditableWarning
+    >
+      Your Role
+    </p>
+
+    <section className="me-section">
+      <h3 className="me-section-title">CONTACT</h3>
+      <ul className="me-list">
+        <li contentEditable={canEdit && isEditable}>Email</li>
+        <li contentEditable={canEdit && isEditable}>Phone</li>
+      </ul>
+    </section>
+
+    <section className="me-section">
+      <h3 className="me-section-title">SKILLS</h3>
+      <ul className="me-list">
+        <li contentEditable={canEdit && isEditable}>Skill 1</li>
+        <li contentEditable={canEdit && isEditable}>Skill 2</li>
+      </ul>
+    </section>
+  </aside>
+);
+
       // ✅ MOVE renderEntry INSIDE
       const renderEntry = (entry) => {
         switch (entry.type) {
