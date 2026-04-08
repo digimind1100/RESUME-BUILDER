@@ -37,8 +37,6 @@ export default function NeoEdgePro() {
     })),
   ];
 
-
-
   // 🔥 PAGINATION (SAME LOGIC)
   useEffect(() => {
     const frame = requestAnimationFrame(() => {
@@ -157,7 +155,8 @@ export default function NeoEdgePro() {
       wrapperClass="me-wrapper"
       resumeClass="me-resume"
     >
-      {() => (
+         
+      {({ canEdit, isEditable }) => (
         <div className="me-wrapper">
 
           {/* 🔥 PAGE 1 */}
@@ -250,6 +249,7 @@ export default function NeoEdgePro() {
 
         </div>
       )}
+    
     </TemplateLayout>
   );
 }
