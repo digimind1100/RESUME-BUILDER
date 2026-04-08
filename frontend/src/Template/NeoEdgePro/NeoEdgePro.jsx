@@ -70,79 +70,98 @@ export default function NeoEdgePro() {
   };
 
   return (
-  <TemplateLayout
-    templateId="NeoEdgePro"
-    wrapperClass="me-wrapper"
-    resumeClass="me-resume"
-  >
-    {({ canEdit, isEditable }) => {
+    <TemplateLayout
+      templateId="NeoEdgePro"
+      wrapperClass="me-wrapper"
+      resumeClass="me-resume"
+    >
+      {({ canEdit, isEditable }) => {
 
-      // ✅ Sidebar INSIDE
-      const Sidebar = () => (
-        <aside className="me-sidebar">
-          <h1 contentEditable={canEdit && isEditable}>Your Name</h1>
-          <p contentEditable={canEdit && isEditable}>Your Role</p>
-        </aside>
-      );
+        // ✅ Sidebar INSIDE
+        const Sidebar = () => (
+          <aside className="me-sidebar">
+            <h1 contentEditable={canEdit && isEditable}>Your Name</h1>
+            <p contentEditable={canEdit && isEditable}>Your Role</p>
+          </aside>
+        );
 
-      // ✅ renderEntry INSIDE
-      const renderEntry = (entry) => {
-        if (entry.type === "summary") {
-          return (
-            <section className="me-block">
-              <h2>SUMMARY</h2>
-              <p contentEditable={canEdit && isEditable}>
-                {entry.data}
-              </p>
-            </section>
-          );
-        }
+        // ✅ renderEntry INSIDE
+        const renderEntry = (entry) => {
+          if (entry.type === "summary") {
+            return (
+              <section className="me-block">
+                <h2>SUMMARY</h2>
+                <p contentEditable={canEdit && isEditable}>
+                  {entry.data}
+                </p>
+              </section>
+            );
+          }
 
-        if (entry.type === "experience-item") {
-          return (
-            <div className="me-job">
-              <h3 contentEditable={canEdit && isEditable}>
-                {entry.data.text}
-              </h3>
-            </div>
-          );
-        }
-
-        return null;
-      };
-
-      // ✅ EVERYTHING returned INSIDE SAME BLOCK
-      return (
-        <>
-          <div className="me-wrapper">
-
-            <div className="resume-a4 me-a4">
-              <div className="me-resume">
-
-                <Sidebar /> {/* ✅ NOW WORKS */}
-
-                <main className="me-main">
-                  {pages.page1.map(entry => (
-                    <div key={entry.id}>{renderEntry(entry)}</div>
-                  ))}
-                </main>
-
+          if (entry.type === "experience-item") {
+            return (
+              <div className="me-job">
+                <h3 contentEditable={canEdit && isEditable}>
+                  {entry.data.text}
+                </h3>
               </div>
+            );
+          }
+
+          return null;
+        };
+
+        // ✅ EVERYTHING returned INSIDE SAME BLOCK
+        return (
+          <>
+            <div className="me-wrapper">
+
+              <div className="resume-a4 me-a4">
+                <div className="me-resume">
+
+                  <Sidebar /> {/* ✅ NOW WORKS */}
+
+                  <main className="me-main">
+                    {pages.page1.map(entry => (
+                      <div key={entry.id}>{renderEntry(entry)}</div>
+                    ))}
+                  </main>
+
+                </div>
+              </div>
+
             </div>
 
-          </div>
+            {/* ✅ hidden container also inside */}
+            <div
+              ref={containerRef}
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                visibility: "hidden",     // ✅ hides visually
+                pointerEvents: "none",    // ✅ no interaction
 
-          {/* ✅ hidden container also inside */}
-          <div ref={containerRef}>
-            {paginationEntries.map(entry => (
-              <div id={`entry-${entry.id}`} key={entry.id}>
-                {renderEntry(entry)}
-              </div>
-            ))}
-          </div>
-        </>
-      );
-    }}
-  </TemplateLayout>
-);
+                width: "540px",
+                padding: "40px",
+                boxSizing: "border-box",
+                fontSize: "13px",
+                lineHeight: "1.6",
+              }}
+            >
+              {paginationEntries.map(entry => (
+                <div
+                  id={`entry-${entry.id}`}
+                  key={entry.id}
+                  style={{ marginBottom: "28px" }}
+                >
+                  {renderEntry(entry)}
+                </div>
+              ))}
+            </div>
+          </>
+        );
+      }}
+    </TemplateLayout>
+  );
 };
