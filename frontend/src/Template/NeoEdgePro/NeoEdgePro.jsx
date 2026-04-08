@@ -99,41 +99,41 @@ export default function NeoEdgePro() {
           }
 
           if (entry.type === "experience-item") {
-  return (
-    <div className="me-job">
+            return (
+              <div className="me-job">
 
-      {/* ✅ ADD HEADING TO FIRST ITEM */}
-      {entry.data.id === 1 && (
-        <h2 className="me-block-title">EXPERIENCE</h2>
-      )}
+                {/* ✅ ADD HEADING TO FIRST ITEM */}
+                {entry.data.id === 1 && (
+                  <h2 className="me-block-title">EXPERIENCE</h2>
+                )}
 
-      <div className="me-job-header">
-        <h3
-          contentEditable={canEdit && isEditable}
-          suppressContentEditableWarning
-          onInput={(e) => handleExpChange(entry.data.id, e)}
-        >
-          {entry.data.text}
-        </h3>
+                <div className="me-job-header">
+                  <h3
+                    contentEditable={canEdit && isEditable}
+                    suppressContentEditableWarning
+                    onInput={(e) => handleExpChange(entry.data.id, e)}
+                  >
+                    {entry.data.text}
+                  </h3>
 
-        <p contentEditable={canEdit && isEditable}>
-          2020 – Present
-        </p>
-      </div>
+                  <p contentEditable={canEdit && isEditable}>
+                    2020 – Present
+                  </p>
+                </div>
 
-      <p className="me-job-location" contentEditable={canEdit && isEditable}>
-        Company Name
-      </p>
+                <p className="me-job-location" contentEditable={canEdit && isEditable}>
+                  Company Name
+                </p>
 
-      <ul className="me-job-list">
-        <li contentEditable={canEdit && isEditable}>Did something important</li>
-        <li contentEditable={canEdit && isEditable}>Worked on project</li>
-      </ul>
+                <ul className="me-job-list">
+                  <li contentEditable={canEdit && isEditable}>Did something important</li>
+                  <li contentEditable={canEdit && isEditable}>Worked on project</li>
+                </ul>
 
-    </div>
-  );
-}
-return null;
+              </div>
+            );
+          }
+          return null;
         };
 
         // ✅ EVERYTHING returned INSIDE SAME BLOCK
@@ -166,38 +166,36 @@ return null;
                 left: 0,
                 visibility: "hidden",
                 pointerEvents: "none",
-                width: "540px",
-                padding: "40px",
-                boxSizing: "border-box",
-                fontSize: "13px",
-                lineHeight: "1.6",
+                width: "794px", // full A4
               }}
             >
+              <div style={{ display: "flex" }}>
 
-              {/* SUMMARY */}
-              <div id="entry-summary">
-                {renderEntry({ id: "summary", type: "summary", data: summary })}
+                {/* Sidebar simulation */}
+                <div style={{ width: "32%" }} />
+
+                {/* REAL content area */}
+                <div
+                  style={{
+                    width: "68%",
+                    padding: "40px",
+                    boxSizing: "border-box",
+                    fontSize: "13px",
+                    lineHeight: "1.6",
+                  }}
+                >
+                  {paginationEntries.map((entry) => (
+                    <div
+                      key={entry.id}
+                      id={`entry-${entry.id}`}
+                      style={{ marginBottom: "28px" }}
+                    >
+                      {renderEntry(entry)}
+                    </div>
+                  ))}
+                </div>
+
               </div>
-
-              {/* EXPERIENCE SECTION (MATCH UI) */}
-              <section className="me-block">
-
-                <h2 className="me-block-title">EXPERIENCE</h2>
-
-                {experiences.map((exp) => (
-                  <div
-                    id={`entry-exp-${exp.id}`}
-                    key={exp.id}
-                    style={{ marginBottom: "28px" }}
-                  >
-                    {renderEntry({
-                      id: `exp-${exp.id}`,
-                      type: "experience-item",
-                      data: exp,
-                    })}
-                  </div>
-                ))}
-              </section>
             </div>
           </>
         );
