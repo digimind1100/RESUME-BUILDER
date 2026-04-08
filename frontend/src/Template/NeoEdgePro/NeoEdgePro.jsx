@@ -12,7 +12,7 @@ export default function NeoEdgePro() {
   });
 
   const canEdit = true;
-  
+
 
   // 🔹 DATA
   const [summary, setSummary] = useState(
@@ -70,164 +70,96 @@ export default function NeoEdgePro() {
   };
 
   return (
-  <TemplateLayout
-    templateId="NeoEdgePro"
-    wrapperClass="me-wrapper"
-    resumeClass="me-resume"
-  >
-    {({ canEdit, isEditable }) => {
+  <>
+    <div className="me-wrapper">
 
+      {/* PAGE 1 */}
+      <div className="resume-a4 me-a4">
+        <div className="me-resume">
 
-const Sidebar = () => (
-  <aside className="me-sidebar">
-    <h1
-      className="me-name"
-      contentEditable={canEdit && isEditable}
-      suppressContentEditableWarning
-    >
-      Your Name
-    </h1>
+          <Sidebar />
 
-    <p
-      className="me-role"
-      contentEditable={canEdit && isEditable}
-      suppressContentEditableWarning
-    >
-      Your Role
-    </p>
+          <main className="me-main">
 
-    <section className="me-section">
-      <h3 className="me-section-title">CONTACT</h3>
-      <ul className="me-list">
-        <li contentEditable={canEdit && isEditable}>Email</li>
-        <li contentEditable={canEdit && isEditable}>Phone</li>
-      </ul>
-    </section>
+            {/* SUMMARY */}
+            {pages.page1
+              .filter(e => e.type === "summary")
+              .map(entry => (
+                <div key={entry.id}>{renderEntry(entry)}</div>
+              ))
+            }
 
-    <section className="me-section">
-      <h3 className="me-section-title">SKILLS</h3>
-      <ul className="me-list">
-        <li contentEditable={canEdit && isEditable}>Skill 1</li>
-        <li contentEditable={canEdit && isEditable}>Skill 2</li>
-      </ul>
-    </section>
-  </aside>
-);
-
-      // ✅ MOVE renderEntry INSIDE
-      const renderEntry = (entry) => {
-        switch (entry.type) {
-
-          case "summary":
-            return (
+            {/* EXPERIENCE */}
+            {pages.page1.some(e => e.type === "experience-item") && (
               <section className="me-block">
-                <h2 className="me-block-title">SUMMARY</h2>
-                <p
-                  className="me-block-text"
-                  contentEditable={canEdit && isEditable}
-                  suppressContentEditableWarning
-                  onInput={(e) => handleSummaryChange(e)}
-                >
-                  {entry.data}
-                </p>
-              </section>
-            );
+                <h2 className="me-block-title">EXPERIENCE</h2>
 
-          case "experience-item":
-            return (
-              <div className="me-job">
-                <div className="me-job-header">
-                  <h3
-                    contentEditable={canEdit && isEditable}
-                    suppressContentEditableWarning
-                    onInput={(e) => handleExpChange(entry.data.id, e)}
-                  >
-                    {entry.data.text}
-                  </h3>
-
-                  <p contentEditable={canEdit && isEditable}>
-                    2020 – Present
-                  </p>
-                </div>
-
-                <p className="me-job-location" contentEditable={canEdit && isEditable}>
-                  Company Name
-                </p>
-
-                <ul className="me-job-list">
-                  <li contentEditable={canEdit && isEditable}>Did something important</li>
-                  <li contentEditable={canEdit && isEditable}>Worked on project</li>
-                </ul>
-              </div>
-            );
-
-          default:
-            return null;
-        }
-      };
-
-      return (
-        <div className="me-wrapper">
-
-          {/* PAGE 1 */}
-          <div className="resume-a4 me-a4">
-            <div className="me-resume">
-
-              <Sidebar />
-
-              <main className="me-main">
-
-                {/* SUMMARY */}
                 {pages.page1
-                  .filter(e => e.type === "summary")
+                  .filter(e => e.type === "experience-item")
                   .map(entry => (
                     <div key={entry.id}>{renderEntry(entry)}</div>
                   ))
                 }
-                {/* EXPERIENCE */}
-                {pages.page1.some(e => e.type === "experience-item") && (
-                  <section className="me-block">
-                    <h2 className="me-block-title">EXPERIENCE</h2>
-                    {pages.page1
-                      .filter(e => e.type === "experience-item")
-                      .map(entry => (
-                        <div key={entry.id}>{renderEntry(entry)}</div>
-                      ))
-                    }
-                  </section>
-                )}
-              </main>
-            </div>
-          </div>
-          {/* PAGE 2 */}
-          {pages.page2.length > 0 && (
-            <div className="resume-a4 me-a4">
-              <div className="me-resume">
-                <Sidebar />
-                <main className="me-main">
+              </section>
+            )}
 
-                  {pages.page2.some(e => e.type === "experience-item") && (
-                    <section className="me-block">
-                      <h2 className="me-block-title">EXPERIENCE</h2>
-
-                      {pages.page2
-                        .filter(e => e.type === "experience-item")
-                        .map(entry => (
-                          <div key={entry.id}>{renderEntry(entry)}</div>
-                        ))
-                      }
-                    </section>
-                  )}
-
-                </main>
-
-              </div>
-            </div>
-          )}
-
+          </main>
         </div>
-      );
-    }}
-  </TemplateLayout>
+      </div>
+
+      {/* PAGE 2 */}
+      {pages.page2.length > 0 && (
+        <div className="resume-a4 me-a4">
+          <div className="me-resume">
+
+            <Sidebar />
+
+            <main className="me-main">
+
+              {pages.page2.some(e => e.type === "experience-item") && (
+                <section className="me-block">
+                  <h2 className="me-block-title">EXPERIENCE</h2>
+
+                  {pages.page2
+                    .filter(e => e.type === "experience-item")
+                    .map(entry => (
+                      <div key={entry.id}>{renderEntry(entry)}</div>
+                    ))
+                  }
+                </section>
+              )}
+
+            </main>
+
+          </div>
+        </div>
+      )}
+
+    </div>
+
+    {/* 🔥 HIDDEN MEASURE */}
+    <div
+      ref={containerRef}
+      style={{
+        position: "absolute",
+        visibility: "hidden",
+        width: "540px",
+        padding: "40px",
+        boxSizing: "border-box",
+        fontSize: "13px",
+        lineHeight: "1.6",
+      }}
+    >
+      {paginationEntries.map((entry) => (
+        <div
+          id={`entry-${entry.id}`}
+          key={entry.id}
+          style={{ marginBottom: "28px" }}
+        >
+          {renderEntry(entry)}
+        </div>
+      ))}
+    </div>
+  </>
 );
 };
