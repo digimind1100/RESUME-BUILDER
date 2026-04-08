@@ -139,25 +139,38 @@ export default function NeoEdgePro() {
                 position: "absolute",
                 top: 0,
                 left: 0,
-                visibility: "hidden",     // ✅ hides visually
-                pointerEvents: "none",    // ✅ no interaction
-
-                width: "540px",
-                padding: "40px",
-                boxSizing: "border-box",
-                fontSize: "13px",
-                lineHeight: "1.6",
+                visibility: "hidden",
+                pointerEvents: "none",
+                width: "794px", // full A4 width
               }}
             >
-              {paginationEntries.map(entry => (
+              <div style={{ display: "flex" }}>
+
+                {/* fake sidebar */}
+                <div style={{ width: "32%" }} />
+
+                {/* ✅ REAL measurement area */}
                 <div
-                  id={`entry-${entry.id}`}
-                  key={entry.id}
-                  style={{ marginBottom: "28px" }}
+                  style={{
+                    width: "68%",
+                    padding: "40px",
+                    boxSizing: "border-box",
+                    fontSize: "13px",
+                    lineHeight: "1.6",
+                  }}
                 >
-                  {renderEntry(entry)}
+                  {paginationEntries.map(entry => (
+                    <div
+                      id={`entry-${entry.id}`}
+                      key={entry.id}
+                      style={{ marginBottom: "28px" }}
+                    >
+                      {renderEntry(entry)}
+                    </div>
+                  ))}
                 </div>
-              ))}
+
+              </div>
             </div>
           </>
         );
