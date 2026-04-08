@@ -1,12 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import TemplateLayout from "../TemplateLayout";
 import { paginateResumeEntries } from "../../utils/paginateResumeEntries";
-import "../MedicalElite/MedicalElite.css";
+import "./NeoEdgePro.css";
 
 export default function NeoEdgePro() {
   const containerRef = useRef(null);
-
-  const [isEditable, setIsEditable] = useState(true);
 
   const [pages, setPages] = useState({
     page1: [],
