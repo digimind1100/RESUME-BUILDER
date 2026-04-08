@@ -6,13 +6,15 @@ import "../MedicalElite/MedicalElite.css";
 export default function NeoEdgePro() {
   const containerRef = useRef(null);
 
+  const [isEditable, setIsEditable] = useState(true);
+
   const [pages, setPages] = useState({
     page1: [],
     page2: [],
   });
 
   const canEdit = true;
-  const isEditable = true;
+  
 
   // 🔹 DATA
   const [summary, setSummary] = useState(
