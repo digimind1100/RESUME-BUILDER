@@ -133,12 +133,14 @@ export default function NeoEdgePro() {
             </div>
 
             {/* ✅ hidden container also inside */}
-            {/* 🔥 HIDDEN MEASURE */}
             <div
               ref={containerRef}
               style={{
                 position: "absolute",
+                top: 0,
+                left: 0,
                 visibility: "hidden",
+                pointerEvents: "none",
                 width: "540px",
                 padding: "40px",
                 boxSizing: "border-box",
@@ -152,7 +154,7 @@ export default function NeoEdgePro() {
                 {renderEntry({ id: "summary", type: "summary", data: summary })}
               </div>
 
-              {/* EXPERIENCE SECTION (IMPORTANT) */}
+              {/* EXPERIENCE SECTION (MATCH UI) */}
               <section className="me-block">
 
                 <h2 className="me-block-title">EXPERIENCE</h2>
@@ -171,7 +173,6 @@ export default function NeoEdgePro() {
                   </div>
                 ))}
               </section>
-
             </div>
           </>
         );
