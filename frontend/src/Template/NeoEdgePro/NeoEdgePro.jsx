@@ -133,44 +133,45 @@ export default function NeoEdgePro() {
             </div>
 
             {/* ✅ hidden container also inside */}
+            {/* 🔥 HIDDEN MEASURE */}
             <div
               ref={containerRef}
               style={{
                 position: "absolute",
-                top: 0,
-                left: 0,
                 visibility: "hidden",
-                pointerEvents: "none",
-                width: "794px", // full A4 width
+                width: "540px",
+                padding: "40px",
+                boxSizing: "border-box",
+                fontSize: "13px",
+                lineHeight: "1.6",
               }}
             >
-              <div style={{ display: "flex" }}>
 
-                {/* fake sidebar */}
-                <div style={{ width: "32%" }} />
-
-                {/* ✅ REAL measurement area */}
-                <div
-                  style={{
-                    width: "68%",
-                    padding: "40px",
-                    boxSizing: "border-box",
-                    fontSize: "13px",
-                    lineHeight: "1.6",
-                  }}
-                >
-                  {paginationEntries.map(entry => (
-                    <div
-                      id={`entry-${entry.id}`}
-                      key={entry.id}
-                      style={{ marginBottom: "28px" }}
-                    >
-                      {renderEntry(entry)}
-                    </div>
-                  ))}
-                </div>
-
+              {/* SUMMARY */}
+              <div id="entry-summary">
+                {renderEntry({ id: "summary", type: "summary", data: summary })}
               </div>
+
+              {/* EXPERIENCE SECTION (IMPORTANT) */}
+              <section className="me-block">
+
+                <h2 className="me-block-title">EXPERIENCE</h2>
+
+                {experiences.map((exp) => (
+                  <div
+                    id={`entry-exp-${exp.id}`}
+                    key={exp.id}
+                    style={{ marginBottom: "28px" }}
+                  >
+                    {renderEntry({
+                      id: `exp-${exp.id}`,
+                      type: "experience-item",
+                      data: exp,
+                    })}
+                  </div>
+                ))}
+              </section>
+
             </div>
           </>
         );
