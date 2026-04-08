@@ -70,96 +70,79 @@ export default function NeoEdgePro() {
   };
 
   return (
-  <>
-    <div className="me-wrapper">
+  <TemplateLayout
+    templateId="NeoEdgePro"
+    wrapperClass="me-wrapper"
+    resumeClass="me-resume"
+  >
+    {({ canEdit, isEditable }) => {
 
-      {/* PAGE 1 */}
-      <div className="resume-a4 me-a4">
-        <div className="me-resume">
+      // ✅ Sidebar INSIDE
+      const Sidebar = () => (
+        <aside className="me-sidebar">
+          <h1 contentEditable={canEdit && isEditable}>Your Name</h1>
+          <p contentEditable={canEdit && isEditable}>Your Role</p>
+        </aside>
+      );
 
-          <Sidebar />
+      // ✅ renderEntry INSIDE
+      const renderEntry = (entry) => {
+        if (entry.type === "summary") {
+          return (
+            <section className="me-block">
+              <h2>SUMMARY</h2>
+              <p contentEditable={canEdit && isEditable}>
+                {entry.data}
+              </p>
+            </section>
+          );
+        }
 
-          <main className="me-main">
+        if (entry.type === "experience-item") {
+          return (
+            <div className="me-job">
+              <h3 contentEditable={canEdit && isEditable}>
+                {entry.data.text}
+              </h3>
+            </div>
+          );
+        }
 
-            {/* SUMMARY */}
-            {pages.page1
-              .filter(e => e.type === "summary")
-              .map(entry => (
-                <div key={entry.id}>{renderEntry(entry)}</div>
-              ))
-            }
+        return null;
+      };
 
-            {/* EXPERIENCE */}
-            {pages.page1.some(e => e.type === "experience-item") && (
-              <section className="me-block">
-                <h2 className="me-block-title">EXPERIENCE</h2>
+      // ✅ EVERYTHING returned INSIDE SAME BLOCK
+      return (
+        <>
+          <div className="me-wrapper">
 
-                {pages.page1
-                  .filter(e => e.type === "experience-item")
-                  .map(entry => (
+            <div className="resume-a4 me-a4">
+              <div className="me-resume">
+
+                <Sidebar /> {/* ✅ NOW WORKS */}
+
+                <main className="me-main">
+                  {pages.page1.map(entry => (
                     <div key={entry.id}>{renderEntry(entry)}</div>
-                  ))
-                }
-              </section>
-            )}
+                  ))}
+                </main>
 
-          </main>
-        </div>
-      </div>
-
-      {/* PAGE 2 */}
-      {pages.page2.length > 0 && (
-        <div className="resume-a4 me-a4">
-          <div className="me-resume">
-
-            <Sidebar />
-
-            <main className="me-main">
-
-              {pages.page2.some(e => e.type === "experience-item") && (
-                <section className="me-block">
-                  <h2 className="me-block-title">EXPERIENCE</h2>
-
-                  {pages.page2
-                    .filter(e => e.type === "experience-item")
-                    .map(entry => (
-                      <div key={entry.id}>{renderEntry(entry)}</div>
-                    ))
-                  }
-                </section>
-              )}
-
-            </main>
+              </div>
+            </div>
 
           </div>
-        </div>
-      )}
 
-    </div>
-
-    {/* 🔥 HIDDEN MEASURE */}
-    <div
-      ref={containerRef}
-      style={{
-        position: "absolute",
-        visibility: "hidden",
-        width: "540px",
-        padding: "40px",
-        boxSizing: "border-box",
-        fontSize: "13px",
-        lineHeight: "1.6",
-      }}
-    >
-      {paginationEntries.map((entry) => (
-        <div
-          id={`entry-${entry.id}`}
-          key={entry.id}
-          style={{ marginBottom: "28px" }}
-        >
-          {renderEntry(entry)}
-        </div>
-      ))}
-    </div>
-  </>
+          {/* ✅ hidden container also inside */}
+          <div ref={containerRef}>
+            {paginationEntries.map(entry => (
+              <div id={`entry-${entry.id}`} key={entry.id}>
+                {renderEntry(entry)}
+              </div>
+            ))}
+          </div>
+        </>
+      );
+    }}
+  </TemplateLayout>
 );
 };
