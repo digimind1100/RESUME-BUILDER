@@ -10,9 +10,9 @@ const API_BASE_URL = import.meta.env.VITE_API_URL;
 // Debug (remove later if you want)
 console.log("API BASE URL:", API_BASE_URL);
 
-if (!API_BASE_URL) {
-  throw new Error("❌ VITE_API_URL is not defined");
-}
+// if (!API_BASE_URL) {
+//   throw new Error("❌ VITE_API_URL is not defined");
+// }
 
 /* ======================
    HELPER

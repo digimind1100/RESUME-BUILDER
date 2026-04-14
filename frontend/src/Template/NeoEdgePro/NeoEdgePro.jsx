@@ -248,7 +248,7 @@ export default function NeoEdgePro() {
           </div>
 
         </div>
-      )}
+      )} 
     
     </TemplateLayout>
   );
