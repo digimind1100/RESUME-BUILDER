@@ -696,15 +696,7 @@ Profile: ${profileLink}
                       <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
                         Crew Resource Management
                       </li>
-                      <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
-                        Emergency Procedures
-                      </li>
-                      <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
-                        Communication &amp; Briefing
-                      </li>
-                      <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
-                        Passenger &amp; Client Service
-                      </li>
+                      
                     </ul>
                   </section>
 
