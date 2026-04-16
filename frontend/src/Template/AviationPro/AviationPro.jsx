@@ -92,7 +92,7 @@ Profile: ${profileLink}
         "Manage workload distribution using CRM principles to enhance flight safety and reduce operational risks.",
         "Conduct advanced flight monitoring using FMS, weather radar, TCAS, and real-time navigation systems.",
         "Collaborate with engineering teams for MEL/CDL assessments and technical log reports.",
-        "Collaborate with engineering teams for MEL/CDL assessments and technical log reports.",
+        
       ],
       exp2Title: "First Officer — Airbus A320 Family",
       exp2Company: "BlueJet Airways — Regional Fleet",
