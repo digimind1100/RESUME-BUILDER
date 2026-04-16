@@ -708,6 +708,28 @@ Profile: ${profileLink}
                     </ul>
                   </section>
 
+                  {/* EDUCATION */}
+                  <section className="av-side-section">
+                    <h3 className="av-side-heading">EDUCATION</h3>
+                    <ul className="av-side-list">
+                      <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
+                        Safety &amp; Compliance
+                      </li>
+                      <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
+                        Crew Resource Management
+                      </li>
+                      <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
+                        Emergency Procedures
+                      </li>
+                      <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
+                        Communication &amp; Briefing
+                      </li>
+                      <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
+                        Passenger &amp; Client Service
+                      </li>
+                    </ul>
+                  </section>
+
                   {/* LICENSES */}
                   <section className="av-side-section">
                     <h3 contentEditable={canEdit && isEditable} suppressContentEditableWarning className="av-side-heading">LICENSES &amp; CERTS</h3>
