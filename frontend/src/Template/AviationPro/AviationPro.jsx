@@ -665,7 +665,7 @@ Profile: ${profileLink}
                         📍 New York, USA
                       </li>
                       <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
-                        🌐 linkedin.com/in/alexmorgan
+                        📍 linkedin.com/in/alexmorgan
                       </li>
                     </ul>
                   </section>
