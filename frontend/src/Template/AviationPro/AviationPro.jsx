@@ -686,9 +686,9 @@ Profile: ${profileLink}
                     </div>
                   </section>
 
-                  {/* SKILLS */}
+                  {/* EDUCATION */}
                   <section className="av-side-section">
-                    <h3 className="av-side-heading">CORE SKILLS</h3>
+                    <h3 className="av-side-heading">EDUCATION</h3>
                     <ul className="av-side-list">
                       <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
                         Safety &amp; Compliance
@@ -708,9 +708,9 @@ Profile: ${profileLink}
                     </ul>
                   </section>
 
-                  {/* EDUCATION */}
+                  {/* SKILLS */}
                   <section className="av-side-section">
-                    <h3 className="av-side-heading">EDUCATION</h3>
+                    <h3 className="av-side-heading">CORE SKILLS</h3>
                     <ul className="av-side-list">
                       <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
                         Safety &amp; Compliance
