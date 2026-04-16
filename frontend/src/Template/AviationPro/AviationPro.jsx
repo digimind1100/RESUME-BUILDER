@@ -709,7 +709,7 @@ Profile: ${profileLink}
 
                   {/* LICENSES */}
                   <section className="av-side-section">
-                    <h3 className="av-side-heading">LICENSES &amp; CERTS</h3>
+                    <h3 contentEditable={canEdit && isEditable} suppressContentEditableWarning className="av-side-heading">LICENSES &amp; CERTS</h3>
                     <ul className="av-side-list">
                       <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
                         Valid Passport &amp; Travel Documents
