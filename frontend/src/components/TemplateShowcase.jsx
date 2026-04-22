@@ -78,18 +78,31 @@ export default function TemplateShowcase() {
     return () => clearInterval(interval);
   }, [slideWidth, slidesToShow]);
 
-  // =============================
-  // 🔥 TEMPLATE CLICK HANDLER
-  // =============================
-  function handleTemplateClick(templateId) {
-    if (!isAuthenticated) {
-      setPendingTemplate(templateId);
-      setShowSignup(true);
-      return;
-    }
 
+  // =============================
+// 🔥 TEMPLATE CLICK HANDLER
+// =============================
+function handleTemplateClick(templateId) {
+
+  const isLocal =
+    window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1";
+
+  // ✅ DEV MODE → skip auth completely
+  if (isLocal) {
     navigate(`/data-${templateId}`);
+    return;
   }
+
+  // 🔐 PRODUCTION → keep existing logic
+  if (!isAuthenticated) {
+    setPendingTemplate(templateId);
+    setShowSignup(true);
+    return;
+  }
+
+  navigate(`/data-${templateId}`);
+}
 
   function handleSignupSuccess() {
     setShowSignup(false);

@@ -29,6 +29,10 @@ export default function Templates() {
   const location = useLocation();
   const { isAuthenticated } = useAuth();
 
+  const isLocal =
+    window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1";
+
   const [showSignup, setShowSignup] = useState(false);
   const pendingRouteRef = useRef(null);
 
@@ -42,19 +46,35 @@ export default function Templates() {
     }
   }, [isStartBuildingFlow, isAuthenticated]);
 
+
+  useEffect(() => {
+  if (isLocal) {
+    setShowSignup(false);
+  }
+}, []);
+
+
   // 🔥 Template click handler (FIXED)
   const handleUseTemplate = (route) => {
-    if (!isAuthenticated) {
-      // ✅ store intent safely
-      pendingRouteRef.current = route;
-      sessionStorage.setItem("pendingTemplateRoute", route);
 
-      setShowSignup(true);
-      return;
-    }
-
+  // 🚀 DEV MODE → skip signup completely
+  if (isLocal) {
     navigate(route);
-  };
+    return;
+  }
+
+  // 🔐 PRODUCTION → keep auth
+  if (!isAuthenticated) {
+    pendingRouteRef.current = route;
+    sessionStorage.setItem("pendingTemplateRoute", route);
+
+    setShowSignup(true);
+    return;
+  }
+
+  navigate(route);
+};
+
 
   // 🔥 After signup success (FIXED)
   const handleSignupSuccess = () => {
