@@ -12,7 +12,6 @@ export default function NeoEdgePro() {
   });
 
   const canEdit = true;
-  
 
   // 🔹 DATA
   const [summary, setSummary] = useState(
@@ -69,187 +68,137 @@ export default function NeoEdgePro() {
     );
   };
 
-  // 🔹 RENDER ENTRY (RIGHT SIDE BLOCKS)
-  const renderEntry = (entry) => {
-    switch (entry.type) {
-
-      case "summary":
-        return (
-          <section className="me-block">
-            <h2 className="me-block-title">SUMMARY</h2>
-            <p
-              className="me-block-text"
-              contentEditable={canEdit && isEditable}
-              suppressContentEditableWarning
-              onInput={(e) => handleSummaryChange(e)}
-            >
-              {entry.data}
-            </p>
-          </section>
-        );
-
-      case "experience-item":
-        return (
-          <div className="me-job">
-            <div className="me-job-header">
-              <h3
-                contentEditable={canEdit && isEditable}
-                suppressContentEditableWarning
-                onInput={(e) => handleExpChange(entry.data.id, e)}
-              >
-                {entry.data.text}
-              </h3>
-
-              <p contentEditable suppressContentEditableWarning>
-                2020 – Present
-              </p>
-            </div>
-
-            <p className="me-job-location" contentEditable>
-              Company Name
-            </p>
-
-            <ul className="me-job-list">
-              <li contentEditable>Did something important</li>
-              <li contentEditable>Worked on project</li>
-            </ul>
-          </div>
-        );
-
-      default:
-        return null;
-    }
-  };
-
-  // 🔥 SIDEBAR (REUSED EXACT STRUCTURE)
-  const Sidebar = () => (
-    <aside className="me-sidebar">
-      <h1 className="me-name" contentEditable>
-        Your Name
-      </h1>
-      <p className="me-role" contentEditable>
-        Your Role
-      </p>
-
-      <section className="me-section">
-        <h3 className="me-section-title">CONTACT</h3>
-        <ul className="me-list">
-          <li contentEditable>Email</li>
-          <li contentEditable>Phone</li>
-        </ul>
-      </section>
-
-      <section className="me-section">
-        <h3 className="me-section-title">SKILLS</h3>
-        <ul className="me-list">
-          <li contentEditable>Skill 1</li>
-          <li contentEditable>Skill 2</li>
-        </ul>
-      </section>
-    </aside>
-  );
-
   return (
     <TemplateLayout
       templateId="NeoEdgePro"
       wrapperClass="me-wrapper"
       resumeClass="me-resume"
     >
-         
-      {({ canEdit, isEditable }) => (
-        <div className="me-wrapper">
+      {({ canEdit, isEditable }) => {
 
-          {/* 🔥 PAGE 1 */}
-          <div className="resume-a4 me-a4">
-            <div className="me-resume">
+        // ✅ Sidebar INSIDE
+        const Sidebar = () => (
+          <aside className="me-sidebar">
+            <h1 contentEditable={canEdit && isEditable}>Your Name</h1>
+            <p contentEditable={canEdit && isEditable}>Your Role</p>
+          </aside>
+        );
 
-              <Sidebar />
+        // ✅ renderEntry INSIDE
+        const renderEntry = (entry) => {
+          if (entry.type === "summary") {
+            return (
+              <section className="me-block">
+                <h2>SUMMARY</h2>
+                <p contentEditable={canEdit && isEditable}>
+                  {entry.data}
+                </p>
+              </section>
+            );
+          }
 
-              <main className="me-main">
+          if (entry.type === "experience-item") {
+            return (
+              <div className="me-job">
 
-                {/* SUMMARY */}
-                {pages.page1
-                  .filter(e => e.type === "summary")
-                  .map(entry => (
-                    <div key={entry.id}>{renderEntry(entry)}</div>
-                  ))
-                }
-
-                {/* EXPERIENCE */}
-                {pages.page1.some(e => e.type === "experience-item") && (
-                  <section className="me-block">
-                    <h2 className="me-block-title">EXPERIENCE</h2>
-
-                    {pages.page1
-                      .filter(e => e.type === "experience-item")
-                      .map(entry => (
-                        <div key={entry.id}>{renderEntry(entry)}</div>
-                      ))
-                    }
-                  </section>
+                {/* ✅ ADD HEADING TO FIRST ITEM */}
+                {entry.data.id === 1 && (
+                  <h2 className="me-block-title">EXPERIENCE</h2>
                 )}
 
-              </main>
+                <div className="me-job-header">
+                  <h3
+                    contentEditable={canEdit && isEditable}
+                    suppressContentEditableWarning
+                    onInput={(e) => handleExpChange(entry.data.id, e)}
+                  >
+                    {entry.data.text}
+                  </h3>
+
+                  <p contentEditable={canEdit && isEditable}>
+                    2020 – Present
+                  </p>
+                </div>
+
+                <p className="me-job-location" contentEditable={canEdit && isEditable}>
+                  Company Name
+                </p>
+
+                <ul className="me-job-list">
+                  <li contentEditable={canEdit && isEditable}>Did something important</li>
+                  <li contentEditable={canEdit && isEditable}>Worked on project</li>
+                </ul>
+
+              </div>
+            );
+          }
+          return null;
+        };
+
+        // ✅ EVERYTHING returned INSIDE SAME BLOCK
+        return (
+          <>
+            <div className="me-wrapper">
+
+              <div className="resume-a4 me-a4">
+                <div className="me-resume">
+
+                  <Sidebar /> {/* ✅ NOW WORKS */}
+
+                  <main className="me-main">
+                    {pages.page1.map(entry => (
+                      <div key={entry.id}>{renderEntry(entry)}</div>
+                    ))}
+                  </main>
+
+                </div>
+              </div>
 
             </div>
-          </div>
 
-          {/* 🔥 PAGE 2 */}
-          {pages.page2.length > 0 && (
-            <div className="resume-a4 me-a4">
-              <div className="me-resume">
+            {/* ✅ hidden container also inside */}
+            <div
+              ref={containerRef}
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                visibility: "hidden",
+                pointerEvents: "none",
+                width: "794px", // full A4
+              }}
+            >
+              <div style={{ display: "flex" }}>
 
-                <Sidebar /> {/* SAME SIDEBAR */}
+                {/* Sidebar simulation */}
+                <div style={{ width: "32%" }} />
 
-                <main className="me-main">
-
-                  {pages.page2.some(e => e.type === "experience-item") && (
-                    <section className="me-block">
-                      <h2 className="me-block-title">EXPERIENCE</h2>
-
-                      {pages.page2
-                        .filter(e => e.type === "experience-item")
-                        .map(entry => (
-                          <div key={entry.id}>{renderEntry(entry)}</div>
-                        ))
-                      }
-                    </section>
-                  )}
-
-                </main>
+                {/* REAL content area */}
+                <div
+                  style={{
+                    width: "68%",
+                    padding: "40px",
+                    boxSizing: "border-box",
+                    fontSize: "13px",
+                    lineHeight: "1.6",
+                  }}
+                >
+                  {paginationEntries.map((entry) => (
+                    <div
+                      key={entry.id}
+                      id={`entry-${entry.id}`}
+                      style={{ marginBottom: "28px" }}
+                    >
+                      {renderEntry(entry)}
+                    </div>
+                  ))}
+                </div>
 
               </div>
             </div>
-          )}
-
-          {/* 🔥 HIDDEN MEASURE (RIGHT SIDE ONLY) */}
-          <div
-            ref={containerRef}
-            style={{
-              position: "absolute",
-              visibility: "hidden",
-
-              width: "540px",
-              padding: "40px",              // ✅ MUST MATCH
-              boxSizing: "border-box",      // ✅ MUST MATCH
-              fontSize: "13px",             // ✅ MATCH TEXT SIZE
-              lineHeight: "1.6",            // ✅ MATCH TEXT
-            }}
-          >
-            {paginationEntries.map((entry) => (
-              <div
-                id={`entry-${entry.id}`}
-                key={entry.id}
-                style={{ marginBottom: "28px" }} // match .me-block
-              >
-                {renderEntry(entry)}
-              </div>
-            ))}
-          </div>
-
-        </div>
-      )} 
-    
+          </>
+        );
+      }}
     </TemplateLayout>
   );
-}
+};
