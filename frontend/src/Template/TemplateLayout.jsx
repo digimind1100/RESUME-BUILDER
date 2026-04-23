@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import TemplateControls from "./TemplateControls";
@@ -17,10 +17,33 @@ export default function TemplateLayout({
   const [isEditable, setIsEditable] = useState(false);
   const [canEdit, setCanEdit] = useState(false);
 
+  const isLocal =
+  window.location.hostname === "localhost" ||
+  window.location.hostname === "127.0.0.1";
+useEffect(() => {
+  if (isLocal) {
+    setIsEditable(true);
+    setCanEdit(true); // 🔥 bypass paid restriction
+  }
+}, []);
+
+
+console.log("isEditable:", isEditable);
+console.log("canEdit:", canEdit);
+
+
   const handleEditChange = (editable, paid) => {
-    setIsEditable(editable);
-    setCanEdit(paid);
-  };
+
+  if (isLocal) {
+    setIsEditable(true);
+    setCanEdit(true);
+    return;
+  }
+
+  setIsEditable(editable);
+  setCanEdit(paid);
+};
+
 
   const handleDownloadPDF = async () => {
   const root = resumeContainerRef.current;

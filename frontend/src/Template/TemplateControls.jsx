@@ -15,6 +15,11 @@ export default function TemplateControls({
   onDownload
 }) {
 
+  const isLocal =
+  window.location.hostname === "localhost" ||
+  window.location.hostname === "127.0.0.1";
+
+
   const navigate = useNavigate();
   const { triggerReview } = useReview();
 
@@ -58,13 +63,21 @@ export default function TemplateControls({
   };
 
   /* Toggle edit */
-  const toggleEdit = () => {
+const toggleEdit = () => {
 
-    if (!requirePayment()) return;
+  // 🚀 DEV MODE → bypass payment completely
+  if (isLocal) {
+    setIsEditable(true);
+    onEditChange(true, true); // force edit + paid
+    return;
+  }
 
-    setIsEditable(prev => !prev);
+  // 🔐 PRODUCTION
+  if (!requirePayment()) return;
 
-  };
+  setIsEditable(prev => !prev);
+};
+
 
   useEffect(() => {
   if (onRequirePayment) {

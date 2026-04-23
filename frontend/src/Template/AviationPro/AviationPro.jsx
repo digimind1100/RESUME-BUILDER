@@ -92,6 +92,7 @@ Profile: ${profileLink}
         "Manage workload distribution using CRM principles to enhance flight safety and reduce operational risks.",
         "Conduct advanced flight monitoring using FMS, weather radar, TCAS, and real-time navigation systems.",
         "Collaborate with engineering teams for MEL/CDL assessments and technical log reports.",
+        
       ],
       exp2Title: "First Officer — Airbus A320 Family",
       exp2Company: "BlueJet Airways — Regional Fleet",
@@ -664,7 +665,7 @@ Profile: ${profileLink}
                         📍 New York, USA
                       </li>
                       <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
-                        🌐 linkedin.com/in/alexmorgan
+                        📍 linkedin.com/in/alexmorgan
                       </li>
                     </ul>
                   </section>
@@ -683,6 +684,20 @@ Profile: ${profileLink}
                         aviation records.
                       </p>
                     </div>
+                  </section>
+
+                  {/* EDUCATION */}
+                  <section className="av-side-section">
+                    <h3 className="av-side-heading">EDUCATION</h3>
+                    <ul className="av-side-list">
+                      <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
+                        Safety &amp; Compliance
+                      </li>
+                      <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
+                        Crew Resource Management
+                      </li>
+                      
+                    </ul>
                   </section>
 
                   {/* SKILLS */}
@@ -709,7 +724,7 @@ Profile: ${profileLink}
 
                   {/* LICENSES */}
                   <section className="av-side-section">
-                    <h3 className="av-side-heading">LICENSES &amp; CERTS</h3>
+                    <h3 contentEditable={canEdit && isEditable} suppressContentEditableWarning className="av-side-heading">LICENSES &amp; CERTS</h3>
                     <ul className="av-side-list">
                       <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
                         Valid Passport &amp; Travel Documents

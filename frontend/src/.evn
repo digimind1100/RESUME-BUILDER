@@ -1,2 +1,7 @@
+<<<<<<< HEAD
 VITE_API_BASE_URL=https://resume-builder-backend-9e4k.onrender.com/api
 VITE_API_URL=https://resume-builder-backend-9e4k.onrender.com/api
+=======
+VITE_API_URL=https://resume-builder-backend-9e4k.onrender.com/api
+VITE_API_BASE_URL=https://resume-builder-backend-9e4k.onrender.com/api
+>>>>>>> a38f546847fb980d1d9bbd2f219d067192998434

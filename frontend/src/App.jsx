@@ -48,6 +48,19 @@ function AppContent() {
 
   const user = JSON.parse(localStorage.getItem("user"));
 
+  const [isEditable, setIsEditable] = useState(false);
+
+  const isLocal =
+    window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1";
+    
+useEffect(() => {
+  if (isLocal) {
+    setIsEditable(true);
+  }
+}, []);
+
+
   return (
     <>
       <ReviewProvider user={user}>
@@ -55,6 +68,16 @@ function AppContent() {
         <ScrollToTop />
         <Toaster position="top-center" />
         <Routes>
+          <Route
+  path="/data-:templateId"
+  element={
+    <TestPagination
+      isEditable={isEditable}
+      isLocal={isLocal}
+    />
+  }
+/>
+
           <Route
             path="/admin/payments"
             element={
