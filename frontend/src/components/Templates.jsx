@@ -57,6 +57,10 @@ export default function Templates() {
   // 🔥 Template click handler (FIXED)
   const handleUseTemplate = (route) => {
 
+    console.log("Hostname:", window.location.hostname);
+console.log("isLocal:", isLocal);
+
+
   // 🚀 DEV MODE → skip signup completely
   if (isLocal) {
     navigate(route);

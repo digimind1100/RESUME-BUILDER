@@ -332,22 +332,38 @@
   font-size: 18px;
   line-height: 1;
 }
+
+
+/* Ensure text is selectable and clickable on mobile */
+[contenteditable="true"] {
+    -webkit-user-select: text;
+    user-select: text;
+    cursor: text;
+    min-height: 1em; /* Prevents empty fields from disappearing */
+    outline: none;
+}
+
 @media (max-width: 768px) {
+
+  .editor-area,
+  #resume-template,
   .resume-a4 {
     transform: none !important;
-    width: 100% !important;
-    height: auto !important;
-  }
-}
-@media (max-width: 768px) {
-  .editor-area,
-  #resume-template {
-    transform: none !important;
     overflow: visible !important;
+    height: auto !important;
+    position: relative !important;
   }
-}
-@media (max-width: 768px) {
-  * {
-    transform: none !important;
+
+  .resume-a4 {
+    width: 100% !important;
+    box-shadow: none !important;
   }
+
+  [contenteditable="true"] {
+    pointer-events: auto !important;
+    user-select: text !important;
+    -webkit-user-select: text !important;
+  }
+
 }
+

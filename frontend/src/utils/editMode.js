@@ -1,1 +1,1 @@
-export const isEditableMode = (isEditable) => isEditable;
+export const isLocal = import.meta.env.DEV;

@@ -98,18 +98,3 @@
   position:relative;
 }
 
-[contenteditable="true"] {
-  outline: none;
-  cursor: text;
-  -webkit-user-select: text;
-  user-select: text;
-  padding: 6px;
-   pointer-events: auto;
-  user-select: text;
-}
-
-[contenteditable="true"] {
-  -webkit-user-select: text;
-  user-select: text;
-  touch-action: manipulation;
-}
