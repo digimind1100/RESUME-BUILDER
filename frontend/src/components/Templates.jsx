@@ -41,16 +41,30 @@ export default function Templates() {
 
   // 🔥 Auto open signup when coming from Start Building
   useEffect(() => {
+    if (isLocal) return;
     if (isStartBuildingFlow && !isAuthenticated) {
       setShowSignup(true);
     }
   }, [isStartBuildingFlow, isAuthenticated]);
 
 
-  useEffect(() => {
+  if (isLocal) {
+  sessionStorage.removeItem("pendingTemplateRoute");
+}
+
+
+useEffect(() => {
   if (isLocal) {
     setShowSignup(false);
   }
+}, [isLocal]);
+
+
+useEffect(() => {
+  console.log("MOUNT Templates.jsx");
+  console.log("isLocal:", isLocal);
+  console.log("isAuthenticated:", isAuthenticated);
+  console.log("showSignup:", showSignup);
 }, []);
 
 

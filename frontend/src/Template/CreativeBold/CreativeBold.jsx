@@ -163,13 +163,6 @@ const CreativeBold = () => {
                     Marketing Specialist
                   </p>
 
-                  <div
-                    contentEditable={true}
-                    style={{ border: "2px solid red", padding: "10px" }}
-                  >
-                    TEST EDIT
-                  </div>
-
                 </header>
 
                 {/* Profile Section */}

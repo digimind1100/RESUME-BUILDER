@@ -48,18 +48,9 @@ function AppContent() {
 
   const user = JSON.parse(localStorage.getItem("user"));
 
-  const [isEditable, setIsEditable] = useState(false);
+const isLocal = import.meta.env.DEV;
 
-  const isLocal =
-    window.location.hostname === "localhost" ||
-    window.location.hostname === "127.0.0.1";
     
-useEffect(() => {
-  if (isLocal) {
-    setIsEditable(true);
-  }
-}, []);
-
 
   return (
     <>
@@ -72,7 +63,7 @@ useEffect(() => {
   path="/data-:templateId"
   element={
     <TestPagination
-      isEditable={isEditable}
+      isEditable={isLocal}
       isLocal={isLocal}
     />
   }
