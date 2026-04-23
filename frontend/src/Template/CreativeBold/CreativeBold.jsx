@@ -94,8 +94,6 @@ const CreativeBold = () => {
                 className="cb-left-role-text"
                 contentEditable={canEdit && isEditable}
                 suppressContentEditableWarning
-                style={{ WebkitUserSelect: "text" }}
-
               >
                 MARKETING SPECIALIST
               </h2>
@@ -107,14 +105,10 @@ const CreativeBold = () => {
                 SKILLS
               </h3>
               <ul className="cb-left-list">
-                <li contentEditable={canEdit && isEditable} suppressContentEditableWarning style={{ WebkitUserSelect: "text" }}
->SEO and SEM</li>
-                <li contentEditable={canEdit && isEditable} suppressContentEditableWarning style={{ WebkitUserSelect: "text" }}
->Content Marketing</li>
-                <li contentEditable={canEdit && isEditable} suppressContentEditableWarning style={{ WebkitUserSelect: "text" }}
->Social Media Management</li>
-                <li contentEditable={canEdit && isEditable} suppressContentEditableWarning style={{ WebkitUserSelect: "text" }}
->Analytics & Reporting</li>
+                <li contentEditable={canEdit && isEditable} suppressContentEditableWarning >SEO and SEM</li>
+                <li contentEditable={canEdit && isEditable} suppressContentEditableWarning >Content Marketing</li>
+                <li contentEditable={canEdit && isEditable} suppressContentEditableWarning >Social Media Management</li>
+                <li contentEditable={canEdit && isEditable} suppressContentEditableWarning >Analytics & Reporting</li>
               </ul>
             </section>
 

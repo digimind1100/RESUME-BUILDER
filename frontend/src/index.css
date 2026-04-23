@@ -98,3 +98,9 @@
   position:relative;
 }
 
+[contenteditable="true"] {
+  outline: none;
+  cursor: text;
+  -webkit-user-select: text;
+  user-select: text;
+}
