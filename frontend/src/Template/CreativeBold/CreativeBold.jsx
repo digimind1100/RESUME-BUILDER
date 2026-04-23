@@ -94,6 +94,7 @@ const CreativeBold = () => {
                 className="cb-left-role-text"
                 contentEditable={canEdit && isEditable}
                 suppressContentEditableWarning
+                
               >
                 MARKETING SPECIALIST
               </h2>

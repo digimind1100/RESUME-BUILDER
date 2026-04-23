@@ -331,6 +331,23 @@
 
   font-size: 18px;
   line-height: 1;
-
-
+}
+@media (max-width: 768px) {
+  .resume-a4 {
+    transform: none !important;
+    width: 100% !important;
+    height: auto !important;
+  }
+}
+@media (max-width: 768px) {
+  .editor-area,
+  #resume-template {
+    transform: none !important;
+    overflow: visible !important;
+  }
+}
+@media (max-width: 768px) {
+  * {
+    transform: none !important;
+  }
 }

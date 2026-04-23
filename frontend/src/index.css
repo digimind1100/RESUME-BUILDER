@@ -108,3 +108,8 @@
   user-select: text;
 }
 
+[contenteditable="true"] {
+  -webkit-user-select: text;
+  user-select: text;
+  touch-action: manipulation;
+}
