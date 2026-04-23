@@ -103,4 +103,8 @@
   cursor: text;
   -webkit-user-select: text;
   user-select: text;
+  padding: 6px;
+   pointer-events: auto;
+  user-select: text;
 }
+

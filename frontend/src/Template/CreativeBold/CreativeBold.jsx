@@ -134,6 +134,7 @@ const CreativeBold = () => {
                 className="cb-name"
                 contentEditable={canEdit && isEditable}
                 suppressContentEditableWarning
+                style={{ WebkitUserSelect: "text" }}
               >
                 AMANDA SMITH
               </h1>
@@ -142,9 +143,18 @@ const CreativeBold = () => {
                 className="cb-title"
                 contentEditable={canEdit && isEditable}
                 suppressContentEditableWarning
+                style={{ WebkitUserSelect: "text" }}
               >
                 Marketing Specialist
               </p>
+
+              <div
+  contentEditable={true}
+  style={{ border: "2px solid red", padding: "10px" }}
+>
+  TEST EDIT
+</div>
+
             </header>
 
             {/* Profile Section */}
