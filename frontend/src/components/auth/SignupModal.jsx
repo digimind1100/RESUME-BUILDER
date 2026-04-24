@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import "./SignupModal.css";
+import { DEV_MODE } from "../../config/devMode";
 
 export default function SignupModal({ isOpen, onClose, onSuccess }) {
   const { signup, login } = useAuth();
@@ -15,7 +16,7 @@ export default function SignupModal({ isOpen, onClose, onSuccess }) {
   const [error, setError] = useState("");
 
   if (!isOpen) return null;
-
+if (DEV_MODE.ui.blockSignupModal) return null;
   async function handleSubmit(e) {
     e.preventDefault();
     if (loading) return;

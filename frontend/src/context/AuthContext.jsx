@@ -1,4 +1,5 @@
 ﻿import { createContext, useContext, useEffect, useState } from "react";
+import { DEV_MODE } from "../config/devMode";
 import {
   signup as signupApi,
   login as loginApi,
@@ -11,6 +12,7 @@ const TOKEN_KEY = "token";
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
 
   // 🔥 Global loading ONLY for app initialization
   const [loading, setLoading] = useState(true);
@@ -21,34 +23,50 @@ export function AuthProvider({ children }) {
   // 🔹 RESTORE SESSION ON APP LOAD
   // ===============================
   useEffect(() => {
-    async function loadUser() {
-      try {
-        const token = localStorage.getItem(TOKEN_KEY);
 
-        if (!token) {
-          setLoading(false);
-          return;
-        }
+  const loadUser = async () => {
+    try {
 
-        const res = await getCurrentUser(token);
-
-        if (res?.success) {
-          setUser(res.user);
-        } else {
-          localStorage.removeItem(TOKEN_KEY);
-        }
-      } catch (error) {
-        console.error("Session restore failed:", error);
-        localStorage.removeItem(TOKEN_KEY);
-      } finally {
-        setLoading(false);
+      // 🔥 DEV MODE: bypass backend completely
+      if (DEV_MODE.auth.bypassLogin) {
+        setUser(DEV_MODE.auth.fakeUser);
+        setToken("dev-token");
+        setInitializing(false);
+        return;
       }
+
+      // 🔐 Restore token from storage
+      const savedToken = localStorage.getItem(TOKEN_KEY);
+
+      if (!savedToken) {
+        setInitializing(false);
+        return;
+      }
+
+      setToken(savedToken);
+
+      const res = await getCurrentUser(savedToken);
+
+      if (res?.success && res.user) {
+        setUser(res.user);
+      } else {
+        localStorage.removeItem(TOKEN_KEY);
+        setToken(null);
+      }
+
+    } catch (error) {
+      console.error("Session restore failed:", error);
+      localStorage.removeItem(TOKEN_KEY);
+      setToken(null);
+    } finally {
+      setInitializing(false);
     }
+  };
 
-    loadUser();
-  }, []);
+  loadUser();
 
-  
+}, []);
+
 
   // ===============================
   // 🔹 SIGNUP

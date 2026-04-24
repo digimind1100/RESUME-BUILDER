@@ -4,6 +4,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 import Footer from "./Footer";
 import { useAuth } from "../context/AuthContext";
 import SignupModal from "./auth/SignupModal";
+import { DEV_MODE } from "../config/devMode";
+
 const SIMPLE_TEMPLATES = Array.from({ length: 14 }, (_, i) => i + 1);
 
 const TEMPLATE_META = {
@@ -60,28 +62,14 @@ useEffect(() => {
 }, [isLocal]);
 
 
-useEffect(() => {
-  console.log("MOUNT Templates.jsx");
-  console.log("isLocal:", isLocal);
-  console.log("isAuthenticated:", isAuthenticated);
-  console.log("showSignup:", showSignup);
-}, []);
+const handleUseTemplate = (route) => {
 
-
-  // 🔥 Template click handler (FIXED)
-  const handleUseTemplate = (route) => {
-
-    console.log("Hostname:", window.location.hostname);
-console.log("isLocal:", isLocal);
-
-
-  // 🚀 DEV MODE → skip signup completely
-  if (isLocal) {
+  // 🔥 DEV MODE BYPASS (CRITICAL)
+  if (DEV_MODE.enabled) {
     navigate(route);
     return;
   }
 
-  // 🔐 PRODUCTION → keep auth
   if (!isAuthenticated) {
     pendingRouteRef.current = route;
     sessionStorage.setItem("pendingTemplateRoute", route);

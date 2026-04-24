@@ -2,13 +2,20 @@
 import { useEffect } from "react";
 import { useAuth } from "../../context/AuthContext";
 import usePaymentGuard from "../../hooks/usePaymentGuard";
+import { DEV_MODE } from "../../config/devMode";
 
 export default function BuilderGuard({ children }) {
   const { user } = useAuth();
   const { isPaid, requirePayment } = usePaymentGuard();
 
+  
+  const isDev = import.meta.env.DEV;
+
 useEffect(() => {
-  if (!user) return;           // 🔥 WAIT until user exists
+  if (DEV_MODE.payment.bypassPayment) return;
+
+  if (!user) return;
+
   if (!isPaid) {
     requirePayment();
   }

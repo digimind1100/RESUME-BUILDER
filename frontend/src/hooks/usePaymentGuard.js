@@ -1,12 +1,25 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 
+
 export default function usePaymentGuard(templateName = "") {
   // 🔥 IMPORTANT: refreshUser added
   const { user, setUser, token, refreshUser } = useAuth();
 
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [checking, setChecking] = useState(false);
+
+  const isDev = import.meta.env.DEV;
+
+  if (isDev) {
+  return {
+    isPaid: true,
+    showPaymentModal: false,
+    setShowPaymentModal: () => {},
+    requirePayment: () => true,
+    handlePaymentSuccess: () => {}
+  };
+}
 
   // 🔐 Date-based paid check (SINGLE SOURCE OF TRUTH)
   const isPaid =
