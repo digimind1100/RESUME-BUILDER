@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState } from "react";
 import "./CreativeBold.css";
 import TemplateLayout from "../TemplateLayout";
 import { useNavigate } from "react-router-dom";
@@ -14,136 +14,6 @@ const CreativeBold = () => {
 
   // ----- Profile Image Upload -----
   const [profileImage, setProfileImage] = useState("/images/creativeboldimage.png");
-  const [isPreview, setIsPreview] = useState(false);
-
-
-
-  const [resumeData, setResumeData] = useState({
-    name: "AMANDA SMITH",
-    title: "Marketing Specialist",
-    profile: "Dynamic marketing specialist with 6+ years of experience...",
-    skills: [
-      "SEO and SEM",
-      "Content Marketing",
-      "Social Media Management",
-      "Analytics & Reporting"
-    ],
-    contact: {
-    phone: "123-456-7860",
-    email: "amanda.smith@mail.com",
-    location: "Los Angeles, CA"
-  },
-    experience: [
-      {
-        title: "Marketing Specialist",
-        company: "XYZ Corporation",
-        duration: "2020 – Present",
-        points: [
-          "Led digital campaigns increasing leads by 38%",
-          "Managed $180K yearly ad spend"
-        ]
-      }
-    ],
-  certifications: [
-    "Google Analytics Certification",
-    "Facebook Blueprint Certified"
-  ],
-  tools: [
-  "Google Analytics, Ads Manager",
-  "Meta Business Suite, LinkedIn Ads",
-  "SEMrush, Ahrefs, Moz",
-  "HubSpot, Mailchimp",
-  "Figma, Canva"
-],
-achievements: [
-  "Increased lead quality by 40%",
-  "Reduced cost-per-lead by 22%",
-  "Managed a digital transformation project"
-]
-
-
-
-  });
-
-
-  useEffect(() => {
-  try {
-    const saved = localStorage.getItem("CreativeBold");
-
-    const defaultData = {
-      name: "AMANDA SMITH",
-      title: "Marketing Specialist",
-      profile: "",
-      contact: {
-        phone: "123-456-7860",
-        email: "amanda.smith@mail.com",
-        location: "Los Angeles, CA"
-      },
-      skills: [
-        "SEO and SEM",
-        "Content Marketing",
-        "Social Media Management",
-        "Analytics & Reporting"
-      ],
-      experience: [
-        {
-          title: "Marketing Specialist",
-          company: "XYZ Corporation",
-          duration: "2020 – Present",
-          points: [
-            "Led digital campaigns increasing leads by 38%",
-            "Managed $180K yearly ad spend"
-          ]
-        }
-      ],
-      certifications: [],
-      tools: [],
-      achievements: []
-    };
-
-    if (saved) {
-      const data = JSON.parse(saved); // ✅ renamed (NO parsed confusion)
-
-      setResumeData({
-        ...defaultData,
-
-        name: data.name || defaultData.name,
-        title: data.title || defaultData.title,
-        profile: data.profile || defaultData.profile,
-
-        contact: {
-          ...defaultData.contact,
-          ...data.contact
-        },
-
-        skills: Array.isArray(data.skills) ? data.skills : defaultData.skills,
-
-        experience:
-          Array.isArray(data.experience) && data.experience.length > 0
-            ? data.experience
-            : defaultData.experience,
-
-        certifications: Array.isArray(data.certifications)
-          ? data.certifications
-          : defaultData.certifications,
-
-        tools: Array.isArray(data.tools)
-          ? data.tools
-          : defaultData.tools,
-
-        achievements: Array.isArray(data.achievements)
-          ? data.achievements
-          : defaultData.achievements
-      });
-    } else {
-      setResumeData(defaultData);
-    }
-  } catch (err) {
-    console.error("Load failed:", err);
-  }
-}, []);
-
-
   const fileInputRef = useRef(null);
 
   const handleImageUpload = (event) => {
@@ -155,11 +25,6 @@ achievements: [
     const imageUrl = URL.createObjectURL(file);
     setProfileImage(imageUrl);
   };
-
-  const canEdit = true;
-  const isEditable = true;
-  const requirePayment = () => { };
-
 
 
   const triggerFileSelect = () => {
@@ -173,550 +38,220 @@ achievements: [
     }
   };
 
-  const handleSave = () => {
-    localStorage.setItem(
-      "CreativeBold",
-      JSON.stringify(resumeData)
-    );
-
-    alert("Saved successfully ✅");
-  };
-
-
   return (
     <TemplateLayout
       templateId="CreativeBold"
-      onSave={handleSave}
-      onPreview={() => console.log("preview")}
+      wrapperClass="cb-wrapper"
+      resumeClass="cb-resume"
     >
-
-      <div className="cb-wrapper">
-
-        {/* A4 Resume Area */}
-        <div className="resume-a4 cb-a4"  >
-
-          <div className="cb-resume">
-            {/* LEFT RED COLUMN */}
-            <aside className="cb-left">
-
-              {/* Profile Image */}
-              <div
-                className={`cb-photo-wrapper ${!canEdit ? "locked" : ""}`}
-                onClick={() => {
-
-                  // free user → open payment modal
-                  if (!canEdit) {
-                    if (requirePayment) requirePayment();
-                    return;
-                  }
-
-                  // paid but editing OFF
-                  if (!isEditable) return;
-
-                  // paid + editing ON
-                  if (fileInputRef.current) {
-                    fileInputRef.current.click();
-                  }
-
-                }}
-                title={!canEdit ? "Unlock to change profile image" : "Click to change photo"}
-              >
-                <img src={profileImage} alt="Profile" className="cb-photo" />
-                <input
-                  type="file"
-                  accept="image/*"
-                  ref={fileInputRef}
-                  style={{ display: "none" }}
-                  onChange={handleImageUpload}
-                />
-              </div>
+      {({ canEdit, isEditable, pdfRef, requirePayment }) => (
+        <div className="cb-wrapper">
 
 
-              {/* Job Title (Left side) */}
-              <div className="cb-left-role">
-                <h2
-                  className="cb-left-role-text"
-                  contentEditable={canEdit && isEditable}
-                  suppressContentEditableWarning >
-                  MARKETING SPECIALIST
-                </h2>
-              </div>
+          {/* A4 Resume Area */}
+          <div className="resume-a4 cb-a4" ref={pdfRef} style={{ position: "relative" }}>
 
-              {/* Skills */}
-              <section className="cb-left-section">
-                <h3 className="cb-left-heading" contentEditable={canEdit && isEditable} suppressContentEditableWarning >
-                  SKILLS
-                </h3>
+            <div className="cb-resume">
+              {/* LEFT RED COLUMN */}
+              <aside className="cb-left">
 
-                <ul className="cb-left-list">
-                  {(resumeData.skills || []).map((skill, index) => (
-                    <li key={index} className="cb-skill-item">
-
-                      <input
-                        value={skill}
-                        onChange={(e) => {
-                          const updated = [...resumeData.skills];
-                          updated[index] = e.target.value;
-
-                          setResumeData({
-                            ...resumeData,
-                            skills: updated
-                          });
-                        }}
-                      />
-
-                      <button
-                        className="cb-delete-btn"
-                        onClick={() => {
-                          const updated = resumeData.skills.filter(
-                            (_, i) => i !== index
-                          );
-
-                          setResumeData({
-                            ...resumeData,
-                            skills: updated
-                          });
-                        }}
-                      >
-                        ✕
-                      </button>
-
-                    </li>
-                  ))}
-                </ul>
-
-
-
-                <button
-                  className="cb-add-btn"
+                {/* Profile Image */}
+                <div
+                  className={`cb-photo-wrapper ${!canEdit ? "locked" : ""}`}
                   onClick={() => {
-                    setResumeData({
-                      ...resumeData,
-                      skills: [...resumeData.skills, "New Skill"]
-                    });
+
+                    // free user → open payment modal
+                    if (!canEdit) {
+                      if (requirePayment) requirePayment();
+                      return;
+                    }
+
+                    // paid but editing OFF
+                    if (!isEditable) return;
+
+                    // paid + editing ON
+                    if (fileInputRef.current) {
+                      fileInputRef.current.click();
+                    }
+
                   }}
+                  title={!canEdit ? "Unlock to change profile image" : "Click to change photo"}
                 >
-                  + Add Skill
-                </button>
+                  <img src={profileImage} alt="Profile" className="cb-photo" />
+                  <input
+                    type="file"
+                    accept="image/*"
+                    ref={fileInputRef}
+                    style={{ display: "none" }}
+                    onChange={handleImageUpload}
+                  />
+                </div>
 
 
-              </section>
+                {/* Job Title (Left side) */}
+                <div className="cb-left-role">
+                  <h2
+                    className="cb-left-role-text"
+                    contentEditable={canEdit && isEditable}
+                    suppressContentEditableWarning
+                  >
+                    MARKETING SPECIALIST
+                  </h2>
+                </div>
 
-              {/* Contact */}
-              <section className="cb-left-section">
-                <h3 className="cb-left-heading" contentEditable={canEdit && isEditable} suppressContentEditableWarning>
-                  CONTACT
-                </h3>
-                <div className="cb-left-contact">
+                {/* Skills */}
+                <section className="cb-left-section">
+                  <h3 className="cb-left-heading" contentEditable={canEdit && isEditable} suppressContentEditableWarning>
+                    SKILLS
+                  </h3>
+                  <ul className="cb-left-list">
+                    <li contentEditable={canEdit && isEditable} suppressContentEditableWarning >SEO and SEM</li>
+                    <li contentEditable={canEdit && isEditable} suppressContentEditableWarning >Content Marketing</li>
+                    <li contentEditable={canEdit && isEditable} suppressContentEditableWarning >Social Media Management</li>
+                    <li contentEditable={canEdit && isEditable} suppressContentEditableWarning >Analytics & Reporting</li>
+                  </ul>
+                </section>
 
-  <input
-    value={resumeData.contact?.phone || ""}
-    onChange={(e) => {
-      setResumeData({
-        ...resumeData,
-        contact: {
-          ...resumeData.contact,
-          phone: e.target.value
-        }
-      });
-    }}
-  />
+                {/* Contact */}
+                <section className="cb-left-section">
+                  <h3 className="cb-left-heading" contentEditable={canEdit && isEditable} suppressContentEditableWarning>
+                    CONTACT
+                  </h3>
+                  <div className="cb-left-contact">
+                    <p contentEditable={canEdit && isEditable} suppressContentEditableWarning>123-456-7860</p>
+                    <p contentEditable={canEdit && isEditable} suppressContentEditableWarning>amanda.smith@mail.com</p>
+                    <p contentEditable={canEdit && isEditable} suppressContentEditableWarning>Los Angeles, CA</p>
+                  </div>
+                </section>
+              </aside>
 
-  <input
-    value={resumeData.contact?.email || ""}
-    onChange={(e) => {
-      setResumeData({
-        ...resumeData,
-        contact: {
-          ...resumeData.contact,
-          email: e.target.value
-        }
-      });
-    }}
-  />
+              {/* RIGHT WHITE COLUMN */}
+              <main className="cb-right">
 
-  <input
-    value={resumeData.contact?.location || ""}
-    onChange={(e) => {
-      setResumeData({
-        ...resumeData,
-        contact: {
-          ...resumeData.contact,
-          location: e.target.value
-        }
-      });
-    }}
-  />
+                {/* Name + Title */}
+                <header className="cb-header-text">
+                  <h1
+                    className="cb-name"
+                    contentEditable={canEdit && isEditable}
+                    suppressContentEditableWarning
+                    onBlur={(e) => {
+                      // Handle saving data here if needed
+                      console.log("New name:", e.target.innerText);
+                    }}
+                    // MOBILE FIX: Ensure a tap triggers focus
+                    onTouchStart={(e) => {
+                      if (canEdit && isEditable) {
+                        e.currentTarget.focus();
+                      }
+                    }}
+                    /* Add this line to force the keyboard on mobile */
+                    onClick={(e) => {
+                      if (window.innerWidth < 768 && (canEdit && isEditable)) {
+                        e.currentTarget.focus();
+                      }
+                    }}
+                  >
+                    AMANDA SMITH
+                  </h1>
 
-</div>
+                  <p
+                    className="cb-title"
+                    contentEditable={canEdit && isEditable}
+                    suppressContentEditableWarning
+                    style={{ WebkitUserSelect: "text" }}
+                  >
+                    Marketing Specialist
+                  </p>
 
-              </section>
-            </aside>
+                </header>
 
-            {/* RIGHT WHITE COLUMN */}
-            <main className="cb-right">
+                {/* Profile Section */}
+                <section className="cb-section">
+                  <h2 className="cb-section-heading" contentEditable={canEdit && isEditable}>PROFILE</h2>
+                  <p className="cb-section-paragraph" contentEditable={canEdit && isEditable}>
+                    Dynamic marketing specialist with 6+ years of experience in planning and executing
+                    multi-channel marketing campaigns...
+                  </p>
+                </section>
 
-              {/* Name + Title */}
-              <header className="cb-header-text">
-                <input
-                  className="cb-name"
-                  value={resumeData.name}
-                  onChange={(e) =>
-                    setResumeData({
-                      ...resumeData,
-                      name: e.target.value
-                    })
-                  }
-                />
+                {/* Experience Section */}
+                <section className="cb-section">
+                  <h2 className="cb-section-heading" contentEditable={canEdit && isEditable}>EXPERIENCE</h2>
 
-                <input
-                  className="cb-title"
-                  value={resumeData.title}
-                  onChange={(e) =>
-                    setResumeData({
-                      ...resumeData,
-                      title: e.target.value
-                    })
-                  }
-                />
+                  {/* Job 1 */}
+                  <div className="cb-entry">
+                    <p className="cb-entry-title" contentEditable={canEdit && isEditable}>
+                      Marketing Specialist
+                    </p>
+                    <p className="cb-entry-subtitle" contentEditable={canEdit && isEditable}>
+                      XYZ Corporation | 2020 – Present
+                    </p>
+                    <ul className="cb-entry-list">
+                      <li contentEditable={canEdit && isEditable}>Led digital campaigns increasing leads by 38%.</li>
+                      <li contentEditable={canEdit && isEditable}>Managed $180K yearly ad spend.</li>
+                      <li contentEditable={canEdit && isEditable}>Conducted market research & analysis.</li>
+                      <li contentEditable={canEdit && isEditable}>Collaborated with creative teams.</li>
+                      <li contentEditable={canEdit && isEditable}>Improved CTR by 27% via A/B testing.</li>
+                    </ul>
+                  </div>
 
+                  {/* Job 2 */}
+                  <div className="cb-entry">
+                    <p className="cb-entry-title" contentEditable={canEdit && isEditable}>
+                      Marketing Coordinator
+                    </p>
+                    <p className="cb-entry-subtitle" contentEditable={canEdit && isEditable}>
+                      ABC Company | 2016 – 2020
+                    </p>
+                    <ul className="cb-entry-list">
+                      <li contentEditable={canEdit && isEditable}>Boosted engagement by 45%.</li>
+                      <li contentEditable={canEdit && isEditable}>Assisted with digital & print campaigns.</li>
+                      <li contentEditable={canEdit && isEditable}>Analyzed performance & suggested improvements.</li>
+                      <li contentEditable={canEdit && isEditable}>Supported brand initiatives.</li>
+                    </ul>
+                  </div>
+                </section>
 
-              </header>
+                {/* Certifications */}
+                <section className="cb-section">
+                  <h2 className="cb-section-heading" contentEditable={canEdit && isEditable}>CERTIFICATIONS</h2>
+                  <ul className="cb-entry-list">
+                    <li contentEditable={canEdit && isEditable}>Google Analytics Certification</li>
+                    <li contentEditable={canEdit && isEditable}>Facebook Blueprint Certified</li>
+                    <li contentEditable={canEdit && isEditable}>HubSpot Content Marketing Certification</li>
+                    <li contentEditable={canEdit && isEditable}>SEO Specialization – Coursera</li>
+                  </ul>
+                </section>
 
-              {/* Profile Section */}
-              <section className="cb-section">
-                <h2 className="cb-section-heading" contentEditable={canEdit && isEditable} suppressContentEditableWarning >PROFILE</h2>
-                
-                <textarea
-  className="cb-section-paragraph"
-  value={resumeData.profile || ""}
-  onChange={(e) => {
-    setResumeData({
-      ...resumeData,
-      profile: e.target.value
-    });
-  }}
-/>
+                {/* Tools */}
+                <section className="cb-section">
+                  <h2 className="cb-section-heading" contentEditable={canEdit && isEditable}>TOOLS & TECHNOLOGIES</h2>
+                  <ul className="cb-entry-list">
+                    <li contentEditable={canEdit && isEditable}>Google Analytics, Ads Manager</li>
+                    <li contentEditable={canEdit && isEditable}>Meta Business Suite, LinkedIn Ads</li>
+                    <li contentEditable={canEdit && isEditable}>SEMrush, Ahrefs, Moz</li>
+                    <li contentEditable={canEdit && isEditable}>HubSpot, Mailchimp</li>
+                    <li contentEditable={canEdit && isEditable}>Figma, Canva</li>
+                  </ul>
+                </section>
 
-              </section>
-
-              {/* Experience Section */}
-
-              <section className="cb-section">
-  <h2 className="cb-section-heading">EXPERIENCE</h2>
-
-  {(resumeData.experience || []).map((job, jobIndex) => (
-    <div key={jobIndex} className="cb-entry">
-
-      {/* TITLE */}
-      <input
-        className="cb-entry-title"
-        value={job.title}
-        onChange={(e) => {
-          const updated = [...resumeData.experience];
-          updated[jobIndex].title = e.target.value;
-          setResumeData({ ...resumeData, experience: updated });
-        }}
-      />
-
-      {/* COMPANY */}
-      <input
-        className="cb-entry-subtitle"
-        value={`${job.company} | ${job.duration}`}
-        onChange={(e) => {
-          const updated = [...resumeData.experience];
-          const parts = e.target.value.split("|");
-
-          updated[jobIndex].company = parts[0]?.trim() || "";
-          updated[jobIndex].duration = parts[1]?.trim() || "";
-
-          setResumeData({ ...resumeData, experience: updated });
-        }}
-      />
-
-      {/* POINTS */}
-      <ul className="cb-entry-list">
-        {(job.points || []).map((point, pointIndex) => (
-          <li key={pointIndex} className="cb-skill-item">
-
-  <input
-    value={point}
-    onChange={(e) => {
-      const updated = [...resumeData.experience];
-      updated[jobIndex].points[pointIndex] = e.target.value;
-
-      setResumeData({ ...resumeData, experience: updated });
-    }}
-  />
-
-  <button
-    className="cb-delete-btn"
-    onClick={() => {
-      const updated = [...resumeData.experience];
-
-      updated[jobIndex].points = updated[jobIndex].points.filter(
-        (_, i) => i !== pointIndex
-      );
-
-      setResumeData({ ...resumeData, experience: updated });
-    }}
-  >
-    ✕
-  </button>
-
-</li>
-
-        ))}
-      </ul>
-
-      {/* ✅ ADD POINT (INSIDE JOB) */}
-      <button
-        className="cb-add-btn"
-        onClick={() => {
-          const updated = [...resumeData.experience];
-
-          updated[jobIndex].points = [
-            ...(updated[jobIndex].points || []),
-            "New responsibility"
-          ];
-
-          setResumeData({ ...resumeData, experience: updated });
-        }}
-      >
-        + Add Point
-      </button>
-
-      {/* DELETE JOB */}
-      <button
-        className="cb-delete-job-btn"
-        onClick={() => {
-          const updated = resumeData.experience.filter(
-            (_, i) => i !== jobIndex
-          );
-
-          setResumeData({ ...resumeData, experience: updated });
-        }}
-      >
-        ✕ Remove Job
-      </button>
-
-    </div>
-  ))}
-
-  {/* ✅ ADD JOB (OUTSIDE LOOP) */}
-  <button
-    className="cb-add-btn"
-    onClick={() => {
-      setResumeData({
-        ...resumeData,
-        experience: [
-          ...(resumeData.experience || []),
-          {
-            title: "New Job Title",
-            company: "Company Name",
-            duration: "Year – Year",
-            points: ["New responsibility"]
-          }
-        ]
-      });
-    }}
-  >
-    + Add Job
-  </button>
-
-</section>
-
-
-              {/* Certifications */}
-              <section className="cb-section">
-                <h2 className="cb-section-heading" contentEditable={canEdit && isEditable} suppressContentEditableWarning>CERTIFICATIONS</h2>
-                <ul className="cb-entry-list">
-  {(resumeData.certifications || []).map((cert, index) => (
-    <li key={index} className="cb-skill-item">
-
-      <input
-        value={cert}
-        disabled={isPreview}
-        onChange={(e) => {
-          const updated = [...resumeData.certifications];
-          updated[index] = e.target.value;
-
-          setResumeData({
-            ...resumeData,
-            certifications: updated
-          });
-        }}
-      />
-
-      {!isPreview && (
-        <button
-          className="cb-delete-btn"
-          onClick={() => {
-            const updated = resumeData.certifications.filter(
-              (_, i) => i !== index
-            );
-
-            setResumeData({
-              ...resumeData,
-              certifications: updated
-            });
-          }}
-        >
-          ✕
-        </button>
-      )}
-
-    </li>
-  ))}
-</ul>
-{!isPreview && (
-  <button
-    className="cb-add-btn"
-    onClick={() => {
-      setResumeData({
-        ...resumeData,
-        certifications: [
-          ...(resumeData.certifications || []),
-          "New Certification"
-        ]
-      });
-    }}
-  >
-    + Add Certification
-  </button>
-)}
-
-
-              </section>
-
-              {/* Tools */}
-              <section className="cb-section">
-                <h2 className="cb-section-heading" contentEditable={canEdit && isEditable} suppressContentEditableWarning>TOOLS & TECHNOLOGIES</h2>
-                <ul className="cb-entry-list">
-  {(resumeData.tools || []).map((tool, index) => (
-    <li key={index} className="cb-skill-item">
-
-      <input
-        value={tool}
-        disabled={isPreview}
-        onChange={(e) => {
-          const updated = [...resumeData.tools];
-          updated[index] = e.target.value;
-
-          setResumeData({
-            ...resumeData,
-            tools: updated
-          });
-        }}
-      />
-
-      {!isPreview && (
-        <button
-          className="cb-delete-btn"
-          onClick={() => {
-            const updated = resumeData.tools.filter(
-              (_, i) => i !== index
-            );
-
-            setResumeData({
-              ...resumeData,
-              tools: updated
-            });
-          }}
-        >
-          ✕
-        </button>
-      )}
-
-    </li>
-  ))}
-</ul>
-{!isPreview && (
-  <button
-    className="cb-add-btn"
-    onClick={() => {
-      setResumeData({
-        ...resumeData,
-        tools: [
-          ...(resumeData.tools || []),
-          "New Tool"
-        ]
-      });
-    }}
-  >
-    + Add Tool
-  </button>
-)}
-
-              </section>
-
-              {/* Achievements */}
-              <section className="cb-section">
-                <h2 className="cb-section-heading" contentEditable={canEdit && isEditable} suppressContentEditableWarning>ACHIEVEMENTS</h2>
-                <ul className="cb-entry-list">
-  {(resumeData.achievements || []).map((item, index) => (
-    <li key={index} className="cb-skill-item">
-
-      <input
-        value={item}
-        disabled={isPreview}
-        onChange={(e) => {
-          const updated = [...resumeData.achievements];
-          updated[index] = e.target.value;
-
-          setResumeData({
-            ...resumeData,
-            achievements: updated
-          });
-        }}
-      />
-
-      {!isPreview && (
-        <button
-          className="cb-delete-btn"
-          onClick={() => {
-            const updated = resumeData.achievements.filter(
-              (_, i) => i !== index
-            );
-
-            setResumeData({
-              ...resumeData,
-              achievements: updated
-            });
-          }}
-        >
-          ✕
-        </button>
-      )}
-
-    </li>
-  ))}
-</ul>
-{!isPreview && (
-  <button
-    className="cb-add-btn"
-    onClick={() => {
-      setResumeData({
-        ...resumeData,
-        achievements: [
-          ...(resumeData.achievements || []),
-          "New Achievement"
-        ]
-      });
-    }}
-  >
-    + Add Achievement
-  </button>
-)}
-
-              </section>
-            </main>
+                {/* Achievements */}
+                <section className="cb-section">
+                  <h2 className="cb-section-heading" contentEditable={canEdit && isEditable}>ACHIEVEMENTS</h2>
+                  <ul className="cb-entry-list">
+                    <li contentEditable={canEdit && isEditable}>Increased lead quality by 40%.</li>
+                    <li contentEditable={canEdit && isEditable}>Reduced cost-per-lead by 22%.</li>
+                    <li contentEditable={canEdit && isEditable}>Managed a digital transformation project.</li>
+                  </ul>
+                </section>
+              </main>
+            </div>
           </div>
         </div>
-      </div>
-    </TemplateLayout>
+      )
+      }
+    </TemplateLayout >
   );
-}
-
+};
 
 export default CreativeBold;

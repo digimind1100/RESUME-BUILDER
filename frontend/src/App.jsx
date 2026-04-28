@@ -114,7 +114,7 @@ const isLocal = import.meta.env.DEV;
           />
 
           <Route path="/clean-professional" element={<CleanProfessional />} />
-          <Route path="/creative-bold" element={<CreativeBold key={Date.now()} />} />
+          <Route path="/creative-bold" element={<CreativeBold />} />
           <Route path="/minimal-accent" element={<MinimalAccent />} />
           <Route path="/elegant-classic" element={<ElegantClassic />} />
           <Route path="/medical-elites" element={<MedicalElites />} />
