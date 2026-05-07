@@ -37,6 +37,7 @@ import FreeBasic from "./Template/FreeBasic/FreeBasic";
 import RoyalBlueDesigner from "./Template/RoyalBlueDesigner/RoyalBlueDesigner";
 import ScrollToTop from "./components/ScrollToTop";
 import TestPagination from "./Template/TestPagination/TestPagination";
+import FlorenceClassic from "./Template/FlorenceClassic/FlorenceClassic";
 
 
 
@@ -124,6 +125,8 @@ const isLocal = import.meta.env.DEV;
           <Route path="/royal-designer" element={<RoyalBlueDesigner />} />
           <Route path="/neoedge-pro" element={<NeoEdgePro />} />
           <Route path="/test-pagination" element={<TestPagination />} />
+          <Route path="/florence-classic" element={<FlorenceClassic />} />
+
 
           <Route
             path="/data-elite"

@@ -1,7 +1,8 @@
 /* Wrapper and buttons */
 .cb-wrapper {
   text-align: center;
-  padding: 20px;
+  margin: 0 !important;
+  padding: 0 !important;
   background: #eef1f6;
   min-height: 100vh;
   display: flex;
@@ -149,19 +150,29 @@
   margin: 0;
   font-size: 30px;
   font-weight: 800;
-  letter-spacing: 0.12em;
-  color: #111827; /* dark gray/black tone */
+
+  letter-spacing: 0.08em;   /* 🔥 reduce from 0.12 */
   text-transform: uppercase;
+
+  color: #111827;
   text-align: center;
+
+  line-height: 1.2;         /* 🔥 VERY IMPORTANT (prevents cut) */
+  padding-top: 4px;         /* 🔥 fixes top clipping */
+
   border: none;
 }
-
 .cb-title {
   margin: 6px 0 0;
   font-size: 15px;
-  letter-spacing: 0.12em;
+
+  letter-spacing: 0.08em;   /* 🔥 reduce */
   text-transform: uppercase;
+
   color: #4b5563;
+
+  text-align: center;       /* 🔥 ensure alignment */
+  line-height: 1.2;         /* 🔥 prevent cut */
 }
 
 /* Sections on right */
@@ -363,19 +374,6 @@
   }
 }
 
-.cb-title {
-  width: 100%;
-  border: none;
-  outline: none;
-  background: transparent;
-  font-size: 15px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #4b5563;
-  font-family: inherit;
-  text-align: center;
-  
-}
 .cb-name:focus,
 .cb-title:focus {
   outline: 2px solid #4f46e5;
@@ -599,11 +597,70 @@
     background: white;
   }
 
+
+}
+
+@media print {
   .cb-a4 {
-    transform: none !important;
-    width: 210mm !important;
-    min-height: 297mm !important;
+    width: 210mm;
+    height: 297mm;
+    overflow: hidden;
   }
+}
+  .cb-a4 {
+     transform: none !important;
+  width: 210mm;
+  height: 297mm;
+  overflow: hidden;   /* 🔥 KEY FIX */
+  background: white;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+}
+.resume-a4 {
+  width: 210mm;
+  height: 297mm;
+  background: white;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: white;
+   padding-top: 2px;
+   transform: scale(1); 
+   box-sizing: border-box;
+}
+
+/* 🔥 KEY MULTI-PAGE CONTROL */
+.page-break {
+  page-break-after: always;
+  break-after: page;
 }
 
 
+.cb-header-text {
+  width: 100%;
+  text-align: center;
+}
+
+.cb-name-text {
+  display: block;
+  width: 100%;
+  text-align: center !important;
+
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #111827;
+  line-height: 1.2;
+}
+
+.cb-title-text {
+  display: block;
+  width: 100%;
+  text-align: center !important;
+
+  font-size: 15px;
+  letter-spacing: 0.08em;
+  color: #4b5563;
+  line-height: 1.2;
+  margin-top: 6px;
+}

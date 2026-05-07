@@ -6,7 +6,7 @@ import { useAuth } from "../context/AuthContext";
 import SignupModal from "./auth/SignupModal";
 import { DEV_MODE } from "../config/devMode";
 
-const SIMPLE_TEMPLATES = Array.from({ length: 14 }, (_, i) => i + 1);
+const SIMPLE_TEMPLATES = Array.from({ length: 16 }, (_, i) => i + 1);
 
 const TEMPLATE_META = {
   1: { name: "Teacher Elite", category: "All Roles" },
@@ -24,6 +24,7 @@ const TEMPLATE_META = {
   13: { name: "Royal Designer", category: "Royal Designer" },
   14: { name: "NeoEdge Pro", category: "NeoEdge Pro" },
   15: { name: "Test Pagination", category: "TestPagination" },
+  16: { name: "Florence Classic", category: "FlorenceClassic" },
 };
 
 export default function Templates() {
@@ -274,12 +275,14 @@ const handleUseTemplate = (route) => {
                       6: "/medical-elites",
                       7: "/engineer-elites",
                       8: "/soft-tech",
-                      9: "/data-elite",
+                      9: "/data-Analyst",
                       10: "/engineer-prime",
                       11: "/aviation-pro",
                       12: "/free-basic",
                       13: "/royal-designer",
                       14: "/neoEdge-pro",
+                      15: "/test-pagination",
+                      16: "/florence-classic",
                     };
                     handleUseTemplate(routes[num]);
                   }}

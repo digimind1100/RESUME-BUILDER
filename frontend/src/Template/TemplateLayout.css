@@ -6,3 +6,13 @@ flex-direction:column;
 align-items:center;
 padding:0 20px;
 }
+.resume-a4.pdf-mode {
+  transform: none !important;
+  zoom: 1 !important;
+  margin: 0 !important;
+}
+
+.resume-a4.pdf-mode * {
+  box-sizing: border-box;
+}
+
