@@ -4,72 +4,99 @@ import TemplateLayout from "../TemplateLayout";
 
 export default function FlorenceClassic() {
 
-    const [resumeData, setResumeData] = useState(() => {
-        const saved = JSON.parse(localStorage.getItem("resumeData"));
+    const STORAGE_KEY = "FlorenceClassic";
 
-        return {
-            fullName: "FLORENCE STEWART",
-            jobTitle: "PROFESSIONAL TITLE",
-            summary:
-                "This section is supposed to introduce yourself. Write a few lines that describe your profile and strongest qualities.",
+    const defaultData = {
+        fullName: "FLORENCE STEWART",
+        jobTitle: "PROFESSIONAL TITLE",
+        summary:
+            "This section is supposed to introduce yourself. Write a few lines that describe your profile and strongest qualities.",
 
-            contact: {
-                phone: "+1 123 456 7890",
-                email: "yourmail@mail.com",
-                location: "New York City",
-                linkedin: "linkedin.com/profile"
+        contact: {
+            phone: "+1 123 456 7890",
+            email: "yourmail@mail.com",
+            location: "New York City",
+            linkedin: "linkedin.com/profile"
+        },
+
+        education: [
+            {
+                degree: "MASTER'S DEGREE",
+                university: "Name of The University",
+                subject: "Enter Your Major",
+                year: "2019 - 2021"
             },
+            {
+                degree: "BACHELOR'S DEGREE",
+                university: "Name of The University",
+                subject: "Enter Your Major",
+                year: "2015 - 2019"
+            }
+        ],
 
-            education: [
-                {
-                    degree: "MASTER'S DEGREE",
-                    university: "Name of The University",
-                    subject: "Enter Your Major",
-                    year: "2019 - 2021"
-                },
-                {
-                    degree: "BACHELOR'S DEGREE",
-                    university: "Name of The University",
-                    subject: "Enter Your Major",
-                    year: "2015 - 2019"
-                }
+        skills: [
+            "Communication",
+            "Project Management",
+            "Team Leadership",
+            "Problem Solving",
+        ],
+        experience: [{
+            title: "EMPLOYMENT TITLE",
+            company: "Company Name",
+            location: "location",
+            duration: "2020 - Present",
+            intro:
+                "Brief description of your role and responsibilities under job title.",
+            bullets: [
+                "Assisted with daily office operations including data entry",
+                "Communicated with customers professionally to answer inquiries, resolve issues",
+                "Managed inventory by checking stock levels, updating records, and ensuring quality",
+                "Supported sales activities by preparing quotations, following up with clients,",
+                "Handled administrative tasks such as scheduling meetings,",
+                "Worked collaboratively with colleagues on various projects, contributing ideas",
             ],
+        },
+        {
+            title: "EMPLOYMENT TITLE HERE",
+            company: "Company Name",
 
-            skills: [
-                "Communication",
-                "Project Management",
-                "Team Leadership",
-                "Problem Solving",
+            duration: "2018 - 2020",
+            intro:
+                "Brief description of your role and responsibilities under job title.",
+            bullets: [
+                "Assisted with daily office operations including data entry, .",
+                "Communicated with customers professionally to answer inquiries, resolve",
+                "Supported sales activities by preparing quotations, following up with clients,",
+                "Handled administrative tasks such as scheduling meetings,",
+                "Worked collaboratively with colleagues on various projects, contributing ideas",
             ],
+        },
+        {
+            title: "EMPLOYMENT TITLE HERE",
+            company: "Company Name",
 
-            experience: [
-                {
-                    title: "EMPLOYMENT TITLE",
-                    company: "Company Name",
-                    duration: "2020 - Present",
-                    intro:
-                        "Brief description of your role and responsibilities under job title.",
-                    bullets: [
-                        "Assisted with daily office operations including data entry",
-                        "Managed inventory and updated records",
-                        "Supported sales activities and client communication",
-                    ],
-                },
-                {
-                    title: "EMPLOYMENT TITLE HERE",
-                    company: "Company Name",
-                    duration: "2018 - 2020",
-                    intro:
-                        "Brief description of your role and responsibilities under job title.",
-                    bullets: [
-                        "Handled administrative tasks and scheduling",
-                        "Worked with team on daily operations",
-                        "Improved workflow efficiency",
-                    ],
-                },
+            duration: "2018 - 2020",
+            intro:
+                "Brief description of your role and responsibilities under job title.",
+            bullets: [
+                "Assisted with daily office operations including data entry, .",
+                "Communicated with customers professionally to answer inquiries, resolve",
+                "Supported sales activities by preparing quotations, following up with clients,",
+
             ],
-        };
+        },]
+    };
+
+    const [resumeData, setResumeData] = useState(() => {
+        try {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            return saved ? { ...defaultData, ...JSON.parse(saved) } : defaultData;
+        } catch (err) {
+            return defaultData;
+        }
     });
+
+   
     const [profileImage, setProfileImage] = useState(
         "/images/cleanprofileimage.png"
 
@@ -87,16 +114,28 @@ export default function FlorenceClassic() {
 
     // ---------------- AUTO SAVE ----------------
     useEffect(() => {
-        localStorage.setItem("resumeData", JSON.stringify(resumeData));
+        localStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify(resumeData)
+        );
     }, [resumeData]);
 
-    // ---------------- HANDLERS ----------------
+    const handleSave = () => {
+        localStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify(resumeData)
+        );
+
+        alert("Saved Successfully");
+    };
+
     const handleChange = (field, value) => {
         setResumeData((prev) => ({
             ...prev,
-            [field]: value,
+            [field]: value
         }));
     };
+
 
     const handleNestedChange = (section, field, value) => {
         setResumeData((prev) => ({
@@ -139,7 +178,7 @@ export default function FlorenceClassic() {
     };
 
     return (
-        <TemplateLayout templateId="FlorenceClassic">
+        <TemplateLayout templateId="FlorenceClassic" onSave={handleSave}>
 
             <div className="florence-page">
 
@@ -149,7 +188,9 @@ export default function FlorenceClassic() {
                         <input
                             className="florence-name"
                             value={resumeData.fullName}
-                            onChange={(e) => handleChange("fullName", e.target.value)}
+                            onChange={(e) =>
+                                handleChange("fullName", e.target.value)
+                            }
                         />
                     </div>
                     <div >
@@ -163,14 +204,12 @@ export default function FlorenceClassic() {
 
                 {/* HEADER SECTION */}
                 <div className="header-section">
-
                     <div
                         className="photo-wrap"
                         onClick={() => fileInputRef.current.click()}
                         style={{ cursor: "pointer" }}
                     >
                         <img src={profileImage} alt="Profile" />
-
                         <input
                             type="file"
                             accept="image/*"
@@ -179,7 +218,6 @@ export default function FlorenceClassic() {
                             style={{ display: "none" }}
                         />
                     </div>
-
                     <section className="header-summary">
                         <h4>SUMMARY</h4>
                         <textarea
@@ -207,7 +245,11 @@ export default function FlorenceClassic() {
                                 <input
                                     value={resumeData.contact.phone}
                                     onChange={(e) =>
-                                        handleNestedChange("contact", "phone", e.target.value)
+                                        handleNestedChange(
+                                            "contact",
+                                            "phone",
+                                            e.target.value
+                                        )
                                     }
                                 />
                             </div>
@@ -219,7 +261,11 @@ export default function FlorenceClassic() {
                                 <input
                                     value={resumeData.contact.email}
                                     onChange={(e) =>
-                                        handleNestedChange("contact", "email", e.target.value)
+                                        handleNestedChange(
+                                            "contact",
+                                            "email",
+                                            e.target.value
+                                        )
                                     }
                                 />
                             </div>
@@ -230,7 +276,11 @@ export default function FlorenceClassic() {
                                 <input
                                     value={resumeData.contact.location}
                                     onChange={(e) =>
-                                        handleNestedChange("contact", "location", e.target.value)
+                                        handleNestedChange(
+                                            "contact",
+                                            "location",
+                                            e.target.value
+                                        )
                                     }
                                 />
                             </div>
@@ -241,7 +291,11 @@ export default function FlorenceClassic() {
                                 <input
                                     value={resumeData.contact.linkedin}
                                     onChange={(e) =>
-                                        handleNestedChange("contact", "linkedin", e.target.value)
+                                        handleNestedChange(
+                                            "contact",
+                                            "linkedin",
+                                            e.target.value
+                                        )
                                     }
                                 />
                             </div>
@@ -256,6 +310,7 @@ export default function FlorenceClassic() {
 
                                     <input
                                         value={edu.degree}
+
                                         onChange={(e) => {
                                             const updated = [...resumeData.education];
                                             updated[i].degree = e.target.value;
@@ -321,6 +376,7 @@ export default function FlorenceClassic() {
                                         <input
                                             className="skills-input"
                                             value={skill}
+                                            onInput={(e) => handleChange("skills", e.target.value)}
                                             onChange={(e) =>
                                                 handleArrayChange("skills", i, e.target.value)
                                             }
@@ -336,48 +392,57 @@ export default function FlorenceClassic() {
                     <main className="florence-right">
 
                         <section>
-                            <h3>EXPERIENCE</h3>
+                            <h3 className="exp-heading">EXPERIENCE</h3>
 
                             {resumeData.experience.map((job, i) => (
                                 <div key={i} className="job-block">
+                                    <div className="exp-title">
+                                        <input
+                                            value={job.title}
+                                            onInput={(e) => handleExperienceChange(i, "title", e.target.value)}
+                                            onChange={(e) =>
+                                                handleExperienceChange(i, "title", e.target.value)
+                                            }
+                                        />
+                                    </div>
+                                    <div className="exp-date">
+                                        <input
+                                            value={`${job.company} | ${job.location} | ${job.duration}`}
+                                            onChange={(e) => {
+                                                const parts = e.target.value.split("|");
 
-                                    <input
-                                        value={job.title}
-                                        onChange={(e) =>
-                                            handleExperienceChange(i, "title", e.target.value)
-                                        }
-                                    />
-
-                                    <input
-                                        value={`${job.company} | ${job.duration}`}
-                                        onChange={(e) => {
-                                            const parts = e.target.value.split("|");
-
-                                            handleExperienceChange(i, "company", parts[0]?.trim());
-                                            handleExperienceChange(i, "duration", parts[1]?.trim());
-                                        }}
-                                    />
-
+                                                handleExperienceChange(i, "company", parts[0]?.trim());
+                                                handleExperienceChange(i, "location", parts[1]?.trim());
+                                                handleExperienceChange(i, "duration", parts[2]?.trim());
+                                            }}
+                                        />
+                                    </div>
                                     <textarea
+                                        className="jon-intro"
                                         value={job.intro}
                                         onChange={(e) =>
                                             handleExperienceChange(i, "intro", e.target.value)
                                         }
                                     />
-
                                     <ul className="experience-bullet">
-                                        {job.bullets.map((b, bi) => (
+                                        {job.bullets.map((bullet, bi) => (
                                             <li key={bi}>
                                                 <input
-                                                    value={b}
-                                                    onChange={(e) =>
-                                                        handleBulletChange(i, bi, e.target.value)
-                                                    }
+                                                    className="bullet-input"
+                                                    value={bullet}
+                                                    onChange={(e) => {
+                                                        const updated = [...resumeData.experience];
+                                                        updated[i].bullets[bi] = e.target.value;
+
+                                                        setResumeData({
+                                                            ...resumeData,
+                                                            experience: updated
+                                                        });
+                                                    }}
                                                 />
                                             </li>
                                         ))}
                                     </ul>
-
                                 </div>
                             ))}
 

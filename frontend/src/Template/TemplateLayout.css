@@ -16,3 +16,12 @@ padding:0 20px;
   box-sizing: border-box;
 }
 
+.save-btn{
+  position: relative;
+  z-index: 9999;
+  pointer-events: auto;
+}
+.toolbar{
+  position: sticky;
+  z-index: 9999;
+}
