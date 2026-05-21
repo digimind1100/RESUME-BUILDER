@@ -3,7 +3,7 @@ import { useAuth } from "../../context/AuthContext";
 import "./SignupModal.css";
 import { DEV_MODE } from "../../config/devMode";
 
-export default function SignupModal({ isOpen, onClose, onSuccess }) {
+export default function SignupModal({onClose, onSuccess }) {
   const { signup, login } = useAuth();
 
   const [mode, setMode] = useState("signup"); // signup | login
@@ -15,8 +15,10 @@ export default function SignupModal({ isOpen, onClose, onSuccess }) {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  if (!isOpen) return null;
-if (DEV_MODE.ui.blockSignupModal) return null;
+ 
+
+console.log("SIGNUP MODAL RENDERED");
+
   async function handleSubmit(e) {
     e.preventDefault();
     if (loading) return;
@@ -43,15 +45,10 @@ if (DEV_MODE.ui.blockSignupModal) return null;
         mode === "signup"
           ? await signup(payload)
           : await login(payload);
+          alert("SIGNUP RESULT: " + JSON.stringify(result));
 
       if (result?.ok) {
         const pendingTemplate = localStorage.getItem("pendingTemplate");
-
-        if (pendingTemplate) {
-          localStorage.removeItem("pendingTemplate");
-          window.location.href = `/resume/${pendingTemplate}`;
-          return;
-        }
 
         onSuccess && onSuccess(result.user);
         onClose();

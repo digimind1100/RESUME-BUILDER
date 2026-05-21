@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import toast from "react-hot-toast";
+import "./SignupModal.css";
 
 export default function LoginModal({ onClose }) {
   const { login, loading } = useAuth();
@@ -21,8 +22,8 @@ export default function LoginModal({ onClose }) {
   }
 
   return (
-    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-      <div className="bg-white p-6 rounded-lg w-[320px]">
+    <div className="signup-overlay">
+  <div className="signup-modal animate-fadeIn">
         <h2 className="text-lg font-semibold mb-4">Login</h2>
 
         <form onSubmit={handleSubmit} className="space-y-3">

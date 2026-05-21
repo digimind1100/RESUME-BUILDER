@@ -17,7 +17,7 @@ export function AuthProvider({ children }) {
 
   // 🔥 Global loading ONLY for app initialization
   const [loading, setLoading] = useState(true);
-const [initializing, setInitializing] = useState(true);
+  const [initializing, setInitializing] = useState(true);
 
 
   const isAuthenticated = !!user;
@@ -27,48 +27,42 @@ const [initializing, setInitializing] = useState(true);
   // ===============================
   useEffect(() => {
 
-  const loadUser = async () => {
-    try {
+    const loadUser = async () => {
+      try {
 
-      // 🔥 DEV MODE: bypass backend completely
-      if (DEV_MODE.auth.bypassLogin) {
-        setUser(DEV_MODE.auth.fakeUser);
-        setToken("dev-token");
-        setInitializing(false);
-        return;
-      }
+        const savedToken = localStorage.getItem(TOKEN_KEY);
 
-      // 🔐 Restore token from storage
-      const savedToken = localStorage.getItem(TOKEN_KEY);
+        if (!savedToken) {
+          setUser(null);
+          setInitializing(false);
+          return;
+        }
 
-      if (!savedToken) {
-        setInitializing(false);
-        return;
-      }
+        setToken(savedToken);
 
-      setToken(savedToken);
+        const res = await getCurrentUser(savedToken);
 
-      const res = await getCurrentUser(savedToken);
+        if (res?.success && res.user) {
+          setUser(res.user);
+        } else {
+          localStorage.removeItem(TOKEN_KEY);
+          setUser(null);
+          setToken(null);
+        }
 
-      if (res?.success && res.user) {
-        setUser(res.user);
-      } else {
+      } catch (error) {
+        console.error("Session restore failed:", error);
         localStorage.removeItem(TOKEN_KEY);
+        setUser(null);
         setToken(null);
+      } finally {
+        setInitializing(false);
       }
+    };
 
-    } catch (error) {
-      console.error("Session restore failed:", error);
-      localStorage.removeItem(TOKEN_KEY);
-      setToken(null);
-    } finally {
-      setInitializing(false);
-    }
-  };
+    loadUser();
 
-  loadUser();
-
-}, []);
+  }, []);
 
 
   // ===============================
@@ -78,20 +72,33 @@ const [initializing, setInitializing] = useState(true);
   try {
     const res = await signupApi(payload);
 
-    console.log("SIGNUP RESPONSE:", res); // 👈 ADD THIS
+    console.log("SIGNUP RESPONSE:", res);
 
     if (res?.ok && res?.token) {
+
+      // ✅ SAVE TOKEN
       localStorage.setItem(TOKEN_KEY, res.token);
+
+      // ✅ UPDATE STATE
+      setToken(res.token);
       setUser(res.user);
-      return { ok: true, user: res.user };
+
+      console.log("✅ TOKEN SAVED");
+
+      return {
+        ok: true,
+        user: res.user,
+      };
     }
 
     return {
       ok: false,
       message: res?.message || "Signup failed",
     };
+
   } catch (error) {
     console.error("Signup error:", error);
+
     return {
       ok: false,
       message: "Server error. Please try again.",

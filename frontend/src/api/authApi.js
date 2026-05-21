@@ -1,108 +1,111 @@
-﻿/* src/api/authApi.js */
+﻿import axios from "axios";
 
-/* ======================
-   API BASE URL
-====================== */
+/* ===============================
+   🔐 API BASE URL
+================================ */
 
-// ✅ Use ONE env variable (already set in Vercel)
-const API_BASE_URL = import.meta.env.VITE_API_URL;
+const BASE_URL =
+  import.meta.env.VITE_API_BASE_URL ||
+  "https://resume-builder-backend-66wy.onrender.com/api";
 
-// Debug (remove later if you want)
-console.log("API BASE URL:", API_BASE_URL);
+  alert("API BASE: " + BASE_URL);
 
-// if (!API_BASE_URL) {
-//   throw new Error("❌ VITE_API_URL is not defined");
-// }
+console.log("🔥 API BASE:", BASE_URL);
 
-/* ======================
-   HELPER
-====================== */
-async function parseResponse(res) {
-  let data = {};
+/* ===============================
+   🔗 AXIOS INSTANCE
+================================ */
 
+const API = axios.create({
+  baseURL: BASE_URL,
+  withCredentials: false,
+});
+
+/* ===============================
+   📝 SIGNUP
+================================ */
+
+export async function signup(data) {
   try {
-    data = await res.json();
-  } catch {
-    // response not JSON
-  }
+    const res = await API.post("/auth/signup", data);
 
-  if (!res.ok) {
+    return {
+      ok: res.data.success,
+      token: res.data.token,
+      user: res.data.user,
+      message: res.data.message,
+    };
+  } catch (err) {
+    const message =
+      err.response?.data?.message ||
+      err.message ||
+      "Signup failed";
+
+    alert("SIGNUP API ERROR: " + message);
+
     return {
       ok: false,
-      message: data.message || "Request failed",
+      message,
     };
   }
+}
 
+/* ===============================
+   🔐 LOGIN
+================================ */
+
+export async function login(data) {
+  try {
+    const res = await API.post("/auth/login", data);
+
+    return {
+      ok: res.data.success,
+      token: res.data.token,
+      user: res.data.user,
+    };
+  } catch (err) {
+    console.error("Login Error:", err);
+
+    return {
+      ok: false,
+      message:
+        err.response?.data?.message ||
+        "Login failed",
+    };
+  }
+}
+
+/* ===============================
+   👤 GET CURRENT USER
+================================ */
+
+export async function getCurrentUser(token) {
+  try {
+    const res = await API.get("/auth/me", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return {
+      success: true,
+      user: res.data.user,
+    };
+  } catch (err) {
+    return {
+      success: false,
+    };
+  }
+}
+/* ===============================
+   🚪 LOGOUT
+================================ */
+
+export async function logout() {
   return {
     ok: true,
-    ...data,
   };
 }
 
-/* ======================
-   SIGNUP
-====================== */
-export async function signup({ fullName, email, password }) {
-  const res = await fetch(`${API_BASE_URL}/api/auth/signup`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      fullName: fullName.trim(),
-      email: email.trim(),
-      password: password.trim(),
-    }),
-  });
 
-  return await parseResponse(res);
-}
-
-/* ======================
-   LOGIN
-====================== */
-export async function login({ email, password }) {
-  const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      email: email.trim(),
-      password: password.trim(),
-    }),
-  });
-
-  return await parseResponse(res);
-}
-
-/* ======================
-   GET CURRENT USER
-====================== */
-export async function getCurrentUser(token) {
-  if (!token) {
-    return { ok: false };
-  }
-
-  const res = await fetch(`${API_BASE_URL}/api/auth/me`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  return await parseResponse(res);
-}
-
-/* ======================
-   LOGOUT
-====================== */
-export async function logout() {
-  try {
-    await fetch(`${API_BASE_URL}/api/auth/logout`, {
-      method: "POST",
-    });
-    return { ok: true };
-  } catch {
-    return { ok: false };
-  }
-}
+export default API;
