@@ -243,6 +243,7 @@ export default function FlorenceClassic() {
                                     <path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1V21a1 1 0 01-1 1C10.52 22 2 13.48 2 3a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.46.57 3.58a1 1 0 01-.24 1.01l-2.2 2.2z" />
                                 </svg>
                                 <input
+                                    className="contact-input"
                                     value={resumeData.contact.phone}
                                     onChange={(e) =>
                                         handleNestedChange(
@@ -259,6 +260,7 @@ export default function FlorenceClassic() {
                                     <path d="M2 8l10 6 10-6v10a2 2 0 01-2 2H4a2 2 0 01-2-2V8z" />
                                 </svg>
                                 <input
+                                className="contact-input"
                                     value={resumeData.contact.email}
                                     onChange={(e) =>
                                         handleNestedChange(
@@ -274,6 +276,7 @@ export default function FlorenceClassic() {
                                     <path d="M12 2a7 7 0 017 7c0 5.25-7 13-7 13S5 14.25 5 9a7 7 0 017-7zm0 9.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z" />
                                 </svg>
                                 <input
+                                className="contact-input"
                                     value={resumeData.contact.location}
                                     onChange={(e) =>
                                         handleNestedChange(
@@ -289,6 +292,7 @@ export default function FlorenceClassic() {
                                     <path d="M4.98 3.5C4.98 4.88 3.87 6 2.49 6S0 4.88 0 3.5 1.11 1 2.49 1s2.49 1.12 2.49 2.5zM0.5 8h4V24h-4V8zM7.5 8h3.8v2.2h0.1c0.5-1 1.8-2.2 3.7-2.2 4 0 4.8 2.7 4.8 6.1V24h-4v-7.1c0-1.7 0-3.9-2.4-3.9s-2.7 1.8-2.7 3.8V24h-4V8z" />
                                 </svg>
                                 <input
+                                className="contact-input"
                                     value={resumeData.contact.linkedin}
                                     onChange={(e) =>
                                         handleNestedChange(
@@ -309,8 +313,8 @@ export default function FlorenceClassic() {
                                 <div key={i} className="edu-block">
 
                                     <input
+                                    className="education-input"
                                         value={edu.degree}
-
                                         onChange={(e) => {
                                             const updated = [...resumeData.education];
                                             updated[i].degree = e.target.value;
@@ -323,6 +327,7 @@ export default function FlorenceClassic() {
                                     />
 
                                     <input
+                                    className="education-input"
                                         value={edu.subject}
                                         onChange={(e) => {
                                             const updated = [...resumeData.education];
@@ -336,6 +341,7 @@ export default function FlorenceClassic() {
                                     />
 
                                     <input
+                                    className="education-input"
                                         value={edu.university}
                                         onChange={(e) => {
                                             const updated = [...resumeData.education];
@@ -351,6 +357,7 @@ export default function FlorenceClassic() {
 
 
                                     <input
+                                    className="education-input"
                                         value={edu.year}
                                         onChange={(e) => {
                                             const updated = [...resumeData.education];
@@ -374,6 +381,7 @@ export default function FlorenceClassic() {
                                 {resumeData.skills.map((skill, i) => (
                                     <li className="skills-bullet" key={i}>
                                         <input
+                                        className="skill-input"
                                             className="skills-input"
                                             value={skill}
                                             onInput={(e) => handleChange("skills", e.target.value)}
@@ -417,7 +425,7 @@ export default function FlorenceClassic() {
                                             }}
                                         />
                                     </div>
-                                    <textarea
+                                    <input
                                         className="jon-intro"
                                         value={job.intro}
                                         onChange={(e) =>

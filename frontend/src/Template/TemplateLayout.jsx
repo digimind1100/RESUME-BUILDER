@@ -36,56 +36,96 @@ const TemplateLayout = ({
       setShowSignupModal(true);
       return;
     }
-
-    alert("Download Started")
+     handleDownloadPDF();
   };
 
   const handleDownloadPDF = async () => {
   const root = resumeContainerRef.current;
   if (!root) return;
 
-  const element = root.querySelector(".florence-page");
-  if (!element) return;
+  const original = root.querySelector(".florence-page");
+  if (!original) return;
 
-  element.classList.add("pdf-export");
+  // ✅ clone template so visible template does not move
+  const clone = original.cloneNode(true);
+
+  clone.classList.add("pdf-export");
+
+  // ✅ Convert header inputs to normal text for perfect PDF capture
+const nameInput = clone.querySelector(".florence-name");
+const titleInput = clone.querySelector(".florence-title");
+
+if (nameInput) {
+  const nameText = document.createElement("div");
+  nameText.className = "florence-name pdf-header-text";
+  nameText.textContent = nameInput.value || nameInput.getAttribute("value") || "";
+  nameInput.replaceWith(nameText);
+}
+
+if (titleInput) {
+  const titleText = document.createElement("div");
+  titleText.className = "florence-title pdf-header-text";
+  titleText.textContent = titleInput.value || titleInput.getAttribute("value") || "";
+  titleInput.replaceWith(titleText);
+}
+
+// ✅ Convert summary textarea to normal text for perfect PDF capture
+const summaryInput = clone.querySelector(".summary-input");
+
+if (summaryInput) {
+  const summaryText = document.createElement("div");
+  summaryText.className = "summary-input pdf-summary-text";
+
+  summaryText.textContent =
+    summaryInput.value || summaryInput.textContent || "";
+
+  summaryInput.replaceWith(summaryText);
+}
+
+
+  // ✅ hidden capture area
+  const hiddenWrapper = document.createElement("div");
+  hiddenWrapper.style.position = "fixed";
+  hiddenWrapper.style.left = "-99999px";
+  hiddenWrapper.style.top = "0";
+  hiddenWrapper.style.width = "210mm";
+  hiddenWrapper.style.height = "297mm";
+  hiddenWrapper.style.background = "#fff";
+  hiddenWrapper.style.zIndex = "-1";
+
+  // ✅ force clone A4 without touching visible page
+  clone.style.margin = "0";
+  clone.style.transform = "none";
+  clone.style.width = "210mm";
+  clone.style.height = "297mm";
+  clone.style.overflow = "hidden";
+  clone.style.background = "#fff";
+
+  hiddenWrapper.appendChild(clone);
+  document.body.appendChild(hiddenWrapper);
 
   await new Promise((r) => setTimeout(r, 300));
 
-  const originalStyle = {
-    margin: element.style.margin,
-    transform: element.style.transform,
-    width: element.style.width,
-    height: element.style.height,
-    overflow: element.style.overflow,
-  };
-
-  element.style.margin = "0";
-  element.style.transform = "none";
-  element.style.width = "210mm";
-  element.style.height = "297mm";
-  element.style.overflow = "hidden";
-
-  const canvas = await html2canvas(element, {
+  const canvas = await html2canvas(clone, {
     scale: 3,
     useCORS: true,
     backgroundColor: "#ffffff",
     scrollX: 0,
     scrollY: 0,
+    windowWidth: clone.scrollWidth,
+    windowHeight: clone.scrollHeight,
   });
 
   const imgData = canvas.toDataURL("image/png");
+
   const pdf = new jsPDF("p", "mm", "a4");
 
   pdf.addImage(imgData, "PNG", 0, 0, 210, 297);
+
   pdf.save("FlorenceClassic-resume.pdf");
 
-  element.classList.remove("pdf-export");
-
-  element.style.margin = originalStyle.margin;
-  element.style.transform = originalStyle.transform;
-  element.style.width = originalStyle.width;
-  element.style.height = originalStyle.height;
-  element.style.overflow = originalStyle.overflow;
+  // ✅ cleanup hidden clone
+  document.body.removeChild(hiddenWrapper);
 };
 
 const continueDownload = () => {
@@ -98,6 +138,7 @@ const continueDownload = () => {
     if (pendingAction === "download") {
       setPendingAction(null);
       continueDownload();
+       handleDownloadPDF();
     }
   };
 

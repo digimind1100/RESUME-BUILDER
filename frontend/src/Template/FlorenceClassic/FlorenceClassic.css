@@ -8,12 +8,77 @@ border: 1px solid black;
     width: 210mm;
   height: 297mm;
   background: #fff;
-  margin: 30px auto;
+  margin: 0 auto;
   padding: 28px 34px;
   box-sizing: border-box;
-  font-family: Arial, Helvetica, sans-serif;
-  color: #333;
+  
 }
+
+/* ===============================
+   PREMIUM FONT CONTROL START
+================================ */
+
+.florence-page {
+  --font-main: "Georgia", "Times New Roman", serif;
+  --font-heading: "Arial", Helvetica, sans-serif;
+  --font-name: "Georgia", "Times New Roman", serif;
+
+  --name-size: 32px;
+  --title-size: 11px;
+  --section-size: 12px;
+  --body-size: 11px;
+  --small-size: 10.5px;
+
+  --body-line: 1.45;
+  --heading-spacing: 3px;
+  --name-spacing: 6px;
+}
+/* ===============================
+   PREMIUM FONT CONTROL END
+================================ */
+/* ===============================
+   MAIN STYLE FONT CONTROL START
+================================ */
+.florence-page {
+  font-family: var(--font-main);
+  font-size: var(--body-size);
+  line-height: var(--body-line);
+}
+
+.florence-name {
+  font-family: var(--font-name);
+  font-size: var(--name-size);
+  letter-spacing: var(--name-spacing);
+}
+
+.florence-title {
+  font-family: var(--font-heading);
+  font-size: var(--title-size);
+  letter-spacing: 3px;
+}
+
+section h3,
+.header-summary h4,
+.edu-heading,
+.skills-heading,
+.exp-heading {
+  font-family: var(--font-heading);
+  font-size: var(--section-size);
+  letter-spacing: var(--heading-spacing);
+}
+
+.florence-page input,
+.florence-page textarea,
+.florence-page li,
+.florence-page p {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+/* ===============================
+   MAIN STYLE FONT CONTROL END
+================================ */
 
 .florence-header {
 
@@ -72,30 +137,31 @@ border: 1px solid black;
   width: 100%;
   height: 100px;
 
-  border: none;
+  border: 2px solid transparent;
   outline: none;
+  background: transparent;
 
-  padding-top: 10px;
+  padding: 8px;
   margin: 0;
 
   resize: none;
-
   box-sizing: border-box;
 
-  /* 👇 KEY FIX */
+  font: inherit;
+  color: inherit;
+  line-height: inherit;
+
   white-space: pre-wrap;
   word-wrap: break-word;
-
-  /* text starts from top-left */
   text-align: left;
-  vertical-align: top;
+
+  transition: border-color 0.15s ease;
 }
 
 .summary-input:focus {
-  border: 2px solid #141414;
+  border-color: #141414;
   background: #fff;
 }
-
 .photo-wrap {
   width: 31%;
   box-sizing: border-box;
@@ -174,7 +240,6 @@ padding-bottom: 28px;
   position: relative;
  box-sizing: border-box;
  letter-spacing: 4px;
-
 }
 .cont-icon{
   width: 16px;
@@ -201,6 +266,8 @@ padding-bottom: 28px;
   display: flex;
   align-items: center;
   gap: 4px;
+ 
+ 
 }
 
 .linked-icon {
@@ -285,6 +352,7 @@ box-sizing: border-box;
 .skills-input{
  margin-right: 14px;
  width: 92%;
+ border:none;
 }
 .skills{
 padding-top: 22px;
@@ -304,10 +372,12 @@ box-sizing: border-box;
   width: 100%;
   word-spacing: 4px;
   letter-spacing: 0.2px;
+  border:none;
   
 }
 .exp-date input{
   width: 100%;
+  border: none;
 }
 .experience-bullet{
     padding-left: 30px;
@@ -334,18 +404,34 @@ box-sizing: border-box;
   outline: none;
   background: transparent;
   font: inherit;
- border: 1px solid #969696;
- 
 }
+
+.bullet-input {
+  border: 2px solid transparent;
+  background: transparent;
+
+  outline: none;
+  width: 100%;
+
+  font: inherit;
+  color: inherit;
+
+  box-sizing: border-box;
+
+  transition: border-color 0.15s ease;
+}
+
 .bullet-input:focus {
-  border: 2px solid #141414;
+  border-color: #141414;
   background: #fff;
 }
 
 .jon-intro{
   width: 100%;
   margin-top: 12px;
+  border:none;
 }
+
 .intro{
     padding-top: 6px;
 }
@@ -365,7 +451,7 @@ box-sizing: border-box;
 
   .florence-page {
     width: 794px;
-    min-height: 1123px;
+    min-height: 297mm;
 
     transform: scale(0.52);
     transform-origin: top center;
@@ -380,7 +466,7 @@ box-sizing: border-box;
   width: 210mm;
   height: 297mm;
   background: #fff;
-  margin: 30px auto;
+  margin: 0 auto;
   padding: 28px 34px;
   box-sizing: border-box;
   font-family: Arial, Helvetica, sans-serif;
@@ -395,7 +481,7 @@ box-sizing: border-box;
 .florence-page {
   width: 210mm;
   height: 297mm;
-  margin: 30px auto;
+  margin: 0 auto;
 }
 /* PDF EXPORT MODE */
 .pdf-export input,
@@ -457,4 +543,210 @@ box-sizing: border-box;
 .signup-form button {
   min-height: 44px;
   font-size: 16px;
+}
+
+/* ===============================
+   CONTACT INPUTS
+================================ */
+
+.contact-input {
+  width: 100%;
+
+  border: 2px solid transparent;
+  outline: none;
+
+  background: transparent;
+
+  padding: 2px 4px;
+  margin: 0;
+
+  box-sizing: border-box;
+
+  font: inherit;
+  color: inherit;
+  line-height: inherit;
+
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease;
+
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  box-shadow: none;
+
+  -webkit-tap-highlight-color: transparent;
+}
+
+.contact-input:focus {
+  border-color: #141414;
+  background: #fff;
+}
+
+
+/* ===============================
+   EDUCATION INPUTS
+================================ */
+
+.education-input {
+  width: 100%;
+
+  border: 2px solid transparent;
+  outline: none;
+
+  background: transparent;
+
+  padding: 2px 4px;
+  margin: 0;
+
+  box-sizing: border-box;
+
+  font: inherit;
+  color: inherit;
+  line-height: inherit;
+
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease;
+
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  box-shadow: none;
+
+  -webkit-tap-highlight-color: transparent;
+}
+
+.education-input:focus {
+  border-color: #141414;
+  background: #fff;
+}
+
+
+/* ===============================
+   SKILL INPUTS
+================================ */
+
+.skill-input {
+  width: 100%;
+
+  border: 2px solid transparent;
+  outline: none;
+
+  background: transparent;
+
+  padding: 2px 4px;
+  margin: 0;
+
+  box-sizing: border-box;
+
+  font: inherit;
+  color: inherit;
+  line-height: inherit;
+
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease;
+
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  box-shadow: none;
+
+  -webkit-tap-highlight-color: transparent;
+}
+
+.skill-input:focus {
+  border-color: #141414;
+  background: #fff;
+}
+
+
+/* PDF HEADER SAFE FIX */
+.pdf-export .florence-header input {
+  border: none !important;
+  outline: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+}
+
+/* keep original layout */
+.pdf-export .florence-name {
+  width: 70% !important;
+  text-align: center !important;
+  font-size: 30px !important;
+  letter-spacing: 6px !important;
+  font-weight: 600 !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+}
+
+.pdf-export .florence-title {
+  width: 40% !important;
+  text-align: center !important;
+  margin: 8px auto 0 !important;
+  font-size: 11px !important;
+  letter-spacing: 3px !important;
+  color: #535353 !important;
+  padding: 0 !important;
+}
+
+/* PDF HEADER TEXT FIX */
+.pdf-export .pdf-header-text {
+  display: block;
+  border: none !important;
+  background: transparent !important;
+  outline: none !important;
+}
+
+.pdf-export .florence-name.pdf-header-text {
+  width: 70%;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 30px;
+  letter-spacing: 6px;
+  font-weight: 600;
+  color: #333;
+  line-height: 1.2;
+}
+
+.pdf-export .florence-title.pdf-header-text {
+  width: 40%;
+  margin: 8px auto 0;
+  text-align: center;
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: #535353;
+  line-height: 1.3;
+}
+/* PDF SUMMARY TEXT FIX */
+.pdf-export .summary-input.pdf-summary-text {
+  width: 100%;
+  min-height: 100px;
+
+  border: none !important;
+  outline: none !important;
+  background: transparent !important;
+
+  padding-top: 10px;
+  padding-left: 0;
+  padding-right: 0;
+
+  box-sizing: border-box;
+
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: inherit;
+  font-weight: inherit;
+  color: #333;
+
+  line-height: 1.45;
+  text-align: left;
+
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
