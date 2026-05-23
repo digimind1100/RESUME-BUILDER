@@ -96,6 +96,9 @@ export default function FlorenceClassic() {
         }
     });
 
+    const [saveStatus, setSaveStatus] = useState("");
+const [isInitialLoad, setIsInitialLoad] = useState(true);
+
    
     const [profileImage, setProfileImage] = useState(
         "/images/cleanprofileimage.png"
@@ -128,6 +131,8 @@ export default function FlorenceClassic() {
 
         alert("Saved Successfully");
     };
+
+    
 
     const handleChange = (field, value) => {
         setResumeData((prev) => ({
@@ -176,6 +181,85 @@ export default function FlorenceClassic() {
             experience: updated,
         }));
     };
+
+    const loadResume = async () => {
+  try {
+    const token = localStorage.getItem("token");
+
+    if (!token) return;
+
+    const response = await fetch(
+      "https://YOUR-BACKEND.onrender.com/api/resume/load",
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const result = await response.json();
+
+    if (result.success && result.resume) {
+      setResumeData(result.resume);
+    }
+    setIsInitialLoad(false);
+
+  } catch (error) {
+    console.error("Load Resume Error:", error);
+  }
+};
+
+useEffect(() => {
+  loadResume();
+}, []);
+
+
+const autoSaveResume = async () => {
+  try {
+    const token = localStorage.getItem("token");
+
+    if (!token) return;
+
+    setSaveStatus("Saving...");
+
+    const response = await fetch(
+      "https://YOUR-BACKEND.onrender.com/api/resume/save",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          templateId: "FlorenceClassic",
+          data: resumeData,
+        }),
+      }
+    );
+
+    const result = await response.json();
+
+    if (result.success) {
+      setSaveStatus("Saved");
+    } else {
+      setSaveStatus("Save failed");
+    }
+  } catch (error) {
+    console.error("Auto Save Error:", error);
+    setSaveStatus("Save failed");
+  }
+};
+
+useEffect(() => {
+  if (isInitialLoad) return;
+
+  const timer = setTimeout(() => {
+    autoSaveResume();
+  }, 2000);
+
+  return () => clearTimeout(timer);
+}, [resumeData]);
 
     return (
         <TemplateLayout templateId="FlorenceClassic" onSave={handleSave}>

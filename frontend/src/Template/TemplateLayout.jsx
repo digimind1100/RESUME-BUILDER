@@ -172,9 +172,10 @@ const continueDownload = () => {
         >
           Save
         </button>
+       
 
         <button onClick={onPreview}>
-          Preview
+          Preview 
         </button>
 
         <button onClick={handleReset}>
