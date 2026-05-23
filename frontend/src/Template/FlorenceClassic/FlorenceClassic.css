@@ -4,14 +4,17 @@
 } */
 
 .florence-page {
-border: 1px solid black;
-    width: 210mm;
+  width: 210mm;
   height: 297mm;
+
   background: #fff;
   margin: 0 auto;
   padding: 28px 34px;
+
   box-sizing: border-box;
-  
+  overflow: hidden;
+
+  color: #333;
 }
 
 /* ===============================
@@ -24,12 +27,13 @@ border: 1px solid black;
   --font-name: "Georgia", "Times New Roman", serif;
 
   --name-size: 32px;
-  --title-size: 11px;
-  --section-size: 12px;
-  --body-size: 11px;
+  --title-size: 14px;
+  --summary-size: 16px;
+  --section-size: 16px;
+  --body-size: 16px;
   --small-size: 10.5px;
 
-  --body-line: 1.45;
+  --body-line: 1.2;
   --heading-spacing: 3px;
   --name-spacing: 6px;
 }
@@ -45,15 +49,19 @@ border: 1px solid black;
   line-height: var(--body-line);
 }
 
-.florence-name {
-  font-family: var(--font-name);
-  font-size: var(--name-size);
-  letter-spacing: var(--name-spacing);
+.florence-page .florence-name {
+  font-family: var(--font-name) !important;
+  font-size: var(--name-size) !important;
+  letter-spacing: var(--name-spacing) !important;
+  font-weight: 600 !important;
+  text-align: center !important;
 }
-
+.summary-input {
+  font-size: var(--summary-size);
+}
 .florence-title {
   font-family: var(--font-heading);
-  font-size: var(--title-size);
+  font-size: var(--title-size) !important;
   letter-spacing: 3px;
 }
 
@@ -71,7 +79,7 @@ section h3,
 .florence-page textarea,
 .florence-page li,
 .florence-page p {
-  font-family: inherit;
+  font-family: "Arial", Helvetica, sans-serif;
   font-size: inherit;
   line-height: inherit;
 }
@@ -144,10 +152,9 @@ section h3,
   padding: 8px;
   margin: 0;
 
-  resize: none;
   box-sizing: border-box;
 
-  font: inherit;
+ 
   color: inherit;
   line-height: inherit;
 
@@ -749,4 +756,14 @@ box-sizing: border-box;
 
   white-space: pre-wrap;
   word-wrap: break-word;
+}
+
+/* SUMMARY FONT OVERRIDE */
+.florence-page .summary-input {
+  font-size: var(--summary-size) !important;
+  line-height: var(--body-line);
+}
+.pdf-export .summary-input.pdf-summary-text {
+  font-size: var(--summary-size) !important;
+  line-height: var(--body-line);
 }
