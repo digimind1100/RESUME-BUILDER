@@ -49,11 +49,11 @@ export default function FlorenceClassic() {
                 "Brief description of your role and responsibilities under job title.",
             bullets: [
                 "Assisted with daily office operations including data entry",
-                "Communicated with customers professionally to answer inquiries, resolve issues",
-                "Managed inventory by checking stock levels, updating records, and ensuring quality",
-                "Supported sales activities by preparing quotations, following up with clients,",
+                "Communicated with customers professionally to answer inquiries",
+                "Managed inventory by checking stock levels and updating records",
+                "Supported sales activities by preparing quotations and following up",
                 "Handled administrative tasks such as scheduling meetings,",
-                "Worked collaboratively with colleagues on various projects, contributing ideas",
+                "Worked collaboratively with colleagues on various projects ideas",
             ],
         },
         {
@@ -236,7 +236,7 @@ export default function FlorenceClassic() {
 
                         {/* CONTACT */}
                         <section className="contact">
-                            <h3>CONTACT</h3>
+                            <h3 className="contact-heading">CONTACT</h3>
                             <div className="contact-row">
                                 {/* Phone SVG */}
                                 <svg className="cont-icon" width="20" height="20" fill="#0066cc" viewBox="0 0 24 24">
@@ -415,6 +415,7 @@ export default function FlorenceClassic() {
                                     </div>
                                     <div className="exp-date">
                                         <input
+                                            className="exp-input"
                                             value={`${job.company} | ${job.location} | ${job.duration}`}
                                             onChange={(e) => {
                                                 const parts = e.target.value.split("|");

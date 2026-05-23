@@ -38,94 +38,112 @@ const TemplateLayout = ({
     }
      handleDownloadPDF();
   };
-
-  const handleDownloadPDF = async () => {
+const handleDownloadPDF = async () => {
   const root = resumeContainerRef.current;
   if (!root) return;
 
   const original = root.querySelector(".florence-page");
   if (!original) return;
 
-  // ✅ clone template so visible template does not move
-  const clone = original.cloneNode(true);
+  // clone template
+  const element = original.cloneNode(true);
 
-  clone.classList.add("pdf-export");
+  // ===============================
+  // HEADER FIX
+  // ===============================
 
-  // ✅ Convert header inputs to normal text for perfect PDF capture
-const nameInput = clone.querySelector(".florence-name");
-const titleInput = clone.querySelector(".florence-title");
+  const nameInput = element.querySelector(".florence-name");
 
-if (nameInput) {
-  const nameText = document.createElement("div");
-  nameText.className = "florence-name pdf-header-text";
-  nameText.textContent = nameInput.value || nameInput.getAttribute("value") || "";
-  nameInput.replaceWith(nameText);
-}
+  if (nameInput) {
+    const div = document.createElement("div");
 
-if (titleInput) {
-  const titleText = document.createElement("div");
-  titleText.className = "florence-title pdf-header-text";
-  titleText.textContent = titleInput.value || titleInput.getAttribute("value") || "";
-  titleInput.replaceWith(titleText);
-}
+    div.className = "florence-name";
 
-// ✅ Convert summary textarea to normal text for perfect PDF capture
-const summaryInput = clone.querySelector(".summary-input");
+    div.textContent = nameInput.value;
 
-if (summaryInput) {
-  const summaryText = document.createElement("div");
-  summaryText.className = "summary-input pdf-summary-text";
+    // ✅ center fix
+    div.style.width = "70%";
+    div.style.margin = "0 auto";
+    div.style.textAlign = "center";
 
-  summaryText.textContent =
-    summaryInput.value || summaryInput.textContent || "";
+    nameInput.replaceWith(div);
+  }
 
-  summaryInput.replaceWith(summaryText);
-}
+  const titleInput = element.querySelector(".florence-title");
 
+  if (titleInput) {
+    const div = document.createElement("div");
 
-  // ✅ hidden capture area
-  const hiddenWrapper = document.createElement("div");
-  hiddenWrapper.style.position = "fixed";
-  hiddenWrapper.style.left = "-99999px";
-  hiddenWrapper.style.top = "0";
-  hiddenWrapper.style.width = "210mm";
-  hiddenWrapper.style.height = "297mm";
-  hiddenWrapper.style.background = "#fff";
-  hiddenWrapper.style.zIndex = "-1";
+    div.className = "florence-title";
 
-  // ✅ force clone A4 without touching visible page
-  clone.style.margin = "0";
-  clone.style.transform = "none";
-  clone.style.width = "210mm";
-  clone.style.height = "297mm";
-  clone.style.overflow = "hidden";
-  clone.style.background = "#fff";
+    div.textContent = titleInput.value;
 
-  hiddenWrapper.appendChild(clone);
-  document.body.appendChild(hiddenWrapper);
+    // ✅ center fix
+    div.style.width = "40%";
+    div.style.margin = "8px auto 0";
+    div.style.textAlign = "center";
 
-  await new Promise((r) => setTimeout(r, 300));
+    titleInput.replaceWith(div);
+  }
 
-  const canvas = await html2canvas(clone, {
-    scale: 3,
+  // ===============================
+  // SUMMARY FIX
+  // ===============================
+
+  const summaryInput = element.querySelector(".summary-input");
+
+  if (summaryInput) {
+    const div = document.createElement("div");
+
+    div.className = "summary-input pdf-summary-text";
+
+    div.textContent = summaryInput.value;
+
+    summaryInput.replaceWith(div);
+  }
+
+  // ===============================
+  // HIDDEN WRAPPER
+  // ===============================
+
+  const wrapper = document.createElement("div");
+
+  wrapper.style.position = "fixed";
+  wrapper.style.left = "-99999px";
+  wrapper.style.top = "0";
+  wrapper.style.background = "#fff";
+
+  element.style.margin = "0";
+  element.style.transform = "none";
+  element.style.width = "210mm";
+  element.style.height = "297mm";
+  element.style.overflow = "hidden";
+
+  wrapper.appendChild(element);
+
+  document.body.appendChild(wrapper);
+
+  await new Promise((r) => setTimeout(r, 200));
+
+  // ===============================
+  // CAPTURE
+  // ===============================
+
+  const canvas = await html2canvas(element, {
+    scale: window.devicePixelRatio * 2,
     useCORS: true,
     backgroundColor: "#ffffff",
-    scrollX: 0,
-    scrollY: 0,
-    windowWidth: clone.scrollWidth,
-    windowHeight: clone.scrollHeight,
   });
 
-  const imgData = canvas.toDataURL("image/png");
+  const imgData = canvas.toDataURL("image/jpeg", 1.0);
 
   const pdf = new jsPDF("p", "mm", "a4");
 
-  pdf.addImage(imgData, "PNG", 0, 0, 210, 297);
+  pdf.addImage(imgData, "JPEG", 0, 0, 210, 297);
 
   pdf.save("FlorenceClassic-resume.pdf");
 
-  // ✅ cleanup hidden clone
-  document.body.removeChild(hiddenWrapper);
+  document.body.removeChild(wrapper);
 };
 
 const continueDownload = () => {

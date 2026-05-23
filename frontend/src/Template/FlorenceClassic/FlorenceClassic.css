@@ -31,6 +31,9 @@
   --summary-size: 16px;
   --section-size: 16px;
   --body-size: 16px;
+  --title-size: 16px;
+  --section-size: 14px;
+  --body-size: 14px;
   --small-size: 10.5px;
 
   --body-line: 1.2;
@@ -68,6 +71,7 @@
 section h3,
 .header-summary h4,
 .edu-heading,
+.contact-heading,
 .skills-heading,
 .exp-heading {
   font-family: var(--font-heading);
@@ -91,14 +95,14 @@ section h3,
 .florence-header {
 
   text-align: center;
-  border-bottom: 1px solid #d9d9d9;
+  border-bottom: 1px solid #797878;
   padding-bottom: 40px;
   padding-top:40px;
 }
 
 
 .florence-name {
-  width: 70%;
+  width: 80%;
   text-align: center;
   font-size: 30px;
   letter-spacing: 6px;
@@ -119,7 +123,7 @@ section h3,
   align-items: flex-start;
   gap: 20px;
   height: 150px;
-  border-bottom: 1px solid #d9d9d9;
+  border-bottom: 1px solid #797878;
 }
 
 .florence-body {
@@ -130,7 +134,8 @@ section h3,
 .florence-left {
   width: 30%;
   padding-right: 24px;
-  border-right: 1px solid #ddd;
+  border-right: 1px solid #797878;
+  margin-left: 20px;
 }
 
 .florence-right {
@@ -205,7 +210,7 @@ section h3,
   bottom: 0;
   width: 10%;
   height: 1px;
-  background: #ddd;
+  background: #b4b3b3;
 }
 .summary{
   text-align: center;
@@ -320,7 +325,7 @@ padding-bottom: 28px;
   bottom: 0;
   width: 50%;
   height: 1px;
-  background: #ddd;
+  background: #b4b3b3;
 }
 .education{
 padding-top: 22px;
@@ -335,7 +340,7 @@ box-sizing: border-box;
   bottom: 0;
   width: 50%;
   height: 1px;
-  background: #ddd;
+  background:#b4b3b3;
 }
 .edu-heading{
   letter-spacing: 4px;
@@ -345,7 +350,7 @@ box-sizing: border-box;
   padding-bottom: 40px;
 }
 .edu-block{
-  padding-top: 10px;
+  padding-top: 0px;
   padding-bottom: 10px;
 }
 .skills-heading{
@@ -380,11 +385,13 @@ box-sizing: border-box;
   word-spacing: 4px;
   letter-spacing: 0.2px;
   border:none;
+  font-weight: 600;
   
 }
 .exp-date input{
   width: 100%;
   border: none;
+  font-weight: 600;
 }
 .experience-bullet{
     padding-left: 30px;
@@ -410,7 +417,6 @@ box-sizing: border-box;
   border: none;
   outline: none;
   background: transparent;
-  font: inherit;
 }
 
 .bullet-input {
@@ -435,8 +441,11 @@ box-sizing: border-box;
 
 .jon-intro{
   width: 100%;
-  margin-top: 12px;
+  margin-top: 0;
   border:none;
+}
+.exp-input{
+  margin-bottom:20px;
 }
 
 .intro{
@@ -564,7 +573,10 @@ box-sizing: border-box;
 
   background: transparent;
 
-  padding: 2px 4px;
+  padding-top: 0px;
+  padding-bottom:2px;
+  padding-left:4px;
+  padding-right: 4px;
   margin: 0;
 
   box-sizing: border-box;
@@ -604,8 +616,12 @@ box-sizing: border-box;
 
   background: transparent;
 
-  padding: 2px 4px;
+  padding-top: 0px;
+  padding-bottom:0px;
+  padding-left:4px;
+  padding-right: 4px;
   margin: 0;
+  height: 20px;
 
   box-sizing: border-box;
 
@@ -684,7 +700,7 @@ box-sizing: border-box;
 
 /* keep original layout */
 .pdf-export .florence-name {
-  width: 70% !important;
+  width: 80% !important;
   text-align: center !important;
   font-size: 30px !important;
   letter-spacing: 6px !important;
@@ -712,7 +728,7 @@ box-sizing: border-box;
 }
 
 .pdf-export .florence-name.pdf-header-text {
-  width: 70%;
+  width: 80%;
   margin: 0 auto;
   text-align: center;
   font-size: 30px;
@@ -766,4 +782,36 @@ box-sizing: border-box;
 .pdf-export .summary-input.pdf-summary-text {
   font-size: var(--summary-size) !important;
   line-height: var(--body-line);
+}
+/* ===============================
+   HEADER FONT OVERRIDE
+================================ */
+
+.florence-page .florence-name {
+  font-family: var(--font-name) !important;
+  font-size: var(--name-size) !important;
+  letter-spacing: var(--name-spacing) !important;
+  font-weight: 600 !important;
+  text-align: center !important;
+}
+
+.florence-page .florence-title {
+  font-family: var(--font-heading) !important;
+  font-size: var(--title-size) !important;
+  letter-spacing: 3px !important;
+  text-align: center !important;
+}
+
+.pdf-summary-text {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  resize: none;
+}
+/* PDF COLOR SHARPNESS */
+.florence-page {
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+* {
+  text-rendering: geometricPrecision;
 }
