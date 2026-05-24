@@ -97,9 +97,9 @@ export default function FlorenceClassic() {
     });
 
     const [saveStatus, setSaveStatus] = useState("");
-const [isInitialLoad, setIsInitialLoad] = useState(true);
+    const [isInitialLoad, setIsInitialLoad] = useState(true);
 
-   
+
     const [profileImage, setProfileImage] = useState(
         "/images/cleanprofileimage.png"
 
@@ -132,7 +132,7 @@ const [isInitialLoad, setIsInitialLoad] = useState(true);
         alert("Saved Successfully");
     };
 
-    
+
 
     const handleChange = (field, value) => {
         setResumeData((prev) => ({
@@ -183,83 +183,83 @@ const [isInitialLoad, setIsInitialLoad] = useState(true);
     };
 
     const loadResume = async () => {
-  try {
-    const token = localStorage.getItem("token");
+        try {
+            const token = localStorage.getItem("token");
 
-    if (!token) return;
+            if (!token) return;
 
-    const response = await fetch(
-      "https://YOUR-BACKEND.onrender.com/api/resume/load",
-      {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+            const response = await fetch(
+                "https://resume-builder-backend-66wy.onrender.com/api/resume/load",
+                {
+                    method: "GET",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
 
-    const result = await response.json();
+            const result = await response.json();
 
-    if (result.success && result.resume) {
-      setResumeData(result.resume);
-    }
-    setIsInitialLoad(false);
+            if (result.success && result.resume) {
+                setResumeData(result.resume);
+            }
+            setIsInitialLoad(false);
 
-  } catch (error) {
-    console.error("Load Resume Error:", error);
-  }
-};
+        } catch (error) {
+            console.error("Load Resume Error:", error);
+        }
+    };
 
-useEffect(() => {
-  loadResume();
-}, []);
+    useEffect(() => {
+        loadResume();
+    }, []);
 
 
-const autoSaveResume = async () => {
-  try {
-    const token = localStorage.getItem("token");
+    const autoSaveResume = async () => {
+        try {
+            const token = localStorage.getItem("token");
 
-    if (!token) return;
+            if (!token) return;
 
-    setSaveStatus("Saving...");
+            setSaveStatus("Saving...");
 
-    const response = await fetch(
-      "https://YOUR-BACKEND.onrender.com/api/resume/save",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          templateId: "FlorenceClassic",
-          data: resumeData,
-        }),
-      }
-    );
+            const response = await fetch(
+                "https://resume-builder-backend-66wy.onrender.com/api/resume/save",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                    body: JSON.stringify({
+                        templateId: "FlorenceClassic",
+                        data: resumeData,
+                    }),
+                }
+            );
 
-    const result = await response.json();
+            const result = await response.json();
 
-    if (result.success) {
-      setSaveStatus("Saved");
-    } else {
-      setSaveStatus("Save failed");
-    }
-  } catch (error) {
-    console.error("Auto Save Error:", error);
-    setSaveStatus("Save failed");
-  }
-};
+            if (result.success) {
+                setSaveStatus("Saved");
+            } else {
+                setSaveStatus("Save failed");
+            }
+        } catch (error) {
+            console.error("Auto Save Error:", error);
+            setSaveStatus("Save failed");
+        }
+    };
 
-useEffect(() => {
-  if (isInitialLoad) return;
+    useEffect(() => {
+        if (isInitialLoad) return;
 
-  const timer = setTimeout(() => {
-    autoSaveResume();
-  }, 2000);
+        const timer = setTimeout(() => {
+            autoSaveResume();
+        }, 2000);
 
-  return () => clearTimeout(timer);
-}, [resumeData]);
+        return () => clearTimeout(timer);
+    }, [resumeData]);
 
     return (
         <TemplateLayout templateId="FlorenceClassic" onSave={handleSave}>
@@ -344,7 +344,7 @@ useEffect(() => {
                                     <path d="M2 8l10 6 10-6v10a2 2 0 01-2 2H4a2 2 0 01-2-2V8z" />
                                 </svg>
                                 <input
-                                className="contact-input"
+                                    className="contact-input"
                                     value={resumeData.contact.email}
                                     onChange={(e) =>
                                         handleNestedChange(
@@ -360,7 +360,7 @@ useEffect(() => {
                                     <path d="M12 2a7 7 0 017 7c0 5.25-7 13-7 13S5 14.25 5 9a7 7 0 017-7zm0 9.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z" />
                                 </svg>
                                 <input
-                                className="contact-input"
+                                    className="contact-input"
                                     value={resumeData.contact.location}
                                     onChange={(e) =>
                                         handleNestedChange(
@@ -376,7 +376,7 @@ useEffect(() => {
                                     <path d="M4.98 3.5C4.98 4.88 3.87 6 2.49 6S0 4.88 0 3.5 1.11 1 2.49 1s2.49 1.12 2.49 2.5zM0.5 8h4V24h-4V8zM7.5 8h3.8v2.2h0.1c0.5-1 1.8-2.2 3.7-2.2 4 0 4.8 2.7 4.8 6.1V24h-4v-7.1c0-1.7 0-3.9-2.4-3.9s-2.7 1.8-2.7 3.8V24h-4V8z" />
                                 </svg>
                                 <input
-                                className="contact-input"
+                                    className="contact-input"
                                     value={resumeData.contact.linkedin}
                                     onChange={(e) =>
                                         handleNestedChange(
@@ -397,7 +397,7 @@ useEffect(() => {
                                 <div key={i} className="edu-block">
 
                                     <input
-                                    className="education-input"
+                                        className="education-input"
                                         value={edu.degree}
                                         onChange={(e) => {
                                             const updated = [...resumeData.education];
@@ -411,7 +411,7 @@ useEffect(() => {
                                     />
 
                                     <input
-                                    className="education-input"
+                                        className="education-input"
                                         value={edu.subject}
                                         onChange={(e) => {
                                             const updated = [...resumeData.education];
@@ -425,7 +425,7 @@ useEffect(() => {
                                     />
 
                                     <input
-                                    className="education-input"
+                                        className="education-input"
                                         value={edu.university}
                                         onChange={(e) => {
                                             const updated = [...resumeData.education];
@@ -441,7 +441,7 @@ useEffect(() => {
 
 
                                     <input
-                                    className="education-input"
+                                        className="education-input"
                                         value={edu.year}
                                         onChange={(e) => {
                                             const updated = [...resumeData.education];
@@ -465,7 +465,7 @@ useEffect(() => {
                                 {resumeData.skills.map((skill, i) => (
                                     <li className="skills-bullet" key={i}>
                                         <input
-                                        className="skill-input"
+                                            className="skill-input"
                                             className="skills-input"
                                             value={skill}
                                             onInput={(e) => handleChange("skills", e.target.value)}
