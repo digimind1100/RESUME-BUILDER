@@ -13,17 +13,20 @@ export default function LoginModal({ onClose }) {
 
     const result = await login({ email, password });
 
-    if (result.ok) {
-      toast.success("Login successful");
-      onClose();
-    } else {
+   if (result.ok) {
+  toast.success("Login successful");
+  onClose();
+
+  localStorage.setItem("resumeLoginEvent", Date.now().toString());
+}
+    else {
       toast.error(result.message || "Login failed");
     }
   }
 
   return (
     <div className="signup-overlay">
-  <div className="signup-modal animate-fadeIn">
+      <div className="signup-modal animate-fadeIn">
         <h2 className="text-lg font-semibold mb-4">Login</h2>
 
         <form onSubmit={handleSubmit} className="space-y-3">

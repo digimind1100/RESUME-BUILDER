@@ -7,8 +7,8 @@ import SignupModal from "../components/auth/SignupModal";
 
 const TemplateLayout = ({
   children,
-  onSave,
-  onPreview
+  onPreview,
+  handleSaveResume,
 }) => {
 
   const handleReset = () => {
@@ -36,119 +36,119 @@ const TemplateLayout = ({
       setShowSignupModal(true);
       return;
     }
-     handleDownloadPDF();
+    handleDownloadPDF();
   };
-const handleDownloadPDF = async () => {
-  const root = resumeContainerRef.current;
-  if (!root) return;
+  const handleDownloadPDF = async () => {
+    const root = resumeContainerRef.current;
+    if (!root) return;
 
-  const original = root.querySelector(".florence-page");
-  if (!original) return;
+    const original = root.querySelector(".florence-page");
+    if (!original) return;
 
-  // clone template
-  const element = original.cloneNode(true);
+    // clone template
+    const element = original.cloneNode(true);
 
-  // ===============================
-  // HEADER FIX
-  // ===============================
+    // ===============================
+    // HEADER FIX
+    // ===============================
 
-  const nameInput = element.querySelector(".florence-name");
+    const nameInput = element.querySelector(".florence-name");
 
-  if (nameInput) {
-    const div = document.createElement("div");
+    if (nameInput) {
+      const div = document.createElement("div");
 
-    div.className = "florence-name";
+      div.className = "florence-name";
 
-    div.textContent = nameInput.value;
+      div.textContent = nameInput.value;
 
-    // ✅ center fix
-    div.style.width = "70%";
-    div.style.margin = "0 auto";
-    div.style.textAlign = "center";
+      // ✅ center fix
+      div.style.width = "70%";
+      div.style.margin = "0 auto";
+      div.style.textAlign = "center";
 
-    nameInput.replaceWith(div);
-  }
+      nameInput.replaceWith(div);
+    }
 
-  const titleInput = element.querySelector(".florence-title");
+    const titleInput = element.querySelector(".florence-title");
 
-  if (titleInput) {
-    const div = document.createElement("div");
+    if (titleInput) {
+      const div = document.createElement("div");
 
-    div.className = "florence-title";
+      div.className = "florence-title";
 
-    div.textContent = titleInput.value;
+      div.textContent = titleInput.value;
 
-    // ✅ center fix
-    div.style.width = "40%";
-    div.style.margin = "8px auto 0";
-    div.style.textAlign = "center";
+      // ✅ center fix
+      div.style.width = "40%";
+      div.style.margin = "8px auto 0";
+      div.style.textAlign = "center";
 
-    titleInput.replaceWith(div);
-  }
+      titleInput.replaceWith(div);
+    }
 
-  // ===============================
-  // SUMMARY FIX
-  // ===============================
+    // ===============================
+    // SUMMARY FIX
+    // ===============================
 
-  const summaryInput = element.querySelector(".summary-input");
+    const summaryInput = element.querySelector(".summary-input");
 
-  if (summaryInput) {
-    const div = document.createElement("div");
+    if (summaryInput) {
+      const div = document.createElement("div");
 
-    div.className = "summary-input pdf-summary-text";
+      div.className = "summary-input pdf-summary-text";
 
-    div.textContent = summaryInput.value;
+      div.textContent = summaryInput.value;
 
-    summaryInput.replaceWith(div);
-  }
+      summaryInput.replaceWith(div);
+    }
 
-  // ===============================
-  // HIDDEN WRAPPER
-  // ===============================
+    // ===============================
+    // HIDDEN WRAPPER
+    // ===============================
 
-  const wrapper = document.createElement("div");
+    const wrapper = document.createElement("div");
 
-  wrapper.style.position = "fixed";
-  wrapper.style.left = "-99999px";
-  wrapper.style.top = "0";
-  wrapper.style.background = "#fff";
+    wrapper.style.position = "fixed";
+    wrapper.style.left = "-99999px";
+    wrapper.style.top = "0";
+    wrapper.style.background = "#fff";
 
-  element.style.margin = "0";
-  element.style.transform = "none";
-  element.style.width = "210mm";
-  element.style.height = "297mm";
-  element.style.overflow = "hidden";
+    element.style.margin = "0";
+    element.style.transform = "none";
+    element.style.width = "210mm";
+    element.style.height = "297mm";
+    element.style.overflow = "hidden";
 
-  wrapper.appendChild(element);
+    wrapper.appendChild(element);
 
-  document.body.appendChild(wrapper);
+    document.body.appendChild(wrapper);
 
-  await new Promise((r) => setTimeout(r, 200));
+    await new Promise((r) => setTimeout(r, 200));
 
-  // ===============================
-  // CAPTURE
-  // ===============================
+    // ===============================
+    // CAPTURE
+    // ===============================
 
-  const canvas = await html2canvas(element, {
-    scale: window.devicePixelRatio * 2,
-    useCORS: true,
-    backgroundColor: "#ffffff",
-  });
+    const canvas = await html2canvas(element, {
+      scale: window.devicePixelRatio * 2,
+      useCORS: true,
+      backgroundColor: "#ffffff",
+    });
 
-  const imgData = canvas.toDataURL("image/jpeg", 1.0);
+    const imgData = canvas.toDataURL("image/jpeg", 1.0);
 
-  const pdf = new jsPDF("p", "mm", "a4");
+    const pdf = new jsPDF("p", "mm", "a4");
 
-  pdf.addImage(imgData, "JPEG", 0, 0, 210, 297);
+    pdf.addImage(imgData, "JPEG", 0, 0, 210, 297);
 
-  pdf.save("FlorenceClassic-resume.pdf");
+    pdf.save("FlorenceClassic-resume.pdf");
 
-  document.body.removeChild(wrapper);
-};
+    document.body.removeChild(wrapper);
+  };
 
-const continueDownload = () => {
-  handleDownloadPDF();
-};
+  const continueDownload = () => {
+    handleDownloadPDF();
+  };
 
   const handleSignupSuccess = () => {
     setShowSignupModal(false);
@@ -156,7 +156,7 @@ const continueDownload = () => {
     if (pendingAction === "download") {
       setPendingAction(null);
       continueDownload();
-       handleDownloadPDF();
+      handleDownloadPDF();
     }
   };
 
@@ -167,15 +167,13 @@ const continueDownload = () => {
       {/* Top Bar */}
       <div className="toolbar">
 
-        <button
-          onClick={onSave}
-        >
-          Save
+        <button onClick={handleSaveResume}>
+          Save Resume in Database
         </button>
-       
+
 
         <button onClick={onPreview}>
-          Preview 
+          Preview
         </button>
 
         <button onClick={handleReset}>
@@ -190,8 +188,8 @@ const continueDownload = () => {
 
       {/* Resume Content */}
       <div className="content" ref={resumeContainerRef}>
-  {children}
-</div>
+        {children}
+      </div>
 
       {showSignupModal && (
         <SignupModal

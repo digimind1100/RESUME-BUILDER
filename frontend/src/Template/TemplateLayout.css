@@ -1,27 +1,30 @@
-.editor-area{
-margin-top:90px; /* navbar 70 + gap 20 */
-
-display:flex;
-flex-direction:column;
-align-items:center;
-padding:0 20px;
-}
-.resume-a4.pdf-mode {
-  transform: none !important;
-  zoom: 1 !important;
-  margin: 0 !important;
+.template-layout {
+  padding-top: 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.resume-a4.pdf-mode * {
+/* Toolbar separate block */
+.template-layout .toolbar {
+  width: 100%;
+  height: 220px;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 14px;
+
+  padding-top: 30px;
   box-sizing: border-box;
+  z-index: 9999;
 }
 
-.save-btn{
-  position: relative;
-  z-index: 9999;
-  pointer-events: auto;
+/* Resume area */
+.template-layout .content {
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
-.toolbar{
-  position: sticky;
-  z-index: 9999;
-}
+
+/* Button text change is in JSX, not CSS */

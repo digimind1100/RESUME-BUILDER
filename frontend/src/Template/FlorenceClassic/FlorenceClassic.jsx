@@ -123,16 +123,43 @@ export default function FlorenceClassic() {
         );
     }, [resumeData]);
 
-    const handleSave = () => {
-        localStorage.setItem(
-            STORAGE_KEY,
-            JSON.stringify(resumeData)
-        );
+    const handleSaveResume = async () => {
+        try {
+            const token = localStorage.getItem("token");
 
-        alert("Saved Successfully");
+            if (!token) {
+                alert("Please login first");
+                return;
+            }
+
+            const response = await fetch(
+                "https://resume-builder-backend-66wy.onrender.com/api/resume/save",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                    body: JSON.stringify({
+                        templateId: "FlorenceClassic",
+                        data: resumeData,
+                    }),
+                }
+            );
+
+            const result = await response.json();
+
+            if (!response.ok) {
+                alert(result.message || "Save failed");
+                return;
+            }
+
+            alert("Resume saved to MongoDB successfully");
+        } catch (error) {
+            console.error("Save resume error:", error);
+            alert("Save failed");
+        }
     };
-
-
 
     const handleChange = (field, value) => {
         setResumeData((prev) => ({
@@ -186,7 +213,11 @@ export default function FlorenceClassic() {
         try {
             const token = localStorage.getItem("token");
 
-            if (!token) return;
+            // ✅ Anonymous user: do NOT load MongoDB
+            if (!token) {
+                setIsInitialLoad(false);
+                return;
+            }
 
             const response = await fetch(
                 "https://resume-builder-backend-66wy.onrender.com/api/resume/load",
@@ -200,13 +231,13 @@ export default function FlorenceClassic() {
 
             const result = await response.json();
 
-            if (result.success && result.resume) {
+            if (response.ok && result.success && result.resume) {
                 setResumeData(result.resume);
             }
-            setIsInitialLoad(false);
-
         } catch (error) {
             console.error("Load Resume Error:", error);
+        } finally {
+            setIsInitialLoad(false);
         }
     };
 
@@ -214,6 +245,49 @@ export default function FlorenceClassic() {
         loadResume();
     }, []);
 
+
+    useEffect(() => {
+        const handleUserLoggedIn = async () => {
+            console.log("✅ userLoggedIn event received");
+            await loadResume();
+        };
+
+        window.addEventListener("userLoggedIn", handleUserLoggedIn);
+
+        return () => {
+            window.removeEventListener("userLoggedIn", handleUserLoggedIn);
+        };
+    }, []);
+
+    useEffect(() => {
+        const checkLoginAndLoadResume = () => {
+            const token = localStorage.getItem("token");
+
+            if (token) {
+                console.log("✅ Login detected, loading MongoDB resume");
+                loadResume();
+            }
+        };
+
+        window.addEventListener("storage", checkLoginAndLoadResume);
+
+        return () => {
+            window.removeEventListener("storage", checkLoginAndLoadResume);
+        };
+    }, []);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            const token = localStorage.getItem("token");
+
+            if (token) {
+                loadResume();
+                clearInterval(interval);
+            }
+        }, 500);
+
+        return () => clearInterval(interval);
+    }, []);
 
     const autoSaveResume = async () => {
         try {
@@ -251,6 +325,36 @@ export default function FlorenceClassic() {
         }
     };
 
+
+    const syncLocalResumeToMongoDB = async () => {
+        try {
+            const token = localStorage.getItem("token");
+            const localResume = localStorage.getItem(STORAGE_KEY);
+
+            if (!token || !localResume) return;
+
+            await fetch(
+                "https://resume-builder-backend-66wy.onrender.com/api/resume/save",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                    body: JSON.stringify({
+                        templateId: "FlorenceClassic",
+                        data: JSON.parse(localResume),
+                    }),
+                }
+            );
+
+            console.log("✅ Local resume synced to MongoDB");
+
+        } catch (error) {
+            console.error("SYNC ERROR:", error);
+        }
+    };
+
     useEffect(() => {
         if (isInitialLoad) return;
 
@@ -261,8 +365,24 @@ export default function FlorenceClassic() {
         return () => clearTimeout(timer);
     }, [resumeData]);
 
+    useEffect(() => {
+        const handleUserLoggedIn = () => {
+            loadResume();
+        };
+
+        window.addEventListener("userLoggedIn", handleUserLoggedIn);
+
+        return () => {
+            window.removeEventListener("userLoggedIn", handleUserLoggedIn);
+        };
+    }, []);
+
     return (
-        <TemplateLayout templateId="FlorenceClassic" onSave={handleSave}>
+        <TemplateLayout templateId="FlorenceClassic"
+            handleSaveResume={handleSaveResume}
+            resumeData={resumeData}
+            setResumeData={setResumeData}
+        >
 
             <div className="florence-page">
 
