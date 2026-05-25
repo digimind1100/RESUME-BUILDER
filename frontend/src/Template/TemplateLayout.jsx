@@ -1,43 +1,98 @@
 import { useAuth } from "../context/AuthContext";
-import React, { useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import html2pdf from "html2pdf.js";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import SignupModal from "../components/auth/SignupModal";
+import PaymentModal from "../components/payment/PaymentModal";
+import "./TemplateLayout.css";
 
 const TemplateLayout = ({
   children,
   onPreview,
   handleSaveResume,
+  checkPaymentStatus,
 }) => {
 
-  const handleReset = () => {
+  const [pendingAction, setPendingAction] = useState(null);
+  const [showSignupModal, setShowSignupModal] = useState(false);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+
+  const resumeRef = React.useRef(null);
+  const resumeContainerRef = useRef(null);
+
+    const handleReset = () => {
     localStorage.removeItem("FlorenceClassic");
     alert("Saved data removed");
     window.location.reload();
   };
 
-  const [pendingAction, setPendingAction] = useState(null);
-  const [showSignupModal, setShowSignupModal] = useState(false);
+useEffect(() => {
 
-  const resumeRef = React.useRef(null);
-  const resumeContainerRef = useRef(null);
+  const openSignup = () => {
+    setShowSignupModal(true);
+  };
 
-  const { isAuthenticated } = useAuth();
-  console.log("STATE showSignupModal =", showSignupModal);
+  const openPayment = () => {
+    setShowPaymentModal(true);
+  };
 
-  const handleDownload = () => {
+  window.addEventListener(
+    "openSignupModal",
+    openSignup
+  );
+
+  window.addEventListener(
+    "openPaymentModal",
+    openPayment
+  );
+
+  return () => {
+
+    window.removeEventListener(
+      "openSignupModal",
+      openSignup
+    );
+
+    window.removeEventListener(
+      "openPaymentModal",
+      openPayment
+    );
+
+  };
+
+}, []);
+
+   const handleDownload = async () => {
     console.log("CLICKED DOWNLOAD");
 
-    if (!isAuthenticated) {
-      console.log("OPEN SIGNUP MODAL");
+    const token = localStorage.getItem("token");
 
-      setPendingAction("download");   // 🔥 ADD THIS
-      setShowSignupModal(true);
+    if (!token || !isAuthenticated) {
+      setPendingAction("download");
+      window.dispatchEvent(new Event("openSignupModal"));
       return;
     }
+
+    if (typeof checkPaymentStatus !== "function") {
+      console.error("checkPaymentStatus function missing");
+      return;
+    }
+
+    const hasPaid = await checkPaymentStatus();
+
+    if (!hasPaid) {
+      setPendingAction("download");
+      window.dispatchEvent(new Event("openPaymentModal"));
+      return;
+    }
+
     handleDownloadPDF();
   };
+
+
+  
+
   const handleDownloadPDF = async () => {
     const root = resumeContainerRef.current;
     if (!root) return;
@@ -197,6 +252,20 @@ const TemplateLayout = ({
           onSuccess={handleSignupSuccess}
         />
       )}
+
+      {showPaymentModal && (
+  <PaymentModal
+    onClose={() => setShowPaymentModal(false)}
+    onSuccess={() => {
+      setShowPaymentModal(false);
+
+      // continue PDF download after payment
+      window.dispatchEvent(
+        new Event("paymentSuccess")
+      );
+    }}
+  />
+)}
 
     </div>
   );

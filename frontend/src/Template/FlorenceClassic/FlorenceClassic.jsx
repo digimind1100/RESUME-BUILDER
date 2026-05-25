@@ -127,8 +127,9 @@ export default function FlorenceClassic() {
         try {
             const token = localStorage.getItem("token");
 
+            // ✅ Anonymous user → open signup modal
             if (!token) {
-                alert("Please login first");
+                window.dispatchEvent(new Event("openSignupModal"));
                 return;
             }
 
@@ -150,16 +151,41 @@ export default function FlorenceClassic() {
             const result = await response.json();
 
             if (!response.ok) {
+                console.error("SAVE FAILED:", result);
+
                 alert(result.message || "Save failed");
                 return;
             }
 
+            // ✅ Success
             alert("Resume saved to MongoDB successfully");
+
         } catch (error) {
             console.error("Save resume error:", error);
+
             alert("Save failed");
         }
     };
+
+
+    /* =========================================
+       AUTO SAVE AFTER LOGIN / SIGNUP
+    ========================================= */
+    useEffect(() => {
+        const handleSaveAfterLogin = async () => {
+            console.log("✅ Save after login triggered");
+
+            setTimeout(() => {
+                handleSaveResume();
+            }, 800);
+        };
+
+        window.addEventListener("saveResumeAfterLogin", handleSaveAfterLogin);
+
+        return () => {
+            window.removeEventListener("saveResumeAfterLogin", handleSaveAfterLogin);
+        };
+    }, [resumeData]);
 
     const handleChange = (field, value) => {
         setResumeData((prev) => ({
@@ -324,7 +350,30 @@ export default function FlorenceClassic() {
             setSaveStatus("Save failed");
         }
     };
+// =======================================================
+    useEffect(() => {
 
+    const continuePDFDownload = () => {
+        console.log("✅ Payment success → continue PDF");
+
+        generatePDF(); // OR your actual PDF function
+    };
+
+    window.addEventListener(
+        "paymentSuccess",
+        continuePDFDownload
+    );
+
+    return () => {
+        window.removeEventListener(
+            "paymentSuccess",
+            continuePDFDownload
+        );
+    };
+
+}, []);
+
+// ======================================================
 
     const syncLocalResumeToMongoDB = async () => {
         try {
@@ -377,11 +426,41 @@ export default function FlorenceClassic() {
         };
     }, []);
 
+    // PAYMENT MODULE START
+
+const checkPaymentStatus = async () => {
+  try {
+    const token = localStorage.getItem("token");
+
+    if (!token) return false;
+
+    const response = await fetch(
+      "https://resume-builder-backend-66wy.onrender.com/api/payments/check",
+      {
+    
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const result = await response.json();
+
+    return result.isPaid === true;
+
+  } catch (error) {
+    console.error("Payment check error:", error);
+    return false;
+  }
+};
+    // PAYMENT MODULE END
+
     return (
         <TemplateLayout templateId="FlorenceClassic"
             handleSaveResume={handleSaveResume}
             resumeData={resumeData}
             setResumeData={setResumeData}
+           checkPaymentStatus={checkPaymentStatus}
         >
 
             <div className="florence-page">
