@@ -350,30 +350,30 @@ export default function FlorenceClassic() {
             setSaveStatus("Save failed");
         }
     };
-// =======================================================
+    // =======================================================
     useEffect(() => {
 
-    const continuePDFDownload = () => {
-        console.log("✅ Payment success → continue PDF");
+        const continuePDFDownload = () => {
+            console.log("✅ Payment success → continue PDF");
 
-        generatePDF(); // OR your actual PDF function
-    };
+            generatePDF(); // OR your actual PDF function
+        };
 
-    window.addEventListener(
-        "paymentSuccess",
-        continuePDFDownload
-    );
-
-    return () => {
-        window.removeEventListener(
+        window.addEventListener(
             "paymentSuccess",
             continuePDFDownload
         );
-    };
 
-}, []);
+        return () => {
+            window.removeEventListener(
+                "paymentSuccess",
+                continuePDFDownload
+            );
+        };
 
-// ======================================================
+    }, []);
+
+    // ======================================================
 
     const syncLocalResumeToMongoDB = async () => {
         try {
@@ -428,8 +428,9 @@ export default function FlorenceClassic() {
 
     // PAYMENT MODULE START
 
-const checkPaymentStatus = async () => {
+    const checkPaymentStatus = async () => {
   try {
+
     const token = localStorage.getItem("token");
 
     if (!token) return false;
@@ -437,7 +438,7 @@ const checkPaymentStatus = async () => {
     const response = await fetch(
       "https://resume-builder-backend-66wy.onrender.com/api/payments/check",
       {
-    
+        method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -446,10 +447,22 @@ const checkPaymentStatus = async () => {
 
     const result = await response.json();
 
-    return result.isPaid === true;
+    console.log("PAYMENT CHECK RESULT:", result);
+
+    return (
+      result.isPaid === true ||
+      result.plan === "premium" ||
+      result.plan === "lifetime" ||
+      result.plan === "monthly-pro"
+    );
 
   } catch (error) {
-    console.error("Payment check error:", error);
+
+    console.error(
+      "Payment check error:",
+      error
+    );
+
     return false;
   }
 };
@@ -460,7 +473,7 @@ const checkPaymentStatus = async () => {
             handleSaveResume={handleSaveResume}
             resumeData={resumeData}
             setResumeData={setResumeData}
-           checkPaymentStatus={checkPaymentStatus}
+            checkPaymentStatus={checkPaymentStatus}
         >
 
             <div className="florence-page">
@@ -489,7 +502,16 @@ const checkPaymentStatus = async () => {
                 <div className="header-section">
                     <div
                         className="photo-wrap"
-                        onClick={() => fileInputRef.current.click()}
+                        onClick={() => {
+                            const token = localStorage.getItem("token");
+
+                            if (!token) {
+                                window.dispatchEvent(new Event("openSignupModal"));
+                                return;
+                            }
+
+                            fileInputRef.current?.click();
+                        }}
                         style={{ cursor: "pointer" }}
                     >
                         <img src={profileImage} alt="Profile" />

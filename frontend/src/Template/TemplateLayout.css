@@ -27,4 +27,11 @@
   width: 100%;
 }
 
+.toolbar{
+  position: sticky;
+ 
+  z-index: 1000;
+}
+
 /* Button text change is in JSX, not CSS */
+

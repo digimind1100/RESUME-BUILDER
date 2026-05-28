@@ -6,6 +6,8 @@ import jsPDF from "jspdf";
 import SignupModal from "../components/auth/SignupModal";
 import PaymentModal from "../components/payment/PaymentModal";
 import "./TemplateLayout.css";
+import { useNavigate } from "react-router-dom";
+
 
 const TemplateLayout = ({
   children,
@@ -20,50 +22,54 @@ const TemplateLayout = ({
 
   const resumeRef = React.useRef(null);
   const resumeContainerRef = useRef(null);
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
 
-    const handleReset = () => {
+  const handleReset = () => {
     localStorage.removeItem("FlorenceClassic");
     alert("Saved data removed");
     window.location.reload();
   };
 
-useEffect(() => {
+  const pdfGeneratingRef = useRef(false);
 
-  const openSignup = () => {
-    setShowSignupModal(true);
-  };
+  useEffect(() => {
 
-  const openPayment = () => {
-    setShowPaymentModal(true);
-  };
+    const openSignup = () => {
+      setShowSignupModal(true);
+    };
 
-  window.addEventListener(
-    "openSignupModal",
-    openSignup
-  );
+    const openPayment = () => {
+      setShowPaymentModal(true);
+    };
 
-  window.addEventListener(
-    "openPaymentModal",
-    openPayment
-  );
-
-  return () => {
-
-    window.removeEventListener(
+    window.addEventListener(
       "openSignupModal",
       openSignup
     );
 
-    window.removeEventListener(
+    window.addEventListener(
       "openPaymentModal",
       openPayment
     );
 
-  };
+    return () => {
 
-}, []);
+      window.removeEventListener(
+        "openSignupModal",
+        openSignup
+      );
 
-   const handleDownload = async () => {
+      window.removeEventListener(
+        "openPaymentModal",
+        openPayment
+      );
+
+    };
+
+  }, []);
+
+  const handleDownload = async () => {
     console.log("CLICKED DOWNLOAD");
 
     const token = localStorage.getItem("token");
@@ -80,6 +86,7 @@ useEffect(() => {
     }
 
     const hasPaid = await checkPaymentStatus();
+ console.log("HAS PAID:", hasPaid);
 
     if (!hasPaid) {
       setPendingAction("download");
@@ -89,19 +96,26 @@ useEffect(() => {
 
     handleDownloadPDF();
   };
+const handleDownloadPDF = async () => {
 
+  console.log("DOWNLOAD CLICKED");
 
-  
+  if (pdfGeneratingRef.current) return;
 
-  const handleDownloadPDF = async () => {
-    const root = resumeContainerRef.current;
-    if (!root) return;
+  pdfGeneratingRef.current = true;
 
-    const original = root.querySelector(".florence-page");
-    if (!original) return;
+  let wrapper = null;
 
-    // clone template
-    const element = original.cloneNode(true);
+  try {
+    const originalElement = resumeContainerRef.current?.firstElementChild;
+
+    if (!originalElement) {
+      console.error("Resume element not found");
+      return;
+    }
+
+    // ✅ Clone template, do not move real DOM
+    const element = originalElement.cloneNode(true);
 
     // ===============================
     // HEADER FIX
@@ -111,12 +125,9 @@ useEffect(() => {
 
     if (nameInput) {
       const div = document.createElement("div");
-
       div.className = "florence-name";
+      div.textContent = nameInput.value || nameInput.textContent;
 
-      div.textContent = nameInput.value;
-
-      // ✅ center fix
       div.style.width = "70%";
       div.style.margin = "0 auto";
       div.style.textAlign = "center";
@@ -128,12 +139,9 @@ useEffect(() => {
 
     if (titleInput) {
       const div = document.createElement("div");
-
       div.className = "florence-title";
+      div.textContent = titleInput.value || titleInput.textContent;
 
-      div.textContent = titleInput.value;
-
-      // ✅ center fix
       div.style.width = "40%";
       div.style.margin = "8px auto 0";
       div.style.textAlign = "center";
@@ -141,18 +149,12 @@ useEffect(() => {
       titleInput.replaceWith(div);
     }
 
-    // ===============================
-    // SUMMARY FIX
-    // ===============================
-
     const summaryInput = element.querySelector(".summary-input");
 
     if (summaryInput) {
       const div = document.createElement("div");
-
       div.className = "summary-input pdf-summary-text";
-
-      div.textContent = summaryInput.value;
+      div.textContent = summaryInput.value || summaryInput.textContent;
 
       summaryInput.replaceWith(div);
     }
@@ -161,7 +163,7 @@ useEffect(() => {
     // HIDDEN WRAPPER
     // ===============================
 
-    const wrapper = document.createElement("div");
+    wrapper = document.createElement("div");
 
     wrapper.style.position = "fixed";
     wrapper.style.left = "-99999px";
@@ -175,14 +177,9 @@ useEffect(() => {
     element.style.overflow = "hidden";
 
     wrapper.appendChild(element);
-
     document.body.appendChild(wrapper);
 
     await new Promise((r) => setTimeout(r, 200));
-
-    // ===============================
-    // CAPTURE
-    // ===============================
 
     const canvas = await html2canvas(element, {
       scale: window.devicePixelRatio * 2,
@@ -198,21 +195,23 @@ useEffect(() => {
 
     pdf.save("FlorenceClassic-resume.pdf");
 
-    document.body.removeChild(wrapper);
-  };
+  } catch (error) {
+    console.error("PDF download error:", error);
+  } finally {
+    if (wrapper && document.body.contains(wrapper)) {
+      document.body.removeChild(wrapper);
+    }
 
-  const continueDownload = () => {
-    handleDownloadPDF();
-  };
+    setTimeout(() => {
+      pdfGeneratingRef.current = false;
+    }, 1000);
+  }
+};
+
 
   const handleSignupSuccess = () => {
     setShowSignupModal(false);
 
-    if (pendingAction === "download") {
-      setPendingAction(null);
-      continueDownload();
-      handleDownloadPDF();
-    }
   };
 
 
@@ -227,9 +226,11 @@ useEffect(() => {
         </button>
 
 
-        <button onClick={onPreview}>
-          Preview
-        </button>
+        <button
+  onClick={() => navigate("/templates")}
+>
+  Templates
+</button>
 
         <button onClick={handleReset}>
           Reset
@@ -254,18 +255,18 @@ useEffect(() => {
       )}
 
       {showPaymentModal && (
-  <PaymentModal
-    onClose={() => setShowPaymentModal(false)}
-    onSuccess={() => {
-      setShowPaymentModal(false);
+        <PaymentModal
+          onClose={() => setShowPaymentModal(false)}
+          onSuccess={() => {
 
-      // continue PDF download after payment
-      window.dispatchEvent(
-        new Event("paymentSuccess")
-      );
-    }}
-  />
-)}
+            setShowPaymentModal(false);
+
+            // Continue PDF download
+            handleDownloadPDF();
+
+          }}
+        />
+      )}
 
     </div>
   );
