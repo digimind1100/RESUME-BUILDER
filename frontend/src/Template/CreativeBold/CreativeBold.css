@@ -176,7 +176,7 @@
   font-size: 34px;
   font-weight: 800;
   letter-spacing: 1px;
-  color: #1f1f1f;
+  color: #727171;
   line-height: 1.1;
   text-align: center;
 }
@@ -599,8 +599,53 @@
   outline: none;
   font-size: 16px;
   font-weight: 800;
-  color: #222;
+  color:#727171;
   margin-bottom: 4px;
+}
+/* =================================
+   SMOOTH EDIT HIGHLIGHT
+================================= */
+
+.cb-name,
+.cb-role,
+.cb-left-role-text,
+.cb-left-input,
+.cb-text-summary,
+.cb-exp-title,
+.cb-exp-description,
+.cb-edu-institute,
+.cb-edu-degree,
+.cb-edu-location,
+.cb-edu-description,
+.cb-date {
+
+  border: 1.5px dashed transparent;
+  transition: all 0.18s ease;
+
+  box-sizing: border-box;
+}
+
+/* Focus */
+.cb-name:focus,
+.cb-role:focus,
+.cb-left-role-text:focus,
+.cb-left-input:focus,
+.cb-text-summary:focus,
+.cb-exp-title:focus,
+.cb-exp-description:focus,
+.cb-edu-institute:focus,
+.cb-edu-degree:focus,
+.cb-edu-location:focus,
+.cb-edu-description:focus,
+.cb-date:focus {
+
+  border-color: #b22222;
+
+  background: rgba(178, 34, 34, 0.05);
+
+  border-radius: 4px;
+
+  outline: none;
 }
 
 /* 

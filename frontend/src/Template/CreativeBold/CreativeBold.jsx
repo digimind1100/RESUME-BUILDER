@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import "./CreativeBold.css";
 import TemplateLayout from "../TemplateLayout";
 import { QRCodeSVG } from "qrcode.react";
+import useResumeTemplate from "../../hooks/useResumeTemplate";
 
 
 const CreativeBold = () => {
@@ -82,15 +83,17 @@ const CreativeBold = () => {
     profileImage: "/images/creativeboldimage.png",
   };
 
-
-  const [resumeData, setResumeData] = useState(() => {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    return saved ? JSON.parse(saved) : defaultData;
-  });
-
-  useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(resumeData));
-  }, [resumeData]);
+const {
+  resumeData,
+  setResumeData,
+  handleChange,
+  handleContactChange,
+  handleArrayChange,
+  handleExperienceChange,
+  handleEducationChange,
+  handleSaveResume,
+  checkPaymentStatus,
+} = useResumeTemplate("CreativeBold", defaultData);
 
   const qrValue = `
 Phone: ${resumeData.contact.phone}
@@ -99,59 +102,6 @@ Location: ${resumeData.contact.location}
 LinkedIn: ${resumeData.contact.linkedin}
 `;
 
-
-  const handleChange = (field, value) => {
-    setResumeData((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
-  };
-
-  const handleContactChange = (field, value) => {
-    setResumeData((prev) => ({
-      ...prev,
-      contact: {
-        ...prev.contact,
-        [field]: value,
-      },
-    }));
-  };
-
-  const handleArrayChange = (section, index, value) => {
-    const updated = [...resumeData[section]];
-    updated[index] = value;
-
-    setResumeData((prev) => ({
-      ...prev,
-      [section]: updated,
-    }));
-  };
-
-  const handleExperienceChange = (index, field, value) => {
-    const updated = [...resumeData.experience];
-    updated[index] = {
-      ...updated[index],
-      [field]: value,
-    };
-
-    setResumeData((prev) => ({
-      ...prev,
-      experience: updated,
-    }));
-  };
-
-  const handleEducationChange = (index, field, value) => {
-    const updated = [...resumeData.education];
-    updated[index] = {
-      ...updated[index],
-      [field]: value,
-    };
-
-    setResumeData((prev) => ({
-      ...prev,
-      education: updated,
-    }));
-  };
 
   const fileInputRef = useRef(null);
 
@@ -170,7 +120,10 @@ const handleImageUpload = (event) => {
 
 
   return (
-    <TemplateLayout>
+    <TemplateLayout
+  handleSaveResume={handleSaveResume}
+  checkPaymentStatus={checkPaymentStatus}
+>
 
       <div className="cb-wrapper">
         <div className="resume-mobile-wrap">

@@ -208,11 +208,23 @@ const handleDownloadPDF = async () => {
   }
 };
 
+const handleSignupSuccess = async () => {
+  setShowSignupModal(false);
 
-  const handleSignupSuccess = () => {
-    setShowSignupModal(false);
+  if (pendingAction === "download") {
+    setPendingAction(null);
 
-  };
+    setTimeout(async () => {
+      const hasPaid = await checkPaymentStatus();
+
+      if (hasPaid) {
+        handleDownloadPDF();
+      } else {
+        setShowPaymentModal(true);
+      }
+    }, 500);
+  }
+};
 
 
   return (
