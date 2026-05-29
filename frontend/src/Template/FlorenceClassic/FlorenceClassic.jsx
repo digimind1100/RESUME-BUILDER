@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./FlorenceClassic.css";
 import TemplateLayout from "../TemplateLayout";
+import html2pdf from "html2pdf.js";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
 export default function FlorenceClassic() {
 
@@ -9,6 +12,7 @@ export default function FlorenceClassic() {
     const defaultData = {
         fullName: "FLORENCE STEWART",
         jobTitle: "PROFESSIONAL TITLE",
+        profileImage: "/images/cleanprofileimage.png",
         summary:
             "This section is supposed to introduce yourself. Write a few lines that describe your profile and strongest qualities.",
 
@@ -99,21 +103,23 @@ export default function FlorenceClassic() {
     const [saveStatus, setSaveStatus] = useState("");
     const [isInitialLoad, setIsInitialLoad] = useState(true);
 
+const resumeContainerRef = useRef(null);
+      const fileInputRef = useRef(null);
 
-    const [profileImage, setProfileImage] = useState(
-        "/images/cleanprofileimage.png"
+const [profileImage, setProfileImage] = useState(
+  "/images/cleanprofileimage.png"
+);
 
-    );
+const handleImageUpload = (event) => {
+  const file = event.target.files?.[0];
 
-    const fileInputRef = useRef(null);
+  if (!file) return;
 
-    const handleImageUpload = (e) => {
-        const file = e.target.files[0];
-        if (!file) return;
+  const imageUrl = URL.createObjectURL(file);
 
-        const imageUrl = URL.createObjectURL(file);
-        setProfileImage(imageUrl);
-    };
+  setProfileImage(imageUrl);
+};
+  
 
     // ---------------- AUTO SAVE ----------------
     useEffect(() => {
@@ -258,8 +264,18 @@ export default function FlorenceClassic() {
             const result = await response.json();
 
             if (response.ok && result.success && result.resume) {
-                setResumeData(result.resume);
+                setResumeData({
+                    ...defaultData,
+                    ...result.resume,
+                });
+
+                if (result.resume.profileImage) {
+                    setProfileImage(result.resume.profileImage);
+                } else {
+                    setProfileImage("/images/cleanprofileimage.png");
+                }
             }
+
         } catch (error) {
             console.error("Load Resume Error:", error);
         } finally {
@@ -429,44 +445,167 @@ export default function FlorenceClassic() {
     // PAYMENT MODULE START
 
     const checkPaymentStatus = async () => {
-  try {
+        try {
 
-    const token = localStorage.getItem("token");
+            const token = localStorage.getItem("token");
 
-    if (!token) return false;
+            if (!token) return false;
 
-    const response = await fetch(
-      "https://resume-builder-backend-66wy.onrender.com/api/payments/check",
-      {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+            const response = await fetch(
+                "https://resume-builder-backend-66wy.onrender.com/api/payments/check",
+                {
+                    method: "GET",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
 
-    const result = await response.json();
+            const result = await response.json();
 
-    console.log("PAYMENT CHECK RESULT:", result);
+            console.log("PAYMENT CHECK RESULT:", result);
 
-    return (
-      result.isPaid === true ||
-      result.plan === "premium" ||
-      result.plan === "lifetime" ||
-      result.plan === "monthly-pro"
-    );
+            return (
+                result.isPaid === true ||
+                result.plan === "premium" ||
+                result.plan === "lifetime" ||
+                result.plan === "monthly-pro"
+            );
 
-  } catch (error) {
+        } catch (error) {
 
-    console.error(
-      "Payment check error:",
-      error
-    );
+            console.error(
+                "Payment check error:",
+                error
+            );
 
-    return false;
-  }
-};
+            return false;
+        }
+    };
     // PAYMENT MODULE END
+    const handleResetFlorence = () => {
+  setResumeData({ ...defaultData });
+
+  setProfileImage("/images/cleanprofileimage.png");
+};
+
+
+
+
+  const pdfGeneratingRef = useRef(false);
+
+  const handleDownloadPDF = async () => {
+
+    console.log("DOWNLOAD CLICKED");
+
+    if (pdfGeneratingRef.current) return;
+
+    pdfGeneratingRef.current = true;
+
+    let wrapper = null;
+
+    try {
+      const originalElement = document.querySelector(".florence-page");
+
+      if (!originalElement) {
+        console.error("Resume element not found");
+        return;
+      }
+
+      // ✅ Clone template, do not move real DOM
+      const element = originalElement.cloneNode(true);
+
+      // ===============================
+      // HEADER FIX
+      // ===============================
+
+      const nameInput = element.querySelector(".florence-name");
+
+      if (nameInput) {
+        const div = document.createElement("div");
+        div.className = "florence-name";
+        div.textContent = nameInput.value || nameInput.textContent;
+
+        div.style.width = "70%";
+        div.style.margin = "0 auto";
+        div.style.textAlign = "center";
+
+        nameInput.replaceWith(div);
+      }
+
+      const titleInput = element.querySelector(".florence-title");
+
+      if (titleInput) {
+        const div = document.createElement("div");
+        div.className = "florence-title";
+        div.textContent = titleInput.value || titleInput.textContent;
+
+        div.style.width = "40%";
+        div.style.margin = "8px auto 0";
+        div.style.textAlign = "center";
+
+        titleInput.replaceWith(div);
+      }
+
+      const summaryInput = element.querySelector(".summary-input");
+
+      if (summaryInput) {
+        const div = document.createElement("div");
+        div.className = "summary-input pdf-summary-text";
+        div.textContent = summaryInput.value || summaryInput.textContent;
+
+        summaryInput.replaceWith(div);
+      }
+
+      // ===============================
+      // HIDDEN WRAPPER
+      // ===============================
+
+      wrapper = document.createElement("div");
+
+      wrapper.style.position = "fixed";
+      wrapper.style.left = "-99999px";
+      wrapper.style.top = "0";
+      wrapper.style.background = "#fff";
+
+      element.style.margin = "0";
+      element.style.transform = "none";
+      element.style.width = "210mm";
+      element.style.height = "297mm";
+      element.style.overflow = "hidden";
+
+      wrapper.appendChild(element);
+      document.body.appendChild(wrapper);
+
+      await new Promise((r) => setTimeout(r, 200));
+
+      const canvas = await html2canvas(element, {
+        scale: window.devicePixelRatio * 2,
+        useCORS: true,
+        backgroundColor: "#ffffff",
+      });
+
+      const imgData = canvas.toDataURL("image/jpeg", 1.0);
+
+      const pdf = new jsPDF("p", "mm", "a4");
+
+      pdf.addImage(imgData, "JPEG", 0, 0, 210, 297);
+
+      pdf.save("FlorenceClassic-resume.pdf");
+
+    } catch (error) {
+      console.error("PDF download error:", error);
+    } finally {
+      if (wrapper && document.body.contains(wrapper)) {
+        document.body.removeChild(wrapper);
+      }
+
+      setTimeout(() => {
+        pdfGeneratingRef.current = false;
+      }, 1000);
+    }
+  };
+
 
     return (
         <TemplateLayout templateId="FlorenceClassic"
@@ -474,9 +613,11 @@ export default function FlorenceClassic() {
             resumeData={resumeData}
             setResumeData={setResumeData}
             checkPaymentStatus={checkPaymentStatus}
+            onReset={handleResetFlorence}
+            onDownloadPDF={handleDownloadPDF}
         >
-
-            <div className="florence-page">
+         <div className="resume-mobile-wrap">
+            <div className= "resume-a4 florence-page" ref={resumeContainerRef} >
 
                 {/* HEADER */}
                 <div className="florence-header">
@@ -765,6 +906,7 @@ export default function FlorenceClassic() {
                     </main>
 
                 </div>
+            </div>
             </div>
 
         </TemplateLayout>

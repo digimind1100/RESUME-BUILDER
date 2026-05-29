@@ -1,8 +1,6 @@
 import { useAuth } from "../context/AuthContext";
 import React, { useEffect, useState, useRef } from "react";
-import html2pdf from "html2pdf.js";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
+
 import SignupModal from "../components/auth/SignupModal";
 import PaymentModal from "../components/payment/PaymentModal";
 import "./TemplateLayout.css";
@@ -14,6 +12,8 @@ const TemplateLayout = ({
   onPreview,
   handleSaveResume,
   checkPaymentStatus,
+   onReset,
+    onDownloadPDF,
 }) => {
 
   const [pendingAction, setPendingAction] = useState(null);
@@ -21,7 +21,7 @@ const TemplateLayout = ({
   const [showPaymentModal, setShowPaymentModal] = useState(false);
 
   const resumeRef = React.useRef(null);
-  const resumeContainerRef = useRef(null);
+  
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
@@ -31,7 +31,7 @@ const TemplateLayout = ({
     window.location.reload();
   };
 
-  const pdfGeneratingRef = useRef(false);
+
 
   useEffect(() => {
 
@@ -86,7 +86,7 @@ const TemplateLayout = ({
     }
 
     const hasPaid = await checkPaymentStatus();
- console.log("HAS PAID:", hasPaid);
+    console.log("HAS PAID:", hasPaid);
 
     if (!hasPaid) {
       setPendingAction("download");
@@ -94,137 +94,30 @@ const TemplateLayout = ({
       return;
     }
 
-    handleDownloadPDF();
+    onDownloadPDF();
   };
-const handleDownloadPDF = async () => {
 
-  console.log("DOWNLOAD CLICKED");
+  if (typeof onDownloadPDF === "function") {
+  onDownloadPDF();
+}
 
-  if (pdfGeneratingRef.current) return;
+  const handleSignupSuccess = async () => {
+    setShowSignupModal(false);
 
-  pdfGeneratingRef.current = true;
+    if (pendingAction === "download") {
+      setPendingAction(null);
 
-  let wrapper = null;
+      setTimeout(async () => {
+        const hasPaid = await checkPaymentStatus();
 
-  try {
-    const originalElement = resumeContainerRef.current?.firstElementChild;
-
-    if (!originalElement) {
-      console.error("Resume element not found");
-      return;
+        if (hasPaid) {
+         onDownloadPDF();
+        } else {
+          setShowPaymentModal(true);
+        }
+      }, 500);
     }
-
-    // ✅ Clone template, do not move real DOM
-    const element = originalElement.cloneNode(true);
-
-    // ===============================
-    // HEADER FIX
-    // ===============================
-
-    const nameInput = element.querySelector(".florence-name");
-
-    if (nameInput) {
-      const div = document.createElement("div");
-      div.className = "florence-name";
-      div.textContent = nameInput.value || nameInput.textContent;
-
-      div.style.width = "70%";
-      div.style.margin = "0 auto";
-      div.style.textAlign = "center";
-
-      nameInput.replaceWith(div);
-    }
-
-    const titleInput = element.querySelector(".florence-title");
-
-    if (titleInput) {
-      const div = document.createElement("div");
-      div.className = "florence-title";
-      div.textContent = titleInput.value || titleInput.textContent;
-
-      div.style.width = "40%";
-      div.style.margin = "8px auto 0";
-      div.style.textAlign = "center";
-
-      titleInput.replaceWith(div);
-    }
-
-    const summaryInput = element.querySelector(".summary-input");
-
-    if (summaryInput) {
-      const div = document.createElement("div");
-      div.className = "summary-input pdf-summary-text";
-      div.textContent = summaryInput.value || summaryInput.textContent;
-
-      summaryInput.replaceWith(div);
-    }
-
-    // ===============================
-    // HIDDEN WRAPPER
-    // ===============================
-
-    wrapper = document.createElement("div");
-
-    wrapper.style.position = "fixed";
-    wrapper.style.left = "-99999px";
-    wrapper.style.top = "0";
-    wrapper.style.background = "#fff";
-
-    element.style.margin = "0";
-    element.style.transform = "none";
-    element.style.width = "210mm";
-    element.style.height = "297mm";
-    element.style.overflow = "hidden";
-
-    wrapper.appendChild(element);
-    document.body.appendChild(wrapper);
-
-    await new Promise((r) => setTimeout(r, 200));
-
-    const canvas = await html2canvas(element, {
-      scale: window.devicePixelRatio * 2,
-      useCORS: true,
-      backgroundColor: "#ffffff",
-    });
-
-    const imgData = canvas.toDataURL("image/jpeg", 1.0);
-
-    const pdf = new jsPDF("p", "mm", "a4");
-
-    pdf.addImage(imgData, "JPEG", 0, 0, 210, 297);
-
-    pdf.save("FlorenceClassic-resume.pdf");
-
-  } catch (error) {
-    console.error("PDF download error:", error);
-  } finally {
-    if (wrapper && document.body.contains(wrapper)) {
-      document.body.removeChild(wrapper);
-    }
-
-    setTimeout(() => {
-      pdfGeneratingRef.current = false;
-    }, 1000);
-  }
-};
-
-const handleSignupSuccess = async () => {
-  setShowSignupModal(false);
-
-  if (pendingAction === "download") {
-    setPendingAction(null);
-
-    setTimeout(async () => {
-      const hasPaid = await checkPaymentStatus();
-
-      if (hasPaid) {
-        handleDownloadPDF();
-      } else {
-        setShowPaymentModal(true);
-      }
-    }, 500);
-  }
-};
+  };
 
 
   return (
@@ -239,12 +132,12 @@ const handleSignupSuccess = async () => {
 
 
         <button
-  onClick={() => navigate("/templates")}
->
-  Templates
-</button>
+          onClick={() => navigate("/templates")}
+        >
+          Templates
+        </button>
 
-        <button onClick={handleReset}>
+        <button onClick={onReset}>
           Reset
         </button>
 
@@ -255,7 +148,7 @@ const handleSignupSuccess = async () => {
       </div>
 
       {/* Resume Content */}
-      <div className="content" ref={resumeContainerRef}>
+      <div className="content" >
         {children}
       </div>
 
@@ -274,7 +167,7 @@ const handleSignupSuccess = async () => {
             setShowPaymentModal(false);
 
             // Continue PDF download
-            handleDownloadPDF();
+            onDownloadPDF();
 
           }}
         />

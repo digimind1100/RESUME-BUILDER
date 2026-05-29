@@ -161,6 +161,7 @@
   padding: 40px 48px;
   box-sizing: border-box;
   background: #f9fafb;
+  height: 1122px;
 }
 
 /* Name + Title */
@@ -470,7 +471,7 @@
 .cb-qr-box {
   width: 96px;
   height: 96px;
-  margin: 50px auto 18px;
+  margin: 30px auto 18px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -647,7 +648,13 @@
 
   outline: none;
 }
-
+.cb-photo-wrapper {
+  width: 130px;
+  height: 130px;
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+}
 /* 
  
 /* education css: 

@@ -9,21 +9,30 @@ export default function LoginModal({ onClose }) {
   const [password, setPassword] = useState("");
 
   async function handleSubmit(e) {
-    e.preventDefault();
+  e.preventDefault();
 
-    const result = await login({ email, password });
+  const result = await login({ email, password });
 
-    if (result.ok) {
-      toast.success("Login successful");
+if (result.ok) {
+  toast.success("Login successful");
 
-      onClose();
+  // token save hone ke baad event fire karo
+  setTimeout(() => {
+    console.log("TOKEN AFTER LOGIN:", localStorage.getItem("token"));
 
-      setTimeout(() => {
-        window.dispatchEvent(new Event("saveResumeAfterLogin"));
-      }, 800);
-    } else {
-      toast.error(result.message || "Login failed");
-    }
+    window.dispatchEvent(new Event("userLoggedIn"));
+    window.dispatchEvent(new Event("saveResumeAfterLogin"));
+  }, 1000);
+
+  onClose();
+
+
+  } else {
+    toast.error(
+      result.message || "Login failed"
+    );
+  }
+}
     return (
       <div className="signup-overlay">
         <div className="signup-modal animate-fadeIn">
