@@ -97,9 +97,6 @@ const TemplateLayout = ({
     onDownloadPDF();
   };
 
-  if (typeof onDownloadPDF === "function") {
-  onDownloadPDF();
-}
 
   const handleSignupSuccess = async () => {
     setShowSignupModal(false);
