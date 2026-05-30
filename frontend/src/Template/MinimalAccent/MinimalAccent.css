@@ -312,14 +312,8 @@
 
 
 
-[contenteditable="true"] {
-  outline: 1px dashed #60a5fa;
-  border-radius: 3px;
-}
 
-[contenteditable="false"] {
-  outline: none;
-}
+
 
 .ma-buttons {
   display: flex;
@@ -403,4 +397,270 @@
   line-height: 1;
 
   pointer-events: none;
+}
+
+
+/* CSS for updated Template version: */
+
+/* name and title input */
+.ma-name,
+.ma-title {
+  border: 1px solid transparent !important;
+  background: transparent;
+  outline: none;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.ma-name:hover,
+.ma-title:hover {
+  background: rgba(14, 107, 168, 0.04) ;
+}
+
+.ma-name:focus,
+.ma-title:focus {
+  background: rgba(14, 107, 168, 0.08) !important;
+  border-color: rgba(14, 107, 168, 0.25) !important;
+}
+/* Card input CSS */
+.ma-card input.ma-card-line {
+  display: block !important;
+  width: 100% !important;
+
+  border: none !important;
+  outline: none !important;
+  background: transparent !important;
+
+  color: #ffffff !important;
+  font-size: 12px !important;
+  font-family: inherit !important;
+
+  margin: 2px 0 !important;
+  padding: 0 !important;
+
+  pointer-events: auto !important;
+  user-select: text !important;
+  -webkit-user-select: text !important;
+}
+.ma-card-line {
+  border: 1px solid transparent;
+  background: transparent;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.ma-card-line:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+.ma-card-line:focus {
+  background: rgba(255,255,255,0.12);
+  border-color: rgba(255,255,255,0.25);
+}
+
+
+/* Profile  */
+.ma-profile-input {
+  width: 100%;
+  min-height: 90px;
+  border: none;
+  outline: 1px dashed #60a5fa;
+  background: transparent;
+  resize: none;
+  font-family: inherit;
+}
+
+/* skills */
+.ma-skill-label {
+  width: 100%;
+  border: none;
+  outline: 1px dashed #60a5fa;
+  background: transparent;
+  color: #ffffff;
+  font-size: 11px;
+}
+
+.ma-skill-label {
+  border: 1px solid transparent;
+  background: transparent;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.ma-skill-label:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+.ma-skill-label:focus {
+  background: rgba(255,255,255,0.12);
+  border-color: rgba(255,255,255,0.25);
+}
+
+/* reference  */
+.ma-ref-name,
+.ma-ref-line {
+  width: 100%;
+  border: none;
+  background: transparent;
+  color: #ffffff;
+  outline: 1px dashed #60a5fa;
+  font-family: inherit;
+}
+
+.ma-ref-name {
+  font-weight: 600;
+};
+
+/* Experience */
+
+/* PREMIUM EXPERIENCE / EDUCATION EDITING LOOK */
+/* STABLE PREMIUM INPUTS - EXPERIENCE / EDUCATION */
+
+.ma-exp-content {
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(14, 107, 168, 0.035);
+  border-left: 3px solid rgba(14, 107, 168, 0.35);
+}
+
+.ma-exp-title,
+.ma-exp-company,
+.ma-exp-desc {
+  width: 100%;
+  display: block;
+
+  border: 1px solid transparent;
+  outline: none;
+  background: transparent;
+
+  box-sizing: border-box;
+  font-family: inherit;
+
+  padding: 3px 5px;
+  border-radius: 5px;
+
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.ma-exp-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #111827;
+  line-height: 1.35;
+}
+
+.ma-exp-company {
+  font-size: 12px;
+  font-weight: 600;
+  color: #0e6ba8;
+  line-height: 1.35;
+  margin-top: 2px;
+}
+
+.ma-exp-desc {
+  font-size: 13px;
+  line-height: 1.55;
+  color: #4b5563;
+  resize: none;
+  min-height: 48px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.ma-exp-title:hover,
+.ma-exp-company:hover,
+.ma-exp-desc:hover {
+  background: rgba(14, 107, 168, 0.06);
+}
+
+.ma-exp-title:focus,
+.ma-exp-company:focus,
+.ma-exp-desc:focus {
+  background: #ffffff;
+  border-color: rgba(14, 107, 168, 0.55);
+}
+
+
+/* FINAL EDITABLE POLISH - STRONG OVERRIDE */
+
+.ma-resume input, 
+.ma-resume textarea {
+  border: 1px solid transparent !important;
+  background: transparent !important;
+  outline: none !important;
+  box-shadow: none !important;
+  box-sizing: border-box !important;
+  font-family: inherit !important;
+  transition: background 0.2s ease, border-color 0.2s ease !important;
+}
+
+.ma-resume input:hover,
+.ma-resume textarea:hover {
+  background: rgba(14, 107, 168, 0.06) !important;
+}
+
+.ma-resume input:focus,
+.ma-resume textarea:focus {
+  background: rgba(14, 107, 168, 0.1) !important;
+  border-color: rgba(14, 107, 168, 0.45) !important;
+}
+
+/* Sidebar white hover/focus */
+.ma-sidebar input:hover,
+.ma-sidebar textarea:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+.ma-sidebar input:focus,
+.ma-sidebar textarea:focus {
+  background: rgba(255, 255, 255, 0.13) !important;
+  border-color: rgba(255, 255, 255, 0.35) !important;
+}
+/* DEV MODE - FORCE A4 ON MOBILE */
+/* MOBILE A4 FIX */
+.resume-mobile-wrap {
+  width: 100%;
+  overflow-x: auto;
+  display: flex;
+  justify-content: center;
+  
+}
+@media (max-width: 768px) {
+
+  .resume-mobile-wrap {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    overflow: hidden !important;
+
+    display: flex !important;
+    justify-content: center !important;
+    align-items: flex-start !important;
+
+    padding: 0 0 30px !important;
+    box-sizing: border-box !important;
+  }
+
+  .resume-a4.ma-a4 {
+    width: 210mm !important;
+    min-width: 210mm !important;
+    height: 297mm !important;
+
+    transform: scale(0.42) !important;
+    transform-origin: top center !important;
+
+    margin-top: 20px !important;
+    margin-bottom: -520px !important;
+  }
+
+  .ma-resume {
+    flex-direction: row !important;
+  }
+
+  .ma-sidebar {
+    width: 32% !important;
+  }
+
+  .ma-main {
+    width: 68% !important;
+  }
 }
