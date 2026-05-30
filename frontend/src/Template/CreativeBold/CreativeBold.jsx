@@ -5,6 +5,9 @@ import { QRCodeSVG } from "qrcode.react";
 import useResumeTemplate from "../../hooks/useResumeTemplate";
 import useProfileImage from "../../hooks/useProfileImage";
 import { useAuth } from "../../context/AuthContext";
+import html2pdf from "html2pdf.js";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
 const CreativeBold = () => {
   const STORAGE_KEY = "creativeBold_resumeData";
@@ -102,11 +105,11 @@ const CreativeBold = () => {
   } = useProfileImage(setResumeData, checkPaymentStatus);
 
   const qrValue = `
-Phone: ${resumeData.contact.phone}
-Email: ${resumeData.contact.email}
-Location: ${resumeData.contact.location}
-LinkedIn: ${resumeData.contact.linkedin}
-`;
+  Phone: ${resumeData.contact.phone}
+  Email: ${resumeData.contact.email}
+  Location: ${resumeData.contact.location}
+  LinkedIn: ${resumeData.contact.linkedin}
+  `;
 
   const handleResetCreativeBold = () => {
     localStorage.removeItem("CreativeBold_resumeData");
@@ -128,18 +131,18 @@ LinkedIn: ${resumeData.contact.linkedin}
   };
 
   // MONGODB SAVE DATA IN DATABASE
-const { isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth();
 
-useEffect(() => {
-  if (!isAuthenticated) return;
+  useEffect(() => {
+    if (!isAuthenticated) return;
 
-  console.log("AUTH READY - LOADING CREATIVEBOLD");
+    console.log("AUTH READY - LOADING CREATIVEBOLD");
 
-  setTimeout(() => {
-    loadResume();
-  }, 500);
+    setTimeout(() => {
+      loadResume();
+    }, 500);
 
-}, [isAuthenticated]);
+  }, [isAuthenticated]);
 
 
 
@@ -147,11 +150,11 @@ useEffect(() => {
   const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   useEffect(() => {
-  localStorage.setItem(
-    STORAGE_KEY,
-    JSON.stringify(resumeData)
-  );
-}, [resumeData]);
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(resumeData)
+    );
+  }, [resumeData]);
 
 
   const syncLocalResumeToMongoDB = async () => {
@@ -183,72 +186,279 @@ useEffect(() => {
   };
 
   // LOAD DATA FROM DATABASE MONGODB
-const loadResume = async () => {
-  try {
-    const token = localStorage.getItem("token");
+  const loadResume = async () => {
+    try {
+      const token = localStorage.getItem("token");
 
-    if (!token) {
-      setIsInitialLoad(false);
-      return;
-    }
-
-    const response = await fetch(
-      "https://resume-builder-backend-66wy.onrender.com/api/resume/load?templateId=CreativeBold",
-      {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+      if (!token) {
+        setIsInitialLoad(false);
+        return;
       }
-    );
 
-    const result = await response.json();
+      const response = await fetch(
+        "https://resume-builder-backend-66wy.onrender.com/api/resume/load?templateId=CreativeBold",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
-    console.log("CREATIVEBOLD LOAD RESULT:", result);
+      const result = await response.json();
 
-    if (response.ok && result.success && result.resume) {
-      setResumeData({
-        ...defaultData,
-        ...result.resume,
+      console.log("CREATIVEBOLD LOAD RESULT:", result);
+
+      if (response.ok && result.success && result.resume) {
+        setResumeData({
+          ...defaultData,
+          ...result.resume,
+        });
+      }
+    } catch (error) {
+      console.error("CreativeBold Load Resume Error:", error);
+    } finally {
+      setIsInitialLoad(false);
+    }
+  };
+
+  useEffect(() => {
+    loadResume();
+  }, []);
+
+
+  useEffect(() => {
+    const handleUserLoggedIn = async () => {
+      console.log("✅ CreativeBold userLoggedIn event received");
+      await loadResume();
+    };
+
+    window.addEventListener("userLoggedIn", handleUserLoggedIn);
+
+    return () => {
+      window.removeEventListener("userLoggedIn", handleUserLoggedIn);
+    };
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const token = localStorage.getItem("token");
+
+      if (token) {
+        loadResume();
+        clearInterval(interval);
+      }
+    }, 500);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // PDF download block code start 
+  const pdfGeneratingRef = useRef(false);
+
+  const handleDownloadPDF = async () => {
+
+    console.log("DOWNLOAD CLICKED");
+
+    if (pdfGeneratingRef.current) return;
+ 
+    pdfGeneratingRef.current = true;
+
+    let wrapper = null;
+
+    try {
+      const originalElement = document.querySelector(".cb-resume");
+
+      if (!originalElement) {
+        console.error("Resume element not found");
+        return;
+      }
+
+      // ✅ Clone template, do not move real DOM
+      const element = originalElement.cloneNode(true);
+
+      // MOBILE PDF FIX
+     const isMobile = window.innerWidth <= 768;
+
+wrapper = document.createElement("div");
+
+wrapper.style.position = "fixed";
+wrapper.style.top = "0";
+wrapper.style.width = "794px";
+wrapper.style.height = "1122px";
+wrapper.style.background = "#fff";
+wrapper.style.overflow = "hidden";
+
+if (isMobile) {
+  wrapper.style.left = "0";
+  wrapper.style.opacity = "0";
+  wrapper.style.pointerEvents = "none";
+  wrapper.style.zIndex = "-1";
+} else {
+  wrapper.style.left = "-99999px";
+}
+
+
+      // NAME FIX
+      const nameInput = element.querySelector(".cb-name");
+
+      if (nameInput) {
+        const div = document.createElement("div");
+        div.className = "cb-name";
+        div.textContent = nameInput.value || nameInput.textContent;
+
+        div.style.width = "100%";
+        div.style.textAlign = "center";
+        div.style.margin = "0 0 18px 0";
+
+        nameInput.replaceWith(div);
+      }
+
+      // LEFT TITLE FIX
+      const leftTitleInputs = element.querySelectorAll(".cb-left-role-text");
+
+      leftTitleInputs.forEach((input) => {
+        const div = document.createElement("div");
+        div.className = "cb-left-role-text";
+        div.textContent = input.value || input.textContent;
+
+        div.style.width = "100%";
+        div.style.textAlign = "center";
+
+        input.replaceWith(div);
       });
+
+      // SUMMARY FIX
+      const summaryInput = element.querySelector(".cb-text-summary");
+
+      if (summaryInput) {
+        const div = document.createElement("div");
+        div.className = "cb-text-summary pdf-summary-text";
+        div.textContent = summaryInput.value || summaryInput.textContent;
+
+        div.style.whiteSpace = "pre-wrap";
+        div.style.lineHeight = "1.55";
+
+        summaryInput.replaceWith(div);
+      }
+
+      // ===============================
+      // HIDDEN WRAPPER
+      // ===============================
+
+      wrapper = document.createElement("div");
+
+      wrapper.style.position = "fixed";
+      wrapper.style.left = "-99999px";
+      wrapper.style.top = "0";
+      wrapper.style.width = "210mm";
+      wrapper.style.height = "297mm";
+      wrapper.style.background = "#fff";
+
+
+      element.style.position = "relative";
+element.style.left = "0";
+element.style.top = "0";
+element.style.transform = "none";
+element.style.transformOrigin = "top left";
+element.style.zoom = "1";
+
+element.style.width = "794px";
+element.style.minWidth = "794px";
+element.style.maxWidth = "794px";
+
+element.style.height = "1123px";
+element.style.minHeight = "1123px";
+element.style.maxHeight = "1123px";
+
+element.style.margin = "0";
+element.style.overflow = "hidden";
+
+
+
+      const resume = element.querySelector(".cb-resume");
+
+      if (resume) {
+        resume.style.width = "100%";
+        resume.style.height = "100%";
+        resume.style.display = "flex";
+        resume.style.flexDirection = "row";
+      }
+
+      wrapper.appendChild(element);
+      document.body.appendChild(wrapper);
+
+      await new Promise((r) => setTimeout(r, 200));
+
+      element.querySelectorAll(
+        ".cb-section-title-pro, .cb-section-title"
+      ).forEach((title) => {
+        title.style.textAlign = "center";
+        title.style.width = "100%";
+        title.style.display = "block";
+      });
+
+      console.log(
+        element.offsetWidth,
+        element.offsetHeight
+      );
+
+      element.style.position = "relative";
+element.style.left = "0";
+element.style.top = "0";
+element.style.transform = "none";
+element.style.transformOrigin = "top left";
+element.style.zoom = "1";
+element.style.width = "794px";
+element.style.height = "1122px";
+element.style.minWidth = "794px";
+element.style.minHeight = "1122px";
+
+      const canvas = await html2canvas(element, {
+        scale: 2,
+        useCORS: true,
+        backgroundColor: "#ffffff",
+      });
+
+      const imgData = canvas.toDataURL("image/jpeg", 1.0);
+
+const pdf = new jsPDF({
+  orientation: "portrait",
+  unit: "mm",
+  format: "a4",
+  compress: true,
+});
+
+pdf.addImage(
+  imgData,
+  "JPEG",
+  0,
+  0,
+  210,
+  297,
+  undefined,
+  "FAST"
+);
+
+pdf.save("CreativeBold-resume.pdf");
+
+    } catch (error) {
+      console.error("PDF download error:", error);
+    } finally {
+      if (wrapper && document.body.contains(wrapper)) {
+        document.body.removeChild(wrapper);
+      }
+
+      setTimeout(() => {
+        pdfGeneratingRef.current = false;
+      }, 1000);
     }
-  } catch (error) {
-    console.error("CreativeBold Load Resume Error:", error);
-  } finally {
-    setIsInitialLoad(false);
-  }
-};
 
-useEffect(() => {
-  loadResume();
-}, []);
-
-
-useEffect(() => {
-  const handleUserLoggedIn = async () => {
-    console.log("✅ CreativeBold userLoggedIn event received");
-    await loadResume();
   };
 
-  window.addEventListener("userLoggedIn", handleUserLoggedIn);
+  // PDF download block code end
 
-  return () => {
-    window.removeEventListener("userLoggedIn", handleUserLoggedIn);
-  };
-}, []);
 
-useEffect(() => {
-  const interval = setInterval(() => {
-    const token = localStorage.getItem("token");
-
-    if (token) {
-      loadResume();
-      clearInterval(interval);
-    }
-  }, 500);
-
-  return () => clearInterval(interval);
-}, []);
 
 
 
@@ -257,6 +467,7 @@ useEffect(() => {
       handleSaveResume={handleSaveResume}
       checkPaymentStatus={checkPaymentStatus}
       onReset={handleResetCreativeBold}
+      onDownloadPDF={handleDownloadPDF}
     >
 
       <div className="cb-wrapper">

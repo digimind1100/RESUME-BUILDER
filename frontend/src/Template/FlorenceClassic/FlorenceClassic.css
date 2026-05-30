@@ -823,7 +823,7 @@ box-sizing: border-box;
 
 @media (max-width: 768px) {
   .resume-mobile-wrap .resume-a4.florence-page {
-    transform: scale(0.48) !important;
+    transform: scale(0.42) !important;
     transform-origin: top center !important;
   }
 
@@ -849,7 +849,7 @@ box-sizing: border-box;
 
 @media (max-width: 932px) and (orientation: landscape) {
   .resume-mobile-wrap .resume-a4.florence-page {
-    transform: scale(0.95) !important;
+    transform: scale(0.85) !important;
     transform-origin: top center !important;
 
     margin-top: 0 !important;
@@ -863,3 +863,4 @@ box-sizing: border-box;
     justify-content: center !important;
   }
 }
+

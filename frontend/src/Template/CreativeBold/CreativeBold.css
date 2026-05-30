@@ -506,7 +506,7 @@
     height: 297mm !important;
     min-height: 297mm !important;
 
-    transform: scale(0.48) !important;
+    transform: scale(0.42) !important;
     transform-origin: top center !important;
 
     margin-left: auto !important;
@@ -539,7 +539,7 @@
   }
 
   .resume-a4.cb-a4 {
-    transform: scale(0.) !important;
+    transform: scale(0.82) !important;
     transform-origin: top center !important;
     margin-bottom: -420px !important;
   }
@@ -655,34 +655,4 @@
   position: relative;
   z-index: 2;
 }
-/* 
- 
-/* education css: 
-.cb-edu-institute,
-.cb-edu-degree,
-.cb-edu-location,
-.cb-edu-description,
-.cb-date{
-  width: 100%;
-  background: transparent;
-  border: none;
-  outline: none;
-  font: inherit;
-  color: inherit;
-}
 
-.cb-edu-institute{
-  font-weight: 700;
-  font-size: 17px;
-}
-
-.cb-edu-degree{
-  font-weight: 600;
-}
-
-.cb-edu-description{
-  resize: none;
-  min-height: 55px;
-  line-height: 1.5;
-  overflow: hidden;
-}  */

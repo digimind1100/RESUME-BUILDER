@@ -489,9 +489,6 @@ const handleImageUpload = (event) => {
   setProfileImage("/images/cleanprofileimage.png");
 };
 
-
-
-
   const pdfGeneratingRef = useRef(false);
 
   const handleDownloadPDF = async () => {
@@ -505,15 +502,33 @@ const handleImageUpload = (event) => {
     let wrapper = null;
 
     try {
-      const originalElement = document.querySelector(".florence-page");
+      const originalElement = document.querySelector(".resume-a4.florence-page");
 
-      if (!originalElement) {
-        console.error("Resume element not found");
-        return;
-      }
+if (!originalElement) {
+  console.error("Resume element not found");
+  return;
+}
 
-      // ✅ Clone template, do not move real DOM
-      const element = originalElement.cloneNode(true);
+const element = originalElement.cloneNode(true);
+element.style.position = "relative";
+element.style.left = "0";
+element.style.top = "0";
+element.style.transform = "none";
+element.style.transformOrigin = "top left";
+element.style.zoom = "1";
+
+element.style.width = "794px";
+element.style.height = "1122px";
+element.style.minHeight = "1122px";
+element.style.maxHeight = "1122px";
+
+element.style.margin = "0";
+element.style.overflow = "hidden";
+
+if (!element) {
+  console.error("Clone element not created");
+  return;
+}
 
       // ===============================
       // HEADER FIX
@@ -561,18 +576,45 @@ const handleImageUpload = (event) => {
       // HIDDEN WRAPPER
       // ===============================
 
-      wrapper = document.createElement("div");
+   const isMobile = window.innerWidth <= 768;
 
-      wrapper.style.position = "fixed";
-      wrapper.style.left = "-99999px";
-      wrapper.style.top = "0";
-      wrapper.style.background = "#fff";
+   wrapper = document.createElement("div");
 
-      element.style.margin = "0";
-      element.style.transform = "none";
-      element.style.width = "210mm";
-      element.style.height = "297mm";
-      element.style.overflow = "hidden";
+wrapper.style.position = "fixed";
+wrapper.style.left = "0";
+wrapper.style.top = "0";
+wrapper.style.width = "794px";
+wrapper.style.height = "1123px";
+wrapper.style.background = "#fff";
+wrapper.style.overflow = "hidden";
+wrapper.style.opacity = "0";
+wrapper.style.pointerEvents = "none";
+wrapper.style.zIndex = "-1";
+
+element.style.setProperty("position", "absolute", "important");
+element.style.setProperty("left", "0", "important");
+element.style.setProperty("top", "0", "important");
+element.style.setProperty("width", "794px", "important");
+element.style.setProperty("height", "1123px", "important");
+element.style.setProperty("transform", "none", "important");
+element.style.setProperty("zoom", "1", "important");
+element.style.setProperty("margin", "0", "important");
+element.style.setProperty("overflow", "hidden", "important");
+
+wrapper.appendChild(element);
+document.body.appendChild(wrapper);
+
+
+
+
+if (isMobile) {
+  wrapper.style.left = "0";
+  wrapper.style.opacity = "0";
+  wrapper.style.pointerEvents = "none";
+  wrapper.style.zIndex = "-1";
+} else {
+  wrapper.style.left = "-99999px";
+}
 
       wrapper.appendChild(element);
       document.body.appendChild(wrapper);
