@@ -510,3 +510,186 @@
 
   pointer-events: none;
 }
+
+.st-resume input,
+.st-resume textarea {
+  border: 1px solid transparent !important;
+  background: transparent !important;
+  outline: none !important;
+  box-shadow: none !important;
+  box-sizing: border-box !important;
+  font-family: inherit !important;
+  transition: background 0.2s ease, border-color 0.2s ease !important;
+}
+
+.st-resume input:hover,
+.st-resume textarea:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+}
+
+.st-main input:hover,
+.st-main textarea:hover {
+  background: rgba(26, 115, 232, 0.06) !important;
+}
+
+.st-resume input:focus,
+.st-resume textarea:focus {
+  background: rgba(26, 115, 232, 0.12) !important;
+  border-color: rgba(26, 115, 232, 0.42) !important;
+}
+
+.st-contact-text,
+.st-side-input,
+.st-side-text,
+.st-name,
+.st-title,
+.st-section-text,
+.st-job-title,
+.st-job-company,
+.st-job-dates,
+.st-job-bullet,
+.st-project-title,
+.st-project-text,
+.st-edu-degree,
+.st-edu-meta {
+  width: 100%;
+}
+
+.st-contact-text,
+.st-side-input,
+.st-side-text {
+  color: #f9fafb;
+  font-size: 12px;
+}
+
+.st-side-text {
+  display: block;
+  min-height: 58px;
+  resize: none;
+  overflow: hidden;
+}
+
+.st-name,
+.st-title,
+.st-job-title,
+.st-job-company,
+.st-project-title,
+.st-edu-degree,
+.st-edu-meta {
+  display: block;
+}
+
+.st-section-text,
+.st-project-text {
+  display: block;
+  min-height: 42px;
+  resize: none;
+  overflow: hidden;
+}
+
+.st-job-title-wrapper {
+  flex: 1;
+}
+
+.st-job-dates {
+  width: 115px;
+  text-align: right;
+}
+
+.st-job-bullet {
+  display: block;
+  min-height: 24px;
+  resize: none;
+  overflow: hidden;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #4b5563;
+}
+
+.resume-mobile-wrap {
+  width: 100%;
+  overflow-x: auto;
+  display: flex;
+  justify-content: center;
+  background: #ffffff;
+}
+
+.resume-a4.st-a4 {
+  height: 297mm;
+  min-height: 297mm;
+  overflow: hidden;
+}
+
+.resume-a4.st-a4 .st-resume {
+  min-height: 100%;
+  background: #ffffff;
+}
+
+.st-screen-preview .resume-a4.st-a4 {
+  height: auto !important;
+  min-height: 297mm !important;
+  overflow: visible !important;
+  background: #ffffff !important;
+}
+
+.st-screen-preview .resume-a4.st-a4 .st-resume {
+  display: flex !important;
+  height: auto !important;
+  min-height: 297mm !important;
+  align-items: stretch !important;
+}
+
+.st-screen-preview .resume-a4.st-a4 .st-sidebar,
+.st-screen-preview .resume-a4.st-a4 .st-main {
+  height: auto !important;
+  min-height: 297mm !important;
+  align-self: stretch !important;
+}
+
+.st-screen-preview .st-qr-wrapper {
+  width: 150px;
+  align-self: center;
+}
+
+.st-screen-preview .st-qr-image {
+  max-width: 138px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .resume-mobile-wrap {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: flex-start !important;
+    padding: 0 0 30px !important;
+    box-sizing: border-box !important;
+  }
+
+  .resume-a4.st-a4 {
+    width: 210mm !important;
+    min-width: 210mm !important;
+    height: 297mm !important;
+    max-width: none !important;
+    transform: scale(0.42) !important;
+    transform-origin: top center !important;
+    margin-top: 20px !important;
+    margin-bottom: -520px !important;
+  }
+
+  .st-resume {
+    flex-direction: row !important;
+  }
+
+  .st-sidebar {
+    width: 35% !important;
+  }
+
+  .st-main {
+    width: 65% !important;
+    padding: 30px 38px 34px !important;
+  }
+}

@@ -1,376 +1,602 @@
-// src/Templates/EngineerElite.jsx
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import "./EngineerElite.css";
-import { useNavigate } from "react-router-dom";
 import QRCode from "qrcode";
 import TemplateLayout from "../TemplateLayout";
 import { useAuth } from "../../context/AuthContext";
-
+import useProfileImage from "../../hooks/useProfileImage";
+import useResumeTemplate from "../../hooks/useResumeTemplate";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
 export default function EngineerElite() {
-  const resumeRef = useRef(null);
-  const navigate = useNavigate();
+  const pdfGeneratingRef = useRef(false);
 
-  const { user, setUser } = useAuth();
+  const defaultData = {
+    fullName: "EMMA ROBERTS",
+    jobTitle: "MECHANICAL ENGINEER",
+    profileImage: "/images/engineereliteprofileimage.png",
+    info: {
+      fullName: "",
+      email: "",
+      phone: "",
+      address: "",
+      state: "",
+      city: "",
+      zip: "",
+      linkedin: "",
+      engineerId: "",
+    },
+    qrDataUrl: "",
+    skills: [
+      "CAD Modeling",
+      "Thermodynamics",
+      "Finite Element Analysis",
+      "Problem Solving",
+      "Technical Writing",
+    ],
+    tools: ["SolidWorks", "AutoCAD", "MATLAB", "MS Office"],
+    certifications: "Certified SolidWorks Professional (CSWP)\nProfessional Engineer (PE)",
+    summary: "Detail-oriented mechanical engineer with 6+ years of experience...",
+    experience: [
+      {
+        title: "Mechanical Engineer",
+        company: "ABC Manufacturing - Los Angeles",
+        dates: "2018-Present",
+        bullets: [
+          "Lead design and validation...",
+          "Collaborate with cross-functional teams...",
+          "Develop detailed CAD models...",
+          "Implement design improvements...",
+        ],
+      },
+      {
+        title: "Jr. Mechanical Engineer",
+        company: "XYZ Technologies - Pasadena",
+        dates: "2015-2018",
+        bullets: [
+          "Assisted in mechanical design...",
+          "Supported field installations...",
+          "Prepared technical reports...",
+        ],
+      },
+    ],
+    projects: [
+      {
+        title: "Heat Exchanger Optimization",
+        year: "2020",
+        description: "Led a cross-functional engineering team to redesign...",
+      },
+    ],
+    education: [
+      {
+        degree: "M.S. in Mechanical Engineering",
+        meta: "UC Berkeley - 2015-2018",
+      },
+      {
+        degree: "B.S. in Mechanical Engineering",
+        meta: "UT Austin - 2009-2013",
+      },
+    ],
+  };
 
+  const {
+    resumeData,
+    setResumeData,
+    handleChange,
+    handleSaveResume,
+    checkPaymentStatus,
+    loadResume,
+  } = useResumeTemplate("EngineerElite", defaultData);
 
-  /* ================= EDIT MODE ================= */
-
-  // ---- Profile image (square - PREMIUM) ----
-  const [profileImage, setProfileImage] = useState(
-    "/images/engineereliteprofileimage.png"
+  const { fileInputRef, handleImageUpload, openImagePicker } = useProfileImage(
+    setResumeData,
+    checkPaymentStatus
   );
-  const fileInputRef = useRef(null);
 
-  const handleImageUpload = (event) => {
-    if (!canEdit && isEditable) return; // 🔒 premium guard
+  const { isAuthenticated } = useAuth();
 
-    const file = event.target.files[0];
-    if (!file) return;
-
-    const imageUrl = URL.createObjectURL(file);
-    setProfileImage(imageUrl);
+  const engineerData = {
+    ...defaultData,
+    ...resumeData,
+    info: {
+      ...defaultData.info,
+      ...(resumeData.info || {}),
+    },
+    skills: Array.isArray(resumeData.skills) ? resumeData.skills : defaultData.skills,
+    tools: Array.isArray(resumeData.tools) ? resumeData.tools : defaultData.tools,
+    experience: Array.isArray(resumeData.experience)
+      ? resumeData.experience
+      : defaultData.experience,
+    projects: Array.isArray(resumeData.projects)
+      ? resumeData.projects
+      : defaultData.projects,
+    education: Array.isArray(resumeData.education)
+      ? resumeData.education
+      : defaultData.education,
   };
 
+  useEffect(() => {
+    if (!isAuthenticated) return;
 
-  const triggerFileSelect = () => {
-    if (!canEdit) {
-      requirePayment(); // 🔥 open payment modal
-      return;
-    }
+    setTimeout(() => {
+      loadResume();
+    }, 500);
+  }, [isAuthenticated]);
 
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
+  useEffect(() => {
+    const handleUserLoggedIn = async () => {
+      await loadResume();
+    };
+
+    window.addEventListener("userLoggedIn", handleUserLoggedIn);
+
+    return () => {
+      window.removeEventListener("userLoggedIn", handleUserLoggedIn);
+    };
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const token = localStorage.getItem("token");
+
+      if (token) {
+        loadResume();
+        clearInterval(interval);
+      }
+    }, 500);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleResetEngineerElite = () => {
+    localStorage.removeItem("EngineerElite_resumeData");
+    setResumeData({
+      ...defaultData,
+      profileImage: "/images/engineereliteprofileimage.png",
+    });
   };
 
-
-  // ---- Personal info form state ----
-  const [info, setInfo] = useState({
-    fullName: "",
-    email: "",
-    phone: "",
-    address: "",
-    state: "",
-    city: "",
-    zip: "",
-    linkedin: "",
-    engineerId: "",
-  });
-
-  const handleInfoChange = (e) => {
-    const { name, value } = e.target;
-    setInfo((prev) => ({ ...prev, [name]: value }));
+  const updateInfo = (field, value) => {
+    setResumeData((prev) => ({
+      ...prev,
+      info: {
+        ...(prev.info || defaultData.info),
+        [field]: value,
+      },
+    }));
   };
-
-  // ---- QR Code ----
-  const [qrDataUrl, setQrDataUrl] = useState("");
 
   const handleCreateQr = async () => {
-    const qrPayload = JSON.stringify(
-      {
-        name: info.fullName,
-        email: info.email,
-        phone: info.phone,
-        address: info.address,
-        state: info.state,
-        city: info.city,
-        zip: info.zip,
-        linkedin: info.linkedin,
-        engineerId: info.engineerId,
-      },
-      null,
-      0
-    );
-
     try {
-      const url = await QRCode.toDataURL(qrPayload);
-      setQrDataUrl(url);
-    } catch (err) {
-      console.error("QR generation error:", err);
+      const url = await QRCode.toDataURL(JSON.stringify(engineerData.info));
+      handleChange("qrDataUrl", url);
+    } catch (error) {
+      console.error("QR generation error:", error);
       alert("QR Code generate karte waqt error.");
     }
   };
 
+  const updateListItem = (section, index, value) => {
+    const updated = [...engineerData[section]];
+    updated[index] = value;
+    setResumeData({ ...resumeData, [section]: updated });
+  };
+
+  const updateExperience = (index, field, value) => {
+    const updated = [...engineerData.experience];
+    updated[index] = { ...updated[index], [field]: value };
+    setResumeData({ ...resumeData, experience: updated });
+  };
+
+  const updateExperienceBullet = (jobIndex, bulletIndex, value) => {
+    const updated = [...engineerData.experience];
+    const bullets = [...updated[jobIndex].bullets];
+    bullets[bulletIndex] = value;
+    updated[jobIndex] = { ...updated[jobIndex], bullets };
+    setResumeData({ ...resumeData, experience: updated });
+  };
+
+  const updateProject = (index, field, value) => {
+    const updated = [...engineerData.projects];
+    updated[index] = { ...updated[index], [field]: value };
+    setResumeData({ ...resumeData, projects: updated });
+  };
+
+  const updateEducation = (index, field, value) => {
+    const updated = [...engineerData.education];
+    updated[index] = { ...updated[index], [field]: value };
+    setResumeData({ ...resumeData, education: updated });
+  };
+
+  const replaceEditableFieldsForPDF = (element) => {
+    element.querySelectorAll("input, textarea").forEach((field) => {
+      if (field.type === "file") {
+        field.remove();
+        return;
+      }
+
+      const div = document.createElement("div");
+      div.className = field.className;
+      div.textContent = field.value || field.textContent || "";
+
+      const computed = window.getComputedStyle(field);
+      div.style.width = computed.width;
+      div.style.minHeight = computed.height;
+      div.style.fontSize = computed.fontSize;
+      div.style.fontWeight = computed.fontWeight;
+      div.style.lineHeight = computed.lineHeight;
+      div.style.color = computed.color;
+      div.style.fontFamily = computed.fontFamily;
+      div.style.letterSpacing = computed.letterSpacing;
+      div.style.textTransform = computed.textTransform;
+      div.style.textAlign = computed.textAlign;
+      div.style.margin = computed.margin;
+      div.style.padding = computed.padding;
+      div.style.boxSizing = "border-box";
+      div.style.whiteSpace = field.tagName === "TEXTAREA" ? "pre-wrap" : "normal";
+      div.style.overflowWrap = "break-word";
+      div.style.background = "transparent";
+      div.style.border = "none";
+      field.replaceWith(div);
+    });
+  };
+
+  const handleDownloadPDF = async () => {
+    if (pdfGeneratingRef.current) return;
+
+    pdfGeneratingRef.current = true;
+    let wrapper = null;
+
+    try {
+      const originalElement = document.querySelector(".resume-a4.ee-a4");
+
+      if (!originalElement) {
+        console.error("EngineerElite resume element not found");
+        return;
+      }
+
+      const element = originalElement.cloneNode(true);
+      replaceEditableFieldsForPDF(element);
+
+      wrapper = document.createElement("div");
+      wrapper.style.position = "fixed";
+      wrapper.style.left = "-99999px";
+      wrapper.style.top = "0";
+      wrapper.style.width = "794px";
+      wrapper.style.height = "1122px";
+      wrapper.style.background = "#ffffff";
+      wrapper.style.overflow = "hidden";
+      wrapper.style.opacity = "0";
+      wrapper.style.pointerEvents = "none";
+      wrapper.style.zIndex = "-1";
+
+      element.style.setProperty("position", "relative", "important");
+      element.style.setProperty("width", "794px", "important");
+      element.style.setProperty("min-width", "794px", "important");
+      element.style.setProperty("height", "1122px", "important");
+      element.style.setProperty("min-height", "1122px", "important");
+      element.style.setProperty("max-height", "1122px", "important");
+      element.style.setProperty("margin", "0", "important");
+      element.style.setProperty("transform", "none", "important");
+      element.style.setProperty("zoom", "1", "important");
+      element.style.setProperty("box-shadow", "none", "important");
+      element.style.setProperty("overflow", "hidden", "important");
+
+      const resume = element.querySelector(".ee-resume");
+      const sidebar = element.querySelector(".ee-sidebar");
+      const main = element.querySelector(".ee-main");
+
+      if (resume) {
+        resume.style.setProperty("display", "flex", "important");
+        resume.style.setProperty("flex-direction", "row", "important");
+        resume.style.setProperty("height", "100%", "important");
+      }
+
+      if (sidebar) {
+        sidebar.style.setProperty("width", "28%", "important");
+        sidebar.style.setProperty("height", "1122px", "important");
+      }
+
+      if (main) {
+        main.style.setProperty("width", "72%", "important");
+      }
+
+      wrapper.appendChild(element);
+      document.body.appendChild(wrapper);
+
+      await new Promise((resolve) => setTimeout(resolve, 250));
+
+      const canvas = await html2canvas(element, {
+        scale: 2,
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: "#ffffff",
+        width: 794,
+        height: 1122,
+        windowWidth: 794,
+        windowHeight: 1122,
+      });
+
+      const imgData = canvas.toDataURL("image/jpeg", 1.0);
+      const pdf = new jsPDF({
+        orientation: "portrait",
+        unit: "mm",
+        format: "a4",
+        compress: true,
+      });
+
+      pdf.addImage(imgData, "JPEG", 0, 0, 210, 297, undefined, "FAST");
+      pdf.save("EngineerElite-resume.pdf");
+    } catch (error) {
+      console.error("EngineerElite PDF download error:", error);
+    } finally {
+      if (wrapper && document.body.contains(wrapper)) {
+        document.body.removeChild(wrapper);
+      }
+
+      setTimeout(() => {
+        pdfGeneratingRef.current = false;
+      }, 1000);
+    }
+  };
+
   return (
- <TemplateLayout
+    <TemplateLayout
       templateId="EngineerElite"
-      wrapperClass="ee-wrapper"
-      resumeClass="ee-resume"
+      handleSaveResume={handleSaveResume}
+      resumeData={resumeData}
+      setResumeData={setResumeData}
+      checkPaymentStatus={checkPaymentStatus}
+      onReset={handleResetEngineerElite}
+      onLoadResume={loadResume}
+      onDownloadPDF={handleDownloadPDF}
     >
-      {({ canEdit, isEditable, pdfRef, requirePayment }) => (
+      <div className="ee-wrapper">
+        <div className="ee-form no-pdf">
+          <h3 className="ee-form-title">Personal Info (for QR Code)</h3>
 
-    <div className="ee-wrapper">
-
-      {/* ---------- PERSONAL INFO FORM ---------- */}
-      <div className="ee-form">
-        <h3 className="ee-form-title">Personal Info (for QR Code)</h3>
-
-        <div className="ee-form-grid">
-
-          <div className="ee-form-field">
-            <label>Full Name</label>
-            <input name="fullName" value={info.fullName} onChange={handleInfoChange} disabled={!(canEdit && isEditable)}
-              placeholder="Enter your full name"
-            />
-
+          <div className="ee-form-grid">
+            {Object.keys(defaultData.info).map((field) => (
+              <div
+                className={`ee-form-field ${field === "engineerId" ? "ee-form-full" : ""}`}
+                key={field}
+              >
+                <label>{field === "engineerId" ? "Engineer ID" : field}</label>
+                <input
+                  name={field}
+                  value={engineerData.info[field]}
+                  onChange={(event) => updateInfo(field, event.target.value)}
+                  placeholder={`Enter your ${field}`}
+                />
+              </div>
+            ))}
           </div>
 
-          <div className="ee-form-field">
-            <label>Email</label>
-            <input name="email" value={info.email} onChange={handleInfoChange} disabled={!(canEdit && isEditable)}
-             
-              placeholder="Enter your Email"
-            />
+          <div className="ee-form-actions">
+            <button onClick={handleCreateQr}>Create QR Code</button>
           </div>
-
-          <div className="ee-form-field">
-            <label>Telephone</label>
-            <input name="phone" value={info.phone} onChange={handleInfoChange} disabled={!(canEdit && isEditable)}
-              
-              placeholder="Enter your Telephone"
-            />
-          </div>
-
-          <div className="ee-form-field">
-            <label>Address</label>
-            <input name="address" value={info.address} onChange={handleInfoChange} disabled={!(canEdit && isEditable)}
-              
-              placeholder="Address"
-            />
-          </div>
-
-          <div className="ee-form-field">
-            <label>State</label>
-            <input name="state" value={info.state} onChange={handleInfoChange} disabled={!(canEdit && isEditable)}
-              
-              placeholder="Enter your State"
-            />
-          </div>
-
-          <div className="ee-form-field">
-            <label>City</label>
-            <input name="city" value={info.city} onChange={handleInfoChange} disabled={!(canEdit && isEditable)}
-            
-              placeholder="Enter your City"
-            />
-          </div>
-
-          <div className="ee-form-field">
-            <label>Zip Code</label>
-            <input name="zip" value={info.zip} onChange={handleInfoChange} disabled={!(canEdit && isEditable)}
-            
-              placeholder="Enter Zip Code"
-            />
-          </div>
-
-          <div className="ee-form-field">
-            <label>LinkedIn</label>
-            <input name="linkedin" value={info.linkedin} onChange={handleInfoChange} disabled={!(canEdit && isEditable)}
-            
-              placeholder="Enter your LinkedIn Profile link"
-            />
-          </div>
-
-          <div className="ee-form-field ee-form-full">
-            <label>Engineer ID</label>
-            <input name="engineerId" value={info.engineerId} onChange={handleInfoChange} disabled={!(canEdit && isEditable)}
-       
-              placeholder="Enter your eignineer ID"
-            />
-          </div>
-
         </div>
 
-        <div className="ee-form-actions">
-          <button onClick={handleCreateQr}>Create QR Code</button>
+        <div className="resume-mobile-wrap ee-screen-preview">
+          <div className="resume-a4 ee-a4" style={{ position: "relative" }}>
+            <div className="ee-resume">
+              <aside className="ee-sidebar">
+                <div className="ee-photo-wrapper" onClick={openImagePicker}>
+                  <img
+                    src={
+                      engineerData.profileImage ||
+                      "/images/engineereliteprofileimage.png"
+                    }
+                    alt="Profile"
+                    className="ee-photo"
+                  />
+
+                  <input
+                    type="file"
+                    accept="image/*"
+                    ref={fileInputRef}
+                    style={{ display: "none" }}
+                    onClick={(event) => event.stopPropagation()}
+                    onChange={handleImageUpload}
+                  />
+                </div>
+
+                <div className="ee-qr-wrapper">
+                  {engineerData.qrDataUrl ? (
+                    <img src={engineerData.qrDataUrl} className="ee-qr-image" alt="QR Code" />
+                  ) : (
+                    <div className="ee-qr-placeholder">
+                      <span>QR CODE</span>
+                    </div>
+                  )}
+                </div>
+
+                <div className="ee-engineer-id">
+                  <span className="ee-engineer-id-label">ENGINEER ID</span>
+                  <span className="ee-engineer-id-value">
+                    {engineerData.info.engineerId || "ENG-XXXX-XXX"}
+                  </span>
+                </div>
+
+                <section className="ee-side-section">
+                  <h3 className="ee-side-heading">SKILLS</h3>
+                  <ul className="ee-side-list">
+                    {engineerData.skills.map((skill, index) => (
+                      <li key={index}>
+                        <input
+                          className="ee-side-input"
+                          value={skill}
+                          onChange={(event) =>
+                            updateListItem("skills", index, event.target.value)
+                          }
+                        />
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+
+                <section className="ee-side-section">
+                  <h3 className="ee-side-heading">TOOLS</h3>
+                  <ul className="ee-side-list">
+                    {engineerData.tools.map((tool, index) => (
+                      <li key={index}>
+                        <input
+                          className="ee-side-input"
+                          value={tool}
+                          onChange={(event) =>
+                            updateListItem("tools", index, event.target.value)
+                          }
+                        />
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+
+                <section className="ee-side-section">
+                  <h3 className="ee-side-heading">CERTIFICATIONS</h3>
+                  <textarea
+                    className="ee-side-text"
+                    value={engineerData.certifications}
+                    onChange={(event) => handleChange("certifications", event.target.value)}
+                  />
+                </section>
+              </aside>
+
+              <main className="ee-main">
+                <header className="ee-header">
+                  <input
+                    className="ee-name"
+                    value={engineerData.fullName}
+                    onChange={(event) => handleChange("fullName", event.target.value)}
+                  />
+                  <input
+                    className="ee-title"
+                    value={engineerData.jobTitle}
+                    onChange={(event) => handleChange("jobTitle", event.target.value)}
+                  />
+                  <div className="ee-header-line" />
+                </header>
+
+                <section className="ee-section">
+                  <h2 className="ee-section-title">SUMMARY</h2>
+                  <textarea
+                    className="ee-section-text"
+                    value={engineerData.summary}
+                    onChange={(event) => handleChange("summary", event.target.value)}
+                  />
+                </section>
+
+                <section className="ee-section">
+                  <h2 className="ee-section-title">EXPERIENCE</h2>
+
+                  {engineerData.experience.map((job, jobIndex) => (
+                    <div className="ee-job" key={jobIndex}>
+                      <div className="ee-job-header">
+                        <div className="ee-job-title-wrapper">
+                          <input
+                            className="ee-job-title"
+                            value={job.title}
+                            onChange={(event) =>
+                              updateExperience(jobIndex, "title", event.target.value)
+                            }
+                          />
+                          <input
+                            className="ee-job-company"
+                            value={job.company}
+                            onChange={(event) =>
+                              updateExperience(jobIndex, "company", event.target.value)
+                            }
+                          />
+                        </div>
+                        <input
+                          className="ee-job-dates"
+                          value={job.dates}
+                          onChange={(event) =>
+                            updateExperience(jobIndex, "dates", event.target.value)
+                          }
+                        />
+                      </div>
+
+                      <ul className="ee-job-list">
+                        {job.bullets.map((bullet, bulletIndex) => (
+                          <li key={bulletIndex}>
+                            <textarea
+                              className="ee-job-bullet"
+                              value={bullet}
+                              onChange={(event) =>
+                                updateExperienceBullet(
+                                  jobIndex,
+                                  bulletIndex,
+                                  event.target.value
+                                )
+                              }
+                            />
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </section>
+
+                <section className="ee-section">
+                  <h2 className="ee-section-title">PROJECTS</h2>
+
+                  {engineerData.projects.map((project, index) => (
+                    <div className="ee-project" key={index}>
+                      <div className="ee-project-header">
+                        <input
+                          className="ee-project-title"
+                          value={project.title}
+                          onChange={(event) =>
+                            updateProject(index, "title", event.target.value)
+                          }
+                        />
+                        <input
+                          className="ee-project-year"
+                          value={project.year}
+                          onChange={(event) =>
+                            updateProject(index, "year", event.target.value)
+                          }
+                        />
+                      </div>
+                      <textarea
+                        className="ee-section-text"
+                        value={project.description}
+                        onChange={(event) =>
+                          updateProject(index, "description", event.target.value)
+                        }
+                      />
+                    </div>
+                  ))}
+                </section>
+
+                <section className="ee-section ee-last">
+                  <h2 className="ee-section-title">EDUCATION</h2>
+
+                  {engineerData.education.map((education, index) => (
+                    <div className="ee-edu-item" key={index}>
+                      <input
+                        className="ee-edu-degree"
+                        value={education.degree}
+                        onChange={(event) =>
+                          updateEducation(index, "degree", event.target.value)
+                        }
+                      />
+                      <input
+                        className="ee-edu-meta"
+                        value={education.meta}
+                        onChange={(event) =>
+                          updateEducation(index, "meta", event.target.value)
+                        }
+                      />
+                    </div>
+                  ))}
+                </section>
+              </main>
+            </div>
+          </div>
         </div>
       </div>
-
-      {/* ---------- A4 RESUME ---------- */}
-      <div className="resume-a4 ee-a4" ref={pdfRef} style={{ position: "relative" }}>
-
-
-        <div className="ee-resume">
-
-
-          {/* LEFT SIDEBAR */}
-          <aside className="ee-sidebar">
-
-
-            <div
-              className={`ee-photo-wrapper ${!canEdit && isEditable ? "locked" : ""}`}
-              onClick={() => {
-
-                    // free user → open payment modal
-                    if (!canEdit) {
-                      if (requirePayment) requirePayment();
-                      return;
-                    }
-
-                    // paid but editing OFF
-                    if (!isEditable) return;
-
-                    // paid + editing ON
-                    if (fileInputRef.current) {
-                      fileInputRef.current.click();
-                    }
-
-                  }}
-              title={canEdit && isEditable ? "Click to change photo" : "Unlock to change photo"}
-             >
-              <img src={profileImage} alt="Profile" className="ee-photo" />
-
-              <input
-                type="file"
-                accept="image/*"
-                ref={fileInputRef}
-                style={{ display: "none" }}
-                onChange={handleImageUpload}
-              />
-
-              {!canEdit && (
-                <div className="ee-photo-lock">
-                  🔒 Premium
-                </div>
-              )}
-            </div>
-
-
-            <div className="ee-qr-wrapper">
-              {qrDataUrl ? (
-                <img src={qrDataUrl} className="ee-qr-image" />
-              ) : (
-                <div className="ee-qr-placeholder">
-                  <span>QR CODE</span>
-                </div>
-              )}
-            </div>
-
-            <div className="ee-engineer-id">
-              <span className="ee-engineer-id-label">ENGINEER ID</span>
-              <span className="ee-engineer-id-value">
-                {info.engineerId || "ENG-XXXX-XXX"}
-              </span>
-            </div>
-
-            <section className="ee-side-section">
-              <h3 className="ee-side-heading">SKILLS</h3>
-              <ul className="ee-side-list">
-                <li contentEditable={canEdit && isEditable}>CAD Modeling</li>
-                <li contentEditable={canEdit && isEditable}>Thermodynamics</li>
-                <li contentEditable={canEdit && isEditable}>Finite Element Analysis</li>
-                <li contentEditable={canEdit && isEditable}>Problem Solving</li>
-                <li contentEditable={canEdit && isEditable}>Technical Writing</li>
-              </ul>
-            </section>
-
-            <section className="ee-side-section">
-              <h3 className="ee-side-heading">TOOLS</h3>
-              <ul className="ee-side-list">
-                <li contentEditable={canEdit && isEditable}>SolidWorks</li>
-                <li contentEditable={canEdit && isEditable}>AutoCAD</li>
-                <li contentEditable={canEdit && isEditable}>MATLAB</li>
-                <li contentEditable={canEdit && isEditable}>MS Office</li>
-              </ul>
-            </section>
-
-            <section className="ee-side-section">
-              <h3 className="ee-side-heading">CERTIFICATIONS</h3>
-              <p className="ee-side-text" contentEditable={canEdit && isEditable}>
-                Certified SolidWorks Professional (CSWP)
-                <br />
-                Professional Engineer (PE)
-              </p>
-            </section>
-          </aside>
-
-          {/* RIGHT SECTION */}
-          <main className="ee-main">
-
-            <header className="ee-header">
-              <h1 className="ee-name" contentEditable={canEdit && isEditable}>EMMA ROBERTS</h1>
-              <p className="ee-title" contentEditable={canEdit && isEditable}>MECHANICAL ENGINEER</p>
-              <div className="ee-header-line" />
-            </header>
-
-            <section className="ee-section">
-              <h2 className="ee-section-title" contentEditable={canEdit && isEditable}>SUMMARY</h2>
-              <p className="ee-section-text" contentEditable={canEdit && isEditable}>
-                Detail-oriented mechanical engineer with 6+ years of experience...
-              </p>
-            </section>
-
-            <section className="ee-section">
-              <h2 className="ee-section-title" contentEditable={canEdit && isEditable}>EXPERIENCE</h2>
-
-              <div className="ee-job">
-                <div className="ee-job-header">
-                  <div>
-                    <p className="ee-job-title" contentEditable={canEdit && isEditable}>Mechanical Engineer</p>
-                    <p className="ee-job-company" contentEditable={canEdit && isEditable}>ABC Manufacturing — Los Angeles</p>
-                  </div>
-                  <p className="ee-job-dates" contentEditable={canEdit && isEditable}>2018–Present</p>
-                </div>
-
-                <ul className="ee-job-list">
-                  <li contentEditable={canEdit && isEditable}>Lead design and validation...</li>
-                  <li contentEditable={canEdit && isEditable}>Collaborate with cross-functional teams...</li>
-                  <li contentEditable={canEdit && isEditable}>Develop detailed CAD models...</li>
-                  <li contentEditable={canEdit && isEditable}>Implement design improvements...</li>
-                </ul>
-              </div>
-
-              <div className="ee-job">
-                <div className="ee-job-header">
-                  <div>
-                    <p className="ee-job-title" contentEditable={canEdit && isEditable}>Jr. Mechanical Engineer</p>
-                    <p className="ee-job-company" contentEditable={canEdit && isEditable}>XYZ Technologies — Pasadena</p>
-                  </div>
-                  <p className="ee-job-dates" contentEditable={canEdit && isEditable}>2015–2018</p>
-                </div>
-
-                <ul className="ee-job-list">
-                  <li contentEditable={canEdit && isEditable}>Assisted in mechanical design...</li>
-                  <li contentEditable={canEdit && isEditable}>Supported field installations...</li>
-                  <li contentEditable={canEdit && isEditable}>Prepared technical reports...</li>
-                </ul>
-              </div>
-            </section>
-
-            <section className="ee-section">
-              <h2 className="ee-section-title" contentEditable={canEdit && isEditable}>PROJECTS</h2>
-
-              <div className="ee-project">
-                <div className="ee-project-header">
-                  <p className="ee-project-title" contentEditable={canEdit && isEditable}>Heat Exchanger Optimization</p>
-                  <p className="ee-project-year" contentEditable={canEdit && isEditable}>2020</p>
-                </div>
-                <p className="ee-section-text" contentEditable={canEdit && isEditable}>
-                  Led a cross-functional engineering team to redesign...
-                </p>
-              </div>
-            </section>
-
-            <section className="ee-section ee-last">
-              <h2 className="ee-section-title" contentEditable={canEdit && isEditable}>EDUCATION</h2>
-
-              <div className="ee-edu-item">
-                <p className="ee-edu-degree" contentEditable={canEdit && isEditable}>M.S. in Mechanical Engineering</p>
-                <p className="ee-edu-meta" contentEditable={canEdit && isEditable}>UC Berkeley — 2015–2018</p>
-              </div>
-
-              <div className="ee-edu-item">
-                <p className="ee-edu-degree" contentEditable={canEdit && isEditable}>B.S. in Mechanical Engineering</p>
-                <p className="ee-edu-meta" contentEditable={canEdit && isEditable}>UT Austin — 2009–2013</p>
-              </div>
-            </section>
-          </main>
-        </div>
-      </div>
-    </div>
-     )
-          }
-        </TemplateLayout>
+    </TemplateLayout>
   );
 }

@@ -1,8 +1,7 @@
 /* Wrapper and buttons */
 .cb-wrapper {
   text-align: center;
-  margin: 0 !important;
-  padding: 0 !important;
+  padding: 20px;
   background: #eef1f6;
   min-height: 100vh;
   display: flex;
@@ -55,7 +54,7 @@
   height: 1122px;
   background: #e53935;
   color: #ffffff;
-  padding: 40px 32px;
+  padding: 30px 22px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -84,7 +83,7 @@
 /* Left column role text (job title) */
 .cb-left-role {
   text-align: center;
-  margin-top: 200px;
+  margin-top: 70px;
   margin-bottom: auto;   /* pushes Skills + Contact to bottom */
 }
 
@@ -104,6 +103,13 @@
   width: 100%;
   margin-bottom: 70px;
 }
+
+.cb-left-section-contact {
+  width: 100%;
+  margin-bottom: 70px;
+}
+
+
 .cb-left-section-skills {
   width: 100%;
   margin-bottom: 30px;
@@ -111,22 +117,37 @@
 
 
 .cb-left-heading {
-  margin: 0 0 12px;
+  margin-top: 50px;
   font-size: 13px;
   letter-spacing: 0.15em;
   font-weight: 700;
   text-transform: uppercase;
+  text-align: left;
 }
+
+
 
 .cb-left-list {
   list-style: disc;
   padding-left: 18px;
   margin: 0;
   font-size: 13px;
+    position: relative;
+  padding-bottom: 60px; /* space for line */
 }
 
 .cb-left-list li + li {
   margin-top: 4px;
+}
+
+.cb-left-list::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 40%;
+  height: 1px;
+  background: #b4b3b3;
 }
 
 .cb-left-contact p {
@@ -140,38 +161,42 @@
   padding: 40px 48px;
   box-sizing: border-box;
   background: #f9fafb;
+  height: 1122px;
 }
 
 /* Name + Title */
 .cb-header-text {
-  margin-bottom: 32px;
+  margin-bottom: 26px;
 }
 
 .cb-name {
-  margin: 0;
-  font-size: 30px;
+    width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 34px;
   font-weight: 800;
-
-  letter-spacing: 0.08em;   /* 🔥 reduce from 0.12 */
-  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #727171;
+  line-height: 1.1;
+  text-align: center;
 }
+
 .cb-title {
   margin: 6px 0 0;
   font-size: 15px;
-
-  letter-spacing: 0.08em;   /* 🔥 reduce */
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-
   color: #4b5563;
-
-  text-align: center;       /* 🔥 ensure alignment */
-  line-height: 1.2;         /* 🔥 prevent cut */
 }
 
 /* Sections on right */
-.cb-section {
-  margin-bottom: 12px;
+/* Common Section */
+.cb-section-profile,
+.cb-section-exp {
+  margin-bottom: 24px;
 }
+
 
 .cb-section-heading {
   margin: 0 0 8px;
@@ -369,33 +394,265 @@
     user-select: text !important;
     -webkit-user-select: text !important;
   }
+}
+
+.cb-left-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: inherit;
+  font: inherit;
+}
+.cb-left-input:focus {
+  background: rgba(255, 255, 255, 0.12);
+}
+.cb-left-role-text{
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: inherit;
+  font: inherit;
+  text-align: center;
+   margin: 8px 0 0;    /* pushes text downward */
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+/* Profile Summary */
+.cb-text-summary {
+  width: 100%;
+  min-height: 88px;
+  background: #fafafa;
+  border: 1px solid #e5e5e5;
+  outline: none;
+  resize: none;
+  padding: 12px 14px;
+  box-sizing: border-box;
+  font-size: 13px;
+  line-height: 1.55;
+  color: #333;
+  text-align: left;
+}
+/* Cards */
+.cb-item {
+  margin-bottom: px;
+  /* padding-top: 13px;   */
+  padding-bottom: 0px;
+  padding-right: 15px;
+  padding-left: 15px;
+  background: #fbfbfb;
+  border-left: 4px solid #b22222;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+.cb-section-title,
+.cb-section-title-pro {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+  color: #b22222;
+  margin: 0 0 12px;
+  padding-bottom: 7px;
+  border-bottom: 2px solid #b22222;
+  text-transform: uppercase;
+}
+.cb-header {
+
+  text-align: center;
+
+  
+  padding-bottom: 40px;
+  padding-top:0px;
+}
+
+.cb-qr-box {
+  width: 96px;
+  height: 96px;
+  margin: 30px auto 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+}
+
+@media (max-width: 768px) {
+  .cb-wrapper {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+    display: flex !important;
+    justify-content: center !important;
+    margin-top:-80px
+    
+  }
+
+  .resume-mobile-wrap {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    overflow: hidden !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: flex-start !important;
+    padding: 10px 0 40px !important;
+  }
+
+  .resume-a4.cb-a4 {
+    width: 210mm !important;
+    min-width: 210mm !important;
+    max-width: 210mm !important;
+    height: 297mm !important;
+    min-height: 297mm !important;
+
+    transform: scale(0.42) !important;
+    transform-origin: top center !important;
+
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-bottom: -10px !important;
+  }
+
+  .cb-resume {
+    width: 100% !important;
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: row !important;
+  }
+
+  .cb-left {
+    width: 32% !important;
+  }
+
+  .cb-right {
+    width: 68% !important;
+  }
+}
+
+@media (max-width: 932px) and (orientation: landscape) {
+
+  .resume-mobile-wrap {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    justify-content: center !important;
+  }
+
+  .resume-a4.cb-a4 {
+    transform: scale(0.82) !important;
+    transform-origin: top center !important;
+    margin-bottom: -420px !important;
+  }
 
 }
-  .cb-a4 {
-     transform: none !important;
-  width: 210mm;
-  height: 297mm;
-  overflow: hidden;   /* 🔥 KEY FIX */
-  background: white;
-  margin: 0 auto;
-  position: relative;
+
+/* Education CSS */
+.cb-exp-title,
+.cb-date,
+.cb-exp-description {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  font: inherit;
+  color: inherit;
+}
+
+.cb-edu-degree,
+.cb-edu-location,
+.cb-date {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 12px;
+  color: #777;
+  margin-bottom: 5px;
+}
+
+.cb-date {
+  font-weight: 700;
+  color: #b22222;
+}
+
+.cb-exp-description,
+.cb-edu-description {
+  width: 100%;
+  min-height: 48px;
+  background: transparent;
+  border: none;
+  outline: none;
+  resize: none;
   overflow: hidden;
-}
-.resume-a4 {
-  width: 210mm;
-  height: 297mm;
-  background: white;
-  margin: 0 !important;
-  padding: 0 !important;
-  background: white;
-   padding-top: 2px;
-   transform: scale(1); 
-   box-sizing: border-box;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #333;
+  padding: 0;
 }
 
-/* 🔥 KEY MULTI-PAGE CONTROL */
-.page-break {
-  page-break-after: always;
-  break-after: page;
+
+
+.cb-exp-title,
+.cb-edu-institute {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  font-weight: 800;
+  color:#727171;
+  margin-bottom: 4px;
+}
+/* =================================
+   SMOOTH EDIT HIGHLIGHT
+================================= */
+
+.cb-name,
+.cb-role,
+.cb-left-role-text,
+.cb-left-input,
+.cb-text-summary,
+.cb-exp-title,
+.cb-exp-description,
+.cb-edu-institute,
+.cb-edu-degree,
+.cb-edu-location,
+.cb-edu-description,
+.cb-date {
+
+  border: 1.5px dashed transparent;
+  transition: all 0.18s ease;
+
+  box-sizing: border-box;
+}
+
+/* Focus */
+.cb-name:focus,
+.cb-role:focus,
+.cb-left-role-text:focus,
+.cb-left-input:focus,
+.cb-text-summary:focus,
+.cb-exp-title:focus,
+.cb-exp-description:focus,
+.cb-edu-institute:focus,
+.cb-edu-degree:focus,
+.cb-edu-location:focus,
+.cb-edu-description:focus,
+.cb-date:focus {
+
+  border-color: #b22222;
+
+  background: rgba(178, 34, 34, 0.05);
+
+  border-radius: 4px;
+
+  outline: none;
+}
+.cb-photo-wrapper {
+  width: 130px;
+  height: 130px;
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
 }
 

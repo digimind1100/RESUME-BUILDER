@@ -306,3 +306,32 @@ scroll-behavior: smooth;
 .payment-modal::-webkit-scrollbar-track {
   background: transparent;
 }
+
+
+.qr-payment-box {
+  margin: 14px 0;
+  padding: 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  text-align: center;
+  background: #fafafa;
+}
+
+.payment-qr-img {
+  width: 180px;
+  height: 180px;
+  object-fit: contain;
+  margin-bottom: 10px;
+}
+
+.qr-payment-text {
+  font-size: 14px;
+  color: #111;
+  margin: 6px 0;
+}
+
+.qr-payment-note {
+  font-size: 12px;
+  color: #666;
+  margin: 4px 0 0;
+}

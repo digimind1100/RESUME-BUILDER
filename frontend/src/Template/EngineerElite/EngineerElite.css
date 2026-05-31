@@ -495,3 +495,164 @@
   pointer-events: none;
 }
 
+.ee-resume input,
+.ee-resume textarea {
+  border: 1px solid transparent !important;
+  background: transparent !important;
+  outline: none !important;
+  box-shadow: none !important;
+  box-sizing: border-box !important;
+  font-family: inherit !important;
+  transition: background 0.2s ease, border-color 0.2s ease !important;
+}
+
+.ee-resume input:hover,
+.ee-resume textarea:hover {
+  background: rgba(37, 99, 235, 0.06) !important;
+}
+
+.ee-resume input:focus,
+.ee-resume textarea:focus {
+  background: rgba(37, 99, 235, 0.12) !important;
+  border-color: rgba(37, 99, 235, 0.42) !important;
+}
+
+.ee-side-input,
+.ee-side-text,
+.ee-name,
+.ee-title,
+.ee-section-text,
+.ee-job-title,
+.ee-job-company,
+.ee-job-dates,
+.ee-job-bullet,
+.ee-project-title,
+.ee-project-year,
+.ee-edu-degree,
+.ee-edu-meta {
+  width: 100%;
+}
+
+.ee-side-input,
+.ee-side-text {
+  color: #f9fafb;
+  font-size: 12px;
+}
+
+.ee-side-text {
+  display: block;
+  min-height: 52px;
+  resize: none;
+  overflow: hidden;
+}
+
+.ee-name,
+.ee-title,
+.ee-job-title,
+.ee-job-company,
+.ee-edu-degree,
+.ee-edu-meta {
+  display: block;
+}
+
+.ee-section-text {
+  display: block;
+  min-height: 52px;
+  resize: none;
+  overflow: hidden;
+}
+
+.ee-job-title-wrapper {
+  flex: 1;
+}
+
+.ee-job-dates,
+.ee-project-year {
+  width: 105px;
+  text-align: right;
+}
+
+.ee-job-bullet {
+  display: block;
+  min-height: 24px;
+  resize: none;
+  overflow: hidden;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #4b5563;
+}
+
+.resume-mobile-wrap {
+  width: 100%;
+  overflow-x: auto;
+  display: flex;
+  justify-content: center;
+  background: #ffffff;
+}
+
+.resume-a4.ee-a4 {
+  height: 297mm;
+  min-height: 297mm;
+  overflow: hidden;
+}
+
+.resume-a4.ee-a4 .ee-resume {
+  min-height: 100%;
+  background: #ffffff;
+}
+
+.ee-screen-preview .resume-a4.ee-a4 {
+  height: auto !important;
+  min-height: 297mm !important;
+  overflow: visible !important;
+  background: #ffffff !important;
+}
+
+.ee-screen-preview .resume-a4.ee-a4 .ee-resume {
+  height: auto !important;
+  min-height: 297mm !important;
+}
+
+.ee-screen-preview .resume-a4.ee-a4 .ee-sidebar,
+.ee-screen-preview .resume-a4.ee-a4 .ee-main {
+  align-self: stretch !important;
+}
+
+@media (max-width: 768px) {
+  .resume-mobile-wrap {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: flex-start !important;
+    padding: 0 0 30px !important;
+    box-sizing: border-box !important;
+  }
+
+  .resume-a4.ee-a4 {
+    width: 210mm !important;
+    min-width: 210mm !important;
+    height: 297mm !important;
+    max-width: none !important;
+    transform: scale(0.42) !important;
+    transform-origin: top center !important;
+    margin-top: 20px !important;
+    margin-bottom: -520px !important;
+  }
+
+  .ee-resume {
+    flex-direction: row !important;
+  }
+
+  .ee-sidebar {
+    width: 28% !important;
+  }
+
+  .ee-main {
+    width: 72% !important;
+    padding: 32px 40px 36px !important;
+  }
+}
+

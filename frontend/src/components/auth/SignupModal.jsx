@@ -63,8 +63,7 @@ console.log("SIGNUP MODAL RENDERED");
       setLoading(false); // stop loading ALWAYS
     }
   }
-
-
+  
   function switchMode(nextMode) {
     setMode(nextMode);
     setError("");

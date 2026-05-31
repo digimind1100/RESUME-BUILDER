@@ -359,3 +359,205 @@
 
   pointer-events: none;
 }
+
+.ec-resume input,
+.ec-resume textarea {
+  border: 1px solid transparent !important;
+  background: transparent !important;
+  outline: none !important;
+  box-shadow: none !important;
+  box-sizing: border-box !important;
+  font-family: inherit !important;
+  transition: background 0.2s ease, border-color 0.2s ease !important;
+}
+
+.ec-resume input:hover,
+.ec-resume textarea:hover {
+  background: rgba(209, 181, 122, 0.07) !important;
+}
+
+.ec-resume input:focus,
+.ec-resume textarea:focus {
+  background: rgba(209, 181, 122, 0.13) !important;
+  border-color: rgba(209, 181, 122, 0.5) !important;
+}
+
+.ec-name,
+.ec-title,
+.ec-contact-text,
+.ec-skill-input,
+.ec-edu-degree,
+.ec-edu-meta,
+.ec-section-text,
+.ec-job-title,
+.ec-job-company,
+.ec-job-dates,
+.ec-job-bullet,
+.ec-main-edu-degree,
+.ec-main-edu-meta {
+  width: 100%;
+}
+
+.ec-name,
+.ec-title {
+  display: block;
+  text-align: center;
+}
+
+.ec-name {
+  color: #f9fafb !important;
+}
+
+.ec-title {
+  color: #d1b57a !important;
+}
+
+.ec-contact-text,
+.ec-skill-input {
+  font-size: 12px;
+  color: #374151;
+}
+
+.ec-contact-list li {
+  align-items: flex-start;
+}
+
+.ec-icon-circle {
+  flex: 0 0 auto;
+}
+
+.ec-edu-meta {
+  display: block;
+  min-height: 48px;
+  resize: none;
+  overflow: hidden;
+}
+
+.ec-section-text {
+  display: block;
+  min-height: 52px;
+  resize: none;
+  overflow: hidden;
+}
+
+.ec-competencies {
+  min-height: 74px;
+}
+
+.ec-job-title-wrapper {
+  flex: 1;
+}
+
+.ec-job-title,
+.ec-job-company {
+  display: block;
+}
+
+.ec-job-dates {
+  width: 110px;
+  text-align: right;
+}
+
+.ec-job-bullet {
+  display: block;
+  min-height: 24px;
+  resize: none;
+  overflow: hidden;
+  font-size: 12px;
+  line-height: 1.55;
+  color: #4b5563;
+}
+
+.ec-main-edu-degree,
+.ec-main-edu-meta {
+  display: block;
+}
+
+.resume-mobile-wrap {
+  width: 100%;
+  overflow-x: auto;
+  display: flex;
+  justify-content: center;
+  background: #ffffff;
+}
+
+.resume-a4.ec-a4 {
+  height: 297mm;
+  min-height: 297mm;
+  overflow: hidden;
+}
+
+.resume-a4.ec-a4 .ec-resume {
+  min-height: 100%;
+  background: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .resume-mobile-wrap {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
+    overflow-y: visible !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: flex-start !important;
+    padding: 0 0 30px !important;
+    box-sizing: border-box !important;
+  }
+
+  .resume-a4.ec-a4 {
+    width: 210mm !important;
+    min-width: 210mm !important;
+    height: 297mm !important;
+    max-width: none !important;
+    transform: scale(0.42) !important;
+    transform-origin: top center !important;
+    margin-top: 20px !important;
+    margin-bottom: -520px !important;
+  }
+
+  .ec-body {
+    flex-direction: row !important;
+    padding: 28px 40px 32px !important;
+  }
+
+  .ec-sidebar {
+    width: 30% !important;
+    border-right: 1px solid #e5e7eb !important;
+    border-bottom: none !important;
+    padding-right: 32px !important;
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  .ec-main {
+    padding-left: 32px !important;
+  }
+}
+
+/* Screen preview may grow when editable text needs more room.
+   PDF export still forces a fixed A4 clone in ElegantClassic.jsx. */
+.ec-screen-preview .resume-a4.ec-a4 {
+  height: auto !important;
+  min-height: 297mm !important;
+  overflow: visible !important;
+  background: #ffffff !important;
+}
+
+.ec-screen-preview .resume-a4.ec-a4 .ec-resume {
+  height: auto !important;
+  min-height: 297mm !important;
+  background: #ffffff !important;
+}
+
+.ec-screen-preview .resume-a4.ec-a4 .ec-body {
+  min-height: calc(297mm - 96px) !important;
+  align-items: stretch !important;
+  background: #ffffff !important;
+}
+
+.ec-screen-preview .resume-a4.ec-a4 .ec-sidebar,
+.ec-screen-preview .resume-a4.ec-a4 .ec-main {
+  align-self: stretch !important;
+}

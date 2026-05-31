@@ -26,7 +26,7 @@ html, body {
   display: flex;
   align-items: center;
   padding: 0 60px;
-  z-index: 3000;
+  z-index: 99999;
 }
 
 /* Space below navbar */

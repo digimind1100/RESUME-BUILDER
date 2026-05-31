@@ -4,14 +4,19 @@
 } */
 
 .florence-page {
-border: 1px solid black;
-    width: 210mm;
+  width: 210mm;
   height: 297mm;
+
   background: #fff;
   margin: 0 auto;
   padding: 28px 34px;
+
   box-sizing: border-box;
-  
+  overflow: hidden;
+
+  color: #333;
+
+  border: 0.5px solid rgb(133, 133, 133);
 }
 
 /* ===============================
@@ -24,12 +29,16 @@ border: 1px solid black;
   --font-name: "Georgia", "Times New Roman", serif;
 
   --name-size: 32px;
-  --title-size: 11px;
-  --section-size: 12px;
-  --body-size: 11px;
+  --title-size: 14px;
+  --summary-size: 16px;
+  --section-size: 16px;
+  --body-size: 16px;
+  --title-size: 16px;
+  --section-size: 14px;
+  --body-size: 14px;
   --small-size: 10.5px;
 
-  --body-line: 1.45;
+  --body-line: 1.2;
   --heading-spacing: 3px;
   --name-spacing: 6px;
 }
@@ -45,21 +54,26 @@ border: 1px solid black;
   line-height: var(--body-line);
 }
 
-.florence-name {
-  font-family: var(--font-name);
-  font-size: var(--name-size);
-  letter-spacing: var(--name-spacing);
+.florence-page .florence-name {
+  font-family: var(--font-name) !important;
+  font-size: var(--name-size) !important;
+  letter-spacing: var(--name-spacing) !important;
+  font-weight: 600 !important;
+  text-align: center !important;
 }
-
+.summary-input {
+  font-size: var(--summary-size);
+}
 .florence-title {
   font-family: var(--font-heading);
-  font-size: var(--title-size);
+  font-size: var(--title-size) !important;
   letter-spacing: 3px;
 }
 
 section h3,
 .header-summary h4,
 .edu-heading,
+.contact-heading,
 .skills-heading,
 .exp-heading {
   font-family: var(--font-heading);
@@ -71,7 +85,7 @@ section h3,
 .florence-page textarea,
 .florence-page li,
 .florence-page p {
-  font-family: inherit;
+  font-family: "Arial", Helvetica, sans-serif;
   font-size: inherit;
   line-height: inherit;
 }
@@ -83,14 +97,14 @@ section h3,
 .florence-header {
 
   text-align: center;
-  border-bottom: 1px solid #d9d9d9;
+  border-bottom: 1px solid #797878;
   padding-bottom: 40px;
   padding-top:40px;
 }
 
 
 .florence-name {
-  width: 70%;
+  width: 80%;
   text-align: center;
   font-size: 30px;
   letter-spacing: 6px;
@@ -111,7 +125,7 @@ section h3,
   align-items: flex-start;
   gap: 20px;
   height: 150px;
-  border-bottom: 1px solid #d9d9d9;
+  border-bottom: 1px solid #797878;
 }
 
 .florence-body {
@@ -122,7 +136,8 @@ section h3,
 .florence-left {
   width: 30%;
   padding-right: 24px;
-  border-right: 1px solid #ddd;
+  border-right: 1px solid #797878;
+  margin-left: 20px;
 }
 
 .florence-right {
@@ -144,10 +159,9 @@ section h3,
   padding: 8px;
   margin: 0;
 
-  resize: none;
   box-sizing: border-box;
 
-  font: inherit;
+ 
   color: inherit;
   line-height: inherit;
 
@@ -198,7 +212,7 @@ section h3,
   bottom: 0;
   width: 10%;
   height: 1px;
-  background: #ddd;
+  background: #b4b3b3;
 }
 .summary{
   text-align: center;
@@ -313,7 +327,7 @@ padding-bottom: 28px;
   bottom: 0;
   width: 50%;
   height: 1px;
-  background: #ddd;
+  background: #b4b3b3;
 }
 .education{
 padding-top: 22px;
@@ -328,7 +342,7 @@ box-sizing: border-box;
   bottom: 0;
   width: 50%;
   height: 1px;
-  background: #ddd;
+  background:#b4b3b3;
 }
 .edu-heading{
   letter-spacing: 4px;
@@ -338,7 +352,7 @@ box-sizing: border-box;
   padding-bottom: 40px;
 }
 .edu-block{
-  padding-top: 10px;
+  padding-top: 0px;
   padding-bottom: 10px;
 }
 .skills-heading{
@@ -373,11 +387,13 @@ box-sizing: border-box;
   word-spacing: 4px;
   letter-spacing: 0.2px;
   border:none;
+  font-weight: 600;
   
 }
 .exp-date input{
   width: 100%;
   border: none;
+  font-weight: 600;
 }
 .experience-bullet{
     padding-left: 30px;
@@ -403,7 +419,6 @@ box-sizing: border-box;
   border: none;
   outline: none;
   background: transparent;
-  font: inherit;
 }
 
 .bullet-input {
@@ -428,40 +443,17 @@ box-sizing: border-box;
 
 .jon-intro{
   width: 100%;
-  margin-top: 12px;
+  margin-top: 0;
   border:none;
+}
+.exp-input{
+  margin-bottom:20px;
 }
 
 .intro{
     padding-top: 6px;
 }
-@media (max-width: 768px) {
 
-  .resume-mobile-wrap {
-    width: 100%;
-    overflow-x: auto;
-    overflow-y: auto;
-
-    display: flex;
-    justify-content: center;
-
-    padding: 14px 10px 40px;
-    box-sizing: border-box;
-  }
-
-  .florence-page {
-    width: 794px;
-    min-height: 297mm;
-
-    transform: scale(0.52);
-    transform-origin: top center;
-
-    margin: 0 auto;
-
-    flex-shrink: 0;
-  }
-
-}
 .florence-page{
   width: 210mm;
   height: 297mm;
@@ -476,6 +468,7 @@ box-sizing: border-box;
 .content {
   display: flex;
   justify-content: center;
+  height: 1300px;
 }
 
 .florence-page {
@@ -557,7 +550,10 @@ box-sizing: border-box;
 
   background: transparent;
 
-  padding: 2px 4px;
+  padding-top: 0px;
+  padding-bottom:2px;
+  padding-left:4px;
+  padding-right: 4px;
   margin: 0;
 
   box-sizing: border-box;
@@ -597,8 +593,12 @@ box-sizing: border-box;
 
   background: transparent;
 
-  padding: 2px 4px;
+  padding-top: 0px;
+  padding-bottom:0px;
+  padding-left:4px;
+  padding-right: 4px;
   margin: 0;
+  height: 20px;
 
   box-sizing: border-box;
 
@@ -677,7 +677,7 @@ box-sizing: border-box;
 
 /* keep original layout */
 .pdf-export .florence-name {
-  width: 70% !important;
+  width: 80% !important;
   text-align: center !important;
   font-size: 30px !important;
   letter-spacing: 6px !important;
@@ -705,7 +705,7 @@ box-sizing: border-box;
 }
 
 .pdf-export .florence-name.pdf-header-text {
-  width: 70%;
+  width: 80%;
   margin: 0 auto;
   text-align: center;
   font-size: 30px;
@@ -750,3 +750,117 @@ box-sizing: border-box;
   white-space: pre-wrap;
   word-wrap: break-word;
 }
+
+/* SUMMARY FONT OVERRIDE */
+.florence-page .summary-input {
+  font-size: var(--summary-size) !important;
+  line-height: var(--body-line);
+}
+.pdf-export .summary-input.pdf-summary-text {
+  font-size: var(--summary-size) !important;
+  line-height: var(--body-line);
+}
+/* ===============================
+   HEADER FONT OVERRIDE
+================================ */
+
+.florence-page .florence-name {
+  font-family: var(--font-name) !important;
+  font-size: var(--name-size) !important;
+  letter-spacing: var(--name-spacing) !important;
+  font-weight: 600 !important;
+  text-align: center !important;
+}
+
+.florence-page .florence-title {
+  font-family: var(--font-heading) !important;
+  font-size: var(--title-size) !important;
+  letter-spacing: 3px !important;
+  text-align: center !important;
+}
+
+.pdf-summary-text {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  resize: none;
+}
+/* PDF COLOR SHARPNESS */
+.florence-page {
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+* {
+  text-rendering: geometricPrecision;
+}
+
+@media (max-width: 768px) {
+  .resume-mobile-wrap {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    overflow: hidden !important;
+
+    display: flex !important;
+    justify-content: center !important;
+    align-items: flex-start !important;
+
+    padding: 0 0 30px !important;
+    box-sizing: border-box !important;
+  }
+
+  .resume-a4.florence-page {
+    width: 210mm !important;
+    min-width: 210mm !important;
+    height: 297mm !important;
+
+    transform: scale(0.38) !important;
+    transform-origin: top center !important;
+
+    margin-top: 30px !important;
+    margin-bottom: -560px !important;
+  }
+
+}
+
+@media (max-width: 768px) {
+  .resume-mobile-wrap .resume-a4.florence-page {
+    transform: scale(0.42) !important;
+    transform-origin: top center !important;
+  }
+
+  .resume-mobile-wrap .florence-page {
+    transform: scale(0.34) !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .resume-a4.florence-page {
+    transform: scale(0.36) !important;
+    margin-bottom: -590px !important;
+  }
+}
+
+@media (max-width: 390px) {
+  .resume-a4.florence-page {
+    transform: scale(0.34) !important;
+    margin-bottom: -620px !important;
+  }
+}
+
+
+@media (max-width: 932px) and (orientation: landscape) {
+  .resume-mobile-wrap .resume-a4.florence-page {
+    transform: scale(0.85) !important;
+    transform-origin: top center !important;
+
+    margin-top: 0 !important;
+    margin-bottom: -380px !important;
+  }
+
+  .resume-mobile-wrap {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    overflow-x: hidden !important;
+    justify-content: center !important;
+  }
+}
+

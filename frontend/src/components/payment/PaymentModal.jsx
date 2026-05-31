@@ -5,6 +5,7 @@ import "./PaymentModal.css";
 import easypaisaLogo from "../../assets/payments/easypaisa.png";
 import jazzcashLogo from "../../assets/payments/jazzcash.png";
 import sadapayLogo from "../../assets/payments/sadapay.png";
+import easypaisaQR from "../../assets/payments/easypaisa-qr.png";
 
 import { useAuth } from "../../context/AuthContext";
 
@@ -35,16 +36,6 @@ export default function PaymentModal({ onClose, onSuccess }) {
       number: "0300-2463822",
       logo: easypaisaLogo,
     },
-    jazzcash: {
-      name: "JazzCash",
-      number: "0300-2463822",
-      logo: jazzcashLogo,
-    },
-    sadapay: {
-      name: "SadaPay",
-      number: "0300-2463822",
-      logo: sadapayLogo,
-    },
   };
 
   /* ===============================
@@ -59,7 +50,8 @@ export default function PaymentModal({ onClose, onSuccess }) {
       }
 
       const res = await fetch(
-        "https://resume-builder-backend-production-116d.up.railway.app/api/payfast/create-payment",
+        "https://resume-builder-backend-66wy.onrender.com/api/payfast/create-payment",
+        
         {
           method: "POST",
           headers: {
@@ -110,7 +102,8 @@ export default function PaymentModal({ onClose, onSuccess }) {
       const token = localStorage.getItem("token");
 
       const res = await fetch(
-        "https://resume-builder-backend-production-116d.up.railway.app/api/payments/submit",
+        "https://resume-builder-backend-66wy.onrender.com/api/payments/submit",
+        
         {
           method: "POST",
           headers: {
@@ -164,7 +157,7 @@ export default function PaymentModal({ onClose, onSuccess }) {
       console.log("Redeeming promo:", promoCode);
 
       const res = await fetch(
-        "https://resume-builder-backend-production-116d.up.railway.app/api/promo/redeem",
+        "https://resume-builder-backend-66wy.onrender.com/api/promo/redeem",
         {
           method: "POST",
           headers: {
@@ -266,6 +259,27 @@ export default function PaymentModal({ onClose, onSuccess }) {
             </p>
           </div>
         )}
+
+
+        {method === "easypaisa" && (
+  <div className="qr-payment-box">
+    <img
+      src={easypaisaQR}
+      alt="EasyPaisa QR Code"
+      className="payment-qr-img"
+    />
+
+    <p className="qr-payment-text">
+      Scan this QR code and pay <b>Rs 599</b> via EasyPaisa.
+    </p>
+
+    <p className="qr-payment-note">
+      After payment, enter your Transaction ID below for verification.
+    </p>
+  </div>
+)}
+
+
 
         {status === "idle" && method && (
           <input

@@ -61,6 +61,15 @@ const isLocal = import.meta.env.DEV;
         <Toaster position="top-center" />
         <Routes>
           <Route
+            path="/data-elite"
+            element={
+              <BuilderGuard>
+                <DataElite />
+              </BuilderGuard>
+            }
+          />
+
+          <Route
   path="/data-:templateId"
   element={
     <TestPagination
@@ -115,7 +124,7 @@ const isLocal = import.meta.env.DEV;
           />
 
           <Route path="/clean-professional" element={<CleanProfessional />} />
-          <Route path="/creative-bold" element={<CreativeBold />} />
+          <Route path="/creative-bold" element={<CreativeBold />}/>
           <Route path="/minimal-accent" element={<MinimalAccent />} />
           <Route path="/elegant-classic" element={<ElegantClassic />} />
           <Route path="/medical-elites" element={<MedicalElites />} />
@@ -127,15 +136,6 @@ const isLocal = import.meta.env.DEV;
           <Route path="/test-pagination" element={<TestPagination />} />
           <Route path="/florence-classic" element={<FlorenceClassic />} />
 
-
-          <Route
-            path="/data-elite"
-            element={
-              <BuilderGuard>
-                <DataElite />
-              </BuilderGuard>
-            }
-          />
 
           <Route path="/engineer-prime" element={<EngineerPrime />} />
           <Route path="/aviation-pro" element={<AviationPro />} />
