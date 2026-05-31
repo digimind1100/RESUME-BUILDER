@@ -16,11 +16,8 @@ export function AuthProvider({ children }) {
 
   // 🔥 Global loading ONLY for app initialization
   const [loading, setLoading] = useState(true);
-<<<<<<< HEAD
   const [initializing, setInitializing] = useState(true);
 
-=======
->>>>>>> 0c79162d18a2081872c0b4d80ef9bdb9708cf244
 
   const isAuthenticated = !!user;
 
