@@ -1,62 +1,17 @@
-// src/Templates/AviationPro.jsx
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import TemplateLayout from "../TemplateLayout";
-import { useNavigate } from "react-router-dom";
 import "./AviationPro.css";
 import QRCode from "qrcode";
+import { useAuth } from "../../context/AuthContext";
+import useProfileImage from "../../hooks/useProfileImage";
+import useResumeTemplate from "../../hooks/useResumeTemplate";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
 export default function AviationPro() {
+  const pdfGeneratingRef = useRef(false);
 
-  // ---------- PROFILE IMAGE ----------
-  const [profileImage, setProfileImage] = useState(
-    "/images/cleanprofileimage.png"
-  );
-  const fileInputRef = useRef(null);
-  const handleImageUpload = (event) => {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    const imageUrl = URL.createObjectURL(file);
-    setProfileImage(imageUrl);
-  };
-const navigate = useNavigate();
-  // ---------- QR FORM STATE ----------
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
-  const [city, setCity] = useState("");
-  const [stateVal, setStateVal] = useState("");
-  const [zip, setZip] = useState("");
-  const [linkedin, setLinkedin] = useState("");
-  const [profileLink, setProfileLink] = useState("");
-
-  const [qrImage, setQrImage] = useState("/images/aviation-qr.png");
-
-  const handleGenerateQR = async () => {
-    const qrData = `
-Full Name: ${fullName}
-Email: ${email}
-Phone: ${phone}
-Address: ${address}
-City: ${city}
-State: ${stateVal}
-ZIP: ${zip}
-LinkedIn: ${linkedin}
-Profile: ${profileLink}
-    `.trim();
-
-    try {
-      const qr = await QRCode.toDataURL(qrData || "Aviation Resume");
-      setQrImage(qr);
-    } catch (err) {
-      console.error("QR generation error:", err);
-    }
-  };
-
-  // ---------- TABS / ROLES ----------
   const roles = ["pilot", "cabin", "maintenance", "atc", "engineer", "operations"];
-  const [activeRole, setActiveRole] = useState("pilot");
 
   const roleLabels = {
     pilot: "Pilot",
@@ -66,139 +21,142 @@ Profile: ${profileLink}
     engineer: "Aeronautical Engineer",
     operations: "Airport Operations",
   };
-  const triggerFileSelect = () => {
-    if (!canEdit) {
-      return;
-    }
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
-  };
 
-  // ---------- STATIC ROLE DATA (BASE) ----------
-  const roleData = {
+  const defaultRoles = {
     pilot: {
       title: "Commercial Airline Pilot",
       summary:
-        "Highly skilled commercial airline pilot with 4,500+ total flight hours across domestic, regional, and intercontinental routes. Adept in crew resource management, critical decision-making, and flight operations under diverse weather and traffic conditions. Strong focus on passenger safety, regulatory compliance, and maintaining consistent on-time performance. Experienced in long-haul and short-haul operations with proven leadership in cockpit communication and situational awareness.",
-      exp1Title: "Captain — Boeing 737 (NG/MAX)",
-      exp1Company: "SkyWings Airlines — International & Domestic Operations",
-      exp1Dates: "2019 – Present",
-      exp1Bullets: [
-        "Operate scheduled long-haul and regional flights with responsibility for crew coordination, fuel planning, performance calculations, and safe operation of aircraft systems.",
-        "Execute takeoff, climb, cruise, descent, and landing procedures in accordance with aircraft SOPs and ATC instructions.",
-        "Lead pre-flight briefings, assign cockpit and cabin crew duties, and coordinate real-time decision-making during abnormal and emergency situations.",
-        "Ensure compliance with ICAO, FAA, EASA, and airline-specific safety standards during all phases of flight.",
-        "Manage workload distribution using CRM principles to enhance flight safety and reduce operational risks.",
-        "Conduct advanced flight monitoring using FMS, weather radar, TCAS, and real-time navigation systems.",
-        "Collaborate with engineering teams for MEL/CDL assessments and technical log reports.",
-        
-      ],
-      exp2Title: "First Officer — Airbus A320 Family",
-      exp2Company: "BlueJet Airways — Regional Fleet",
-      exp2Dates: "2014 – 2019",
-      exp2Bullets: [
-        "Assisted the captain in flight operations including FMC programming, route validation, performance checks, and fuel analysis.",
-        "Executed takeoffs and landings under both VFR and IFR, including low-visibility operations (CAT II/III).",
-        "Maintained accurate flight logs, operational documentation, and incident reports.",
-        "Coordinated with ATC, ground handling, and dispatch teams to optimize turnaround times.",
+        "Highly skilled commercial airline pilot with 4,500+ total flight hours across domestic, regional, and intercontinental routes. Adept in crew resource management, critical decision-making, and flight operations under diverse weather and traffic conditions. Strong focus on passenger safety, regulatory compliance, and maintaining consistent on-time performance.",
+      experiences: [
+        {
+          title: "Captain - Boeing 737 (NG/MAX)",
+          company: "SkyWings Airlines - International & Domestic Operations",
+          dates: "2019 - Present",
+          bullets: [
+            "Operate scheduled long-haul and regional flights with responsibility for crew coordination, fuel planning, performance calculations, and safe operation of aircraft systems.",
+            "Execute takeoff, climb, cruise, descent, and landing procedures in accordance with aircraft SOPs and ATC instructions.",
+            "Lead pre-flight briefings, assign cockpit and cabin crew duties, and coordinate real-time decision-making during abnormal and emergency situations.",
+            "Ensure compliance with ICAO, FAA, EASA, and airline-specific safety standards during all phases of flight.",
+            "Manage workload distribution using CRM principles to enhance flight safety and reduce operational risks.",
+          ],
+        },
+        {
+          title: "First Officer - Airbus A320 Family",
+          company: "BlueJet Airways - Regional Fleet",
+          dates: "2014 - 2019",
+          bullets: [
+            "Assisted the captain in flight operations including FMC programming, route validation, performance checks, and fuel analysis.",
+            "Executed takeoffs and landings under both VFR and IFR, including low-visibility operations.",
+            "Maintained accurate flight logs, operational documentation, and incident reports.",
+            "Coordinated with ATC, ground handling, and dispatch teams to optimize turnaround times.",
+          ],
+        },
       ],
       highlights: [
         "4,500+ total flight hours",
         "Type-rated: Boeing 737 NG/MAX & Airbus A320",
         "Zero safety violations throughout career",
         "Experienced in international, oceanic, and mountainous routes",
-        "Certified in Advanced Crew Resource Management (ACRM)",
+        "Certified in Advanced Crew Resource Management",
       ],
     },
-
     cabin: {
       title: "Senior Cabin Crew Specialist",
       summary:
-        "Dedicated cabin crew professional with 10+ years of experience in premium in-flight service, passenger care, and aviation safety operations. Proven track record of handling long-haul and high-pressure cabin environments with professionalism and excellent communication. Expert in emergency procedures, cultural sensitivity, and maintaining smooth cabin flow during routine and irregular operations.",
-      exp1Title: "Senior Flight Attendant — Long Haul Fleet",
-      exp1Company: "GlobalSky Airlines — Boeing 787 / Airbus A350",
-      exp1Dates: "2018 – Present",
-      exp1Bullets: [
-        "Lead cabin operations for long-haul flights up to 14–16 hours, ensuring seamless passenger experience and regulatory compliance.",
-        "Conduct full safety demonstrations, emergency briefings, and equipment checks including oxygen units, doors, and fire extinguishers.",
-        "Support medical emergencies, assess passenger conditions, and coordinate with onboard physicians and ground medical teams.",
-        "Manage premium cabin service including meal presentation, onboarding of VIP passengers, and handling confidential traveler information.",
-        "Train new crew members on service standards, communication protocols, and safety equipment handling.",
-      ],
-      exp2Title: "Cabin Crew — Regional & Short Haul",
-      exp2Company: "CityJet Airlines — A320 / E175 Fleet",
-      exp2Dates: "2013 – 2018",
-      exp2Bullets: [
-        "Delivered high-frequency regional flight service with fast turnaround requirements.",
-        "Ensured compliance with safety duties including door arming/disarming, galley security, and cross-checks.",
-        "Managed boarding, seating issues, baggage assistance, and conflict resolution.",
-        "Executed first-aid procedures and documented incident reports accurately.",
+        "Dedicated cabin crew professional with 10+ years of experience in premium in-flight service, passenger care, and aviation safety operations. Proven track record of handling long-haul and high-pressure cabin environments with professionalism and excellent communication.",
+      experiences: [
+        {
+          title: "Senior Flight Attendant - Long Haul Fleet",
+          company: "GlobalSky Airlines - Boeing 787 / Airbus A350",
+          dates: "2018 - Present",
+          bullets: [
+            "Lead cabin operations for long-haul flights, ensuring seamless passenger experience and regulatory compliance.",
+            "Conduct full safety demonstrations, emergency briefings, and equipment checks.",
+            "Support medical emergencies and coordinate with onboard physicians and ground medical teams.",
+            "Manage premium cabin service and VIP passenger care.",
+          ],
+        },
+        {
+          title: "Cabin Crew - Regional & Short Haul",
+          company: "CityJet Airlines - A320 / E175 Fleet",
+          dates: "2013 - 2018",
+          bullets: [
+            "Delivered high-frequency regional flight service with fast turnaround requirements.",
+            "Ensured compliance with safety duties including door arming, galley security, and cross-checks.",
+            "Managed boarding, seating issues, baggage assistance, and conflict resolution.",
+            "Executed first-aid procedures and documented incident reports accurately.",
+          ],
+        },
       ],
       highlights: [
         "Certified in Aviation First Aid & CPR",
         "Trained in Advanced Smoke & Fire Fighting",
-        "Awarded 'Top Crew Member' twice",
+        "Awarded Top Crew Member twice",
         "Fluent in 3+ international languages",
-        "Experienced with VIP and special-needs passenger care",
       ],
     },
-
     maintenance: {
       title: "Aviation Maintenance Technician (AMT)",
       summary:
-        "Certified AMT with 9+ years of experience in commercial aircraft maintenance, inspections, troubleshooting, and regulatory compliance. Skilled in both line and heavy maintenance for Airbus and Boeing fleets. Strong understanding of aircraft systems including hydraulics, avionics, powerplant, and structures. Focused on safety, precision, and documentation accuracy.",
-      exp1Title: "Senior AMT — Line Maintenance",
-      exp1Company: "AeroTech MRO Services",
-      exp1Dates: "2019 – Present",
-      exp1Bullets: [
-        "Perform A-checks, daily inspections, and transit checks on Airbus A320 and Boeing 737 fleets.",
-        "Diagnose mechanical, electrical, and hydraulic faults using AMM, TSM, and MEL troubleshooting guidelines.",
-        "Coordinate with engineering to review deferred defects, replacements, and component removals.",
-        "Perform borescope inspections, leak checks, and engine ground runs when qualified.",
-        "Ensure maintenance records meet FAA/EASA airworthiness standards.",
-        "Train new technicians on inspection procedures, tooling safety, and documentation practices.",
-      ],
-      exp2Title: "Heavy Maintenance Technician (C-Checks)",
-      exp2Company: "SkyBase Engineering",
-      exp2Dates: "2014 – 2019",
-      exp2Bullets: [
-        "Conducted structural inspections, corrosion removal, and repair of fuselage/wings.",
-        "Supported landing gear overhauls, brake system maintenance, and NDT testing.",
-        "Assisted engineers with modification bulletins and service bulletins (SB/AD).",
-        "Completed electrical harness routing, avionics equipment replacement, and EFIS troubleshooting.",
+        "Certified AMT with 9+ years of experience in commercial aircraft maintenance, inspections, troubleshooting, and regulatory compliance. Skilled in both line and heavy maintenance for Airbus and Boeing fleets.",
+      experiences: [
+        {
+          title: "Senior AMT - Line Maintenance",
+          company: "AeroTech MRO Services",
+          dates: "2019 - Present",
+          bullets: [
+            "Perform A-checks, daily inspections, and transit checks on Airbus A320 and Boeing 737 fleets.",
+            "Diagnose mechanical, electrical, and hydraulic faults using AMM, TSM, and MEL troubleshooting guidelines.",
+            "Coordinate with engineering to review deferred defects, replacements, and component removals.",
+            "Ensure maintenance records meet FAA/EASA airworthiness standards.",
+          ],
+        },
+        {
+          title: "Heavy Maintenance Technician",
+          company: "SkyBase Engineering",
+          dates: "2014 - 2019",
+          bullets: [
+            "Conducted structural inspections, corrosion removal, and fuselage repair.",
+            "Supported landing gear overhauls, brake system maintenance, and NDT testing.",
+            "Assisted engineers with modification bulletins and service bulletins.",
+            "Completed electrical harness routing, avionics replacement, and EFIS troubleshooting.",
+          ],
+        },
       ],
       highlights: [
         "FAA A&P Licensed Technician",
         "Skilled with A320 & B737 fleets",
-        "NDT Level I (PT/MT) certified",
+        "NDT Level I certified",
         "Strong documentation & compliance expertise",
-        "Zero rework incidents for 4 consecutive years",
       ],
     },
-
     atc: {
       title: "Air Traffic Controller (ATCO)",
       summary:
-        "Experienced ATCO specializing in high-density terminal operations, en-route traffic separation, and emergency coordination. Strong situational awareness with exceptional communication and decision-making in time-critical operations. Proven record of maintaining safety and efficiency under heavy workloads.",
-      exp1Title: "Approach / Terminal Radar Controller",
-      exp1Company: "Metropolitan International Airport (Class B Airspace)",
-      exp1Dates: "2017 – Present",
-      exp1Bullets: [
-        "Control arrival and departure sequencing while maintaining safe separation minima.",
-        "Issue headings, altitudes, speed adjustments, and vectors for traffic management.",
-        "Coordinate with area control (ACC), tower control, and ground units for seamless aircraft transitions.",
-        "Utilize radar, ADS-B, and advanced surveillance systems for traffic monitoring.",
-        "Manage emergencies including aircraft deviations, medical diversions, and communication failures.",
-      ],
-      exp2Title: "Tower Controller",
-      exp2Company: "Regional Airport ATC Unit",
-      exp2Dates: "2012 – 2017",
-      exp2Bullets: [
-        "Managed runway operations including takeoff/landing clearances and runway separation.",
-        "Monitored taxi operations, pushback approvals, and ramp movements.",
-        "Implemented low-visibility procedures (LVP) and emergency response actions.",
-        "Maintained accurate logs, communication transcripts, and incident reports.",
+        "Experienced ATCO specializing in high-density terminal operations, en-route traffic separation, and emergency coordination. Strong situational awareness with exceptional communication and decision-making in time-critical operations.",
+      experiences: [
+        {
+          title: "Approach / Terminal Radar Controller",
+          company: "Metropolitan International Airport",
+          dates: "2017 - Present",
+          bullets: [
+            "Control arrival and departure sequencing while maintaining safe separation minima.",
+            "Issue headings, altitudes, speed adjustments, and vectors for traffic management.",
+            "Coordinate with area control, tower control, and ground units for seamless aircraft transitions.",
+            "Manage emergencies including aircraft deviations, medical diversions, and communication failures.",
+          ],
+        },
+        {
+          title: "Tower Controller",
+          company: "Regional Airport ATC Unit",
+          dates: "2012 - 2017",
+          bullets: [
+            "Managed runway operations including takeoff and landing clearances.",
+            "Monitored taxi operations, pushback approvals, and ramp movements.",
+            "Implemented low-visibility procedures and emergency response actions.",
+            "Maintained accurate logs, communication transcripts, and incident reports.",
+          ],
+        },
       ],
       highlights: [
         "Licensed ATCO with Radar & Tower Ratings",
@@ -207,28 +165,32 @@ Profile: ${profileLink}
         "Zero operational errors in last 5 years",
       ],
     },
-
     engineer: {
       title: "Aeronautical / Aerospace Engineer",
       summary:
-        "Aeronautical engineer with expertise in aircraft structural design, performance optimization, testing, and certification support. Skilled in aerodynamic modeling, FEA simulations, and prototype development. Strong background working with multidisciplinary engineering teams.",
-      exp1Title: "Flight Structures Engineer",
-      exp1Company: "Aerospace Innovations Ltd.",
-      exp1Dates: "2018 – Present",
-      exp1Bullets: [
-        "Perform fatigue, fracture, and stress analysis for wing and fuselage components.",
-        "Develop FEA simulations using Nastran / HyperMesh for critical load evaluations.",
-        "Coordinate with design teams to implement structural modifications and repairs.",
-        "Prepare technical documentation for FAA/EASA submission and certification audits.",
-        "Participate in ground testing, static testing, and modal analysis.",
-      ],
-      exp2Title: "Aerodynamics & Research Engineer",
-      exp2Company: "AvioTech Labs",
-      exp2Dates: "2014 – 2018",
-      exp2Bullets: [
-        "Supported wind-tunnel experiments and analyzed aerodynamic performance data.",
-        "Developed MATLAB models for lift/drag calculations and flow simulations.",
-        "Assisted in UAV prototype development and component testing.",
+        "Aeronautical engineer with expertise in aircraft structural design, performance optimization, testing, and certification support. Skilled in aerodynamic modeling, FEA simulations, and prototype development.",
+      experiences: [
+        {
+          title: "Flight Structures Engineer",
+          company: "Aerospace Innovations Ltd.",
+          dates: "2018 - Present",
+          bullets: [
+            "Perform fatigue, fracture, and stress analysis for wing and fuselage components.",
+            "Develop FEA simulations using Nastran / HyperMesh for critical load evaluations.",
+            "Coordinate with design teams to implement structural modifications and repairs.",
+            "Prepare technical documentation for FAA/EASA submission and certification audits.",
+          ],
+        },
+        {
+          title: "Aerodynamics & Research Engineer",
+          company: "AvioTech Labs",
+          dates: "2014 - 2018",
+          bullets: [
+            "Supported wind-tunnel experiments and analyzed aerodynamic performance data.",
+            "Developed MATLAB models for lift and drag calculations.",
+            "Assisted in UAV prototype development and component testing.",
+          ],
+        },
       ],
       highlights: [
         "Advanced knowledge of CATIA V5 / SolidWorks",
@@ -237,29 +199,33 @@ Profile: ${profileLink}
         "Passionate about next-gen sustainable aviation",
       ],
     },
-
     operations: {
       title: "Airport Operations Specialist",
       summary:
-        "Operations specialist with deep expertise in terminal management, airside coordination, safety inspections, and airport stakeholder communication. Strong background ensuring operational continuity, on-time performance, and regulatory compliance in fast-paced airport environments.",
-      exp1Title: "Airport Duty Officer",
-      exp1Company: "Gateway International Airport",
-      exp1Dates: "2019 – Present",
-      exp1Bullets: [
-        "Supervise daily terminal and airside operations across multiple stands and gates.",
-        "Coordinate with airlines, ATC, ground handlers, and emergency services for smooth workflows.",
-        "Monitor potential hazards and enforce compliance with ICAO and airport safety regulations.",
-        "Respond to irregular operations, diversions, weather disruptions, and flight delays.",
-        "Prepare daily operation logs, OTP reports, and incident documentation.",
-      ],
-      exp2Title: "Operations Coordinator",
-      exp2Company: "City Airport Services — Ramp & Terminal",
-      exp2Dates: "2013 – 2019",
-      exp2Bullets: [
-        "Managed aircraft turnarounds, ground handling supervision, and gate assignments.",
-        "Ensured baggage flow, passenger boarding, and aircraft servicing were on schedule.",
-        "Performed ramp inspections, equipment audits, and FOD checks.",
-        "Supported VIP movements, charter flights, and emergency procedures.",
+        "Operations specialist with deep expertise in terminal management, airside coordination, safety inspections, and airport stakeholder communication. Strong background ensuring operational continuity, on-time performance, and regulatory compliance.",
+      experiences: [
+        {
+          title: "Airport Duty Officer",
+          company: "Gateway International Airport",
+          dates: "2019 - Present",
+          bullets: [
+            "Supervise daily terminal and airside operations across multiple stands and gates.",
+            "Coordinate with airlines, ATC, ground handlers, and emergency services for smooth workflows.",
+            "Monitor potential hazards and enforce compliance with ICAO and airport safety regulations.",
+            "Respond to irregular operations, diversions, weather disruptions, and flight delays.",
+          ],
+        },
+        {
+          title: "Operations Coordinator",
+          company: "City Airport Services - Ramp & Terminal",
+          dates: "2013 - 2019",
+          bullets: [
+            "Managed aircraft turnarounds, ground handling supervision, and gate assignments.",
+            "Ensured baggage flow, passenger boarding, and aircraft servicing stayed on schedule.",
+            "Performed ramp inspections, equipment audits, and FOD checks.",
+            "Supported VIP movements, charter flights, and emergency procedures.",
+          ],
+        },
       ],
       highlights: [
         "Experienced with A-CDM processes",
@@ -270,499 +236,690 @@ Profile: ${profileLink}
     },
   };
 
-  // ---------- DYNAMIC ROLE DATA IN STATE (for adding bullets / jobs) ----------
-  const [dynamicRoleData, setDynamicRoleData] = useState(() => {
-    const initial = {};
-    Object.entries(roleData).forEach(([key, value]) => {
-      initial[key] = {
-        ...value,
-        experiences: [
-          {
-            title: value.exp1Title,
-            company: value.exp1Company,
-            dates: value.exp1Dates,
-            bullets: value.exp1Bullets ? [...value.exp1Bullets] : [],
-          },
-          {
-            title: value.exp2Title,
-            company: value.exp2Company,
-            dates: value.exp2Dates,
-            bullets: value.exp2Bullets ? [...value.exp2Bullets] : [],
-          },
-        ],
-        highlights: value.highlights ? [...value.highlights] : [],
-      };
-    });
-    return initial;
-  });
+  const defaultData = {
+    fullName: "ALEXANDER MORGAN",
+    profileImage: "/images/cleanprofileimage.png",
+    activeRole: "pilot",
+    info: {
+      fullName: "",
+      email: "",
+      phone: "",
+      address: "",
+      city: "",
+      state: "",
+      zip: "",
+      linkedin: "",
+      profileLink: "",
+    },
+    qrDataUrl: "/images/aviation-qr.png",
+    qrText: "Scan for licenses, flight log & full profile",
+    sideQrText:
+      "QR code links to updated digital profile, licenses, and aviation records.",
+    contact: [
+      "Email: alex.morgan@mail.com",
+      "Phone: +1 (555) 214-8790",
+      "Location: New York, USA",
+      "LinkedIn: linkedin.com/in/alexmorgan",
+    ],
+    education: ["Safety & Compliance", "Crew Resource Management"],
+    skills: [
+      "Safety & Compliance",
+      "Crew Resource Management",
+      "Emergency Procedures",
+      "Communication & Briefing",
+      "Passenger & Client Service",
+    ],
+    licenses: [
+      "Valid Passport & Travel Documents",
+      "Medical Certificate - Class 1 / 2",
+      "Recurrent Safety & Emergency Training",
+    ],
+    languages: [
+      "English - Native / Fluent",
+      "Spanish - Conversational",
+      "French - Basic",
+    ],
+    roles: defaultRoles,
+  };
 
-  const activeData = dynamicRoleData[activeRole];
+  const {
+    resumeData,
+    setResumeData,
+    handleChange,
+    handleSaveResume,
+    checkPaymentStatus,
+    loadResume,
+  } = useResumeTemplate("AviationPro", defaultData);
 
-  // ---------- DYNAMIC HANDLERS (ADD BULLETS / EXPERIENCE / HIGHLIGHT) ----------
+  const { fileInputRef, handleImageUpload, openImagePicker } = useProfileImage(
+    setResumeData,
+    checkPaymentStatus
+  );
 
-  const handleAddExperienceBullet = (expIndex) => {
-    setDynamicRoleData((prev) => {
-      const copy = { ...prev };
-      const role = copy[activeRole];
-      const experiences = role.experiences.map((exp, idx) =>
-        idx === expIndex
-          ? {
-            ...exp,
-            bullets: [
-              ...exp.bullets,
-              "New responsibility or achievement bullet.",
-            ],
-          }
-          : exp
-      );
-      copy[activeRole] = { ...role, experiences };
-      return copy;
+  const { isAuthenticated } = useAuth();
+
+  const aviationData = {
+    ...defaultData,
+    ...resumeData,
+    info: {
+      ...defaultData.info,
+      ...(resumeData.info || {}),
+    },
+    roles: {
+      ...defaultData.roles,
+      ...(resumeData.roles || {}),
+    },
+    contact: Array.isArray(resumeData.contact) ? resumeData.contact : defaultData.contact,
+    education: Array.isArray(resumeData.education)
+      ? resumeData.education
+      : defaultData.education,
+    skills: Array.isArray(resumeData.skills) ? resumeData.skills : defaultData.skills,
+    licenses: Array.isArray(resumeData.licenses)
+      ? resumeData.licenses
+      : defaultData.licenses,
+    languages: Array.isArray(resumeData.languages)
+      ? resumeData.languages
+      : defaultData.languages,
+  };
+
+  const activeRole = roles.includes(aviationData.activeRole)
+    ? aviationData.activeRole
+    : "pilot";
+  const activeData = aviationData.roles[activeRole] || defaultData.roles.pilot;
+
+  useEffect(() => {
+    if (!isAuthenticated) return;
+
+    setTimeout(() => {
+      loadResume();
+    }, 500);
+  }, [isAuthenticated]);
+
+  useEffect(() => {
+    const handleUserLoggedIn = async () => {
+      await loadResume();
+    };
+
+    window.addEventListener("userLoggedIn", handleUserLoggedIn);
+
+    return () => {
+      window.removeEventListener("userLoggedIn", handleUserLoggedIn);
+    };
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const token = localStorage.getItem("token");
+
+      if (token) {
+        loadResume();
+        clearInterval(interval);
+      }
+    }, 500);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleResetAviationPro = () => {
+    localStorage.removeItem("AviationPro_resumeData");
+    setResumeData({
+      ...defaultData,
+      profileImage: "/images/cleanprofileimage.png",
+      qrDataUrl: "/images/aviation-qr.png",
     });
   };
 
-  // Option B: duplicate last job's structure
-  const handleAddExperience = () => {
-    setDynamicRoleData((prev) => {
-      const copy = { ...prev };
-      const role = copy[activeRole];
-      const experiences = role.experiences || [];
-      const last =
-        experiences[experiences.length - 1] || {
-          title: "New Position Title",
-          company: "Company Name — Location",
-          dates: "Year – Year",
-          bullets: ["Describe your key responsibilities here."],
-        };
+  const updateInfo = (field, value) => {
+    setResumeData((prev) => ({
+      ...prev,
+      info: {
+        ...(prev.info || defaultData.info),
+        [field]: value,
+      },
+    }));
+  };
 
-      const newExp = {
-        title: last.title,
-        company: last.company,
-        dates: last.dates,
-        bullets: last.bullets ? [...last.bullets] : [],
-      };
+  const updateListItem = (section, index, value) => {
+    const updated = [...aviationData[section]];
+    updated[index] = value;
+    setResumeData({ ...resumeData, [section]: updated });
+  };
 
-      copy[activeRole] = {
-        ...role,
-        experiences: [...experiences, newExp],
-      };
-      return copy;
+  const updateRoleField = (field, value) => {
+    setResumeData((prev) => ({
+      ...prev,
+      roles: {
+        ...(prev.roles || aviationData.roles),
+        [activeRole]: {
+          ...activeData,
+          [field]: value,
+        },
+      },
+    }));
+  };
+
+  const updateExperience = (experienceIndex, field, value) => {
+    const experiences = [...(activeData.experiences || [])];
+    experiences[experienceIndex] = {
+      ...experiences[experienceIndex],
+      [field]: value,
+    };
+    updateRoleField("experiences", experiences);
+  };
+
+  const updateExperienceBullet = (experienceIndex, bulletIndex, value) => {
+    const experiences = [...(activeData.experiences || [])];
+    const bullets = [...(experiences[experienceIndex].bullets || [])];
+    bullets[bulletIndex] = value;
+    experiences[experienceIndex] = {
+      ...experiences[experienceIndex],
+      bullets,
+    };
+    updateRoleField("experiences", experiences);
+  };
+
+  const updateHighlight = (index, value) => {
+    const highlights = [...(activeData.highlights || [])];
+    highlights[index] = value;
+    updateRoleField("highlights", highlights);
+  };
+
+  const handleGenerateQR = async () => {
+    const qrData = `
+Full Name: ${aviationData.info.fullName}
+Email: ${aviationData.info.email}
+Phone: ${aviationData.info.phone}
+Address: ${aviationData.info.address}
+City: ${aviationData.info.city}
+State: ${aviationData.info.state}
+ZIP: ${aviationData.info.zip}
+LinkedIn: ${aviationData.info.linkedin}
+Profile: ${aviationData.info.profileLink}
+    `.trim();
+
+    try {
+      const qr = await QRCode.toDataURL(qrData || "Aviation Resume");
+      handleChange("qrDataUrl", qr);
+    } catch (error) {
+      console.error("QR generation error:", error);
+      alert("QR Code generate karte waqt error.");
+    }
+  };
+
+  const replaceEditableFieldsForPDF = (element) => {
+    element.querySelectorAll("input, textarea").forEach((field) => {
+      if (field.type === "file") {
+        field.remove();
+        return;
+      }
+
+      const div = document.createElement("div");
+      div.className = field.className;
+      div.textContent = field.value || field.textContent || "";
+
+      const computed = window.getComputedStyle(field);
+      div.style.width = computed.width;
+      div.style.minHeight = computed.height;
+      div.style.fontSize = computed.fontSize;
+      div.style.fontWeight = computed.fontWeight;
+      div.style.lineHeight = computed.lineHeight;
+      div.style.color = computed.color;
+      div.style.fontFamily = computed.fontFamily;
+      div.style.letterSpacing = computed.letterSpacing;
+      div.style.textTransform = computed.textTransform;
+      div.style.textAlign = computed.textAlign;
+      div.style.margin = computed.margin;
+      div.style.padding = computed.padding;
+      div.style.boxSizing = "border-box";
+      div.style.whiteSpace = field.tagName === "TEXTAREA" ? "pre-wrap" : "normal";
+      div.style.overflowWrap = "break-word";
+      div.style.background = "transparent";
+      div.style.border = "none";
+      field.replaceWith(div);
     });
   };
 
-  const handleAddHighlight = () => {
-    setDynamicRoleData((prev) => {
-      const copy = { ...prev };
-      const role = copy[activeRole];
-      const highlights = role.highlights || [];
-      copy[activeRole] = {
-        ...role,
-        highlights: [...highlights, "New highlight / key achievement."],
-      };
-      return copy;
-    });
-  };
+  const handleDownloadPDF = async () => {
+    if (pdfGeneratingRef.current) return;
 
+    pdfGeneratingRef.current = true;
+    let wrapper = null;
+
+    try {
+      const originalElement = document.querySelector(".resume-a4.av-a4");
+
+      if (!originalElement) {
+        console.error("AviationPro resume element not found");
+        return;
+      }
+
+      const element = originalElement.cloneNode(true);
+      replaceEditableFieldsForPDF(element);
+
+      wrapper = document.createElement("div");
+      wrapper.style.position = "fixed";
+      wrapper.style.left = "-99999px";
+      wrapper.style.top = "0";
+      wrapper.style.width = "794px";
+      wrapper.style.height = "1122px";
+      wrapper.style.background = "#ffffff";
+      wrapper.style.overflow = "hidden";
+      wrapper.style.opacity = "0";
+      wrapper.style.pointerEvents = "none";
+      wrapper.style.zIndex = "-1";
+
+      element.style.setProperty("position", "relative", "important");
+      element.style.setProperty("width", "794px", "important");
+      element.style.setProperty("min-width", "794px", "important");
+      element.style.setProperty("height", "1122px", "important");
+      element.style.setProperty("min-height", "1122px", "important");
+      element.style.setProperty("max-height", "1122px", "important");
+      element.style.setProperty("margin", "0", "important");
+      element.style.setProperty("transform", "none", "important");
+      element.style.setProperty("zoom", "1", "important");
+      element.style.setProperty("box-shadow", "none", "important");
+      element.style.setProperty("overflow", "hidden", "important");
+
+      const resume = element.querySelector(".av-resume");
+      const body = element.querySelector(".av-body");
+      const main = element.querySelector(".av-main");
+      const sidebar = element.querySelector(".av-sidebar");
+
+      if (resume) {
+        resume.style.setProperty("width", "794px", "important");
+        resume.style.setProperty("height", "1122px", "important");
+        resume.style.setProperty("min-height", "1122px", "important");
+      }
+
+      if (body) {
+        body.style.setProperty("display", "flex", "important");
+        body.style.setProperty("flex-direction", "row", "important");
+      }
+
+      if (main) {
+        main.style.setProperty("width", "68%", "important");
+        main.style.setProperty("height", "922px", "important");
+      }
+
+      if (sidebar) {
+        sidebar.style.setProperty("width", "32%", "important");
+        sidebar.style.setProperty("height", "922px", "important");
+      }
+
+      wrapper.appendChild(element);
+      document.body.appendChild(wrapper);
+
+      await new Promise((resolve) => setTimeout(resolve, 250));
+
+      const canvas = await html2canvas(element, {
+        scale: 2,
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: "#ffffff",
+        width: 794,
+        height: 1122,
+        windowWidth: 794,
+        windowHeight: 1122,
+      });
+
+      const imgData = canvas.toDataURL("image/jpeg", 1.0);
+      const pdf = new jsPDF({
+        orientation: "portrait",
+        unit: "mm",
+        format: "a4",
+        compress: true,
+      });
+
+      pdf.addImage(imgData, "JPEG", 0, 0, 210, 297, undefined, "FAST");
+      pdf.save("AviationPro-resume.pdf");
+    } catch (error) {
+      console.error("AviationPro PDF download error:", error);
+    } finally {
+      if (wrapper && document.body.contains(wrapper)) {
+        document.body.removeChild(wrapper);
+      }
+
+      setTimeout(() => {
+        pdfGeneratingRef.current = false;
+      }, 1000);
+    }
+  };
 
   return (
-
     <TemplateLayout
       templateId="AviationPro"
-      wrapperClass="av-wrapper"
-      resumeClass="av-resume"
+      handleSaveResume={handleSaveResume}
+      resumeData={resumeData}
+      setResumeData={setResumeData}
+      checkPaymentStatus={checkPaymentStatus}
+      onReset={handleResetAviationPro}
+      onLoadResume={loadResume}
+      onDownloadPDF={handleDownloadPDF}
     >
-
-      {({ canEdit, isEditable, pdfRef, requirePayment }) => (
-
-        <div className="av-wrapper">
-
-
-          {/* QR FORM */}
-          <div className="av-qr-form no-pdf">
-            <div className="av-qr-row">
-              <input
-                placeholder="Full Name"
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
-                disabled={!(canEdit && isEditable)}
-              />
-
-              <input
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                disabled={!(canEdit && isEditable)}
-              />
-              <input
-                placeholder="Phone"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                disabled={!(canEdit && isEditable)}
-              />
-            </div>
-
+      <div className="av-wrapper">
+        <div className="av-qr-form no-pdf">
+          <div className="av-qr-row">
             <input
-              placeholder="Address"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              disabled={!(canEdit && isEditable)}
+              placeholder="Full Name"
+              value={aviationData.info.fullName}
+              onChange={(event) => updateInfo("fullName", event.target.value)}
             />
+            <input
+              placeholder="Email"
+              value={aviationData.info.email}
+              onChange={(event) => updateInfo("email", event.target.value)}
+            />
+            <input
+              placeholder="Phone"
+              value={aviationData.info.phone}
+              onChange={(event) => updateInfo("phone", event.target.value)}
+            />
+          </div>
 
-            <div className="av-qr-row">
-              <input
-                placeholder="City"
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
-                disabled={!(canEdit && isEditable)}
-              />
-              <input
-                placeholder="State"
-                value={stateVal}
-                onChange={(e) => setStateVal(e.target.value)}
-                disabled={!(canEdit && isEditable)}
-              />
-              <input
-                placeholder="ZIP"
-                value={zip}
-                onChange={(e) => setZip(e.target.value)}
-                disabled={!(canEdit && isEditable)}
-              />
-            </div>
+          <input
+            placeholder="Address"
+            value={aviationData.info.address}
+            onChange={(event) => updateInfo("address", event.target.value)}
+          />
 
-            <div className="av-qr-row">
-              <input
-                placeholder="LinkedIn Profile URL"
-                value={linkedin}
-                onChange={(e) => setLinkedin(e.target.value)}
-                disabled={!(canEdit && isEditable)}
-              />
-              <input
-                placeholder="Portfolio / Profile Link"
-                value={profileLink}
-                onChange={(e) => setProfileLink(e.target.value)}
-                disabled={!(canEdit && isEditable)}
-              />
-            </div>
+          <div className="av-qr-row">
+            <input
+              placeholder="City"
+              value={aviationData.info.city}
+              onChange={(event) => updateInfo("city", event.target.value)}
+            />
+            <input
+              placeholder="State"
+              value={aviationData.info.state}
+              onChange={(event) => updateInfo("state", event.target.value)}
+            />
+            <input
+              placeholder="ZIP"
+              value={aviationData.info.zip}
+              onChange={(event) => updateInfo("zip", event.target.value)}
+            />
+          </div>
 
-            <button className="av-qr-btn" onClick={handleGenerateQR}>
-              Create QR Code
+          <div className="av-qr-row">
+            <input
+              placeholder="LinkedIn Profile URL"
+              value={aviationData.info.linkedin}
+              onChange={(event) => updateInfo("linkedin", event.target.value)}
+            />
+            <input
+              placeholder="Portfolio / Profile Link"
+              value={aviationData.info.profileLink}
+              onChange={(event) => updateInfo("profileLink", event.target.value)}
+            />
+          </div>
+
+          <button className="av-qr-btn" onClick={handleGenerateQR}>
+            Create QR Code
+          </button>
+        </div>
+
+        <div className="av-tabs no-pdf">
+          {roles.map((role) => (
+            <button
+              key={role}
+              className={`av-tab ${activeRole === role ? "av-tab-active" : ""}`}
+              onClick={() => handleChange("activeRole", role)}
+            >
+              {roleLabels[role]}
             </button>
-          </div>
+          ))}
+        </div>
 
-          {/* TABS */}
-          <div className="av-tabs no-pdf">
-            {roles.map((role) => (
-              <button
-                key={role}
-                className={`av-tab ${activeRole === role ? "av-tab-active" : ""
-                  }`}
-                onClick={() => setActiveRole(role)}
-              >
-                {roleLabels[role]}
-              </button>
-            ))}
-          </div>
-
-          {/* A4 PAGE */}
-          <div className="resume-a4 av-a4" ref={pdfRef} style={{ position: "relative" }}>
-
-            <div className="av-resume" contentEditable={false}>
-
-              {/* HEADER */}
+        <div className="resume-mobile-wrap av-screen-preview">
+          <div className="resume-a4 av-a4" style={{ position: "relative" }}>
+            <div className="av-resume">
               <header className="av-header">
-
                 <div className="av-header-left">
-                  {/* PHOTO */}
                   <div
-                    className={`av-profile-wrapper ${!canEdit ? "locked" : ""}`}
-                    onClick={() => {
-
-                      // free user → open payment modal
-                      if (!canEdit) {
-                        if (requirePayment) requirePayment();
-                        return;
-                      }
-
-                      // paid but editing OFF
-                      if (!isEditable) return;
-
-                      // paid + editing ON
-                      if (fileInputRef.current) {
-                        fileInputRef.current.click();
-                      }
-
-                    }}
-
-                    title={!canEdit ? "Unlock to change profile image" : "Click to change photo"}
+                    className="av-profile-wrapper"
+                    onClick={openImagePicker}
+                    title="Click to change photo"
                   >
-
-                    <img src={profileImage} alt="Profile" className="av-profile" />
+                    <img
+                      src={aviationData.profileImage || "/images/cleanprofileimage.png"}
+                      alt="Profile"
+                      className="av-profile"
+                    />
 
                     <input
                       type="file"
                       accept="image/*"
                       ref={fileInputRef}
                       style={{ display: "none" }}
+                      onClick={(event) => event.stopPropagation()}
                       onChange={handleImageUpload}
                     />
-
                   </div>
 
-
-                  {/* NAME + TITLE */}
                   <div className="av-header-text">
-                    <h1
+                    <input
                       className="av-name"
-                      contentEditable={canEdit && isEditable}
-                      suppressContentEditableWarning
-                    >
-                      ALEXANDER MORGAN
-                    </h1>
-
-                    <p
+                      value={aviationData.fullName}
+                      onChange={(event) => handleChange("fullName", event.target.value)}
+                    />
+                    <input
                       className="av-role"
-                      contentEditable={canEdit && isEditable}
-                      suppressContentEditableWarning
-                    >
-                      {activeData.title.toUpperCase()}
-                    </p>
+                      value={activeData.title.toUpperCase()}
+                      onChange={(event) => updateRoleField("title", event.target.value)}
+                    />
                   </div>
                 </div>
 
-                {/* HEADER QR */}
                 <div className="av-header-right">
                   <div className="av-qr-block">
-                    <img src={qrImage} alt="QR Code" className="av-qr-img" />
-                    <p
+                    <img
+                      src={aviationData.qrDataUrl}
+                      alt="QR Code"
+                      className="av-qr-img"
+                    />
+                    <textarea
                       className="av-qr-text"
-                      contentEditable={canEdit && isEditable}
-                      suppressContentEditableWarning
-                    >
-                      Scan for licenses, flight log &amp; full profile
-                    </p>
+                      value={aviationData.qrText}
+                      onChange={(event) => handleChange("qrText", event.target.value)}
+                    />
                   </div>
                 </div>
               </header>
 
               <div className="av-runway-stripe" />
 
-              {/* BODY */}
               <div className="av-body">
-                {/* MAIN COLUMN */}
                 <main className="av-main">
-                  {/* SUMMARY */}
                   <section className="av-section">
-                    <h2
-                      className="av-section-title"
-                      contentEditable={canEdit && isEditable}
-                      suppressContentEditableWarning
-                    >
-                      PROFESSIONAL SUMMARY
-                    </h2>
-                    <p
+                    <h2 className="av-section-title">PROFESSIONAL SUMMARY</h2>
+                    <textarea
                       className="av-section-text"
-                      contentEditable={canEdit && isEditable}
-                      suppressContentEditableWarning
-                    >
-                      {activeData.summary}
-                    </p>
+                      value={activeData.summary}
+                      onChange={(event) => updateRoleField("summary", event.target.value)}
+                    />
                   </section>
 
-                  {/* EXPERIENCE */}
                   <section className="av-section">
-                    <h2
-                      className="av-section-title"
-                      contentEditable={canEdit && isEditable}
-                      suppressContentEditableWarning
-                    >
-                      EXPERIENCE
-                    </h2>
+                    <h2 className="av-section-title">EXPERIENCE</h2>
 
-                    {activeData.experiences.map((exp, idx) => (
-                      <div className="av-job" key={idx}>
+                    {(activeData.experiences || []).map((exp, index) => (
+                      <div className="av-job" key={index}>
                         <div className="av-job-header">
-                          <div>
-                            <p
+                          <div className="av-job-title-wrapper">
+                            <input
                               className="av-job-title"
-                              contentEditable={canEdit && isEditable}
-                              suppressContentEditableWarning
-                            >
-                              {exp.title}
-                            </p>
-                            <p
+                              value={exp.title}
+                              onChange={(event) =>
+                                updateExperience(index, "title", event.target.value)
+                              }
+                            />
+                            <input
                               className="av-job-company"
-                              contentEditable={canEdit && isEditable}
-                              suppressContentEditableWarning
-                            >
-                              {exp.company}
-                            </p>
+                              value={exp.company}
+                              onChange={(event) =>
+                                updateExperience(index, "company", event.target.value)
+                              }
+                            />
                           </div>
 
-                          <p
+                          <input
                             className="av-job-dates"
-                            contentEditable={canEdit && isEditable}
-                            suppressContentEditableWarning
-                          >
-                            {exp.dates}
-                          </p>
+                            value={exp.dates}
+                            onChange={(event) =>
+                              updateExperience(index, "dates", event.target.value)
+                            }
+                          />
                         </div>
 
                         <ul className="av-job-list">
-                          {exp.bullets.map((item, bIndex) => (
-                            <li
-                              key={bIndex}
-                              contentEditable={canEdit && isEditable}
-                              suppressContentEditableWarning
-                            >
-                              {item}
+                          {(exp.bullets || []).map((item, bulletIndex) => (
+                            <li key={bulletIndex}>
+                              <textarea
+                                className="av-job-bullet"
+                                value={item}
+                                onChange={(event) =>
+                                  updateExperienceBullet(
+                                    index,
+                                    bulletIndex,
+                                    event.target.value
+                                  )
+                                }
+                              />
                             </li>
                           ))}
                         </ul>
-
                       </div>
                     ))}
-
-
                   </section>
 
-                  {/* HIGHLIGHTS */}
                   <section className="av-section av-section-last">
-                    <h2
-                      className="av-section-title"
-                      contentEditable={canEdit && isEditable}
-                      suppressContentEditableWarning
-                    >
-                      KEY HIGHLIGHTS
-                    </h2>
+                    <h2 className="av-section-title">KEY HIGHLIGHTS</h2>
 
                     <ul className="av-highlight-list">
-                      {activeData.highlights.map((item, idx) => (
-                        <li
-                          key={idx}
-                          contentEditable={canEdit && isEditable}
-                          suppressContentEditableWarning
-                        >
-                          {item}
+                      {(activeData.highlights || []).map((item, index) => (
+                        <li key={index}>
+                          <textarea
+                            className="av-highlight-item"
+                            value={item}
+                            onChange={(event) =>
+                              updateHighlight(index, event.target.value)
+                            }
+                          />
                         </li>
                       ))}
                     </ul>
-
                   </section>
                 </main>
 
-                {/* SIDEBAR */}
                 <aside className="av-sidebar">
-                  {/* CONTACT */}
                   <section className="av-side-section">
                     <h3 className="av-side-heading">CONTACT</h3>
                     <ul className="av-side-list">
-                      <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
-                        ✉️ alex.morgan@mail.com
-                      </li>
-                      <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
-                        📞 +1 (555) 214-8790
-                      </li>
-                      <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
-                        📍 New York, USA
-                      </li>
-                      <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
-                        📍 linkedin.com/in/alexmorgan
-                      </li>
+                      {aviationData.contact.map((item, index) => (
+                        <li key={index}>
+                          <input
+                            className="av-side-input"
+                            value={item}
+                            onChange={(event) =>
+                              updateListItem("contact", index, event.target.value)
+                            }
+                          />
+                        </li>
+                      ))}
                     </ul>
                   </section>
 
-                  {/* QR IN SIDEBAR */}
                   <section className="av-side-section">
                     <h3 className="av-side-heading">DIGITAL IDENTITY</h3>
                     <div className="av-side-qr-box">
-                      <img src={qrImage} alt="QR" className="av-side-qr-img" />
-                      <p
+                      <img
+                        src={aviationData.qrDataUrl}
+                        alt="QR"
+                        className="av-side-qr-img"
+                      />
+                      <textarea
                         className="av-side-qr-text"
-                        contentEditable={canEdit && isEditable}
-                        suppressContentEditableWarning
-                      >
-                        QR code links to updated digital profile, licenses, and
-                        aviation records.
-                      </p>
+                        value={aviationData.sideQrText}
+                        onChange={(event) =>
+                          handleChange("sideQrText", event.target.value)
+                        }
+                      />
                     </div>
                   </section>
 
-                  {/* EDUCATION */}
                   <section className="av-side-section">
                     <h3 className="av-side-heading">EDUCATION</h3>
                     <ul className="av-side-list">
-                      <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
-                        Safety &amp; Compliance
-                      </li>
-                      <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
-                        Crew Resource Management
-                      </li>
-                      
+                      {aviationData.education.map((item, index) => (
+                        <li key={index}>
+                          <input
+                            className="av-side-input"
+                            value={item}
+                            onChange={(event) =>
+                              updateListItem("education", index, event.target.value)
+                            }
+                          />
+                        </li>
+                      ))}
                     </ul>
                   </section>
 
-                  {/* SKILLS */}
                   <section className="av-side-section">
                     <h3 className="av-side-heading">CORE SKILLS</h3>
                     <ul className="av-side-list">
-                      <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
-                        Safety &amp; Compliance
-                      </li>
-                      <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
-                        Crew Resource Management
-                      </li>
-                      <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
-                        Emergency Procedures
-                      </li>
-                      <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
-                        Communication &amp; Briefing
-                      </li>
-                      <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
-                        Passenger &amp; Client Service
-                      </li>
+                      {aviationData.skills.map((item, index) => (
+                        <li key={index}>
+                          <input
+                            className="av-side-input"
+                            value={item}
+                            onChange={(event) =>
+                              updateListItem("skills", index, event.target.value)
+                            }
+                          />
+                        </li>
+                      ))}
                     </ul>
                   </section>
 
-                  {/* LICENSES */}
                   <section className="av-side-section">
-                    <h3 contentEditable={canEdit && isEditable} suppressContentEditableWarning className="av-side-heading">LICENSES &amp; CERTS</h3>
+                    <h3 className="av-side-heading">LICENSES & CERTS</h3>
                     <ul className="av-side-list">
-                      <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
-                        Valid Passport &amp; Travel Documents
-                      </li>
-                      <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
-                        Medical Certificate – Class 1 / 2
-                      </li>
-                      <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
-                        Recurrent Safety &amp; Emergency Training
-                      </li>
+                      {aviationData.licenses.map((item, index) => (
+                        <li key={index}>
+                          <input
+                            className="av-side-input"
+                            value={item}
+                            onChange={(event) =>
+                              updateListItem("licenses", index, event.target.value)
+                            }
+                          />
+                        </li>
+                      ))}
                     </ul>
                   </section>
 
-                  {/* LANGUAGES */}
                   <section className="av-side-section">
                     <h3 className="av-side-heading">LANGUAGES</h3>
                     <ul className="av-side-list">
-                      <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
-                        English — Native / Fluent
-                      </li>
-                      <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
-                        Spanish — Conversational
-                      </li>
-                      <li contentEditable={canEdit && isEditable} suppressContentEditableWarning>
-                        French — Basic
-                      </li>
+                      {aviationData.languages.map((item, index) => (
+                        <li key={index}>
+                          <input
+                            className="av-side-input"
+                            value={item}
+                            onChange={(event) =>
+                              updateListItem("languages", index, event.target.value)
+                            }
+                          />
+                        </li>
+                      ))}
                     </ul>
                   </section>
                 </aside>
-
               </div>
             </div>
           </div>
-
         </div>
-
-      )
-      }
+      </div>
     </TemplateLayout>
   );
 }
