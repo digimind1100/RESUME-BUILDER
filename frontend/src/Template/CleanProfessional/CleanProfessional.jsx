@@ -108,7 +108,7 @@ const CleanProfessional = () => {
                       <p className="cp-edu-degree" contentEditable={canEdit && isEditable}>
                         Master of Business Admin.
                       </p>
-                      <p className="cp-edu-year" contentEditable={!canEdit && isEditable}>2011</p>
+                      <p className="cp-edu-year" contentEditable={canEdit && isEditable}>2011</p>
                     </div>
 
                     <div className="cp-edu-entry">

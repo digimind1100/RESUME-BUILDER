@@ -52,6 +52,7 @@
 /* Left red column */
 .cb-left {
   width: 32%;
+  height: 1122px;
   background: #e53935;
   color: #ffffff;
   padding: 40px 32px;
@@ -153,6 +154,7 @@
 
   letter-spacing: 0.08em;   /* 🔥 reduce from 0.12 */
   text-transform: uppercase;
+<<<<<<< HEAD
 
   color: #111827;
   text-align: center;
@@ -161,6 +163,8 @@
   padding-top: 4px;         /* 🔥 fixes top clipping */
 
   border: none;
+=======
+>>>>>>> 0c79162d18a2081872c0b4d80ef9bdb9708cf244
 }
 .cb-title {
   margin: 6px 0 0;
@@ -346,29 +350,29 @@
 }
 
 
+/* Ensure text is selectable and clickable on mobile */
 [contenteditable="true"] {
-  outline: none;
-  -webkit-user-select: text;
-  user-select: text;
-  touch-action: manipulation;
-  
+    -webkit-user-select: text;
+    user-select: text;
+    cursor: text;
+    min-height: 1em; /* Prevents empty fields from disappearing */
+    outline: none;
 }
-
-[contenteditable="true"]:focus {
-  outline: 2px solid #4f46e5;
-  background: rgba(79, 70, 229, 0.08);
-}
-
-.cb-resume *[contenteditable="true"] {
-  min-height: 24px;
-  display: inline-block;
-}
-
 
 @media (max-width: 768px) {
+
+  .editor-area,
+  #resume-template,
   .resume-a4 {
     transform: none !important;
+    overflow: visible !important;
+    height: auto !important;
+    position: relative !important;
+  }
+
+  .resume-a4 {
     width: 100% !important;
+<<<<<<< HEAD
     min-height: auto !important;
     padding: 16px;
   }
@@ -591,12 +595,18 @@
   .cb-delete-btn,
   .cb-delete-job-btn {
     display: none !important;
+=======
+    box-shadow: none !important;
+>>>>>>> 0c79162d18a2081872c0b4d80ef9bdb9708cf244
   }
 
-  body {
-    background: white;
+  [contenteditable="true"] {
+    pointer-events: auto !important;
+    user-select: text !important;
+    -webkit-user-select: text !important;
   }
 
+<<<<<<< HEAD
 
 }
 
@@ -606,6 +616,8 @@
     height: 297mm;
     overflow: hidden;
   }
+=======
+>>>>>>> 0c79162d18a2081872c0b4d80ef9bdb9708cf244
 }
   .cb-a4 {
      transform: none !important;
@@ -635,6 +647,7 @@
   break-after: page;
 }
 
+<<<<<<< HEAD
 
 .cb-header-text {
   width: 100%;
@@ -664,3 +677,5 @@
   line-height: 1.2;
   margin-top: 6px;
 }
+=======
+>>>>>>> 0c79162d18a2081872c0b4d80ef9bdb9708cf244

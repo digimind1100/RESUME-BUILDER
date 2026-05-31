@@ -11,14 +11,13 @@ export default function TemplateControls({
   resumeRef,
   templateId,
   onEditChange,
-  onSave,
   onRequirePayment,
   onDownload
 }) {
 
   const isLocal =
-    window.location.hostname === "localhost" ||
-    window.location.hostname === "127.0.0.1";
+  window.location.hostname === "localhost" ||
+  window.location.hostname === "127.0.0.1";
 
 
   const navigate = useNavigate();
@@ -64,33 +63,33 @@ export default function TemplateControls({
   };
 
   /* Toggle edit */
-  const toggleEdit = () => {
+const toggleEdit = () => {
 
-    // 🚀 DEV MODE → bypass payment completely
-    if (isLocal) {
-      setIsEditable(true);
-      onEditChange(true, true); // force edit + paid
-      return;
-    }
+  // 🚀 DEV MODE → bypass payment completely
+  if (isLocal) {
+    setIsEditable(true);
+    onEditChange(true, true); // force edit + paid
+    return;
+  }
 
-    // 🔐 PRODUCTION
-    if (!requirePayment()) return;
+  // 🔐 PRODUCTION
+  if (!requirePayment()) return;
 
-    setIsEditable(prev => !prev);
-  };
+  setIsEditable(prev => !prev);
+};
 
 
   useEffect(() => {
-    if (onRequirePayment) {
-      onRequirePayment(() => requirePayment);
-    }
-  }, [requirePayment]);
+  if (onRequirePayment) {
+    onRequirePayment(() => requirePayment);
+  }
+}, [requirePayment]);
 
   return (
     <>
       <div className="te-buttons" contentEditable={false}>
 
-
+       
         <button className="download-btn" onClick={onDownload}>
           Download PDF
         </button>
@@ -102,11 +101,6 @@ export default function TemplateControls({
         <button onClick={handleReset}>
           Reset
         </button>
-
-        <button onClick={onSave}>
-          Save
-        </button>
-
 
         <button
           className={isEditable ? "edit-btn on" : "edit-btn off"}
