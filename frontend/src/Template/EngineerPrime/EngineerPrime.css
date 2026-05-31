@@ -36,7 +36,8 @@
   background: #ffffff;
   padding: 15px;
   border-radius: 8px;
-  max-width: 900px;
+  width: 210mm;
+  max-width: 100%;
   margin: 0 auto 20px auto;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   display: flex;
@@ -70,6 +71,8 @@
 ----------------------------------------------------- */
 /* FORCE SAME CENTERING AS MINI FORM */
 .ep-a4 {
+  width: 210mm;
+  min-height: 297mm;
   max-width: 210mm;          /* 🔥 same as A4 */
   margin: 40px auto;         /* 🔥 centers under mini form */
   padding: 0;
@@ -78,6 +81,7 @@
 
 .ep-resume {
   width: 100%;
+  height: 100%;
   min-height: 297mm;
   background: #ffffff;
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
@@ -159,9 +163,11 @@
    MAIN PANEL
 ----------------------------------------------------- */
 .ep-main {
-  width: 68%;
+  width: 65%;
   height: 1122px;
   padding: 30px 40px;
+  box-sizing: border-box;
+  background: #ffffff;
 }
 
 /* HEADER */
@@ -310,6 +316,188 @@
   color: #fff;
 
   pointer-events: none;
+}
+
+.ep-resume input,
+.ep-resume textarea {
+  border: 1px solid transparent !important;
+  background: transparent !important;
+  outline: none !important;
+  box-shadow: none !important;
+  box-sizing: border-box !important;
+  font-family: inherit !important;
+  transition: background 0.2s ease, border-color 0.2s ease !important;
+}
+
+.ep-resume input:hover,
+.ep-resume textarea:hover {
+  background: rgba(37, 99, 235, 0.06) !important;
+}
+
+.ep-resume input:focus,
+.ep-resume textarea:focus {
+  background: rgba(37, 99, 235, 0.12) !important;
+  border-color: rgba(37, 99, 235, 0.42) !important;
+}
+
+.ep-side-input,
+.ep-name,
+.ep-title,
+.ep-text,
+.ep-job-title,
+.ep-job-date,
+.ep-job-location,
+.ep-job-bullet,
+.ep-edu-degree,
+.ep-edu-meta,
+.ep-inline-input {
+  width: 100%;
+}
+
+.ep-side-input {
+  display: block;
+  color: #ffffff;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.ep-name,
+.ep-title,
+.ep-job-title,
+.ep-job-date,
+.ep-job-location,
+.ep-edu-degree,
+.ep-edu-meta,
+.ep-inline-input {
+  display: block;
+}
+
+.ep-text {
+  display: block;
+  min-height: 58px;
+  resize: none;
+  overflow: hidden;
+}
+
+.ep-job-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.ep-job-date {
+  width: 125px;
+  text-align: right;
+  font-size: 12px;
+  color: #555555;
+}
+
+.ep-job-bullet {
+  display: block;
+  min-height: 24px;
+  resize: none;
+  overflow: hidden;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #333333;
+}
+
+.ep-project-description {
+  display: block;
+  min-height: 24px;
+  resize: none;
+  overflow: hidden;
+}
+
+.resume-mobile-wrap {
+  width: 100%;
+  overflow-x: auto;
+  display: flex;
+  justify-content: center;
+  background: #ffffff;
+}
+
+.resume-a4.ep-a4 {
+  height: 297mm;
+  min-height: 297mm;
+  overflow: hidden;
+}
+
+.resume-a4.ep-a4 .ep-resume {
+  min-height: 100%;
+  background: #ffffff;
+}
+
+.ep-screen-preview .resume-a4.ep-a4 {
+  height: auto !important;
+  min-height: 297mm !important;
+  overflow: visible !important;
+  background: #ffffff !important;
+}
+
+.ep-screen-preview .resume-a4.ep-a4 .ep-resume {
+  height: auto !important;
+  min-height: 297mm !important;
+}
+
+.ep-screen-preview .resume-a4.ep-a4 .ep-sidebar,
+.ep-screen-preview .resume-a4.ep-a4 .ep-main {
+  align-self: stretch !important;
+  height: auto !important;
+  min-height: 1122px !important;
+}
+
+@media (max-width: 768px) {
+  .ep-wrapper {
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+    overflow-x: hidden;
+  }
+
+  .ep-mini-form {
+    width: calc(100vw - 24px);
+  }
+
+  .ep-mini-row {
+    flex-direction: column;
+  }
+
+  .resume-mobile-wrap {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: flex-start !important;
+    padding: 0 0 30px !important;
+    box-sizing: border-box !important;
+  }
+
+  .resume-a4.ep-a4 {
+    width: 210mm !important;
+    min-width: 210mm !important;
+    height: 297mm !important;
+    max-width: none !important;
+    transform: scale(0.42) !important;
+    transform-origin: top center !important;
+    margin-top: 20px !important;
+    margin-bottom: -520px !important;
+  }
+
+  .ep-resume {
+    flex-direction: row !important;
+  }
+
+  .ep-sidebar {
+    width: 35% !important;
+  }
+
+  .ep-main {
+    width: 65% !important;
+    padding: 30px 40px !important;
+  }
 }
 /* ===============================
    EDIT BUTTON – CROWN PREMIUM

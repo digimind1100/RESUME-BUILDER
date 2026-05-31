@@ -100,9 +100,6 @@ export default function FlorenceClassic() {
         }
     });
 
-    const [saveStatus, setSaveStatus] = useState("");
-    const [isInitialLoad, setIsInitialLoad] = useState(true);
-
 const resumeContainerRef = useRef(null);
       const fileInputRef = useRef(null);
 
@@ -174,25 +171,6 @@ const handleImageUpload = (event) => {
     };
 
 
-    /* =========================================
-       AUTO SAVE AFTER LOGIN / SIGNUP
-    ========================================= */
-    useEffect(() => {
-        const handleSaveAfterLogin = async () => {
-            console.log("✅ Save after login triggered");
-
-            setTimeout(() => {
-                handleSaveResume();
-            }, 800);
-        };
-
-        window.addEventListener("saveResumeAfterLogin", handleSaveAfterLogin);
-
-        return () => {
-            window.removeEventListener("saveResumeAfterLogin", handleSaveAfterLogin);
-        };
-    }, [resumeData]);
-
     const handleChange = (field, value) => {
         setResumeData((prev) => ({
             ...prev,
@@ -247,7 +225,6 @@ const handleImageUpload = (event) => {
 
             // ✅ Anonymous user: do NOT load MongoDB
             if (!token) {
-                setIsInitialLoad(false);
                 return;
             }
 
@@ -278,8 +255,6 @@ const handleImageUpload = (event) => {
 
         } catch (error) {
             console.error("Load Resume Error:", error);
-        } finally {
-            setIsInitialLoad(false);
         }
     };
 
@@ -331,41 +306,6 @@ const handleImageUpload = (event) => {
         return () => clearInterval(interval);
     }, []);
 
-    const autoSaveResume = async () => {
-        try {
-            const token = localStorage.getItem("token");
-
-            if (!token) return;
-
-            setSaveStatus("Saving...");
-
-            const response = await fetch(
-                "https://resume-builder-backend-66wy.onrender.com/api/resume/save",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${token}`,
-                    },
-                    body: JSON.stringify({
-                        templateId: "FlorenceClassic",
-                        data: resumeData,
-                    }),
-                }
-            );
-
-            const result = await response.json();
-
-            if (result.success) {
-                setSaveStatus("Saved");
-            } else {
-                setSaveStatus("Save failed");
-            }
-        } catch (error) {
-            console.error("Auto Save Error:", error);
-            setSaveStatus("Save failed");
-        }
-    };
     // =======================================================
     useEffect(() => {
 
@@ -390,45 +330,6 @@ const handleImageUpload = (event) => {
     }, []);
 
     // ======================================================
-
-    const syncLocalResumeToMongoDB = async () => {
-        try {
-            const token = localStorage.getItem("token");
-            const localResume = localStorage.getItem(STORAGE_KEY);
-
-            if (!token || !localResume) return;
-
-            await fetch(
-                "https://resume-builder-backend-66wy.onrender.com/api/resume/save",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${token}`,
-                    },
-                    body: JSON.stringify({
-                        templateId: "FlorenceClassic",
-                        data: JSON.parse(localResume),
-                    }),
-                }
-            );
-
-            console.log("✅ Local resume synced to MongoDB");
-
-        } catch (error) {
-            console.error("SYNC ERROR:", error);
-        }
-    };
-
-    useEffect(() => {
-        if (isInitialLoad) return;
-
-        const timer = setTimeout(() => {
-            autoSaveResume();
-        }, 2000);
-
-        return () => clearTimeout(timer);
-    }, [resumeData]);
 
     useEffect(() => {
         const handleUserLoggedIn = () => {

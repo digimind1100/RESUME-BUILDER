@@ -146,7 +146,6 @@ const CreativeBold = () => {
 
 
 
-  const [saveStatus, setSaveStatus] = useState("");
   const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   useEffect(() => {
@@ -156,34 +155,6 @@ const CreativeBold = () => {
     );
   }, [resumeData]);
 
-
-  const syncLocalResumeToMongoDB = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      const localResume = localStorage.getItem(STORAGE_KEY);
-
-      if (!token || !localResume) return;
-
-      await fetch(
-        "https://resume-builder-backend-66wy.onrender.com/api/resume/save",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            templateId: "CreativeBold",
-            data: JSON.parse(localResume),
-          }),
-        }
-      );
-
-      console.log("✅ CreativeBold synced to MongoDB");
-    } catch (error) {
-      console.error("SYNC ERROR:", error);
-    }
-  };
 
   // LOAD DATA FROM DATABASE MONGODB
   const loadResume = async () => {

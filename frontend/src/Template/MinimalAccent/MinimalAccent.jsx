@@ -14,6 +14,7 @@ import jsPDF from "jspdf";
 const MinimalAccent = () => {
 
   const resumeRef = useRef(null);
+  const pdfGeneratingRef = useRef(false);
   const navigate = useNavigate();
 
   // Object Datat start
@@ -105,15 +106,193 @@ const MinimalAccent = () => {
   } = useProfileImage(setResumeData, checkPaymentStatus);
 
 
-  // Auto save section end
+  // Reset Button
+  const handleResetMinimalAccent = () => {
+  localStorage.removeItem("MinimalAccent_resumeData");
 
+  setResumeData({
+    ...defaultData,
+    profileImage: "/images/minimalaccentprofileimage.png",
+  });
+};
 
+const { isAuthenticated } = useAuth();
+
+useEffect(() => {
+  if (!isAuthenticated) return;
+
+  console.log("AUTH READY - LOADING MINIMALACCENT");
+
+  setTimeout(() => {
+    loadResume();
+  }, 500);
+}, [isAuthenticated]);
+
+useEffect(() => {
+  const handleUserLoggedIn = async () => {
+    console.log("✅ MinimalAccent userLoggedIn event received");
+    await loadResume();
+  };
+
+  window.addEventListener("userLoggedIn", handleUserLoggedIn);
+
+  return () => {
+    window.removeEventListener("userLoggedIn", handleUserLoggedIn);
+  };
+}, []);
+
+useEffect(() => {
+  const interval = setInterval(() => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      loadResume();
+      clearInterval(interval);
+    }
+  }, 500);
+
+  return () => clearInterval(interval);
+}, []);
+
+const replaceEditableFieldsForPDF = (element) => {
+  element.querySelectorAll("input, textarea").forEach((field) => {
+    if (field.type === "file") {
+      field.remove();
+      return;
+    }
+
+    const div = document.createElement("div");
+    div.className = field.className;
+    div.textContent = field.value || field.textContent || "";
+
+    const computed = window.getComputedStyle(field);
+    div.style.width = computed.width;
+    div.style.minHeight = computed.height;
+    div.style.fontSize = computed.fontSize;
+    div.style.fontWeight = computed.fontWeight;
+    div.style.lineHeight = computed.lineHeight;
+    div.style.color = computed.color;
+    div.style.fontFamily = computed.fontFamily;
+    div.style.letterSpacing = computed.letterSpacing;
+    div.style.textTransform = computed.textTransform;
+    div.style.textAlign = computed.textAlign;
+    div.style.margin = computed.margin;
+    div.style.padding = computed.padding;
+    div.style.boxSizing = "border-box";
+    div.style.whiteSpace = field.tagName === "TEXTAREA" ? "pre-wrap" : "normal";
+    div.style.overflowWrap = "break-word";
+    div.style.background = "transparent";
+    div.style.border = "none";
+
+    field.replaceWith(div);
+  });
+};
+
+const handleDownloadPDF = async () => {
+  if (pdfGeneratingRef.current) return;
+
+  pdfGeneratingRef.current = true;
+  let wrapper = null;
+
+  try {
+    const originalElement = document.querySelector(".resume-a4.ma-a4");
+
+    if (!originalElement) {
+      console.error("MinimalAccent resume element not found");
+      return;
+    }
+
+    const element = originalElement.cloneNode(true);
+    replaceEditableFieldsForPDF(element);
+
+    wrapper = document.createElement("div");
+    wrapper.style.position = "fixed";
+    wrapper.style.left = "-99999px";
+    wrapper.style.top = "0";
+    wrapper.style.width = "794px";
+    wrapper.style.height = "1122px";
+    wrapper.style.background = "#ffffff";
+    wrapper.style.overflow = "hidden";
+    wrapper.style.opacity = "0";
+    wrapper.style.pointerEvents = "none";
+    wrapper.style.zIndex = "-1";
+
+    element.style.setProperty("position", "relative", "important");
+    element.style.setProperty("left", "0", "important");
+    element.style.setProperty("top", "0", "important");
+    element.style.setProperty("width", "794px", "important");
+    element.style.setProperty("min-width", "794px", "important");
+    element.style.setProperty("max-width", "794px", "important");
+    element.style.setProperty("height", "1122px", "important");
+    element.style.setProperty("min-height", "1122px", "important");
+    element.style.setProperty("max-height", "1122px", "important");
+    element.style.setProperty("margin", "0", "important");
+    element.style.setProperty("transform", "none", "important");
+    element.style.setProperty("transform-origin", "top left", "important");
+    element.style.setProperty("zoom", "1", "important");
+    element.style.setProperty("box-shadow", "none", "important");
+    element.style.setProperty("overflow", "hidden", "important");
+
+    const resume = element.querySelector(".ma-resume");
+    const sidebar = element.querySelector(".ma-sidebar");
+    const main = element.querySelector(".ma-main");
+
+    if (resume) {
+      resume.style.setProperty("display", "flex", "important");
+      resume.style.setProperty("flex-direction", "row", "important");
+      resume.style.setProperty("width", "100%", "important");
+      resume.style.setProperty("height", "100%", "important");
+    }
+
+    if (sidebar) {
+      sidebar.style.setProperty("width", "32%", "important");
+      sidebar.style.setProperty("height", "1122px", "important");
+    }
+
+    if (main) {
+      main.style.setProperty("width", "68%", "important");
+    }
+
+    wrapper.appendChild(element);
+    document.body.appendChild(wrapper);
+
+    await new Promise((resolve) => setTimeout(resolve, 250));
+
+    const canvas = await html2canvas(element, {
+      scale: 2,
+      useCORS: true,
+      allowTaint: true,
+      backgroundColor: "#ffffff",
+      width: 794,
+      height: 1122,
+      windowWidth: 794,
+      windowHeight: 1122,
+    });
+
+    const imgData = canvas.toDataURL("image/jpeg", 1.0);
+    const pdf = new jsPDF({
+      orientation: "portrait",
+      unit: "mm",
+      format: "a4",
+      compress: true,
+    });
+
+    pdf.addImage(imgData, "JPEG", 0, 0, 210, 297, undefined, "FAST");
+    pdf.save("MinimalAccent-resume.pdf");
+  } catch (error) {
+    console.error("MinimalAccent PDF download error:", error);
+  } finally {
+    if (wrapper && document.body.contains(wrapper)) {
+      document.body.removeChild(wrapper);
+    }
+
+    setTimeout(() => {
+      pdfGeneratingRef.current = false;
+    }, 1000);
+  }
+};
 
   // Florence HandlerChange end
-
-
-
-
 
   return (
     <TemplateLayout
@@ -121,6 +300,10 @@ const MinimalAccent = () => {
       handleSaveResume={handleSaveResume}
       resumeData={resumeData}
       setResumeData={setResumeData}
+       checkPaymentStatus={checkPaymentStatus}
+       onReset={handleResetMinimalAccent}
+       onLoadResume={loadResume}
+       onDownloadPDF={handleDownloadPDF}
     >
       <div className="ma-wrapper">
         <div className="resume-mobile-wrap">
@@ -134,26 +317,27 @@ const MinimalAccent = () => {
               <aside className="ma-sidebar">
                 {/* Profile Photo */}
                 <div
-                  className="ma-photo-wrapper"
-                  onClick={openImagePicker}
-                >
-                  <img
-                    src={
-                      resumeData.profileImage ||
-                      "/images/minimalaccentprofileimage.png"
-                    }
-                    alt="Profile"
-                    className="ma-photo"
-                  />
+  className="ma-photo-wrapper"
+  onClick={openImagePicker}
+>
+  <img
+    src={
+      resumeData.profileImage ||
+      "/images/minimalaccentprofileimage.png"
+    }
+    alt="Profile"
+    className="ma-photo"
+  />
 
-                  <input
-                    type="file"
-                    accept="image/*"
-                    ref={fileInputRef}
-                    style={{ display: "none" }}
-                    onChange={handleImageUpload}
-                  />
-                </div>
+  <input
+    type="file"
+    accept="image/*"
+    ref={fileInputRef}
+    style={{ display: "none" }}
+    onClick={(e) => e.stopPropagation()}
+    onChange={handleImageUpload}
+  />
+</div>
 
 
                 {/* Contact Card */}
@@ -163,8 +347,7 @@ const MinimalAccent = () => {
                     className="ma-card-line"
                     value={resumeData.contact.address}
                     onChange={(e) =>
-                      handleNestedChange(
-                        "contact",
+                      handleContactChange(
                         "address",
                         e.target.value
                       )
@@ -175,8 +358,7 @@ const MinimalAccent = () => {
                     className="ma-card-line"
                     value={resumeData.contact.city}
                     onChange={(e) =>
-                      handleNestedChange(
-                        "contact",
+                      handleContactChange(
                         "city",
                         e.target.value
                       )
@@ -187,8 +369,7 @@ const MinimalAccent = () => {
                     className="ma-card-line"
                     value={resumeData.contact.phone}
                     onChange={(e) =>
-                      handleNestedChange(
-                        "contact",
+                      handleContactChange(
                         "phone",
                         e.target.value
                       )
@@ -199,8 +380,7 @@ const MinimalAccent = () => {
                     className="ma-card-line"
                     value={resumeData.contact.email}
                     onChange={(e) =>
-                      handleNestedChange(
-                        "contact",
+                      handleContactChange(
                         "email",
                         e.target.value
                       )

@@ -7,11 +7,10 @@ export default function useResumeTemplate(templateId, defaultData) {
 
   const [resumeData, setResumeData] = useState(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
-    return saved ? JSON.parse(saved) : defaultData;
+    return saved ? { ...defaultData, ...JSON.parse(saved) } : defaultData;
   });
-
   const [isInitialLoad, setIsInitialLoad] = useState(true);
-  const [saveStatus, setSaveStatus] = useState("");
+  const [saveStatus] = useState("");
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(resumeData));
@@ -28,7 +27,7 @@ export default function useResumeTemplate(templateId, defaultData) {
     setResumeData((prev) => ({
       ...prev,
       contact: {
-        ...prev.contact,
+        ...(prev.contact || {}),
         [field]: value,
       },
     }));
@@ -126,45 +125,15 @@ export default function useResumeTemplate(templateId, defaultData) {
       const result = await response.json();
 
       if (response.ok && result.success && result.resume) {
-        setResumeData(result.resume);
+        setResumeData({
+          ...defaultData,
+          ...result.resume,
+        });
       }
     } catch (error) {
       console.error("Load Resume Error:", error);
     } finally {
       setIsInitialLoad(false);
-    }
-  };
-
-  const autoSaveResume = async () => {
-    try {
-      const token = localStorage.getItem("token");
-
-      if (!token) return;
-
-      setSaveStatus("Saving...");
-
-      const response = await fetch(`${API_BASE}/api/resume/save`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          templateId,
-          data: resumeData,
-        }),
-      });
-
-      const result = await response.json();
-
-      if (result.success) {
-        setSaveStatus("Saved");
-      } else {
-        setSaveStatus("Save failed");
-      }
-    } catch (error) {
-      console.error("Auto Save Error:", error);
-      setSaveStatus("Save failed");
     }
   };
 
@@ -194,21 +163,11 @@ export default function useResumeTemplate(templateId, defaultData) {
     loadResume();
   }, []);
 
-  useEffect(() => {
-    if (isInitialLoad) return;
-
-    const timer = setTimeout(() => {
-      autoSaveResume();
-    }, 2000);
-
-    return () => clearTimeout(timer);
-  }, [resumeData]);
-
   return {
     resumeData,
     setResumeData,
     saveStatus,
-
+    isInitialLoad,
     handleChange,
     handleContactChange,
     handleArrayChange,

@@ -16,12 +16,10 @@ export default function LoginModal({ onClose }) {
 if (result.ok) {
   toast.success("Login successful");
 
-  // token save hone ke baad event fire karo
   setTimeout(() => {
     console.log("TOKEN AFTER LOGIN:", localStorage.getItem("token"));
 
     window.dispatchEvent(new Event("userLoggedIn"));
-    window.dispatchEvent(new Event("saveResumeAfterLogin"));
   }, 1000);
 
   onClose();

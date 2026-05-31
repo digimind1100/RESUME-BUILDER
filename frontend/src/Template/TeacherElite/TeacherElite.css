@@ -14,6 +14,7 @@
 .te-resume {
   width: 210mm;
   min-height: 297mm;
+  height: 297mm;
   background: white;
   margin: auto;
   position: relative;
@@ -123,6 +124,7 @@
 .te-resume {
   width: 100%;
   height: 100%;
+  background: #ffffff;
 }
 
 /* ========= HEADER (DECORATIVE WAVE) ========= */
@@ -248,6 +250,8 @@
 .te-layout {
   display: flex;
   min-height: calc(297mm - 180px);
+  height: calc(297mm - 180px);
+  background: #ffffff;
 }
 
 /* ========= SIDEBAR ========= */
@@ -265,23 +269,31 @@
 /* QR cards */
 .te-qr-card {
   background: #ffffff;
-  border-radius: 10px;
-  padding: 10px;
+  border-radius: 8px;
+  padding: 6px;
   box-shadow: 0 8px 18px rgba(15, 23, 42, 0.35);
-  margin-bottom: 18px;
+  margin-bottom: 12px;
+  width: 118px;
+  align-self: center;
 }
 
 .te-qr-img {
   width: 100%;
+  max-width: 106px;
   height: auto;
   display: block;
+  margin: 0 auto;
 }
 
 .te-qr-placeholder {
-  font-size: 11px;
+  font-size: 9px;
   color: #4b5563;
   text-align: center;
-  padding: 16px 4px;
+  padding: 10px 4px;
+  min-height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Sidebar sections */
@@ -313,6 +325,8 @@
   padding: 26px 40px 32px;
   box-sizing: border-box;
   color: #111827;
+  background: #ffffff;
+  min-height: 100%;
 }
 
 /* Section titles */
@@ -694,4 +708,192 @@ display:none !important;
 .pdf-mode .te-header::before {
   border-bottom-left-radius: 0 !important;
   border-bottom-right-radius: 0 !important;
+}
+
+.te-resume input,
+.te-resume textarea {
+  border: 1px solid transparent !important;
+  background: transparent !important;
+  outline: none !important;
+  box-shadow: none !important;
+  box-sizing: border-box !important;
+  font-family: inherit !important;
+  transition: background 0.2s ease, border-color 0.2s ease !important;
+}
+
+.te-resume input:hover,
+.te-resume textarea:hover {
+  background: rgba(37, 99, 235, 0.06) !important;
+}
+
+.te-resume input:focus,
+.te-resume textarea:focus {
+  background: rgba(37, 99, 235, 0.11) !important;
+  border-color: rgba(37, 99, 235, 0.4) !important;
+}
+
+.te-header-name,
+.te-header-role,
+.te-header-contact input,
+.te-side-input,
+.te-section-text,
+.te-job-title,
+.te-job-dates,
+.te-job-sub,
+.te-job-bullet,
+.te-edu-line,
+.te-list-input {
+  width: 100%;
+}
+
+.te-header-name,
+.te-header-role {
+  display: block;
+}
+
+.te-header-contact input {
+  font-size: 13px;
+  color: #374151;
+}
+
+.te-side-input {
+  font-size: 12px;
+  line-height: 1.45;
+  color: #e5e7eb;
+}
+
+.te-section-text {
+  display: block;
+  min-height: 94px;
+  resize: none;
+  overflow: hidden;
+}
+
+.te-job-title {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.te-job-dates {
+  width: 120px;
+  text-align: right;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.te-job-sub {
+  display: block;
+}
+
+.te-job-bullet {
+  display: block;
+  min-height: 24px;
+  resize: none;
+  overflow: hidden;
+  font-size: 12px;
+  line-height: 1.55;
+  color: #374151;
+}
+
+.te-edu-line {
+  display: block;
+}
+
+.te-list-input {
+  font-size: 12px;
+  color: #374151;
+}
+
+.resume-mobile-wrap {
+  width: 100%;
+  overflow-x: auto;
+  display: flex;
+  justify-content: center;
+  background: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .resume-mobile-wrap {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: flex-start !important;
+    padding: 0 0 30px !important;
+    box-sizing: border-box !important;
+  }
+
+  .resume-a4.te-a4 {
+    width: 210mm !important;
+    min-width: 210mm !important;
+    height: 297mm !important;
+    max-width: none !important;
+    transform: scale(0.42) !important;
+    transform-origin: top center !important;
+    margin-top: 20px !important;
+    margin-bottom: -520px !important;
+  }
+
+  .te-layout {
+    flex-direction: row !important;
+  }
+
+  .te-sidebar {
+    width: 260px !important;
+  }
+}
+
+/* Keep visible screen preview painted to the full A4 height. */
+.resume-a4.te-a4 {
+  height: 297mm !important;
+  min-height: 297mm !important;
+  background: #ffffff !important;
+  overflow: visible;
+}
+
+.resume-a4.te-a4 .te-resume {
+  height: 100% !important;
+  min-height: 100% !important;
+  background: #ffffff !important;
+}
+
+.resume-a4.te-a4 .te-layout {
+  height: calc(297mm - 180px) !important;
+  min-height: calc(297mm - 180px) !important;
+  align-items: stretch;
+  background: #ffffff !important;
+}
+
+.resume-a4.te-a4 .te-main {
+  align-self: stretch;
+  background: #ffffff !important;
+}
+
+/* Screen preview may grow when editable text needs more room.
+   PDF export still forces a fixed A4 clone in TeacherElite.jsx. */
+.te-screen-preview .resume-a4.te-a4 {
+  height: auto !important;
+  min-height: 297mm !important;
+  overflow: visible !important;
+  background: #ffffff !important;
+}
+
+.te-screen-preview .resume-a4.te-a4 .te-resume {
+  height: auto !important;
+  min-height: 297mm !important;
+  background: #ffffff !important;
+}
+
+.te-screen-preview .resume-a4.te-a4 .te-layout {
+  height: auto !important;
+  min-height: calc(297mm - 180px) !important;
+  align-items: stretch !important;
+  background: #ffffff !important;
+}
+
+.te-screen-preview .resume-a4.te-a4 .te-sidebar,
+.te-screen-preview .resume-a4.te-a4 .te-main {
+  align-self: stretch !important;
 }

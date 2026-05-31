@@ -275,7 +275,7 @@ const handleUseTemplate = (route) => {
                       6: "/medical-elites",
                       7: "/engineer-elites",
                       8: "/soft-tech",
-                      9: "/data-Analyst",
+                      9: "/data-elite",
                       10: "/engineer-prime",
                       11: "/aviation-pro",
                       12: "/free-basic",
