@@ -15,9 +15,6 @@ export default function SignupModal({onClose, onSuccess }) {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
- 
-
-console.log("SIGNUP MODAL RENDERED");
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -55,7 +52,7 @@ console.log("SIGNUP MODAL RENDERED");
         setError(result?.message || "Authentication failed. Please try again.");
       }
     } catch (err) {
-      console.error("AUTH ERROR:", err);
+      
       setError(err?.message || "Something went wrong. Please try again.");
     }
     finally {
