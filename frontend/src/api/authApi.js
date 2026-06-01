@@ -8,8 +8,6 @@ const BASE_URL =
   import.meta.env.VITE_API_BASE_URL ||
   "https://resume-builder-backend-66wy.onrender.com/api";
 
-
-
 /* ===============================
    🔗 AXIOS INSTANCE
 ================================ */

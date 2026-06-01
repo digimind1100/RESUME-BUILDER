@@ -45,8 +45,7 @@ console.log("SIGNUP MODAL RENDERED");
         mode === "signup"
           ? await signup(payload)
           : await login(payload);
-          alert("SIGNUP RESULT: " + JSON.stringify(result));
-
+          
       if (result?.ok) {
         const pendingTemplate = localStorage.getItem("pendingTemplate");
 
