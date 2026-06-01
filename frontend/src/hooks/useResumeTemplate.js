@@ -152,7 +152,7 @@ export default function useResumeTemplate(templateId, defaultData) {
 
       const result = await response.json();
 
-      return result.isPaid === true;
+      return result.isPaid === true || result.canAccessPremium === true;
     } catch (error) {
       console.error("Payment check error:", error);
       return false;

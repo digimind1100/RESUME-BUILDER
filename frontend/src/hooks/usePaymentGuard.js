@@ -24,9 +24,10 @@ export default function usePaymentGuard(templateName = "") {
   // 🔐 Date-based paid check (SINGLE SOURCE OF TRUTH)
   const isPaid =
     !!user &&
-    user.isPaid === true &&
-    user.accessUntil &&
-    new Date(user.accessUntil).getTime() > Date.now();
+    (user.canAccessPremium === true ||
+      (user.isPaid === true &&
+        user.accessUntil &&
+        new Date(user.accessUntil).getTime() > Date.now()));
 
   // 🔹 DEBUG (keep this)
   console.log("🧩 usePaymentGuard render", {

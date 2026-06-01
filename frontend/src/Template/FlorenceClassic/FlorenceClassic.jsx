@@ -368,6 +368,7 @@ const handleImageUpload = (event) => {
 
             return (
                 result.isPaid === true ||
+                result.canAccessPremium === true ||
                 result.plan === "premium" ||
                 result.plan === "lifetime" ||
                 result.plan === "monthly-pro"

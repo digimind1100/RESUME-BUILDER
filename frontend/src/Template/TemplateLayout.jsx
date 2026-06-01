@@ -2,12 +2,13 @@ import { useAuth } from "../context/AuthContext";
 import React, { useEffect, useState, useRef } from "react";
 
 import SignupModal from "../components/auth/SignupModal";
-import PaymentModal from "../components/payment/PaymentModal";
+import ReviewPopup from "../components/review/ReviewPopup";
 import "./TemplateLayout.css";
 import { useNavigate } from "react-router-dom";
 
 
 const TemplateLayout = ({
+  templateId,
   children,
   onPreview,
   handleSaveResume,
@@ -18,7 +19,7 @@ const TemplateLayout = ({
 
   const [pendingAction, setPendingAction] = useState(null);
   const [showSignupModal, setShowSignupModal] = useState(false);
-  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [showReviewPopup, setShowReviewPopup] = useState(false);
 
   const resumeRef = React.useRef(null);
   
@@ -35,12 +36,18 @@ const TemplateLayout = ({
 
   useEffect(() => {
 
-    const openSignup = () => {
+    const openSignup = (event) => {
+      if (event?.detail?.pendingAction) {
+        setPendingAction(event.detail.pendingAction);
+      }
       setShowSignupModal(true);
     };
 
-    const openPayment = () => {
-      setShowPaymentModal(true);
+    const openReview = (event) => {
+      if (event?.detail?.pendingAction) {
+        setPendingAction(event.detail.pendingAction);
+      }
+      setShowReviewPopup(true);
     };
 
     window.addEventListener(
@@ -49,8 +56,8 @@ const TemplateLayout = ({
     );
 
     window.addEventListener(
-      "openPaymentModal",
-      openPayment
+      "openReviewPopup",
+      openReview
     );
 
     return () => {
@@ -61,8 +68,8 @@ const TemplateLayout = ({
       );
 
       window.removeEventListener(
-        "openPaymentModal",
-        openPayment
+        "openReviewPopup",
+        openReview
       );
 
     };
@@ -90,30 +97,49 @@ const TemplateLayout = ({
 
     if (!hasPaid) {
       setPendingAction("download");
-      window.dispatchEvent(new Event("openPaymentModal"));
+      window.dispatchEvent(
+        new CustomEvent("openReviewPopup", {
+          detail: { pendingAction: "download" },
+        })
+      );
       return;
     }
 
     onDownloadPDF();
   };
 
+  const continuePendingAction = () => {
+    if (pendingAction === "download") {
+      setPendingAction(null);
+      onDownloadPDF();
+      return;
+    }
+
+    if (pendingAction === "profileImage") {
+      setPendingAction(null);
+      window.dispatchEvent(new Event("openProfileImagePicker"));
+    }
+  };
 
   const handleSignupSuccess = async () => {
     setShowSignupModal(false);
 
-    if (pendingAction === "download") {
-      setPendingAction(null);
-
+    if (pendingAction === "download" || pendingAction === "profileImage") {
       setTimeout(async () => {
         const hasPaid = await checkPaymentStatus();
 
         if (hasPaid) {
-         onDownloadPDF();
+          continuePendingAction();
         } else {
-          setShowPaymentModal(true);
+          setShowReviewPopup(true);
         }
       }, 500);
     }
+  };
+
+  const handleReviewSuccess = () => {
+    setShowReviewPopup(false);
+    continuePendingAction();
   };
 
 
@@ -156,17 +182,11 @@ const TemplateLayout = ({
         />
       )}
 
-      {showPaymentModal && (
-        <PaymentModal
-          onClose={() => setShowPaymentModal(false)}
-          onSuccess={() => {
-
-            setShowPaymentModal(false);
-
-            // Continue PDF download
-            onDownloadPDF();
-
-          }}
+      {showReviewPopup && (
+        <ReviewPopup
+          templateId={templateId}
+          onClose={() => setShowReviewPopup(false)}
+          onSuccess={handleReviewSuccess}
         />
       )}
 

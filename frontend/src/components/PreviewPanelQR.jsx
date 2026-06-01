@@ -8,7 +8,7 @@ import WorkPreview from "./WorkPreview";
 import SkillsPreview from "./SkillsPreview";
 // payment Guard
 import usePaymentGuard from "../hooks/usePaymentGuard";
-import PaymentGate from "../components/payment/PaymentGate";
+import ReviewPopup from "../components/review/ReviewPopup";
 import { useAuth } from "../context/AuthContext";
 
 
@@ -50,6 +50,7 @@ export default function PreviewPanelQR({
 
   const [page1Skills, setPage1Skills] = useState([]);
   const [page2Skills, setPage2Skills] = useState([]);
+  const [showReviewPopup, setShowReviewPopup] = useState(false);
 
 
   const fileInputRef = useRef(null);
@@ -76,27 +77,28 @@ export default function PreviewPanelQR({
 
   const {
     isPaid,
-    showPaymentModal,
-    setShowPaymentModal,
-    requirePayment,
-    handlePaymentSuccess,
   } = usePaymentGuard("ClassicPreview");
 
   const canEdit = isPaid;
 
   const triggerProfileSelect = () => {
     if (!canEdit) {
-      requirePayment();   // 🔥 opens payment modal
+      setShowReviewPopup(true);
       return;
     }
+    fileInputRef.current?.click();
+  };
+
+  const handleReviewSuccess = () => {
+    setShowReviewPopup(false);
     fileInputRef.current?.click();
   };
 
   // Payment Guard End
 
   useEffect(() => {
-    console.log("showPaymentModal =", showPaymentModal);
-  }, [showPaymentModal]);
+    console.log("showReviewPopup =", showReviewPopup);
+  }, [showReviewPopup]);
 
 
   // ========= EDUCATION PAGINATION =========
@@ -301,11 +303,13 @@ export default function PreviewPanelQR({
                 />
               </div>
             )}
-            <PaymentGate
-              open={showPaymentModal}
-              onClose={() => setShowPaymentModal(false)}
-              onSuccess={handlePaymentSuccess}
-            />
+            {showReviewPopup && (
+              <ReviewPopup
+                templateId="ClassicPreview"
+                onClose={() => setShowReviewPopup(false)}
+                onSuccess={handleReviewSuccess}
+              />
+            )}
           </div>
         </div>
       </div>

@@ -8,7 +8,7 @@ import { paginateSkillsEntries } from "../utils/paginateSkillsEntries";
 import WorkPreview from "./WorkPreview";
 import SkillsPreview from "./SkillsPreview";
 import usePaymentGuard from "../hooks/usePaymentGuard";
-import PaymentGate from "../components/payment/PaymentGate";
+import ReviewPopup from "../components/review/ReviewPopup";
 import { useAuth } from "../context/AuthContext";
 
 
@@ -50,25 +50,28 @@ export default function PreviewPanel({
 
   const [page1Skills, setPage1Skills] = useState([]);
   const [page2Skills, setPage2Skills] = useState([]);
+  const [showReviewPopup, setShowReviewPopup] = useState(false);
 
 
   const { user, setUser } = useAuth();
 
   const {
     isPaid,
-    showPaymentModal,
-    setShowPaymentModal,
     requirePayment,
-    handlePaymentSuccess,
   } = usePaymentGuard("CleanProfessional");
 
   const canEdit = isPaid;
 
   const triggerProfileSelect = () => {
     if (!canEdit) {
-      requirePayment();
+      setShowReviewPopup(true);
       return;
     }
+    fileInputRef.current?.click();
+  };
+
+  const handleReviewSuccess = () => {
+    setShowReviewPopup(false);
     fileInputRef.current?.click();
   };
 
@@ -301,11 +304,13 @@ export default function PreviewPanel({
                 />
               </div>
             )}
-            <PaymentGate
-              open={showPaymentModal}
-              onClose={() => setShowPaymentModal(false)}
-              onSuccess={handlePaymentSuccess}
-            />
+            {showReviewPopup && (
+              <ReviewPopup
+                templateId={resumeStyle}
+                onClose={() => setShowReviewPopup(false)}
+                onSuccess={handleReviewSuccess}
+              />
+            )}
 
           </div>
         </div>
