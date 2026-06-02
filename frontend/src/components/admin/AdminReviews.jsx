@@ -1,24 +1,46 @@
 import { useEffect, useState } from "react";
 import "./adminTable.css";
 
-
 const API_BASE = "https://resume-builder-backend-production-116d.up.railway.app";
 
 export default function AdminReviews() {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [updatingId, setUpdatingId] = useState(null);
 
   useEffect(() => {
     fetchPendingReviews();
   }, []);
 
+  const getAuthHeaders = () => {
+    const token = localStorage.getItem("token");
+
+    return {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+  };
+
   const fetchPendingReviews = async () => {
     try {
-      const res = await fetch(`${API_BASE}/api/admin/reviews?status=pending`);
+      setLoading(true);
+      setError("");
+
+      const res = await fetch(`${API_BASE}/api/admin/review?status=pending`, {
+        headers: getAuthHeaders(),
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to fetch pending reviews");
+      }
+
       const data = await res.json();
-      setReviews(data);
+      setReviews(Array.isArray(data) ? data : data.reviews || []);
     } catch (err) {
-      console.error("Failed to fetch reviews");
+      console.error("Failed to fetch reviews", err);
+      setError("Failed to load pending reviews.");
+      setReviews([]);
     } finally {
       setLoading(false);
     }
@@ -26,32 +48,29 @@ export default function AdminReviews() {
 
   const updateStatus = async (id, status) => {
     try {
-      const token = localStorage.getItem("token");
+      setUpdatingId(id);
 
       const res = await fetch(
-        `${API_BASE}/api/admin/reviews/${id}/${status === "approved" ? "approve" : "reject"}`,
+        `${API_BASE}/api/admin/review/${id}/${status === "approved" ? "approve" : "reject"}`,
         {
           method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: getAuthHeaders(),
           body: JSON.stringify({ status }),
-        });
+        }
+      );
 
       if (!res.ok) {
         throw new Error("Request failed");
       }
 
-      // ✅ remove approved review from pending list
-      setReviews(prev => prev.filter(r => r._id !== id));
-
+      setReviews((prev) => prev.filter((review) => review._id !== id));
     } catch (err) {
-      console.error("❌ Approve failed:", err.message);
+      console.error("Review status update failed:", err.message);
       alert("Action failed");
+    } finally {
+      setUpdatingId(null);
     }
   };
-
-
 
   return (
     <div style={{ padding: "30px" }}>
@@ -81,28 +100,34 @@ export default function AdminReviews() {
             {!loading && reviews.length === 0 && (
               <tr>
                 <td colSpan="5" style={{ textAlign: "center" }}>
-                  No pending reviews
+                  {error || "No pending reviews"}
                 </td>
               </tr>
             )}
 
-            {reviews.map(review => (
+            {reviews.map((review) => (
               <tr key={review._id}>
-                <td>{review.name || "Anonymous"}</td>
-                <td>{review.rating} ⭐</td>
-                <td style={{ maxWidth: "300px" }}>{review.comment}</td>
+                <td>{review.name || review.user?.name || "Anonymous"}</td>
+                <td>{review.rating} star</td>
+                <td style={{ maxWidth: "300px" }}>
+                  {review.comment || review.review || "-"}
+                </td>
                 <td>
-                  <span className="badge pending">Pending</span>
+                  <span className="badge pending">
+                    {review.status || "pending"}
+                  </span>
                 </td>
                 <td>
                   <button
                     className="btn approve"
+                    disabled={updatingId === review._id}
                     onClick={() => updateStatus(review._id, "approved")}
                   >
                     Approve
                   </button>
                   <button
                     className="btn reject"
+                    disabled={updatingId === review._id}
                     onClick={() => updateStatus(review._id, "rejected")}
                   >
                     Reject

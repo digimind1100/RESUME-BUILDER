@@ -14,7 +14,7 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
 
-  // 🔥 Global loading ONLY for app initialization
+  // Global loading ONLY for app initialization
   const [loading, setLoading] = useState(true);
   const [initializing, setInitializing] = useState(true);
 
@@ -56,6 +56,7 @@ export function AuthProvider({ children }) {
         setToken(null);
       } finally {
         setInitializing(false);
+        setLoading(false);
       }
     };
 
@@ -115,6 +116,7 @@ export function AuthProvider({ children }) {
 
       if (res?.ok && res?.token) {
         localStorage.setItem(TOKEN_KEY, res.token);
+        setToken(res.token);
         setUser(res.user);
         return { ok: true, user: res.user };
       }
@@ -161,6 +163,7 @@ export function AuthProvider({ children }) {
 
     localStorage.removeItem(TOKEN_KEY);
     setUser(null);
+    setToken(null);
   };
 
   return (
@@ -168,8 +171,10 @@ export function AuthProvider({ children }) {
       value={{
         user,
         setUser,
+        token,
         isAuthenticated,
         loading, // only used for app initialization
+        initializing,
         signup,
         login,
         logout,

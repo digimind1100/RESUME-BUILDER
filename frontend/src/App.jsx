@@ -84,7 +84,22 @@ const isLocal = import.meta.env.DEV;
               </AdminGuard>
             }
           />
-          <Route path="/admin/reviews" element={<AdminReviews />} />
+          <Route
+            path="/admin/review"
+            element={
+              <AdminGuard>
+                <AdminReviews />
+              </AdminGuard>
+            }
+          />
+          <Route
+            path="/admin/reviews"
+            element={
+              <AdminGuard>
+                <AdminReviews />
+              </AdminGuard>
+            }
+          />
           <Route path="/" element={<HomePage />} />
           {/* Unified builder */}
           <Route
