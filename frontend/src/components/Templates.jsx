@@ -6,8 +6,8 @@ import { useAuth } from "../context/AuthContext";
 import SignupModal from "./auth/SignupModal";
 import { DEV_MODE } from "../config/devMode";
 
-const HIDDEN_PRODUCTION_TEMPLATES = new Set([12, 13, 14, 15]);
-const SIMPLE_TEMPLATES = Array.from({ length: 16 }, (_, i) => i + 1).filter(
+const HIDDEN_PRODUCTION_TEMPLATES = new Set([12, 13, 14]);
+const SIMPLE_TEMPLATES = Array.from({ length: 15 }, (_, i) => i + 1).filter(
   (templateId) => !HIDDEN_PRODUCTION_TEMPLATES.has(templateId)
 );
 
@@ -26,8 +26,7 @@ const TEMPLATE_META = {
   12: { name: "Free Basic", category: "Free Template" },
   13: { name: "Royal Designer", category: "Royal Designer" },
   14: { name: "NeoEdge Pro", category: "NeoEdge Pro" },
-  15: { name: "Test Pagination", category: "TestPagination" },
-  16: { name: "Florence Classic", category: "FlorenceClassic" },
+  15: { name: "Florence Classic", category: "FlorenceClassic" },
 };
 
 export default function Templates() {
@@ -284,8 +283,7 @@ const handleUseTemplate = (route) => {
                       12: "/free-basic",
                       13: "/royal-designer",
                       14: "/neoEdge-pro",
-                      15: "/test-pagination",
-                      16: "/florence-classic",
+                      15: "/florence-classic",
                     };
                     handleUseTemplate(routes[num]);
                   }}
