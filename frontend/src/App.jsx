@@ -17,7 +17,6 @@ import EngineerElites from "./Template/EngineerElite/EngineerElite";
 import SoftTech from "./Template/SoftTech/SoftTech";
 import EngineerPrime from "./Template/EngineerPrime/EngineerPrime";
 import DataElite from "./Template/DataElite/DataElite";
-import NeoEdgePro from "./Template/NeoEdgePro/NeoEdgePro";
 import AviationPro from "./Template/AviationPro/AviationPro";
 import TeacherElite from "./Template/TeacherElite/TeacherElite";
 import BuilderGuard from "./components/guards/BuilderGuard";
@@ -33,8 +32,6 @@ import ReviewsPage from "./components/ReviewsPage";
 import Blog from "./components/Blog";
 import BlogPost from "./components/BlogPost";
 import Pricing from "./components/Pricing";
-import FreeBasic from "./Template/FreeBasic/FreeBasic";
-import RoyalBlueDesigner from "./Template/RoyalBlueDesigner/RoyalBlueDesigner";
 import ScrollToTop from "./components/ScrollToTop";
 import TestPagination from "./Template/TestPagination/TestPagination";
 import FlorenceClassic from "./Template/FlorenceClassic/FlorenceClassic";
@@ -130,10 +127,11 @@ const isLocal = import.meta.env.DEV;
           <Route path="/medical-elites" element={<MedicalElites />} />
           <Route path="/engineer-elites" element={<EngineerElites />} />
           <Route path="/soft-tech" element={<SoftTech />} />
-          <Route path="/free-basic" element={<FreeBasic />} />
-          <Route path="/royal-designer" element={<RoyalBlueDesigner />} />
-          <Route path="/neoedge-pro" element={<NeoEdgePro />} />
-          <Route path="/test-pagination" element={<TestPagination />} />
+          <Route path="/free-basic" element={<Navigate to="/templates" replace />} />
+          <Route path="/royal-designer" element={<Navigate to="/templates" replace />} />
+          <Route path="/neoedge-pro" element={<Navigate to="/templates" replace />} />
+          <Route path="/neoEdge-pro" element={<Navigate to="/templates" replace />} />
+          <Route path="/test-pagination" element={<Navigate to="/templates" replace />} />
           <Route path="/florence-classic" element={<FlorenceClassic />} />
 
 

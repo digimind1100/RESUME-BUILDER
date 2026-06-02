@@ -6,7 +6,10 @@ import { useAuth } from "../context/AuthContext";
 import SignupModal from "./auth/SignupModal";
 import { DEV_MODE } from "../config/devMode";
 
-const SIMPLE_TEMPLATES = Array.from({ length: 16 }, (_, i) => i + 1);
+const HIDDEN_PRODUCTION_TEMPLATES = new Set([12, 13, 14, 15]);
+const SIMPLE_TEMPLATES = Array.from({ length: 16 }, (_, i) => i + 1).filter(
+  (templateId) => !HIDDEN_PRODUCTION_TEMPLATES.has(templateId)
+);
 
 const TEMPLATE_META = {
   1: { name: "Teacher Elite", category: "All Roles" },
