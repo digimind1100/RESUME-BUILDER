@@ -35,7 +35,7 @@ const openImagePicker = async (event) => {
     return;
   }
 
-  const hasPaid = hasReviewAccess(user) || (await checkPaymentStatus());
+  const hasPaid = hasReviewAccess(user);
 
   if (!hasPaid) {
     window.dispatchEvent(

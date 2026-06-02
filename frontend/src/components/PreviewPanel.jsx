@@ -62,7 +62,7 @@ export default function PreviewPanel({
     isPaid,
   } = usePaymentGuard("CleanProfessional");
 
-  const canEdit = isPaid || hasReviewAccess(user);
+  const canEdit = hasReviewAccess(user);
 
   const triggerProfileSelect = () => {
     const token = localStorage.getItem("token");

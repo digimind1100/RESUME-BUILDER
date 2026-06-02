@@ -88,15 +88,10 @@ const TemplateLayout = ({
       return;
     }
 
-    if (typeof checkPaymentStatus !== "function") {
-      console.error("checkPaymentStatus function missing");
-      return;
-    }
+    const hasReviewed = hasReviewAccess(user);
+    console.log("HAS REVIEW ACCESS:", hasReviewed);
 
-    const hasPaid = hasReviewAccess(user) || (await checkPaymentStatus());
-    console.log("HAS PAID:", hasPaid);
-
-    if (!hasPaid) {
+    if (!hasReviewed) {
       setPendingAction("download");
       window.dispatchEvent(
         new CustomEvent("openReviewPopup", {
@@ -127,9 +122,9 @@ const TemplateLayout = ({
 
     if (pendingAction === "download" || pendingAction === "profileImage") {
       setTimeout(async () => {
-        const hasPaid = hasReviewAccess(user) || (await checkPaymentStatus());
+        const hasReviewed = hasReviewAccess(user);
 
-        if (hasPaid) {
+        if (hasReviewed) {
           continuePendingAction();
         } else {
           setShowReviewPopup(true);

@@ -82,7 +82,7 @@ export default function PreviewPanelQR({
     isPaid,
   } = usePaymentGuard("ClassicPreview");
 
-  const canEdit = isPaid || hasReviewAccess(user);
+  const canEdit = hasReviewAccess(user);
 
   const triggerProfileSelect = () => {
     const token = localStorage.getItem("token");

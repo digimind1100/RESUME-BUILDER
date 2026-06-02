@@ -155,10 +155,6 @@ export default function useResumeTemplate(templateId, defaultData) {
       const canAccess =
         result.isPaid === true || result.canAccessPremium === true;
 
-      if (canAccess) {
-        localStorage.setItem("canAccessPremium", "true");
-      }
-
       return canAccess;
     } catch (error) {
       console.error("Payment check error:", error);

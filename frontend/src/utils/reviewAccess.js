@@ -4,10 +4,6 @@ const getReviewAccessKey = (user) => {
 };
 
 export const hasReviewAccess = (user) => {
-  if (user?.canAccessPremium === true || user?.isPaid === true) {
-    return true;
-  }
-
   const key = getReviewAccessKey(user);
   return key ? localStorage.getItem(key) === "true" : false;
 };
