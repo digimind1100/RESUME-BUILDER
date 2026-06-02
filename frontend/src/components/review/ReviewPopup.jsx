@@ -13,7 +13,7 @@ const reviewEndpoint = API_BASE.endsWith("/api")
 
 export default function ReviewPopup({ templateId, onClose, onSuccess }) {
   const modalRoot = document.getElementById("modal-root");
-  const { refreshUser } = useAuth();
+  const { refreshUser, setUser } = useAuth();
 
   const [rating, setRating] = useState(5);
   const [comment, setComment] = useState("Great resume builder");
@@ -51,12 +51,24 @@ export default function ReviewPopup({ templateId, onClose, onSuccess }) {
 
       const data = await res.json();
 
-      if (!res.ok || !data.success || !data.canAccessPremium) {
+      if (!res.ok || data.success === false) {
         setError(data.message || "Review submission failed. Please try again.");
         return;
       }
 
+      localStorage.setItem("reviewSubmitted", "true");
+      localStorage.setItem("canAccessPremium", "true");
+
       await refreshUser();
+
+      setUser((prev) =>
+        prev
+          ? {
+              ...prev,
+              canAccessPremium: true,
+            }
+          : prev
+      );
 
       if (typeof onSuccess === "function") {
         await onSuccess(data);

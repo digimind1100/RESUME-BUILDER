@@ -58,7 +58,10 @@ const ResumeBuilder = () => {
   const { user } = useAuth();
 
   const canAccessPremium =
-    user?.canAccessPremium === true || user?.isPaid === true;
+    user?.canAccessPremium === true ||
+    user?.isPaid === true ||
+    localStorage.getItem("canAccessPremium") === "true" ||
+    localStorage.getItem("reviewSubmitted") === "true";
 
   /* ---------------- EFFECTS ---------------- */
   useEffect(() => {

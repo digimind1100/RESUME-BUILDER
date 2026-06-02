@@ -17,7 +17,10 @@ export default function ButtonSection({
   const [showSignupModal, setShowSignupModal] = useState(false);
 
   const canAccessPremium =
-    user?.canAccessPremium === true || user?.isPaid === true;
+    user?.canAccessPremium === true ||
+    user?.isPaid === true ||
+    localStorage.getItem("canAccessPremium") === "true" ||
+    localStorage.getItem("reviewSubmitted") === "true";
 
   const runDownload = async () => {
     try {

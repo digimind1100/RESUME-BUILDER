@@ -139,6 +139,13 @@ export default function useResumeTemplate(templateId, defaultData) {
 
   const checkPaymentStatus = async () => {
     try {
+      if (
+        localStorage.getItem("canAccessPremium") === "true" ||
+        localStorage.getItem("reviewSubmitted") === "true"
+      ) {
+        return true;
+      }
+
       const token = localStorage.getItem("token");
 
       if (!token) return false;
@@ -152,7 +159,14 @@ export default function useResumeTemplate(templateId, defaultData) {
 
       const result = await response.json();
 
-      return result.isPaid === true || result.canAccessPremium === true;
+      const canAccess =
+        result.isPaid === true || result.canAccessPremium === true;
+
+      if (canAccess) {
+        localStorage.setItem("canAccessPremium", "true");
+      }
+
+      return canAccess;
     } catch (error) {
       console.error("Payment check error:", error);
       return false;
