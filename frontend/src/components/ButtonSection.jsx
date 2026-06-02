@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "./ButtonSection.css";
 import { downloadResumeAndTriggerReview } from "./DownloadPDF";
-import { useReview } from "../context/ReviewContext";
 import { useAuth } from "../context/AuthContext";
 import ReviewPopup from "./review/ReviewPopup";
 import SignupModal from "./auth/SignupModal";
@@ -11,7 +10,6 @@ export default function ButtonSection({
   setIsEditing,
   handleDeleteSelected,
 }) {
-  const { triggerReview } = useReview();
   const { user } = useAuth();
   const [showReviewPopup, setShowReviewPopup] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false);
@@ -24,9 +22,7 @@ export default function ButtonSection({
 
   const runDownload = async () => {
     try {
-      await downloadResumeAndTriggerReview({
-        onReviewTrigger: triggerReview,
-      });
+      await downloadResumeAndTriggerReview({});
     } catch (err) {
       console.error("Download / Review error:", err);
     }

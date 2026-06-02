@@ -2,7 +2,6 @@ import html2pdf from "html2pdf.js";
 
 export function downloadResumeAndTriggerReview({
   element,
-  onReviewTrigger,
 }) {
   const container =
     element || document.getElementById("resumeContainer");
@@ -54,14 +53,6 @@ export function downloadResumeAndTriggerReview({
       checkboxes.forEach((cb) => (cb.style.display = ""));
 
       // 🔥 Trigger review AFTER download (AI logic)
-      setTimeout(() => {
-        if (
-          typeof onReviewTrigger === "function" &&
-          !localStorage.getItem("reviewSubmitted")
-        ) {
-          onReviewTrigger();
-        }
-      }, 600);
     });
 }
 

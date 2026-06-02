@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useReview } from "../context/ReviewContext";
 import { downloadResumeAndTriggerReview } from "../components/DownloadPDF";
 import usePaymentGuard from "../hooks/usePaymentGuard";
 import PaymentGate from "../components/payment/PaymentGate";
@@ -21,7 +20,6 @@ export default function TemplateControls({
 
 
   const navigate = useNavigate();
-  const { triggerReview } = useReview();
 
   const [isEditable, setIsEditable] = useState(false);
   const [showShare, setShowShare] = useState(false);
@@ -52,7 +50,6 @@ export default function TemplateControls({
 
     downloadResumeAndTriggerReview({
       element: resumeContainerRef.current,
-      onReviewTrigger: triggerReview
     });
 
   };

@@ -26,7 +26,6 @@ import Features from "./components/Features";
 import Contact from "./components/Contact";
 import AdminPendingPayments from "./components/admin/AdminPendingPayments";
 import AdminGuard from "./components/admin/AdminGuard";
-import { ReviewProvider } from "./context/ReviewContext";
 import AdminReviews from "./components/admin/AdminReviews";
 import ReviewsPage from "./components/ReviewsPage";
 import Blog from "./components/Blog";
@@ -52,7 +51,6 @@ const isLocal = import.meta.env.DEV;
 
   return (
     <>
-      <ReviewProvider user={user}>
         <Navbar />
         <ScrollToTop />
         <Toaster position="top-center" />
@@ -156,9 +154,7 @@ const isLocal = import.meta.env.DEV;
           <Route path="/coverletter" element={<CoverLetterPage />} />
           <Route path="/coverletter-generator" element={<CoverLetterPanel />} />
           <Route path="*" element={<Navigate to="/" />} />
-
         </Routes>
-      </ReviewProvider>
     </>
   );
 }
