@@ -246,6 +246,7 @@ const ResumeBuilder = () => {
             templateId={templateId}
             entrySource={entrySource}
             formData={formData}
+            setFormData={setFormData}
             selectedEducations={selectedEducations}
             handleCheckboxChange={handleCheckboxChange}
             jobTitle={jobTitle}

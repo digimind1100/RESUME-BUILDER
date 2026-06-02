@@ -10,6 +10,7 @@ import SkillsPreview from "./SkillsPreview";
 import usePaymentGuard from "../hooks/usePaymentGuard";
 import ReviewPopup from "../components/review/ReviewPopup";
 import { useAuth } from "../context/AuthContext";
+import SignupModal from "./auth/SignupModal";
 
 
 
@@ -51,6 +52,7 @@ export default function PreviewPanelQR({
   const [page1Skills, setPage1Skills] = useState([]);
   const [page2Skills, setPage2Skills] = useState([]);
   const [showReviewPopup, setShowReviewPopup] = useState(false);
+  const [showSignupModal, setShowSignupModal] = useState(false);
 
 
   const fileInputRef = useRef(null);
@@ -73,7 +75,7 @@ export default function PreviewPanelQR({
   };
 
   // Payment Guard Start
-  const { setUser } = useAuth();
+  const { user } = useAuth();
 
   const {
     isPaid,
@@ -82,6 +84,13 @@ export default function PreviewPanelQR({
   const canEdit = isPaid;
 
   const triggerProfileSelect = () => {
+    const token = localStorage.getItem("token");
+
+    if (!token || !user) {
+      setShowSignupModal(true);
+      return;
+    }
+
     if (!canEdit) {
       setShowReviewPopup(true);
       return;
@@ -92,6 +101,11 @@ export default function PreviewPanelQR({
   const handleReviewSuccess = () => {
     setShowReviewPopup(false);
     fileInputRef.current?.click();
+  };
+
+  const handleSignupSuccess = () => {
+    setShowSignupModal(false);
+    setShowReviewPopup(true);
   };
 
   // Payment Guard End
@@ -308,6 +322,12 @@ export default function PreviewPanelQR({
                 templateId="ClassicPreview"
                 onClose={() => setShowReviewPopup(false)}
                 onSuccess={handleReviewSuccess}
+              />
+            )}
+            {showSignupModal && (
+              <SignupModal
+                onClose={() => setShowSignupModal(false)}
+                onSuccess={handleSignupSuccess}
               />
             )}
           </div>

@@ -10,6 +10,7 @@ import SkillsPreview from "./SkillsPreview";
 import usePaymentGuard from "../hooks/usePaymentGuard";
 import ReviewPopup from "../components/review/ReviewPopup";
 import { useAuth } from "../context/AuthContext";
+import SignupModal from "./auth/SignupModal";
 
 
 export default function PreviewPanel({
@@ -51,18 +52,25 @@ export default function PreviewPanel({
   const [page1Skills, setPage1Skills] = useState([]);
   const [page2Skills, setPage2Skills] = useState([]);
   const [showReviewPopup, setShowReviewPopup] = useState(false);
+  const [showSignupModal, setShowSignupModal] = useState(false);
 
 
-  const { user, setUser } = useAuth();
+  const { user } = useAuth();
 
   const {
     isPaid,
-    requirePayment,
   } = usePaymentGuard("CleanProfessional");
 
   const canEdit = isPaid;
 
   const triggerProfileSelect = () => {
+    const token = localStorage.getItem("token");
+
+    if (!token || !user) {
+      setShowSignupModal(true);
+      return;
+    }
+
     if (!canEdit) {
       setShowReviewPopup(true);
       return;
@@ -73,6 +81,11 @@ export default function PreviewPanel({
   const handleReviewSuccess = () => {
     setShowReviewPopup(false);
     fileInputRef.current?.click();
+  };
+
+  const handleSignupSuccess = () => {
+    setShowSignupModal(false);
+    setShowReviewPopup(true);
   };
 
 
@@ -309,6 +322,13 @@ export default function PreviewPanel({
                 templateId={resumeStyle}
                 onClose={() => setShowReviewPopup(false)}
                 onSuccess={handleReviewSuccess}
+              />
+            )}
+
+            {showSignupModal && (
+              <SignupModal
+                onClose={() => setShowSignupModal(false)}
+                onSuccess={handleSignupSuccess}
               />
             )}
 
