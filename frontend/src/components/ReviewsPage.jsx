@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
-
-const API_BASE = "https://resume-builder-backend-production-116d.up.railway.app";
+import { fetchAllReviews } from "../services/reviewService";
+import ReviewCard from "./ReviewCard";
+import "./HomeReviews.css";
 
 export default function ReviewsPage() {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`${API_BASE}/api/reviews`)
-      .then(res => res.json())
-      .then(data => {
+    fetchAllReviews()
+      .then((data) => {
         setReviews(data);
         setLoading(false);
       })
-      .catch(err => {
-        console.error("❌ Failed to load reviews", err);
+      .catch((err) => {
+        console.error("Failed to load reviews", err);
         setLoading(false);
       });
   }, []);
@@ -28,28 +28,16 @@ export default function ReviewsPage() {
   }
 
   return (
-    <div style={{ maxWidth: "800px", margin: "40px auto" }}>
-      <h2 style={{ textAlign: "center", marginBottom: "20px" }}>
+    <div style={{ maxWidth: "1150px", margin: "40px auto", padding: "0 20px" }}>
+      <h2 style={{ textAlign: "center", marginBottom: "28px" }}>
         What Our Users Say
       </h2>
 
-      {reviews.map((r) => (
-        <div
-          key={r._id}
-          style={{
-            border: "1px solid #ddd",
-            borderRadius: "8px",
-            padding: "16px",
-            marginBottom: "12px",
-          }}
-        >
-          <strong>{r.name || "Anonymous"}</strong>
-          <div style={{ color: "#f5a623", margin: "5px 0" }}>
-            {"★".repeat(r.rating)}
-          </div>
-          <p>{r.comment}</p>
-        </div>
-      ))}
+      <div className="home-reviews-grid">
+        {reviews.map((review) => (
+          <ReviewCard key={review._id} review={review} />
+        ))}
+      </div>
     </div>
   );
 }
