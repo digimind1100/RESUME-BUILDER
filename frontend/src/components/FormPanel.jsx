@@ -32,7 +32,7 @@ export default function FormPanel({
 
   const handleWorkClickWithGuard = () => {
     if (!canEdit) {
-      requirePayment();
+      requirePayment("work");
       return;
     }
     openWorkPopup();
@@ -40,7 +40,7 @@ export default function FormPanel({
 
   const handleSkillsClickWithGuard = () => {
     if (!canEdit) {
-      requirePayment();
+      requirePayment("skills");
       return;
     }
     onAddSkillsClick();

@@ -8,10 +8,9 @@ import FormatButtons from "./FormatButtons";
 import ThemeSelector from "./ThemeSelector";
 import PreviewPanelQR from "./PreviewPanelQR";
 import "./ResumeBuilder.css";
-import PaymentGate from "../components/payment/PaymentGate";
-import usePaymentGuard from "../hooks/usePaymentGuard";
-import { useReview } from "../context/ReviewContext";
 import { useAuth } from "../context/AuthContext";
+import ReviewPopup from "./review/ReviewPopup";
+import SignupModal from "./auth/SignupModal";
 
 
 
@@ -25,35 +24,15 @@ const ResumeBuilderQR = () => {
   const [workExperiences, setWorkExperiences] = useState([]);
   const [skills, setSkills] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
- const [showWorkPopup, setShowWorkPopup] = useState(false);
+  const [showWorkPopup, setShowWorkPopup] = useState(false);
   const [showSkillsPopup, setShowSkillsPopup] = useState(false);
-  // Popup visibility
-  const {
-  isPaid,
-  showPaymentModal,
-  setShowPaymentModal,
-  requirePayment,
-  handlePaymentSuccess,
-} = usePaymentGuard("ClassicPreview");
+  const [pendingAiAction, setPendingAiAction] = useState(null);
+  const [showReviewPopup, setShowReviewPopup] = useState(false);
+  const [showSignupModal, setShowSignupModal] = useState(false);
+  const { user } = useAuth();
 
-const canEdit = isPaid;
-
-const handleWorkClickWithGuard = () => {
-  if (!canEdit) {
-    requirePayment();
-    return;
-  }
-  setShowWorkPopup(true);
-};
-
-const handleSkillsClickWithGuard = () => {
-  if (!canEdit) {
-    requirePayment();
-    return;
-  }
-  setShowSkillsPopup(true);
-};
-//payment Guard End
+  const canAccessPremium =
+    user?.canAccessPremium === true || user?.isPaid === true;
   // Theme colors
   const [theme, setTheme] = useState({
     left: "#ffffff",
@@ -137,6 +116,51 @@ const handleSkillsClickWithGuard = () => {
     setSkills((prev) => prev.filter((skill) => !skill.checked));
   };
 
+  const openAiPanel = (action) => {
+    if (action === "work") {
+      setShowWorkPopup(true);
+      return;
+    }
+
+    if (action === "skills") {
+      setShowSkillsPopup(true);
+    }
+  };
+
+  const requireAiAccess = (action) => {
+    setPendingAiAction(action);
+
+    const token = localStorage.getItem("token");
+    if (!token || !user) {
+      setShowSignupModal(true);
+      return;
+    }
+
+    if (!canAccessPremium) {
+      setShowReviewPopup(true);
+      return;
+    }
+
+    setPendingAiAction(null);
+    openAiPanel(action);
+  };
+
+  const handleAiAccessSuccess = () => {
+    const action = pendingAiAction;
+    setShowSignupModal(false);
+    setShowReviewPopup(false);
+    setPendingAiAction(null);
+
+    if (action) {
+      openAiPanel(action);
+    }
+  };
+
+  const handleSignupSuccess = () => {
+    setShowSignupModal(false);
+    setShowReviewPopup(true);
+  };
+
   // --- Generate QR ---
  const handleGenerateQR = () => {
   if (!formData.fullName || !formData.email) {
@@ -172,11 +196,11 @@ DOB:${formData.dob || ""}
           setSelectedEducations={setSelectedEducations}
           jobTitle={jobTitle}
           setJobTitle={setJobTitle}
-          openWorkPopup={handleWorkClickWithGuard}
-          onAddSkillsClick={handleSkillsClickWithGuard}
+          openWorkPopup={() => openAiPanel("work")}
+          onAddSkillsClick={() => openAiPanel("skills")}
           onGenerateQR={handleGenerateQR}
-          canEdit={canEdit}
-  requirePayment={requirePayment}
+          canEdit={canAccessPremium}
+          requirePayment={requireAiAccess}
         />
       </div>
 
@@ -246,11 +270,20 @@ DOB:${formData.dob || ""}
         />
       )}
 
-<PaymentGate
-  open={showPaymentModal}
-  onClose={() => setShowPaymentModal(false)}
-  onSuccess={handlePaymentSuccess}
-/>
+      {showReviewPopup && (
+        <ReviewPopup
+          templateId="ClassicPreview"
+          onClose={() => setShowReviewPopup(false)}
+          onSuccess={handleAiAccessSuccess}
+        />
+      )}
+
+      {showSignupModal && (
+        <SignupModal
+          onClose={() => setShowSignupModal(false)}
+          onSuccess={handleSignupSuccess}
+        />
+      )}
 
     </div>
   );

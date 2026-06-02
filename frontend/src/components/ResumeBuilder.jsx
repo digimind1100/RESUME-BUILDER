@@ -9,10 +9,9 @@ import ButtonSection from "./ButtonSection";
 import FormatButtons from "./FormatButtons";
 import ThemeSelector from "./ThemeSelector";
 import PreviewPanel from "./PreviewPanel";
-import usePaymentGuard from "../hooks/usePaymentGuard";
-import PaymentGate from "../components/payment/PaymentGate";
-import { useReview } from "../context/ReviewContext";
 import { useAuth } from "../context/AuthContext";
+import ReviewPopup from "./review/ReviewPopup";
+import SignupModal from "./auth/SignupModal";
 
 
 
@@ -44,6 +43,9 @@ const ResumeBuilder = () => {
 
   const [showWorkPopup, setShowWorkPopup] = useState(false);
   const [showSkillsPopup, setShowSkillsPopup] = useState(false);
+  const [pendingAiAction, setPendingAiAction] = useState(null);
+  const [showReviewPopup, setShowReviewPopup] = useState(false);
+  const [showSignupModal, setShowSignupModal] = useState(false);
 
   const [resumeStyle, setResumeStyle] = useState(resolvedTemplate);
 
@@ -53,13 +55,10 @@ const ResumeBuilder = () => {
     text: "#000",
   });
 
-  const {
-    isPaid,
-    showPaymentModal,
-    setShowPaymentModal,
-    requirePayment,
-    handlePaymentSuccess,
-  } = usePaymentGuard("CleanProfessional");
+  const { user } = useAuth();
+
+  const canAccessPremium =
+    user?.canAccessPremium === true || user?.isPaid === true;
 
   /* ---------------- EFFECTS ---------------- */
   useEffect(() => {
@@ -174,6 +173,51 @@ const ResumeBuilder = () => {
     setSkills((prev) => prev.filter((skill) => !skill.checked));
   };
 
+  const openAiPanel = (action) => {
+    if (action === "work") {
+      setShowWorkPopup(true);
+      return;
+    }
+
+    if (action === "skills") {
+      setShowSkillsPopup(true);
+    }
+  };
+
+  const requireAiAccess = (action) => {
+    setPendingAiAction(action);
+
+    const token = localStorage.getItem("token");
+    if (!token || !user) {
+      setShowSignupModal(true);
+      return;
+    }
+
+    if (!canAccessPremium) {
+      setShowReviewPopup(true);
+      return;
+    }
+
+    setPendingAiAction(null);
+    openAiPanel(action);
+  };
+
+  const handleAiAccessSuccess = () => {
+    const action = pendingAiAction;
+    setShowSignupModal(false);
+    setShowReviewPopup(false);
+    setPendingAiAction(null);
+
+    if (action) {
+      openAiPanel(action);
+    }
+  };
+
+  const handleSignupSuccess = () => {
+    setShowSignupModal(false);
+    setShowReviewPopup(true);
+  };
+
   /* ---------------- RENDER ---------------- */
   return (
     <div className="resume-builder-container">
@@ -187,10 +231,10 @@ const ResumeBuilder = () => {
           setSelectedEducations={setSelectedEducations}
           jobTitle={jobTitle}
           setJobTitle={setJobTitle}
-          openWorkPopup={() => setShowWorkPopup(true)}
-          onAddSkillsClick={() => setShowSkillsPopup(true)}
-          canEdit={isPaid}
-          requirePayment={requirePayment}
+          openWorkPopup={() => openAiPanel("work")}
+          onAddSkillsClick={() => openAiPanel("skills")}
+          canEdit={canAccessPremium}
+          requirePayment={requireAiAccess}
         />
       </div>
 
@@ -257,8 +301,8 @@ const ResumeBuilder = () => {
             isEditing={isEditing}
             toggleWorkCheckbox={toggleWorkCheckbox}
             toggleSkillCheckbox={toggleSkillCheckbox}
-            handleOpenWorkPopup={() => setShowWorkPopup(true)}
-            handleAddSkillsClick={() => setShowSkillsPopup(true)}
+            handleOpenWorkPopup={() => requireAiAccess("work")}
+            handleAddSkillsClick={() => requireAiAccess("skills")}
             theme={theme}
             resumeStyle={resumeStyle}
           />
@@ -266,11 +310,20 @@ const ResumeBuilder = () => {
       </div>
 
 
-      <PaymentGate
-        open={showPaymentModal}
-        onClose={() => setShowPaymentModal(false)}
-        onSuccess={handlePaymentSuccess}
-      />
+      {showReviewPopup && (
+        <ReviewPopup
+          templateId={resumeStyle}
+          onClose={() => setShowReviewPopup(false)}
+          onSuccess={handleAiAccessSuccess}
+        />
+      )}
+
+      {showSignupModal && (
+        <SignupModal
+          onClose={() => setShowSignupModal(false)}
+          onSuccess={handleSignupSuccess}
+        />
+      )}
 
     </div>
 

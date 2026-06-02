@@ -30,7 +30,7 @@ export default function FormPanelQR({
 
 const handleWorkClickWithGuard = () => {
   if (!canEdit) {
-    requirePayment();
+    requirePayment("work");
     return;
   }
   openWorkPopup();
@@ -38,7 +38,7 @@ const handleWorkClickWithGuard = () => {
 
 const handleSkillsClickWithGuard = () => {
   if (!canEdit) {
-    requirePayment();
+    requirePayment("skills");
     return;
   }
   onAddSkillsClick();
