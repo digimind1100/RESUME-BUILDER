@@ -1,7 +1,10 @@
 import { useEffect, useRef } from "react";
+import { useAuth } from "../context/AuthContext";
+import { hasReviewAccess } from "../utils/reviewAccess";
 
 export default function useProfileImage(setResumeData, checkPaymentStatus) {
   const fileInputRef = useRef(null);
+  const { user } = useAuth();
 
   const handleImageUpload = (event) => {
     const file = event.target.files?.[0];
@@ -32,7 +35,7 @@ const openImagePicker = async (event) => {
     return;
   }
 
-  const hasPaid = await checkPaymentStatus();
+  const hasPaid = hasReviewAccess(user) || (await checkPaymentStatus());
 
   if (!hasPaid) {
     window.dispatchEvent(

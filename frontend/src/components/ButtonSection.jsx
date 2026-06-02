@@ -4,6 +4,7 @@ import { downloadResumeAndTriggerReview } from "./DownloadPDF";
 import { useAuth } from "../context/AuthContext";
 import ReviewPopup from "./review/ReviewPopup";
 import SignupModal from "./auth/SignupModal";
+import { hasReviewAccess } from "../utils/reviewAccess";
 
 export default function ButtonSection({
   isEditing,
@@ -14,11 +15,7 @@ export default function ButtonSection({
   const [showReviewPopup, setShowReviewPopup] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false);
 
-  const canAccessPremium =
-    user?.canAccessPremium === true ||
-    user?.isPaid === true ||
-    localStorage.getItem("canAccessPremium") === "true" ||
-    localStorage.getItem("reviewSubmitted") === "true";
+  const canAccessPremium = hasReviewAccess(user);
 
   const runDownload = async () => {
     try {

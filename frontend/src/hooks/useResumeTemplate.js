@@ -139,13 +139,6 @@ export default function useResumeTemplate(templateId, defaultData) {
 
   const checkPaymentStatus = async () => {
     try {
-      if (
-        localStorage.getItem("canAccessPremium") === "true" ||
-        localStorage.getItem("reviewSubmitted") === "true"
-      ) {
-        return true;
-      }
-
       const token = localStorage.getItem("token");
 
       if (!token) return false;

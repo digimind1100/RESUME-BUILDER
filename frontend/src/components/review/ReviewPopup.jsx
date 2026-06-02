@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { createPortal } from "react-dom";
 import { useAuth } from "../../context/AuthContext";
+import { grantReviewAccess } from "../../utils/reviewAccess";
 import "./ReviewPopup.css";
 
 const API_BASE =
@@ -13,7 +14,7 @@ const reviewEndpoint = API_BASE.endsWith("/api")
 
 export default function ReviewPopup({ templateId, onClose, onSuccess }) {
   const modalRoot = document.getElementById("modal-root");
-  const { refreshUser, setUser } = useAuth();
+  const { refreshUser, setUser, user } = useAuth();
 
   const [rating, setRating] = useState(5);
   const [comment, setComment] = useState("Great resume builder");
@@ -56,8 +57,7 @@ export default function ReviewPopup({ templateId, onClose, onSuccess }) {
         return;
       }
 
-      localStorage.setItem("reviewSubmitted", "true");
-      localStorage.setItem("canAccessPremium", "true");
+      grantReviewAccess(user);
 
       await refreshUser();
 

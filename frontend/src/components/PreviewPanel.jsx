@@ -11,6 +11,7 @@ import usePaymentGuard from "../hooks/usePaymentGuard";
 import ReviewPopup from "../components/review/ReviewPopup";
 import { useAuth } from "../context/AuthContext";
 import SignupModal from "./auth/SignupModal";
+import { hasReviewAccess } from "../utils/reviewAccess";
 
 
 export default function PreviewPanel({
@@ -61,12 +62,7 @@ export default function PreviewPanel({
     isPaid,
   } = usePaymentGuard("CleanProfessional");
 
-  const canEdit =
-    isPaid ||
-    user?.canAccessPremium === true ||
-    user?.isPaid === true ||
-    localStorage.getItem("canAccessPremium") === "true" ||
-    localStorage.getItem("reviewSubmitted") === "true";
+  const canEdit = isPaid || hasReviewAccess(user);
 
   const triggerProfileSelect = () => {
     const token = localStorage.getItem("token");

@@ -5,6 +5,7 @@ import SignupModal from "../components/auth/SignupModal";
 import ReviewPopup from "../components/review/ReviewPopup";
 import "./TemplateLayout.css";
 import { useNavigate } from "react-router-dom";
+import { hasReviewAccess } from "../utils/reviewAccess";
 
 
 const TemplateLayout = ({
@@ -23,7 +24,7 @@ const TemplateLayout = ({
 
   const resumeRef = React.useRef(null);
   
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
   const navigate = useNavigate();
 
   const handleReset = () => {
@@ -92,7 +93,7 @@ const TemplateLayout = ({
       return;
     }
 
-    const hasPaid = await checkPaymentStatus();
+    const hasPaid = hasReviewAccess(user) || (await checkPaymentStatus());
     console.log("HAS PAID:", hasPaid);
 
     if (!hasPaid) {
@@ -126,7 +127,7 @@ const TemplateLayout = ({
 
     if (pendingAction === "download" || pendingAction === "profileImage") {
       setTimeout(async () => {
-        const hasPaid = await checkPaymentStatus();
+        const hasPaid = hasReviewAccess(user) || (await checkPaymentStatus());
 
         if (hasPaid) {
           continuePendingAction();

@@ -12,6 +12,7 @@ import PreviewPanel from "./PreviewPanel";
 import { useAuth } from "../context/AuthContext";
 import ReviewPopup from "./review/ReviewPopup";
 import SignupModal from "./auth/SignupModal";
+import { hasReviewAccess } from "../utils/reviewAccess";
 
 
 
@@ -57,11 +58,7 @@ const ResumeBuilder = () => {
 
   const { user } = useAuth();
 
-  const canAccessPremium =
-    user?.canAccessPremium === true ||
-    user?.isPaid === true ||
-    localStorage.getItem("canAccessPremium") === "true" ||
-    localStorage.getItem("reviewSubmitted") === "true";
+  const canAccessPremium = hasReviewAccess(user);
 
   /* ---------------- EFFECTS ---------------- */
   useEffect(() => {
