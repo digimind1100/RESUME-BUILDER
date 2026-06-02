@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./adminTable.css";
 
-const API_BASE = "https://resume-builder-backend-production-116d.up.railway.app";
+const API_BASE = "https://resume-builder-backend-66wy.onrender.com/api";
 
 export default function AdminReviews() {
   const [reviews, setReviews] = useState([]);
@@ -27,7 +27,7 @@ export default function AdminReviews() {
       setLoading(true);
       setError("");
 
-      const res = await fetch(`${API_BASE}/api/admin/review?status=pending`, {
+      const res = await fetch(`${API_BASE}/admin/review?status=pending`, {
         headers: getAuthHeaders(),
       });
 
@@ -51,7 +51,7 @@ export default function AdminReviews() {
       setUpdatingId(id);
 
       const res = await fetch(
-        `${API_BASE}/api/admin/review/${id}/${status === "approved" ? "approve" : "reject"}`,
+        `${API_BASE}/admin/review/${id}/${status === "approved" ? "approve" : "reject"}`,
         {
           method: "POST",
           headers: getAuthHeaders(),
