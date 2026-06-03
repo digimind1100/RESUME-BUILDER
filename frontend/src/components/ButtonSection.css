@@ -4,11 +4,13 @@
 .button-section-container {
   display: flex;
   justify-content: center;
-  width:738px;
+  width: 738px;
+  max-width: 738px;
   margin-top: 0px;
   margin-bottom: 0px;
   position: relative;
   z-index: 5;
+  box-sizing: border-box;
 }
 /* === DOWNLOAD BUTTON STYLE === */
 .download-btn {
@@ -51,7 +53,10 @@
   gap: 12px;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  max-width: 100%;
   padding: 10px 0;
+  box-sizing: border-box;
 }
 
 /* Common button design */

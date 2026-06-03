@@ -43,8 +43,16 @@
 .theme-selector-container,
 .button-section-container,
 .format-buttons-wrapper {
-  width: 100%;
+  width: 738px;
   max-width: 738px;
+  box-sizing: border-box;
+}
+
+.theme-selector-container .theme-selector,
+.button-section-container .button-section,
+.button-section-container .button-section-inner {
+  width: 100%;
+  max-width: 100%;
   box-sizing: border-box;
 }
 
@@ -139,10 +147,13 @@
   .theme-selector-container,
   .button-section-container,
   .format-buttons-wrapper,
+  .theme-selector-container .theme-selector,
+  .button-section-container .button-section,
+  .button-section-container .button-section-inner,
   .resume-mobile-wrap .preview-template,
   .resume-mobile-wrap .preview-section {
     width: 738px !important;
-    max-width: 100% !important;
+    max-width: 738px !important;
   }
 
   .resume-mobile-wrap .preview-section {

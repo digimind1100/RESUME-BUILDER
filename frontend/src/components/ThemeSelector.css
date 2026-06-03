@@ -6,7 +6,9 @@
   padding: 8px;
   margin-bottom: 0px;
   flex-wrap: wrap;
+  width: 100%;
   max-width: 738px;
+  box-sizing: border-box;
   
 }
 
