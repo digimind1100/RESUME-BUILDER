@@ -87,169 +87,93 @@
   align-items: center;
 }
 
-/* ===== Tablet ===== */
+/* ===== Mobile: shrink full builder to fit screen ===== */
 
 @media (max-width: 1024px) {
-  .resume-builder-container,
-  .qr-layout {
-    flex-direction: column;
+  html,
+  body,
+  #root {
+    width: 100%;
+    overflow-x: hidden;
   }
 
-  .form-panel-container,
-  .form-panel,
-  .qr-form-panel,
-  .preview-panel-container,
-  .qr-preview-panel {
-    width: 100%;
-    min-width: 0;
-    border-right: 0;
+  .resume-builder-container {
+    width: 1120px !important;
+    min-width: 1120px !important;
+    max-width: none !important;
+    flex-direction: row !important;
+    transform: scale(0.9);
+    transform-origin: top left;
+  }
+
+  .qr-layout {
+    flex-direction: row !important;
   }
 
   .form-panel-container,
   .form-panel {
-    border-bottom: 1px solid #e5e5e5;
-  }
-}
-
-/* ===== Mobile Preview Scaling ===== */
-
-@media (max-width: 768px) {
-  .resume-builder-container {
-    background: #f3f4f6;
+    width: 35% !important;
+    min-width: 340px !important;
   }
 
-  .form-panel-container,
-  .form-panel,
+  .preview-panel-container {
+    width: 65% !important;
+  }
+
   .qr-form-panel {
-    padding: 12px;
+    width: 30% !important;
+    min-width: 320px !important;
   }
 
-  .preview-panel-container,
   .qr-preview-panel {
-    padding: 10px 0 24px;
-    overflow-x: hidden;
-  }
-
-  .resume-theme {
-    padding: 0 !important;
-    background: transparent;
-  }
-
-  .theme-selector-container,
-  .button-section-container,
-  .format-buttons-wrapper {
-    width: 100% !important;
-    max-width: 100vw;
-    padding-left: 10px !important;
-    padding-right: 10px !important;
-  }
-
-  .theme-selector-container {
-    display: flex;
-    justify-content: center;
-  }
-
-  .button-section-container {
-    display: flex;
-    justify-content: center;
+    width: 70% !important;
   }
 
   .resume-mobile-wrap {
-    width: 100vw !important;
-    max-width: 100vw !important;
-    padding: 0 0 28px !important;
-    overflow: hidden !important;
-  }
-
-  .resume-mobile-wrap .preview-template,
-  .qr-resume-mobile-wrap {
-    width: 738px;
-    max-width: none;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: visible !important;
   }
 
   .resume-mobile-wrap .preview-section {
-    width: 738px !important;
-    min-width: 738px !important;
-    height: 1040px !important;
-    min-height: 1040px !important;
-    transform: scale(0.9);
-    transform-origin: top center;
-    margin-top: 12px;
-    margin-bottom: -104px;
+    transform: none !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
   }
+}
 
-  .resume-mobile-wrap .preview-section.mt-8 {
-    margin-top: -72px !important;
+@media (max-width: 768px) {
+  .resume-builder-container {
+    transform: scale(0.68);
   }
 }
 
 @media (max-width: 640px) {
-  .resume-mobile-wrap .preview-section {
-    transform: scale(0.76);
-    margin-bottom: -250px;
-  }
-
-  .resume-mobile-wrap .preview-section.mt-8 {
-    margin-top: -206px !important;
+  .resume-builder-container {
+    transform: scale(0.56);
   }
 }
 
 @media (max-width: 520px) {
-  .resume-mobile-wrap .preview-section {
-    transform: scale(0.64);
-    margin-bottom: -374px;
-  }
-
-  .resume-mobile-wrap .preview-section.mt-8 {
-    margin-top: -330px !important;
+  .resume-builder-container {
+    transform: scale(0.46);
   }
 }
 
 @media (max-width: 430px) {
-  .resume-mobile-wrap .preview-section {
-    transform: scale(0.54);
-    margin-bottom: -478px;
-  }
-
-  .resume-mobile-wrap .preview-section.mt-8 {
-    margin-top: -434px !important;
+  .resume-builder-container {
+    transform: scale(0.38);
   }
 }
 
 @media (max-width: 390px) {
-  .resume-mobile-wrap .preview-section {
-    transform: scale(0.5);
-    margin-bottom: -520px;
-  }
-
-  .resume-mobile-wrap .preview-section.mt-8 {
-    margin-top: -476px !important;
+  .resume-builder-container {
+    transform: scale(0.34);
   }
 }
 
 @media (max-width: 360px) {
-  .resume-mobile-wrap .preview-section {
-    transform: scale(0.46);
-    margin-bottom: -562px;
-  }
-
-  .resume-mobile-wrap .preview-section.mt-8 {
-    margin-top: -518px !important;
-  }
-}
-
-@media (max-width: 932px) and (orientation: landscape) {
-  .resume-builder-container,
-  .qr-layout {
-    flex-direction: column;
-  }
-
-  .resume-mobile-wrap .preview-section {
-    transform: scale(0.84);
-    margin-bottom: -166px;
-  }
-
-  .resume-mobile-wrap .preview-section.mt-8 {
-    margin-top: -122px !important;
+  .resume-builder-container {
+    transform: scale(0.31);
   }
 }
