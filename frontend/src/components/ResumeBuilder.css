@@ -1,209 +1,18 @@
-/* Large screen / Desktop layout */
-@media (min-width: 1024px) {
-  .resume-builder-container {
-    display: flex;
-    flex-direction: row; /* form + right-side side by side */
-    gap: 20px; /* optional spacing between columns */
-    align-items: flex-start; /* align top edges */
-  }
-
-
-  /* PreviewPanel fixed height for desktop */
-@media (min-width: 1024px) {
-  #resumeContainer > .preview-panel-root { /* use your PreviewPanel root class */
-    height: 1040px;
-    overflow-y: auto;
-  }
-}
-
-.preview-panel-container {
-  position: relative;
-}
-
-#resumeContainer {
-  position: relative;
-}
-  /* Left side: Form Panel */
-  .form-panel {
-    width: 30%; /* adjust as needed */
-    min-width: 350px; /* optional minimum width */
-  }
-
-  /* Right side: Theme + Preview + Buttons */
-  .right-side {
-    width: 70%;
-    display: flex;
-    flex-direction: column; /* stack resume-theme + button section */
-    gap: 10px; /* spacing between preview and button section */
-  }
-
-  /* Theme + Preview container */
-  .resume-theme {
-    display: flex;
-    flex-direction: column;
-    gap: 0px;
-    width: 100%;
-  }
-
-  /* Theme selector stays on top of preview */
-  .theme-selector-container {
-    width: 100%;
-  }
-
-
-
-  /* Button section below preview */
-  .button-section-container {
-    width: 738px;
-    margin-top: 0px; /* already managed by gap */
-  }
-}
-
-/* mobile css to make responsive START  */
-
-/* Default Desktop Layout (already fine) */
-
-/* --- 📱 Mobile Responsive Rules --- */
-@media (max-width: 768px) {
-  .resume-builder-container {
-    flex-direction: column; /* stack vertically */
-    align-items: stretch;
-  }
-
-  .form-panel {
-    width: 100% !important;
-    padding: 12px;
-  }
-
-  .resume-theme {
-    width: 100% !important;
-    margin-top: 10px;
-    padding: 12px;
-  }
-
-  .preview-section {
-    width: 100% !important;
-    height: auto !important;
-  }
-
-  .button-section-container {
-    width: 100% !important;
-    margin-top: 0px;
-    padding: 12px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-
-  /* Optional: make theme selector look cleaner on mobile */
-  .theme-selector-container {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-bottom: 0;
-  }
-}
-
-@media (max-width: 768px) {
-  .resume-builder-container {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .form-panel {
-    width: 100% !important;
-    height: auto !important;
-    min-height: fit-content !important;
-    padding: 16px;
-    margin-bottom: 12px;
-    position: relative;
-    z-index: 2; /* ✅ ensures form is above */
-    background: white;
-  }
-
-  .resume-theme {
-    width: 100% !important;
-    height: auto !important;
-    margin-top: 0;
-    padding: 12px;
-    z-index: 1;
-    background: #f9f9f9;
-  }
-
-  .preview-section {
-    width: 100% !important;
-    height: 1040px !important;
-    overflow-x: auto;
-    overflow-y: visible;
-  }
-
-  .button-section-container {
-    width: 738px;
-    margin-top: 0px;
-    padding: 8px;
-  }
-}
-
-
-/* mobile css to make responsive END  */
-@media (max-width: 1023px) and (min-width: 769px) {
-  #resumeContainer {
-    position: relative;  /* essential */
-    width: 100%;         /* full width below form panel */
-    margin-top: 1rem;    /* small spacing if needed */
-  }
-
-  .form-panel {
-    width: 100%;         /* full width */
-  }
-}
-
-
-.resume-builder-container {
-  display: flex;
-  flex-direction: column;
-  margin: 20px;
-}
-
-@media screen and (min-width: 768px) {
-  .resume-builder-container {
-    flex-direction: row;
-    align-items: flex-start;
-    gap: 20px;
-  }
-}
-
-.form-panel {
-  width: 100%;
-  padding: 15px;
-}
-
-.right-side {
-  width: 100%;
-  padding: 15px;
-}
-
-@media screen and (min-width: 768px) {
-  .form-panel {
-    width: 40%;
-  }
-
-  .right-side {
-    width: 60%;
-  }
-}
+/* ===== Shared Resume Builder Layout ===== */
 
 .resume-builder-container {
   display: flex;
   flex-direction: row;
+  align-items: flex-start;
   width: 100%;
   min-height: 100vh;
+  margin: 0;
   background: #f7f7f7;
+  box-sizing: border-box;
 }
 
-.form-panel-container {
+.form-panel-container,
+.form-panel {
   width: 35%;
   min-width: 340px;
   padding: 16px;
@@ -211,49 +20,236 @@
   background: #ffffff;
   border-right: 1px solid #e5e5e5;
 }
+
 .preview-panel-container {
   width: 65%;
   padding: 16px;
+  overflow-x: auto;
   overflow-y: auto;
   box-sizing: border-box;
 }
 
-/* ===== QR BUILDER LAYOUT ===== */
+#resumeContainer,
+.resume-theme {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  box-sizing: border-box;
+}
+
+.theme-selector-container,
+.button-section-container,
+.format-buttons-wrapper {
+  width: 100%;
+  max-width: 738px;
+  box-sizing: border-box;
+}
+
+.resume-mobile-wrap {
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow-x: auto;
+  overflow-y: visible;
+  box-sizing: border-box;
+}
+
+.resume-mobile-wrap .preview-template {
+  width: 738px;
+  max-width: none;
+}
+
+/* ===== QR Builder Layout ===== */
 
 .qr-layout {
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
-  width: 100%;
-  min-height: 100vh;
 }
 
-/* Left form panel — 35% */
 .qr-form-panel {
   width: 30%;
   min-width: 320px;
-  padding: 16px;
-  box-sizing: border-box;
   overflow-y: auto;
-  border-right: 1px solid #e5e7eb;
 }
 
-/* Right preview panel — 65% */
 .qr-preview-panel {
   width: 70%;
-  padding: 16px;
-  box-sizing: border-box;
-  overflow-x: hidden;
+  overflow-x: auto;
 }
 
-/* Mobile fallback */
+.qr-resume-mobile-wrap {
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ===== Tablet ===== */
+
 @media (max-width: 1024px) {
+  .resume-builder-container,
   .qr-layout {
     flex-direction: column;
   }
 
+  .form-panel-container,
+  .form-panel,
   .qr-form-panel,
+  .preview-panel-container,
   .qr-preview-panel {
     width: 100%;
+    min-width: 0;
+    border-right: 0;
+  }
+
+  .form-panel-container,
+  .form-panel {
+    border-bottom: 1px solid #e5e5e5;
+  }
+}
+
+/* ===== Mobile Preview Scaling ===== */
+
+@media (max-width: 768px) {
+  .resume-builder-container {
+    background: #f3f4f6;
+  }
+
+  .form-panel-container,
+  .form-panel,
+  .qr-form-panel {
+    padding: 12px;
+  }
+
+  .preview-panel-container,
+  .qr-preview-panel {
+    padding: 10px 0 24px;
+    overflow-x: hidden;
+  }
+
+  .resume-theme {
+    padding: 0 !important;
+    background: transparent;
+  }
+
+  .theme-selector-container,
+  .button-section-container,
+  .format-buttons-wrapper {
+    width: 100% !important;
+    max-width: 100vw;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+
+  .theme-selector-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  .button-section-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  .resume-mobile-wrap {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    padding: 0 0 28px !important;
+    overflow: hidden !important;
+  }
+
+  .resume-mobile-wrap .preview-template,
+  .qr-resume-mobile-wrap {
+    width: 738px;
+    max-width: none;
+  }
+
+  .resume-mobile-wrap .preview-section {
+    width: 738px !important;
+    min-width: 738px !important;
+    height: 1040px !important;
+    min-height: 1040px !important;
+    transform: scale(0.9);
+    transform-origin: top center;
+    margin-top: 12px;
+    margin-bottom: -104px;
+  }
+
+  .resume-mobile-wrap .preview-section.mt-8 {
+    margin-top: -72px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .resume-mobile-wrap .preview-section {
+    transform: scale(0.76);
+    margin-bottom: -250px;
+  }
+
+  .resume-mobile-wrap .preview-section.mt-8 {
+    margin-top: -206px !important;
+  }
+}
+
+@media (max-width: 520px) {
+  .resume-mobile-wrap .preview-section {
+    transform: scale(0.64);
+    margin-bottom: -374px;
+  }
+
+  .resume-mobile-wrap .preview-section.mt-8 {
+    margin-top: -330px !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .resume-mobile-wrap .preview-section {
+    transform: scale(0.54);
+    margin-bottom: -478px;
+  }
+
+  .resume-mobile-wrap .preview-section.mt-8 {
+    margin-top: -434px !important;
+  }
+}
+
+@media (max-width: 390px) {
+  .resume-mobile-wrap .preview-section {
+    transform: scale(0.5);
+    margin-bottom: -520px;
+  }
+
+  .resume-mobile-wrap .preview-section.mt-8 {
+    margin-top: -476px !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .resume-mobile-wrap .preview-section {
+    transform: scale(0.46);
+    margin-bottom: -562px;
+  }
+
+  .resume-mobile-wrap .preview-section.mt-8 {
+    margin-top: -518px !important;
+  }
+}
+
+@media (max-width: 932px) and (orientation: landscape) {
+  .resume-builder-container,
+  .qr-layout {
+    flex-direction: column;
+  }
+
+  .resume-mobile-wrap .preview-section {
+    transform: scale(0.84);
+    margin-bottom: -166px;
+  }
+
+  .resume-mobile-wrap .preview-section.mt-8 {
+    margin-top: -122px !important;
   }
 }

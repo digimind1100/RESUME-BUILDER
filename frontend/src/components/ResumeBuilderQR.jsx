@@ -232,20 +232,22 @@ DOB:${formData.dob || ""}
           </div>
 
           {/* PREVIEW PANEL */}
-          <PreviewPanelQR
-            formData={formData}
-            setFormData={setFormData}
-            selectedEducations={selectedEducations}
-            handleCheckboxChange={handleCheckboxChange}
-            jobTitle={jobTitle}
-            workExperiences={workExperiences}
-            skills={skills}
-            theme={theme}
-            isEditing={isEditing}
-            toggleWorkCheckbox={toggleWorkCheckbox}
-            toggleSkillCheckbox={toggleSkillCheckbox}
-            qrData={qrData}
-          />
+          <div className="resume-mobile-wrap qr-resume-mobile-wrap">
+            <PreviewPanelQR
+              formData={formData}
+              setFormData={setFormData}
+              selectedEducations={selectedEducations}
+              handleCheckboxChange={handleCheckboxChange}
+              jobTitle={jobTitle}
+              workExperiences={workExperiences}
+              skills={skills}
+              theme={theme}
+              isEditing={isEditing}
+              toggleWorkCheckbox={toggleWorkCheckbox}
+              toggleSkillCheckbox={toggleSkillCheckbox}
+              qrData={qrData}
+            />
+          </div>
         </div>
       </div>
 
