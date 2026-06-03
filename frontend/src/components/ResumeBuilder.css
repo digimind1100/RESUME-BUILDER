@@ -98,8 +98,8 @@
   }
 
   .resume-builder-container {
-    width: 1120px !important;
-    min-width: 1120px !important;
+    width: 1100px !important;
+    min-width: 1100px !important;
     max-width: none !important;
     flex-direction: row !important;
     transform: scale(0.9);
@@ -112,12 +112,13 @@
 
   .form-panel-container,
   .form-panel {
-    width: 35% !important;
-    min-width: 340px !important;
+    width: 30% !important;
+    min-width: 320px !important;
   }
 
   .preview-panel-container {
-    width: 65% !important;
+    width: 70% !important;
+    overflow: visible !important;
   }
 
   .qr-form-panel {
@@ -133,6 +134,15 @@
     width: 100% !important;
     max-width: 100% !important;
     overflow: visible !important;
+  }
+
+  .theme-selector-container,
+  .button-section-container,
+  .format-buttons-wrapper,
+  .resume-mobile-wrap .preview-template,
+  .resume-mobile-wrap .preview-section {
+    width: 738px !important;
+    max-width: 100% !important;
   }
 
   .resume-mobile-wrap .preview-section {
