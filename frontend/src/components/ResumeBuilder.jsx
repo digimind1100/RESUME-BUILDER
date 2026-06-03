@@ -223,7 +223,7 @@ const ResumeBuilder = () => {
     <div className="resume-builder-container">
 
       {/* LEFT: FORM PANEL */}
-      <div className="form-panel-container">
+      
         <FormPanel
           formData={formData}
           setFormData={setFormData}
@@ -236,7 +236,7 @@ const ResumeBuilder = () => {
           canEdit={canAccessPremium}
           requirePayment={requireAiAccess}
         />
-      </div>
+      
 
       {/* RIGHT: PREVIEW */}
       <div className="preview-panel-container">
