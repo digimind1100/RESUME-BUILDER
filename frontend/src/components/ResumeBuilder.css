@@ -165,7 +165,11 @@
 
 @media (max-width: 768px) {
   .resume-builder-container {
+    
     transform: scale(0.68);
+  }
+  .theme-selector{
+    width: 70%;
   }
 }
 
