@@ -187,7 +187,7 @@ DOB:${formData.dob || ""}
   return (
     <div className="resume-builder-container qr-layout">
       {/* LEFT FORM PANEL */}
-      <div className="form-panel qr-form-panel">
+      
 
         <FormPanelQR
           formData={formData}
@@ -202,7 +202,7 @@ DOB:${formData.dob || ""}
           canEdit={canAccessPremium}
           requirePayment={requireAiAccess}
         />
-      </div>
+      
 
       {/* RIGHT PREVIEW AREA */}
       <div className="preview-panel-container qr-preview-panel">
