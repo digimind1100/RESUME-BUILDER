@@ -168,13 +168,13 @@
     
     transform: scale(0.68);
   }
-   .preview-panel-container {
-    
-    transform: scale(0.99);
+    .form-panel-container,
+  .form-panel {
+    width: 30% !important;
+    min-width: 320px !important;
   }
-   .preview-section{
-    transform: scale(0.56);
-  }
+
+
 }
 
 @media (max-width: 640px) {
