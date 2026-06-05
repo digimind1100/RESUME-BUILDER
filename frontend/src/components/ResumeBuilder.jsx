@@ -286,28 +286,26 @@ const ResumeBuilder = () => {
             />
           </div>
 
-          <div className="resume-mobile-wrap">
-            <PreviewPanel
-              templateId={templateId}
-              entrySource={entrySource}
-              formData={formData}
-              setFormData={setFormData}
-              selectedEducations={selectedEducations}
-              handleCheckboxChange={handleCheckboxChange}
-              jobTitle={jobTitle}
-              workExperiences={workExperiences}
-              skills={skills}
-              deleteWorkExperience={() => { }}
-              deleteSkill={() => { }}
-              isEditing={isEditing}
-              toggleWorkCheckbox={toggleWorkCheckbox}
-              toggleSkillCheckbox={toggleSkillCheckbox}
-              handleOpenWorkPopup={() => requireAiAccess("work")}
-              handleAddSkillsClick={() => requireAiAccess("skills")}
-              theme={theme}
-              resumeStyle={resumeStyle}
-            />
-          </div>
+          <PreviewPanel
+            templateId={templateId}
+            entrySource={entrySource}
+            formData={formData}
+            setFormData={setFormData}
+            selectedEducations={selectedEducations}
+            handleCheckboxChange={handleCheckboxChange}
+            jobTitle={jobTitle}
+            workExperiences={workExperiences}
+            skills={skills}
+            deleteWorkExperience={() => { }}
+            deleteSkill={() => { }}
+            isEditing={isEditing}
+            toggleWorkCheckbox={toggleWorkCheckbox}
+            toggleSkillCheckbox={toggleSkillCheckbox}
+            handleOpenWorkPopup={() => requireAiAccess("work")}
+            handleAddSkillsClick={() => requireAiAccess("skills")}
+            theme={theme}
+            resumeStyle={resumeStyle}
+          />
         </div>
       </div>
 

@@ -75,6 +75,13 @@
   max-width: none;
 }
 
+.preview-panel-container .preview-template {
+  width: 738px;
+  max-width: none;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 /* ===== QR Builder Layout ===== */
 
 .qr-layout {
@@ -133,6 +140,8 @@
     width: 70% !important;
     min-width: 0 !important;
     overflow: visible !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
 
   .qr-form-panel {
@@ -150,18 +159,28 @@
     overflow: visible !important;
   }
 
+  .preview-panel-container .preview-template {
+    width: 738px !important;
+    max-width: 738px !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
   .theme-selector-container,
   .button-section-container,
   .format-buttons-wrapper,
   .theme-selector-container .theme-selector,
   .button-section-container .button-section,
   .button-section-container .button-section-inner,
+  .preview-panel-container .preview-template,
+  .preview-panel-container .preview-section,
   .resume-mobile-wrap .preview-template,
   .resume-mobile-wrap .preview-section {
     width: 738px !important;
     max-width: 738px !important;
   }
 
+  .preview-panel-container .preview-section,
   .resume-mobile-wrap .preview-section {
     transform: none !important;
     margin-top: 0 !important;
@@ -183,7 +202,7 @@
 
 @media (max-width: 520px) {
   .resume-builder-container {
-    transform: scale(0.46);
+    transform: scale(0.44);
   }
 }
 
