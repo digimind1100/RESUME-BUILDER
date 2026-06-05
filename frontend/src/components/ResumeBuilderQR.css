@@ -13,8 +13,9 @@
 
 .form-panel-container,
 .form-panel {
-  width: 35%;
-  min-width: 340px;
+  flex: 0 0 30%;
+  width: 30%;
+  min-width: 320px;
   padding: 16px;
   box-sizing: border-box;
   background: #ffffff;
@@ -22,7 +23,9 @@
 }
 
 .preview-panel-container {
-  width: 65%;
+  flex: 1 1 70%;
+  width: 70%;
+  min-width: 0;
   padding: 16px;
   overflow-x: auto;
   overflow-y: auto;
@@ -120,12 +123,15 @@
 
   .form-panel-container,
   .form-panel {
+    flex: 0 0 30% !important;
     width: 30% !important;
     min-width: 320px !important;
   }
 
   .preview-panel-container {
+    flex: 1 1 70% !important;
     width: 70% !important;
+    min-width: 0 !important;
     overflow: visible !important;
   }
 
@@ -165,10 +171,10 @@
 
 @media (max-width: 768px) {
   .resume-builder-container {
-    
     transform: scale(0.68);
   }
-  .theme-selector{
+
+  .qr-layout .theme-selector {
     width: 100px;
   }
 }

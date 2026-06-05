@@ -111,7 +111,7 @@ const handleSkillsClickWithGuard = () => {
   };
 
   return (
-    <div className="form-panel">
+    <div className="form-panel qr-form-panel">
       <h2>Personal Information</h2>
 
       <label>Job Title</label>
