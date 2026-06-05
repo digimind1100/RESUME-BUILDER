@@ -527,20 +527,23 @@ display: flex;
 
   .resume-mobile-wrap .preview-section-qr {
     flex-direction: row !important;
+    gap: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
     transform: none !important;
     margin-top: 0 !important;
     margin-bottom: 0 !important;
   }
 
   .resume-mobile-wrap .preview-section-qr .preview-left {
-    flex: 0 0 calc((100% - 12px) * 0.3) !important;
-    width: calc((100% - 12px) * 0.3) !important;
+    flex: 0 0 30% !important;
+    width: 30% !important;
     min-width: 0 !important;
   }
 
   .resume-mobile-wrap .preview-right-qr {
-    flex: 0 0 calc((100% - 12px) * 0.7) !important;
-    width: calc((100% - 12px) * 0.7) !important;
+    flex: 0 0 70% !important;
+    width: 70% !important;
     min-width: 0 !important;
   }
 }
