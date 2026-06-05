@@ -386,6 +386,49 @@ display: flex;
   box-sizing: border-box;
 }
 
+.preview-right-qr *,
+.qr-preview-content,
+.qr-preview-content * {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.qr-preview-content {
+  min-width: 0;
+  overflow: visible;
+}
+
+.qr-preview-content .job-title-box,
+.qr-preview-content .job-title-banner,
+.qr-preview-content .qr-work-panel,
+.qr-preview-content .qr-skills-panel,
+.qr-preview-content .preview-box,
+.qr-preview-content .work-box,
+.qr-preview-content .skills-box {
+  width: 100%;
+  min-width: 0;
+}
+
+.qr-preview-content .job-title-banner {
+  display: block;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.qr-preview-content .work-entry,
+.qr-preview-content .skill-entry,
+.qr-preview-content .work-text,
+.qr-preview-content .skill-text {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.qr-preview-content .preview-box {
+  overflow: visible;
+}
+
 .qr-preview-wrapper { margin-bottom: 12px; }
 .qr-preview-wrapper canvas, .qr-preview-wrapper svg {
   background: #fff;

@@ -295,7 +295,7 @@ export default function PreviewPanelQR({
               </h1>
             </div>
 
-            <div ref={workPanelRef} className="preview-box work-box">
+            <div ref={workPanelRef} className="qr-work-panel">
               <WorkPreview
                 workList={page1Work}
                 toggleWorkCheckbox={toggleWorkCheckbox}
@@ -307,7 +307,7 @@ export default function PreviewPanelQR({
             {!includePage2Work && (
               <div
                 ref={skillsPanelRef}
-                className="preview-box skills-box"
+                className="qr-skills-panel"
                 style={{ display: page1Skills.length === 0 && page2Skills.length > 0 ? "none" : "block" }}
               >
                 <SkillsPreview
