@@ -181,8 +181,11 @@
   }
 
   .qr-resume-mobile-wrap {
+    width: 738px !important;
+    max-width: 738px !important;
     align-items: flex-start !important;
     justify-content: flex-start !important;
+    overflow: visible !important;
   }
 
   .qr-resume-mobile-wrap .qr-preview-template {
@@ -227,7 +230,7 @@
 
 @media (max-width: 520px) {
   .resume-builder-container {
-    transform: scale(0.46);
+    transform: scale(0.44);
   }
 }
 
