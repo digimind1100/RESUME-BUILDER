@@ -168,12 +168,8 @@
     
     transform: scale(0.68);
   }
-   .preview-panel-container {
-    
-    transform: scale(0.68);
-  }
-   .preview-section{
-    transform: scale(0.56);
+  .theme-selector{
+    width: 100px;
   }
 }
 

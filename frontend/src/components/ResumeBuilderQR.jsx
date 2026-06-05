@@ -7,17 +7,14 @@ import ButtonSection from "./ButtonSection";
 import FormatButtons from "./FormatButtons";
 import ThemeSelector from "./ThemeSelector";
 import PreviewPanelQR from "./PreviewPanelQR";
-import "./ResumeBuilder.css";
+import "./ResumeBuilderQR.css";
 import { useAuth } from "../context/AuthContext";
 import ReviewPopup from "./review/ReviewPopup";
 import SignupModal from "./auth/SignupModal";
 import { hasReviewAccess } from "../utils/reviewAccess";
 
 
-
-
 const ResumeBuilderQR = () => {
-
 
   const [formData, setFormData] = useState({});
   const [selectedEducations, setSelectedEducations] = useState([]);
