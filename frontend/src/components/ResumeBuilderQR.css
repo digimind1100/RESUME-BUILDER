@@ -212,6 +212,24 @@
   }
 }
 
+@media (orientation: landscape) and (max-width: 1024px) {
+  .resume-builder-container {
+    transform: scale(0.84);
+  }
+}
+
+@media (orientation: landscape) and (max-width: 900px) {
+  .resume-builder-container {
+    transform: scale(0.72);
+  }
+}
+
+@media (orientation: landscape) and (max-width: 760px) {
+  .resume-builder-container {
+    transform: scale(0.66);
+  }
+}
+
 @media (max-width: 640px) {
   .resume-builder-container {
     transform: scale(0.56);
