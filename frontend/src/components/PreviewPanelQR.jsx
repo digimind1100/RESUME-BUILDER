@@ -1,6 +1,6 @@
 // PreviewPanelQR.jsx — QR version of preview panel
 import React, { useEffect, useRef, useState } from "react";
-import "./PreviewPanel.css";
+import "./PreviewPanelQR.css";
 import { paginateEntries } from "../utils/paginateEntries";
 import { paginateWorkEntries } from "../utils/paginateWorkEntries";
 import { paginateSkillsEntries } from "../utils/paginateSkillsEntries";

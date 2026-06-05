@@ -93,9 +93,25 @@
   overflow-x: auto;
 }
 
+.preview-panel-container.qr-preview-panel {
+  display: flex;
+  justify-content: center;
+}
+
+.qr-preview-panel .resume-theme {
+  width: 100%;
+  align-items: center;
+}
+
 .qr-resume-mobile-wrap {
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
+}
+
+.qr-resume-mobile-wrap .qr-preview-template {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* ===== Mobile: shrink full builder to fit screen ===== */
@@ -142,6 +158,7 @@
 
   .qr-preview-panel {
     width: 70% !important;
+    justify-content: center;
   }
 
   .resume-mobile-wrap {

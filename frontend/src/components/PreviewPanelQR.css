@@ -1,0 +1,548 @@
+.preview-section {
+ 
+  background: #f9f9f9;
+  padding: 12px;
+  display: flex;
+  flex-direction: row;   /* ✅ horizontal layout */
+  align-items: flex-start;
+  height:1040px;
+  width:738px;
+  gap: 12px;
+  box-sizing: border-box;
+}
+
+.preview-left {
+  flex: 0 0 30%;
+}
+
+.preview-right {
+  flex: 1; /* takes remaining width (around 70%) */
+}
+
+.preview-left {
+  width: 30%;
+  border: 1px solid #ccc;
+  padding: 12px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 1016px;           /* ✅ takes full height of parent (A4 height) */
+  box-sizing: border-box; /* ✅ ensures padding doesn’t expand height */
+   position: relative;
+  overflow: visible; /* Allow popup to appear outside */
+  z-index: 1;
+}
+
+
+/* Profile Circle with Elegant Background */
+.profile-circle {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: #f4f4f4; /* light elegant background */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px; /* space between border and image */
+  margin-bottom: 15px;
+  overflow: hidden;
+ 
+}
+
+.profile-circle img.preview-profile-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-circle i {
+  font-size: 50px;
+  color: #aaa;
+}
+
+/* Name */
+.preview-name {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* Contact Info */
+.preview-info {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  align-items: center;
+}
+
+.info-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.info-block i {
+  font-size: 18px;
+  color: #333;
+}
+
+.info-block span {
+  font-size: 14px;
+  color: #555;
+  margin: 8px 0;   /* 🔹 reduced margin (was 16px default) */
+}
+
+.icon-block p{
+  margin: 8px 0
+}
+
+/* Education */
+.preview-education {
+  margin-top: 20px;
+  text-align: left;
+  width: 100%;
+}
+
+.preview-education h3 {
+  font-size: 16px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 4px;
+}
+
+.preview-education ul {
+  padding-left: 15px;
+}
+
+.preview-education li {
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+/* Right Column */
+.preview-right {
+  width: 70%;
+  padding: 15px;
+  border: 1px solid #eee;
+}
+
+.preview-right h2 {
+  margin-bottom: 15px;
+  font-size: 20px;
+}
+
+.preview-panel p {
+  margin-top: 2px;
+  margin-bottom: 6px;
+}
+/* Section Headings */
+.section-heading,
+.preview-education h3,
+.preview-right h2 {
+  margin-top: 15px;
+  margin-bottom: 8px;
+}
+
+.preview-left .section-heading {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin-left: 0;
+  margin-right: 0;
+  float: none;
+}
+
+
+/* CSS FOR PROFILE PICTUER  */
+.profile-pic-wrapper {
+  position: relative;          /* 🔥 REQUIRED */
+  width: 140px;
+  height: 140px;
+  margin: auto;
+  border-radius: 50%;
+  background-color: #f0f0f0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid #ddd;
+  cursor: pointer;
+}
+
+.profile-pic-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* crop image proportionally */
+  border-radius: 50%; /* ensures circular */
+}
+.preview-section {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  white-space: normal;
+}
+
+.education-entry {
+display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+
+  width: 194px;
+  min-height: 112px;
+  height: auto;
+  max-height: none;
+
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #f9f9f9;
+  padding: 5px;
+  margin-bottom: 5px;
+  gap: 0px;
+
+  white-space: normal;
+  overflow-wrap: anywhere;
+  text-overflow: clip;
+
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.education-entry input[type="checkbox"] {
+  margin-top: 1px;         /* nicely aligns with text top */
+  transform: scale(1.1);   /* slightly bigger checkbox */
+  cursor: pointer;
+}
+
+.education-details {
+  display: inline-block;
+  flex-direction: column;
+  font-family: 'Times New Roman', Times, serif;
+  justify-content: flex-start;
+  width: 100%;
+       
+}
+
+.education-details p {
+  margin: 4px 0;
+  line-height: 1.4;
+  color: #0f0f0f;
+  border-bottom: 1px dotted #2e2e2e;  
+}
+.education-details p:last-child {
+  border-bottom: none;                /* no line under last entry */
+}
+
+.edu-school,
+.edu-degree,
+.edu-year {
+  font-size: 14px;
+  font-weight: 600;
+  word-break: break-word;
+}
+.edu-school{
+  margin-top: 0px;
+}
+
+/* Optional hover effect (looks nice in preview) */
+.education-entry:hover {
+  background-color: #f9f9f9;
+  border-color: #aaa;
+  transition: all 0.2s ease;
+}
+.job-title-banner {
+  text-align: center;
+  margin: 0;
+  padding: 12px 16px;
+  border: 2px solid #d1d5db;   /* Tailwind border-gray-300 */
+  border-radius: 6px;
+  background-color: #ebf8ff;    /* Tailwind bg-blue-50 */
+  font-weight: 600;
+  font-size: 1.25rem;           /* text-xl */
+  letter-spacing: 0.5px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+
+.preview-column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.preview-box {
+  border: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
+  padding: 6px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.preview-box.work-box,
+.preview-box.skills-box {
+  max-height: none !important;
+  height: auto !important;
+  overflow: visible !important;
+}
+
+.work-exp-item {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+  align-items: flex-start; /* ensures everything aligns at top of first line */
+}
+.skill-item {
+  display: flex;
+  gap: 0px;
+  margin-bottom: 8px;
+  align-items: flex-start; /* ensures everything aligns at top of first line */
+}
+
+.checkbox-bullet-wrapper {
+  display: flex;
+  flex-direction: row; /* stack checkbox and bullet if needed */
+  align-items: top;    /* optional, to center bullet under checkbox */
+  
+  margin-top: 0px;        /* fine-tune vertical alignment with first line */
+  
+  flex-shrink: 0;
+}
+
+.exp-checkbox {
+  display: block;
+  margin: 3px 3px 3px 4px;  /* remove default top/bottom margin */
+}
+
+.bullet {
+  margin-top: 0px;  /* bullet slightly below checkbox, adjust if needed */
+  margin-right: 5px;
+   font-size: 20px; /* or 22px, depending on your taste */
+  font-weight: bold; /* optional, thoda thick look ke liye */
+  padding-top: 0px;
+  
+}
+
+.exp-text {
+  white-space: pre-wrap;
+  line-height: 1.4;
+}
+
+
+.editable-box {
+  border: 2px dotted #007bff;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+/* QR code CSS  */
+
+.qr-preview-template {
+  width: 738px;
+  max-width: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  box-sizing: border-box;
+}
+
+.qr-preview-template .preview-section {
+  width: 738px;
+  min-width: 738px;
+  max-width: 738px;
+  height: 1040px;
+  flex: 0 0 auto;
+}
+
+.preview-section-qr {
+  align-items: stretch;
+  overflow: visible;
+}
+
+.preview-section-qr .preview-left {
+  flex: 0 0 30%;
+  width: 30%;
+  min-width: 0;
+  height: 1016px;
+}
+
+.preview-right-qr {
+  flex: 1 1 70%;
+  width: 70%;
+  min-width: 0;
+  height: 1016px;
+  padding: 15px;
+  border: 1px solid #eee;
+  background: #fff;
+  box-sizing: border-box;
+  overflow: visible;
+}
+
+.qr-preview-content {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.qr-preview-wrapper { margin-bottom: 12px; }
+.qr-preview-wrapper canvas, .qr-preview-wrapper svg {
+  background: #fff;
+  border-radius: 6px;
+  padding: 6px; /* small white padding around QR */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.qr-box {
+  width: 100%;               /* take full available width */
+  max-width: 180px;          /* do NOT grow larger than this */
+  min-width: 120px;          /* do NOT shrink smaller than this */
+  
+  aspect-ratio: 1 / 1;       /* ALWAYS keep perfect square */
+  margin: 10px auto;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+ background: #fff;
+  border: 2px dashed #c0c0c0;
+}
+
+.qr-box canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.qr-box svg {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+
+
+
+.qr-placeholder {
+  font-size: 12px;
+  color: #888;
+  text-align: center;
+  
+}
+
+
+/* Education Entry Responsive */
+.education-entry-qr {
+ display: flex;
+ width: 100%;
+ max-width: 194px;
+  flex-direction: column; /* stack content vertically on small screens */
+  gap: 0.25rem; /* small spacing between items */
+  padding: 0.5rem;
+  margin: 0.25rem 0;
+  border-radius: 0.375rem;
+  background-color: var(--edu-bg, #fff);
+  color: var(--edu-text, #000);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  transition: all 0.2s ease-in-out;
+}
+
+
+
+
+.profile-pic-wrapper {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  margin: auto;
+  cursor: pointer;
+}
+
+.profile-pic-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* 🔥 THIS IS IMPORTANT */
+.lock-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  color: white;
+  z-index: 5;
+  pointer-events:none;
+}
+
+.payment-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;   /* 🔥 VERY IMPORTANT */
+}
+
+
+/* Horizontal layout on larger screens */
+@media (min-width: 640px) {
+  .education-entry-qr {
+    flex-direction: column; /* align items horizontally */
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .education-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+  }
+
+  .education-entry-qr input[type="checkbox"] {
+    margin-right: 1rem;
+  }
+}
+
+/* Optional: text scaling on small screens */
+@media (max-width: 639px) {
+  .education-entry-qr p {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .resume-mobile-wrap .qr-preview-template,
+  .resume-mobile-wrap .qr-preview-template .preview-section {
+    width: 738px !important;
+    min-width: 738px !important;
+    max-width: 738px !important;
+  }
+
+  .resume-mobile-wrap .preview-section-qr {
+    flex-direction: row !important;
+    transform: none !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  .resume-mobile-wrap .preview-section-qr .preview-left {
+    flex: 0 0 30% !important;
+    width: 30% !important;
+    min-width: 0 !important;
+  }
+
+  .resume-mobile-wrap .preview-right-qr {
+    flex: 1 1 70% !important;
+    width: 70% !important;
+    min-width: 0 !important;
+  }
+}
+
+ 
