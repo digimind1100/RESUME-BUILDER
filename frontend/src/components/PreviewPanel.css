@@ -337,7 +337,55 @@ display: flex;
 
 /* QR code CSS  */
 
-/* optional (add to PreviewPanel.css) */
+.qr-preview-template {
+  width: 738px;
+  max-width: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  box-sizing: border-box;
+}
+
+.qr-preview-template .preview-section {
+  width: 738px;
+  min-width: 738px;
+  max-width: 738px;
+  height: 1040px;
+  flex: 0 0 auto;
+}
+
+.preview-section-qr {
+  align-items: stretch;
+  overflow: visible;
+}
+
+.preview-section-qr .preview-left {
+  flex: 0 0 30%;
+  width: 30%;
+  min-width: 0;
+  height: 1016px;
+}
+
+.preview-right-qr {
+  flex: 1 1 70%;
+  width: 70%;
+  min-width: 0;
+  height: 1016px;
+  padding: 15px;
+  border: 1px solid #eee;
+  background: #fff;
+  box-sizing: border-box;
+  overflow: visible;
+}
+
+.qr-preview-content {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
 .qr-preview-wrapper { margin-bottom: 12px; }
 .qr-preview-wrapper canvas, .qr-preview-wrapper svg {
   background: #fff;
@@ -363,6 +411,11 @@ display: flex;
 }
 
 .qr-box canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.qr-box svg {
   width: 100% !important;
   height: 100% !important;
 }
@@ -461,6 +514,34 @@ display: flex;
 @media (max-width: 639px) {
   .education-entry-qr p {
     font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .resume-mobile-wrap .qr-preview-template,
+  .resume-mobile-wrap .qr-preview-template .preview-section {
+    width: 738px !important;
+    min-width: 738px !important;
+    max-width: 738px !important;
+  }
+
+  .resume-mobile-wrap .preview-section-qr {
+    flex-direction: row !important;
+    transform: none !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  .resume-mobile-wrap .preview-section-qr .preview-left {
+    flex: 0 0 30% !important;
+    width: 30% !important;
+    min-width: 0 !important;
+  }
+
+  .resume-mobile-wrap .preview-right-qr {
+    flex: 1 1 70% !important;
+    width: 70% !important;
+    min-width: 0 !important;
   }
 }
 

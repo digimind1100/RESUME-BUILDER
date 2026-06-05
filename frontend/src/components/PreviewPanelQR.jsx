@@ -190,9 +190,9 @@ export default function PreviewPanelQR({
   };
 
   return (
-    <>
+    <div className="preview-template qr-preview-template">
       {/* ================= PAGE 1 ================= */}
-      <div className="preview-section" style={{ position: "relative" }}>
+      <div className="preview-section preview-section-qr" style={{ position: "relative" }}>
         <div
           className="preview-left"
           style={{ backgroundColor: theme.left }}
@@ -281,8 +281,8 @@ export default function PreviewPanelQR({
         </div>
 
         {/* ===== RIGHT SIDE: WORK + SKILLS (Page 1) ===== */}
-        <div className="flex-1 p-4" ref={rightPanelRef}>
-          <div className="max-w-2xl mx-auto">
+        <div className="preview-right preview-right-qr" ref={rightPanelRef}>
+          <div className="preview-content qr-preview-content">
             <div ref={jobTitleRef} className="job-title-box text-center mb-6">
               <h1
                 className="text-2xl font-bold job-title-banner"
@@ -339,7 +339,7 @@ export default function PreviewPanelQR({
       {(page2Education.length > 0 ||
         page2Work.length > 0 ||
         page2Skills.length > 0) && (
-          <div className="preview-section mt-8">
+          <div className="preview-section preview-section-qr mt-8">
             {/* Left side page 2 — only Education */}
             <div className="preview-left" style={{ backgroundColor: theme.left }}>
               <h3 className="section-heading">Education</h3>
@@ -369,8 +369,8 @@ export default function PreviewPanelQR({
             </div>
 
             {/* Right side page 2 — Work + Skills */}
-            <div className="flex-1 p-4">
-              <div className="max-w-2xl mx-auto">
+            <div className="preview-right preview-right-qr">
+              <div className="preview-content qr-preview-content">
                 {page2Work.length > 0 && (
                   <>
 
@@ -399,6 +399,6 @@ export default function PreviewPanelQR({
             </div>
           </div>
         )}
-    </>
+    </div>
   );
 }
