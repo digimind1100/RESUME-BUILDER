@@ -34,7 +34,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import TestPagination from "./Template/TestPagination/TestPagination";
 import FlorenceClassic from "./Template/FlorenceClassic/FlorenceClassic";
 import Blog from "./pages/Blog";
-
+import SoftwareEngineerResume2026 from "./blogs/SoftwareEngineerResume2026";
 
 
 function AppContent() {
