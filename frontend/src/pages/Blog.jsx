@@ -107,6 +107,22 @@ export default function Blog() {
     Read Full Guide
   </Link>
 </article>
+{/* Blog 7 */}
+<article className="blog-card">
+  <h2>Software Engineer Resume Example (2026)</h2>
+
+  <p>
+    Learn how to create a professional Software Engineer resume with
+    ATS-friendly formatting, key skills, examples, and resume writing tips.
+  </p>
+
+  <Link
+    to="/blog/software-engineer-resume-example-2026"
+    className="blog-read-btn"
+  >
+    Read Full Guide
+  </Link>
+</article>
 
     </div>
   </div>

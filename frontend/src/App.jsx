@@ -34,7 +34,8 @@ import Pricing from "./components/Pricing";
 import ScrollToTop from "./components/ScrollToTop";
 import TestPagination from "./Template/TestPagination/TestPagination";
 import FlorenceClassic from "./Template/FlorenceClassic/FlorenceClassic";
-
+import { HelmetProvider } from "react-helmet-async";
+import SoftwareEngineerResume2026 from "./blogs/SoftwareEngineerResume2026";
 
 
 
@@ -45,116 +46,120 @@ function AppContent() {
 
   const user = JSON.parse(localStorage.getItem("user"));
 
-const isLocal = import.meta.env.DEV;
+  const isLocal = import.meta.env.DEV;
 
-    
+
 
   return (
     <>
-        <Navbar />
-        <ScrollToTop />
-        <Toaster position="top-center" />
-        <Routes>
-          <Route
-            path="/data-elite"
-            element={
-              <BuilderGuard>
-                <DataElite />
-              </BuilderGuard>
-            }
-          />
+      <Navbar />
+      <ScrollToTop />
+      <Toaster position="top-center" />
+      <Routes>
+        <Route
+          path="/data-elite"
+          element={
+            <BuilderGuard>
+              <DataElite />
+            </BuilderGuard>
+          }
+        />
 
-          <Route
-  path="/data-:templateId"
-  element={
-    <TestPagination
-      isEditable={isLocal}
-      isLocal={isLocal}
-    />
-  }
-/>
+        <Route
+          path="/data-:templateId"
+          element={
+            <TestPagination
+              isEditable={isLocal}
+              isLocal={isLocal}
+            />
+          }
+        />
 
-          <Route
-            path="/admin/payments"
-            element={
-              <AdminGuard>
-                <AdminPendingPayments />
-              </AdminGuard>
-            }
-          />
-          <Route
-            path="/admin/review"
-            element={
-              <AdminGuard>
-                <AdminReviews />
-              </AdminGuard>
-            }
-          />
-          <Route
-            path="/admin/reviews"
-            element={
-              <AdminGuard>
-                <AdminReviews />
-              </AdminGuard>
-            }
-          />
-          <Route path="/" element={<HomePage />} />
-          {/* Unified builder */}
-          <Route
-            path="/resume/:templateId?"
-            element={<ResumeBuilder formData={formData} setFormData={setFormData} />}
-          />
-          <Route path="/resume-classic" element={<ResumeBuilderQR />} />
+        <Route
+          path="/admin/payments"
+          element={
+            <AdminGuard>
+              <AdminPendingPayments />
+            </AdminGuard>
+          }
+        />
+        <Route
+          path="/admin/review"
+          element={
+            <AdminGuard>
+              <AdminReviews />
+            </AdminGuard>
+          }
+        />
+        <Route
+          path="/admin/reviews"
+          element={
+            <AdminGuard>
+              <AdminReviews />
+            </AdminGuard>
+          }
+        />
+        <Route path="/" element={<HomePage />} />
+        {/* Unified builder */}
+        <Route
+          path="/resume/:templateId?"
+          element={<ResumeBuilder formData={formData} setFormData={setFormData} />}
+        />
+        <Route path="/resume-classic" element={<ResumeBuilderQR />} />
 
-          {/* Templates */}
-          <Route path="/templates" element={<Templates />} />
+        {/* Templates */}
+        <Route path="/templates" element={<Templates />} />
 
-          <Route path="/features" element={<Features />} />
+        <Route path="/features" element={<Features />} />
 
-          {/* Cover letter */}
-          <Route path="/cover-letter" element={<CoverLetterPanel />} />
+        {/* Cover letter */}
+        <Route path="/cover-letter" element={<CoverLetterPanel />} />
 
-          {/* Terms & policies */}
-          <Route path="/policies" element={<Policies />} />
+        {/* Terms & policies */}
+        <Route path="/policies" element={<Policies />} />
 
-          {/* Contact */}
-          <Route path="/contact" element={<Contact />} />
+        {/* Contact */}
+        <Route path="/contact" element={<Contact />} />
 
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/blog/:slug" element={<BlogPost />} />
-          <Route path="/pricing" element={<Pricing />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route
+          path="/blog/software-engineer-resume-example-2026"
+          element={<SoftwareEngineerResume2026 />}
+        />
+        <Route path="/blog/:slug" element={<BlogPost />} />
+        <Route path="/pricing" element={<Pricing />} />
 
-          {/* ✅ PUBLIC REVIEWS PAGE */}
-          <Route path="/reviews" element={<ReviewsPage />} />
+        {/* ✅ PUBLIC REVIEWS PAGE */}
+        <Route path="/reviews" element={<ReviewsPage />} />
 
-          {/* Preview */}
-          <Route
-            path="/preview-classic"
-            element={<PreviewPanelQRPage formData={formData} />}
-          />
+        {/* Preview */}
+        <Route
+          path="/preview-classic"
+          element={<PreviewPanelQRPage formData={formData} />}
+        />
 
-          <Route path="/clean-professional" element={<CleanProfessional />} />
-          <Route path="/creative-bold" element={<CreativeBold />}/>
-          <Route path="/minimal-accent" element={<MinimalAccent />} />
-          <Route path="/elegant-classic" element={<ElegantClassic />} />
-          <Route path="/medical-elites" element={<MedicalElites />} />
-          <Route path="/engineer-elites" element={<EngineerElites />} />
-          <Route path="/soft-tech" element={<SoftTech />} />
-          <Route path="/free-basic" element={<Navigate to="/templates" replace />} />
-          <Route path="/royal-designer" element={<Navigate to="/templates" replace />} />
-          <Route path="/neoedge-pro" element={<Navigate to="/templates" replace />} />
-          <Route path="/neoEdge-pro" element={<Navigate to="/templates" replace />} />
-          <Route path="/test-pagination" element={<Navigate to="/templates" replace />} />
-          <Route path="/florence-classic" element={<FlorenceClassic />} />
+        <Route path="/clean-professional" element={<CleanProfessional />} />
+        <Route path="/creative-bold" element={<CreativeBold />} />
+        <Route path="/minimal-accent" element={<MinimalAccent />} />
+        <Route path="/elegant-classic" element={<ElegantClassic />} />
+        <Route path="/medical-elites" element={<MedicalElites />} />
+        <Route path="/engineer-elites" element={<EngineerElites />} />
+        <Route path="/soft-tech" element={<SoftTech />} />
+        <Route path="/free-basic" element={<Navigate to="/templates" replace />} />
+        <Route path="/royal-designer" element={<Navigate to="/templates" replace />} />
+        <Route path="/neoedge-pro" element={<Navigate to="/templates" replace />} />
+        <Route path="/neoEdge-pro" element={<Navigate to="/templates" replace />} />
+        <Route path="/test-pagination" element={<Navigate to="/templates" replace />} />
+        <Route path="/florence-classic" element={<FlorenceClassic />} />
 
 
-          <Route path="/engineer-prime" element={<EngineerPrime />} />
-          <Route path="/aviation-pro" element={<AviationPro />} />
-          <Route path="/teacher-elite" element={<TeacherElite />} />
-          <Route path="/coverletter" element={<CoverLetterPage />} />
-          <Route path="/coverletter-generator" element={<CoverLetterPanel />} />
-          <Route path="*" element={<Navigate to="/" />} />
-        </Routes>
+        <Route path="/engineer-prime" element={<EngineerPrime />} />
+        <Route path="/aviation-pro" element={<AviationPro />} />
+        <Route path="/teacher-elite" element={<TeacherElite />} />
+        <Route path="/coverletter" element={<CoverLetterPage />} />
+        <Route path="/coverletter-generator" element={<CoverLetterPanel />} />
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
     </>
   );
 }
