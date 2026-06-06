@@ -6,6 +6,7 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 
 import Watermark from "../../components/Watermark";
+import { trackResumeDownload } from "../../services/statsService";
 
 const FreeBasic = () => {
   const resumeRef = useRef(null);
@@ -29,6 +30,7 @@ const FreeBasic = () => {
 
     pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, imgHeight);
     pdf.save("free-basic-resume.pdf");
+    await trackResumeDownload("nonAi");
   };
 
   const handleReset = () => {

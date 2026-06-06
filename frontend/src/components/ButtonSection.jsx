@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./ButtonSection.css";
 import { downloadResumeAndTriggerReview } from "./DownloadPDF";
 import { useAuth } from "../context/AuthContext";
@@ -12,6 +13,7 @@ export default function ButtonSection({
   handleDeleteSelected,
 }) {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [showReviewPopup, setShowReviewPopup] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false);
 
@@ -67,6 +69,10 @@ export default function ButtonSection({
 
         <button className="common-btn" onClick={handleDeleteSelected}>
           Delete Selected
+        </button>
+
+        <button className="common-btn" onClick={() => navigate("/templates")}>
+          Templates
         </button>
       </div>
 
