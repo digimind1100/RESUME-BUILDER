@@ -34,6 +34,7 @@ const ResumeBuilder = () => {
 
   const isPreviewFlow = entrySource === "start";
   const storageKey = `ai-${resolvedTemplate}_resumeData`;
+  const databaseTemplateId = `ai-${resolvedTemplate}`;
   const savedBuilderState = (() => {
     try {
       return JSON.parse(localStorage.getItem(storageKey)) || {};
@@ -78,6 +79,47 @@ const ResumeBuilder = () => {
   useEffect(() => {
     setResumeStyle(resolvedTemplate);
   }, [resolvedTemplate]);
+
+  useEffect(() => {
+    const loadSavedResume = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) return;
+
+        const response = await fetch(
+          `https://resume-builder-backend-66wy.onrender.com/api/resume/load?templateId=${databaseTemplateId}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        const result = await response.json();
+
+        if (!response.ok || !result.success || !result.resume) return;
+
+        const savedResume = result.resume.data || result.resume;
+
+        setFormData(savedResume.formData || {});
+        setSelectedEducations(savedResume.selectedEducations || []);
+        setJobTitle(savedResume.jobTitle || "");
+        setWorkExperiences(savedResume.workExperiences || []);
+        setSkills(savedResume.skills || []);
+        setTheme({
+          left: savedResume.theme?.left || "#17639F",
+          job: savedResume.theme?.job || "#F4ECE1",
+          text: savedResume.theme?.text || "#000",
+        });
+        setResumeStyle(savedResume.resumeStyle || resolvedTemplate);
+      } catch (error) {
+        console.error("Load AI resume error:", error);
+      }
+    };
+
+    loadSavedResume();
+  }, [databaseTemplateId, resolvedTemplate, user]);
 
   // Load CSS for simple templates only
   useEffect(() => {
@@ -337,7 +379,7 @@ const ResumeBuilder = () => {
               skills={skills}
               jobTitle={jobTitle}
               showSaveResume
-              saveTemplateId={`ai-${resumeStyle}`}
+              saveTemplateId={databaseTemplateId}
               resumeData={resumeDataForSave}
               showResetResume
               onResetResume={handleResetResume}

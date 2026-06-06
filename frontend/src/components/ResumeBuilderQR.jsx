@@ -16,6 +16,7 @@ import { hasReviewAccess } from "../utils/reviewAccess";
 
 const ResumeBuilderQR = () => {
   const storageKey = "ai-classic-qr_resumeData";
+  const databaseTemplateId = "ai-classic-qr";
   const savedBuilderState = (() => {
     try {
       return JSON.parse(localStorage.getItem(storageKey)) || {};
@@ -75,6 +76,47 @@ const ResumeBuilderQR = () => {
     theme,
     qrData,
   ]);
+
+  useEffect(() => {
+    const loadSavedResume = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) return;
+
+        const response = await fetch(
+          `https://resume-builder-backend-66wy.onrender.com/api/resume/load?templateId=${databaseTemplateId}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        const result = await response.json();
+
+        if (!response.ok || !result.success || !result.resume) return;
+
+        const savedResume = result.resume.data || result.resume;
+
+        setFormData(savedResume.formData || {});
+        setSelectedEducations(savedResume.selectedEducations || []);
+        setJobTitle(savedResume.jobTitle || "");
+        setWorkExperiences(savedResume.workExperiences || []);
+        setSkills(savedResume.skills || []);
+        setQrData(savedResume.qrData || null);
+        setTheme({
+          left: savedResume.theme?.left || "#ffffff",
+          job: savedResume.theme?.job || "#F4ECE1",
+          text: savedResume.theme?.text || "#000",
+        });
+      } catch (error) {
+        console.error("Load AI QR resume error:", error);
+      }
+    };
+
+    loadSavedResume();
+  }, [databaseTemplateId, user]);
 
   // --- Checkbox handlers ---
   const toggleSkillCheckbox = (id) => {
@@ -280,7 +322,7 @@ DOB:${formData.dob || ""}
               skills={skills}
               jobTitle={jobTitle}
               showSaveResume
-              saveTemplateId="ai-classic-qr"
+              saveTemplateId={databaseTemplateId}
               resumeData={resumeDataForSave}
               showResetResume
               onResetResume={handleResetResume}
