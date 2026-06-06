@@ -69,7 +69,7 @@ const CounterBlock = () => {
   const counters = [
     { value: stats.resumesCreated, label: "Resumes Created" },
     { value: TEMPLATES_AVAILABLE_COUNT, label: "Templates Available" },
-    { value: stats.aiSuggestionsGenerated, label: "AI Suggestions Generated" },
+    { value: stats.aiDownloads, label: "AI Generated" },
     { value: stats.nonAiDownloads, label: "Non AI Generated" },
   ];
 
