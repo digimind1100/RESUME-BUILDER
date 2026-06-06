@@ -14,6 +14,8 @@ export default function ButtonSection({
   showSaveResume = false,
   saveTemplateId = "resume-builder",
   resumeData = null,
+  showResetResume = false,
+  onResetResume,
 }) {
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -120,6 +122,12 @@ export default function ButtonSection({
         {showSaveResume && (
           <button className="common-btn" onClick={handleSaveResumeClick}>
             Save Resume in Database
+          </button>
+        )}
+
+        {showResetResume && (
+          <button className="common-btn" onClick={onResetResume}>
+            Reset
           </button>
         )}
 

@@ -208,6 +208,24 @@ const ResumeBuilder = () => {
     setSkills((prev) => prev.filter((skill) => !skill.checked));
   };
 
+  const handleResetResume = () => {
+    localStorage.removeItem(storageKey);
+    localStorage.removeItem("resumeData");
+    setFormData({});
+    setSelectedEducations([]);
+    setJobTitle("");
+    setWorkExperiences([]);
+    setSkills([]);
+    setResumeStyle(resolvedTemplate);
+    setTheme({
+      left: "#17639F",
+      job: "#F4ECE1",
+      text: "#000",
+    });
+    setIsEditing(false);
+    alert("Saved data removed");
+  };
+
   const openAiPanel = (action) => {
     if (action === "work") {
       setShowWorkPopup(true);
@@ -321,6 +339,8 @@ const ResumeBuilder = () => {
               showSaveResume
               saveTemplateId={`ai-${resumeStyle}`}
               resumeData={resumeDataForSave}
+              showResetResume
+              onResetResume={handleResetResume}
             />
           </div>
 

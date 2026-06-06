@@ -149,6 +149,24 @@ const ResumeBuilderQR = () => {
     setSkills((prev) => prev.filter((skill) => !skill.checked));
   };
 
+  const handleResetResume = () => {
+    localStorage.removeItem(storageKey);
+    localStorage.removeItem("resumeData");
+    setFormData({});
+    setSelectedEducations([]);
+    setJobTitle("");
+    setWorkExperiences([]);
+    setSkills([]);
+    setQrData(null);
+    setTheme({
+      left: "#ffffff",
+      job: "#F4ECE1",
+      text: "#000",
+    });
+    setIsEditing(false);
+    alert("Saved data removed");
+  };
+
   const openAiPanel = (action) => {
     if (action === "work") {
       setShowWorkPopup(true);
@@ -264,6 +282,8 @@ DOB:${formData.dob || ""}
               showSaveResume
               saveTemplateId="ai-classic-qr"
               resumeData={resumeDataForSave}
+              showResetResume
+              onResetResume={handleResetResume}
             />
           </div>
 
