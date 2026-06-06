@@ -59,7 +59,8 @@ export default function Navbar() {
           <li><Link to="/features" onClick={handleLinkClick}>Features</Link></li>
           <li><Link to="/coverletter" onClick={handleLinkClick}>Cover Letter</Link></li>
           <li><Link to="/policies" onClick={handleLinkClick}>Policies</Link></li>
-          <li><Link to="/pricing" onClick={handleLinkClick}>Pricing</Link></li>
+          {/* Pricing is hidden from the navbar. Restore this line to show it again. */}
+          {/* <li><Link to="/pricing" onClick={handleLinkClick}>Pricing</Link></li> */}
           <li><Link to="/blog" onClick={handleLinkClick}>Blog</Link></li>
           <li><Link to="/contact" onClick={handleLinkClick}>Contact</Link></li>
 
