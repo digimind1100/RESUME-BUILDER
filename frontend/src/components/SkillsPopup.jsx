@@ -10,6 +10,15 @@ const getApiBaseUrl = () => {
   return rawUrl.replace(/\/+$/, "").replace(/\/api$/, "");
 };
 
+const cleanSkillSuggestion = (skill) => {
+  const text = typeof skill === "string" ? skill : skill?.text || "";
+
+  return text
+    .replace(/\*\*/g, "")
+    .replace(/^[-•\s]+/, "")
+    .trim();
+};
+
 export default function SkillsPopup({ jobTitle, onClose, onSelect }) {
   const [loading, setLoading] = useState(false);
   const [skillsList, setSkillsList] = useState([]);
@@ -96,10 +105,7 @@ export default function SkillsPopup({ jobTitle, onClose, onSelect }) {
         {!loading && !error && (
           <ul className="popup-list">
             {skillsList.map((skill, idx) => {
-              const cleanText =
-                typeof skill === "string"
-                  ? skill.replace(/^[-•\s]+/, "")
-                  : skill?.text || "";
+              const cleanText = cleanSkillSuggestion(skill);
 
               if (!cleanText) return null;
 

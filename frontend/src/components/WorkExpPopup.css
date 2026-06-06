@@ -148,5 +148,27 @@ body {
   line-height: 1.4;
 }
 
+@media (max-width: 640px) {
+  .popup-overlay {
+    padding: 10px;
+  }
+
+  .popup-content-box {
+    width: 94vw;
+    max-width: 520px;
+    max-height: 82vh;
+    padding: 28px 18px 16px 16px;
+  }
+
+  .popup-scroll {
+    max-height: calc(82vh - 54px);
+    padding-left: 6px;
+  }
+
+  .suggestion-text {
+    font-size: 13px;
+  }
+}
+
 
 
