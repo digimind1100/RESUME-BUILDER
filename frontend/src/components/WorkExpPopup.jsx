@@ -10,6 +10,16 @@ const getApiBaseUrl = () => {
   return rawUrl.replace(/\/+$/, "").replace(/\/api$/, "");
 };
 
+const cleanWorkSuggestion = (work) => {
+  const text =
+    typeof work === "string" ? work : work?.text || work?.title || "";
+
+  return text
+    .replace(/\*\*/g, "")
+    .replace(/^[-•\s]+/, "")
+    .trim();
+};
+
 export default function WorkExpPopup({ jobTitle, onClose, onSelect }) {
   const [loading, setLoading] = useState(false);
   const [workList, setWorkList] = useState([]);
@@ -96,10 +106,7 @@ export default function WorkExpPopup({ jobTitle, onClose, onSelect }) {
         {!loading && !error && (
           <ul className="popup-list">
             {workList.map((work, idx) => {
-              const cleanText =
-                typeof work === "string"
-                  ? work.replace(/^[-•\s]+/, "")
-                  : work?.text || work?.title || "";
+              const cleanText = cleanWorkSuggestion(work);
 
               if (!cleanText) return null;
 
