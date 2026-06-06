@@ -72,7 +72,7 @@ export default function ButtonSection({
         </button>
 
         <button className="common-btn" onClick={() => navigate("/templates")}>
-          Template
+          Templates
         </button>
       </div>
 

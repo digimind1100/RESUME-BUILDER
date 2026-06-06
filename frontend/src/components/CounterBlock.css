@@ -117,7 +117,11 @@
   color: #ffb400;
 }
 
-/* Partial star (25%) */
+.star.empty {
+  color: #e6e6e6;
+}
+
+/* Partial star */
 .star.partial {
   background: linear-gradient(
     to right,

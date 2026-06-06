@@ -6,6 +6,7 @@ import ReviewPopup from "../components/review/ReviewPopup";
 import "./TemplateLayout.css";
 import { useNavigate } from "react-router-dom";
 import { hasReviewAccess } from "../utils/reviewAccess";
+import { trackResumeDownload } from "../services/statsService";
 
 
 const TemplateLayout = ({
@@ -31,6 +32,11 @@ const TemplateLayout = ({
     localStorage.removeItem("FlorenceClassic");
     alert("Saved data removed");
     window.location.reload();
+  };
+
+  const runDownloadPDF = async () => {
+    await onDownloadPDF();
+    await trackResumeDownload("nonAi");
   };
 
 
@@ -101,13 +107,13 @@ const TemplateLayout = ({
       return;
     }
 
-    onDownloadPDF();
+    await runDownloadPDF();
   };
 
-  const continuePendingAction = () => {
+  const continuePendingAction = async () => {
     if (pendingAction === "download") {
       setPendingAction(null);
-      onDownloadPDF();
+      await runDownloadPDF();
       return;
     }
 
