@@ -11,11 +11,15 @@ export default function ButtonSection({
   isEditing,
   setIsEditing,
   handleDeleteSelected,
+  showSaveResume = false,
+  saveTemplateId = "resume-builder",
+  resumeData = null,
 }) {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [showReviewPopup, setShowReviewPopup] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false);
+  const [pendingAction, setPendingAction] = useState(null);
 
   const canAccessPremium = hasReviewAccess(user);
 
@@ -31,6 +35,7 @@ export default function ButtonSection({
     const token = localStorage.getItem("token");
 
     if (!token || !user) {
+      setPendingAction("download");
       setShowSignupModal(true);
       return;
     }
@@ -43,6 +48,54 @@ export default function ButtonSection({
     await runDownload();
   };
 
+  const runSaveResume = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        setPendingAction("save");
+        setShowSignupModal(true);
+        return;
+      }
+
+      const response = await fetch(
+        "https://resume-builder-backend-66wy.onrender.com/api/resume/save",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            templateId: saveTemplateId,
+            data: resumeData,
+          }),
+        }
+      );
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        alert(result.message || "Save failed");
+        return;
+      }
+
+      alert("Resume saved to MongoDB successfully");
+    } catch (err) {
+      console.error("Save resume error:", err);
+      alert("Save failed");
+    }
+  };
+
+  const handleSaveResumeClick = async () => {
+    if (!resumeData) {
+      alert("Nothing to save yet");
+      return;
+    }
+
+    await runSaveResume();
+  };
+
   const handleReviewSuccess = async () => {
     setShowReviewPopup(false);
     await runDownload();
@@ -50,12 +103,26 @@ export default function ButtonSection({
 
   const handleSignupSuccess = () => {
     setShowSignupModal(false);
+
+    if (pendingAction === "save") {
+      setPendingAction(null);
+      runSaveResume();
+      return;
+    }
+
+    setPendingAction(null);
     setShowReviewPopup(true);
   };
 
   return (
     <div className="button-section-container button-section">
       <div className="button-section-inner">
+        {showSaveResume && (
+          <button className="common-btn" onClick={handleSaveResumeClick}>
+            Save Resume in Database
+          </button>
+        )}
+
         <button className="common-btn" onClick={handleDownloadClick}>
           Download PDF
         </button>

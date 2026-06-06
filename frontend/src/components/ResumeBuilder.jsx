@@ -33,13 +33,25 @@ const ResumeBuilder = () => {
     new URLSearchParams(location.search).get("entry") || "template";
 
   const isPreviewFlow = entrySource === "start";
+  const storageKey = `ai-${resolvedTemplate}_resumeData`;
+  const savedBuilderState = (() => {
+    try {
+      return JSON.parse(localStorage.getItem(storageKey)) || {};
+    } catch {
+      return {};
+    }
+  })();
 
   /* ---------------- STATE ---------------- */
-  const [formData, setFormData] = useState({});
-  const [selectedEducations, setSelectedEducations] = useState([]);
-  const [jobTitle, setJobTitle] = useState("");
-  const [workExperiences, setWorkExperiences] = useState([]);
-  const [skills, setSkills] = useState([]);
+  const [formData, setFormData] = useState(savedBuilderState.formData || {});
+  const [selectedEducations, setSelectedEducations] = useState(
+    savedBuilderState.selectedEducations || []
+  );
+  const [jobTitle, setJobTitle] = useState(savedBuilderState.jobTitle || "");
+  const [workExperiences, setWorkExperiences] = useState(
+    savedBuilderState.workExperiences || []
+  );
+  const [skills, setSkills] = useState(savedBuilderState.skills || []);
   const [isEditing, setIsEditing] = useState(false);
 
   const [showWorkPopup, setShowWorkPopup] = useState(false);
@@ -48,12 +60,14 @@ const ResumeBuilder = () => {
   const [showReviewPopup, setShowReviewPopup] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false);
 
-  const [resumeStyle, setResumeStyle] = useState(resolvedTemplate);
+  const [resumeStyle, setResumeStyle] = useState(
+    savedBuilderState.resumeStyle || resolvedTemplate
+  );
 
   const [theme, setTheme] = useState({
-    left: "#17639F",
-    job: "#F4ECE1",
-    text: "#000",
+    left: savedBuilderState.theme?.left || "#17639F",
+    job: savedBuilderState.theme?.job || "#F4ECE1",
+    text: savedBuilderState.theme?.text || "#000",
   });
 
   const { user } = useAuth();
@@ -81,9 +95,30 @@ const ResumeBuilder = () => {
     }
   }, [templateId]);
 
+  const resumeDataForSave = {
+    formData,
+    selectedEducations,
+    jobTitle,
+    workExperiences,
+    skills,
+    theme,
+    resumeStyle,
+    templateId: resolvedTemplate,
+  };
+
   useEffect(() => {
-  localStorage.setItem("resumeData", JSON.stringify(formData));
-}, [formData]);
+    localStorage.setItem(storageKey, JSON.stringify(resumeDataForSave));
+    localStorage.setItem("resumeData", JSON.stringify(resumeDataForSave));
+  }, [
+    formData,
+    selectedEducations,
+    jobTitle,
+    workExperiences,
+    skills,
+    theme,
+    resumeStyle,
+    storageKey,
+  ]);
 
 
   /* ---------------- HANDLERS ---------------- */
@@ -283,6 +318,9 @@ const ResumeBuilder = () => {
               workExperiences={workExperiences}
               skills={skills}
               jobTitle={jobTitle}
+              showSaveResume
+              saveTemplateId={`ai-${resumeStyle}`}
+              resumeData={resumeDataForSave}
             />
           </div>
 

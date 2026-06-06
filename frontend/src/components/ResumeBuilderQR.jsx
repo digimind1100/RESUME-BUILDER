@@ -1,5 +1,5 @@
 // ResumeBuilderQR.jsx
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FormPanelQR from "./FormPanelQR";
 import WorkPopup from "./WorkExpPopup";
 import SkillsPopup from "./SkillsPopup";
@@ -15,12 +15,24 @@ import { hasReviewAccess } from "../utils/reviewAccess";
 
 
 const ResumeBuilderQR = () => {
+  const storageKey = "ai-classic-qr_resumeData";
+  const savedBuilderState = (() => {
+    try {
+      return JSON.parse(localStorage.getItem(storageKey)) || {};
+    } catch {
+      return {};
+    }
+  })();
 
-  const [formData, setFormData] = useState({});
-  const [selectedEducations, setSelectedEducations] = useState([]);
-  const [jobTitle, setJobTitle] = useState("");
-  const [workExperiences, setWorkExperiences] = useState([]);
-  const [skills, setSkills] = useState([]);
+  const [formData, setFormData] = useState(savedBuilderState.formData || {});
+  const [selectedEducations, setSelectedEducations] = useState(
+    savedBuilderState.selectedEducations || []
+  );
+  const [jobTitle, setJobTitle] = useState(savedBuilderState.jobTitle || "");
+  const [workExperiences, setWorkExperiences] = useState(
+    savedBuilderState.workExperiences || []
+  );
+  const [skills, setSkills] = useState(savedBuilderState.skills || []);
   const [isEditing, setIsEditing] = useState(false);
   const [showWorkPopup, setShowWorkPopup] = useState(false);
   const [showSkillsPopup, setShowSkillsPopup] = useState(false);
@@ -32,13 +44,37 @@ const ResumeBuilderQR = () => {
   const canAccessPremium = hasReviewAccess(user);
   // Theme colors
   const [theme, setTheme] = useState({
-    left: "#ffffff",
-    job: "#F4ECE1",
-    text: "#000",
+    left: savedBuilderState.theme?.left || "#ffffff",
+    job: savedBuilderState.theme?.job || "#F4ECE1",
+    text: savedBuilderState.theme?.text || "#000",
   });
 
   // QR Code State
-  const [qrData, setQrData] = useState(null);
+  const [qrData, setQrData] = useState(savedBuilderState.qrData || null);
+
+  const resumeDataForSave = {
+    formData,
+    selectedEducations,
+    jobTitle,
+    workExperiences,
+    skills,
+    theme,
+    qrData,
+    templateId: "classic-qr",
+  };
+
+  useEffect(() => {
+    localStorage.setItem(storageKey, JSON.stringify(resumeDataForSave));
+    localStorage.setItem("resumeData", JSON.stringify(resumeDataForSave));
+  }, [
+    formData,
+    selectedEducations,
+    jobTitle,
+    workExperiences,
+    skills,
+    theme,
+    qrData,
+  ]);
 
   // --- Checkbox handlers ---
   const toggleSkillCheckbox = (id) => {
@@ -225,6 +261,9 @@ DOB:${formData.dob || ""}
               workExperiences={workExperiences}
               skills={skills}
               jobTitle={jobTitle}
+              showSaveResume
+              saveTemplateId="ai-classic-qr"
+              resumeData={resumeDataForSave}
             />
           </div>
 
