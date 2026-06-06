@@ -16,8 +16,8 @@ export function paginateSkillsEntries(
 
   const PAGE_HEIGHT_LIMIT = 950;
 
-  const workHeight = workRef.current.getBoundingClientRect().height || 0;
-  const skillsHeight = skillsRef.current.getBoundingClientRect().height || 0;
+  const workHeight = workRef.current.scrollHeight || workRef.current.offsetHeight || 0;
+  const skillsHeight = skillsRef.current.scrollHeight || skillsRef.current.offsetHeight || 0;
   const combinedHeight = workHeight + skillsHeight;
 
   // Use requestAnimationFrame to prevent jerking

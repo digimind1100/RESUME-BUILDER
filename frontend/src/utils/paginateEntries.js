@@ -10,7 +10,8 @@ export function paginateEntries({
   }
 
   const leftRect = containerEl.getBoundingClientRect();
-  const MAX_HEIGHT = leftRect.height; // 🔥 use real column height only
+  const MAX_HEIGHT = containerEl.offsetHeight || leftRect.height;
+  const COLUMN_WIDTH = containerEl.offsetWidth || leftRect.width;
 
   // get computed paddings
   const style = window.getComputedStyle(containerEl);
@@ -25,7 +26,7 @@ export function paginateEntries({
   const tempDiv = document.createElement("div");
   tempDiv.style.position = "absolute";
   tempDiv.style.visibility = "hidden";
-  tempDiv.style.width = `${Math.round(leftRect.width)}px`;
+  tempDiv.style.width = `${Math.round(COLUMN_WIDTH)}px`;
   tempDiv.style.padding = `${padding.top}px ${padding.right}px ${padding.bottom}px ${padding.left}px`;
   tempDiv.style.boxSizing = "border-box";
   tempDiv.style.left = "-9999px";
