@@ -5,6 +5,8 @@ import {
   login as loginApi,
   getCurrentUser,
   logout as logoutApi,
+  sendVerificationCode as sendVerificationCodeApi,
+  verifyEmailCode as verifyEmailCodeApi,
 } from "../api/authApi";
 
 const AuthContext = createContext();
@@ -20,6 +22,10 @@ export function AuthProvider({ children }) {
 
 
   const isAuthenticated = !!user;
+  const isEmailVerified =
+    DEV_MODE.enabled ||
+    user?.emailVerified === true ||
+    user?.isEmailVerified === true;
 
   // ===============================
   // 🔹 RESTORE SESSION ON APP LOAD
@@ -135,6 +141,54 @@ export function AuthProvider({ children }) {
   };
 
   // ===============================
+  // 🔹 EMAIL VERIFICATION
+  // ===============================
+  const sendVerificationCode = async () => {
+    const savedToken = token || localStorage.getItem(TOKEN_KEY);
+
+    if (!savedToken) {
+      return {
+        ok: false,
+        message: "Please login again before verifying your email.",
+      };
+    }
+
+    return sendVerificationCodeApi(savedToken);
+  };
+
+  const verifyEmailCode = async (code) => {
+    const savedToken = token || localStorage.getItem(TOKEN_KEY);
+
+    if (!savedToken) {
+      return {
+        ok: false,
+        message: "Please login again before verifying your email.",
+      };
+    }
+
+    const res = await verifyEmailCodeApi({
+      token: savedToken,
+      code,
+    });
+
+    if (res?.ok && res.user) {
+      setUser(res.user);
+    } else if (res?.ok) {
+      setUser((prev) =>
+        prev
+          ? {
+              ...prev,
+              emailVerified: true,
+              isEmailVerified: true,
+            }
+          : prev
+      );
+    }
+
+    return res;
+  };
+
+  // ===============================
   // 🔹 REFRESH USER (for payments etc.)
   // ===============================
   const refreshUser = async () => {
@@ -173,10 +227,13 @@ export function AuthProvider({ children }) {
         setUser,
         token,
         isAuthenticated,
+        isEmailVerified,
         loading, // only used for app initialization
         initializing,
         signup,
         login,
+        sendVerificationCode,
+        verifyEmailCode,
         logout,
         refreshUser,
       }}

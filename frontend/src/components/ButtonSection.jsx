@@ -17,7 +17,7 @@ export default function ButtonSection({
   showResetResume = false,
   onResetResume,
 }) {
-  const { user } = useAuth();
+  const { user, isEmailVerified } = useAuth();
   const navigate = useNavigate();
   const [showReviewPopup, setShowReviewPopup] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false);
@@ -37,6 +37,12 @@ export default function ButtonSection({
     const token = localStorage.getItem("token");
 
     if (!token || !user) {
+      setPendingAction("download");
+      setShowSignupModal(true);
+      return;
+    }
+
+    if (!isEmailVerified) {
       setPendingAction("download");
       setShowSignupModal(true);
       return;
@@ -161,6 +167,7 @@ export default function ButtonSection({
 
       {showSignupModal && (
         <SignupModal
+          initialMode={user && !isEmailVerified ? "verify" : "signup"}
           onClose={() => setShowSignupModal(false)}
           onSuccess={handleSignupSuccess}
         />

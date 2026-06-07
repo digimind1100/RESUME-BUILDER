@@ -1,19 +1,53 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import "./SignupModal.css";
-import { DEV_MODE } from "../../config/devMode";
 
-export default function SignupModal({onClose, onSuccess }) {
-  const { signup, login } = useAuth();
+export default function SignupModal({ onClose, onSuccess, initialMode = "signup" }) {
+  const { user, signup, login, sendVerificationCode, verifyEmailCode } = useAuth();
 
-  const [mode, setMode] = useState("signup"); // signup | login
+  const [mode, setMode] = useState(initialMode); // signup | login | verify
   const [loading, setLoading] = useState(false);
+  const [resending, setResending] = useState(false);
 
 
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [verificationCode, setVerificationCode] = useState("");
   const [error, setError] = useState("");
+  const [notice, setNotice] = useState("");
+  const [codeSentOnOpen, setCodeSentOnOpen] = useState(false);
+
+  const isUserVerified = (user) =>
+    user?.emailVerified === true || user?.isEmailVerified === true;
+
+  const finishAuth = (user) => {
+    onSuccess && onSuccess(user);
+    onClose();
+  };
+
+  useEffect(() => {
+    if (mode !== "verify" || initialMode !== "verify" || codeSentOnOpen) {
+      return;
+    }
+
+    let active = true;
+    setCodeSentOnOpen(true);
+
+    sendVerificationCode().then((result) => {
+      if (!active) return;
+
+      if (result?.ok) {
+        setNotice("Enter the code sent to your email address.");
+      } else {
+        setError(result?.message || "Could not send verification code.");
+      }
+    });
+
+    return () => {
+      active = false;
+    };
+  }, [codeSentOnOpen, initialMode, mode, sendVerificationCode]);
 
 
   async function handleSubmit(e) {
@@ -22,6 +56,31 @@ export default function SignupModal({onClose, onSuccess }) {
 
     setError("");
     setLoading(true); // start loading
+
+    if (mode === "verify") {
+      if (!verificationCode.trim()) {
+        setError("Please enter the verification code.");
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const result = await verifyEmailCode(verificationCode.trim());
+
+        if (result?.ok) {
+          finishAuth(result.user || user);
+          return;
+        }
+
+        setError(result?.message || "Invalid verification code.");
+      } catch (err) {
+        setError(err?.message || "Verification failed. Please try again.");
+      } finally {
+        setLoading(false);
+      }
+
+      return;
+    }
 
     const payload =
       mode === "signup"
@@ -44,10 +103,19 @@ export default function SignupModal({onClose, onSuccess }) {
           : await login(payload);
           
       if (result?.ok) {
-        const pendingTemplate = localStorage.getItem("pendingTemplate");
+        if (isUserVerified(result.user)) {
+          finishAuth(result.user);
+          return;
+        }
 
-        onSuccess && onSuccess(result.user);
-        onClose();
+        await sendVerificationCode();
+
+        setMode("verify");
+        setNotice(
+          mode === "signup"
+            ? "Account created. Enter the code sent to your email address."
+            : "Please verify your email address before continuing."
+        );
       } else {
         setError(result?.message || "Authentication failed. Please try again.");
       }
@@ -63,19 +131,46 @@ export default function SignupModal({onClose, onSuccess }) {
   function switchMode(nextMode) {
     setMode(nextMode);
     setError("");
+    setNotice("");
     setPassword("");
+    setVerificationCode("");
+  }
+
+  async function handleResendCode() {
+    if (resending) return;
+
+    setError("");
+    setNotice("");
+    setResending(true);
+
+    try {
+      const result = await sendVerificationCode();
+
+      if (result?.ok) {
+        setNotice("A new verification code has been sent.");
+      } else {
+        setError(result?.message || "Could not resend verification code.");
+      }
+    } catch (err) {
+      setError(err?.message || "Could not resend verification code.");
+    } finally {
+      setResending(false);
+    }
   }
 
   return (
     <div className="signup-overlay">
       <div className="signup-modal animate-fadeIn">
         <h2 className="signup-title">
-          {mode === "signup"
-            ? "Create Your Account for Free Access"
-            : "Login to Your Account"}
+          {mode === "verify"
+            ? "Verify Your Email"
+            : mode === "signup"
+              ? "Create Your Account for Free Access"
+              : "Login to Your Account"}
         </h2>
 
         {error && <p className="signup-error">{error}</p>}
+        {notice && <p className="signup-notice">{notice}</p>}
 
         <form onSubmit={handleSubmit} className="signup-form">
           {mode === "signup" && (
@@ -88,35 +183,61 @@ export default function SignupModal({onClose, onSuccess }) {
             />
           )}
 
-          <input
-            type="email"
-            placeholder="Email Address"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+          {mode !== "verify" ? (
+            <>
+              <input
+                type="email"
+                placeholder="Email Address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
 
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </>
+          ) : (
+            <input
+              type="text"
+              inputMode="numeric"
+              placeholder="Verification Code"
+              value={verificationCode}
+              onChange={(e) => setVerificationCode(e.target.value)}
+              autoComplete="one-time-code"
+              required
+            />
+          )}
 
           <button type="submit" disabled={loading}>
             {loading
-              ? mode === "signup"
-                ? "Creating Account..."
-                : "Logging in..."
-              : mode === "signup"
-                ? "Signup"
-                : "Login"}
+              ? mode === "verify"
+                ? "Verifying..."
+                : mode === "signup"
+                  ? "Creating Account..."
+                  : "Logging in..."
+              : mode === "verify"
+                ? "Verify Email"
+                : mode === "signup"
+                  ? "Signup"
+                  : "Login"}
           </button>
         </form>
 
-        <p className="signup-switch">
-          {mode === "signup" ? (
+        {mode === "verify" ? (
+          <p className="signup-switch">
+            Did not receive a code?{" "}
+            <span onClick={handleResendCode}>
+              {resending ? "Sending..." : "Resend code"}
+            </span>
+          </p>
+        ) : (
+          <p className="signup-switch">
+            {mode === "signup" ? (
             <>
               Already have an account?{" "}
               <span onClick={() => switchMode("login")}>Login</span>
@@ -128,8 +249,9 @@ export default function SignupModal({onClose, onSuccess }) {
                 Create account
               </span>
             </>
-          )}
-        </p>
+            )}
+          </p>
+        )}
 
         <button className="signup-cancel" onClick={onClose}>
           Cancel

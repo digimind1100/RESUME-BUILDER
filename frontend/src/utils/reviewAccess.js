@@ -4,6 +4,14 @@ const getReviewAccessKey = (user) => {
 };
 
 export const hasReviewAccess = (user) => {
+  if (
+    user?.emailVerified !== true &&
+    user?.isEmailVerified !== true &&
+    user?.id !== "dev-user"
+  ) {
+    return false;
+  }
+
   const key = getReviewAccessKey(user);
   return key ? localStorage.getItem(key) === "true" : false;
 };

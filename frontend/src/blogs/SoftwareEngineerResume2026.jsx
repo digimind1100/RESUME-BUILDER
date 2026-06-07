@@ -510,7 +510,7 @@ export default function SoftwareEngineerResume2026() {
           content, and download a polished resume ready for job applications.
         </p>
 
-        <Link to="/templates" className="blog-cta-btn">
+        <Link to="/soft-tech" className="blog-cta-btn">
           Create Your Resume Now
         </Link>
       </main>

@@ -14,7 +14,7 @@ const reviewEndpoint = API_BASE.endsWith("/api")
 
 export default function ReviewPopup({ templateId, onClose, onSuccess }) {
   const modalRoot = document.getElementById("modal-root");
-  const { refreshUser, setUser, user } = useAuth();
+  const { isEmailVerified, refreshUser, setUser, user } = useAuth();
 
   const [rating, setRating] = useState(5);
   const [comment, setComment] = useState("Great resume builder");
@@ -30,6 +30,11 @@ export default function ReviewPopup({ templateId, onClose, onSuccess }) {
     const token = localStorage.getItem("token");
     if (!token) {
       setError("Please login again to submit your review.");
+      return;
+    }
+
+    if (!isEmailVerified) {
+      setError("Please verify your email before submitting a review.");
       return;
     }
 

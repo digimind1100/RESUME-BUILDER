@@ -47,6 +47,63 @@ export async function signup(data) {
 }
 
 /* ===============================
+   📧 EMAIL VERIFICATION
+================================ */
+
+export async function sendVerificationCode(token) {
+  try {
+    const res = await API.post(
+      "/auth/send-verification-code",
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    return {
+      ok: res.data.success !== false,
+      message: res.data.message,
+    };
+  } catch (err) {
+    return {
+      ok: false,
+      message:
+        err.response?.data?.message ||
+        "Could not send verification code",
+    };
+  }
+}
+
+export async function verifyEmailCode({ token, code }) {
+  try {
+    const res = await API.post(
+      "/auth/verify-email",
+      { code },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    return {
+      ok: res.data.success !== false,
+      user: res.data.user,
+      message: res.data.message,
+    };
+  } catch (err) {
+    return {
+      ok: false,
+      message:
+        err.response?.data?.message ||
+        "Email verification failed",
+    };
+  }
+}
+
+/* ===============================
    🔐 LOGIN
 ================================ */
 
