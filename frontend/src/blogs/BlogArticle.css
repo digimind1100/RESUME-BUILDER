@@ -1,6 +1,7 @@
 /* Shared article reading styles for all blog posts */
 
-.blog-post {
+.blog-post,
+.blog-article > .blog-container {
   width: min(92%, 880px);
   margin: 0 auto;
   padding: 72px 0 88px;
@@ -12,70 +13,85 @@
 .blog-post h1,
 .blog-post h2,
 .blog-post h3,
-.blog-post h4 {
+.blog-post h4,
+.blog-article > .blog-container h1,
+.blog-article > .blog-container h2,
+.blog-article > .blog-container h3,
+.blog-article > .blog-container h4 {
   color: #111827;
   line-height: 1.25;
 }
 
-.blog-post h1 {
+.blog-post h1,
+.blog-article > .blog-container h1 {
   max-width: 820px;
   margin: 0 0 24px;
   font-size: clamp(2rem, 4vw, 3.25rem);
   font-weight: 800;
 }
 
-.blog-post h2 {
+.blog-post h2,
+.blog-article > .blog-container h2 {
   margin: 56px 0 18px;
   font-size: clamp(1.55rem, 2.4vw, 2.15rem);
   font-weight: 750;
 }
 
-.blog-post h3 {
+.blog-post h3,
+.blog-article > .blog-container h3 {
   margin: 34px 0 10px;
   font-size: 1.25rem;
   font-weight: 750;
 }
 
-.blog-post h4 {
+.blog-post h4,
+.blog-article > .blog-container h4 {
   margin: 26px 0 8px;
   font-size: 1.05rem;
   font-weight: 750;
 }
 
-.blog-post p {
+.blog-post p,
+.blog-article > .blog-container p {
   margin: 0 0 18px;
   color: #374151;
 }
 
-.blog-post strong {
+.blog-post strong,
+.blog-article > .blog-container strong {
   color: #111827;
   font-weight: 750;
 }
 
-.blog-post ul {
+.blog-post ul,
+.blog-article > .blog-container ul {
   margin: 10px 0 24px;
   padding-left: 24px;
 }
 
-.blog-post li {
+.blog-post li,
+.blog-article > .blog-container li {
   margin: 9px 0;
   padding-left: 4px;
   color: #374151;
 }
 
-.blog-post a:not(.blog-cta-btn) {
+.blog-post a:not(.blog-cta-btn),
+.blog-article > .blog-container a:not(.blog-cta-btn) {
   color: #0b67d8;
   font-weight: 700;
   text-decoration: none;
   border-bottom: 1px solid rgba(11, 103, 216, 0.28);
 }
 
-.blog-post a:not(.blog-cta-btn):hover {
+.blog-post a:not(.blog-cta-btn):hover,
+.blog-article > .blog-container a:not(.blog-cta-btn):hover {
   color: #064da6;
   border-bottom-color: currentColor;
 }
 
-.blog-post > p:first-of-type {
+.blog-post > p:first-of-type,
+.blog-article > .blog-container > p:first-of-type {
   font-size: 1.12rem;
   color: #273244;
 }
@@ -146,18 +162,21 @@
 }
 
 @media (max-width: 768px) {
-  .blog-post {
+  .blog-post,
+  .blog-article > .blog-container {
     width: min(92%, 680px);
     padding: 48px 0 64px;
     font-size: 16px;
     line-height: 1.75;
   }
 
-  .blog-post h1 {
+  .blog-post h1,
+  .blog-article > .blog-container h1 {
     font-size: 2rem;
   }
 
-  .blog-post h2 {
+  .blog-post h2,
+  .blog-article > .blog-container h2 {
     margin-top: 42px;
   }
 
