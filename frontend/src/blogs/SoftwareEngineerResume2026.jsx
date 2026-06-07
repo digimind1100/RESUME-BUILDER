@@ -48,8 +48,8 @@ export default function SoftwareEngineerResume2026() {
             Use ResumeBuilder.pk to create a professional ATS-friendly resume
             with ready-made templates.
           </p>
-          <Link to="/templates" className="blog-cta-btn">
-            Create Resume Now
+          <Link to="/soft-tech" className="blog-cta-btn">
+            Create Software Engineer Resume Now
           </Link>
         </div>
 
