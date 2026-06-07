@@ -5,6 +5,7 @@ import App from "./App";
 import { AuthProvider } from "./context/AuthContext";
 import { HelmetProvider } from "react-helmet-async";
 import "./index.css";
+import "./blogs/BlogArticle.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
