@@ -45,6 +45,16 @@ import TextileMerchandiserResume2026 from "./blogs/TextileMerchandiserResume2026
 import ProductionManagerResume2026 from "./blogs/ProductionManagerResume2026";
 import DataEntryOperatorResume2026 from "./blogs/DataEntryOperatorResume2026";
 import BankJobCvFormatPakistan2026 from "./blogs/BankJobCvFormatPakistan2026";
+import HowToWriteWorkExperienceResume from "./blogs/HowToWriteWorkExperienceResume";
+import BestSkillsForResume2026 from "./blogs/BestSkillsForResume2026";
+import HowToWriteProfessionalSummary from "./blogs/HowToWriteProfessionalSummary";
+import AtsResumeGuide from "./blogs/AtsResumeGuide";
+import ResumeMistakesToAvoid2026 from "./blogs/ResumeMistakesToAvoid2026";
+import HowToWriteAchievementsResume from "./blogs/HowToWriteAchievementsResume";
+import OnePageVsTwoPageResume from "./blogs/OnePageVsTwoPageResume";
+import ResumeChecklistBeforeApplying from "./blogs/ResumeChecklistBeforeApplying";
+import HowToWriteCoverLetter from "./blogs/HowToWriteCoverLetter";
+import AtsKeywordsForResumes from "./blogs/AtsKeywordsForResumes";
 
 
 function AppContent() {
@@ -173,6 +183,46 @@ function AppContent() {
         <Route
           path="/blog/bank-job-cv-format-in-pakistan-2026"
           element={<BankJobCvFormatPakistan2026 />}
+        />
+        <Route
+          path="/blog/how-to-write-work-experience-on-a-resume"
+          element={<HowToWriteWorkExperienceResume />}
+        />
+        <Route
+          path="/blog/best-skills-for-a-resume-2026"
+          element={<BestSkillsForResume2026 />}
+        />
+        <Route
+          path="/blog/how-to-write-a-professional-summary"
+          element={<HowToWriteProfessionalSummary />}
+        />
+        <Route
+          path="/blog/ats-resume-guide"
+          element={<AtsResumeGuide />}
+        />
+        <Route
+          path="/blog/resume-mistakes-to-avoid"
+          element={<ResumeMistakesToAvoid2026 />}
+        />
+        <Route
+          path="/blog/how-to-write-achievements-on-a-resume"
+          element={<HowToWriteAchievementsResume />}
+        />
+        <Route
+          path="/blog/one-page-vs-two-page-resume"
+          element={<OnePageVsTwoPageResume />}
+        />
+        <Route
+          path="/blog/resume-checklist-before-applying"
+          element={<ResumeChecklistBeforeApplying />}
+        />
+        <Route
+          path="/blog/how-to-write-a-cover-letter"
+          element={<HowToWriteCoverLetter />}
+        />
+        <Route
+          path="/blog/ats-keywords-for-resumes"
+          element={<AtsKeywordsForResumes />}
         />
         <Route path="/blog/:slug" element={<BlogPost />} />
         <Route path="/pricing" element={<Pricing />} />

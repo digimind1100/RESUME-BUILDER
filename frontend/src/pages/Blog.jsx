@@ -274,6 +274,156 @@ export default function Blog() {
   </Link>
 </article>
 
+{/* Blog 18 */}
+<article className="blog-card">
+  <h2>How to Write Work Experience on a Resume</h2>
+  <p>
+    Learn how to write strong work experience bullets with action verbs,
+    achievements, examples, formatting tips, and ATS-friendly wording.
+  </p>
+  <Link
+    to="/blog/how-to-write-work-experience-on-a-resume"
+    className="blog-read-btn"
+  >
+    Read Full Guide
+  </Link>
+</article>
+
+{/* Blog 19 */}
+<article className="blog-card">
+  <h2>Best Skills for a Resume in 2026</h2>
+  <p>
+    Discover the best hard and soft skills to add to your resume in 2026,
+    with examples, keyword tips, and common mistakes to avoid.
+  </p>
+  <Link
+    to="/blog/best-skills-for-a-resume-2026"
+    className="blog-read-btn"
+  >
+    Read Full Guide
+  </Link>
+</article>
+
+{/* Blog 20 */}
+<article className="blog-card">
+  <h2>How to Write a Professional Summary</h2>
+  <p>
+    Write a clear resume summary that introduces your experience, skills,
+    achievements, and target role in a recruiter-friendly way.
+  </p>
+  <Link
+    to="/blog/how-to-write-a-professional-summary"
+    className="blog-read-btn"
+  >
+    Read Full Guide
+  </Link>
+</article>
+
+{/* Blog 21 */}
+<article className="blog-card">
+  <h2>ATS Resume Guide</h2>
+  <p>
+    Learn how ATS software reads resumes and how to create a clean,
+    keyword-focused, ATS-friendly resume for job applications.
+  </p>
+  <Link
+    to="/blog/ats-resume-guide"
+    className="blog-read-btn"
+  >
+    Read Full Guide
+  </Link>
+</article>
+
+{/* Blog 22 */}
+<article className="blog-card">
+  <h2>Resume Mistakes to Avoid</h2>
+  <p>
+    Avoid common resume mistakes that reduce shortlisting chances, including
+    weak summaries, poor formatting, missing keywords, and vague bullets.
+  </p>
+  <Link
+    to="/blog/resume-mistakes-to-avoid"
+    className="blog-read-btn"
+  >
+    Read Full Guide
+  </Link>
+</article>
+
+{/* Blog 23 */}
+<article className="blog-card">
+  <h2>How to Write Achievements on a Resume</h2>
+  <p>
+    Learn how to turn duties into measurable resume achievements using
+    action verbs, results, examples, and practical writing formulas.
+  </p>
+  <Link
+    to="/blog/how-to-write-achievements-on-a-resume"
+    className="blog-read-btn"
+  >
+    Read Full Guide
+  </Link>
+</article>
+
+{/* Blog 24 */}
+<article className="blog-card">
+  <h2>One Page vs Two Page Resume</h2>
+  <p>
+    Understand when to use a one-page resume, when two pages are acceptable,
+    and how to choose the right length for your experience.
+  </p>
+  <Link
+    to="/blog/one-page-vs-two-page-resume"
+    className="blog-read-btn"
+  >
+    Read Full Guide
+  </Link>
+</article>
+
+{/* Blog 25 */}
+<article className="blog-card">
+  <h2>Resume Checklist Before Applying</h2>
+  <p>
+    Use this practical checklist to review your resume before applying,
+    including contact details, keywords, formatting, file name, and errors.
+  </p>
+  <Link
+    to="/blog/resume-checklist-before-applying"
+    className="blog-read-btn"
+  >
+    Read Full Guide
+  </Link>
+</article>
+
+{/* Blog 26 */}
+<article className="blog-card">
+  <h2>How to Write a Cover Letter</h2>
+  <p>
+    Learn how to write a professional cover letter with the right structure,
+    examples, tone, closing, and mistakes to avoid.
+  </p>
+  <Link
+    to="/blog/how-to-write-a-cover-letter"
+    className="blog-read-btn"
+  >
+    Read Full Guide
+  </Link>
+</article>
+
+{/* Blog 27 */}
+<article className="blog-card">
+  <h2>ATS Keywords for Resumes</h2>
+  <p>
+    Learn how to find and use ATS keywords naturally in your resume summary,
+    skills, work experience, projects, and certifications.
+  </p>
+  <Link
+    to="/blog/ats-keywords-for-resumes"
+    className="blog-read-btn"
+  >
+    Read Full Guide
+  </Link>
+</article>
+
     </div>
   </div>
 </section>
