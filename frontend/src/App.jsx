@@ -35,6 +35,16 @@ import TestPagination from "./Template/TestPagination/TestPagination";
 import FlorenceClassic from "./Template/FlorenceClassic/FlorenceClassic";
 import Blog from "./pages/Blog";
 import SoftwareEngineerResume2026 from "./blogs/SoftwareEngineerResume2026";
+import AccountantResume2026 from "./blogs/AccountantResume2026";
+import TeacherResume2026 from "./blogs/TeacherResume2026";
+import SalesExecutiveResume2026 from "./blogs/SalesExecutiveResume2026";
+import GraphicDesignerResume2026 from "./blogs/GraphicDesignerResume2026";
+import CustomerServiceResume2026 from "./blogs/CustomerServiceResume2026";
+import HrManagerResume2026 from "./blogs/HrManagerResume2026";
+import TextileMerchandiserResume2026 from "./blogs/TextileMerchandiserResume2026";
+import ProductionManagerResume2026 from "./blogs/ProductionManagerResume2026";
+import DataEntryOperatorResume2026 from "./blogs/DataEntryOperatorResume2026";
+import BankJobCvFormatPakistan2026 from "./blogs/BankJobCvFormatPakistan2026";
 
 
 function AppContent() {
@@ -123,6 +133,46 @@ function AppContent() {
         <Route
           path="/blog/software-engineer-resume-example-2026"
           element={<SoftwareEngineerResume2026 />}
+        />
+        <Route
+          path="/blog/accountant-resume-example-2026"
+          element={<AccountantResume2026 />}
+        />
+        <Route
+          path="/blog/teacher-resume-example-2026"
+          element={<TeacherResume2026 />}
+        />
+        <Route
+          path="/blog/sales-executive-resume-example-2026"
+          element={<SalesExecutiveResume2026 />}
+        />
+        <Route
+          path="/blog/graphic-designer-resume-example-2026"
+          element={<GraphicDesignerResume2026 />}
+        />
+        <Route
+          path="/blog/customer-service-representative-resume-example-2026"
+          element={<CustomerServiceResume2026 />}
+        />
+        <Route
+          path="/blog/hr-manager-resume-example-2026"
+          element={<HrManagerResume2026 />}
+        />
+        <Route
+          path="/blog/textile-merchandiser-resume-example-2026"
+          element={<TextileMerchandiserResume2026 />}
+        />
+        <Route
+          path="/blog/production-manager-resume-example-2026"
+          element={<ProductionManagerResume2026 />}
+        />
+        <Route
+          path="/blog/data-entry-operator-resume-example-2026"
+          element={<DataEntryOperatorResume2026 />}
+        />
+        <Route
+          path="/blog/bank-job-cv-format-in-pakistan-2026"
+          element={<BankJobCvFormatPakistan2026 />}
         />
         <Route path="/blog/:slug" element={<BlogPost />} />
         <Route path="/pricing" element={<Pricing />} />

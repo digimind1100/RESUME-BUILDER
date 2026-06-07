@@ -124,6 +124,156 @@ export default function Blog() {
   </Link>
 </article>
 
+{/* Blog 8 */}
+<article className="blog-card">
+  <h2>Accountant Resume Example (2026)</h2>
+  <p>
+    Learn how to create a professional Accountant resume with key skills,
+    experience examples, ATS tips, and resume writing guidance.
+  </p>
+  <Link
+    to="/blog/accountant-resume-example-2026"
+    className="blog-read-btn"
+  >
+    Read Full Guide
+  </Link>
+</article>
+
+{/* Blog 9 */}
+<article className="blog-card">
+  <h2>Teacher Resume Example (2026)</h2>
+  <p>
+    Build a strong Teacher resume with classroom skills, teaching experience,
+    subject expertise, ATS guidance, and practical examples.
+  </p>
+  <Link
+    to="/blog/teacher-resume-example-2026"
+    className="blog-read-btn"
+  >
+    Read Full Guide
+  </Link>
+</article>
+
+{/* Blog 10 */}
+<article className="blog-card">
+  <h2>Sales Executive Resume Example (2026)</h2>
+  <p>
+    Learn how to write a results-focused Sales Executive resume with sales
+    achievements, CRM skills, target examples, and ATS tips.
+  </p>
+  <Link
+    to="/blog/sales-executive-resume-example-2026"
+    className="blog-read-btn"
+  >
+    Read Full Guide
+  </Link>
+</article>
+
+{/* Blog 11 */}
+<article className="blog-card">
+  <h2>Graphic Designer Resume Example (2026)</h2>
+  <p>
+    Create a professional Graphic Designer resume with portfolio guidance,
+    design skills, project examples, ATS tips, and common mistakes.
+  </p>
+  <Link
+    to="/blog/graphic-designer-resume-example-2026"
+    className="blog-read-btn"
+  >
+    Read Full Guide
+  </Link>
+</article>
+
+{/* Blog 12 */}
+<article className="blog-card">
+  <h2>Customer Service Representative Resume Example (2026)</h2>
+  <p>
+    Write a customer service resume that highlights call handling, complaint
+    resolution, CRM tools, communication skills, and service results.
+  </p>
+  <Link
+    to="/blog/customer-service-representative-resume-example-2026"
+    className="blog-read-btn"
+  >
+    Read Full Guide
+  </Link>
+</article>
+
+{/* Blog 13 */}
+<article className="blog-card">
+  <h2>HR Manager Resume Example (2026)</h2>
+  <p>
+    Learn how to present HR leadership, recruitment, employee relations,
+    payroll coordination, policy work, and HR achievements.
+  </p>
+  <Link
+    to="/blog/hr-manager-resume-example-2026"
+    className="blog-read-btn"
+  >
+    Read Full Guide
+  </Link>
+</article>
+
+{/* Blog 14 */}
+<article className="blog-card">
+  <h2>Textile Merchandiser Resume Example (2026)</h2>
+  <p>
+    Build a textile merchandising resume with buyer communication, costing,
+    sampling, production follow-up, shipment tracking, and ATS keywords.
+  </p>
+  <Link
+    to="/blog/textile-merchandiser-resume-example-2026"
+    className="blog-read-btn"
+  >
+    Read Full Guide
+  </Link>
+</article>
+
+{/* Blog 15 */}
+<article className="blog-card">
+  <h2>Production Manager Resume Example (2026)</h2>
+  <p>
+    Create a Production Manager resume with operations achievements, team
+    supervision, quality control, efficiency metrics, and manufacturing skills.
+  </p>
+  <Link
+    to="/blog/production-manager-resume-example-2026"
+    className="blog-read-btn"
+  >
+    Read Full Guide
+  </Link>
+</article>
+
+{/* Blog 16 */}
+<article className="blog-card">
+  <h2>Data Entry Operator Resume Example (2026)</h2>
+  <p>
+    Learn how to write a Data Entry Operator resume with typing speed,
+    accuracy, Excel skills, record handling, ATS tips, and examples.
+  </p>
+  <Link
+    to="/blog/data-entry-operator-resume-example-2026"
+    className="blog-read-btn"
+  >
+    Read Full Guide
+  </Link>
+</article>
+
+{/* Blog 17 */}
+<article className="blog-card">
+  <h2>Bank Job CV Format in Pakistan (2026)</h2>
+  <p>
+    Learn the best CV format for bank jobs in Pakistan with banking skills,
+    customer service examples, compliance keywords, and template tips.
+  </p>
+  <Link
+    to="/blog/bank-job-cv-format-in-pakistan-2026"
+    className="blog-read-btn"
+  >
+    Read Full Guide
+  </Link>
+</article>
+
     </div>
   </div>
 </section>
