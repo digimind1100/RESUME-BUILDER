@@ -2,7 +2,66 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 
+const templateLinks = [
+  {
+    match: "Graphic Designer Resume Example",
+    path: "/creative-bold",
+    label: "Use Graphic Designer Template"
+  },
+  {
+    match: "Teacher Resume Example",
+    path: "/teacher-elite",
+    label: "Use Teacher Template"
+  },
+  {
+    match: "Accountant Resume Example",
+    path: "/clean-professional",
+    label: "Use Accountant Template"
+  },
+  {
+    match: "HR Manager Resume Example",
+    path: "/elegant-classic",
+    label: "Use HR Manager Template"
+  },
+  {
+    match: "Bank Job CV",
+    path: "/florence-classic",
+    label: "Use Bank Job CV Template"
+  },
+  {
+    match: "Customer Service",
+    path: "/clean-professional",
+    label: "Use Customer Service Template"
+  },
+  {
+    match: "Sales Executive Resume Example",
+    path: "/florence-classic",
+    label: "Use Sales Executive Template"
+  },
+  {
+    match: "Data Entry Operator Resume Example",
+    path: "/florence-classic",
+    label: "Use Data Entry Operator Template"
+  },
+  {
+    match: "Textile Merchandiser Resume Example",
+    path: "/florence-classic",
+    label: "Use Textile Merchandiser Template"
+  },
+  {
+    match: "Production Manager Resume Example",
+    path: "/clean-professional",
+    label: "Use Production Manager Template"
+  }
+];
+
 export default function ResumeGuideArticle({ article }) {
+  const templateLink =
+    templateLinks.find(({ match }) => article.title.includes(match)) || {
+      path: "/templates",
+      label: "Create Resume Now"
+    };
+
   return (
     <>
       <Helmet>
@@ -22,8 +81,8 @@ export default function ResumeGuideArticle({ article }) {
           <p>
             Use ResumeBuilder.pk to create a professional ATS-friendly resume with ready-made templates.
           </p>
-          <Link to="/templates" className="blog-cta-btn">
-            Create Resume Now
+          <Link to={templateLink.path} className="blog-cta-btn">
+            {templateLink.label}
           </Link>
         </div>
 
@@ -115,8 +174,8 @@ export default function ResumeGuideArticle({ article }) {
           . For all roles, the right structure, honest achievements, and a clear layout can help you
           apply with more confidence.
         </p>
-        <Link to="/templates" className="blog-cta-btn">
-          Create Your Resume Now
+        <Link to={templateLink.path} className="blog-cta-btn">
+          {templateLink.label}
         </Link>
       </main>
     </>

@@ -131,10 +131,7 @@ export default function Blog() {
     Learn how to create a professional Accountant resume with key skills,
     experience examples, ATS tips, and resume writing guidance.
   </p>
-  <Link
-    to="/blog/accountant-resume-example-2026"
-    className="blog-read-btn"
-  >
+  <Link to="/blog/accountant-resume-example-2026" className="blog-read-btn" >
     Read Full Guide
   </Link>
 </article>
