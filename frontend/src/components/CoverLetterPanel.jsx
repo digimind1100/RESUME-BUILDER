@@ -38,6 +38,11 @@ export default function CoverLetterPanel() {
     new Date(user.accessUntil) > new Date();
   const hasReviewed = hasReviewAccess(user);
   const canUseCoverLetter = isPremium || hasReviewed;
+  const coverLetterUsageKey = user
+    ? `coverLetterGenerated:${user.id || user._id || user.email}`
+    : null;
+  const localCoverLetterUsed =
+    coverLetterUsageKey && localStorage.getItem(coverLetterUsageKey) === "true";
   // 🔥 adjust if your field name differs
 
   const isMobile = window.innerWidth < 768;
@@ -144,8 +149,13 @@ const fullPreviewRef = useRef(null);
         return;
       }
 
-      alert(err.response?.data?.message || "Cover letter generation not allowed");
-      return;
+      const backendRouteMissing =
+        err.response?.status === 404 || err.response?.status === 500;
+
+      if (!backendRouteMissing || localCoverLetterUsed) {
+        setShowPayment(true);
+        return;
+      }
     }
 
     const generated = await generateCoverLetter();
@@ -167,6 +177,9 @@ const fullPreviewRef = useRef(null);
         "Cover letter usage mark error:",
         err.response?.data || err.message
       );
+      if (coverLetterUsageKey) {
+        localStorage.setItem(coverLetterUsageKey, "true");
+      }
     }
   };
 
