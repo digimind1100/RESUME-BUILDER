@@ -4,9 +4,13 @@ import { downloadCoverLetterPDF } from "./downloadCoverLetterPDF";
 import PaymentModal from "../components/payment/PaymentModal";
 import { useAuth } from "../context/AuthContext";
 import { FaLock } from "react-icons/fa";
+import ReviewPopup from "./review/ReviewPopup";
+import SignupModal from "./auth/SignupModal";
+import { hasReviewAccess } from "../utils/reviewAccess";
+import API from "../api/authApi";
 
 export default function CoverLetterPanel() {
-  const { user, refreshUser } = useAuth();
+  const { user, isEmailVerified, refreshUser } = useAuth();
 
   const [companyName, setCompanyName] = useState("");
   const [jobTitle, setJobTitle] = useState("");
@@ -23,12 +27,17 @@ export default function CoverLetterPanel() {
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [showPayment, setShowPayment] = useState(false);
+  const [showReviewPopup, setShowReviewPopup] = useState(false);
+  const [showSignupModal, setShowSignupModal] = useState(false);
+  const [pendingAction, setPendingAction] = useState(null);
   const previewRef = useRef(null);
 
   const isPremium =
     user?.isPaid &&
     user?.accessUntil &&
     new Date(user.accessUntil) > new Date();
+  const hasReviewed = hasReviewAccess(user);
+  const canUseCoverLetter = isPremium || hasReviewed;
   // 🔥 adjust if your field name differs
 
   const isMobile = window.innerWidth < 768;
@@ -56,20 +65,16 @@ const fullPreviewRef = useRef(null);
   console.log("USER AFTER LOGIN:", user);
 
 
-  // ===============================
-  // 🔒 GENERATE HANDLER WITH PAYMENT CHECK
-  // ===============================
-  const handleGenerate = async () => {
-    if (!isPremium) {
-      setShowPayment(true);
-      return;
-    }
-
+  const validateCoverLetterInput = () => {
     if (!companyName || !jobTitle || !yourName) {
       alert("Please fill in Company Name, Job Title, and Your Name");
-      return;
+      return false;
     }
 
+    return true;
+  };
+
+  const generateCoverLetter = async () => {
     setIsLoading(true);
     setGeneratedText("");
 
@@ -97,8 +102,117 @@ const fullPreviewRef = useRef(null);
     } catch (error) {
       console.error(error);
       setGeneratedText("Error generating cover letter. Please try again.");
+      return false;
     } finally {
       setIsLoading(false);
+    }
+
+    return true;
+  };
+
+  const runGenerateWithAccess = async () => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      setPendingAction("generate");
+      setShowSignupModal(true);
+      return;
+    }
+
+    try {
+      const accessRes = await API.get("/stats/cover-letter/access", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (
+        accessRes.data.paymentRequired ||
+        accessRes.data.canGenerateCoverLetter === false
+      ) {
+        setShowPayment(true);
+        return;
+      }
+    } catch (err) {
+      console.error(
+        "Cover letter access check error:",
+        err.response?.data || err.message
+      );
+
+      if (err.response?.status === 402 || err.response?.data?.paymentRequired) {
+        setShowPayment(true);
+        return;
+      }
+
+      alert(err.response?.data?.message || "Cover letter generation not allowed");
+      return;
+    }
+
+    const generated = await generateCoverLetter();
+    if (!generated) return;
+
+    try {
+      await API.post(
+        "/stats/cover-letter/generate",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      await refreshUser();
+    } catch (err) {
+      console.error(
+        "Cover letter usage mark error:",
+        err.response?.data || err.message
+      );
+    }
+  };
+
+  // ===============================
+  // 🔒 GENERATE HANDLER WITH REVIEW + PAYMENT CHECK
+  // ===============================
+  const handleGenerate = async () => {
+    if (!validateCoverLetterInput()) return;
+
+    const token = localStorage.getItem("token");
+
+    if (!token || !user) {
+      setPendingAction("generate");
+      setShowSignupModal(true);
+      return;
+    }
+
+    if (!isEmailVerified) {
+      setPendingAction("generate");
+      setShowSignupModal(true);
+      return;
+    }
+
+    if (!hasReviewed) {
+      setPendingAction("generate");
+      setShowReviewPopup(true);
+      return;
+    }
+
+    await runGenerateWithAccess();
+  };
+
+  const handleReviewSuccess = async () => {
+    setShowReviewPopup(false);
+
+    if (pendingAction === "generate") {
+      setPendingAction(null);
+      await runGenerateWithAccess();
+    }
+  };
+
+  const handleSignupSuccess = () => {
+    setShowSignupModal(false);
+
+    if (pendingAction === "generate") {
+      setShowReviewPopup(true);
     }
   };
 
@@ -143,11 +257,11 @@ const fullPreviewRef = useRef(null);
           <input value={experienceInput} onChange={e => setExperienceInput(e.target.value)} />
 
           <button
-            className={`generate-btn ${!isPremium ? "locked-feature" : ""}`}
+            className={`generate-btn ${!canUseCoverLetter ? "locked-feature" : ""}`}
             onClick={handleGenerate}
           >
-            {!isPremium && <FaLock style={{ marginRight: "8px" }} />}
-            {isPremium ? "Generate Cover Letter" : "Unlock to Generate"}
+            {!canUseCoverLetter && <FaLock style={{ marginRight: "8px" }} />}
+            {canUseCoverLetter ? "Generate Cover Letter" : "Unlock to Generate"}
           </button>
         </div>
 
@@ -245,6 +359,22 @@ const fullPreviewRef = useRef(null);
           isOpen={showPayment}
           onClose={() => setShowPayment(false)}
           onSuccess={handlePaymentSuccess}
+        />
+      )}
+
+      {showReviewPopup && (
+        <ReviewPopup
+          templateId="cover-letter"
+          onClose={() => setShowReviewPopup(false)}
+          onSuccess={handleReviewSuccess}
+        />
+      )}
+
+      {showSignupModal && (
+        <SignupModal
+          initialMode={user && !isEmailVerified ? "verify" : "signup"}
+          onClose={() => setShowSignupModal(false)}
+          onSuccess={handleSignupSuccess}
         />
       )}
     </div>
