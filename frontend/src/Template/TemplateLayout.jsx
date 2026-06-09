@@ -46,9 +46,8 @@ const TemplateLayout = ({
     }
 
     try {
-      const accessRes = await API.post(
-        "/stats/download",
-        { type: "nonAi" },
+      const accessRes = await API.get(
+        "/stats/download/access",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -76,6 +75,20 @@ const TemplateLayout = ({
     }
 
     await onDownloadPDF();
+
+    try {
+      await API.post(
+        "/stats/download",
+        { type: "nonAi" },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    } catch (err) {
+      console.error("PDF download mark error:", err.response?.data || err.message);
+    }
   };
 
 
