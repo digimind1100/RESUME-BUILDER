@@ -7,7 +7,6 @@ import useProfileImage from "../../hooks/useProfileImage";
 import useResumeTemplate from "../../hooks/useResumeTemplate";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-import API from "../../api/authApi";
 
 export default function AviationPro() {
   const pdfGeneratingRef = useRef(false);
@@ -484,43 +483,6 @@ Profile: ${aviationData.info.profileLink}
   if (pdfGeneratingRef.current) return;
 
   let wrapper = null;
-
-  try {
-    const token = localStorage.getItem("token");
-
-    if (!token) {
-      alert("Please login again");
-      return;
-    }
-
-    const accessRes = await API.post(
-      "/stats/download",
-      { type: "nonAi" },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-
-    if (
-      accessRes.data.paymentRequired ||
-      accessRes.data.canDownloadPdf === false
-    ) {
-      setShowPaymentModal(true);
-      return;
-    }
-  } catch (err) {
-    console.error("PDF access check error:", err.response?.data || err.message);
-
-    if (err.response?.status === 402 || err.response?.data?.paymentRequired) {
-      setShowPaymentModal(true);
-      return;
-    }
-
-    alert(err.response?.data?.message || "Download not allowed");
-    return;
-  }
 
   pdfGeneratingRef.current = true;
 

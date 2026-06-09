@@ -3,10 +3,11 @@ import React, { useEffect, useState, useRef } from "react";
 
 import SignupModal from "../components/auth/SignupModal";
 import ReviewPopup from "../components/review/ReviewPopup";
+import PaymentModal from "../components/payment/PaymentModal";
 import "./TemplateLayout.css";
 import { useNavigate } from "react-router-dom";
 import { hasReviewAccess } from "../utils/reviewAccess";
-import { trackResumeDownload } from "../services/statsService";
+import API from "../api/authApi";
 
 
 const TemplateLayout = ({
@@ -22,6 +23,7 @@ const TemplateLayout = ({
   const [pendingAction, setPendingAction] = useState(null);
   const [showSignupModal, setShowSignupModal] = useState(false);
   const [showReviewPopup, setShowReviewPopup] = useState(false);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
 
   const resumeRef = React.useRef(null);
   
@@ -35,8 +37,45 @@ const TemplateLayout = ({
   };
 
   const runDownloadPDF = async () => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      setPendingAction("download");
+      window.dispatchEvent(new Event("openSignupModal"));
+      return;
+    }
+
+    try {
+      const accessRes = await API.post(
+        "/stats/download",
+        { type: "nonAi" },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (
+        accessRes.data.paymentRequired ||
+        accessRes.data.canDownloadPdf === false
+      ) {
+        setShowPaymentModal(true);
+        return;
+      }
+    } catch (err) {
+      console.error("PDF access check error:", err.response?.data || err.message);
+
+      if (err.response?.status === 402 || err.response?.data?.paymentRequired) {
+        setShowPaymentModal(true);
+        return;
+      }
+
+      alert(err.response?.data?.message || "Download not allowed");
+      return;
+    }
+
     await onDownloadPDF();
-    await trackResumeDownload("nonAi");
   };
 
 
@@ -189,6 +228,13 @@ const TemplateLayout = ({
           templateId={templateId}
           onClose={() => setShowReviewPopup(false)}
           onSuccess={handleReviewSuccess}
+        />
+      )}
+
+      {showPaymentModal && (
+        <PaymentModal
+          onClose={() => setShowPaymentModal(false)}
+          onSuccess={() => setShowPaymentModal(false)}
         />
       )}
 
