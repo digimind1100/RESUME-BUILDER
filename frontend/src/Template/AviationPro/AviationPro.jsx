@@ -7,6 +7,7 @@ import useProfileImage from "../../hooks/useProfileImage";
 import useResumeTemplate from "../../hooks/useResumeTemplate";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import API from "../../api/authApi";
 
 export default function AviationPro() {
   const pdfGeneratingRef = useRef(false);
@@ -482,35 +483,37 @@ Profile: ${aviationData.info.profileLink}
  const handleDownloadPDF = async () => {
   if (pdfGeneratingRef.current) return;
 
-  try {
-    const token = localStorage.getItem("token");
+try {
+  const token = localStorage.getItem("token");
 
-    const accessRes = await axios.post(
-      `${API_BASE}/api/stats/download`,
-      { type: "nonAi" },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-
-    if (
-      accessRes.data.paymentRequired ||
-      accessRes.data.canDownloadPdf === false
-    ) {
-      setShowPaymentModal(true);
-      return;
+  const accessRes = await API.post(
+    "/stats/download",
+    { type: "nonAi" },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     }
-  } catch (err) {
-    if (err.response?.status === 402 || err.response?.data?.paymentRequired) {
-      setShowPaymentModal(true);
-      return;
-    }
+  );
 
-    alert(err.response?.data?.message || "Download not allowed");
+  if (
+    accessRes.data.paymentRequired ||
+    accessRes.data.canDownloadPdf === false
+  ) {
+    setShowPaymentModal(true);
     return;
   }
+} catch (err) {
+  console.error("PDF access check error:", err.response?.data || err.message);
+
+  if (err.response?.status === 402 || err.response?.data?.paymentRequired) {
+    setShowPaymentModal(true);
+    return;
+  }
+
+  alert(err.response?.data?.message || "Download not allowed");
+  return;
+}
 
   pdfGeneratingRef.current = true;
   let wrapper = null;
