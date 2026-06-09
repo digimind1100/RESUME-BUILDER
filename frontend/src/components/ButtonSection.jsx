@@ -5,7 +5,9 @@ import { downloadResumeAndTriggerReview } from "./DownloadPDF";
 import { useAuth } from "../context/AuthContext";
 import ReviewPopup from "./review/ReviewPopup";
 import SignupModal from "./auth/SignupModal";
+import PaymentModal from "./payment/PaymentModal";
 import { hasReviewAccess } from "../utils/reviewAccess";
+import API from "../api/authApi";
 
 export default function ButtonSection({
   isEditing,
@@ -21,13 +23,62 @@ export default function ButtonSection({
   const navigate = useNavigate();
   const [showReviewPopup, setShowReviewPopup] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [pendingAction, setPendingAction] = useState(null);
 
   const canAccessPremium = hasReviewAccess(user);
 
   const runDownload = async () => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      setPendingAction("download");
+      setShowSignupModal(true);
+      return;
+    }
+
     try {
-      await downloadResumeAndTriggerReview({});
+      const accessRes = await API.get("/stats/download/access", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (
+        accessRes.data.paymentRequired ||
+        accessRes.data.canDownloadPdf === false
+      ) {
+        setShowPaymentModal(true);
+        return;
+      }
+    } catch (err) {
+      console.error("AI PDF access check error:", err.response?.data || err.message);
+
+      if (err.response?.status === 402 || err.response?.data?.paymentRequired) {
+        setShowPaymentModal(true);
+        return;
+      }
+
+      alert(err.response?.data?.message || "Download not allowed");
+      return;
+    }
+
+    try {
+      const downloaded = await downloadResumeAndTriggerReview({
+        downloadType: "ai",
+      });
+
+      if (!downloaded) return;
+
+      await API.post(
+        "/stats/download",
+        { type: "ai" },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
     } catch (err) {
       console.error("Download / Review error:", err);
     }
@@ -170,6 +221,13 @@ export default function ButtonSection({
           initialMode={user && !isEmailVerified ? "verify" : "signup"}
           onClose={() => setShowSignupModal(false)}
           onSuccess={handleSignupSuccess}
+        />
+      )}
+
+      {showPaymentModal && (
+        <PaymentModal
+          onClose={() => setShowPaymentModal(false)}
+          onSuccess={() => setShowPaymentModal(false)}
         />
       )}
     </div>

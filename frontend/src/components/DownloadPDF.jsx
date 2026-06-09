@@ -1,5 +1,4 @@
 import html2pdf from "html2pdf.js";
-import { trackResumeDownload } from "../services/statsService";
 
 export async function downloadResumeAndTriggerReview({
   element,
@@ -49,7 +48,6 @@ export async function downloadResumeAndTriggerReview({
       })
       .save();
 
-    await trackResumeDownload(downloadType);
     return true;
   } finally {
     checkboxes.forEach((cb) => (cb.style.display = ""));
