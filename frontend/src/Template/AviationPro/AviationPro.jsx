@@ -479,22 +479,54 @@ Profile: ${aviationData.info.profileLink}
     });
   };
 
-  const handleDownloadPDF = async () => {
-    if (pdfGeneratingRef.current) return;
+ const handleDownloadPDF = async () => {
+  if (pdfGeneratingRef.current) return;
 
-    pdfGeneratingRef.current = true;
-    let wrapper = null;
+  try {
+    const token = localStorage.getItem("token");
 
-    try {
-      const originalElement = document.querySelector(".resume-a4.av-a4");
-
-      if (!originalElement) {
-        console.error("AviationPro resume element not found");
-        return;
+    const accessRes = await axios.post(
+      `${API_BASE}/api/stats/download`,
+      { type: "nonAi" },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       }
+    );
 
-      const element = originalElement.cloneNode(true);
-      replaceEditableFieldsForPDF(element);
+    if (
+      accessRes.data.paymentRequired ||
+      accessRes.data.canDownloadPdf === false
+    ) {
+      setShowPaymentModal(true);
+      return;
+    }
+  } catch (err) {
+    if (err.response?.status === 402 || err.response?.data?.paymentRequired) {
+      setShowPaymentModal(true);
+      return;
+    }
+
+    alert(err.response?.data?.message || "Download not allowed");
+    return;
+  }
+
+  pdfGeneratingRef.current = true;
+  let wrapper = null;
+
+  try {
+    const originalElement = document.querySelector(".resume-a4.av-a4");
+
+    if (!originalElement) {
+      console.error("AviationPro resume element not found");
+      return;
+    }
+
+    const element = originalElement.cloneNode(true);
+    replaceEditableFieldsForPDF(element);
+
+
 
       wrapper = document.createElement("div");
       wrapper.style.position = "fixed";
