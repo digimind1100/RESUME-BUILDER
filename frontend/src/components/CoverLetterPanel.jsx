@@ -83,14 +83,12 @@ const fullPreviewRef = useRef(null);
     setIsLoading(true);
     setGeneratedText("");
 
-    const API_BASE =
-      import.meta.env.VITE_API_URL || "http://localhost:3001";
+    const token = localStorage.getItem("token");
 
     try {
-      const res = await fetch(`${API_BASE}/api/cover-letter`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
+      const res = await API.post(
+        "/cover-letter",
+        {
           companyName,
           jobTitle,
           yourName,
@@ -99,14 +97,26 @@ const fullPreviewRef = useRef(null);
           experienceInput,
           startGreeting,
           endGreeting,
-        }),
-      });
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
-      const data = await res.json();
-      setGeneratedText(data.coverLetter || "Error generating cover letter.");
+      setGeneratedText(
+        res.data.coverLetter || "Error generating cover letter."
+      );
     } catch (error) {
-      console.error(error);
-      setGeneratedText("Error generating cover letter. Please try again.");
+      console.error(
+        "Cover letter generation error:",
+        error.response?.data || error.message
+      );
+      setGeneratedText(
+        error.response?.data?.message ||
+          "Error generating cover letter. Please try again."
+      );
       return false;
     } finally {
       setIsLoading(false);
