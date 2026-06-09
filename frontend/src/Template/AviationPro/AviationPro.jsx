@@ -483,40 +483,46 @@ Profile: ${aviationData.info.profileLink}
  const handleDownloadPDF = async () => {
   if (pdfGeneratingRef.current) return;
 
-try {
-  const token = localStorage.getItem("token");
+  let wrapper = null;
 
-  const accessRes = await API.post(
-    "/stats/download",
-    { type: "nonAi" },
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+  try {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      alert("Please login again");
+      return;
     }
-  );
 
-  if (
-    accessRes.data.paymentRequired ||
-    accessRes.data.canDownloadPdf === false
-  ) {
-    setShowPaymentModal(true);
+    const accessRes = await API.post(
+      "/stats/download",
+      { type: "nonAi" },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    if (
+      accessRes.data.paymentRequired ||
+      accessRes.data.canDownloadPdf === false
+    ) {
+      setShowPaymentModal(true);
+      return;
+    }
+  } catch (err) {
+    console.error("PDF access check error:", err.response?.data || err.message);
+
+    if (err.response?.status === 402 || err.response?.data?.paymentRequired) {
+      setShowPaymentModal(true);
+      return;
+    }
+
+    alert(err.response?.data?.message || "Download not allowed");
     return;
   }
-} catch (err) {
-  console.error("PDF access check error:", err.response?.data || err.message);
-
-  if (err.response?.status === 402 || err.response?.data?.paymentRequired) {
-    setShowPaymentModal(true);
-    return;
-  }
-
-  alert(err.response?.data?.message || "Download not allowed");
-  return;
-}
 
   pdfGeneratingRef.current = true;
-  let wrapper = null;
 
   try {
     const originalElement = document.querySelector(".resume-a4.av-a4");
@@ -608,17 +614,17 @@ try {
       pdf.addImage(imgData, "JPEG", 0, 0, 210, 297, undefined, "FAST");
       pdf.save("AviationPro-resume.pdf");
     } catch (error) {
-      console.error("AviationPro PDF download error:", error);
-    } finally {
-      if (wrapper && document.body.contains(wrapper)) {
-        document.body.removeChild(wrapper);
-      }
-
-      setTimeout(() => {
-        pdfGeneratingRef.current = false;
-      }, 1000);
+    console.error("AviationPro PDF download error:", error);
+  } finally {
+    if (wrapper && document.body.contains(wrapper)) {
+      document.body.removeChild(wrapper);
     }
-  };
+
+    setTimeout(() => {
+      pdfGeneratingRef.current = false;
+    }, 1000);
+  }
+};
 
   return (
     <TemplateLayout
