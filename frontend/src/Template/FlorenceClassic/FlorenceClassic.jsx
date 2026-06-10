@@ -772,7 +772,6 @@ if (isMobile) {
                                     <li className="skills-bullet" key={i}>
                                         <input
                                             className="skill-input"
-                                            className="skills-input"
                                             value={skill}
                                             onInput={(e) => handleChange("skills", e.target.value)}
                                             onChange={(e) =>
