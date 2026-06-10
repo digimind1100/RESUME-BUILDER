@@ -112,7 +112,7 @@ export default function PaymentModal({ onClose, onSuccess }) {
           },
           body: JSON.stringify({
             method,
-            amount: 599,
+            amount: 299,
             transactionId,
           }),
         }
@@ -203,7 +203,7 @@ export default function PaymentModal({ onClose, onSuccess }) {
           One-time payment to unlock full editing
         </p>
 
-        <div className="payment-price">Rs 599</div>
+        <div className="payment-price">Rs 299</div>
         <div className="payment-note">
           Valid for 30 days · Instant access via PayFast
         </div>
@@ -252,7 +252,7 @@ export default function PaymentModal({ onClose, onSuccess }) {
         {status === "idle" && selectedAccount && (
           <div className="payment-instructions">
             <strong>{selectedAccount.name} Payment</strong>
-            <p>Send <b>Rs 599</b> to:</p>
+            <p>Send <b>Rs 299</b> to:</p>
             <p>
               <b>Account:</b> {selectedAccount.number}<br />
               <b></b> {selectedAccount.holder}
@@ -270,7 +270,7 @@ export default function PaymentModal({ onClose, onSuccess }) {
     />
 
     <p className="qr-payment-text">
-      Scan this QR code and pay <b>Rs 599</b> via EasyPaisa.
+      Scan this QR code and pay <b>Rs 299</b> via EasyPaisa.
     </p>
 
     <p className="qr-payment-note">
