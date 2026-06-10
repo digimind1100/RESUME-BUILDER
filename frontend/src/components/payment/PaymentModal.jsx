@@ -240,7 +240,10 @@ export default function PaymentModal({ onClose, onSuccess }) {
               <label
                 key={p}
                 className={`payment-option ${method === p ? "active" : ""}`}
-                onClick={() => handleMethodToggle(p)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleMethodToggle(p);
+                }}
               >
                 <input
                   type="radio"
@@ -248,8 +251,7 @@ export default function PaymentModal({ onClose, onSuccess }) {
                   value={p}
                   disabled={loading}
                   checked={method === p}
-                  onChange={() => {}}
-                  onClick={(e) => e.preventDefault()}
+                  readOnly
                 />
                 <img
                   src={PAYMENT_ACCOUNTS[p].logo}
