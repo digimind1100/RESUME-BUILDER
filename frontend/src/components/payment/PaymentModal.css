@@ -290,21 +290,25 @@
 .payment-modal {
   max-height: 90vh;
   overflow-y: auto;
-scroll-behavior: smooth;
+  scroll-behavior: smooth;
+  scrollbar-gutter: stable;
   border-radius: 16px; /* keep your existing radius */
-  padding-right: 6px;  /* space for scrollbar */
+  padding-right: 14px;  /* space for scrollbar */
 }
 .payment-modal::-webkit-scrollbar {
-  width: 6px;
+  width: 12px;
 }
 
 .payment-modal::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.28);
   border-radius: 10px;
+  border: 3px solid transparent;
+  background-clip: content-box;
 }
 
 .payment-modal::-webkit-scrollbar-track {
-  background: transparent;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
 }
 
 

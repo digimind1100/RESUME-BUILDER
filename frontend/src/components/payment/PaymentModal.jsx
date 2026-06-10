@@ -190,6 +190,18 @@ export default function PaymentModal({ onClose, onSuccess }) {
 
   const selectedAccount = method ? PAYMENT_ACCOUNTS[method] : null;
 
+  const handleMethodToggle = (paymentMethod) => {
+    if (loading) return;
+
+    if (method === paymentMethod) {
+      setMethod("");
+      setTransactionId("");
+      return;
+    }
+
+    setMethod(paymentMethod);
+  };
+
   /* ===============================
      🧱 RENDER
      =============================== */
@@ -228,13 +240,16 @@ export default function PaymentModal({ onClose, onSuccess }) {
               <label
                 key={p}
                 className={`payment-option ${method === p ? "active" : ""}`}
+                onClick={() => handleMethodToggle(p)}
               >
                 <input
                   type="radio"
                   name="payment"
                   value={p}
                   disabled={loading}
-                  onChange={(e) => setMethod(e.target.value)}
+                  checked={method === p}
+                  onChange={() => {}}
+                  onClick={(e) => e.preventDefault()}
                 />
                 <img
                   src={PAYMENT_ACCOUNTS[p].logo}
