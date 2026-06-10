@@ -5,7 +5,7 @@ import "./PaymentModal.css";
 import easypaisaLogo from "../../assets/payments/easypaisa.png";
 import jazzcashLogo from "../../assets/payments/jazzcash.png";
 import sadapayLogo from "../../assets/payments/sadapay.png";
-import easypaisaQR from "../../assets/payments/easypaisa-qr.png";
+import easypaisaQR from "../../assets/payments/easypaisa-qr.jpeg";
 
 import { useAuth } from "../../context/AuthContext";
 
