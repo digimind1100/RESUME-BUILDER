@@ -104,7 +104,7 @@ export default function AdminPendingPayments() {
                 <tr key={p._id}>
                   <td data-label="User">
                     <span className="admin-user-email">
-                      {p.userId.email}
+                      {p.userId?.email || "Unknown user"}
                     </span>
                   </td>
 
