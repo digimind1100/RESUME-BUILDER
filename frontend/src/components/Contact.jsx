@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import "./Contact.css";
 
+const API_BASE =
+  import.meta.env.VITE_API_BASE_URL ||
+  "https://resume-builder-backend-66wy.onrender.com/api";
+
 export default function Contact() {
   const [formData, setFormData] = useState({
     name: "",
@@ -23,16 +27,13 @@ export default function Contact() {
     setLoading(true);
 
     try {
-      const response = await fetch(
-        "https://resume-builder-backend-production-116d.up.railway.app/api/contact",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      );
+      const response = await fetch(`${API_BASE}/contact`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
       const data = await response.json();
 

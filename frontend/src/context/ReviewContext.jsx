@@ -26,10 +26,12 @@ const triggerReview = ({ onSuccess } = {}) => {
     setShowReview(false);
   };
 
-const API_BASE = "https://resume-builder-backend-production-116d.up.railway.app";
+const API_BASE =
+  import.meta.env.VITE_API_BASE_URL ||
+  "https://resume-builder-backend-66wy.onrender.com/api";
 
 const submitReview = async (data) => {
-  await fetch(`${API_BASE}/api/reviews`, {
+  await fetch(`${API_BASE}/reviews`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
