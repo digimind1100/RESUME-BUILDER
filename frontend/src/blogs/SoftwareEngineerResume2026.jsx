@@ -510,6 +510,25 @@ export default function SoftwareEngineerResume2026() {
           content, and download a polished resume ready for job applications.
         </p>
 
+        <h2>Related Articles</h2>
+        <ul>
+          <li>
+            <Link to="/blog/resume-checklist-before-applying">
+              Resume Checklist Before Applying
+            </Link>
+          </li>
+          <li>
+            <Link to="/blog/how-to-write-a-professional-summary">
+              How to Write a Professional Summary
+            </Link>
+          </li>
+          <li>
+            <Link to="/blog/ats-keywords-for-resumes">
+              ATS Keywords for Resumes
+            </Link>
+          </li>
+        </ul>
+
         <Link to="/soft-tech" className="blog-cta-btn">
           Create Your Resume Now
         </Link>
