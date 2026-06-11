@@ -2,6 +2,10 @@
 import { useEffect, useState } from "react";
 import "./AdminPendingPayments.css";
 
+const API_BASE =
+  import.meta.env.VITE_API_BASE_URL ||
+  "https://resume-builder-backend-66wy.onrender.com/api";
+
 export default function AdminPendingPayments() {
   const [payments, setPayments] = useState([]);
 
@@ -14,35 +18,37 @@ export default function AdminPendingPayments() {
   const fetchPending = async () => {
     const token = localStorage.getItem("token");
 
-    const res = await fetch(
-      "https://resume-builder-backend-production-116d.up.railway.app/api/payments/admin/pending",
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const res = await fetch(`${API_BASE}/payments/admin/pending`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     const data = await res.json();
     if (data.success) {
       setPayments(data.payments);
+    } else {
+      alert(data.message || "Failed to load pending payments");
     }
   };
 
   const approvePayment = async (paymentId) => {
     const token = localStorage.getItem("token");
 
-    await fetch(
-      "https://resume-builder-backend-production-116d.up.railway.app/api/payments/admin/approve",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ paymentId }),
-      }
-    );
+    const res = await fetch(`${API_BASE}/payments/admin/approve`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ paymentId }),
+    });
+
+    const data = await res.json();
+    if (!res.ok) {
+      alert(data.message || "Failed to approve payment");
+      return;
+    }
 
     fetchPending();
   };
@@ -52,17 +58,14 @@ export default function AdminPendingPayments() {
 
     const token = localStorage.getItem("token");
 
-    const res = await fetch(
-      "https://resume-builder-backend-production-116d.up.railway.app/api/payments/admin/reject",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ paymentId }),
-      }
-    );
+    const res = await fetch(`${API_BASE}/payments/admin/reject`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ paymentId }),
+    });
 
     const data = await res.json();
     if (res.ok) {

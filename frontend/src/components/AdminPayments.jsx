@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 
+const API_BASE =
+  import.meta.env.VITE_API_BASE_URL ||
+  "https://resume-builder-backend-66wy.onrender.com/api";
+
 export default function AdminPayments() {
   const [payments, setPayments] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -9,13 +13,11 @@ export default function AdminPayments() {
   const token = localStorage.getItem("rb_auth_token");
 
   // 🔥 BACKEND BASE URL
-  const API = "https://resume-builder-backend-production-116d.up.railway.app";
-
   const fetchPayments = async () => {
     setLoading(true);
 
     const res = await fetch(
-      `${API}/api/payments/admin/pending`,
+      `${API_BASE}/payments/admin/pending`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -24,6 +26,12 @@ export default function AdminPayments() {
     );
 
     const data = await res.json();
+    if (!res.ok) {
+      alert(data.message || "Failed to load pending payments");
+      setLoading(false);
+      return;
+    }
+
     setPayments(data.payments || []);
     setLoading(false);
   };
@@ -33,7 +41,7 @@ export default function AdminPayments() {
   }, []);
 
   const approvePayment = async (paymentId) => {
-    await fetch(`${API}/api/payments/admin/approve`, {
+    const res = await fetch(`${API_BASE}/payments/admin/approve`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -41,13 +49,19 @@ export default function AdminPayments() {
       },
       body: JSON.stringify({ paymentId }),
     });
+
+    const data = await res.json();
+    if (!res.ok) {
+      alert(data.message || "Failed to approve payment");
+      return;
+    }
 
     await refreshUser();
     fetchPayments();
   };
 
   const rejectPayment = async (paymentId) => {
-    await fetch(`${API}/api/payments/admin/reject`, {
+    const res = await fetch(`${API_BASE}/payments/admin/reject`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -55,6 +69,12 @@ export default function AdminPayments() {
       },
       body: JSON.stringify({ paymentId }),
     });
+
+    const data = await res.json();
+    if (!res.ok) {
+      alert(data.message || "Failed to reject payment");
+      return;
+    }
 
     fetchPayments();
   };
