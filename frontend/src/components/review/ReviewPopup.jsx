@@ -12,14 +12,19 @@ const reviewEndpoint = API_BASE.endsWith("/api")
   ? `${API_BASE}/reviews`
   : `${API_BASE}/api/reviews`;
 
+const MIN_REVIEW_LENGTH = 50;
+
 export default function ReviewPopup({ templateId, onClose, onSuccess }) {
   const modalRoot = document.getElementById("modal-root");
   const { isEmailVerified, refreshUser, setUser, user } = useAuth();
 
   const [rating, setRating] = useState(5);
-  const [comment, setComment] = useState("Great resume builder");
+  const [comment, setComment] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const trimmedComment = comment.trim();
+  const remainingChars = Math.max(0, MIN_REVIEW_LENGTH - trimmedComment.length);
+  const isReviewValid = trimmedComment.length >= MIN_REVIEW_LENGTH;
 
   if (!modalRoot) return null;
 
@@ -38,6 +43,11 @@ export default function ReviewPopup({ templateId, onClose, onSuccess }) {
       return;
     }
 
+    if (!isReviewValid) {
+      setError(`Please write at least ${MIN_REVIEW_LENGTH} characters about your experience.`);
+      return;
+    }
+
     setLoading(true);
     setError("");
 
@@ -50,7 +60,7 @@ export default function ReviewPopup({ templateId, onClose, onSuccess }) {
         },
         body: JSON.stringify({
           rating,
-          comment,
+          comment: trimmedComment,
           templateId,
         }),
       });
@@ -93,7 +103,7 @@ export default function ReviewPopup({ templateId, onClose, onSuccess }) {
       <div className="review-gate-modal">
         <h2 className="review-gate-title">Unlock Resume Access</h2>
         <p className="review-gate-subtitle">
-          Leave a quick review to continue.
+          Share one genuine sentence about your experience to continue.
         </p>
 
         <form onSubmit={handleSubmit}>
@@ -121,16 +131,21 @@ export default function ReviewPopup({ templateId, onClose, onSuccess }) {
             rows="4"
             value={comment}
             onChange={(event) => setComment(event.target.value)}
-            placeholder="Tell us what you think..."
+            placeholder="What helped you most: templates, AI writing, PDF download, or ease of use?"
             required
           />
+          <div className={isReviewValid ? "review-gate-help valid" : "review-gate-help"}>
+            {isReviewValid
+              ? "Thank you. This looks helpful."
+              : `${remainingChars} more characters needed for a meaningful review.`}
+          </div>
 
           {error && <div className="review-gate-error">{error}</div>}
 
           <button
             type="submit"
             className="review-gate-submit"
-            disabled={loading || !comment.trim()}
+            disabled={loading || !isReviewValid}
           >
             {loading ? "Submitting..." : "Submit Review"}
           </button>

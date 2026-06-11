@@ -145,6 +145,26 @@
 .star:hover {
   transform: scale(1.15);
 }
+
+.review-helper {
+  margin-top: 6px;
+  color: #64748b;
+  font-size: 12px;
+}
+
+.review-helper.valid {
+  color: #047857;
+}
+
+.review-error {
+  margin-top: 10px;
+  padding: 9px 10px;
+  border-radius: 8px;
+  background: #fee2e2;
+  color: #991b1b;
+  font-size: 13px;
+}
+
 /* ===== Submit Review Button (Polished) ===== */
 .submit-review-btn {
   margin-top: 16px;

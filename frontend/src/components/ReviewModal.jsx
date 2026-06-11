@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import "./ReviewModal.css";
 
+const MIN_REVIEW_LENGTH = 50;
+
 export default function ReviewModal({
   onClose,
   onSubmit,
@@ -13,6 +15,10 @@ export default function ReviewModal({
   const [review, setReview] = useState("");
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState("");
+  const [error, setError] = useState("");
+  const trimmedReview = review.trim();
+  const remainingChars = Math.max(0, MIN_REVIEW_LENGTH - trimmedReview.length);
+  const isReviewValid = trimmedReview.length >= MIN_REVIEW_LENGTH;
 
   // ✅ NAME AUTO-FILL (GUARANTEED)
   useEffect(() => {
@@ -27,8 +33,14 @@ export default function ReviewModal({
     e.preventDefault();
     if (loading) return;
 
+    if (!isReviewValid) {
+      setError(`Please write at least ${MIN_REVIEW_LENGTH} characters about your experience.`);
+      return;
+    }
+
     setLoading(true);
-    await onSubmit({ name, rating, review });
+    setError("");
+    await onSubmit({ name, rating, review: trimmedReview });
     setLoading(false);
     onClose();
   };
@@ -66,19 +78,30 @@ export default function ReviewModal({
           </div>
 
           {/* ✍️ REVIEW */}
-          <label>Review (optional)</label>
+          <label>Review</label>
           <textarea
             rows="4"
             value={review}
-            onChange={(e) => setReview(e.target.value)}
-            placeholder="Write your feedback..."
+            onChange={(e) => {
+              setReview(e.target.value);
+              setError("");
+            }}
+            placeholder="What helped you most: templates, AI writing, PDF download, or ease of use?"
+            required
           />
+          <div className={isReviewValid ? "review-helper valid" : "review-helper"}>
+            {isReviewValid
+              ? "Thank you. This looks helpful."
+              : `${remainingChars} more characters needed for a meaningful review.`}
+          </div>
+
+          {error && <div className="review-error">{error}</div>}
 
           {/* 🌟 PRETTY BUTTON */}
           <button
             type="submit"
             className="submit-review-btn"
-            disabled={loading}
+            disabled={loading || !isReviewValid}
           >
             {loading ? "Submitting..." : "Submit Review"}
           </button>
