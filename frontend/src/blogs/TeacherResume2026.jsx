@@ -98,7 +98,25 @@ const article = {
     }
   ],
   finalParagraph:
-    "A strong Teacher resume should clearly show your subjects, class levels, teaching methods, and student impact. Keep it structured, honest, and focused on learning outcomes."
+    "A strong Teacher resume should clearly show your subjects, class levels, teaching methods, and student impact. Keep it structured, honest, and focused on learning outcomes.",
+  relatedArticles: [
+    {
+      title: "Resume Checklist Before Applying",
+      path: "/blog/resume-checklist-before-applying"
+    },
+    {
+      title: "How to Write a Professional Summary",
+      path: "/blog/how-to-write-a-professional-summary"
+    },
+    {
+      title: "ATS Keywords for Resumes",
+      path: "/blog/ats-keywords-for-resumes"
+    },
+    {
+      title: "How to Write Work Experience",
+      path: "/blog/how-to-write-work-experience-on-a-resume"
+    }
+  ]
 };
 
 export default function TeacherResume2026() {

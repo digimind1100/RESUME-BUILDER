@@ -98,7 +98,21 @@ const article = {
     }
   ],
   finalParagraph:
-    "A strong Sales Executive resume should be energetic, specific, and results-focused. Show what you sold, who you served, and how your work helped the company grow."
+    "A strong Sales Executive resume should be energetic, specific, and results-focused. Show what you sold, who you served, and how your work helped the company grow.",
+  relatedArticles: [
+    {
+      title: "ATS Resume Guide",
+      path: "/blog/ats-resume-guide"
+    },
+    {
+      title: "Resume Checklist Before Applying",
+      path: "/blog/resume-checklist-before-applying"
+    },
+    {
+      title: "Best Skills for a Resume",
+      path: "/blog/best-skills-for-a-resume-2026"
+    }
+  ]
 };
 
 export default function SalesExecutiveResume2026() {
