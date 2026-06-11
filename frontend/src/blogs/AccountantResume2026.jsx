@@ -98,7 +98,21 @@ const article = {
     }
   ],
   finalParagraph:
-    "A strong Accountant resume should feel accurate, organized, and trustworthy. Focus on clean formatting, measurable finance work, relevant software, and keywords that match the role."
+    "A strong Accountant resume should feel accurate, organized, and trustworthy. Focus on clean formatting, measurable finance work, relevant software, and keywords that match the role.",
+  relatedArticles: [
+    {
+      title: "Resume Checklist Before Applying",
+      path: "/blog/resume-checklist-before-applying"
+    },
+    {
+      title: "How to Write a Professional Summary",
+      path: "/blog/how-to-write-a-professional-summary"
+    },
+    {
+      title: "ATS Keywords for Resumes",
+      path: "/blog/ats-keywords-for-resumes"
+    }
+  ]
 };
 
 export default function AccountantResume2026() {

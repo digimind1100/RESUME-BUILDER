@@ -174,6 +174,18 @@ export default function ResumeGuideArticle({ article }) {
           . For all roles, the right structure, honest achievements, and a clear layout can help you
           apply with more confidence.
         </p>
+        {article.relatedArticles?.length > 0 && (
+          <>
+            <h2>Related Articles</h2>
+            <ul>
+              {article.relatedArticles.map((relatedArticle) => (
+                <li key={relatedArticle.path}>
+                  <Link to={relatedArticle.path}>{relatedArticle.title}</Link>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
         <Link to={templateLink.path} className="blog-cta-btn">
           {templateLink.label}
         </Link>
