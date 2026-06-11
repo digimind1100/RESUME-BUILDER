@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import { AuthProvider } from "./context/AuthContext";
 import { HelmetProvider } from "react-helmet-async";
+import "./styles/theme.css";
 import "./index.css";
 import "./blogs/BlogArticle.css";
 
