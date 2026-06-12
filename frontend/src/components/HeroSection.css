@@ -5,9 +5,7 @@
   align-items: center;
   padding-top: 90px;
   padding: 80px 0;
-  background:
-    radial-gradient(circle at 12% 18%, rgba(240, 231, 111, 0.32), transparent 28%),
-    linear-gradient(180deg, var(--rb-bg) 0%, var(--rb-bg-soft) 100%);
+  background-color: #f9fafc;
    
 }
 
@@ -35,23 +33,23 @@
 }
 
 .hero-title span {
-  color: var(--rb-primary);
+  color: #0077ff;
 }
 
 .hero-titleh3 span {
-  color: var(--rb-primary);
+  color: #0077ff;
   font-weight: 600;
   font-size: 25px;
 }
 
 .hero-subtitle {
   font-size: 1.1rem;
-  color: var(--rb-text-muted);
+  color: #555;
   margin: 14px 0 24px;
 }
 
 .hero-btn {
-  background: var(--rb-primary);
+  background: #0077ff;
   color: white;
   padding: 12px 26px;
   border-radius: 8px;
@@ -62,7 +60,7 @@
 }
 
 .hero-btn:hover {
-  background: var(--rb-primary-strong);
+  background: #005fcc;
 }
 
 /* ==== RIGHT SIDE MOCKUP ==== */

@@ -4,7 +4,7 @@
 
 .home-reviews {
   padding: 80px 20px;
-  background: var(--rb-bg);
+  background: #f9fafb;
 }
 
 .home-reviews-title {
@@ -12,7 +12,7 @@
   font-size: 28px;
   font-weight: 700;
   margin-bottom: 45px;
-  color: var(--rb-text);
+  color: #111827;
 }
 
 /* =========================
@@ -35,8 +35,7 @@
   background: #ffffff;
   border-radius: 14px;
   padding: 22px 20px;
-  border: 1px solid var(--rb-border);
-  box-shadow: 0 10px 30px rgba(24, 33, 15, 0.06);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
   transition: all 0.25s ease;
   display: flex;
   flex-direction: column;
@@ -45,7 +44,7 @@
 
 .review-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 16px 40px rgba(79, 127, 49, 0.13);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
 }
 
 /* =========================
@@ -62,13 +61,13 @@
 .review-name {
   font-size: 15px;
   font-weight: 600;
-  color: var(--rb-text);
+  color: #111827;
   text-transform: capitalize;
 }
 
 .review-stars {
   font-size: 14px;
-  color: var(--rb-highlight);
+  color: #f5a623;
   letter-spacing: 1px;
 }
 
@@ -79,7 +78,7 @@
 .review-comment {
   font-size: 14px;
   line-height: 1.6;
-  color: var(--rb-text-muted);
+  color: #4b5563;
   margin-top: 4px;
   word-break: break-word;
 }
@@ -125,7 +124,7 @@
 }
 
 .view-more-btn {
-  background: var(--rb-secondary);
+  background: #111827;
   color: #ffffff;
   padding: 12px 26px;
   border-radius: 8px;
@@ -137,6 +136,6 @@
 }
 
 .view-more-btn:hover {
-  background: var(--rb-primary);
+  background: #2563eb;
   transform: translateY(-2px);
 }

@@ -1,19 +1,15 @@
 :root {
-  --rb-primary: #4f7f31;
-  --rb-primary-strong: #355f1f;
-  --rb-secondary: #25331c;
-  --rb-accent: #e89951;
-  --rb-accent-strong: #c76636;
-  --rb-highlight: #ecb65f;
-  --rb-warm: #f0e76f;
-  --rb-fresh: #a5cf83;
-  --rb-bg: #fffdf3;
-  --rb-bg-soft: #f8f5df;
+  --rb-primary: #0b63f6;
+  --rb-primary-strong: #084fc4;
+  --rb-secondary: #111827;
+  --rb-accent: #20c997;
+  --rb-bg: #f7f9fc;
+  --rb-bg-soft: #eef4fb;
   --rb-surface: #ffffff;
-  --rb-border: #e6dec4;
-  --rb-text: #18210f;
-  --rb-text-soft: #39462f;
-  --rb-text-muted: #6d715f;
+  --rb-border: #d8e0ea;
+  --rb-text: #0f172a;
+  --rb-text-soft: #334155;
+  --rb-text-muted: #64748b;
   --rb-shadow-sm: 0 10px 24px rgba(15, 23, 42, 0.06);
   --rb-shadow-md: 0 18px 42px rgba(15, 23, 42, 0.1);
   --rb-shadow-lg: 0 28px 80px rgba(15, 23, 42, 0.16);
@@ -31,6 +27,6 @@ body {
 }
 
 ::selection {
-  background: rgba(240, 231, 111, 0.55);
+  background: rgba(11, 99, 246, 0.18);
   color: var(--rb-text);
 }

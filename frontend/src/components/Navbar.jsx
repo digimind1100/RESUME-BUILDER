@@ -37,6 +37,7 @@ export default function Navbar() {
   );
 
   const handleLinkClick = () => setMenuOpen(false);
+  const getLinkClass = (path) => (location.pathname === path ? "active" : "");
 
   return (
     <>
@@ -54,15 +55,15 @@ export default function Navbar() {
 
         {/* NAV LINKS */}
         <ul className={`navbar-links ${menuOpen ? "open" : ""}`}>
-          <li><Link to="/" onClick={handleLinkClick}>Home</Link></li>
-          <li><Link to="/templates" onClick={handleLinkClick}>Templates</Link></li>
-          <li><Link to="/features" onClick={handleLinkClick}>Features</Link></li>
-          <li><Link to="/coverletter" onClick={handleLinkClick}>Cover Letter</Link></li>
-          <li><Link to="/policies" onClick={handleLinkClick}>Policies</Link></li>
+          <li><Link to="/" className={getLinkClass("/")} onClick={handleLinkClick}>Home</Link></li>
+          <li><Link to="/templates" className={getLinkClass("/templates")} onClick={handleLinkClick}>Templates</Link></li>
+          <li><Link to="/features" className={getLinkClass("/features")} onClick={handleLinkClick}>Features</Link></li>
+          <li><Link to="/coverletter" className={getLinkClass("/coverletter")} onClick={handleLinkClick}>Cover Letter</Link></li>
+          <li><Link to="/policies" className={getLinkClass("/policies")} onClick={handleLinkClick}>Policies</Link></li>
           {/* Pricing is hidden from the navbar. Restore this line to show it again. */}
           {/* <li><Link to="/pricing" onClick={handleLinkClick}>Pricing</Link></li> */}
-          <li><Link to="/blog" onClick={handleLinkClick}>Blog</Link></li>
-          <li><Link to="/contact" onClick={handleLinkClick}>Contact</Link></li>
+          <li><Link to="/blog" className={getLinkClass("/blog")} onClick={handleLinkClick}>Blog</Link></li>
+          <li><Link to="/contact" className={getLinkClass("/contact")} onClick={handleLinkClick}>Contact</Link></li>
 
 
           {/* MOBILE AUTH */}
@@ -105,11 +106,17 @@ export default function Navbar() {
         </ul>
 
         {/* HAMBURGER */}
-        <div className="hamburger" onClick={() => setMenuOpen(p => !p)}>
+        <button
+          type="button"
+          className={`hamburger ${menuOpen ? "open" : ""}`}
+          onClick={() => setMenuOpen(p => !p)}
+          aria-label="Toggle navigation menu"
+          aria-expanded={menuOpen}
+        >
           <span className="bar"></span>
           <span className="bar"></span>
           <span className="bar"></span>
-        </div>
+        </button>
 
         {/* RIGHT AVATAR */}
         {!menuOpen && (
