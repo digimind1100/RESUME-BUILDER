@@ -5,7 +5,9 @@
   align-items: center;
   padding-top: 90px;
   padding: 80px 0;
-  background-color: #f9fafc;
+  background:
+    radial-gradient(circle at 12% 18%, rgba(240, 231, 111, 0.32), transparent 28%),
+    linear-gradient(180deg, var(--rb-bg) 0%, var(--rb-bg-soft) 100%);
    
 }
 
@@ -33,23 +35,23 @@
 }
 
 .hero-title span {
-  color: #0077ff;
+  color: var(--rb-primary);
 }
 
 .hero-titleh3 span {
-  color: #0077ff;
+  color: var(--rb-primary);
   font-weight: 600;
   font-size: 25px;
 }
 
 .hero-subtitle {
   font-size: 1.1rem;
-  color: #555;
+  color: var(--rb-text-muted);
   margin: 14px 0 24px;
 }
 
 .hero-btn {
-  background: #0077ff;
+  background: var(--rb-primary);
   color: white;
   padding: 12px 26px;
   border-radius: 8px;
@@ -60,7 +62,7 @@
 }
 
 .hero-btn:hover {
-  background: #005fcc;
+  background: var(--rb-primary-strong);
 }
 
 /* ==== RIGHT SIDE MOCKUP ==== */

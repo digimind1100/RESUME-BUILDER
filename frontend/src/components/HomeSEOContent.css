@@ -5,7 +5,7 @@
   justify-content: center;
   align-items: center;
   padding: 80px 0;          /* ONLY top & bottom padding */
-  background-color: #f9fafc; /* Same as hero */
+  background-color: var(--rb-bg);
 }
 
 .seo-container {
@@ -23,13 +23,13 @@
 }
 
 .seo-section h2 span {
-  color: #0077ff;
+  color: var(--rb-primary);
 }
 
 /* Paragraph style aligned with hero subtitle */
 .seo-section p {
   font-size: 1.05rem;
-  color: #555;
+  color: var(--rb-text-muted);
   line-height: 1.8;
   margin-bottom: 18px;
 }
@@ -51,7 +51,7 @@
 }
 
 .seo-section a {
-  color: #0077ff;
+  color: var(--rb-primary);
   text-decoration: none;
   font-weight: 600;
 }

@@ -1,7 +1,7 @@
 .features-section {
-  background: #f9fafc;
+  background: var(--rb-bg);
   padding: 80px 20px;
-  color: #1f2937;
+  color: var(--rb-text);
   font-family: "Inter", sans-serif;
 }
 
@@ -17,7 +17,7 @@
 .section-title {
   font-size: 2.2rem;
   font-weight: 700;
-  color: #111827;
+  color: var(--rb-text);
   margin-bottom: 40px;
   position: relative;
 }
@@ -27,7 +27,7 @@
   display: block;
   width: 80px;
   height: 4px;
-  background: #4f46e5;
+  background: var(--rb-accent);
   border-radius: 2px;
   margin: 12px auto 0;
 }
@@ -45,7 +45,8 @@
   background: #ffffff;
   border-radius: 16px;
   padding: 28px 22px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--rb-border);
+  box-shadow: 0 2px 12px rgba(24, 33, 15, 0.08);
   transition: all 0.3s ease;
   width: 100%;
   max-width: 360px;
@@ -53,7 +54,7 @@
 
 .card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 8px 22px rgba(79, 127, 49, 0.14);
 }
 
 /* Icons */
@@ -69,12 +70,12 @@
   font-weight: 600;
   margin-top: 10;
   margin-bottom: 10px;
-  color: #111827;
+  color: var(--rb-text);
 }
 
 /* Text */
 .card-text {
-  color: #4b5563;
+  color: var(--rb-text-muted);
   line-height: 1.6;
 }
 
@@ -89,7 +90,7 @@
   top: 16px;
   left: 50%;
   transform: translateX(-50%);
-  background: #4f46e5;
+  background: var(--rb-primary);
   color: white;
   width: 40px;
   height: 40px;
@@ -104,7 +105,7 @@
 /* Testimonials */
 .testimonial-card {
   background: white;
-  border-left: 4px solid #4f46e5;
+  border-left: 4px solid var(--rb-accent);
   border-radius: 12px;
   padding: 24px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
@@ -118,13 +119,13 @@
 
 .testimonial-text {
   font-style: italic;
-  color: #374151;
+  color: var(--rb-text-soft);
   margin-bottom: 12px;
 }
 
 .testimonial-author {
   font-weight: 600;
-  color: #111827;
+  color: var(--rb-text);
 }
 
 /* Responsive tweaks */

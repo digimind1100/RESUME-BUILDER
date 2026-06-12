@@ -2,7 +2,7 @@
    SECTION
 =================================*/
 .counter-block-section {
-  background: #f4f7fc;
+  background: var(--rb-bg-soft);
   padding: 80px 20px;
   text-align: center;
 }
@@ -15,13 +15,13 @@
 .counter-title {
   font-size: 2.4rem;
   font-weight: 700;
-  color: #1f2937;
+  color: var(--rb-text);
   margin-bottom: 10px;
 }
 
 .counter-subtitle {
   font-size: 1.1rem;
-  color: #4b5563;
+  color: var(--rb-text-muted);
   margin-bottom: 50px;
 }
 
@@ -42,7 +42,8 @@
   padding: 30px 25px;
   border-radius: 12px;
   min-width: 200px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+  border: 1px solid var(--rb-border);
+  box-shadow: 0 8px 20px rgba(24, 33, 15, 0.06);
   transition: 0.3s ease;
 }
 
@@ -53,13 +54,13 @@
 .counter-number {
   font-size: 2rem;
   font-weight: 700;
-  color: #3b82f6;
+  color: var(--rb-primary);
   margin-bottom: 6px;
 }
 
 .counter-label {
   font-size: 1rem;
-  color: #374151;
+  color: var(--rb-text-soft);
 }
 
 
@@ -77,7 +78,7 @@
   max-width: 600px;
   padding: 45px 20px 30px;
   background: #ffffff;
-  border: 2px solid #e5e7eb;
+  border: 2px solid var(--rb-border);
   border-radius: 12px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.05);
   text-align: center;
@@ -96,7 +97,7 @@
   /* Half section bg, half card bg */
   background: linear-gradient(
     to bottom,
-    #f4f7fc 50%,
+    var(--rb-bg-soft) 50%,
     #ffffff 50%
   );
 
@@ -114,7 +115,7 @@
 
 /* Full star */
 .star.full {
-  color: #ffb400;
+  color: var(--rb-highlight);
 }
 
 .star.empty {
@@ -125,7 +126,7 @@
 .star.partial {
   background: linear-gradient(
     to right,
-    #ffb400 60%,
+    var(--rb-highlight) 60%,
     #e6e6e6 40%
   );
   -webkit-background-clip: text;
