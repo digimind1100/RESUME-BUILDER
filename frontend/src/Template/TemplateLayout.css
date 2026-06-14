@@ -131,6 +131,7 @@
     overflow-x: auto;
     overscroll-behavior-x: contain;
     scrollbar-width: none;
+    max-width: 100%;
   }
 
   .template-layout .toolbar::-webkit-scrollbar {
