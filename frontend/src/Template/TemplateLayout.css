@@ -8,9 +8,10 @@
 }
 
 .template-layout .toolbar {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
+  position: fixed;
+  top: 70px;
+  left: 0;
+  z-index: 99998;
   width: 100%;
   min-height: 74px;
   display: flex;
@@ -120,10 +121,12 @@
   width: 100%;
   display: flex;
   justify-content: center;
+  padding-top: 74px;
 }
 
 @media (max-width: 768px) {
   .template-layout .toolbar {
+    top: 64px;
     min-height: auto;
     justify-content: center;
     flex-wrap: nowrap;
@@ -149,8 +152,6 @@
 
 @media (max-width: 480px) {
   .template-layout .toolbar {
-    position: sticky;
-    top: 0;
     padding: 8px;
     gap: 7px;
   }
@@ -160,6 +161,12 @@
     padding: 6px 5px;
     font-size: 10px;
     letter-spacing: 0;
+  }
+}
+
+@media (max-width: 900px) and (orientation: landscape) {
+  .template-layout .toolbar {
+    top: 56px;
   }
 }
 
