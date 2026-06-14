@@ -117,7 +117,7 @@ export default function SignupModal({ onClose, onSuccess, initialMode = "signup"
           size: "large",
           text: mode === "signup" ? "signup_with" : "signin_with",
           shape: "rectangular",
-          width: 330,
+          width: Math.min(330, googleButtonRef.current.clientWidth || 330),
         });
       })
       .catch(() => {
