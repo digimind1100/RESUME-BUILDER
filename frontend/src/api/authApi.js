@@ -47,6 +47,34 @@ export async function signup(data) {
 }
 
 /* ===============================
+   🟦 GOOGLE AUTH
+================================ */
+
+export async function googleAuth(data) {
+  try {
+    const endpoint =
+      import.meta.env.VITE_GOOGLE_AUTH_ENDPOINT || "/auth/google";
+
+    const res = await API.post(endpoint, data);
+
+    return {
+      ok: res.data.success,
+      token: res.data.token,
+      user: res.data.user,
+      message: res.data.message,
+    };
+  } catch (err) {
+    return {
+      ok: false,
+      message:
+        err.response?.data?.message ||
+        err.message ||
+        "Google authentication failed",
+    };
+  }
+}
+
+/* ===============================
    📧 EMAIL VERIFICATION
 ================================ */
 

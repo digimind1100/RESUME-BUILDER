@@ -2,6 +2,7 @@
 import { DEV_MODE } from "../config/devMode";
 import {
   signup as signupApi,
+  googleAuth as googleAuthApi,
   login as loginApi,
   getCurrentUser,
   logout as logoutApi,
@@ -111,6 +112,35 @@ export function AuthProvider({ children }) {
     };
   }
 };
+
+
+  // ===============================
+  // 🔹 GOOGLE AUTH
+  // ===============================
+  const googleAuth = async (payload) => {
+    try {
+      const res = await googleAuthApi(payload);
+
+      if (res?.ok && res?.token) {
+        localStorage.setItem(TOKEN_KEY, res.token);
+        setToken(res.token);
+        setUser(res.user);
+        return { ok: true, user: res.user };
+      }
+
+      return {
+        ok: false,
+        message: res?.message || "Google authentication failed",
+      };
+    } catch (error) {
+      console.error("Google auth error:", error);
+
+      return {
+        ok: false,
+        message: "Server error. Please try again.",
+      };
+    }
+  };
 
 
   // ===============================
@@ -231,6 +261,7 @@ export function AuthProvider({ children }) {
         loading, // only used for app initialization
         initializing,
         signup,
+        googleAuth,
         login,
         sendVerificationCode,
         verifyEmailCode,
