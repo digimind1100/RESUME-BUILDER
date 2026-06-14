@@ -126,18 +126,18 @@
   .template-layout .toolbar {
     min-height: auto;
     justify-content: center;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     gap: 8px;
     padding: 10px 10px 12px;
     overflow-x: hidden;
   }
 
   .template-layout .toolbar button {
-    flex: 1 1 calc(50% - 8px);
+    flex: 1 1 0;
     min-width: 0;
-    max-width: calc(50% - 4px);
+    max-width: none;
     min-height: 40px;
-    padding: 0 13px;
+    padding: 6px 8px;
     border-radius: 6px;
     font-size: 12px;
     line-height: 1.15;
@@ -156,18 +156,22 @@
   }
 
   .template-layout .toolbar button {
-    flex-basis: calc(50% - 7px);
-    max-width: calc(50% - 4px);
     min-height: 38px;
-    padding: 0 11px;
-    font-size: 11px;
+    padding: 6px 5px;
+    font-size: 10px;
     letter-spacing: 0;
   }
 }
 
 @media (max-width: 340px) {
+  .template-layout .toolbar {
+    gap: 5px;
+    padding: 7px 5px;
+  }
+
   .template-layout .toolbar button {
-    flex-basis: 100%;
-    max-width: 100%;
+    min-height: 36px;
+    padding: 5px 3px;
+    font-size: 9px;
   }
 }
