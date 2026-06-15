@@ -6,7 +6,7 @@ const FeaturesHowTestimonials = () => {
     <section id="features-how-testimonials" className="features-section">
       {/* ---------- Features Section ---------- */}
       <div className="section-container">
-        <h2 className="section-title">Why Choose Our Resume Builder?</h2>
+        <h2 className="section-title">How It Works</h2>
         <div className="card-grid">
           <div className="card">
             <img src="/icons/easy-edit.svg" alt="Easy Editing" className="card-icon" />

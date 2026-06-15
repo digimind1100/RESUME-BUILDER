@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchAllReviews } from "../services/reviewService";
+import { fetchAllReviews, fetchHomeReviews } from "../services/reviewService";
 import ReviewCard from "./ReviewCard";
 import "./HomeReviews.css";
 
@@ -10,10 +10,10 @@ export default function HomeReviews() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchAllReviews()
-      .then((data) => {
-        setAllCount(data.length);
-        setReviews(data.slice(0, 6));
+    Promise.all([fetchHomeReviews(), fetchAllReviews()])
+      .then(([homeReviews, allReviews]) => {
+        setAllCount(allReviews.length);
+        setReviews(homeReviews);
       })
       .catch((err) => console.error("Review fetch error:", err));
   }, []);
