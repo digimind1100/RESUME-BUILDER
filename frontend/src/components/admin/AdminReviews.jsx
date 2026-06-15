@@ -16,10 +16,11 @@ export default function AdminReviews() {
   const [error, setError] = useState("");
   const [updatingId, setUpdatingId] = useState(null);
   const [homeReviewChoices, setHomeReviewChoices] = useState({});
+  const [statusFilter, setStatusFilter] = useState("pending");
 
   useEffect(() => {
-    fetchPendingReviews();
-  }, []);
+    fetchReviews(statusFilter);
+  }, [statusFilter]);
 
   const getAuthHeaders = () => {
     const token = localStorage.getItem("token");
@@ -30,17 +31,17 @@ export default function AdminReviews() {
     };
   };
 
-  const fetchPendingReviews = async () => {
+  const fetchReviews = async (status) => {
     try {
       setLoading(true);
       setError("");
 
-      const res = await fetch(`${adminReviewEndpoint}?status=pending`, {
+      const res = await fetch(`${adminReviewEndpoint}?status=${status}`, {
         headers: getAuthHeaders(),
       });
 
       if (!res.ok) {
-        throw new Error("Failed to fetch pending reviews");
+        throw new Error(`Failed to fetch ${status} reviews`);
       }
 
       const data = await res.json();
@@ -55,7 +56,7 @@ export default function AdminReviews() {
       );
     } catch (err) {
       console.error("Failed to fetch reviews", err);
-      setError("Failed to load pending reviews.");
+      setError(`Failed to load ${status} reviews.`);
       setReviews([]);
     } finally {
       setLoading(false);
@@ -96,7 +97,24 @@ export default function AdminReviews() {
 
   return (
     <div style={{ padding: "30px" }}>
-      <h2 style={{ marginBottom: "15px" }}>Pending Reviews</h2>
+      <h2 style={{ marginBottom: "15px" }}>Reviews</h2>
+
+      <div className="admin-tabs" aria-label="Review status filter">
+        <button
+          className={statusFilter === "pending" ? "active" : ""}
+          onClick={() => setStatusFilter("pending")}
+          type="button"
+        >
+          Pending
+        </button>
+        <button
+          className={statusFilter === "approved" ? "active" : ""}
+          onClick={() => setStatusFilter("approved")}
+          type="button"
+        >
+          Approved
+        </button>
+      </div>
 
       <div className="admin-card">
         <table className="admin-table">
@@ -123,7 +141,7 @@ export default function AdminReviews() {
             {!loading && reviews.length === 0 && (
               <tr>
                 <td colSpan="6" style={{ textAlign: "center" }}>
-                  {error || "No pending reviews"}
+                  {error || `No ${statusFilter} reviews`}
                 </td>
               </tr>
             )}
@@ -136,40 +154,46 @@ export default function AdminReviews() {
                   {review.comment || review.review || "-"}
                 </td>
                 <td>
-                  <span className="badge pending">
-                    {review.status || "pending"}
+                  <span className={`badge ${review.status || statusFilter}`}>
+                    {review.status || statusFilter}
                   </span>
                 </td>
                 <td>
-                  <label className="admin-checkbox">
-                    <input
-                      type="checkbox"
-                      checked={Boolean(homeReviewChoices[review._id])}
-                      disabled={updatingId === review._id}
-                      onChange={(event) =>
-                        setHomeReviewChoices((prev) => ({
-                          ...prev,
-                          [review._id]: event.target.checked,
-                        }))
-                      }
-                    />
-                    <span>Show on home</span>
-                  </label>
+                  {statusFilter === "pending" ? (
+                    <label className="admin-checkbox">
+                      <input
+                        type="checkbox"
+                        checked={Boolean(homeReviewChoices[review._id])}
+                        disabled={updatingId === review._id}
+                        onChange={(event) =>
+                          setHomeReviewChoices((prev) => ({
+                            ...prev,
+                            [review._id]: event.target.checked,
+                          }))
+                        }
+                      />
+                      <span>Show on home</span>
+                    </label>
+                  ) : (
+                    <span>{review.showOnHome ? "Yes" : "No"}</span>
+                  )}
                 </td>
                 <td>
-                  <button
-                    className="btn approve"
-                    disabled={updatingId === review._id}
-                    onClick={() => updateStatus(review._id, "approved")}
-                  >
-                    Approve
-                  </button>
+                  {statusFilter === "pending" && (
+                    <button
+                      className="btn approve"
+                      disabled={updatingId === review._id}
+                      onClick={() => updateStatus(review._id, "approved")}
+                    >
+                      Approve
+                    </button>
+                  )}
                   <button
                     className="btn reject"
                     disabled={updatingId === review._id}
                     onClick={() => updateStatus(review._id, "rejected")}
                   >
-                    Reject
+                    {statusFilter === "approved" ? "Remove" : "Reject"}
                   </button>
                 </td>
               </tr>
