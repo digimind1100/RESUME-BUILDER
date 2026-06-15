@@ -1,21 +1,10 @@
-html,
-body,
-#root {
-  margin: 0;
-  padding: 0;
-  background: #020617;
-}
-
-
 /* Home.css - Hero Section styles */
 
 .home-page {
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
     Arial;
-    background: #020617;
-  color: #ffffff;
-  min-height: 100vh;
-  padding-top: 70px;
+  color: #111827;
+  padding-top: 90px; /* navbar height */
   
 }
 

@@ -12,16 +12,10 @@ export default function HeroSection() {
 
   return (
     <section className="hero-container">
-      <div className="hero-glow hero-glow-one"></div>
-      <div className="hero-glow hero-glow-two"></div>
-
       <div className="hero-content">
         <div className="hero-text">
-          <div className="hero-badge">#1 AI Resume Builder in Pakistan</div>
-
           <h1 className="hero-title">
-            Free AI Resume Builder in Pakistan – Create a{" "}
-            <span>Professional CV</span> in Minutes
+            Free AI Resume Builder in Pakistan – Create a <span>Professional CV</span> in Minutes
           </h1>
 
           <h3 className="hero-titleh3">
@@ -33,31 +27,23 @@ export default function HeroSection() {
             Choose professional templates and download your ATS-friendly resume in minutes.
           </p>
 
-          <div className="hero-points">
-            <span>✓ ATS Friendly</span>
-            <span>✓ Mobile Editing</span>
-            <span>✓ Instant PDF Download</span>
-          </div>
-
           <button onClick={handleStartBuilding} className="hero-btn">
             Start Building
           </button>
         </div>
 
         <div className="hero-illustration">
-          <div className="mockup-glass">
-            <div className="mockup-box">
-              <video
-                className="mockup-video"
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="auto"
-              >
-                <source src="/demo/mockup.mp4" type="video/mp4" />
-              </video>
-            </div>
+          <div className="mockup-box">
+            <video
+              className="mockup-video"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+            >
+              <source src="/demo/mockup.mp4" type="video/mp4" />
+            </video>
           </div>
         </div>
       </div>
