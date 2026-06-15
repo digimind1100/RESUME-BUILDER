@@ -95,6 +95,40 @@ export default function AdminReviews() {
     }
   };
 
+  const updateHomeCard = async (id, showOnHome) => {
+    try {
+      setUpdatingId(id);
+      setHomeReviewChoices((prev) => ({ ...prev, [id]: showOnHome }));
+
+      const res = await fetch(`${adminReviewEndpoint}/${id}/approve`, {
+        method: "POST",
+        headers: getAuthHeaders(),
+        body: JSON.stringify({ status: "approved", showOnHome }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Request failed");
+      }
+
+      const data = await res.json();
+      const updatedReview = data.review;
+
+      if (updatedReview?._id) {
+        setReviews((prev) =>
+          prev.map((review) =>
+            review._id === updatedReview._id ? updatedReview : review
+          )
+        );
+      }
+    } catch (err) {
+      console.error("Home card update failed:", err.message);
+      alert("Home card update failed");
+      fetchReviews(statusFilter);
+    } finally {
+      setUpdatingId(null);
+    }
+  };
+
   return (
     <div style={{ padding: "30px" }}>
       <h2 style={{ marginBottom: "15px" }}>Reviews</h2>
@@ -159,24 +193,33 @@ export default function AdminReviews() {
                   </span>
                 </td>
                 <td>
-                  {statusFilter === "pending" ? (
-                    <label className="admin-checkbox">
-                      <input
-                        type="checkbox"
-                        checked={Boolean(homeReviewChoices[review._id])}
-                        disabled={updatingId === review._id}
-                        onChange={(event) =>
-                          setHomeReviewChoices((prev) => ({
-                            ...prev,
-                            [review._id]: event.target.checked,
-                          }))
+                  <label className="admin-checkbox">
+                    <input
+                      type="checkbox"
+                      checked={Boolean(homeReviewChoices[review._id])}
+                      disabled={updatingId === review._id}
+                      onChange={(event) => {
+                        const checked = event.target.checked;
+
+                        if (statusFilter === "approved") {
+                          updateHomeCard(review._id, checked);
+                          return;
                         }
-                      />
-                      <span>Show on home</span>
-                    </label>
-                  ) : (
-                    <span>{review.showOnHome ? "Yes" : "No"}</span>
-                  )}
+
+                        setHomeReviewChoices((prev) => ({
+                          ...prev,
+                          [review._id]: checked,
+                        }));
+                      }}
+                    />
+                    <span>
+                      {statusFilter === "approved"
+                        ? homeReviewChoices[review._id]
+                          ? "Yes"
+                          : "No"
+                        : "Show on home"}
+                    </span>
+                  </label>
                 </td>
                 <td>
                   {statusFilter === "pending" && (
