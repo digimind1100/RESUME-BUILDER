@@ -13,8 +13,8 @@ function normalizeReviews(data) {
   return [];
 }
 
-function isHomeReview(review) {
-  return review?.showOnHome === true;
+function hasHomeReviewFlag(review) {
+  return Object.prototype.hasOwnProperty.call(review || {}, "showOnHome");
 }
 
 export async function fetchHomeReviews() {
@@ -22,7 +22,14 @@ export async function fetchHomeReviews() {
     `${reviewsEndpoint}?status=approved&showOnHome=true&limit=6`
   );
   if (!res.ok) throw new Error("Failed to fetch reviews");
-  return normalizeReviews(await res.json()).filter(isHomeReview).slice(0, 6);
+
+  const reviews = normalizeReviews(await res.json());
+  const backendSupportsHomeFlag = reviews.some(hasHomeReviewFlag);
+  const homeReviews = backendSupportsHomeFlag
+    ? reviews.filter((review) => review.showOnHome === true)
+    : reviews;
+
+  return homeReviews.slice(0, 6);
 }
 
 export async function fetchAllReviews() {
