@@ -101,6 +101,19 @@ export default function AdviceArticle({ article }) {
           </React.Fragment>
         ))}
 
+        {article.relatedArticles && (
+          <>
+            <h2>Related Articles</h2>
+            <ul>
+              {article.relatedArticles.map((relatedArticle) => (
+                <li key={relatedArticle.href}>
+                  <Link to={relatedArticle.href}>{relatedArticle.title}</Link>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
+
         <h2>{article.finalHeading}</h2>
         {article.finalParagraphs.map((paragraph) => (
           <p key={paragraph}>{paragraph}</p>

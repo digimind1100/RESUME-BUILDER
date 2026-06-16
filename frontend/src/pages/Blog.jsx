@@ -13,11 +13,10 @@ export default function Blog() {
 
       {/* Blog 1 */}
       <article className="blog-card">
-        <h2>Best CV Format for Freshers in Pakistan (2026)</h2>
+        <h2>Best CV Format for Freshers</h2>
         <p>
-          Discover the ideal CV format for fresh graduates and students in Pakistan.
-          Learn how to create an ATS-friendly resume that increases your chances
-          of getting shortlisted.
+          Learn the best CV format for fresh graduates with section order,
+          examples, ATS tips, common mistakes, and related resume writing guides.
         </p>
         <Link
           to="/blog/best-cv-format-for-freshers-in-pakistan-2026"
