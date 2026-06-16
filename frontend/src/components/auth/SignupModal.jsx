@@ -39,15 +39,18 @@ function loadGoogleScript() {
 }
 
 function afterGoogleButtonPaint(element, callback) {
+  let revealTimer;
   const reveal = () => {
     requestAnimationFrame(() => {
-      requestAnimationFrame(callback);
+      requestAnimationFrame(() => {
+        revealTimer = window.setTimeout(callback, 250);
+      });
     });
   };
 
   if (element.querySelector("iframe")) {
     reveal();
-    return () => {};
+    return () => window.clearTimeout(revealTimer);
   }
 
   const observer = new MutationObserver(() => {
@@ -58,7 +61,10 @@ function afterGoogleButtonPaint(element, callback) {
   });
 
   observer.observe(element, { childList: true, subtree: true });
-  return () => observer.disconnect();
+  return () => {
+    observer.disconnect();
+    window.clearTimeout(revealTimer);
+  };
 }
 
 if (GOOGLE_CLIENT_ID && typeof window !== "undefined") {
@@ -73,6 +79,7 @@ export default function SignupModal({ onClose, onSuccess, initialMode = "signup"
   const [googleLoading, setGoogleLoading] = useState(false);
   const [googleButtonReady, setGoogleButtonReady] = useState(false);
   const [resending, setResending] = useState(false);
+  const googleButtonShellRef = useRef(null);
   const googleButtonRef = useRef(null);
 
 
@@ -147,7 +154,7 @@ export default function SignupModal({ onClose, onSuccess, initialMode = "signup"
           size: "large",
           text: mode === "signup" ? "signup_with" : "signin_with",
           shape: "rectangular",
-          width: Math.min(330, googleButtonRef.current.clientWidth || 330),
+          width: Math.floor(googleButtonShellRef.current?.clientWidth || 330),
         });
 
         stopWatchingButton = afterGoogleButtonPaint(googleButtonRef.current, () => {
@@ -381,6 +388,7 @@ export default function SignupModal({ onClose, onSuccess, initialMode = "signup"
                 className={`google-auth-button${
                   googleButtonReady ? " is-ready" : ""
                 }`}
+                ref={googleButtonShellRef}
                 aria-busy={googleLoading}
               >
                 <div

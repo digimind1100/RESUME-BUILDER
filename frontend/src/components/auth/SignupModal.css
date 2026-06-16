@@ -130,36 +130,38 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: min(100%, 330px);
+  width: 100%;
   height: 40px;
   margin: 0 auto;
   opacity: 0;
-  transition: opacity 0.2s ease;
+  visibility: hidden;
 }
 
 .google-auth-target > div,
 .google-auth-button iframe {
   width: 100% !important;
   max-width: 100% !important;
+  min-width: 100% !important;
+  height: 40px !important;
 }
 
 .google-auth-placeholder {
   position: absolute;
   inset: 0;
-  width: min(100%, 330px);
+  width: 100%;
   height: 40px;
   min-height: 40px;
   margin: 0 auto;
   pointer-events: none;
-  transition: opacity 0.2s ease;
 }
 
 .google-auth-button.is-ready .google-auth-target {
   opacity: 1;
+  visibility: visible;
 }
 
 .google-auth-button.is-ready .google-auth-placeholder {
-  opacity: 0;
+  visibility: hidden;
 }
 
 .google-auth-button[aria-busy="true"] {
