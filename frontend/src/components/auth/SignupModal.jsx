@@ -38,6 +38,29 @@ function loadGoogleScript() {
   return googleScriptPromise;
 }
 
+function afterGoogleButtonPaint(element, callback) {
+  const reveal = () => {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(callback);
+    });
+  };
+
+  if (element.querySelector("iframe")) {
+    reveal();
+    return () => {};
+  }
+
+  const observer = new MutationObserver(() => {
+    if (element.querySelector("iframe")) {
+      observer.disconnect();
+      reveal();
+    }
+  });
+
+  observer.observe(element, { childList: true, subtree: true });
+  return () => observer.disconnect();
+}
+
 if (GOOGLE_CLIENT_ID && typeof window !== "undefined") {
   loadGoogleScript().catch(() => {});
 }
@@ -105,6 +128,7 @@ export default function SignupModal({ onClose, onSuccess, initialMode = "signup"
     }
 
     let active = true;
+    let stopWatchingButton = () => {};
     setGoogleButtonReady(false);
 
     loadGoogleScript()
@@ -125,7 +149,12 @@ export default function SignupModal({ onClose, onSuccess, initialMode = "signup"
           shape: "rectangular",
           width: Math.min(330, googleButtonRef.current.clientWidth || 330),
         });
-        setGoogleButtonReady(true);
+
+        stopWatchingButton = afterGoogleButtonPaint(googleButtonRef.current, () => {
+          if (active) {
+            setGoogleButtonReady(true);
+          }
+        });
       })
       .catch(() => {
         if (active) {
@@ -135,6 +164,7 @@ export default function SignupModal({ onClose, onSuccess, initialMode = "signup"
 
     return () => {
       active = false;
+      stopWatchingButton();
     };
   }, [handleGoogleCredential, mode]);
 
