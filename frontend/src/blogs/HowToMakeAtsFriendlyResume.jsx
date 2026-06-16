@@ -8,8 +8,8 @@ const article = {
   title: "How to Make an ATS Friendly Resume",
   intro: [
     "An ATS friendly resume is a resume that can be read clearly by Applicant Tracking Systems and human recruiters. Many employers use ATS software to scan resumes before shortlisting candidates.",
-    "If your resume uses complex formatting, missing keywords, or unclear sections, it may not be parsed correctly even when your experience is relevant.",
-    "This guide explains how to make an ATS friendly resume with simple formatting, targeted keywords, standard headings, and clear examples."
+    "If your resume uses complex formatting, missing keywords, or unclear sections, it may not be parsed correctly even when your experience is relevant. A Resume Builder, CV Maker, or Online Resume Builder can help you create a clean structure that works for both recruiters and ATS software.",
+    "This guide explains how to make an ATS friendly resume with simple formatting, targeted keywords, standard headings, and clear examples. It is also useful if you are comparing CV Format for Freshers, Resume Format for Freshers, Fresh Graduate Resume, or Student Resume Format options."
   ],
   sample: {
     heading: "ATS Friendly Resume Structure Sample",
@@ -37,7 +37,7 @@ const article = {
   skills: {
     heading: "What Makes a Resume ATS Friendly",
     intro:
-      "ATS friendly resumes are clean, readable, and aligned with the job description. The goal is not to trick software, but to make your qualifications easy to find.",
+      "ATS friendly resumes are clean, readable, and aligned with the job description. The goal is not to trick software, but to make your qualifications easy to find. Many Professional Resume Templates and ATS Resume Builder tools follow these basics because they match modern hiring expectations.",
     items: [
       "Simple layout with readable fonts",
       "Standard headings such as Summary, Skills, Work Experience, and Education",
@@ -54,7 +54,7 @@ const article = {
     {
       heading: "Use a simple resume format",
       text:
-        "Avoid heavy graphics, text boxes, icons, and complicated tables. A clean one-column or simple two-column layout is easier for ATS software and recruiters to read."
+        "Avoid heavy graphics, text boxes, icons, and complicated tables. A clean one-column or simple two-column layout is easier for ATS software and recruiters to read. This is especially important for a Resume Builder for Fresh Graduates and a Resume Builder for Job Seekers."
     },
     {
       heading: "Add keywords from the job post",
@@ -86,6 +86,11 @@ const article = {
     "Using vague bullets that do not show results.",
     "Submitting the same resume for every job without tailoring it."
   ],
+  commercialSection: {
+    heading: "Create Your Fresher Resume Online",
+    text:
+      "ResumeBuilder.pk is an Online Resume Builder and CV Maker that helps fresh graduates create ATS-friendly resumes using Professional Resume Templates. Build your resume online and download a PDF version in minutes."
+  },
   faqs: [
     {
       question: "What is an ATS friendly resume?",
@@ -125,7 +130,7 @@ const article = {
   finalHeading: "Create a Resume That Can Be Read Clearly",
   finalParagraphs: [
     "An ATS friendly resume is simple, targeted, and easy to scan. Use clear headings, honest keywords, readable formatting, and achievement-focused bullet points.",
-    "When your resume is easy for software and recruiters to understand, your chances of getting shortlisted become stronger."
+    "When your resume is easy for software and recruiters to understand, your chances of getting shortlisted become stronger. A Free CV Maker, Resume Builder, or CV Maker can help you choose Professional Resume Templates and create a Resume Download PDF file for job applications."
   ]
 };
 
