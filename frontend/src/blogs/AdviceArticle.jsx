@@ -22,7 +22,7 @@ export default function AdviceArticle({ article }) {
           <p>
             Use ResumeBuilder.pk to create a professional ATS-friendly resume with ready-made templates.
           </p>
-          <Link to="/templates" className="blog-cta-btn">
+          <Link to="/florence-classic" className="blog-cta-btn">
             Create Resume Now
           </Link>
         </div>
@@ -118,7 +118,7 @@ export default function AdviceArticle({ article }) {
         {article.finalParagraphs.map((paragraph) => (
           <p key={paragraph}>{paragraph}</p>
         ))}
-        <Link to="/templates" className="blog-cta-btn">
+        <Link to="/florence-classic" className="blog-cta-btn">
           Create Your Resume Now
         </Link>
       </main>
