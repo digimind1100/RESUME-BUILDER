@@ -38,12 +38,17 @@ function loadGoogleScript() {
   return googleScriptPromise;
 }
 
+if (GOOGLE_CLIENT_ID && typeof window !== "undefined") {
+  loadGoogleScript().catch(() => {});
+}
+
 export default function SignupModal({ onClose, onSuccess, initialMode = "signup" }) {
   const { user, signup, googleAuth, login, sendVerificationCode, verifyEmailCode } = useAuth();
 
   const [mode, setMode] = useState(initialMode); // signup | login | verify
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
+  const [googleButtonReady, setGoogleButtonReady] = useState(false);
   const [resending, setResending] = useState(false);
   const googleButtonRef = useRef(null);
 
@@ -100,6 +105,7 @@ export default function SignupModal({ onClose, onSuccess, initialMode = "signup"
     }
 
     let active = true;
+    setGoogleButtonReady(false);
 
     loadGoogleScript()
       .then(() => {
@@ -119,6 +125,7 @@ export default function SignupModal({ onClose, onSuccess, initialMode = "signup"
           shape: "rectangular",
           width: Math.min(330, googleButtonRef.current.clientWidth || 330),
         });
+        setGoogleButtonReady(true);
       })
       .catch(() => {
         if (active) {
@@ -341,10 +348,25 @@ export default function SignupModal({ onClose, onSuccess, initialMode = "signup"
 
             {GOOGLE_CLIENT_ID ? (
               <div
-                className="google-auth-button"
-                ref={googleButtonRef}
+                className={`google-auth-button${
+                  googleButtonReady ? " is-ready" : ""
+                }`}
                 aria-busy={googleLoading}
-              />
+              >
+                <div
+                  className="google-auth-target"
+                  ref={googleButtonRef}
+                />
+                {!googleButtonReady && (
+                  <button
+                    type="button"
+                    className="google-auth-fallback google-auth-placeholder"
+                    disabled
+                  >
+                    Continue with Google
+                  </button>
+                )}
+              </div>
             ) : (
               <button
                 type="button"
