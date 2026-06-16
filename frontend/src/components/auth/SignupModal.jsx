@@ -357,15 +357,13 @@ export default function SignupModal({ onClose, onSuccess, initialMode = "signup"
                   className="google-auth-target"
                   ref={googleButtonRef}
                 />
-                {!googleButtonReady && (
-                  <button
-                    type="button"
-                    className="google-auth-fallback google-auth-placeholder"
-                    disabled
-                  >
-                    Continue with Google
-                  </button>
-                )}
+                <button
+                  type="button"
+                  className="google-auth-fallback google-auth-placeholder"
+                  disabled
+                >
+                  Continue with Google
+                </button>
               </div>
             ) : (
               <button

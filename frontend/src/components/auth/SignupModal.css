@@ -117,19 +117,23 @@
 
 .google-auth-button {
   position: relative;
-  display: flex;
-  justify-content: center;
+  display: block;
   width: 100%;
   max-width: 100%;
-  min-height: 42px;
+  height: 42px;
   overflow: hidden;
 }
 
 .google-auth-target {
+  position: absolute;
+  inset: 0;
   display: flex;
   justify-content: center;
+  align-items: center;
   width: 100%;
-  min-height: 42px;
+  height: 42px;
+  opacity: 0;
+  transition: opacity 0.15s ease;
 }
 
 .google-auth-button > div,
@@ -140,10 +144,19 @@
 .google-auth-placeholder {
   position: absolute;
   inset: 0;
+  width: min(100%, 330px);
+  height: 42px;
+  margin: 0 auto;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+
+.google-auth-button.is-ready .google-auth-target {
+  opacity: 1;
 }
 
 .google-auth-button.is-ready .google-auth-placeholder {
-  display: none;
+  opacity: 0;
 }
 
 .google-auth-button[aria-busy="true"] {
