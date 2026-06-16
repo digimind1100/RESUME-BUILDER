@@ -93,6 +93,16 @@ export default function AdviceArticle({ article }) {
           ))}
         </ul>
 
+        {article.commercialSection && (
+          <>
+            <h2>{article.commercialSection.heading}</h2>
+            <p>{article.commercialSection.text}</p>
+            <Link to="/florence-classic" className="blog-cta-btn">
+              Create Resume Now
+            </Link>
+          </>
+        )}
+
         <h2>Frequently Asked Questions</h2>
         {article.faqs.map((faq) => (
           <React.Fragment key={faq.question}>

@@ -8,8 +8,8 @@ const article = {
   title: "Best CV Format for Freshers",
   intro: [
     "A fresher CV should be clear, simple, and focused on potential. Since fresh graduates usually have limited work experience, the format must highlight education, skills, internships, projects, and certifications in a recruiter-friendly order.",
-    "The best CV format for freshers is a clean reverse chronological layout with standard headings. It helps employers quickly understand your background and also works well with Applicant Tracking Systems.",
-    "This guide explains the ideal CV structure for freshers, what to include in each section, common mistakes to avoid, and how to make your first CV look professional."
+    "The best CV format for freshers is a clean reverse chronological layout with standard headings. Whether you use a Resume Builder, CV Maker, or Online Resume Builder, this format helps employers quickly understand your background and works well with Applicant Tracking Systems.",
+    "This guide explains the ideal CV Format for Freshers, Resume Format for Freshers, Fresh Graduate Resume, and Student Resume Format, including what to include in each section, common mistakes to avoid, and how to make your first CV look professional."
   ],
   sample: {
     heading: "Fresher CV Format Sample",
@@ -38,7 +38,7 @@ const article = {
   skills: {
     heading: "What Freshers Should Include in a CV",
     intro:
-      "A fresher CV becomes stronger when it shows job-ready skills and proof of learning, even without full-time experience.",
+      "A fresher CV becomes stronger when it shows job-ready skills and proof of learning, even without full-time experience. Many Resume Builders and Professional Resume Templates include these sections because recruiters expect them in a modern fresher CV.",
     items: [
       "Professional email address and phone number",
       "Short career-focused summary",
@@ -86,6 +86,11 @@ const article = {
     "Leaving projects, internships, or certifications out because they were not full-time jobs.",
     "Sending the same CV to every employer without matching the job description."
   ],
+  commercialSection: {
+    heading: "Create Your Fresher Resume Online",
+    text:
+      "ResumeBuilder.pk is an Online Resume Builder and CV Maker that helps fresh graduates create ATS-friendly resumes using Professional Resume Templates. Build your resume online and download a PDF version in minutes."
+  },
   faqs: [
     {
       question: "Which CV format is best for freshers?",
@@ -125,7 +130,7 @@ const article = {
   finalHeading: "Build a Clear Fresher CV",
   finalParagraphs: [
     "The best CV format for freshers is simple, organized, and focused on relevant strengths. Your goal is to make your education, skills, projects, and learning easy for recruiters to understand.",
-    "Use a clean template, write honestly, and tailor your CV for each role so your first job application feels professional from the start."
+    "Use a clean template, write honestly, and tailor your CV for each role. A professional Resume Builder and CV Maker can help fresh graduates create ATS-friendly resumes, choose Professional Resume Templates, and generate Resume Download PDF files ready for job applications."
   ]
 };
 
