@@ -152,12 +152,6 @@
   height: 40px;
   min-height: 40px;
   margin: 0 auto;
-  color: #3c4043;
-  border-color: #dadce0;
-  border-radius: 4px;
-  font-family: "Google Sans", Roboto, Arial, sans-serif;
-  font-size: 14px;
-  font-weight: 500;
   pointer-events: none;
 }
 
@@ -186,6 +180,15 @@
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
+}
+
+.google-auth-fallback.google-auth-placeholder {
+  color: #3c4043;
+  border-color: #dadce0;
+  border-radius: 4px;
+  font-family: "Google Sans", Roboto, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .signup-cancel {
