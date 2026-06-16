@@ -28,10 +28,10 @@ export default function Blog() {
 
       {/* Blog 2 */}
       <article className="blog-card">
-        <h2>How to Make an ATS Friendly Resume in Pakistan (2026)</h2>
+        <h2>How to Make an ATS Friendly Resume</h2>
         <p>
-          Learn how ATS systems work and how to optimize your resume
-          to pass automated screening in Pakistan.
+          Learn how ATS systems read resumes and how to use clean formatting,
+          keywords, section headings, and achievement bullets correctly.
         </p>
         <Link
           to="/blog/how-to-make-ats-friendly-resume-in-pakistan-2026"

@@ -35,6 +35,7 @@ import TestPagination from "./Template/TestPagination/TestPagination";
 import FlorenceClassic from "./Template/FlorenceClassic/FlorenceClassic";
 import Blog from "./pages/Blog";
 import BestCvFormatForFreshers from "./blogs/BestCvFormatForFreshers";
+import HowToMakeAtsFriendlyResume from "./blogs/HowToMakeAtsFriendlyResume";
 import SoftwareEngineerResume2026 from "./blogs/SoftwareEngineerResume2026";
 import AccountantResume2026 from "./blogs/AccountantResume2026";
 import TeacherResume2026 from "./blogs/TeacherResume2026";
@@ -144,6 +145,10 @@ function AppContent() {
         <Route
           path="/blog/best-cv-format-for-freshers-in-pakistan-2026"
           element={<BestCvFormatForFreshers />}
+        />
+        <Route
+          path="/blog/how-to-make-ats-friendly-resume-in-pakistan-2026"
+          element={<HowToMakeAtsFriendlyResume />}
         />
         <Route
           path="/blog/software-engineer-resume-example-2026"
