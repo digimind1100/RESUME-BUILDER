@@ -23,6 +23,34 @@ export default function HomeSEOContent() {
           Applicant Tracking Systems (ATS) used by many companies in Pakistan.
         </p>
 
+        <h2>Professional Resume Builder and CV Maker</h2>
+
+        <p>
+          ResumeBuilder.pk is a professional Resume Builder and CV Maker that
+          helps job seekers create ATS-friendly resumes online. Whether you need
+          an Online Resume Builder, AI Resume Builder, Professional Resume
+          Templates, Cover Letter Builder, or instant Resume Download PDF
+          functionality, our platform helps you build job-winning resumes in
+          minutes.
+        </p>
+
+        <h2>Create Professional Resume Templates Online</h2>
+
+        <p>
+          Choose from modern Professional Resume Templates designed for students,
+          fresh graduates, experienced professionals, teachers, software
+          engineers, accountants, and job seekers. Our Resume Builder provides
+          easy editing, ATS-friendly formatting, and PDF downloads.
+        </p>
+
+        <h2>AI Resume Builder for Job Seekers</h2>
+
+        <p>
+          Our AI Resume Builder helps users create professional resumes faster by
+          providing resume examples, writing guidance, and ATS-friendly
+          structures that improve job application success.
+        </p>
+
         <h2>Professional CV Templates Designed for Pakistani Job Market</h2>
 
         <p>
