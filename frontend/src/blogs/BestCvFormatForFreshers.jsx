@@ -5,7 +5,7 @@ const article = {
   metaTitle: "Best CV Format for Freshers: Complete 2026 Guide",
   metaDescription:
     "Learn the best CV format for freshers with section order, examples, ATS tips, mistakes, FAQs, and related resume writing guides.",
-  title: "Best CV Format for Freshers",
+  title: "Best CV Format for Freshers (2026 Guide)",
   intro: [
     "A fresher CV should be clear, simple, and focused on potential. Since fresh graduates usually have limited work experience, the format must highlight education, skills, internships, projects, and certifications in a recruiter-friendly order.",
     "The best CV format for freshers is a clean reverse chronological layout with standard headings. Whether you use a Resume Builder, CV Maker, or Online Resume Builder, this format helps employers quickly understand your background and works well with Applicant Tracking Systems.",

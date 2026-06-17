@@ -15,7 +15,7 @@ export default function HeroSection() {
       <div className="hero-content">
         <div className="hero-text">
           <h1 className="hero-title">
-            Free AI Resume Builder in Pakistan – Create a <span>Professional CV</span> in Minutes
+            Free AI Resume Builder & CV Maker in Pakistan – Create a <span>Professional CV</span> in Minutes
           </h1>
 
           <h3 className="hero-titleh3">
