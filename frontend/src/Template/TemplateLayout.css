@@ -8,22 +8,24 @@
 }
 
 .template-layout .toolbar {
-  position: fixed;
-  top: 70px;
-  left: 0;
+  position: sticky;
+  top: 84px;
   z-index: 99998;
   width: 100%;
-  min-height: 74px;
+  max-width: 100%;
+  min-height: 64px;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 12px;
-  padding: 12px 18px;
+  margin: 0 auto 16px;
+  padding: 10px 12px;
   box-sizing: border-box;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 250, 252, 0.92)),
     #ffffff;
-  border-bottom: 1px solid rgba(15, 23, 42, 0.1);
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  border-radius: 8px;
   box-shadow: 0 14px 34px rgba(15, 23, 42, 0.12);
   backdrop-filter: blur(14px);
 }
@@ -219,6 +221,7 @@
     justify-content: center;
     flex-wrap: nowrap;
     gap: 8px;
+    margin-bottom: 12px;
     padding: 10px 10px 12px;
     overflow-x: hidden;
   }

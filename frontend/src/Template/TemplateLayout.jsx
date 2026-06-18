@@ -206,31 +206,6 @@ const TemplateLayout = ({
 
   return (
     <div className="template-layout template-layout--browser">
-
-      {/* Top Bar */}
-      <div className="toolbar">
-
-        <button onClick={handleSaveResume}>
-          Save Resume in Database
-        </button>
-
-
-        <button
-          onClick={() => navigate("/templates")}
-        >
-          Templates
-        </button>
-
-        <button onClick={onReset}>
-          Reset
-        </button>
-
-        <button onClick={handleDownload}>
-          Download PDF
-        </button>
-
-      </div>
-
       {/* Resume Content */}
       <div className="content">
         <div className="template-workspace">
@@ -254,6 +229,30 @@ const TemplateLayout = ({
           </aside>
 
           <main className="template-preview-stage">
+            {/* Top Bar */}
+            <div className="toolbar no-pdf">
+
+              <button onClick={handleSaveResume}>
+                Save Resume in Database
+              </button>
+
+
+              <button
+                onClick={() => navigate("/templates")}
+              >
+                Templates
+              </button>
+
+              <button onClick={onReset}>
+                Reset
+              </button>
+
+              <button onClick={handleDownload}>
+                Download PDF
+              </button>
+
+            </div>
+
             {children}
           </main>
         </div>
