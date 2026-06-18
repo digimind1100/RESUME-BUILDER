@@ -10,8 +10,7 @@
 .template-layout .toolbar {
   position: fixed;
   top: 75px;
-  left: 50%;
-  transform: translateX(-50%);
+  right: 18px;
   z-index: 99998;
   width: min(900px, calc(100% - 36px));
   max-width: 900px;
@@ -219,6 +218,9 @@
 @media (max-width: 768px) {
   .template-layout .toolbar {
     top: 69px;
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%);
     width: calc(100% - 20px);
     max-width: none;
     min-height: auto;
