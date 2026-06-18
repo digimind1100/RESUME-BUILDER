@@ -136,11 +136,10 @@
   position: sticky;
   top: 162px;
   flex: 0 0 220px;
-  height: 1000px;
-  max-height: none;
+  max-height: calc(100vh - 184px);
   overflow-y: auto;
   overscroll-behavior: contain;
-  padding: 8px;
+  padding: 8px 8px 10px;
   box-sizing: border-box;
   background: #f8fafc;
   border-right: 1px solid rgba(15, 23, 42, 0.08);
@@ -249,11 +248,10 @@
     top: auto;
     flex: none;
     width: 100%;
-    height: auto;
     max-height: none;
     overflow-x: auto;
     overflow-y: hidden;
-    padding: 10px 12px;
+    padding: 10px 12px 12px;
     border-right: none;
     border-top: 1px solid rgba(15, 23, 42, 0.08);
   }
