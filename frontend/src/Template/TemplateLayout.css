@@ -121,7 +121,7 @@
 
 .template-layout .content {
   width: 100%;
-  padding-top: 74px;
+  padding-top: 0;
   box-sizing: border-box;
 }
 
