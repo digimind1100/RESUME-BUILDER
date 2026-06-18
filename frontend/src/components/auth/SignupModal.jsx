@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import { FaEnvelope } from "react-icons/fa";
 import { useAuth } from "../../context/AuthContext";
 import "./SignupModal.css";
 
@@ -331,6 +332,7 @@ export default function SignupModal({ onClose, onSuccess, initialMode = "signup"
               onClick={() => setShowEmailSignup(true)}
               disabled={loading || googleLoading}
             >
+              <FaEnvelope aria-hidden="true" className="email-auth-icon" />
               Signup With Email
             </button>
           ) : mode !== "verify" ? (
