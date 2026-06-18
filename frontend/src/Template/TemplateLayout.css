@@ -9,7 +9,7 @@
 
 .template-layout .toolbar {
   position: sticky;
-  top: 84px;
+  top: 70px;
   z-index: 99998;
   width: 100%;
   max-width: 100%;
@@ -18,7 +18,7 @@
   justify-content: center;
   align-items: center;
   gap: 12px;
-  margin: 0 auto 16px;
+  margin: 0 auto 4px;
   padding: 10px 12px;
   box-sizing: border-box;
   background:
@@ -130,7 +130,7 @@
   display: flex;
   align-items: flex-start;
   gap: 18px;
-  padding: 18px 18px 42px;
+  padding: 0 18px 42px;
   box-sizing: border-box;
 }
 
