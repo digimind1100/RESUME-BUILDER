@@ -10,10 +10,11 @@
 .template-layout .toolbar {
   position: fixed;
   top: 75px;
-  left: 0;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 99998;
-  width: 100%;
-  max-width: 100%;
+  width: min(900px, calc(100% - 36px));
+  max-width: 900px;
   min-height: 64px;
   display: flex;
   justify-content: center;
@@ -26,7 +27,7 @@
     linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 250, 252, 0.92)),
     #ffffff;
   border: 1px solid rgba(15, 23, 42, 0.1);
-  border-radius: 0;
+  border-radius: 8px;
   box-shadow: 0 14px 34px rgba(15, 23, 42, 0.12);
   backdrop-filter: blur(14px);
 }
@@ -218,6 +219,8 @@
 @media (max-width: 768px) {
   .template-layout .toolbar {
     top: 69px;
+    width: calc(100% - 20px);
+    max-width: none;
     min-height: auto;
     justify-content: center;
     flex-wrap: nowrap;
