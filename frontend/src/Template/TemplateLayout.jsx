@@ -5,9 +5,10 @@ import SignupModal from "../components/auth/SignupModal";
 import ReviewPopup from "../components/review/ReviewPopup";
 import PaymentModal from "../components/payment/PaymentModal";
 import "./TemplateLayout.css";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { hasReviewAccess } from "../utils/reviewAccess";
 import API from "../api/authApi";
+import { NON_AI_TEMPLATE_GALLERY } from "../config/templateCatalog";
 
 
 const TemplateLayout = ({
@@ -29,6 +30,7 @@ const TemplateLayout = ({
   
   const { isAuthenticated, user } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleReset = () => {
     localStorage.removeItem("FlorenceClassic");
@@ -196,9 +198,14 @@ const TemplateLayout = ({
     continuePendingAction();
   };
 
+  const activeTemplate = NON_AI_TEMPLATE_GALLERY.find(
+    (template) =>
+      template.id === templateId || template.route === location.pathname
+  );
+
 
   return (
-    <div className="template-layout">
+    <div className="template-layout template-layout--browser">
 
       {/* Top Bar */}
       <div className="toolbar">
@@ -225,8 +232,31 @@ const TemplateLayout = ({
       </div>
 
       {/* Resume Content */}
-      <div className="content" >
-        {children}
+      <div className="content">
+        <div className="template-workspace">
+          <aside className="template-picker no-pdf" aria-label="Resume templates">
+            <div className="template-picker-list">
+              {NON_AI_TEMPLATE_GALLERY.map((template) => (
+                <button
+                  key={template.id}
+                  type="button"
+                  className={`template-picker-item${
+                    activeTemplate?.id === template.id ? " active" : ""
+                  }`}
+                  onClick={() => navigate(template.route)}
+                  aria-current={activeTemplate?.id === template.id ? "page" : undefined}
+                >
+                  <img src={template.thumbnail} alt="" loading="lazy" />
+                  <span>{template.name}</span>
+                </button>
+              ))}
+            </div>
+          </aside>
+
+          <main className="template-preview-stage">
+            {children}
+          </main>
+        </div>
       </div>
 
       {showSignupModal && (

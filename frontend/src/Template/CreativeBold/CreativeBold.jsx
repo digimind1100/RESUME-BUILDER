@@ -435,6 +435,7 @@ pdf.save("CreativeBold-resume.pdf");
 
   return (
     <TemplateLayout
+      templateId="CreativeBold"
       handleSaveResume={handleSaveResume}
       checkPaymentStatus={checkPaymentStatus}
       onReset={handleResetCreativeBold}
