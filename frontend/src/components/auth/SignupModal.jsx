@@ -78,6 +78,7 @@ export default function SignupModal({ onClose, onSuccess, initialMode = "signup"
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
   const [googleButtonReady, setGoogleButtonReady] = useState(false);
+  const [showEmailSignup, setShowEmailSignup] = useState(initialMode !== "signup");
   const [resending, setResending] = useState(false);
   const googleButtonShellRef = useRef(null);
   const googleButtonRef = useRef(null);
@@ -282,6 +283,7 @@ export default function SignupModal({ onClose, onSuccess, initialMode = "signup"
     setError("");
     setNotice("");
     setPassword("");
+    setShowEmailSignup(nextMode !== "signup");
     setVerificationCode("");
   }
 
@@ -322,18 +324,27 @@ export default function SignupModal({ onClose, onSuccess, initialMode = "signup"
         {notice && <p className="signup-notice">{notice}</p>}
 
         <form onSubmit={handleSubmit} className="signup-form">
-          {mode === "signup" && (
-            <input
-              type="text"
-              placeholder="Full Name"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
-              required
-            />
-          )}
-
-          {mode !== "verify" ? (
+          {mode === "signup" && !showEmailSignup ? (
+            <button
+              type="button"
+              className="email-auth-toggle"
+              onClick={() => setShowEmailSignup(true)}
+              disabled={loading || googleLoading}
+            >
+              Signup With Email
+            </button>
+          ) : mode !== "verify" ? (
             <>
+              {mode === "signup" && (
+                <input
+                  type="text"
+                  placeholder="Full Name"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  required
+                />
+              )}
+
               <input
                 type="email"
                 placeholder="Email Address"
@@ -362,19 +373,21 @@ export default function SignupModal({ onClose, onSuccess, initialMode = "signup"
             />
           )}
 
-          <button type="submit" disabled={loading || googleLoading}>
-            {loading
-              ? mode === "verify"
-                ? "Verifying..."
-                : mode === "signup"
-                  ? "Creating Account..."
-                  : "Logging in..."
-              : mode === "verify"
-                ? "Verify Email"
-                : mode === "signup"
-                  ? "Signup"
-                  : "Login"}
-          </button>
+          {(mode === "verify" || mode !== "signup" || showEmailSignup) && (
+            <button type="submit" disabled={loading || googleLoading}>
+              {loading
+                ? mode === "verify"
+                  ? "Verifying..."
+                  : mode === "signup"
+                    ? "Creating Account..."
+                    : "Logging in..."
+                : mode === "verify"
+                  ? "Verify Email"
+                  : mode === "signup"
+                    ? "Signup"
+                    : "Login"}
+            </button>
+          )}
         </form>
 
         {mode !== "verify" && (
