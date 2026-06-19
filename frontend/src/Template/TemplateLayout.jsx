@@ -203,9 +203,12 @@ const TemplateLayout = ({
       template.id === templateId || template.route === location.pathname
   );
 
+  const layoutTemplateClass = templateId
+    ? `template-layout--${templateId.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase()}`
+    : "";
 
   return (
-    <div className="template-layout template-layout--browser">
+    <div className={`template-layout template-layout--browser ${layoutTemplateClass}`}>
       {/* Top Bar */}
       <div className="toolbar no-pdf">
 

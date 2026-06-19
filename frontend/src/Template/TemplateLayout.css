@@ -10,10 +10,10 @@
 .template-layout .toolbar {
   position: fixed;
   top: 75px;
-  right: 58px;
+  right: 18px;
   z-index: 99998;
-  width: min(900px, calc(100% - 36px));
-  max-width: 850px;
+  width: min(210mm, calc(100% - 36px));
+  max-width: 210mm;
   min-height: 64px;
   display: flex;
   justify-content: center;
@@ -213,6 +213,14 @@
 
 .template-layout--browser .template-preview-stage .resume-mobile-wrap {
   justify-content: center;
+}
+
+@media (min-width: 769px) {
+  .template-layout--teacher-elite .toolbar {
+    right: 58px;
+    width: min(900px, calc(100% - 36px));
+    max-width: 852px;
+  }
 }
 
 @media (max-width: 768px) {
