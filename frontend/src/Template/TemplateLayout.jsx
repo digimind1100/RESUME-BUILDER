@@ -233,13 +233,14 @@ const TemplateLayout = ({
 
       </div>
 
+      <div className="template-picker-heading no-pdf">
+        Explor Premium Template
+      </div>
+
       {/* Resume Content */}
       <div className="content">
         <div className="template-workspace">
           <aside className="template-picker no-pdf" aria-label="Resume templates">
-            <div className="template-picker-heading">
-              Explor Premium Template
-            </div>
             <div className="template-picker-list">
               {NON_AI_TEMPLATE_GALLERY.map((template) => (
                 <button

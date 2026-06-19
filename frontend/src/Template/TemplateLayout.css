@@ -1,4 +1,6 @@
 .template-layout {
+  --template-toolbar-right: 18px;
+  --template-toolbar-width: 210mm;
   width: 100%;
   min-height: 100vh;
   display: flex;
@@ -10,10 +12,10 @@
 .template-layout .toolbar {
   position: fixed;
   top: 75px;
-  right: 18px;
+  right: var(--template-toolbar-right);
   z-index: 99998;
-  width: min(210mm, calc(100% - 36px));
-  max-width: 210mm;
+  width: min(var(--template-toolbar-width), calc(100% - 36px));
+  max-width: var(--template-toolbar-width);
   min-height: 64px;
   display: flex;
   justify-content: center;
@@ -156,23 +158,31 @@
 }
 
 .template-picker-heading {
+  position: fixed;
+  top: 75px;
+  left: 18px;
+  z-index: 99998;
+  width: calc(100% - var(--template-toolbar-width) - var(--template-toolbar-right) - 36px);
+  min-width: 220px;
+  max-width: calc(100% - var(--template-toolbar-width) - var(--template-toolbar-right) - 36px);
   min-height: 64px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 10px;
-  padding: 10px 12px;
+  padding: 10px 18px;
   box-sizing: border-box;
   border: 1px solid rgba(15, 23, 42, 0.1);
   border-radius: 8px;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 250, 252, 0.92)),
+    linear-gradient(135deg, rgba(15, 23, 42, 0.96), rgba(30, 58, 138, 0.94)),
     #ffffff;
-  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.12);
-  color: #111827;
-  font-size: 13px;
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.16);
+  color: #ffffff;
+  font-size: 18px;
   font-weight: 800;
+  letter-spacing: 0.01em;
   text-align: center;
+  text-transform: capitalize;
 }
 
 .template-picker-item {
@@ -236,25 +246,24 @@
 }
 
 @media (min-width: 769px) {
-  .template-layout--teacher-elite .toolbar {
-    right: 58px;
-    width: min(900px, calc(100% - 36px));
-    max-width: 852px;
+  .template-layout--teacher-elite {
+    --template-toolbar-right: 58px;
+    --template-toolbar-width: 852px;
   }
 
-  .template-layout--elegant-classic .toolbar {
-    right: 56px;
+  .template-layout--elegant-classic {
+    --template-toolbar-right: 56px;
   }
 
-  .template-layout--engineer-elite .toolbar,
-  .template-layout--soft-tech .toolbar,
-  .template-layout--aviation-pro .toolbar {
-    right: 34px;
+  .template-layout--engineer-elite,
+  .template-layout--soft-tech,
+  .template-layout--aviation-pro {
+    --template-toolbar-right: 34px;
   }
 
-  .template-layout--data-elite .toolbar,
-  .template-layout--engineer-prime .toolbar {
-    right: 48px;
+  .template-layout--data-elite,
+  .template-layout--engineer-prime {
+    --template-toolbar-right: 48px;
   }
 }
 
@@ -319,19 +328,24 @@
     border-top: 1px solid rgba(15, 23, 42, 0.08);
   }
 
+  .template-picker-heading {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: calc(100% - 24px);
+    max-width: none;
+    min-width: 0;
+    min-height: 52px;
+    margin: 0 12px 10px;
+    font-size: 15px;
+  }
+
   .template-picker-list {
     display: flex;
     flex-direction: row;
     gap: 10px;
     width: max-content;
     min-width: 100%;
-  }
-
-  .template-picker-heading {
-    flex: 0 0 180px;
-    min-height: 102px;
-    margin: 0;
-    font-size: 12px;
   }
 
   .template-picker-item {
