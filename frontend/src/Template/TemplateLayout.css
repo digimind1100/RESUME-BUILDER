@@ -155,6 +155,26 @@
   gap: 10px;
 }
 
+.template-picker-heading {
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  padding: 10px 12px;
+  box-sizing: border-box;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 250, 252, 0.92)),
+    #ffffff;
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.12);
+  color: #111827;
+  font-size: 13px;
+  font-weight: 800;
+  text-align: center;
+}
+
 .template-picker-item {
   width: 100%;
   display: grid;
@@ -305,6 +325,13 @@
     gap: 10px;
     width: max-content;
     min-width: 100%;
+  }
+
+  .template-picker-heading {
+    flex: 0 0 180px;
+    min-height: 102px;
+    margin: 0;
+    font-size: 12px;
   }
 
   .template-picker-item {
