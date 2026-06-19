@@ -10,7 +10,7 @@
 .template-layout .toolbar {
   position: fixed;
   top: 75px;
-  right: -22px;
+  right: 58px;
   z-index: 99998;
   width: min(210mm, calc(100% - 36px));
   max-width: 210mm;
