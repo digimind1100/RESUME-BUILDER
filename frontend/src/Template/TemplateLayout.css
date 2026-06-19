@@ -225,6 +225,17 @@
   .template-layout--elegant-classic .toolbar {
     right: 56px;
   }
+
+  .template-layout--engineer-elite .toolbar,
+  .template-layout--soft-tech .toolbar,
+  .template-layout--aviation-pro .toolbar {
+    right: 34px;
+  }
+
+  .template-layout--data-elite .toolbar,
+  .template-layout--engineer-prime .toolbar {
+    right: 48px;
+  }
 }
 
 @media (max-width: 768px) {
