@@ -47,6 +47,7 @@ const priorityByPath = new Map([
   ["/", "1.0"],
   ["/pricing", "0.9"],
   ["/templates", "0.9"],
+  ["/cv-maker", "0.9"],
   ["/features", "0.8"],
   ["/cover-letter", "0.8"],
   ["/blog", "0.8"],
@@ -104,7 +105,7 @@ function getBlogLinksFromSource() {
 }
 
 function getChangefreq(route) {
-  if (route === "/" || route === "/templates" || route === "/blog") return "weekly";
+  if (route === "/" || route === "/templates" || route === "/cv-maker" || route === "/blog") return "weekly";
   if (route === "/policies" || route === "/contact") return "yearly";
   return "monthly";
 }
