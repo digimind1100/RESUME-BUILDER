@@ -7,6 +7,8 @@ import { FiLogOut } from "react-icons/fi";
 
 export default function Navbar() {
   const location = useLocation();
+  const isCvMakerPage = location.pathname === "/cv-maker";
+  const homePath = isCvMakerPage ? "/cv-maker" : "/";
 
   const [showMenu, setShowMenu] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -37,13 +39,20 @@ export default function Navbar() {
   );
 
   const handleLinkClick = () => setMenuOpen(false);
+  const handleHomeClick = () => {
+    setMenuOpen(false);
+
+    if (isCvMakerPage) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
 
   return (
     <>
       <nav className="navbar fixed-nav">
         {/* LOGO */}
         <div className="navbar-logo">
-  <Link to="/" className="logo-link">
+  <Link to={homePath} className="logo-link" onClick={handleHomeClick}>
     <img
       src="/logo.png"
       alt="ResumeBuilder.pk Logo"
@@ -54,7 +63,7 @@ export default function Navbar() {
 
         {/* NAV LINKS */}
         <ul className={`navbar-links ${menuOpen ? "open" : ""}`}>
-          <li><Link to="/" onClick={handleLinkClick}>Home</Link></li>
+          <li><Link to={homePath} onClick={handleHomeClick}>Home</Link></li>
           <li><Link to="/templates" onClick={handleLinkClick}>Templates</Link></li>
           <li><Link to="/features" onClick={handleLinkClick}>Features</Link></li>
           <li><Link to="/coverletter" onClick={handleLinkClick}>Cover Letter</Link></li>
