@@ -10,6 +10,7 @@ import { hasReviewAccess } from "../utils/reviewAccess";
 import API from "../api/authApi";
 import { NON_AI_TEMPLATE_GALLERY } from "../config/templateCatalog";
 
+const TEMPLATE_PICKER_SCROLL_KEY = "templatePickerScrollPosition";
 
 const TemplateLayout = ({
   templateId,
@@ -27,6 +28,7 @@ const TemplateLayout = ({
   const [showPaymentModal, setShowPaymentModal] = useState(false);
 
   const resumeRef = React.useRef(null);
+  const templatePickerRef = useRef(null);
   
   const { isAuthenticated, user } = useAuth();
   const navigate = useNavigate();
@@ -203,6 +205,41 @@ const TemplateLayout = ({
       template.id === templateId || template.route === location.pathname
   );
 
+  useEffect(() => {
+    const savedPosition = sessionStorage.getItem(TEMPLATE_PICKER_SCROLL_KEY);
+
+    if (!savedPosition || !templatePickerRef.current) {
+      return;
+    }
+
+    try {
+      const { scrollTop = 0, scrollLeft = 0 } = JSON.parse(savedPosition);
+
+      requestAnimationFrame(() => {
+        if (templatePickerRef.current) {
+          templatePickerRef.current.scrollTop = scrollTop;
+          templatePickerRef.current.scrollLeft = scrollLeft;
+        }
+      });
+    } catch {
+      sessionStorage.removeItem(TEMPLATE_PICKER_SCROLL_KEY);
+    }
+  }, [location.pathname]);
+
+  const handleTemplateSelect = (route) => {
+    if (templatePickerRef.current) {
+      sessionStorage.setItem(
+        TEMPLATE_PICKER_SCROLL_KEY,
+        JSON.stringify({
+          scrollTop: templatePickerRef.current.scrollTop,
+          scrollLeft: templatePickerRef.current.scrollLeft,
+        })
+      );
+    }
+
+    navigate(route, { state: { preserveTemplateScroll: true } });
+  };
+
   const layoutTemplateClass = templateId
     ? `template-layout--${templateId.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase()}`
     : "";
@@ -240,7 +277,11 @@ const TemplateLayout = ({
       {/* Resume Content */}
       <div className="content">
         <div className="template-workspace">
-          <aside className="template-picker no-pdf" aria-label="Resume templates">
+          <aside
+            ref={templatePickerRef}
+            className="template-picker no-pdf"
+            aria-label="Resume templates"
+          >
             <div className="template-picker-list">
               {NON_AI_TEMPLATE_GALLERY.map((template) => (
                 <button
@@ -249,7 +290,7 @@ const TemplateLayout = ({
                   className={`template-picker-item${
                     activeTemplate?.id === template.id ? " active" : ""
                   }`}
-                  onClick={() => navigate(template.route)}
+                  onClick={() => handleTemplateSelect(template.route)}
                   aria-current={activeTemplate?.id === template.id ? "page" : undefined}
                 >
                   <img src={template.thumbnail} alt="" loading="lazy" />
