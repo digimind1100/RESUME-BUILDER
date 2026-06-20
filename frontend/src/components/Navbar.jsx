@@ -7,8 +7,9 @@ import { FiLogOut } from "react-icons/fi";
 
 export default function Navbar() {
   const location = useLocation();
-  const isCvMakerPage = location.pathname === "/cv-maker";
-  const homePath = "/cv-maker";
+  const isCvMakerFlow = location.pathname === "/cv-maker" || location.pathname.startsWith("/cv-maker/");
+  const homePath = isCvMakerFlow ? "/cv-maker" : "/";
+  const templatesPath = isCvMakerFlow ? "/cv-maker/templates" : "/templates";
 
   const [showMenu, setShowMenu] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -42,7 +43,7 @@ export default function Navbar() {
   const handleHomeClick = () => {
     setMenuOpen(false);
 
-    if (isCvMakerPage) {
+    if (isCvMakerFlow) {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
@@ -64,7 +65,7 @@ export default function Navbar() {
         {/* NAV LINKS */}
         <ul className={`navbar-links ${menuOpen ? "open" : ""}`}>
           <li><Link to={homePath} onClick={handleHomeClick}>Home</Link></li>
-          <li><Link to="/templates" onClick={handleLinkClick}>Templates</Link></li>
+          <li><Link to={templatesPath} onClick={handleLinkClick}>Templates</Link></li>
           <li><Link to="/features" onClick={handleLinkClick}>Features</Link></li>
           <li><Link to="/coverletter" onClick={handleLinkClick}>Cover Letter</Link></li>
           <li><Link to="/policies" onClick={handleLinkClick}>Policies</Link></li>

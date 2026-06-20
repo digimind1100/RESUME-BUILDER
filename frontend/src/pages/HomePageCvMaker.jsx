@@ -32,7 +32,7 @@ function CvMakerHero() {
             CV ready for job applications.
           </p>
 
-          <Link to="/templates" className="hero-btn">
+          <Link to="/cv-maker/templates" className="hero-btn">
             Create CV Now
           </Link>
         </div>
@@ -67,7 +67,7 @@ function CvMakerSEOContent() {
           fast, professional applications. Our CV Maker Online helps you add
           education, experience, skills, projects, and contact details without
           fighting with formatting. You can start from{" "}
-          <Link to="/templates">Professional CV Templates</Link> and create a
+          <Link to="/cv-maker/templates">Professional CV Templates</Link> and create a
           polished CV that is ready for recruiters.
         </p>
 

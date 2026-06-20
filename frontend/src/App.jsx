@@ -131,6 +131,7 @@ function AppContent() {
 
         {/* Templates */}
         <Route path="/templates" element={<Templates />} />
+        <Route path="/cv-maker/templates" element={<Templates />} />
 
         <Route path="/features" element={<Features />} />
 
