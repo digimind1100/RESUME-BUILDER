@@ -8,7 +8,7 @@ import { FiLogOut } from "react-icons/fi";
 export default function Navbar() {
   const location = useLocation();
   const isCvMakerPage = location.pathname === "/cv-maker";
-  const homePath = isCvMakerPage ? "/cv-maker" : "/";
+  const homePath = "/cv-maker";
 
   const [showMenu, setShowMenu] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
