@@ -1,8 +1,15 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Footer from "../components/Footer";
 import "./Blog.css";
 
 export default function Blog() {
+  const location = useLocation();
+  const blogBasePath =
+    location.pathname === "/cv-maker/blog" || location.pathname.startsWith("/cv-maker/blog/")
+      ? "/cv-maker/blog"
+      : "/blog";
+  const blogLink = (slug) => `${blogBasePath}/${slug}`;
+
   return (
     <>
       <section className="blog-page">
@@ -19,7 +26,7 @@ export default function Blog() {
           examples, ATS tips, common mistakes, and related resume writing guides.
         </p>
         <Link
-          to="/blog/best-cv-format-for-freshers-in-pakistan-2026"
+          to={blogLink("best-cv-format-for-freshers-in-pakistan-2026")}
           className="blog-read-btn"
         >
           Read Full Guide
@@ -34,7 +41,7 @@ export default function Blog() {
           keywords, section headings, and achievement bullets correctly.
         </p>
         <Link
-          to="/blog/how-to-make-ats-friendly-resume-in-pakistan-2026"
+          to={blogLink("how-to-make-ats-friendly-resume-in-pakistan-2026")}
           className="blog-read-btn"
         >
           Read Full Guide
@@ -51,7 +58,7 @@ export default function Blog() {
   </p>
 
   <Link
-    to="/blog/how-to-write-professional-cover-letter-in-pakistan-2026"
+    to={blogLink("how-to-write-professional-cover-letter-in-pakistan-2026")}
     className="blog-read-btn"
   >
     Read Full Guide
@@ -68,7 +75,7 @@ export default function Blog() {
   </p>
 
   <Link
-    to="/blog/top-resume-mistakes-to-avoid-in-pakistan-2026"
+    to={blogLink("top-resume-mistakes-to-avoid-in-pakistan-2026")}
     className="blog-read-btn"
   >
     Read Full Guide
@@ -84,7 +91,7 @@ export default function Blog() {
   </p>
 
   <Link
-    to="/blog/best-resume-skills-for-jobs-in-pakistan-2026"
+    to={blogLink("best-resume-skills-for-jobs-in-pakistan-2026")}
     className="blog-read-btn"
   >
     Read Full Guide
@@ -100,7 +107,7 @@ export default function Blog() {
   </p>
 
   <Link
-    to="/blog/resume-vs-cv-difference-in-pakistan-2026"
+    to={blogLink("resume-vs-cv-difference-in-pakistan-2026")}
     className="blog-read-btn"
   >
     Read Full Guide
@@ -116,7 +123,7 @@ export default function Blog() {
   </p>
 
   <Link
-    to="/blog/software-engineer-resume-example-2026"
+    to={blogLink("software-engineer-resume-example-2026")}
     className="blog-read-btn"
   >
     Read Full Guide
@@ -130,7 +137,7 @@ export default function Blog() {
     Learn how to create a professional Accountant resume with key skills,
     experience examples, ATS tips, and resume writing guidance.
   </p>
-  <Link to="/blog/accountant-resume-example-2026" className="blog-read-btn" >
+  <Link to={blogLink("accountant-resume-example-2026")} className="blog-read-btn" >
     Read Full Guide
   </Link>
 </article>
@@ -143,7 +150,7 @@ export default function Blog() {
     subject expertise, ATS guidance, and practical examples.
   </p>
   <Link
-    to="/blog/teacher-resume-example-2026"
+    to={blogLink("teacher-resume-example-2026")}
     className="blog-read-btn"
   >
     Read Full Guide
@@ -158,7 +165,7 @@ export default function Blog() {
     achievements, CRM skills, target examples, and ATS tips.
   </p>
   <Link
-    to="/blog/sales-executive-resume-example-2026"
+    to={blogLink("sales-executive-resume-example-2026")}
     className="blog-read-btn"
   >
     Read Full Guide
@@ -173,7 +180,7 @@ export default function Blog() {
     design skills, project examples, ATS tips, and common mistakes.
   </p>
   <Link
-    to="/blog/graphic-designer-resume-example-2026"
+    to={blogLink("graphic-designer-resume-example-2026")}
     className="blog-read-btn"
   >
     Read Full Guide
@@ -188,7 +195,7 @@ export default function Blog() {
     resolution, CRM tools, communication skills, and service results.
   </p>
   <Link
-    to="/blog/customer-service-representative-resume-example-2026"
+    to={blogLink("customer-service-representative-resume-example-2026")}
     className="blog-read-btn"
   >
     Read Full Guide
@@ -203,7 +210,7 @@ export default function Blog() {
     payroll coordination, policy work, and HR achievements.
   </p>
   <Link
-    to="/blog/hr-manager-resume-example-2026"
+    to={blogLink("hr-manager-resume-example-2026")}
     className="blog-read-btn"
   >
     Read Full Guide
@@ -218,7 +225,7 @@ export default function Blog() {
     sampling, production follow-up, shipment tracking, and ATS keywords.
   </p>
   <Link
-    to="/blog/textile-merchandiser-resume-example-2026"
+    to={blogLink("textile-merchandiser-resume-example-2026")}
     className="blog-read-btn"
   >
     Read Full Guide
@@ -233,7 +240,7 @@ export default function Blog() {
     supervision, quality control, efficiency metrics, and manufacturing skills.
   </p>
   <Link
-    to="/blog/production-manager-resume-example-2026"
+    to={blogLink("production-manager-resume-example-2026")}
     className="blog-read-btn"
   >
     Read Full Guide
@@ -248,7 +255,7 @@ export default function Blog() {
     accuracy, Excel skills, record handling, ATS tips, and examples.
   </p>
   <Link
-    to="/blog/data-entry-operator-resume-example-2026"
+    to={blogLink("data-entry-operator-resume-example-2026")}
     className="blog-read-btn"
   >
     Read Full Guide
@@ -263,7 +270,7 @@ export default function Blog() {
     customer service examples, compliance keywords, and template tips.
   </p>
   <Link
-    to="/blog/bank-job-cv-format-in-pakistan-2026"
+    to={blogLink("bank-job-cv-format-in-pakistan-2026")}
     className="blog-read-btn"
   >
     Read Full Guide
@@ -278,7 +285,7 @@ export default function Blog() {
     achievements, examples, formatting tips, and ATS-friendly wording.
   </p>
   <Link
-    to="/blog/how-to-write-work-experience-on-a-resume"
+    to={blogLink("how-to-write-work-experience-on-a-resume")}
     className="blog-read-btn"
   >
     Read Full Guide
@@ -293,7 +300,7 @@ export default function Blog() {
     with examples, keyword tips, and common mistakes to avoid.
   </p>
   <Link
-    to="/blog/best-skills-for-a-resume-2026"
+    to={blogLink("best-skills-for-a-resume-2026")}
     className="blog-read-btn"
   >
     Read Full Guide
@@ -308,7 +315,7 @@ export default function Blog() {
     achievements, and target role in a recruiter-friendly way.
   </p>
   <Link
-    to="/blog/how-to-write-a-professional-summary"
+    to={blogLink("how-to-write-a-professional-summary")}
     className="blog-read-btn"
   >
     Read Full Guide
@@ -323,7 +330,7 @@ export default function Blog() {
     keyword-focused, ATS-friendly resume for job applications.
   </p>
   <Link
-    to="/blog/ats-resume-guide"
+    to={blogLink("ats-resume-guide")}
     className="blog-read-btn"
   >
     Read Full Guide
@@ -338,7 +345,7 @@ export default function Blog() {
     weak summaries, poor formatting, missing keywords, and vague bullets.
   </p>
   <Link
-    to="/blog/resume-mistakes-to-avoid"
+    to={blogLink("resume-mistakes-to-avoid")}
     className="blog-read-btn"
   >
     Read Full Guide
@@ -353,7 +360,7 @@ export default function Blog() {
     action verbs, results, examples, and practical writing formulas.
   </p>
   <Link
-    to="/blog/how-to-write-achievements-on-a-resume"
+    to={blogLink("how-to-write-achievements-on-a-resume")}
     className="blog-read-btn"
   >
     Read Full Guide
@@ -368,7 +375,7 @@ export default function Blog() {
     and how to choose the right length for your experience.
   </p>
   <Link
-    to="/blog/one-page-vs-two-page-resume"
+    to={blogLink("one-page-vs-two-page-resume")}
     className="blog-read-btn"
   >
     Read Full Guide
@@ -383,7 +390,7 @@ export default function Blog() {
     including contact details, keywords, formatting, file name, and errors.
   </p>
   <Link
-    to="/blog/resume-checklist-before-applying"
+    to={blogLink("resume-checklist-before-applying")}
     className="blog-read-btn"
   >
     Read Full Guide
@@ -398,7 +405,7 @@ export default function Blog() {
     examples, tone, closing, and mistakes to avoid.
   </p>
   <Link
-    to="/blog/how-to-write-a-cover-letter"
+    to={blogLink("how-to-write-a-cover-letter")}
     className="blog-read-btn"
   >
     Read Full Guide
@@ -413,7 +420,7 @@ export default function Blog() {
     skills, work experience, projects, and certifications.
   </p>
   <Link
-    to="/blog/ats-keywords-for-resumes"
+    to={blogLink("ats-keywords-for-resumes")}
     className="blog-read-btn"
   >
     Read Full Guide
@@ -428,3 +435,4 @@ export default function Blog() {
     </>
   );
 }
+

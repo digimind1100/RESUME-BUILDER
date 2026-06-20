@@ -10,6 +10,11 @@ export default function Navbar() {
   const isCvMakerFlow = location.pathname === "/cv-maker" || location.pathname.startsWith("/cv-maker/");
   const homePath = isCvMakerFlow ? "/cv-maker" : "/";
   const templatesPath = isCvMakerFlow ? "/cv-maker/templates" : "/templates";
+  const featuresPath = isCvMakerFlow ? "/cv-maker/features" : "/features";
+  const coverLetterPath = isCvMakerFlow ? "/cv-maker/coverletter" : "/coverletter";
+  const policiesPath = isCvMakerFlow ? "/cv-maker/policies" : "/policies";
+  const blogPath = isCvMakerFlow ? "/cv-maker/blog" : "/blog";
+  const contactPath = isCvMakerFlow ? "/cv-maker/contact" : "/contact";
 
   const [showMenu, setShowMenu] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -66,13 +71,13 @@ export default function Navbar() {
         <ul className={`navbar-links ${menuOpen ? "open" : ""}`}>
           <li><Link to={homePath} onClick={handleHomeClick}>Home</Link></li>
           <li><Link to={templatesPath} onClick={handleLinkClick}>Templates</Link></li>
-          <li><Link to="/features" onClick={handleLinkClick}>Features</Link></li>
-          <li><Link to="/coverletter" onClick={handleLinkClick}>Cover Letter</Link></li>
-          <li><Link to="/policies" onClick={handleLinkClick}>Policies</Link></li>
+          <li><Link to={featuresPath} onClick={handleLinkClick}>Features</Link></li>
+          <li><Link to={coverLetterPath} onClick={handleLinkClick}>Cover Letter</Link></li>
+          <li><Link to={policiesPath} onClick={handleLinkClick}>Policies</Link></li>
           {/* Pricing is hidden from the navbar. Restore this line to show it again. */}
           {/* <li><Link to="/pricing" onClick={handleLinkClick}>Pricing</Link></li> */}
-          <li><Link to="/blog" onClick={handleLinkClick}>Blog</Link></li>
-          <li><Link to="/contact" onClick={handleLinkClick}>Contact</Link></li>
+          <li><Link to={blogPath} onClick={handleLinkClick}>Blog</Link></li>
+          <li><Link to={contactPath} onClick={handleLinkClick}>Contact</Link></li>
 
 
           {/* MOBILE AUTH */}
