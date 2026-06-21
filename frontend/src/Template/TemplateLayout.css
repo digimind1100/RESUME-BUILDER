@@ -327,6 +327,10 @@
     border-top: 1px solid rgba(15, 23, 42, 0.08);
   }
 
+  .template-layout--clean-professional .template-picker {
+    margin-top: 12px;
+  }
+
   .template-picker-heading {
     position: sticky;
     top: 132px;
