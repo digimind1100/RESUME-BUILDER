@@ -11,13 +11,14 @@ export default function Navbar() {
   const isAiResumeBuilderFlow =
     location.pathname === "/ai-resume-builder" ||
     location.pathname.startsWith("/ai-resume-builder/");
-  const homePath = isAiResumeBuilderFlow ? "/ai-resume-builder" : isCvMakerFlow ? "/cv-maker" : "/";
-  const templatesPath = isCvMakerFlow ? "/cv-maker/templates" : "/templates";
-  const featuresPath = isCvMakerFlow ? "/cv-maker/features" : "/features";
-  const coverLetterPath = isCvMakerFlow ? "/cv-maker/coverletter" : "/coverletter";
-  const policiesPath = isCvMakerFlow ? "/cv-maker/policies" : "/policies";
-  const blogPath = isCvMakerFlow ? "/cv-maker/blog" : "/blog";
-  const contactPath = isCvMakerFlow ? "/cv-maker/contact" : "/contact";
+  const flowBasePath = isAiResumeBuilderFlow ? "/ai-resume-builder" : isCvMakerFlow ? "/cv-maker" : "";
+  const homePath = flowBasePath || "/";
+  const templatesPath = `${flowBasePath}/templates`;
+  const featuresPath = `${flowBasePath}/features`;
+  const coverLetterPath = `${flowBasePath}/coverletter`;
+  const policiesPath = `${flowBasePath}/policies`;
+  const blogPath = `${flowBasePath}/blog`;
+  const contactPath = `${flowBasePath}/contact`;
 
   const [showMenu, setShowMenu] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);

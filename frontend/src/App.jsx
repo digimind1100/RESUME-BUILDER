@@ -134,30 +134,40 @@ function AppContent() {
         {/* Templates */}
         <Route path="/templates" element={<Templates />} />
         <Route path="/cv-maker/templates" element={<Templates />} />
+        <Route path="/ai-resume-builder/templates" element={<Templates />} />
 
         <Route path="/features" element={<Features />} />
         <Route path="/cv-maker/features" element={<Features />} />
+        <Route path="/ai-resume-builder/features" element={<Features />} />
 
         {/* Cover letter */}
         <Route path="/cover-letter" element={<CoverLetterPanel />} />
         <Route path="/cv-maker/cover-letter" element={<CoverLetterPanel />} />
+        <Route path="/ai-resume-builder/cover-letter" element={<CoverLetterPanel />} />
 
         {/* Terms & policies */}
         <Route path="/policies" element={<Policies />} />
         <Route path="/cv-maker/policies" element={<Policies />} />
+        <Route path="/ai-resume-builder/policies" element={<Policies />} />
 
         {/* Contact */}
         <Route path="/contact" element={<Contact />} />
         <Route path="/cv-maker/contact" element={<Contact />} />
+        <Route path="/ai-resume-builder/contact" element={<Contact />} />
 
         <Route path="/blog" element={<Blog />} />
         <Route path="/cv-maker/blog" element={<Blog />} />
+        <Route path="/ai-resume-builder/blog" element={<Blog />} />
         <Route
           path="/blog/best-cv-format-for-freshers-in-pakistan-2026"
           element={<BestCvFormatForFreshers />}
         />
         <Route
           path="/cv-maker/blog/best-cv-format-for-freshers-in-pakistan-2026"
+          element={<BestCvFormatForFreshers />}
+        />
+        <Route
+          path="/ai-resume-builder/blog/best-cv-format-for-freshers-in-pakistan-2026"
           element={<BestCvFormatForFreshers />}
         />
         <Route
@@ -169,11 +179,19 @@ function AppContent() {
           element={<HowToMakeAtsFriendlyResume />}
         />
         <Route
+          path="/ai-resume-builder/blog/how-to-make-ats-friendly-resume-in-pakistan-2026"
+          element={<HowToMakeAtsFriendlyResume />}
+        />
+        <Route
           path="/blog/software-engineer-resume-example-2026"
           element={<SoftwareEngineerResume2026 />}
         />
         <Route
           path="/cv-maker/blog/software-engineer-resume-example-2026"
+          element={<SoftwareEngineerResume2026 />}
+        />
+        <Route
+          path="/ai-resume-builder/blog/software-engineer-resume-example-2026"
           element={<SoftwareEngineerResume2026 />}
         />
         <Route
@@ -185,11 +203,19 @@ function AppContent() {
           element={<AccountantResume2026 />}
         />
         <Route
+          path="/ai-resume-builder/blog/accountant-resume-example-2026"
+          element={<AccountantResume2026 />}
+        />
+        <Route
           path="/blog/teacher-resume-example-2026"
           element={<TeacherResume2026 />}
         />
         <Route
           path="/cv-maker/blog/teacher-resume-example-2026"
+          element={<TeacherResume2026 />}
+        />
+        <Route
+          path="/ai-resume-builder/blog/teacher-resume-example-2026"
           element={<TeacherResume2026 />}
         />
         <Route
@@ -201,11 +227,19 @@ function AppContent() {
           element={<SalesExecutiveResume2026 />}
         />
         <Route
+          path="/ai-resume-builder/blog/sales-executive-resume-example-2026"
+          element={<SalesExecutiveResume2026 />}
+        />
+        <Route
           path="/blog/graphic-designer-resume-example-2026"
           element={<GraphicDesignerResume2026 />}
         />
         <Route
           path="/cv-maker/blog/graphic-designer-resume-example-2026"
+          element={<GraphicDesignerResume2026 />}
+        />
+        <Route
+          path="/ai-resume-builder/blog/graphic-designer-resume-example-2026"
           element={<GraphicDesignerResume2026 />}
         />
         <Route
@@ -217,11 +251,19 @@ function AppContent() {
           element={<CustomerServiceResume2026 />}
         />
         <Route
+          path="/ai-resume-builder/blog/customer-service-representative-resume-example-2026"
+          element={<CustomerServiceResume2026 />}
+        />
+        <Route
           path="/blog/hr-manager-resume-example-2026"
           element={<HrManagerResume2026 />}
         />
         <Route
           path="/cv-maker/blog/hr-manager-resume-example-2026"
+          element={<HrManagerResume2026 />}
+        />
+        <Route
+          path="/ai-resume-builder/blog/hr-manager-resume-example-2026"
           element={<HrManagerResume2026 />}
         />
         <Route
@@ -233,11 +275,19 @@ function AppContent() {
           element={<TextileMerchandiserResume2026 />}
         />
         <Route
+          path="/ai-resume-builder/blog/textile-merchandiser-resume-example-2026"
+          element={<TextileMerchandiserResume2026 />}
+        />
+        <Route
           path="/blog/production-manager-resume-example-2026"
           element={<ProductionManagerResume2026 />}
         />
         <Route
           path="/cv-maker/blog/production-manager-resume-example-2026"
+          element={<ProductionManagerResume2026 />}
+        />
+        <Route
+          path="/ai-resume-builder/blog/production-manager-resume-example-2026"
           element={<ProductionManagerResume2026 />}
         />
         <Route
@@ -249,11 +299,19 @@ function AppContent() {
           element={<DataEntryOperatorResume2026 />}
         />
         <Route
+          path="/ai-resume-builder/blog/data-entry-operator-resume-example-2026"
+          element={<DataEntryOperatorResume2026 />}
+        />
+        <Route
           path="/blog/bank-job-cv-format-in-pakistan-2026"
           element={<BankJobCvFormatPakistan2026 />}
         />
         <Route
           path="/cv-maker/blog/bank-job-cv-format-in-pakistan-2026"
+          element={<BankJobCvFormatPakistan2026 />}
+        />
+        <Route
+          path="/ai-resume-builder/blog/bank-job-cv-format-in-pakistan-2026"
           element={<BankJobCvFormatPakistan2026 />}
         />
         <Route
@@ -265,11 +323,19 @@ function AppContent() {
           element={<HowToWriteWorkExperienceResume />}
         />
         <Route
+          path="/ai-resume-builder/blog/how-to-write-work-experience-on-a-resume"
+          element={<HowToWriteWorkExperienceResume />}
+        />
+        <Route
           path="/blog/best-skills-for-a-resume-2026"
           element={<BestSkillsForResume2026 />}
         />
         <Route
           path="/cv-maker/blog/best-skills-for-a-resume-2026"
+          element={<BestSkillsForResume2026 />}
+        />
+        <Route
+          path="/ai-resume-builder/blog/best-skills-for-a-resume-2026"
           element={<BestSkillsForResume2026 />}
         />
         <Route
@@ -281,11 +347,19 @@ function AppContent() {
           element={<HowToWriteProfessionalSummary />}
         />
         <Route
+          path="/ai-resume-builder/blog/how-to-write-a-professional-summary"
+          element={<HowToWriteProfessionalSummary />}
+        />
+        <Route
           path="/blog/ats-resume-guide"
           element={<AtsResumeGuide />}
         />
         <Route
           path="/cv-maker/blog/ats-resume-guide"
+          element={<AtsResumeGuide />}
+        />
+        <Route
+          path="/ai-resume-builder/blog/ats-resume-guide"
           element={<AtsResumeGuide />}
         />
         <Route
@@ -297,11 +371,19 @@ function AppContent() {
           element={<ResumeMistakesToAvoid2026 />}
         />
         <Route
+          path="/ai-resume-builder/blog/resume-mistakes-to-avoid"
+          element={<ResumeMistakesToAvoid2026 />}
+        />
+        <Route
           path="/blog/how-to-write-achievements-on-a-resume"
           element={<HowToWriteAchievementsResume />}
         />
         <Route
           path="/cv-maker/blog/how-to-write-achievements-on-a-resume"
+          element={<HowToWriteAchievementsResume />}
+        />
+        <Route
+          path="/ai-resume-builder/blog/how-to-write-achievements-on-a-resume"
           element={<HowToWriteAchievementsResume />}
         />
         <Route
@@ -313,11 +395,19 @@ function AppContent() {
           element={<OnePageVsTwoPageResume />}
         />
         <Route
+          path="/ai-resume-builder/blog/one-page-vs-two-page-resume"
+          element={<OnePageVsTwoPageResume />}
+        />
+        <Route
           path="/blog/resume-checklist-before-applying"
           element={<ResumeChecklistBeforeApplying />}
         />
         <Route
           path="/cv-maker/blog/resume-checklist-before-applying"
+          element={<ResumeChecklistBeforeApplying />}
+        />
+        <Route
+          path="/ai-resume-builder/blog/resume-checklist-before-applying"
           element={<ResumeChecklistBeforeApplying />}
         />
         <Route
@@ -329,6 +419,10 @@ function AppContent() {
           element={<HowToWriteCoverLetter />}
         />
         <Route
+          path="/ai-resume-builder/blog/how-to-write-a-cover-letter"
+          element={<HowToWriteCoverLetter />}
+        />
+        <Route
           path="/blog/ats-keywords-for-resumes"
           element={<AtsKeywordsForResumes />}
         />
@@ -336,8 +430,13 @@ function AppContent() {
           path="/cv-maker/blog/ats-keywords-for-resumes"
           element={<AtsKeywordsForResumes />}
         />
+        <Route
+          path="/ai-resume-builder/blog/ats-keywords-for-resumes"
+          element={<AtsKeywordsForResumes />}
+        />
         <Route path="/blog/:slug" element={<BlogPost />} />
         <Route path="/cv-maker/blog/:slug" element={<BlogPost />} />
+        <Route path="/ai-resume-builder/blog/:slug" element={<BlogPost />} />
         <Route path="/pricing" element={<Pricing />} />
 
         {/* ✅ PUBLIC REVIEWS PAGE */}
@@ -369,6 +468,7 @@ function AppContent() {
         <Route path="/teacher-elite" element={<TeacherElite />} />
         <Route path="/coverletter" element={<CoverLetterPage />} />
         <Route path="/cv-maker/coverletter" element={<CoverLetterPage />} />
+        <Route path="/ai-resume-builder/coverletter" element={<CoverLetterPage />} />
         <Route path="/coverletter-generator" element={<CoverLetterPanel />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>

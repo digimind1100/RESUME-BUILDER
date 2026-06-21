@@ -33,7 +33,7 @@ function AiResumeBuilderHero() {
             templates, and instant PDF download.
           </p>
 
-          <Link to="/templates" className="hero-btn">
+          <Link to="/ai-resume-builder/templates" className="hero-btn">
             Create AI Resume Now
           </Link>
         </div>
@@ -73,7 +73,7 @@ function AiResumeBuilderSEOContent() {
 
         <p>
           Start with our{" "}
-          <Link to="/templates">Professional Resume Templates</Link> and use the
+          <Link to="/ai-resume-builder/templates">Professional Resume Templates</Link> and use the
           Online Resume Builder to edit your details, improve your wording, and
           prepare a polished resume for local and international job applications.
         </p>
@@ -84,7 +84,7 @@ function AiResumeBuilderSEOContent() {
           Our ATS-Friendly Resume Builder keeps your resume structure clean so
           applicant tracking systems can read your sections, headings, and skills
           more reliably. For a deeper checklist, read our guide on{" "}
-          <Link to="/blog/how-to-make-ats-friendly-resume-in-pakistan-2026">
+          <Link to="/ai-resume-builder/blog/how-to-make-ats-friendly-resume-in-pakistan-2026">
             how to make an ATS-friendly resume in Pakistan
           </Link>
           .
@@ -93,9 +93,9 @@ function AiResumeBuilderSEOContent() {
         <p>
           You can also improve your screening chances with practical advice from
           our{" "}
-          <Link to="/blog/ats-resume-guide">ATS resume guide</Link> and our list
+          <Link to="/ai-resume-builder/blog/ats-resume-guide">ATS resume guide</Link> and our list
           of{" "}
-          <Link to="/blog/ats-keywords-for-resumes">
+          <Link to="/ai-resume-builder/blog/ats-keywords-for-resumes">
             ATS keywords for resumes
           </Link>
           .
@@ -128,7 +128,7 @@ function AiResumeBuilderSEOContent() {
 
         <p>
           Before applying, compare your skills section with our guide to the{" "}
-          <Link to="/blog/best-skills-for-a-resume-2026">
+          <Link to="/ai-resume-builder/blog/best-skills-for-a-resume-2026">
             best skills for a resume in 2026
           </Link>{" "}
           so your resume highlights the strengths employers expect.

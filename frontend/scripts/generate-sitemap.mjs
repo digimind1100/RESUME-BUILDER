@@ -47,7 +47,14 @@ const excludedPaths = new Set([
   "/cv-maker/coverletter",
   "/cv-maker/policies",
   "/cv-maker/contact",
-  "/cv-maker/blog"
+  "/cv-maker/blog",
+  "/ai-resume-builder/templates",
+  "/ai-resume-builder/features",
+  "/ai-resume-builder/cover-letter",
+  "/ai-resume-builder/coverletter",
+  "/ai-resume-builder/policies",
+  "/ai-resume-builder/contact",
+  "/ai-resume-builder/blog"
 ]);
 
 const priorityByPath = new Map([
@@ -73,6 +80,7 @@ function normalizeRoute(route) {
   const normalized = route.startsWith("/") ? route : `/${route}`;
   if (normalized.includes(":") || normalized.includes("*")) return null;
   if (normalized.startsWith("/cv-maker/blog/")) return null;
+  if (normalized.startsWith("/ai-resume-builder/")) return null;
   if (excludedPaths.has(normalized)) return null;
   if (normalized.startsWith("/admin")) return null;
   return normalized.replace(/\/$/, "") || "/";
