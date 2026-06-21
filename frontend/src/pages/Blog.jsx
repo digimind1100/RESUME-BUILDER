@@ -5,7 +5,10 @@ import "./Blog.css";
 export default function Blog() {
   const location = useLocation();
   const blogBasePath =
-    location.pathname === "/resume-builder/blog" ||
+    location.pathname === "/cover-letter-builder/blog" ||
+    location.pathname.startsWith("/cover-letter-builder/blog/")
+      ? "/cover-letter-builder/blog"
+      : location.pathname === "/resume-builder/blog" ||
     location.pathname.startsWith("/resume-builder/blog/")
       ? "/resume-builder/blog"
       : location.pathname === "/ai-resume-builder/blog" ||

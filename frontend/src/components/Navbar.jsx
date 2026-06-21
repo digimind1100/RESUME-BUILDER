@@ -14,7 +14,12 @@ export default function Navbar() {
   const isResumeBuilderFlow =
     location.pathname === "/resume-builder" ||
     location.pathname.startsWith("/resume-builder/");
-  const flowBasePath = isResumeBuilderFlow
+  const isCoverLetterBuilderFlow =
+    location.pathname === "/cover-letter-builder" ||
+    location.pathname.startsWith("/cover-letter-builder/");
+  const flowBasePath = isCoverLetterBuilderFlow
+    ? "/cover-letter-builder"
+    : isResumeBuilderFlow
     ? "/resume-builder"
     : isAiResumeBuilderFlow
     ? "/ai-resume-builder"
@@ -61,7 +66,12 @@ export default function Navbar() {
   const handleHomeClick = () => {
     setMenuOpen(false);
 
-    if (isCvMakerFlow || isAiResumeBuilderFlow || isResumeBuilderFlow) {
+    if (
+      isCvMakerFlow ||
+      isAiResumeBuilderFlow ||
+      isResumeBuilderFlow ||
+      isCoverLetterBuilderFlow
+    ) {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
