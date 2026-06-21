@@ -47,8 +47,12 @@ export default function Policies() {
             When you download a resume PDF, we may ask for your consent to keep a copy
             of the downloaded PDF. These copies may be used to understand template
             quality, improve formatting, fix download issues, and plan future Resume
-            Builder features. We do not use downloaded PDF copies for public display,
-            resale, or sharing with employers without your permission.
+            Builder features. With your consent, your resume PDF may also help us
+            understand your skills, experience, and career goals so we can prepare
+            future services that may recommend more relevant job opportunities,
+            career support, and hiring connections. We do not guarantee employment,
+            and we do not use downloaded PDF copies for public display, resale, or
+            sharing with employers without your permission.
           </p>
 
           <h4>How We Use Resume Data</h4>
@@ -56,7 +60,9 @@ export default function Policies() {
             We may use saved resume data, download activity, template selection, and
             consented PDF copies to improve our resume builder, develop better
             templates, identify formatting problems, provide customer support, and
-            understand which features are most useful to users.
+            understand which features are most useful to users. We may also use this
+            information to develop future job-search and career-support services
+            designed to help users find better job opportunities.
           </p>
 
           <h4>Analytics & Cookies</h4>
@@ -274,8 +280,10 @@ export default function Policies() {
           <p>
             If a user gives consent, Resume Builder may keep a copy of the downloaded
             resume PDF for service improvement, formatting review, support, and future
-            feature planning. Users should only enter information they are comfortable
-            saving in their account or downloaded PDF.
+            feature planning. Consented PDF copies may also help us prepare upcoming
+            services that can suggest relevant job opportunities or career support
+            based on the user's skills and experience. Users should only enter
+            information they are comfortable saving in their account or downloaded PDF.
           </p>
 
           <h4>5. Premium Access Duration</h4>
