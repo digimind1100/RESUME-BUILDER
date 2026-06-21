@@ -321,17 +321,17 @@
     flex: none;
     width: 100%;
     max-height: none;
-    overflow-x: auto;
-    overflow-y: hidden;
+    overflow: visible;
     padding: 10px 12px 12px;
     border-right: none;
     border-top: 1px solid rgba(15, 23, 42, 0.08);
   }
 
   .template-picker-heading {
-    position: relative;
-    top: auto;
+    position: sticky;
+    top: 132px;
     left: auto;
+    z-index: 3;
     width: calc(100% - 24px);
     max-width: none;
     min-width: 0;
@@ -344,8 +344,16 @@
     display: flex;
     flex-direction: row;
     gap: 10px;
-    width: max-content;
-    min-width: 100%;
+    width: 100%;
+    min-width: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+
+  .template-picker-list::-webkit-scrollbar {
+    display: none;
   }
 
   .template-picker-item {
