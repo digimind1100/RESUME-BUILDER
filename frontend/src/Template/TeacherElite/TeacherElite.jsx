@@ -7,6 +7,7 @@ import useProfileImage from "../../hooks/useProfileImage";
 import useResumeTemplate from "../../hooks/useResumeTemplate";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import { savePdfAndUploadCopy } from "../../services/resumePdfCopyService";
 
 const TABS = [
   "Kindergarten",
@@ -425,7 +426,12 @@ Subject: ${teacherData.qrForm.subject}
       });
 
       pdf.addImage(imgData, "JPEG", 0, 0, 210, 297, undefined, "FAST");
-      pdf.save("TeacherElite-resume.pdf");
+      await savePdfAndUploadCopy({
+        pdf,
+        fileName: "TeacherElite-resume.pdf",
+        templateId: "TeacherElite",
+        downloadType: "nonAi",
+      });
     } catch (error) {
       console.error("TeacherElite PDF download error:", error);
     } finally {

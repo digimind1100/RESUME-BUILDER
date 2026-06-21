@@ -6,6 +6,7 @@ import useProfileImage from "../../hooks/useProfileImage";
 import useResumeTemplate from "../../hooks/useResumeTemplate";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import { savePdfAndUploadCopy } from "../../services/resumePdfCopyService";
 
 export default function MedicalElite() {
   const pdfGeneratingRef = useRef(false);
@@ -321,7 +322,12 @@ export default function MedicalElite() {
       });
 
       pdf.addImage(imgData, "JPEG", 0, 0, 210, 297, undefined, "FAST");
-      pdf.save("MedicalElite-resume.pdf");
+      await savePdfAndUploadCopy({
+        pdf,
+        fileName: "MedicalElite-resume.pdf",
+        templateId: "MedicalElite",
+        downloadType: "nonAi",
+      });
     } catch (error) {
       console.error("MedicalElite PDF download error:", error);
     } finally {

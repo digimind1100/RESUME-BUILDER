@@ -4,6 +4,7 @@ import TemplateLayout from "../TemplateLayout";
 import html2pdf from "html2pdf.js";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import { savePdfAndUploadCopy } from "../../services/resumePdfCopyService";
 
 export default function FlorenceClassic() {
 
@@ -535,7 +536,12 @@ if (isMobile) {
 
       pdf.addImage(imgData, "JPEG", 0, 0, 210, 297);
 
-      pdf.save("FlorenceClassic-resume.pdf");
+      await savePdfAndUploadCopy({
+        pdf,
+        fileName: "FlorenceClassic-resume.pdf",
+        templateId: "FlorenceClassic",
+        downloadType: "nonAi",
+      });
 
     } catch (error) {
       console.error("PDF download error:", error);

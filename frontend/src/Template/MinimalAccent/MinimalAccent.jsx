@@ -9,6 +9,7 @@ import useResumeTemplate from "../../hooks/useResumeTemplate";
 import html2pdf from "html2pdf.js";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import { savePdfAndUploadCopy } from "../../services/resumePdfCopyService";
 
 
 const MinimalAccent = () => {
@@ -278,7 +279,12 @@ const handleDownloadPDF = async () => {
     });
 
     pdf.addImage(imgData, "JPEG", 0, 0, 210, 297, undefined, "FAST");
-    pdf.save("MinimalAccent-resume.pdf");
+    await savePdfAndUploadCopy({
+      pdf,
+      fileName: "MinimalAccent-resume.pdf",
+      templateId: "MinimalAccent",
+      downloadType: "nonAi",
+    });
   } catch (error) {
     console.error("MinimalAccent PDF download error:", error);
   } finally {

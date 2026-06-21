@@ -7,6 +7,7 @@ import html2canvas from "html2canvas";
 
 import Watermark from "../../components/Watermark";
 import { trackResumeDownload } from "../../services/statsService";
+import { savePdfAndUploadCopy } from "../../services/resumePdfCopyService";
 
 const FreeBasic = () => {
   const resumeRef = useRef(null);
@@ -29,7 +30,12 @@ const FreeBasic = () => {
     const imgHeight = (canvas.height * pdfWidth) / canvas.width;
 
     pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, imgHeight);
-    pdf.save("free-basic-resume.pdf");
+    await savePdfAndUploadCopy({
+      pdf,
+      fileName: "free-basic-resume.pdf",
+      templateId: "FreeBasic",
+      downloadType: "nonAi",
+    });
     await trackResumeDownload("nonAi");
   };
 

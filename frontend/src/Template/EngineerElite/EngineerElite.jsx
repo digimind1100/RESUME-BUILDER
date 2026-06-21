@@ -7,6 +7,7 @@ import useProfileImage from "../../hooks/useProfileImage";
 import useResumeTemplate from "../../hooks/useResumeTemplate";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import { savePdfAndUploadCopy } from "../../services/resumePdfCopyService";
 
 export default function EngineerElite() {
   const pdfGeneratingRef = useRef(false);
@@ -326,7 +327,12 @@ export default function EngineerElite() {
       });
 
       pdf.addImage(imgData, "JPEG", 0, 0, 210, 297, undefined, "FAST");
-      pdf.save("EngineerElite-resume.pdf");
+      await savePdfAndUploadCopy({
+        pdf,
+        fileName: "EngineerElite-resume.pdf",
+        templateId: "EngineerElite",
+        downloadType: "nonAi",
+      });
     } catch (error) {
       console.error("EngineerElite PDF download error:", error);
     } finally {

@@ -7,6 +7,7 @@ import useProfileImage from "../../hooks/useProfileImage";
 import useResumeTemplate from "../../hooks/useResumeTemplate";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import { savePdfAndUploadCopy } from "../../services/resumePdfCopyService";
 
 export default function AviationPro() {
   const pdfGeneratingRef = useRef(false);
@@ -574,7 +575,12 @@ Profile: ${aviationData.info.profileLink}
       });
 
       pdf.addImage(imgData, "JPEG", 0, 0, 210, 297, undefined, "FAST");
-      pdf.save("AviationPro-resume.pdf");
+      await savePdfAndUploadCopy({
+        pdf,
+        fileName: "AviationPro-resume.pdf",
+        templateId: "AviationPro",
+        downloadType: "nonAi",
+      });
     } catch (error) {
     console.error("AviationPro PDF download error:", error);
   } finally {

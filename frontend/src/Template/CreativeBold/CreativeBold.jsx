@@ -8,6 +8,7 @@ import { useAuth } from "../../context/AuthContext";
 import html2pdf from "html2pdf.js";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import { savePdfAndUploadCopy } from "../../services/resumePdfCopyService";
 
 const CreativeBold = () => {
   const STORAGE_KEY = "creativeBold_resumeData";
@@ -411,7 +412,12 @@ pdf.addImage(
   "FAST"
 );
 
-pdf.save("CreativeBold-resume.pdf");
+    await savePdfAndUploadCopy({
+      pdf,
+      fileName: "CreativeBold-resume.pdf",
+      templateId: "CreativeBold",
+      downloadType: "nonAi",
+    });
 
     } catch (error) {
       console.error("PDF download error:", error);

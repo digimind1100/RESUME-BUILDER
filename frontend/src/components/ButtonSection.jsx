@@ -66,6 +66,7 @@ export default function ButtonSection({
     try {
       const downloaded = await downloadResumeAndTriggerReview({
         downloadType: "ai",
+        templateId: saveTemplateId,
       });
 
       if (!downloaded) return;

@@ -44,12 +44,14 @@ export default function TemplateControls({
   /* Download PDF */
   const handleDownloadClick = async () => {
 
-    if (!resumeContainerRef || !resumeContainerRef.current) return;
+    if (!resumeRef || !resumeRef.current) return;
 
     await new Promise(resolve => setTimeout(resolve, 200));
 
     downloadResumeAndTriggerReview({
-      element: resumeContainerRef.current,
+      element: resumeRef.current,
+      templateId,
+      downloadType: "nonAi",
     });
 
   };

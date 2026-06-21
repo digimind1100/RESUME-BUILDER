@@ -7,6 +7,7 @@ import useProfileImage from "../../hooks/useProfileImage";
 import useResumeTemplate from "../../hooks/useResumeTemplate";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import { savePdfAndUploadCopy } from "../../services/resumePdfCopyService";
 
 export default function DataElite() {
   const pdfGeneratingRef = useRef(false);
@@ -314,7 +315,12 @@ export default function DataElite() {
       });
 
       pdf.addImage(imgData, "JPEG", 0, 0, 210, 297, undefined, "FAST");
-      pdf.save("DataElite-resume.pdf");
+      await savePdfAndUploadCopy({
+        pdf,
+        fileName: "DataElite-resume.pdf",
+        templateId: "DataElite",
+        downloadType: "nonAi",
+      });
     } catch (error) {
       console.error("DataElite PDF download error:", error);
     } finally {

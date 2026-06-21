@@ -5,6 +5,7 @@ import { useAuth } from "../../context/AuthContext";
 import useResumeTemplate from "../../hooks/useResumeTemplate";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import { savePdfAndUploadCopy } from "../../services/resumePdfCopyService";
 
 const ElegantClassic = () => {
   const pdfGeneratingRef = useRef(false);
@@ -327,7 +328,12 @@ const ElegantClassic = () => {
       });
 
       pdf.addImage(imgData, "JPEG", 0, 0, 210, 297, undefined, "FAST");
-      pdf.save("ElegantClassic-resume.pdf");
+      await savePdfAndUploadCopy({
+        pdf,
+        fileName: "ElegantClassic-resume.pdf",
+        templateId: "ElegantClassic",
+        downloadType: "nonAi",
+      });
     } catch (error) {
       console.error("ElegantClassic PDF download error:", error);
     } finally {
