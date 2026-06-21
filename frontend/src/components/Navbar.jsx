@@ -11,7 +11,16 @@ export default function Navbar() {
   const isAiResumeBuilderFlow =
     location.pathname === "/ai-resume-builder" ||
     location.pathname.startsWith("/ai-resume-builder/");
-  const flowBasePath = isAiResumeBuilderFlow ? "/ai-resume-builder" : isCvMakerFlow ? "/cv-maker" : "";
+  const isResumeBuilderFlow =
+    location.pathname === "/resume-builder" ||
+    location.pathname.startsWith("/resume-builder/");
+  const flowBasePath = isResumeBuilderFlow
+    ? "/resume-builder"
+    : isAiResumeBuilderFlow
+    ? "/ai-resume-builder"
+    : isCvMakerFlow
+    ? "/cv-maker"
+    : "";
   const homePath = flowBasePath || "/";
   const templatesPath = `${flowBasePath}/templates`;
   const featuresPath = `${flowBasePath}/features`;
@@ -52,7 +61,7 @@ export default function Navbar() {
   const handleHomeClick = () => {
     setMenuOpen(false);
 
-    if (isCvMakerFlow || isAiResumeBuilderFlow) {
+    if (isCvMakerFlow || isAiResumeBuilderFlow || isResumeBuilderFlow) {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };

@@ -54,7 +54,14 @@ const excludedPaths = new Set([
   "/ai-resume-builder/coverletter",
   "/ai-resume-builder/policies",
   "/ai-resume-builder/contact",
-  "/ai-resume-builder/blog"
+  "/ai-resume-builder/blog",
+  "/resume-builder/templates",
+  "/resume-builder/features",
+  "/resume-builder/cover-letter",
+  "/resume-builder/coverletter",
+  "/resume-builder/policies",
+  "/resume-builder/contact",
+  "/resume-builder/blog"
 ]);
 
 const priorityByPath = new Map([
@@ -63,6 +70,7 @@ const priorityByPath = new Map([
   ["/templates", "0.9"],
   ["/cv-maker", "0.9"],
   ["/ai-resume-builder", "0.9"],
+  ["/resume-builder", "0.9"],
   ["/cv-maker/templates", "0.9"],
   ["/features", "0.8"],
   ["/cover-letter", "0.8"],
@@ -81,6 +89,7 @@ function normalizeRoute(route) {
   if (normalized.includes(":") || normalized.includes("*")) return null;
   if (normalized.startsWith("/cv-maker/blog/")) return null;
   if (normalized.startsWith("/ai-resume-builder/")) return null;
+  if (normalized.startsWith("/resume-builder/")) return null;
   if (excludedPaths.has(normalized)) return null;
   if (normalized.startsWith("/admin")) return null;
   return normalized.replace(/\/$/, "") || "/";
@@ -128,6 +137,7 @@ function getChangefreq(route) {
     route === "/templates" ||
     route === "/cv-maker" ||
     route === "/ai-resume-builder" ||
+    route === "/resume-builder" ||
     route === "/cv-maker/templates" ||
     route === "/blog"
   ) return "weekly";
