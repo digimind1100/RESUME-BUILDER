@@ -22,6 +22,7 @@ export default function Policies() {
             <li>Full name, email address, and phone number</li>
             <li>Account login details</li>
             <li>Resume and cover letter information entered by you</li>
+            <li>Downloaded resume PDF copies, only when you give consent</li>
             <li>Subscription and payment status</li>
             <li>Technical information such as IP address and browser type</li>
           </ul>
@@ -35,8 +36,27 @@ export default function Policies() {
           <h4>Data Storage</h4>
           <p>
             Resume Builder stores resume and cover letter data locally in your browser
-            using localStorage technology. We do not permanently store your resume
-            content on our servers.
+            using localStorage technology. If you create an account, save your resume,
+            or agree to let us keep a downloaded PDF copy, we may store that resume
+            information securely in our database to provide your account features,
+            download history, support, and service improvement.
+          </p>
+
+          <h4>Downloaded PDF Consent</h4>
+          <p>
+            When you download a resume PDF, we may ask for your consent to keep a copy
+            of the downloaded PDF. These copies may be used to understand template
+            quality, improve formatting, fix download issues, and plan future Resume
+            Builder features. We do not use downloaded PDF copies for public display,
+            resale, or sharing with employers without your permission.
+          </p>
+
+          <h4>How We Use Resume Data</h4>
+          <p>
+            We may use saved resume data, download activity, template selection, and
+            consented PDF copies to improve our resume builder, develop better
+            templates, identify formatting problems, provide customer support, and
+            understand which features are most useful to users.
           </p>
 
           <h4>Analytics & Cookies</h4>
@@ -250,20 +270,28 @@ export default function Policies() {
             after successful payment of the premium fee.
           </p>
 
-          <h4>4. Premium Access Duration</h4>
+          <h4>4. Downloaded PDF Copies</h4>
+          <p>
+            If a user gives consent, Resume Builder may keep a copy of the downloaded
+            resume PDF for service improvement, formatting review, support, and future
+            feature planning. Users should only enter information they are comfortable
+            saving in their account or downloaded PDF.
+          </p>
+
+          <h4>5. Premium Access Duration</h4>
           <p>
             Premium access is granted for 30 days from the date of payment.
             After 30 days, premium access will expire unless renewed.
           </p>
 
-          <h4>5. Service Availability</h4>
+          <h4>6. Service Availability</h4>
           <p>
             We aim to keep our platform available at all times. However, we do not
             guarantee uninterrupted or error-free access due to maintenance,
             technical issues, or circumstances beyond our control.
           </p>
 
-          <h4>6. No Physical Delivery</h4>
+          <h4>7. No Physical Delivery</h4>
           <p>
             All services and digital products are delivered instantly online.
             No physical shipping or courier service is involved.
