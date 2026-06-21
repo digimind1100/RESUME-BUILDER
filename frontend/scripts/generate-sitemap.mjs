@@ -55,6 +55,7 @@ const priorityByPath = new Map([
   ["/pricing", "0.9"],
   ["/templates", "0.9"],
   ["/cv-maker", "0.9"],
+  ["/ai-resume-builder", "0.9"],
   ["/cv-maker/templates", "0.9"],
   ["/features", "0.8"],
   ["/cover-letter", "0.8"],
@@ -114,7 +115,14 @@ function getBlogLinksFromSource() {
 }
 
 function getChangefreq(route) {
-  if (route === "/" || route === "/templates" || route === "/cv-maker" || route === "/cv-maker/templates" || route === "/blog") return "weekly";
+  if (
+    route === "/" ||
+    route === "/templates" ||
+    route === "/cv-maker" ||
+    route === "/ai-resume-builder" ||
+    route === "/cv-maker/templates" ||
+    route === "/blog"
+  ) return "weekly";
   if (route === "/policies" || route === "/contact") return "yearly";
   return "monthly";
 }

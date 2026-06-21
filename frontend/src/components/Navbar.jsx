@@ -8,7 +8,10 @@ import { FiLogOut } from "react-icons/fi";
 export default function Navbar() {
   const location = useLocation();
   const isCvMakerFlow = location.pathname === "/cv-maker" || location.pathname.startsWith("/cv-maker/");
-  const homePath = isCvMakerFlow ? "/cv-maker" : "/";
+  const isAiResumeBuilderFlow =
+    location.pathname === "/ai-resume-builder" ||
+    location.pathname.startsWith("/ai-resume-builder/");
+  const homePath = isAiResumeBuilderFlow ? "/ai-resume-builder" : isCvMakerFlow ? "/cv-maker" : "/";
   const templatesPath = isCvMakerFlow ? "/cv-maker/templates" : "/templates";
   const featuresPath = isCvMakerFlow ? "/cv-maker/features" : "/features";
   const coverLetterPath = isCvMakerFlow ? "/cv-maker/coverletter" : "/coverletter";
@@ -48,7 +51,7 @@ export default function Navbar() {
   const handleHomeClick = () => {
     setMenuOpen(false);
 
-    if (isCvMakerFlow) {
+    if (isCvMakerFlow || isAiResumeBuilderFlow) {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };

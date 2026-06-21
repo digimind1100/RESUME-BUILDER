@@ -30,6 +30,7 @@ import AdminReviews from "./components/admin/AdminReviews";
 import ReviewsPage from "./components/ReviewsPage";
 import BlogPost from "./pages/BlogPost";
 import HomePageCvMaker from "./pages/HomePageCvMaker";
+import HomePageAiResumeBuilder from "./pages/HomePageAiResumeBuilder";
 import Pricing from "./components/Pricing";
 import ScrollToTop from "./components/ScrollToTop";
 import TestPagination from "./Template/TestPagination/TestPagination";
@@ -122,6 +123,7 @@ function AppContent() {
         />
         <Route path="/" element={<HomePage />} />
         <Route path="/cv-maker" element={<HomePageCvMaker />} />
+        <Route path="/ai-resume-builder" element={<HomePageAiResumeBuilder />} />
         {/* Unified builder */}
         <Route
           path="/resume/:templateId?"
