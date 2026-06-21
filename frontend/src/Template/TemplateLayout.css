@@ -328,7 +328,15 @@
   }
 
   .template-layout--clean-professional .template-picker,
-  .template-layout--creative-bold .template-picker {
+  .template-layout--creative-bold .template-picker,
+  .template-layout--elegant-classic .template-picker,
+  .template-layout--medical-elite .template-picker,
+  .template-layout--engineer-elite .template-picker,
+  .template-layout--soft-tech .template-picker,
+  .template-layout--data-elite .template-picker,
+  .template-layout--engineer-prime .template-picker,
+  .template-layout--aviation-pro .template-picker,
+  .template-layout--florence-classic .template-picker {
     margin-top: 12px;
   }
 

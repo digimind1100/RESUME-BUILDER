@@ -657,6 +657,10 @@
 }
 
 @media (max-width: 768px) {
+  .st-wrapper {
+    min-height: auto !important;
+  }
+
   .resume-mobile-wrap {
     width: 100vw !important;
     max-width: 100vw !important;
@@ -665,7 +669,7 @@
     display: flex !important;
     justify-content: center !important;
     align-items: flex-start !important;
-    padding: 0 0 30px !important;
+    padding: 0 !important;
     box-sizing: border-box !important;
   }
 
@@ -677,7 +681,7 @@
     transform: scale(0.42) !important;
     transform-origin: top center !important;
     margin-top: 20px !important;
-    margin-bottom: -520px !important;
+    margin-bottom: -650px !important;
   }
 
   .st-resume {
