@@ -422,9 +422,8 @@
     flex: none;
     width: 100%;
     max-height: none;
-    display: flex;
-    align-items: stretch;
-    overflow: hidden;
+    display: block;
+    overflow: visible;
     padding: 10px 12px 12px;
     border-right: none;
     border-top: 1px solid rgba(15, 23, 42, 0.08);
@@ -432,24 +431,22 @@
 
   .template-picker-heading {
     position: sticky;
-    left: 0;
-    top: auto;
+    top: 122px;
+    left: auto;
     z-index: 3;
-    flex: 0 0 180px;
-    width: 180px;
-    max-width: 180px;
-    min-width: 180px;
-    min-height: auto;
-    margin: 0 10px 0 0;
-    font-size: 14px;
+    width: calc(100% - 24px);
+    max-width: none;
+    min-width: 0;
+    min-height: 48px;
+    margin: 0 auto 10px;
+    font-size: 15px;
   }
 
   .template-picker-list {
     display: flex;
-    flex: 1 1 auto;
     flex-direction: row;
     gap: 10px;
-    width: auto;
+    width: 100%;
     min-width: 0;
     overflow-x: auto;
     overflow-y: hidden;
