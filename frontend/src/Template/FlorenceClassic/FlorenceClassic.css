@@ -816,7 +816,7 @@ box-sizing: border-box;
     transform-origin: top center !important;
 
     margin-top: 12px !important;
-    margin-bottom: -730px !important;
+    margin-bottom: -630px !important;
   }
 
 }
@@ -842,7 +842,7 @@ box-sizing: border-box;
 @media (max-width: 390px) {
   .resume-a4.florence-page {
     transform: scale(0.34) !important;
-    margin-bottom: -730px !important;
+    margin-bottom: -630px !important;
   }
 }
 
