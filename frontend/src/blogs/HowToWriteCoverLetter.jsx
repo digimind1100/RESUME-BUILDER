@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 
 export default function HowToWriteCoverLetter() {
@@ -37,6 +38,17 @@ export default function HowToWriteCoverLetter() {
           Whether you are a fresh graduate, an experienced professional, or changing careers,
           learning how to write a compelling cover letter is an essential career skill.
         </p>
+
+        <div className="blog-cta-box">
+          <h2>Create Your Cover Letter Faster</h2>
+          <p>
+            Use ResumeBuilder.pk to create a professional cover letter with a clean format and
+            ready-to-edit content.
+          </p>
+          <Link to="/cover-letter" className="blog-cta-btn">
+            Create Cover Letter
+          </Link>
+        </div>
 
         <h2>Why Is a Cover Letter Important?</h2>
         <p>
