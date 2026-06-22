@@ -385,6 +385,25 @@ export default function HowToWriteCoverLetter() {
           <p>Your Name</p>
         </div>
 
+        <h2>Related Articles</h2>
+        <ul>
+          <li>
+            <Link to="/blog/how-to-make-ats-friendly-resume-in-pakistan-2026">
+              How to Make an ATS Friendly Resume
+            </Link>
+          </li>
+          <li>
+            <Link to="/blog/top-resume-mistakes-to-avoid-in-pakistan-2026">
+              Top Resume Mistakes to Avoid in Pakistan (2026)
+            </Link>
+          </li>
+          <li>
+            <Link to="/blog/best-resume-skills-for-jobs-in-pakistan-2026">
+              Best Resume Skills for Jobs in Pakistan (2026)
+            </Link>
+          </li>
+        </ul>
+
         <h2>Final Thoughts</h2>
         <p>
           A well-written <strong>cover letter</strong> remains one of the most effective tools for
