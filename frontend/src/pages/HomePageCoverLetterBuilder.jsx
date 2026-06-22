@@ -19,7 +19,7 @@ function CoverLetterBuilderHero() {
       <div className="hero-content">
         <div className="hero-text">
           <h1 className="hero-title">
-            Free Cover Letter Builder Online - Create{" "}
+            Free Cover Letter - Create{" "}
             <span>Professional Cover Letters</span> in Minutes
           </h1>
 
@@ -61,6 +61,16 @@ function CoverLetterBuilderSEOContent() {
   return (
     <section className="seo-section">
       <div className="seo-container">
+
+        <h2>How to write a cover letter</h2>
+
+        <p>
+          Freshers can use the Cover Letter Creator to highlight education,
+          internships, projects, and motivation. Experienced professionals can
+          focus on achievements, leadership, industry knowledge, and the value
+          they bring to the role.
+        </p>
+        
         <h2>Free Cover Letter Builder for Job Seekers</h2>
 
         <p>

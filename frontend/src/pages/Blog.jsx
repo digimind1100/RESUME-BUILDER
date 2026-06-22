@@ -408,10 +408,10 @@ export default function Blog() {
 
 {/* Blog 26 */}
 <article className="blog-card">
-  <h2>How to Write a Cover Letter</h2>
+  <h2>How to Write a Cover Letter in 2026</h2>
   <p>
-    Learn how to write a professional cover letter with the right structure,
-    examples, tone, closing, and mistakes to avoid.
+    Complete guide with examples, ATS-friendly tips, structure, and professional
+    cover letter writing guidance for 2026.
   </p>
   <Link
     to={blogLink("how-to-write-a-cover-letter")}

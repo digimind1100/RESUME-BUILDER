@@ -19,7 +19,7 @@ function AiResumeBuilderHero() {
       <div className="hero-content">
         <div className="hero-text">
           <h1 className="hero-title">
-            Free AI Resume Builder Online - Create{" "}
+            Free AI Resume - Create{" "}
             <span>ATS-Friendly Resumes</span> Faster
           </h1>
 
@@ -61,7 +61,7 @@ function AiResumeBuilderSEOContent() {
   return (
     <section className="seo-section">
       <div className="seo-container">
-        <h2>Free AI Resume Builder for Job Seekers</h2>
+        <h2>Free AI Resume for Job Seekers</h2>
 
         <p>
           ResumeBuilder.pk gives students, fresh graduates, and experienced
@@ -101,7 +101,7 @@ function AiResumeBuilderSEOContent() {
           .
         </p>
 
-        <h2>AI Resume Generator with Professional Templates</h2>
+        <h2>AI Resume with Professional Templates</h2>
 
         <p>
           Use the AI Resume Generator as an AI Resume Maker, AI CV Maker, or
@@ -117,7 +117,7 @@ function AiResumeBuilderSEOContent() {
           dedicated AI CV Maker Free style landing page and CV creation workflow.
         </p>
 
-        <h2>Build a Resume Online and Download PDF</h2>
+        <h2>Build ai Resume Online and Download PDF</h2>
 
         <p>
           The AI Resume Builder Online experience lets you create, edit, and

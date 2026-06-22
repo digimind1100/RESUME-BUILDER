@@ -161,6 +161,10 @@
   margin-bottom: 0;
 }
 
+.blog-content-space {
+  min-height: 520px;
+}
+
 @media (max-width: 768px) {
   .blog-post,
   .blog-article > .blog-container {
