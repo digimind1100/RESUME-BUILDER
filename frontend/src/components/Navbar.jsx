@@ -3,7 +3,14 @@ import { Link, useLocation } from "react-router-dom";
 import "./Navbar.css";
 import SignupModal from "./auth/SignupModal";
 import { useAuth } from "../context/AuthContext";
-import { FiLogOut } from "react-icons/fi";
+import {
+  FiChevronDown,
+  FiHelpCircle,
+  FiLogOut,
+  FiMessageCircle,
+  FiSearch,
+  FiUserPlus,
+} from "react-icons/fi";
 
 export default function Navbar() {
   const location = useLocation();
@@ -92,7 +99,69 @@ export default function Navbar() {
 
         {/* NAV LINKS */}
         <ul className={`navbar-links ${menuOpen ? "open" : ""}`}>
-          <li><Link to={homePath} onClick={handleHomeClick}>Resume Builder</Link></li>
+          <li className="mega-menu-parent">
+            <Link to={homePath} className="mega-menu-trigger" onClick={handleHomeClick}>
+              Resume Builder
+              <FiChevronDown className="mega-menu-arrow" aria-hidden="true" />
+            </Link>
+
+            <div className="resume-mega-menu">
+              <button
+                type="button"
+                className="mega-menu-row"
+                onClick={() => {
+                  setShowSignup(true);
+                  setMenuOpen(false);
+                }}
+              >
+                <span className="mega-menu-icon mega-menu-icon-signup">
+                  <FiUserPlus aria-hidden="true" />
+                </span>
+                <span className="mega-menu-copy">
+                  <span className="mega-menu-heading">Sign Up / Login</span>
+                  <span className="mega-menu-text">
+                    Sign Up free to access Templates Editing is 100% free
+                  </span>
+                </span>
+              </button>
+
+              <Link to="/reviews" className="mega-menu-row" onClick={handleLinkClick}>
+                <span className="mega-menu-icon mega-menu-icon-reviews">
+                  <FiMessageCircle aria-hidden="true" />
+                </span>
+                <span className="mega-menu-copy">
+                  <span className="mega-menu-heading">What our users say</span>
+                  <span className="mega-menu-text">
+                    You can read our users current reviews and build your trust
+                  </span>
+                </span>
+              </Link>
+
+              <Link to={homePath} className="mega-menu-row" onClick={handleHomeClick}>
+                <span className="mega-menu-icon mega-menu-icon-faq">
+                  <FiHelpCircle aria-hidden="true" />
+                </span>
+                <span className="mega-menu-copy">
+                  <span className="mega-menu-heading">Frequently ask question</span>
+                  <span className="mega-menu-text">
+                    You can get answers of immediate Question creates in your mind related To Resume / CV
+                  </span>
+                </span>
+              </Link>
+
+              <Link to={featuresPath} className="mega-menu-row" onClick={handleLinkClick}>
+                <span className="mega-menu-icon mega-menu-icon-why">
+                  <FiSearch aria-hidden="true" />
+                </span>
+                <span className="mega-menu-copy">
+                  <span className="mega-menu-heading">Why us</span>
+                  <span className="mega-menu-text">
+                    We allow free access to our users with free editing, unique templates, AI suggestions, and nominal pricing.
+                  </span>
+                </span>
+              </Link>
+            </div>
+          </li>
           <li><Link to={templatesPath} onClick={handleLinkClick}>Templates</Link></li>
           <li><Link to={featuresPath} onClick={handleLinkClick}>Features</Link></li>
           <li><Link to={coverLetterPath} onClick={handleLinkClick}>Cover Letter</Link></li>
