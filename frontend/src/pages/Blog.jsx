@@ -57,24 +57,6 @@ export default function Blog() {
         </Link>
       </article>
 
-      {/* Blog 3 */}
-<article className="blog-card">
-  <h2>How to Write a Professional Cover Letter in Pakistan (2026)</h2>
-  <p>
-    Learn how to write a strong and professional cover letter tailored
-    for the Pakistani job market. Includes structure, examples, and
-    common mistakes to avoid.
-  </p>
-
-  <Link
-    to={blogLink("how-to-write-professional-cover-letter-in-pakistan-2026")}
-    className="blog-read-btn"
-  >
-    Read Full Guide
-  </Link>
-</article>
-
-
 {/* Blog 4 */}
 <article className="blog-card">
   <h2>Top Resume Mistakes to Avoid in Pakistan (2026)</h2>

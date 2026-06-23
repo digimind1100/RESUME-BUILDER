@@ -92,7 +92,7 @@ export default function Navbar() {
 
         {/* NAV LINKS */}
         <ul className={`navbar-links ${menuOpen ? "open" : ""}`}>
-          <li><Link to={homePath} onClick={handleHomeClick}>Home</Link></li>
+          <li><Link to={homePath} onClick={handleHomeClick}>Resume Builder</Link></li>
           <li><Link to={templatesPath} onClick={handleLinkClick}>Templates</Link></li>
           <li><Link to={featuresPath} onClick={handleLinkClick}>Features</Link></li>
           <li><Link to={coverLetterPath} onClick={handleLinkClick}>Cover Letter</Link></li>
