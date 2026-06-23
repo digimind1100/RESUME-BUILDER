@@ -78,10 +78,28 @@ body {
   position: relative;
 }
 
-.navbar-links li a.mega-menu-trigger {
+.mega-menu-trigger-wrap {
   display: inline-flex;
   align-items: center;
   gap: 5px;
+}
+
+.navbar-links li a.mega-menu-trigger {
+  display: inline-flex;
+  align-items: center;
+}
+
+.mega-menu-toggle {
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #333;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 
 .mega-menu-arrow {
@@ -91,7 +109,8 @@ body {
 }
 
 .mega-menu-parent:hover .mega-menu-arrow,
-.mega-menu-parent:focus-within .mega-menu-arrow {
+.mega-menu-parent:focus-within .mega-menu-arrow,
+.mega-menu-parent.mega-menu-open .mega-menu-arrow {
   transform: rotate(180deg);
 }
 
@@ -383,9 +402,21 @@ body {
     font-size: 16px;
   }
 
-  .navbar-links li a.mega-menu-trigger {
+  .mega-menu-trigger-wrap {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+  }
+
+  .navbar-links li a.mega-menu-trigger {
+    padding: 14px 0;
+  }
+
+  .mega-menu-toggle {
+    width: 42px;
+    height: 42px;
+    margin-right: -10px;
   }
 
   .resume-mega-menu {
@@ -394,12 +425,32 @@ body {
     margin: 0 14px 8px 18px;
     padding: 12px;
     gap: 12px;
-    opacity: 1;
-    visibility: visible;
-    transform: none;
-    pointer-events: auto;
+    display: none;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-4px);
+    pointer-events: none;
     box-shadow: none;
     border-radius: 8px;
+  }
+
+  .mega-menu-parent:hover .resume-mega-menu,
+  .mega-menu-parent:focus-within .resume-mega-menu {
+    display: none;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-4px);
+    pointer-events: none;
+  }
+
+  .mega-menu-parent.mega-menu-open .resume-mega-menu,
+  .mega-menu-parent.mega-menu-open:hover .resume-mega-menu,
+  .mega-menu-parent.mega-menu-open:focus-within .resume-mega-menu {
+    display: grid;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
   }
 
   .resume-mega-menu::before {

@@ -6,6 +6,7 @@
   align-items: center;
   padding: 80px 0;
   background-color: #ffffff; /* slight contrast from SEO section */
+  scroll-margin-top: 88px;
 }
 
 .faq-container {

@@ -43,6 +43,7 @@ export default function Navbar() {
 
   const [showMenu, setShowMenu] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [resumeMegaMenuOpen, setResumeMegaMenuOpen] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
 
   const { user, isAuthenticated, logout, initializing } = useAuth();
@@ -69,9 +70,14 @@ export default function Navbar() {
     user?.fullName || user?.email || ""
   );
 
-  const handleLinkClick = () => setMenuOpen(false);
+  const handleLinkClick = () => {
+    setMenuOpen(false);
+    setResumeMegaMenuOpen(false);
+  };
+
   const handleHomeClick = () => {
     setMenuOpen(false);
+    setResumeMegaMenuOpen(false);
 
     if (
       isCvMakerFlow ||
@@ -99,11 +105,21 @@ export default function Navbar() {
 
         {/* NAV LINKS */}
         <ul className={`navbar-links ${menuOpen ? "open" : ""}`}>
-          <li className="mega-menu-parent">
-            <Link to={homePath} className="mega-menu-trigger" onClick={handleHomeClick}>
-              Resume Builder
-              <FiChevronDown className="mega-menu-arrow" aria-hidden="true" />
-            </Link>
+          <li className={`mega-menu-parent ${resumeMegaMenuOpen ? "mega-menu-open" : ""}`}>
+            <div className="mega-menu-trigger-wrap">
+              <Link to={homePath} className="mega-menu-trigger" onClick={handleHomeClick}>
+                Resume Builder
+              </Link>
+              <button
+                type="button"
+                className="mega-menu-toggle"
+                aria-label={resumeMegaMenuOpen ? "Close Resume Builder menu" : "Open Resume Builder menu"}
+                aria-expanded={resumeMegaMenuOpen}
+                onClick={() => setResumeMegaMenuOpen((open) => !open)}
+              >
+                <FiChevronDown className="mega-menu-arrow" aria-hidden="true" />
+              </button>
+            </div>
 
             <div className="resume-mega-menu">
               <button
@@ -112,6 +128,7 @@ export default function Navbar() {
                 onClick={() => {
                   setShowSignup(true);
                   setMenuOpen(false);
+                  setResumeMegaMenuOpen(false);
                 }}
               >
                 <span className="mega-menu-icon mega-menu-icon-signup">
@@ -137,7 +154,11 @@ export default function Navbar() {
                 </span>
               </Link>
 
-              <Link to={homePath} className="mega-menu-row" onClick={handleHomeClick}>
+              <Link
+                to="/resume-builder#frequently-asked-questions"
+                className="mega-menu-row"
+                onClick={handleLinkClick}
+              >
                 <span className="mega-menu-icon mega-menu-icon-faq">
                   <FiHelpCircle aria-hidden="true" />
                 </span>
@@ -180,6 +201,7 @@ export default function Navbar() {
                 onClick={() => {
                   setShowSignup(true);
                   setMenuOpen(false);
+                  setResumeMegaMenuOpen(false);
                 }}
               >
                 Sign In
@@ -201,6 +223,7 @@ export default function Navbar() {
                   onClick={() => {
                     logout();
                     setMenuOpen(false);
+                    setResumeMegaMenuOpen(false);
                   }}
                 >
                   <FiLogOut size={16} />
@@ -212,7 +235,15 @@ export default function Navbar() {
         </ul>
 
         {/* HAMBURGER */}
-        <div className="hamburger" onClick={() => setMenuOpen(p => !p)}>
+        <div
+          className="hamburger"
+          onClick={() => {
+            setMenuOpen((open) => {
+              if (open) setResumeMegaMenuOpen(false);
+              return !open;
+            });
+          }}
+        >
           <span className="bar"></span>
           <span className="bar"></span>
           <span className="bar"></span>

@@ -37,7 +37,7 @@ export default function HomeFAQ() {
   };
 
   return (
-    <section className="faq-section">
+    <section id="frequently-asked-questions" className="faq-section">
       <div className="faq-container">
         <h2>
           Frequently Asked <span>Questions</span>
