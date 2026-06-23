@@ -33,6 +33,7 @@
 
 .signup-modal-premium {
   width: min(920px, calc(100vw - 32px));
+  min-width: min(860px, calc(100vw - 32px));
   padding: 0;
   display: grid;
   grid-template-columns: 1.05fr 0.95fr;
@@ -96,7 +97,7 @@
 
 .signup-promo-panel h2 {
   margin: 0;
-  font-size: 34px;
+  font-size: clamp(28px, 3vw, 34px);
   line-height: 1.1;
   font-weight: 800;
   letter-spacing: 0;
@@ -105,7 +106,7 @@
 .signup-promo-lead {
   margin: 32px 0 28px;
   max-width: 355px;
-  font-size: 26px;
+  font-size: clamp(20px, 2.1vw, 26px);
   line-height: 1.38;
   color: #111827;
 }
@@ -400,9 +401,10 @@
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 520px) {
   .signup-modal-premium {
     grid-template-columns: 1fr;
+    min-width: 0;
     width: min(430px, calc(100vw - 24px));
   }
 
@@ -456,9 +458,10 @@
   }
 }
 
-@media (min-width: 641px) {
+@media (min-width: 521px) {
   .signup-modal-premium {
     width: min(920px, calc(100vw - 32px));
+    min-width: min(860px, calc(100vw - 32px));
     display: grid;
     grid-template-columns: 1.05fr 0.95fr;
   }
