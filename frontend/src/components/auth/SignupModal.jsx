@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { FaEnvelope } from "react-icons/fa";
-import { FiAward, FiCheckCircle, FiDownloadCloud, FiEdit3 } from "react-icons/fi";
+import { FiAward, FiCheckCircle, FiDownloadCloud, FiEdit3, FiStar } from "react-icons/fi";
 import { useAuth } from "../../context/AuthContext";
 import "./SignupModal.css";
 
@@ -489,6 +489,17 @@ export default function SignupModal({ onClose, onSuccess, initialMode = "signup"
           <button className="signup-cancel" onClick={onClose}>
             Cancel
           </button>
+
+          <div className="signup-trust-rating" aria-label="Five star user rating">
+            <div className="signup-stars" aria-hidden="true">
+              {[0, 1, 2, 3, 4].map((star) => (
+                <FiStar key={star} />
+              ))}
+            </div>
+            <p>
+              Rated 5 stars by users building professional resumes with confidence.
+            </p>
+          </div>
         </div>
       </div>
     </div>
