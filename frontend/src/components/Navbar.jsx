@@ -89,6 +89,33 @@ export default function Navbar() {
     }
   };
 
+  const handleSectionScroll = (sectionId) => {
+    setMenuOpen(false);
+    setResumeMegaMenuOpen(false);
+
+    let attempts = 0;
+
+    const scrollToSection = () => {
+      const target = document.getElementById(sectionId);
+
+      if (target) {
+        target.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+        return;
+      }
+
+      attempts += 1;
+
+      if (attempts < 40) {
+        window.setTimeout(scrollToSection, 100);
+      }
+    };
+
+    scrollToSection();
+  };
+
   return (
     <>
       <nav className="navbar fixed-nav">
@@ -142,10 +169,10 @@ export default function Navbar() {
                 </span>
               </button>
 
-              <Link
-                to="/resume-builder#what-our-users-say"
+              <button
+                type="button"
                 className="mega-menu-row"
-                onClick={handleLinkClick}
+                onClick={() => handleSectionScroll("what-our-users-say")}
               >
                 <span className="mega-menu-icon mega-menu-icon-reviews">
                   <FiMessageCircle aria-hidden="true" />
@@ -156,12 +183,12 @@ export default function Navbar() {
                     You can read our users current reviews and build your trust
                   </span>
                 </span>
-              </Link>
+              </button>
 
-              <Link
-                to="/resume-builder#frequently-asked-questions"
+              <button
+                type="button"
                 className="mega-menu-row"
-                onClick={handleLinkClick}
+                onClick={() => handleSectionScroll("frequently-asked-questions")}
               >
                 <span className="mega-menu-icon mega-menu-icon-faq">
                   <FiHelpCircle aria-hidden="true" />
@@ -172,7 +199,7 @@ export default function Navbar() {
                     You can get answers of immediate Question creates in your mind related To Resume / CV
                   </span>
                 </span>
-              </Link>
+              </button>
 
               <Link to={featuresPath} className="mega-menu-row" onClick={handleLinkClick}>
                 <span className="mega-menu-icon mega-menu-icon-why">
