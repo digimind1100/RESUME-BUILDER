@@ -36,7 +36,8 @@
   padding: 0;
   display: grid;
   grid-template-columns: 1.05fr 0.95fr;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   border-radius: 10px;
   box-shadow: 0 28px 70px rgba(15, 23, 42, 0.24);
 }
@@ -146,10 +147,12 @@
 }
 
 .signup-auth-panel {
+  min-height: 470px;
   padding: 58px 44px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  min-width: 0;
 }
 
 /* ===============================
@@ -397,7 +400,7 @@
   }
 }
 
-@media (max-width: 760px) {
+@media (max-width: 640px) {
   .signup-modal-premium {
     grid-template-columns: 1fr;
     width: min(430px, calc(100vw - 24px));
@@ -422,6 +425,7 @@
   }
 
   .signup-auth-panel {
+    min-height: auto;
     padding: 28px 24px 30px;
   }
 }
