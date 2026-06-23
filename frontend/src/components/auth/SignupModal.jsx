@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { FaEnvelope } from "react-icons/fa";
+import { FiAward, FiCheckCircle, FiDownloadCloud, FiEdit3 } from "react-icons/fi";
 import { useAuth } from "../../context/AuthContext";
 import "./SignupModal.css";
 
@@ -312,154 +313,183 @@ export default function SignupModal({ onClose, onSuccess, initialMode = "signup"
 
   return (
     <div className="signup-overlay">
-      <div className="signup-modal animate-fadeIn">
-        <h2 className="signup-title">
-          {mode === "verify"
-            ? "Verify Your Email"
-            : mode === "signup"
-              ? "Create Your Account for Free Access"
-              : "Login to Your Account"}
-        </h2>
+      <div className="signup-modal signup-modal-premium animate-fadeIn">
+        <div className="signup-promo-panel">
+          <p className="signup-promo-kicker">Premium access</p>
+          <h2>Sign Up is 100% Free</h2>
+          <p className="signup-promo-lead">
+            Our goal is providing seamless services for every job seeker.
+          </p>
 
-        {error && <p className="signup-error">{error}</p>}
-        {notice && <p className="signup-notice">{notice}</p>}
+          <div className="signup-promo-list">
+            <div className="signup-promo-item">
+              <span><FiEdit3 aria-hidden="true" /></span>
+              <p>Create and edit professional resumes without limits.</p>
+            </div>
+            <div className="signup-promo-item">
+              <span><FiAward aria-hidden="true" /></span>
+              <p>Use polished templates made for a premium first impression.</p>
+            </div>
+            <div className="signup-promo-item">
+              <span><FiDownloadCloud aria-hidden="true" /></span>
+              <p>Save your work and prepare downloads when you are ready.</p>
+            </div>
+            <div className="signup-promo-item">
+              <span><FiCheckCircle aria-hidden="true" /></span>
+              <p>Access smart resume guidance with a clean, simple workflow.</p>
+            </div>
+          </div>
+        </div>
 
-        <form onSubmit={handleSubmit} className="signup-form">
-          {mode === "signup" && !showEmailSignup ? (
-            <button
-              type="button"
-              className="email-auth-toggle"
-              onClick={() => setShowEmailSignup(true)}
-              disabled={loading || googleLoading}
-            >
-              <FaEnvelope aria-hidden="true" className="email-auth-icon" />
-              Signup With Email
-            </button>
-          ) : mode !== "verify" ? (
-            <>
-              {mode === "signup" && (
+        <div className="signup-auth-panel">
+          <h2 className="signup-title">
+            {mode === "verify"
+              ? "Verify Your Email"
+              : mode === "signup"
+                ? "Create Your Account for Free Access"
+                : "Login to Your Account"}
+          </h2>
+
+          {error && <p className="signup-error">{error}</p>}
+          {notice && <p className="signup-notice">{notice}</p>}
+
+          <form onSubmit={handleSubmit} className="signup-form">
+            {mode === "signup" && !showEmailSignup ? (
+              <button
+                type="button"
+                className="email-auth-toggle"
+                onClick={() => setShowEmailSignup(true)}
+                disabled={loading || googleLoading}
+              >
+                <FaEnvelope aria-hidden="true" className="email-auth-icon" />
+                Signup With Email
+              </button>
+            ) : mode !== "verify" ? (
+              <>
+                {mode === "signup" && (
+                  <input
+                    type="text"
+                    placeholder="Full Name"
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                    required
+                  />
+                )}
+
                 <input
-                  type="text"
-                  placeholder="Full Name"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
+                  type="email"
+                  placeholder="Email Address"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   required
                 />
-              )}
 
-              <input
-                type="email"
-                placeholder="Email Address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-
-              <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </>
-          ) : (
-            <input
-              type="text"
-              inputMode="numeric"
-              placeholder="Verification Code"
-              value={verificationCode}
-              onChange={(e) => setVerificationCode(e.target.value)}
-              autoComplete="one-time-code"
-              required
-            />
-          )}
-
-          {(mode === "verify" || mode !== "signup" || showEmailSignup) && (
-            <button type="submit" disabled={loading || googleLoading}>
-              {loading
-                ? mode === "verify"
-                  ? "Verifying..."
-                  : mode === "signup"
-                    ? "Creating Account..."
-                    : "Logging in..."
-                : mode === "verify"
-                  ? "Verify Email"
-                  : mode === "signup"
-                    ? "Signup"
-                    : "Login"}
-            </button>
-          )}
-        </form>
-
-        {mode !== "verify" && (
-          <>
-            <div className="signup-divider">
-              <span>or</span>
-            </div>
-
-            {GOOGLE_CLIENT_ID ? (
-              <div
-                className={`google-auth-button${
-                  googleButtonReady ? " is-ready" : ""
-                }`}
-                ref={googleButtonShellRef}
-                aria-busy={googleLoading}
-              >
-                <div
-                  className="google-auth-target"
-                  ref={googleButtonRef}
+                <input
+                  type="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
                 />
+              </>
+            ) : (
+              <input
+                type="text"
+                inputMode="numeric"
+                placeholder="Verification Code"
+                value={verificationCode}
+                onChange={(e) => setVerificationCode(e.target.value)}
+                autoComplete="one-time-code"
+                required
+              />
+            )}
+
+            {(mode === "verify" || mode !== "signup" || showEmailSignup) && (
+              <button type="submit" disabled={loading || googleLoading}>
+                {loading
+                  ? mode === "verify"
+                    ? "Verifying..."
+                    : mode === "signup"
+                      ? "Creating Account..."
+                      : "Logging in..."
+                  : mode === "verify"
+                    ? "Verify Email"
+                    : mode === "signup"
+                      ? "Signup"
+                      : "Login"}
+              </button>
+            )}
+          </form>
+
+          {mode !== "verify" && (
+            <>
+              <div className="signup-divider">
+                <span>or</span>
+              </div>
+
+              {GOOGLE_CLIENT_ID ? (
+                <div
+                  className={`google-auth-button${
+                    googleButtonReady ? " is-ready" : ""
+                  }`}
+                  ref={googleButtonShellRef}
+                  aria-busy={googleLoading}
+                >
+                  <div
+                    className="google-auth-target"
+                    ref={googleButtonRef}
+                  />
+                  <button
+                    type="button"
+                    className="google-auth-fallback google-auth-placeholder"
+                    disabled
+                  >
+                    Continue with Google
+                  </button>
+                </div>
+              ) : (
                 <button
                   type="button"
-                  className="google-auth-fallback google-auth-placeholder"
-                  disabled
+                  className="google-auth-fallback"
+                  onClick={() =>
+                    setError("Google signup needs VITE_GOOGLE_CLIENT_ID configured.")
+                  }
                 >
                   Continue with Google
                 </button>
-              </div>
-            ) : (
-              <button
-                type="button"
-                className="google-auth-fallback"
-                onClick={() =>
-                  setError("Google signup needs VITE_GOOGLE_CLIENT_ID configured.")
-                }
-              >
-                Continue with Google
-              </button>
-            )}
-          </>
-        )}
-
-        {mode === "verify" ? (
-          <p className="signup-switch">
-            Did not receive a code?{" "}
-            <span onClick={handleResendCode}>
-              {resending ? "Sending..." : "Resend code"}
-            </span>
-          </p>
-        ) : (
-          <p className="signup-switch">
-            {mode === "signup" ? (
-            <>
-              Already have an account?{" "}
-              <span onClick={() => switchMode("login")}>Login</span>
+              )}
             </>
-          ) : (
-            <>
-              New here?{" "}
-              <span onClick={() => switchMode("signup")}>
-                Create account
+          )}
+
+          {mode === "verify" ? (
+            <p className="signup-switch">
+              Did not receive a code?{" "}
+              <span onClick={handleResendCode}>
+                {resending ? "Sending..." : "Resend code"}
               </span>
-            </>
-            )}
-          </p>
-        )}
+            </p>
+          ) : (
+            <p className="signup-switch">
+              {mode === "signup" ? (
+              <>
+                Already have an account?{" "}
+                <span onClick={() => switchMode("login")}>Login</span>
+              </>
+            ) : (
+              <>
+                New here?{" "}
+                <span onClick={() => switchMode("signup")}>
+                  Create account
+                </span>
+              </>
+              )}
+            </p>
+          )}
 
-        <button className="signup-cancel" onClick={onClose}>
-          Cancel
-        </button>
+          <button className="signup-cancel" onClick={onClose}>
+            Cancel
+          </button>
+        </div>
       </div>
     </div>
   );
