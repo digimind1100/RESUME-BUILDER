@@ -26,7 +26,7 @@ export default function ScrollToTop() {
 
         attempts += 1;
 
-        if (attempts < 30) {
+        if (attempts < 80) {
           window.setTimeout(scrollToHashTarget, 100);
         }
       };

@@ -142,7 +142,11 @@ export default function Navbar() {
                 </span>
               </button>
 
-              <Link to="/reviews" className="mega-menu-row" onClick={handleLinkClick}>
+              <Link
+                to="/resume-builder#what-our-users-say"
+                className="mega-menu-row"
+                onClick={handleLinkClick}
+              >
                 <span className="mega-menu-icon mega-menu-icon-reviews">
                   <FiMessageCircle aria-hidden="true" />
                 </span>

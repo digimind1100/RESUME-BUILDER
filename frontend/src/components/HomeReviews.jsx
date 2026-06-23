@@ -21,7 +21,7 @@ export default function HomeReviews() {
   if (reviews.length === 0) return null;
 
   return (
-    <section className="home-reviews">
+    <section id="what-our-users-say" className="home-reviews">
       <h2 className="home-reviews-title">What our users say</h2>
 
       <div className="home-reviews-grid">
