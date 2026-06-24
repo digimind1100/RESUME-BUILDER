@@ -11,12 +11,15 @@ import {
   FiDollarSign,
   FiDownload,
   FiEdit3,
+  FiFileText,
   FiHelpCircle,
   FiImage,
   FiLayers,
   FiLogOut,
   FiMessageCircle,
+  FiShield,
   FiSearch,
+  FiStar,
   FiTarget,
   FiUserCheck,
   FiUserPlus,
@@ -202,9 +205,24 @@ export default function Navbar() {
             </div>
 
             <div className="resume-mega-menu">
+              <div className="resume-mega-hero">
+                <span className="resume-premium-icon">
+                  <FiAward aria-hidden="true" />
+                </span>
+                <div>
+                  <p className="resume-mega-kicker">Premium resume builder</p>
+                  <h3>Create a professional CV with smart guidance</h3>
+                  <p>
+                    Build, edit, and improve your resume with free access,
+                    AI-powered suggestions, trust signals, and helpful career tools.
+                  </p>
+                </div>
+              </div>
+
+              <div className="resume-mega-grid">
               <button
                 type="button"
-                className="mega-menu-row"
+                className="resume-mega-card"
                 onClick={() => {
                   setShowSignup(true);
                   setMenuOpen(false);
@@ -212,60 +230,69 @@ export default function Navbar() {
                   setTemplatesMegaMenuOpen(false);
                 }}
               >
-                <span className="mega-menu-icon mega-menu-icon-signup">
+                <span>
                   <FiUserPlus aria-hidden="true" />
                 </span>
-                <span className="mega-menu-copy">
-                  <span className="mega-menu-heading">Sign Up / Login</span>
-                  <span className="mega-menu-text">
-                    Sign Up free to access Templates Editing is 100% free
-                  </span>
-                </span>
+                <strong>Sign Up / Login</strong>
+                <p>Sign up free to access templates and enjoy 100% free editing.</p>
               </button>
 
               <button
                 type="button"
-                className="mega-menu-row"
+                className="resume-mega-card"
                 onClick={() => handleSectionScroll("what-our-users-say")}
               >
-                <span className="mega-menu-icon mega-menu-icon-reviews">
+                <span>
                   <FiMessageCircle aria-hidden="true" />
                 </span>
-                <span className="mega-menu-copy">
-                  <span className="mega-menu-heading">What our users say</span>
-                  <span className="mega-menu-text">
-                    You can read our users current reviews and build your trust
-                  </span>
-                </span>
+                <strong>What our users say</strong>
+                <p>Read current user reviews and build confidence before starting.</p>
               </button>
 
               <button
                 type="button"
-                className="mega-menu-row"
+                className="resume-mega-card"
                 onClick={() => handleSectionScroll("frequently-asked-questions")}
               >
-                <span className="mega-menu-icon mega-menu-icon-faq">
+                <span>
                   <FiHelpCircle aria-hidden="true" />
                 </span>
-                <span className="mega-menu-copy">
-                  <span className="mega-menu-heading">Frequently ask question</span>
-                  <span className="mega-menu-text">
-                    You can get answers of immediate Question creates in your mind related To Resume / CV
-                  </span>
-                </span>
+                <strong>Frequently ask question</strong>
+                <p>Get quick answers about resumes, CVs, templates, and editing.</p>
               </button>
 
-              <Link to={featuresPath} className="mega-menu-row" onClick={handleLinkClick}>
-                <span className="mega-menu-icon mega-menu-icon-why">
+              <Link to={featuresPath} className="resume-mega-card" onClick={handleLinkClick}>
+                <span>
                   <FiSearch aria-hidden="true" />
                 </span>
-                <span className="mega-menu-copy">
-                  <span className="mega-menu-heading">Why us</span>
-                  <span className="mega-menu-text">
-                    We allow free access to our users with free editing, unique templates, AI suggestions, and nominal pricing.
-                  </span>
-                </span>
+                <strong>Why us</strong>
+                <p>Free access, unique templates, AI suggestions, and nominal pricing.</p>
               </Link>
+
+              <Link to={templatesPath} className="resume-mega-card" onClick={handleLinkClick}>
+                <span>
+                  <FiFileText aria-hidden="true" />
+                </span>
+                <strong>Resume templates</strong>
+                <p>Choose modern layouts made to impress hiring teams quickly.</p>
+              </Link>
+
+              <Link to={featuresPath} className="resume-mega-card" onClick={handleLinkClick}>
+                <span>
+                  <FiShield aria-hidden="true" />
+                </span>
+                <strong>ATS-friendly support</strong>
+                <p>Create clean, readable resumes that work better for job applications.</p>
+              </Link>
+
+              <Link to={templatesPath} className="resume-mega-card resume-mega-card-wide" onClick={handleLinkClick}>
+                <span>
+                  <FiStar aria-hidden="true" />
+                </span>
+                <strong>Professional impression</strong>
+                <p>Present your skills clearly and give recruiters a polished first impression.</p>
+              </Link>
+              </div>
             </div>
           </li>
           <li className={`mega-menu-parent templates-menu-parent ${templatesMegaMenuOpen ? "mega-menu-open" : ""} ${templatesMegaMenuSuppressed ? "mega-menu-suppressed" : ""}`}>
