@@ -161,6 +161,14 @@ body {
   pointer-events: auto;
 }
 
+.mega-menu-parent.mega-menu-suppressed:hover .resume-mega-menu,
+.mega-menu-parent.mega-menu-suppressed:focus-within .resume-mega-menu {
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, 10px) scale(0.98);
+  pointer-events: none;
+}
+
 .resume-mega-hero {
   min-height: 100%;
   padding: 22px;

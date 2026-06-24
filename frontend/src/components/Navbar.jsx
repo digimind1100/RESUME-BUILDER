@@ -57,6 +57,7 @@ export default function Navbar() {
   const [showMenu, setShowMenu] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [resumeMegaMenuOpen, setResumeMegaMenuOpen] = useState(false);
+  const [resumeMegaMenuSuppressed, setResumeMegaMenuSuppressed] = useState(false);
   const [templatesMegaMenuOpen, setTemplatesMegaMenuOpen] = useState(false);
   const [templatesMegaMenuSuppressed, setTemplatesMegaMenuSuppressed] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
@@ -89,7 +90,9 @@ export default function Navbar() {
     setMenuOpen(false);
     setResumeMegaMenuOpen(false);
     setTemplatesMegaMenuOpen(false);
+    setResumeMegaMenuSuppressed(true);
     setTemplatesMegaMenuSuppressed(true);
+    window.setTimeout(() => setResumeMegaMenuSuppressed(false), 450);
     window.setTimeout(() => setTemplatesMegaMenuSuppressed(false), 450);
   };
 
@@ -97,6 +100,8 @@ export default function Navbar() {
     setMenuOpen(false);
     setResumeMegaMenuOpen(false);
     setTemplatesMegaMenuOpen(false);
+    setResumeMegaMenuSuppressed(true);
+    window.setTimeout(() => setResumeMegaMenuSuppressed(false), 450);
 
     if (
       isCvMakerFlow ||
@@ -112,6 +117,8 @@ export default function Navbar() {
     setMenuOpen(false);
     setResumeMegaMenuOpen(false);
     setTemplatesMegaMenuOpen(false);
+    setResumeMegaMenuSuppressed(true);
+    window.setTimeout(() => setResumeMegaMenuSuppressed(false), 450);
 
     let attempts = 0;
 
@@ -185,7 +192,7 @@ export default function Navbar() {
 
         {/* NAV LINKS */}
         <ul className={`navbar-links ${menuOpen ? "open" : ""}`}>
-          <li className={`mega-menu-parent ${resumeMegaMenuOpen ? "mega-menu-open" : ""}`}>
+          <li className={`mega-menu-parent ${resumeMegaMenuOpen ? "mega-menu-open" : ""} ${resumeMegaMenuSuppressed ? "mega-menu-suppressed" : ""}`}>
             <div className="mega-menu-trigger-wrap">
               <Link to={homePath} className="mega-menu-trigger" onClick={handleHomeClick}>
                 Resume Builder
@@ -196,6 +203,7 @@ export default function Navbar() {
                 aria-label={resumeMegaMenuOpen ? "Close Resume Builder menu" : "Open Resume Builder menu"}
                 aria-expanded={resumeMegaMenuOpen}
                 onClick={() => {
+                  setResumeMegaMenuSuppressed(false);
                   setTemplatesMegaMenuOpen(false);
                   setResumeMegaMenuOpen((open) => !open);
                 }}
@@ -228,6 +236,8 @@ export default function Navbar() {
                   setMenuOpen(false);
                   setResumeMegaMenuOpen(false);
                   setTemplatesMegaMenuOpen(false);
+                  setResumeMegaMenuSuppressed(true);
+                  window.setTimeout(() => setResumeMegaMenuSuppressed(false), 450);
                 }}
               >
                 <span>
