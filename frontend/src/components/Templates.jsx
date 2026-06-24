@@ -223,7 +223,7 @@ const handleUseTemplate = (route) => {
 
 
         {/* ================= SIMPLE ================= */}
-        <section className="templates-section templates-section--simple">
+        <section id="modern-templates" className="templates-section templates-section--simple">
           <h2 className="section-title">Simple Templates</h2>
 
           <div className="template-list">

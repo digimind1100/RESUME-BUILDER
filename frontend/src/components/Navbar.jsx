@@ -276,7 +276,7 @@ export default function Navbar() {
                   <strong>AI Templates</strong>
                   <p>Start with AI-friendly layouts and premium guidance for faster resume creation.</p>
                 </Link>
-                <Link to={templatesPath} className="templates-mega-card" onClick={handleLinkClick}>
+                <Link to={`${templatesPath}#modern-templates`} className="templates-mega-card" onClick={handleLinkClick}>
                   <span><FiImage aria-hidden="true" /></span>
                   <strong>Modern Templates</strong>
                   <p>Unique designs with QR code, profile image, clean sections, and polished spacing.</p>
