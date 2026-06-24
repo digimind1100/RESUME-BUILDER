@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { createPortal } from "react-dom";
+import { FiAward, FiCheckCircle, FiClock, FiCreditCard, FiShield, FiZap } from "react-icons/fi";
 import "./PaymentModal.css";
 
 import easypaisaLogo from "../../assets/payments/easypaisa.png";
@@ -208,7 +209,44 @@ export default function PaymentModal({ onClose, onSuccess }) {
   return createPortal(
     <div className="payment-overlay">
       <div className="payment-modal premium">
-        <h2 className="payment-title">🔓 Unlock Resume</h2>
+        <div className="payment-info-panel">
+          <span className="payment-premium-icon">
+            <FiAward aria-hidden="true" />
+          </span>
+          <p className="payment-info-kicker">Premium access</p>
+          <h2>Unlock your professional resume toolkit</h2>
+          <p className="payment-info-lead">
+            Get full editing access, premium templates, and export-ready resume
+            tools for a focused 30-day career push.
+          </p>
+
+          <div className="payment-benefit-list">
+            <div className="payment-benefit-item">
+              <span><FiZap aria-hidden="true" /></span>
+              <p>Instant access through PayFast after successful payment.</p>
+            </div>
+            <div className="payment-benefit-item">
+              <span><FiCheckCircle aria-hidden="true" /></span>
+              <p>Unlock editing, templates, and download-ready resume features.</p>
+            </div>
+            <div className="payment-benefit-item">
+              <span><FiShield aria-hidden="true" /></span>
+              <p>Manual EasyPaisa verification is reviewed by admin support.</p>
+            </div>
+            <div className="payment-benefit-item">
+              <span><FiClock aria-hidden="true" /></span>
+              <p>Premium access remains active for 30 days after approval.</p>
+            </div>
+          </div>
+
+          <div className="payment-trust-strip">
+            <FiCreditCard aria-hidden="true" />
+            <span>Simple payment. Clear access. No subscription.</span>
+          </div>
+        </div>
+
+        <div className="payment-action-panel">
+        <h2 className="payment-title">Unlock Resume</h2>
         <p className="payment-subtitle">
           One-time payment to unlock full editing
         </p>
@@ -380,6 +418,7 @@ export default function PaymentModal({ onClose, onSuccess }) {
             Cancel
           </button>
         )}
+        </div>
       </div>
     </div>,
     modalRoot
