@@ -55,6 +55,7 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [resumeMegaMenuOpen, setResumeMegaMenuOpen] = useState(false);
   const [templatesMegaMenuOpen, setTemplatesMegaMenuOpen] = useState(false);
+  const [templatesMegaMenuSuppressed, setTemplatesMegaMenuSuppressed] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
 
   const { user, isAuthenticated, logout, initializing } = useAuth();
@@ -85,6 +86,8 @@ export default function Navbar() {
     setMenuOpen(false);
     setResumeMegaMenuOpen(false);
     setTemplatesMegaMenuOpen(false);
+    setTemplatesMegaMenuSuppressed(true);
+    window.setTimeout(() => setTemplatesMegaMenuSuppressed(false), 450);
   };
 
   const handleHomeClick = () => {
@@ -232,7 +235,7 @@ export default function Navbar() {
               </Link>
             </div>
           </li>
-          <li className={`mega-menu-parent templates-menu-parent ${templatesMegaMenuOpen ? "mega-menu-open" : ""}`}>
+          <li className={`mega-menu-parent templates-menu-parent ${templatesMegaMenuOpen ? "mega-menu-open" : ""} ${templatesMegaMenuSuppressed ? "mega-menu-suppressed" : ""}`}>
             <div className="mega-menu-trigger-wrap">
               <Link to={templatesPath} className="mega-menu-trigger" onClick={handleLinkClick}>
                 Templates
@@ -243,6 +246,7 @@ export default function Navbar() {
                 aria-label={templatesMegaMenuOpen ? "Close Templates menu" : "Open Templates menu"}
                 aria-expanded={templatesMegaMenuOpen}
                 onClick={() => {
+                  setTemplatesMegaMenuSuppressed(false);
                   setResumeMegaMenuOpen(false);
                   setTemplatesMegaMenuOpen((open) => !open);
                 }}
