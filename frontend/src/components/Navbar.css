@@ -265,6 +265,16 @@ body {
     visibility 0.2s ease;
 }
 
+.templates-menu-parent::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 220px;
+  height: 30px;
+  transform: translateX(-50%);
+}
+
 .templates-menu-parent:hover .templates-mega-menu,
 .templates-menu-parent:focus-within .templates-mega-menu {
   opacity: 1;
@@ -618,6 +628,10 @@ body {
     pointer-events: none;
     box-shadow: none;
     border-radius: 8px;
+  }
+
+  .templates-menu-parent::after {
+    display: none;
   }
 
   .mega-menu-parent:hover .resume-mega-menu,
