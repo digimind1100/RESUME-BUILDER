@@ -322,7 +322,11 @@ export default function Navbar() {
                   <strong>Modern Templates</strong>
                   <p>Unique designs with QR code, profile image, clean sections, and polished spacing.</p>
                 </Link>
-                <Link to={templatesPath} className="templates-mega-card" onClick={handleLinkClick}>
+                <Link
+                  to={`${templatesPath}#modern-templates`}
+                  className="templates-mega-card"
+                  onClick={(event) => handleTemplateSectionClick("modern-templates", event)}
+                >
                   <span><FiLayers aria-hidden="true" /></span>
                   <strong>Job Specific Templates</strong>
                   <p>Pick resume styles shaped for different industries, roles, and career levels.</p>
