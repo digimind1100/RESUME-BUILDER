@@ -103,7 +103,7 @@ const handleUseTemplate = (route) => {
         </div>
 
         {/* =================== PREMIUM TEMPLATES =================== */}
-        <section className="templates-section templates-section--premium">
+        <section id="ai-templates" className="templates-section templates-section--premium">
           <div className="section-heading">
             <div>
               <h2 className="section-title">Premium interactive templates</h2>

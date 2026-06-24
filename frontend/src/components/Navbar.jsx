@@ -267,7 +267,7 @@ export default function Navbar() {
               </div>
 
               <div className="templates-mega-grid">
-                <Link to={templatesPath} className="templates-mega-card" onClick={handleLinkClick}>
+                <Link to={`${templatesPath}#ai-templates`} className="templates-mega-card" onClick={handleLinkClick}>
                   <span><FiCpu aria-hidden="true" /></span>
                   <strong>AI Templates</strong>
                   <p>Start with AI-friendly layouts and premium guidance for faster resume creation.</p>
