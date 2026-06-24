@@ -4,11 +4,21 @@ import "./Navbar.css";
 import SignupModal from "./auth/SignupModal";
 import { useAuth } from "../context/AuthContext";
 import {
+  FiAward,
   FiChevronDown,
+  FiClock,
+  FiCpu,
+  FiDollarSign,
+  FiDownload,
+  FiEdit3,
   FiHelpCircle,
+  FiImage,
+  FiLayers,
   FiLogOut,
   FiMessageCircle,
   FiSearch,
+  FiTarget,
+  FiUserCheck,
   FiUserPlus,
 } from "react-icons/fi";
 
@@ -44,6 +54,7 @@ export default function Navbar() {
   const [showMenu, setShowMenu] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [resumeMegaMenuOpen, setResumeMegaMenuOpen] = useState(false);
+  const [templatesMegaMenuOpen, setTemplatesMegaMenuOpen] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
 
   const { user, isAuthenticated, logout, initializing } = useAuth();
@@ -73,11 +84,13 @@ export default function Navbar() {
   const handleLinkClick = () => {
     setMenuOpen(false);
     setResumeMegaMenuOpen(false);
+    setTemplatesMegaMenuOpen(false);
   };
 
   const handleHomeClick = () => {
     setMenuOpen(false);
     setResumeMegaMenuOpen(false);
+    setTemplatesMegaMenuOpen(false);
 
     if (
       isCvMakerFlow ||
@@ -92,6 +105,7 @@ export default function Navbar() {
   const handleSectionScroll = (sectionId) => {
     setMenuOpen(false);
     setResumeMegaMenuOpen(false);
+    setTemplatesMegaMenuOpen(false);
 
     let attempts = 0;
 
@@ -142,7 +156,10 @@ export default function Navbar() {
                 className="mega-menu-toggle"
                 aria-label={resumeMegaMenuOpen ? "Close Resume Builder menu" : "Open Resume Builder menu"}
                 aria-expanded={resumeMegaMenuOpen}
-                onClick={() => setResumeMegaMenuOpen((open) => !open)}
+                onClick={() => {
+                  setTemplatesMegaMenuOpen(false);
+                  setResumeMegaMenuOpen((open) => !open);
+                }}
               >
                 <FiChevronDown className="mega-menu-arrow" aria-hidden="true" />
               </button>
@@ -156,6 +173,7 @@ export default function Navbar() {
                   setShowSignup(true);
                   setMenuOpen(false);
                   setResumeMegaMenuOpen(false);
+                  setTemplatesMegaMenuOpen(false);
                 }}
               >
                 <span className="mega-menu-icon mega-menu-icon-signup">
@@ -214,7 +232,98 @@ export default function Navbar() {
               </Link>
             </div>
           </li>
-          <li><Link to={templatesPath} onClick={handleLinkClick}>Templates</Link></li>
+          <li className={`mega-menu-parent templates-menu-parent ${templatesMegaMenuOpen ? "mega-menu-open" : ""}`}>
+            <div className="mega-menu-trigger-wrap">
+              <Link to={templatesPath} className="mega-menu-trigger" onClick={handleLinkClick}>
+                Templates
+              </Link>
+              <button
+                type="button"
+                className="mega-menu-toggle"
+                aria-label={templatesMegaMenuOpen ? "Close Templates menu" : "Open Templates menu"}
+                aria-expanded={templatesMegaMenuOpen}
+                onClick={() => {
+                  setResumeMegaMenuOpen(false);
+                  setTemplatesMegaMenuOpen((open) => !open);
+                }}
+              >
+                <FiChevronDown className="mega-menu-arrow" aria-hidden="true" />
+              </button>
+            </div>
+
+            <div className="templates-mega-menu">
+              <div className="templates-mega-hero">
+                <span className="templates-premium-icon">
+                  <FiAward aria-hidden="true" />
+                </span>
+                <div>
+                  <p className="templates-mega-kicker">Premium template library</p>
+                  <h3>AI templates built for a professional first impression</h3>
+                  <p>
+                    Choose smart, modern resume designs that help your CV look sharp,
+                    readable, and ready for hiring teams.
+                  </p>
+                </div>
+              </div>
+
+              <div className="templates-mega-grid">
+                <Link to={templatesPath} className="templates-mega-card" onClick={handleLinkClick}>
+                  <span><FiCpu aria-hidden="true" /></span>
+                  <strong>AI Templates</strong>
+                  <p>Start with AI-friendly layouts and premium guidance for faster resume creation.</p>
+                </Link>
+                <Link to={templatesPath} className="templates-mega-card" onClick={handleLinkClick}>
+                  <span><FiImage aria-hidden="true" /></span>
+                  <strong>Modern Templates</strong>
+                  <p>Unique designs with QR code, profile image, clean sections, and polished spacing.</p>
+                </Link>
+                <Link to={templatesPath} className="templates-mega-card" onClick={handleLinkClick}>
+                  <span><FiLayers aria-hidden="true" /></span>
+                  <strong>Job Specific Templates</strong>
+                  <p>Pick resume styles shaped for different industries, roles, and career levels.</p>
+                </Link>
+                <Link to={templatesPath} className="templates-mega-card" onClick={handleLinkClick}>
+                  <span><FiDownload aria-hidden="true" /></span>
+                  <strong>PDF Download</strong>
+                  <p>Prepare templates for clean PDF export that keeps formatting consistent.</p>
+                </Link>
+                <button
+                  type="button"
+                  className="templates-mega-card"
+                  onClick={() => {
+                    setShowSignup(true);
+                    setMenuOpen(false);
+                    setResumeMegaMenuOpen(false);
+                    setTemplatesMegaMenuOpen(false);
+                  }}
+                >
+                  <span><FiEdit3 aria-hidden="true" /></span>
+                  <strong>Free Editing Access</strong>
+                  <p>Edit templates freely and adjust your content before finalizing your resume.</p>
+                </button>
+                <Link to="/pricing" className="templates-mega-card" onClick={handleLinkClick}>
+                  <span><FiDollarSign aria-hidden="true" /></span>
+                  <strong>Competitive Prices</strong>
+                  <p>Get premium resume support with market competitive pricing.</p>
+                </Link>
+                <Link to={featuresPath} className="templates-mega-card" onClick={handleLinkClick}>
+                  <span><FiTarget aria-hidden="true" /></span>
+                  <strong>Search Suitable Jobs</strong>
+                  <p>Use a focused CV style that helps match your strengths to suitable job paths.</p>
+                </Link>
+                <Link to={templatesPath} className="templates-mega-card" onClick={handleLinkClick}>
+                  <span><FiUserCheck aria-hidden="true" /></span>
+                  <strong>Professional Look</strong>
+                  <p>Drop a confident impression on the hiring person with a clean CV presentation.</p>
+                </Link>
+                <Link to={templatesPath} className="templates-mega-card templates-mega-card-wide" onClick={handleLinkClick}>
+                  <span><FiClock aria-hidden="true" /></span>
+                  <strong>Interview Call Faster</strong>
+                  <p>Our templates help present your skills clearly, increasing your chance to get interview calls in a short time.</p>
+                </Link>
+              </div>
+            </div>
+          </li>
           <li><Link to={featuresPath} onClick={handleLinkClick}>Features</Link></li>
           <li><Link to={coverLetterPath} onClick={handleLinkClick}>Cover Letter</Link></li>
           <li><Link to={policiesPath} onClick={handleLinkClick}>Policies</Link></li>
@@ -233,6 +342,7 @@ export default function Navbar() {
                   setShowSignup(true);
                   setMenuOpen(false);
                   setResumeMegaMenuOpen(false);
+                  setTemplatesMegaMenuOpen(false);
                 }}
               >
                 Sign In
@@ -255,6 +365,7 @@ export default function Navbar() {
                     logout();
                     setMenuOpen(false);
                     setResumeMegaMenuOpen(false);
+                    setTemplatesMegaMenuOpen(false);
                   }}
                 >
                   <FiLogOut size={16} />
@@ -270,7 +381,10 @@ export default function Navbar() {
           className="hamburger"
           onClick={() => {
             setMenuOpen((open) => {
-              if (open) setResumeMegaMenuOpen(false);
+              if (open) {
+                setResumeMegaMenuOpen(false);
+                setTemplatesMegaMenuOpen(false);
+              }
               return !open;
             });
           }}
