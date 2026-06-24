@@ -765,6 +765,7 @@ body {
     margin: 0 14px 8px 18px;
     padding: 12px;
     gap: 12px;
+    grid-template-columns: 1fr;
     display: none;
     opacity: 0;
     visibility: hidden;
