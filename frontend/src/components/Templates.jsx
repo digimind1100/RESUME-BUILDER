@@ -42,6 +42,33 @@ useEffect(() => {
   }
 }, [isLocal]);
 
+useEffect(() => {
+  if (!location.hash) return;
+
+  const targetId = decodeURIComponent(location.hash.slice(1));
+  let attempts = 0;
+
+  const scrollToTemplateSection = () => {
+    const target = document.getElementById(targetId);
+
+    if (target) {
+      target.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+      return;
+    }
+
+    attempts += 1;
+
+    if (attempts < 60) {
+      window.setTimeout(scrollToTemplateSection, 100);
+    }
+  };
+
+  window.setTimeout(scrollToTemplateSection, 0);
+}, [location.hash]);
+
 
 const handleUseTemplate = (route) => {
 

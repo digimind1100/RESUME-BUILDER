@@ -133,6 +133,39 @@ export default function Navbar() {
     scrollToSection();
   };
 
+  const handleTemplateSectionClick = (sectionId, event) => {
+    handleLinkClick();
+
+    if (location.pathname !== templatesPath) {
+      return;
+    }
+
+    event.preventDefault();
+    window.history.pushState(null, "", `${templatesPath}#${sectionId}`);
+
+    let attempts = 0;
+
+    const scrollToTemplateSection = () => {
+      const target = document.getElementById(sectionId);
+
+      if (target) {
+        target.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+        return;
+      }
+
+      attempts += 1;
+
+      if (attempts < 60) {
+        window.setTimeout(scrollToTemplateSection, 100);
+      }
+    };
+
+    scrollToTemplateSection();
+  };
+
   return (
     <>
       <nav className="navbar fixed-nav">
@@ -271,12 +304,20 @@ export default function Navbar() {
               </div>
 
               <div className="templates-mega-grid">
-                <Link to={`${templatesPath}#ai-templates`} className="templates-mega-card" onClick={handleLinkClick}>
+                <Link
+                  to={`${templatesPath}#ai-templates`}
+                  className="templates-mega-card"
+                  onClick={(event) => handleTemplateSectionClick("ai-templates", event)}
+                >
                   <span><FiCpu aria-hidden="true" /></span>
                   <strong>AI Templates</strong>
                   <p>Start with AI-friendly layouts and premium guidance for faster resume creation.</p>
                 </Link>
-                <Link to={`${templatesPath}#modern-templates`} className="templates-mega-card" onClick={handleLinkClick}>
+                <Link
+                  to={`${templatesPath}#modern-templates`}
+                  className="templates-mega-card"
+                  onClick={(event) => handleTemplateSectionClick("modern-templates", event)}
+                >
                   <span><FiImage aria-hidden="true" /></span>
                   <strong>Modern Templates</strong>
                   <p>Unique designs with QR code, profile image, clean sections, and polished spacing.</p>
@@ -299,6 +340,8 @@ export default function Navbar() {
                     setMenuOpen(false);
                     setResumeMegaMenuOpen(false);
                     setTemplatesMegaMenuOpen(false);
+                    setTemplatesMegaMenuSuppressed(true);
+                    window.setTimeout(() => setTemplatesMegaMenuSuppressed(false), 450);
                   }}
                 >
                   <span><FiEdit3 aria-hidden="true" /></span>
