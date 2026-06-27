@@ -34,7 +34,7 @@ export default function Pricing() {
             <div className="popular-badge">Most Popular</div>
 
             <h3>Premium Plan</h3>
-            <h2 className="price">Rs 599</h2>
+            <h2 className="price">Rs 299</h2>
             <p className="duration">
               One-Time Payment • 30 Days Full Access
             </p>
@@ -59,7 +59,7 @@ export default function Pricing() {
                 <div className="pay-box">💳 Credit / Debit Card</div>
                 <div className="pay-box">💚 Easypaisa</div>
                 <div className="pay-box">💛 JazzCash</div>
-                <div className="pay-box">💙 SadaPay</div>
+                
               </div>
             </div>
 
