@@ -195,13 +195,13 @@ export default function HomePageAiResumeBuilder() {
             "@context": "https://schema.org",
             "@type": "WebPage",
             name: "Free AI Resume Builder Online",
-            url: "https://resumebuilder.pk/ai-resume-builder",
+            url: "https://www.resumebuilder.pk/ai-resume-builder",
             description:
               "Create ATS-friendly resumes online with AI-assisted guidance, professional templates, and instant PDF download.",
             publisher: {
               "@type": "Organization",
               name: "ResumeBuilder.pk",
-              url: "https://resumebuilder.pk"
+              url: "https://www.resumebuilder.pk"
             }
           })
         }}

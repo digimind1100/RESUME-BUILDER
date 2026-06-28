@@ -184,13 +184,13 @@ export default function HomePageCvMaker() {
             "@context": "https://schema.org",
             "@type": "WebPage",
             name: "Free CV Maker Online",
-            url: "https://resumebuilder.pk/cv-maker",
+            url: "https://www.resumebuilder.pk/cv-maker",
             description:
               "Create professional CVs online with modern templates, ATS-friendly formatting, and PDF download.",
             publisher: {
               "@type": "Organization",
               name: "ResumeBuilder.pk",
-              url: "https://resumebuilder.pk"
+              url: "https://www.resumebuilder.pk"
             }
           })
         }}

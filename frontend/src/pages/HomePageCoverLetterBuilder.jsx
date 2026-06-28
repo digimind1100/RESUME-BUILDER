@@ -193,13 +193,13 @@ export default function HomePageCoverLetterBuilder() {
             "@context": "https://schema.org",
             "@type": "WebPage",
             name: "Free Cover Letter Builder Online",
-            url: "https://resumebuilder.pk/cover-letter-builder",
+            url: "https://www.resumebuilder.pk/cover-letter-builder",
             description:
               "Create professional cover letters online with guided sections, easy editing, and instant download.",
             publisher: {
               "@type": "Organization",
               name: "ResumeBuilder.pk",
-              url: "https://resumebuilder.pk"
+              url: "https://www.resumebuilder.pk"
             }
           })
         }}

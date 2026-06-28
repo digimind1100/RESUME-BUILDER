@@ -67,8 +67,8 @@ function AppContent() {
   const location = useLocation();
   const canonicalUrl =
     location.pathname === "/"
-      ? "https://resumebuilder.pk/"
-      : `https://resumebuilder.pk${location.pathname}`;
+      ? "https://www.resumebuilder.pk/"
+      : `https://www.resumebuilder.pk${location.pathname}`;
 
   // Global form state
   const [formData, setFormData] = useState({});

@@ -174,13 +174,13 @@ export default function HomePageResumeBuilder() {
             "@context": "https://schema.org",
             "@type": "WebPage",
             name: "Free Resume Builder Online",
-            url: "https://resumebuilder.pk/resume-builder",
+            url: "https://www.resumebuilder.pk/resume-builder",
             description:
               "Create ATS-friendly resumes online with professional templates, easy editing, and instant PDF download.",
             publisher: {
               "@type": "Organization",
               name: "ResumeBuilder.pk",
-              url: "https://resumebuilder.pk"
+              url: "https://www.resumebuilder.pk"
             }
           })
         }}

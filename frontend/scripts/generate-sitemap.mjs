@@ -8,7 +8,7 @@ const rootDir = path.resolve(__dirname, "..");
 const srcDir = path.join(rootDir, "src");
 const publicDir = path.join(rootDir, "public");
 
-const siteUrl = (process.env.SITE_URL || "https://resumebuilder.pk").replace(/\/$/, "");
+const siteUrl = (process.env.SITE_URL || "https://www.resumebuilder.pk").replace(/\/$/, "");
 const today = new Intl.DateTimeFormat("en-CA", {
   timeZone: "Asia/Karachi",
   year: "numeric",

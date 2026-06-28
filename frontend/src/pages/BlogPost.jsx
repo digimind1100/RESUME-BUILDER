@@ -28,14 +28,14 @@ export default function BlogPost() {
                 "name": "ResumeBuilder.pk",
                 "logo": {
                   "@type": "ImageObject",
-                  "url": "https://resumebuilder.pk/logo.png"
+                  "url": "https://www.resumebuilder.pk/logo.png"
                 }
               },
               "datePublished": "2026-02-21",
               "dateModified": "2026-02-21",
               "mainEntityOfPage": {
                 "@type": "WebPage",
-                "@id": "https://resumebuilder.pk/blog/best-cv-format-for-freshers-in-pakistan-2026"
+                "@id": "https://www.resumebuilder.pk/blog/best-cv-format-for-freshers-in-pakistan-2026"
               }
             })
           }}
@@ -51,19 +51,19 @@ export default function BlogPost() {
                   "@type": "ListItem",
                   "position": 1,
                   "name": "Home",
-                  "item": "https://resumebuilder.pk/"
+                  "item": "https://www.resumebuilder.pk/"
                 },
                 {
                   "@type": "ListItem",
                   "position": 2,
                   "name": "Blog",
-                  "item": "https://resumebuilder.pk/blog"
+                  "item": "https://www.resumebuilder.pk/blog"
                 },
                 {
                   "@type": "ListItem",
                   "position": 3,
                   "name": "Best CV Format for Freshers in Pakistan (2026)",
-                  "item": "https://resumebuilder.pk/blog/best-cv-format-for-freshers-in-pakistan-2026"
+                  "item": "https://www.resumebuilder.pk/blog/best-cv-format-for-freshers-in-pakistan-2026"
                 }
               ]
             })
@@ -233,14 +233,14 @@ export default function BlogPost() {
                 "name": "ResumeBuilder.pk",
                 "logo": {
                   "@type": "ImageObject",
-                  "url": "https://resumebuilder.pk/logo.png"
+                  "url": "https://www.resumebuilder.pk/logo.png"
                 }
               },
               "datePublished": "2026-02-22",
               "dateModified": "2026-02-22",
               "mainEntityOfPage": {
                 "@type": "WebPage",
-                "@id": "https://resumebuilder.pk/blog/how-to-make-ats-friendly-resume-in-pakistan-2026"
+                "@id": "https://www.resumebuilder.pk/blog/how-to-make-ats-friendly-resume-in-pakistan-2026"
               }
             })
           }}
@@ -256,19 +256,19 @@ export default function BlogPost() {
                   "@type": "ListItem",
                   "position": 1,
                   "name": "Home",
-                  "item": "https://resumebuilder.pk/"
+                  "item": "https://www.resumebuilder.pk/"
                 },
                 {
                   "@type": "ListItem",
                   "position": 2,
                   "name": "Blog",
-                  "item": "https://resumebuilder.pk/blog"
+                  "item": "https://www.resumebuilder.pk/blog"
                 },
                 {
                   "@type": "ListItem",
                   "position": 3,
                   "name": "How to Make an ATS Friendly Resume in Pakistan (2026)",
-                  "item": "https://resumebuilder.pk/blog/how-to-make-ats-friendly-resume-in-pakistan-2026"
+                  "item": "https://www.resumebuilder.pk/blog/how-to-make-ats-friendly-resume-in-pakistan-2026"
                 }
               ]
             })
@@ -446,14 +446,14 @@ export default function BlogPost() {
                 "name": "ResumeBuilder.pk",
                 "logo": {
                   "@type": "ImageObject",
-                  "url": "https://resumebuilder.pk/logo.png"
+                  "url": "https://www.resumebuilder.pk/logo.png"
                 }
               },
               "datePublished": "2026-02-23",
               "dateModified": "2026-02-23",
               "mainEntityOfPage": {
                 "@type": "WebPage",
-                "@id": "https://resumebuilder.pk/blog/how-to-write-professional-cover-letter-in-pakistan-2026"
+                "@id": "https://www.resumebuilder.pk/blog/how-to-write-professional-cover-letter-in-pakistan-2026"
               }
             })
           }}
@@ -469,19 +469,19 @@ export default function BlogPost() {
                   "@type": "ListItem",
                   "position": 1,
                   "name": "Home",
-                  "item": "https://resumebuilder.pk/"
+                  "item": "https://www.resumebuilder.pk/"
                 },
                 {
                   "@type": "ListItem",
                   "position": 2,
                   "name": "Blog",
-                  "item": "https://resumebuilder.pk/blog"
+                  "item": "https://www.resumebuilder.pk/blog"
                 },
                 {
                   "@type": "ListItem",
                   "position": 3,
                   "name": "How to Write a Professional Cover Letter in Pakistan (2026)",
-                  "item": "https://resumebuilder.pk/blog/how-to-write-professional-cover-letter-in-pakistan-2026"
+                  "item": "https://www.resumebuilder.pk/blog/how-to-write-professional-cover-letter-in-pakistan-2026"
                 }
               ]
             })
@@ -582,14 +582,14 @@ export default function BlogPost() {
                 "name": "ResumeBuilder.pk",
                 "logo": {
                   "@type": "ImageObject",
-                  "url": "https://resumebuilder.pk/logo.png"
+                  "url": "https://www.resumebuilder.pk/logo.png"
                 }
               },
               "datePublished": "2026-02-23",
               "dateModified": "2026-02-23",
               "mainEntityOfPage": {
                 "@type": "WebPage",
-                "@id": "https://resumebuilder.pk/blog/top-resume-mistakes-to-avoid-in-pakistan-2026"
+                "@id": "https://www.resumebuilder.pk/blog/top-resume-mistakes-to-avoid-in-pakistan-2026"
               }
             })
           }}
@@ -605,19 +605,19 @@ export default function BlogPost() {
                   "@type": "ListItem",
                   "position": 1,
                   "name": "Home",
-                  "item": "https://resumebuilder.pk/"
+                  "item": "https://www.resumebuilder.pk/"
                 },
                 {
                   "@type": "ListItem",
                   "position": 2,
                   "name": "Blog",
-                  "item": "https://resumebuilder.pk/blog"
+                  "item": "https://www.resumebuilder.pk/blog"
                 },
                 {
                   "@type": "ListItem",
                   "position": 3,
                   "name": "Top Resume Mistakes to Avoid in Pakistan (2026)",
-                  "item": "https://resumebuilder.pk/blog/top-resume-mistakes-to-avoid-in-pakistan-2026"
+                  "item": "https://www.resumebuilder.pk/blog/top-resume-mistakes-to-avoid-in-pakistan-2026"
                 }
               ]
             })
@@ -738,14 +738,14 @@ export default function BlogPost() {
           "name": "ResumeBuilder.pk",
           "logo": {
             "@type": "ImageObject",
-            "url": "https://resumebuilder.pk/logo.png"
+            "url": "https://www.resumebuilder.pk/logo.png"
           }
         },
         "datePublished": "2026-02-23",
         "dateModified": "2026-02-23",
         "mainEntityOfPage": {
           "@type": "WebPage",
-          "@id": "https://resumebuilder.pk/blog/best-resume-skills-for-jobs-in-pakistan-2026"
+          "@id": "https://www.resumebuilder.pk/blog/best-resume-skills-for-jobs-in-pakistan-2026"
         }
       })
     }}
@@ -763,19 +763,19 @@ export default function BlogPost() {
             "@type": "ListItem",
             "position": 1,
             "name": "Home",
-            "item": "https://resumebuilder.pk/"
+            "item": "https://www.resumebuilder.pk/"
           },
           {
             "@type": "ListItem",
             "position": 2,
             "name": "Blog",
-            "item": "https://resumebuilder.pk/blog"
+            "item": "https://www.resumebuilder.pk/blog"
           },
           {
             "@type": "ListItem",
             "position": 3,
             "name": "Best Resume Skills for Jobs in Pakistan (2026)",
-            "item": "https://resumebuilder.pk/blog/best-resume-skills-for-jobs-in-pakistan-2026"
+            "item": "https://www.resumebuilder.pk/blog/best-resume-skills-for-jobs-in-pakistan-2026"
           }
         ]
       })
@@ -918,14 +918,14 @@ if (slug === "resume-vs-cv-difference-in-pakistan-2026") {
           "name": "ResumeBuilder.pk",
           "logo": {
             "@type": "ImageObject",
-            "url": "https://resumebuilder.pk/logo.png"
+            "url": "https://www.resumebuilder.pk/logo.png"
           }
         },
         "datePublished": "2026-02-23",
         "dateModified": "2026-02-23",
         "mainEntityOfPage": {
           "@type": "WebPage",
-          "@id": "https://resumebuilder.pk/blog/resume-vs-cv-difference-in-pakistan-2026"
+          "@id": "https://www.resumebuilder.pk/blog/resume-vs-cv-difference-in-pakistan-2026"
         }
       })
     }}
@@ -943,19 +943,19 @@ if (slug === "resume-vs-cv-difference-in-pakistan-2026") {
             "@type": "ListItem",
             "position": 1,
             "name": "Home",
-            "item": "https://resumebuilder.pk/"
+            "item": "https://www.resumebuilder.pk/"
           },
           {
             "@type": "ListItem",
             "position": 2,
             "name": "Blog",
-            "item": "https://resumebuilder.pk/blog"
+            "item": "https://www.resumebuilder.pk/blog"
           },
           {
             "@type": "ListItem",
             "position": 3,
             "name": "Resume vs CV – What’s the Difference in Pakistan? (2026)",
-            "item": "https://resumebuilder.pk/blog/resume-vs-cv-difference-in-pakistan-2026"
+            "item": "https://www.resumebuilder.pk/blog/resume-vs-cv-difference-in-pakistan-2026"
           }
         ]
       })

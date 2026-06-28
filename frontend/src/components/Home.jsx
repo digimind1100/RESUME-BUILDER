@@ -44,8 +44,8 @@ export default function Home() {
           "@context": "https://schema.org",
           "@type": "Organization",
           "name": "ResumeBuilder.pk",
-          "url": "https://resumebuilder.pk",
-          "logo": "https://resumebuilder.pk/logo.png",
+          "url": "https://www.resumebuilder.pk",
+          "logo": "https://www.resumebuilder.pk/logo.png",
           "founder": {
             "@type": "Person",
             "name": "Haider Zaidi"
