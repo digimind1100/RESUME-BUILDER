@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
 import Navbar from "./components/Navbar";
 import HomePage from "./components/Home";
 import ResumeBuilder from "./components/ResumeBuilder";
@@ -70,6 +69,18 @@ function AppContent() {
       ? "https://www.resumebuilder.pk/"
       : `https://www.resumebuilder.pk${location.pathname}`;
 
+  useEffect(() => {
+    let canonicalLink = document.querySelector('link[rel="canonical"]');
+
+    if (!canonicalLink) {
+      canonicalLink = document.createElement("link");
+      canonicalLink.setAttribute("rel", "canonical");
+      document.head.appendChild(canonicalLink);
+    }
+
+    canonicalLink.setAttribute("href", canonicalUrl);
+  }, [canonicalUrl]);
+
   // Global form state
   const [formData, setFormData] = useState({});
 
@@ -81,9 +92,6 @@ function AppContent() {
 
   return (
     <>
-      <Helmet>
-        <link rel="canonical" href={canonicalUrl} />
-      </Helmet>
       <Navbar />
       <ScrollToTop />
       <Toaster position="top-center" />
