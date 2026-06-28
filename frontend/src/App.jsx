@@ -63,21 +63,13 @@ import ResumeChecklistBeforeApplying from "./blogs/ResumeChecklistBeforeApplying
 import HowToWriteCoverLetter from "./blogs/HowToWriteCoverLetter";
 import AtsKeywordsForResumes from "./blogs/AtsKeywordsForResumes";
 
-const SITE_URL = "https://resumebuilder.pk";
-
-function CanonicalUrl() {
-  const { pathname } = useLocation();
-  const canonicalPath = pathname === "/" ? "/" : pathname.replace(/\/$/, "");
-  const canonicalUrl = `${SITE_URL}${canonicalPath}`;
-
-  return (
-    <Helmet>
-      <link rel="canonical" href={canonicalUrl} />
-    </Helmet>
-  );
-}
-
 function AppContent() {
+  const location = useLocation();
+  const canonicalUrl =
+    location.pathname === "/"
+      ? "https://resumebuilder.pk/"
+      : `https://resumebuilder.pk${location.pathname}`;
+
   // Global form state
   const [formData, setFormData] = useState({});
 
@@ -89,7 +81,9 @@ function AppContent() {
 
   return (
     <>
-      <CanonicalUrl />
+      <Helmet>
+        <link rel="canonical" href={canonicalUrl} />
+      </Helmet>
       <Navbar />
       <ScrollToTop />
       <Toaster position="top-center" />
