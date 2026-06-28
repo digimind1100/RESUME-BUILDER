@@ -186,7 +186,6 @@ export default function HomePageAiResumeBuilder() {
           name="description"
           content="Use our free AI Resume Builder online to create ATS-friendly resumes with professional templates, easy editing, resume examples, and instant PDF download."
         />
-        <link rel="canonical" href="https://resumebuilder.pk/ai-resume-builder" />
       </Helmet>
 
       <script

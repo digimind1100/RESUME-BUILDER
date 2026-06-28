@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import Navbar from "./components/Navbar";
 import HomePage from "./components/Home";
 import ResumeBuilder from "./components/ResumeBuilder";
@@ -62,9 +63,21 @@ import ResumeChecklistBeforeApplying from "./blogs/ResumeChecklistBeforeApplying
 import HowToWriteCoverLetter from "./blogs/HowToWriteCoverLetter";
 import AtsKeywordsForResumes from "./blogs/AtsKeywordsForResumes";
 
+const SITE_URL = "https://resumebuilder.pk";
+
+function CanonicalUrl() {
+  const { pathname } = useLocation();
+  const canonicalPath = pathname === "/" ? "/" : pathname.replace(/\/$/, "");
+  const canonicalUrl = `${SITE_URL}${canonicalPath}`;
+
+  return (
+    <Helmet>
+      <link rel="canonical" href={canonicalUrl} />
+    </Helmet>
+  );
+}
 
 function AppContent() {
-  const location = useLocation();
   // Global form state
   const [formData, setFormData] = useState({});
 
@@ -76,6 +89,7 @@ function AppContent() {
 
   return (
     <>
+      <CanonicalUrl />
       <Navbar />
       <ScrollToTop />
       <Toaster position="top-center" />

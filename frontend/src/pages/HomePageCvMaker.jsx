@@ -175,7 +175,6 @@ export default function HomePageCvMaker() {
           name="description"
           content="Use our free CV Maker online to create professional CVs with modern templates, easy editing, ATS-friendly formatting, and instant PDF download."
         />
-        <link rel="canonical" href="https://resumebuilder.pk/cv-maker" />
       </Helmet>
 
       <script

@@ -184,10 +184,6 @@ export default function HomePageCoverLetterBuilder() {
           name="description"
           content="Use our free Cover Letter Builder online to create professional cover letters with guided writing, easy editing, and instant download."
         />
-        <link
-          rel="canonical"
-          href="https://resumebuilder.pk/cover-letter-builder"
-        />
       </Helmet>
 
       <script
