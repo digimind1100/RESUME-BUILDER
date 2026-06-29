@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
+import { MIN_REVIEW_LENGTH, validateReviewText } from "../utils/reviewValidation";
 import "./ReviewModal.css";
-
-const MIN_REVIEW_LENGTH = 50;
 
 export default function ReviewModal({
   onClose,
@@ -18,7 +17,8 @@ export default function ReviewModal({
   const [error, setError] = useState("");
   const trimmedReview = review.trim();
   const remainingChars = Math.max(0, MIN_REVIEW_LENGTH - trimmedReview.length);
-  const isReviewValid = trimmedReview.length >= MIN_REVIEW_LENGTH;
+  const reviewValidation = validateReviewText(trimmedReview);
+  const hasMinimumLength = trimmedReview.length >= MIN_REVIEW_LENGTH;
 
   // ✅ NAME AUTO-FILL (GUARANTEED)
   useEffect(() => {
@@ -33,8 +33,8 @@ export default function ReviewModal({
     e.preventDefault();
     if (loading) return;
 
-    if (!isReviewValid) {
-      setError(`Please write at least ${MIN_REVIEW_LENGTH} characters about your experience.`);
+    if (!reviewValidation.isValid) {
+      setError(reviewValidation.message);
       return;
     }
 
@@ -89,9 +89,9 @@ export default function ReviewModal({
             placeholder="What helped you most: templates, AI writing, PDF download, or ease of use?"
             required
           />
-          <div className={isReviewValid ? "review-helper valid" : "review-helper"}>
-            {isReviewValid
-              ? "Thank you. This looks helpful."
+          <div className={reviewValidation.isValid ? "review-helper valid" : "review-helper"}>
+            {hasMinimumLength
+              ? reviewValidation.message
               : `${remainingChars} more characters needed for a meaningful review.`}
           </div>
 
@@ -101,7 +101,7 @@ export default function ReviewModal({
           <button
             type="submit"
             className="submit-review-btn"
-            disabled={loading || !isReviewValid}
+            disabled={loading || !hasMinimumLength}
           >
             {loading ? "Submitting..." : "Submit Review"}
           </button>

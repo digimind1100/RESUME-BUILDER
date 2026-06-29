@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { validateReviewText } from "../utils/reviewValidation";
 import "./SubmitReviewModal.css";
 
 export default function SubmitReviewModal({ onClose, onSubmit }) {
@@ -6,8 +7,10 @@ export default function SubmitReviewModal({ onClose, onSubmit }) {
   const [text, setText] = useState("");
 
   const handleSubmit = () => {
-    if (text.length < 20) {
-      alert("Please write at least 20 characters.");
+    const reviewValidation = validateReviewText(text);
+
+    if (!reviewValidation.isValid) {
+      alert(reviewValidation.message);
       return;
     }
     onSubmit({ rating, text });

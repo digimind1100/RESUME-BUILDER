@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { createPortal } from "react-dom";
 import { useAuth } from "../../context/AuthContext";
 import { grantReviewAccess } from "../../utils/reviewAccess";
+import { MIN_REVIEW_LENGTH, validateReviewText } from "../../utils/reviewValidation";
 import "./ReviewPopup.css";
 
 const API_BASE =
@@ -11,8 +12,6 @@ const API_BASE =
 const reviewEndpoint = API_BASE.endsWith("/api")
   ? `${API_BASE}/reviews`
   : `${API_BASE}/api/reviews`;
-
-const MIN_REVIEW_LENGTH = 50;
 
 export default function ReviewPopup({ templateId, onClose, onSuccess }) {
   const modalRoot = document.getElementById("modal-root");
@@ -24,7 +23,8 @@ export default function ReviewPopup({ templateId, onClose, onSuccess }) {
   const [error, setError] = useState("");
   const trimmedComment = comment.trim();
   const remainingChars = Math.max(0, MIN_REVIEW_LENGTH - trimmedComment.length);
-  const isReviewValid = trimmedComment.length >= MIN_REVIEW_LENGTH;
+  const reviewValidation = validateReviewText(trimmedComment);
+  const hasMinimumLength = trimmedComment.length >= MIN_REVIEW_LENGTH;
 
   if (!modalRoot) return null;
 
@@ -43,8 +43,8 @@ export default function ReviewPopup({ templateId, onClose, onSuccess }) {
       return;
     }
 
-    if (!isReviewValid) {
-      setError(`Please write at least ${MIN_REVIEW_LENGTH} characters about your experience.`);
+    if (!reviewValidation.isValid) {
+      setError(reviewValidation.message);
       return;
     }
 
@@ -134,9 +134,9 @@ export default function ReviewPopup({ templateId, onClose, onSuccess }) {
             placeholder="What helped you most: templates, AI writing, PDF download, or ease of use?"
             required
           />
-          <div className={isReviewValid ? "review-gate-help valid" : "review-gate-help"}>
-            {isReviewValid
-              ? "Thank you. This looks helpful."
+          <div className={reviewValidation.isValid ? "review-gate-help valid" : "review-gate-help"}>
+            {hasMinimumLength
+              ? reviewValidation.message
               : `${remainingChars} more characters needed for a meaningful review.`}
           </div>
 
@@ -145,7 +145,7 @@ export default function ReviewPopup({ templateId, onClose, onSuccess }) {
           <button
             type="submit"
             className="review-gate-submit"
-            disabled={loading || !isReviewValid}
+            disabled={loading || !hasMinimumLength}
           >
             {loading ? "Submitting..." : "Submit Review"}
           </button>
