@@ -9,6 +9,12 @@
   font-family: "Inter", system-ui, sans-serif;
 }
 
+.admin-payments-page.embedded {
+  margin: 0;
+  max-width: none;
+  padding: 0;
+}
+
 /* Title */
 .admin-payments-title {
   font-size: 28px;
@@ -33,7 +39,7 @@
 
 .admin-table-wrapper {
   background: #ffffff;
-  border-radius: 14px;
+  border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
 }
@@ -171,6 +177,10 @@
 @media (max-width: 768px) {
   .admin-payments-page {
     padding: 20px;
+  }
+
+  .admin-payments-page.embedded {
+    padding: 0;
   }
 
   .admin-payments-table thead {

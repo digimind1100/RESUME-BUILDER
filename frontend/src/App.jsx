@@ -24,9 +24,8 @@ import { Toaster } from "react-hot-toast";
 import Policies from "./components/Policies";
 import Features from "./components/Features";
 import Contact from "./components/Contact";
-import AdminPendingPayments from "./components/admin/AdminPendingPayments";
 import AdminGuard from "./components/admin/AdminGuard";
-import AdminReviews from "./components/admin/AdminReviews";
+import AdminDashboard from "./components/admin/AdminDashboard";
 import ReviewsPage from "./components/ReviewsPage";
 import BlogPost from "./pages/BlogPost";
 import HomePageCvMaker from "./pages/HomePageCvMaker";
@@ -116,10 +115,18 @@ function AppContent() {
         />
 
         <Route
+          path="/admin"
+          element={
+            <AdminGuard>
+              <AdminDashboard />
+            </AdminGuard>
+          }
+        />
+        <Route
           path="/admin/payments"
           element={
             <AdminGuard>
-              <AdminPendingPayments />
+              <AdminDashboard />
             </AdminGuard>
           }
         />
@@ -127,7 +134,7 @@ function AppContent() {
           path="/admin/review"
           element={
             <AdminGuard>
-              <AdminReviews />
+              <Navigate to="/admin/reviews" replace />
             </AdminGuard>
           }
         />
@@ -135,7 +142,7 @@ function AppContent() {
           path="/admin/reviews"
           element={
             <AdminGuard>
-              <AdminReviews />
+              <AdminDashboard />
             </AdminGuard>
           }
         />

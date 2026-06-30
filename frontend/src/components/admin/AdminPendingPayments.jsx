@@ -6,7 +6,7 @@ const API_BASE =
   import.meta.env.VITE_API_BASE_URL ||
   "https://resume-builder-backend-66wy.onrender.com/api";
 
-export default function AdminPendingPayments() {
+export default function AdminPendingPayments({ embedded = false }) {
   const [payments, setPayments] = useState([]);
 
   console.log("🔥 ADMIN PAGE MOUNTED");
@@ -78,7 +78,7 @@ export default function AdminPendingPayments() {
   };
 
   return (
-    <div className="admin-payments-page">
+    <div className={`admin-payments-page ${embedded ? "embedded" : ""}`}>
       <h1 className="admin-payments-title">Pending Payments</h1>
 
       {payments.length === 0 ? (

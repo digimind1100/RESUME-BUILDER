@@ -10,7 +10,7 @@ const adminReviewEndpoint = API_BASE.endsWith("/api")
   ? `${API_BASE}/admin/review`
   : `${API_BASE}/api/admin/review`;
 
-export default function AdminReviews() {
+export default function AdminReviews({ embedded = false }) {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -130,8 +130,8 @@ export default function AdminReviews() {
   };
 
   return (
-    <div style={{ padding: "30px" }}>
-      <h2 style={{ marginBottom: "15px" }}>Reviews</h2>
+    <div className={`admin-reviews-page ${embedded ? "embedded" : ""}`}>
+      <h2 className="admin-reviews-title">Reviews</h2>
 
       <div className="admin-tabs" aria-label="Review status filter">
         <button
