@@ -86,12 +86,13 @@ function AppContent() {
   const user = JSON.parse(localStorage.getItem("user"));
 
   const isLocal = import.meta.env.DEV;
+  const isAdminRoute = location.pathname.startsWith("/admin");
 
 
 
   return (
     <>
-      <Navbar />
+      {!isAdminRoute && <Navbar />}
       <ScrollToTop />
       <Toaster position="top-center" />
       <Routes>
